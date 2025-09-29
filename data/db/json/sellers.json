@@ -1,0 +1,88 @@
+[
+  {
+    "name": "War For Less",
+    "base_url": "https://www.warforless.com.au/",
+    "search_url": "?rf=kw&kw=*",
+    "product_selector": ".card.thumbnail.card-body",
+    "name_selector": ".card-title a",
+    "link_selector": ".card-title a",
+    "price_selector": ".price span",
+    "sale_selector": ".badge--sale span",
+    "image_selector": ".product-image"
+  },
+  {
+    "name": "Warhammer Official",
+    "base_url": "https://www.warhammer.com/en-AU/",
+    "search_url": "plp?search=*",
+    "product_selector": "[data-test=\"product-card\"]",
+    "name_selector": ".full-unstyled-link",
+    "link_selector": "a.product-card-image",
+    "price_selector": "[data-testid=\"product-card-current-price\"]",
+    "sale_selector": ".NOSALESBITCH",
+    "image_selector": ".product-image"
+  },
+  {
+    "name": "The Combat Company",
+    "base_url": "https://thecombatcompany.com",
+    "search_url": "/search?q=*",
+    "product_selector": "li.grid__item",
+    "name_selector": ".full-unstyled-link",
+    "link_selector": ".full-unstyled-link",
+    "price_selector": ".price-item--regular",
+    "sale_selector": ".price-item--sale",
+    "image_selector": ".product-image"
+  },
+  {
+    "name": "Gap Games",
+    "base_url": "https://www.gapgames.com.au/",
+    "search_url": "a/search?q=*",
+    "product_selector": "div.product",
+    "name_selector": ".product__title a",
+    "link_selector": ".product__image-wrapper",
+    "price_selector": "[data-testid=\"product-card-current-price\"]",
+    "sale_selector": ".product__price--on-sale",
+    "image_selector": ".product-image"
+  },
+  {
+    "name": "Emerald Hobbies",
+    "base_url": "https://www.emeraldhobbies.com.au/",
+    "search_url": "search?q=*&type=product",
+    "product_selector": ".category_detail",
+    "name_selector": "h4 > a",
+    "link_selector": "h4 > a",
+    "price_selector": ".compare-price",
+    "sale_selector": ".price span",
+    "image_selector": ".product-image"
+  },
+ {
+  "name": "Gumnut",
+  "base_url": "https://www.gumnut.com.au/",
+  "search_url": "search?type=product&q=*",
+
+  "product_selector": ".search-infinite-wrapper .element",
+
+  "name_selector": ".desc h5 a",
+  "link_selector": ".desc h5 a",
+
+  "price_selector": ".desc .compare-price",
+  "sale_selector": "desc .price",
+
+  "image_selector": ".product-image img"
+}
+,
+   {
+  "name": "Frontline Hobbies",
+  "base_url": "https://www.frontlinehobbies.com.au/",
+  "search_url": "/search/?query=*",
+
+  "product_selector": ".card.thumbnail.card-body",
+
+  "name_selector": ".m_caption .card-title a",
+  "link_selector": ".m_caption .card-title a",
+
+  "price_selector": ".m_caption .price [itemprop='price']",
+  "sale_selector": "",
+
+  "image_selector": "a.thumbnail-image img.product-image"
+}
+]
