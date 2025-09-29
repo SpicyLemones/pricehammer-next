@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "postinstall": "PUPPETEER_CACHE_DIR=/opt/render/.cache/puppeteer npx puppeteer browsers install chrome",
     "build": "next build --turbopack",
     "start": "next start -p ${PORT:-3000}",
-    "lint": "eslint",
-    "postinstall": "PUPPETEER_CACHE_DIR=/opt/render/.cache/puppeteer puppeteer browsers install chrome"
+    "lint": "eslint"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",
