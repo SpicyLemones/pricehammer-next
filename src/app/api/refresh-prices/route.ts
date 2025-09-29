@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import pLimit from "p-limit";
 import { query } from "@/lib/sql";
-import { fetchPriceFromLinkWithSellerSelectors } from "@/lib/scrape";
+import { fetchPriceFromLinkWithSellerSelectors } from "@/lib/scraper";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
