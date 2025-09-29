@@ -1,5 +1,5 @@
 // src/app/lib/scraper.ts
-// Server-only helpers for scraping. Safe to import from app routes with `runtime = "nodejs"`.
+// Server-only helpers for scraping. Import only from routes with `export const runtime = "nodejs"`.
 
 type Seller = {
   id?: number;
@@ -34,7 +34,8 @@ type PageLike = {
   setUserAgent(ua: string): Promise<void>;
   goto(url: string, opts: { waitUntil: any; timeout: number }): Promise<any>;
   waitForSelector(sel: string, opts?: { timeout?: number }): Promise<void>;
-  evaluate<T, A = unknown>(fn: (a: A) => T | Promise<T>, arg: A): Promise<T>;
+  // allow 1 or 2 args like real Puppeteer
+  evaluate<T = any>(fn: any, arg?: any): Promise<T>;
   $$eval<T, A = unknown>(
     selector: string,
     fn: (els: Element[], args: A) => T,
@@ -47,24 +48,25 @@ const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
 
 async function launchPuppeteer(): Promise<BrowserLike> {
-  // Try puppeteer-extra + stealth; if it explodes, fall back to plain puppeteer.
   try {
-    const puppeteerExtra = (await import("puppeteer-extra")).default;
-    const Stealth = (await import("puppeteer-extra-plugin-stealth")).default;
-    // Some envs need construction, some accept function; both are fine:
-    const plugin = typeof Stealth === "function" ? Stealth() : (Stealth as any).default?.() ?? Stealth;
-    // In certain bundlers this line can throw — we guard the whole block.
-    (puppeteerExtra as any).use(plugin);
-    return await (puppeteerExtra as any).launch({
+    // Try puppeteer-extra + stealth
+    const puppeteerExtra = (await import("puppeteer-extra")).default as any;
+    const Stealth = (await import("puppeteer-extra-plugin-stealth")).default as any;
+    const plugin = typeof Stealth === "function" ? Stealth() : Stealth?.default?.() ?? Stealth;
+    if (typeof puppeteerExtra.use === "function") puppeteerExtra.use(plugin);
+    const browser = await puppeteerExtra.launch({
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
+    return browser as unknown as BrowserLike;
   } catch {
-    const puppeteer = (await import("puppeteer")).default;
-    return await puppeteer.launch({
+    // Fallback to plain puppeteer
+    const puppeteer = (await import("puppeteer")).default as any;
+    const browser = await puppeteer.launch({
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
+    return browser as unknown as BrowserLike;
   }
 }
 
@@ -73,23 +75,6 @@ function pickNumber(txt?: string | null): number | null {
   if (!txt) return null;
   const m = txt.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
   return m ? parseFloat(m[0]) : null;
-}
-
-/** Try to read the first URL from a srcset attribute. */
-function firstFromSrcset(srcset?: string | null): string | null {
-  if (!srcset) return null;
-  const first = srcset.split(",")[0]?.trim().split(" ")[0];
-  return first || null;
-}
-
-/** Resolve possibly-relative URL against a base. */
-function toAbs(href: string | null | undefined, base: string): string | null {
-  if (!href) return null;
-  try {
-    return new URL(href, base).toString();
-  } catch {
-    return href;
-  }
 }
 
 /**
@@ -106,26 +91,21 @@ export async function fetchPriceFromLinkWithSellerSelectors(
     await page.goto(link, { waitUntil: "domcontentloaded", timeout: 30_000 });
 
     const price = await page.evaluate(
-      ({ priceSel, saleSel }) => {
-        const pick = (t?: string | null) =>
-          t ? parseFloat((t.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/) || [])[0] || "NaN") : NaN;
+      ({ priceSel, saleSel }: { priceSel: string; saleSel: string }) => {
+        const pick = (t?: string | null) => {
+          if (!t) return null;
+          const m = t.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
+          return m ? parseFloat(m[0]) : null;
+        };
 
-        const sale =
-          saleSel ? (document.querySelector(saleSel)?.textContent ?? "") : "";
-        const reg =
-          priceSel ? (document.querySelector(priceSel)?.textContent ?? "") : "";
-        const item =
-          (document.querySelector("[itemprop='price']") as HTMLElement | null)?.getAttribute?.("content") ||
-          (document.querySelector("[itemprop='price']")?.textContent ?? "") ||
+        const saleTxt = saleSel ? document.querySelector(saleSel)?.textContent ?? "" : "";
+        const regTxt  = priceSel ? document.querySelector(priceSel)?.textContent ?? "" : "";
+        const itemTxt =
+          document.querySelector("[itemprop='price']")?.getAttribute?.("content") ||
+          document.querySelector("[itemprop='price']")?.textContent ||
           "";
 
-        const vals = [sale, reg, item].map((x) => {
-          if (!x) return NaN;
-          const m = x.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
-          return m ? parseFloat(m[0]) : NaN;
-        });
-        const best = vals.find((v) => Number.isFinite(v));
-        return Number.isFinite(best as number) ? (best as number) : null;
+        return pick(saleTxt) ?? pick(regTxt) ?? pick(itemTxt) ?? null;
       },
       { priceSel: seller.price_selector || "", saleSel: seller.sale_selector || "" }
     );
@@ -135,7 +115,7 @@ export async function fetchPriceFromLinkWithSellerSelectors(
     return null;
   } finally {
     await page.close().catch(() => {});
-    await browser.close().catch(() => {});
+    await (browser as any).close?.().catch?.(() => {});
   }
 }
 
@@ -159,7 +139,7 @@ export async function searchSeller(
       await page.goto(searchUrl, { waitUntil: "networkidle2", timeout: 30_000 });
     } catch {}
 
-    // Try to help infinite lists/lazy-loaders:
+    // Help lazy lists / infinite scroll
     try {
       await page.evaluate(async () => {
         const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -183,7 +163,6 @@ export async function searchSeller(
 
     type EvalArgs = {
       base_url: string;
-      product_selector: string;
       name?: string;
       link?: string;
       img?: string;
@@ -192,15 +171,24 @@ export async function searchSeller(
     };
 
     const cards = await page.$$eval<
-      Candidate[],
+      { link: string | null; price: number | null; img: string | null }[],
       EvalArgs
     >(
       seller.product_selector,
       (nodes: Element[], sel: EvalArgs) => {
+        const firstFromSrcset = (srcset?: string | null) => {
+          if (!srcset) return null;
+          const first = srcset.split(",")[0]?.trim().split(" ")[0];
+          return first || null;
+        };
         const pickNum = (txt?: string | null) => {
           if (!txt) return null;
           const m = txt.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
           return m ? parseFloat(m[0]) : null;
+        };
+        const toAbs = (href: string | null | undefined, base: string) => {
+          if (!href) return null;
+          try { return new URL(href, base).toString(); } catch { return href; }
         };
 
         return nodes
@@ -209,7 +197,7 @@ export async function searchSeller(
             let linkEl =
               (sel.link && (el.querySelector(sel.link) as HTMLAnchorElement | null)) ||
               (el.querySelector("a") as HTMLAnchorElement | null);
-            const link = linkEl ? new URL((linkEl.getAttribute("href") || linkEl.href), sel.base_url).toString() : null;
+            const link = linkEl ? toAbs(linkEl.getAttribute("href") || linkEl.href, sel.base_url) : null;
 
             // Image:
             let imgEl =
@@ -225,16 +213,16 @@ export async function searchSeller(
               firstFromSrcset(imgEl?.getAttribute?.("srcset")) ||
               firstFromSrcset(imgEl?.getAttribute?.("data-srcset")) ||
               null;
-            const imgLink = src ? new URL(src, sel.base_url).toString() : null;
+            const imgLink = toAbs(src, sel.base_url);
 
-            // Price (sale > regular > itemprop > generic .price):
-            const saleText = sel.sale ? (el.querySelector(sel.sale)?.textContent ?? "") : "";
+            // Price:
+            const saleText  = sel.sale  ? (el.querySelector(sel.sale)?.textContent  ?? "") : "";
             const priceText = sel.price ? (el.querySelector(sel.price)?.textContent ?? "") : "";
             const itemPropText =
               (el.querySelector("[itemprop='price']") as HTMLElement | null)?.getAttribute?.("content") ||
               (el.querySelector("[itemprop='price']")?.textContent ?? "") ||
               "";
-            const anyPriceText = (el.querySelector(".price")?.textContent ?? "");
+            const anyPriceText = el.querySelector(".price")?.textContent ?? "";
 
             const price =
               pickNum(saleText) ??
@@ -243,13 +231,12 @@ export async function searchSeller(
               pickNum(anyPriceText) ??
               null;
 
-            return { link, price, img: imgLink as any };
+            return { link, price, img: imgLink };
           })
           .filter((r) => !!r.link);
       },
       {
         base_url: seller.base_url,
-        product_selector: seller.product_selector,
         name: seller.name_selector,
         link: seller.link_selector,
         img: seller.image_selector,
@@ -258,13 +245,13 @@ export async function searchSeller(
       }
     );
 
-    // Fetch image buffers server-side (best-effort)
+    // Fetch image buffers server-side
     const out: Candidate[] = [];
     for (const c of cards) {
       let buf: Buffer | null = null;
       if (c.img) {
         try {
-          const r = await fetch(c.img as unknown as string);
+          const r = await fetch(c.img);
           const ab = await r.arrayBuffer();
           buf = Buffer.from(ab);
         } catch {
@@ -276,6 +263,6 @@ export async function searchSeller(
     return out;
   } finally {
     await page.close().catch(() => {});
-    await browser.close().catch(() => {});
+    await (browser as any).close?.().catch?.(() => {});
   }
 }
