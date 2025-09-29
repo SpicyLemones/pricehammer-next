@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start -p ${PORT:-3000}",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "PUPPETEER_CACHE_DIR=/opt/render/.cache/puppeteer puppeteer browsers install chrome"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",

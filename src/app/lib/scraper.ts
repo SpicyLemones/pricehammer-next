@@ -47,27 +47,20 @@ type PageLike = {
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
 
+// src/app/lib/scraper.ts
+
 async function launchPuppeteer(): Promise<BrowserLike> {
-  try {
-    // Try puppeteer-extra + stealth
-    const puppeteerExtra = (await import("puppeteer-extra")).default as any;
-    const Stealth = (await import("puppeteer-extra-plugin-stealth")).default as any;
-    const plugin = typeof Stealth === "function" ? Stealth() : Stealth?.default?.() ?? Stealth;
-    if (typeof puppeteerExtra.use === "function") puppeteerExtra.use(plugin);
-    const browser = await puppeteerExtra.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-    return browser as unknown as BrowserLike;
-  } catch {
-    // Fallback to plain puppeteer
-    const puppeteer = (await import("puppeteer")).default as any;
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-    return browser as unknown as BrowserLike;
-  }
+  // Use plain Puppeteer and (optionally) a provided Chrome path.
+  // This is the most reliable setup on hosts like Render / Spaceship.
+  const puppeteer = (await import("puppeteer")).default as any;
+
+  const browser = await puppeteer.launch({
+    headless: true,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, // use if provided
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
+
+  return browser as unknown as BrowserLike;
 }
 
 /** Extracts a number from a price-like string. */
@@ -76,6 +69,8 @@ function pickNumber(txt?: string | null): number | null {
   const m = txt.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
   return m ? parseFloat(m[0]) : null;
 }
+
+
 
 /**
  * Refresh a product page by seller selectors and return the best price found.
