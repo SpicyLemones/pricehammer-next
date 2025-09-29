@@ -19,6 +19,7 @@ import { Search, ExternalLink, X } from "lucide-react";
 // ⬇️ still using the static bundle for now
 import { Products as sourceProducts, type Product } from "../../data/Data";
 
+
 /* ------------------------------------------------
    Currency formatting: "$120 AUD" or "$80.75 AUD"
 --------------------------------------------------*/
