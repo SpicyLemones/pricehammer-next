@@ -158,3 +158,13 @@
 @layer utilities {
   .font-display { font-family: var(--font-display), serif !important; }
 }
+
+:root {
+   
+    body[data-scroll-locked][data-scroll-locked] {
+      overflow: auto !important;
+    }
+    body[data-scroll-locked] {
+      margin-right: 0 !important;
+    }
+  }

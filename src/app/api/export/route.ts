@@ -12,7 +12,7 @@ type ProductRow = { id: number; name: string };
 type PriceRow = { seller_name: string; price: number | null; link: string | null };
 
 // File we’ll write (optional)
-const OUT = path.join(process.cwd(), "src", "data", "Data.ts");
+const OUT = path.join(process.cwd(), "data", "db", "Data.ts");
 
 // TS interface we’ll emit to the file, and also the runtime type we return
 export type ExportedProduct = {

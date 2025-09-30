@@ -12,12 +12,15 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
+  SelectLabel,
 } from "./ui/select";
+
 import { Separator } from "./ui/separator";
 import { Search, ExternalLink, X } from "lucide-react";
 
 // ⬇️ still using the static bundle for now
-import { Products as sourceProducts, type Product } from "../../data/Data";
+import { Products as sourceProducts, type Product } from "../../../data/db/Data";
 
 
 /* ------------------------------------------------
@@ -36,16 +39,57 @@ const fmtAUD = (n?: number | null) => {
   return `${withSymbol} AUD`;
 };
 
+
+// Super-groups
+const FACTION_GROUPS: Record<
+  "No Faction" | "Imperium" | "Chaos" | "Xenos" | "Order" | "Destruction" | "Death",
+  string[]
+> = {
+  "No Faction": ["No Faction / Misc"],
+
+  Imperium: [
+    "Adepta Sororitas","Adeptus Custodes","Adeptus Mechanicus","Adeptus Titanicus",
+    "Astra Militarum","Grey Knights","Imperial Agents","Imperial Knights","Space Marines",
+  ],
+
+  Chaos: [
+    "Chaos Daemons","Chaos Knights","Chaos Space Marines","Death Guard",
+    "Emperor’s Children","Thousand Sons","World Eaters",
+  ],
+
+  Xenos: [
+    "Aeldari","Drukhari","Genestealer Cults","Leagues of Votann","Necrons","Orks","T’au Empire","Tyranids",
+  ],
+
+  Order: [
+    "Cities of Sigmar","Daughters of Khaine","Fyreslayers","Idoneth Deepkin","Kharadron Overlords",
+    "Lumineth Realm-lords","Seraphon","Stormcast Eternals","Sylvaneth",
+  ],
+
+  Destruction: [
+    "Bonesplitterz","Gloomspite Gitz","Ironjawz","Kruleboyz","Ogor Mawtribes","Sons of Behemat",
+  ],
+
+  Death: [
+    "Flesh-eater Courts","Nighthaunt","Ossiarch Bonereapers","Soulblight Gravelords",
+  ],
+};
+
+
 /* ------------------------------------------------
    Report wrong → call your Next API route
    POST /api/report-wrong-by-link  { link, reason, context? }
 --------------------------------------------------*/
-async function reportWrong(link?: string, sellerName?: string, productName?: string) {
-  const cleanLink = (link ?? "").trim();
-  if (!cleanLink) {
-    alert("No link to report for this retailer.");
-    return;
-  }
+async function reportWrong(
+      link?: string | null,
+      sellerName?: string | null,
+      productName?: string | null
+    ) {
+      const cleanLink = (link ?? "").trim();
+      if (!cleanLink) {
+        alert("No link to report for this retailer.");
+        return;
+      }
   const reason = window.prompt("What's wrong with this link/price? (optional)") || "";
 
   try {
@@ -153,6 +197,19 @@ export function ProductLookup() {
     () => [...new Set(sourceProducts.map((p) => p.category).filter(Boolean))],
     []
   );
+  
+// After you compute `factions`
+const factionSet = useMemo(() => new Set(factions), [factions]);
+
+const groupedFactions = useMemo(() => {
+  return (Object.entries(FACTION_GROUPS) as [keyof typeof FACTION_GROUPS, string[]][])
+    .map(([group, list]) => ({
+      group,
+      items: list.filter((f) => factionSet.has(f)),
+    }))
+    .filter((g) => g.items.length > 0);
+}, [factionSet]);
+
   const games = ["warhammer40k", "ageofsigmar"] as const;
 
   const hasQueryOrFilters =
@@ -268,27 +325,44 @@ export function ProductLookup() {
 
         {/* faction */}
         <Select value={selectedFaction} onValueChange={setSelectedFaction}>
-          <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800">
-            <SelectValue placeholder="All Factions" />
-          </SelectTrigger>
-          <SelectContent className="w-[180px] bg-white dark:bg-slate-800">
-            <SelectItem
-              value="all"
-              className="cursor-pointer px-2 py-1 rounded-sm data-[highlighted]:bg-blue-500 data-[highlighted]:text-white transition-all"
-            >
-              All Factions
-            </SelectItem>
-            {factions.map((f) => (
-              <SelectItem
-                key={f}
-                value={f}
-                className="cursor-pointer px-2 py-1 rounded-sm data-[highlighted]:bg-blue-500 data-[highlighted]:text-white transition-all"
-              >
-                {f}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+  <SelectTrigger className="w-[220px] bg-white dark:bg-slate-800">
+    <SelectValue placeholder="All Factions" />
+  </SelectTrigger>
+
+  {/* Use popper so it doesn't stretch, cap height, show scroll */}
+  <SelectContent
+    position="popper"
+    side="bottom"
+    align="start"
+    className="w-[280px] max-h-[70vh] overflow-y-auto overscroll-contain bg-white dark:bg-slate-800 [scrollbar-gutter:stable] border"
+  >
+    <SelectItem
+      value="all"
+      className="cursor-pointer px-2 py-1 rounded-sm data-[highlighted]:bg-blue-500 data-[highlighted]:text-white"
+    >
+      All Factions
+    </SelectItem>
+
+    {groupedFactions.map(({ group, items }) => (
+      <SelectGroup key={group}>
+        <SelectLabel className="px-2 pt-2 text-[11px] uppercase tracking-wide text-slate-500">
+          {group}
+        </SelectLabel>
+        {items.map((f) => (
+          <SelectItem
+            key={f}
+            value={f}
+            className="cursor-pointer px-2 py-1 rounded-sm data-[highlighted]:bg-blue-500 data-[highlighted]:text-white"
+          >
+            {f}
+          </SelectItem>
+        ))}
+        <Separator className="my-2" />
+      </SelectGroup>
+    ))}
+  </SelectContent>
+</Select>
+
 
         {/* category */}
         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
@@ -362,7 +436,7 @@ function ProductCard({ product }: { product: ProductExtended }) {
         <CardHeader className="pb-0">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Image */}
-            <div className="w-full md:w-40 flex-shrink-0">
+            <div className="w-full min-h md:w-40 flex-shrink-0">
               <div
                 className="aspect-square overflow-hidden rounded-md border bg-white cursor-pointer"
                 onClick={() => setZoomed(true)}

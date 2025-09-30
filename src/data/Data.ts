@@ -94,6 +94,12 @@ export const Products: Product[] = [
         price: 120,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Abaddon-the-Despoiler-2019?queryID=593aae9bce1e3d348cf8e050be7b5613"
+      },
+      {
+        store: "The Combat Company",
+        price: 94.8,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/abaddon-the-despoiler?_pos=1&_sid=c11e43e0a&_ss=r"
       }
     ]
   },
@@ -117,6 +123,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Aberrants-2019?queryID=67ac29e0ade97c61bd1c5ecd9eba967e"
+      },
+      {
+        store: "The Combat Company",
+        price: 107.99,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/exulon-nostilla-and-aberration?_pos=1&_sid=f8c1e0689&_ss=r"
       }
     ]
   },
@@ -140,6 +152,12 @@ export const Products: Product[] = [
         price: 46,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Abominant-2019?queryID=7c5cb349be409c66d768c15b93e20a41"
+      },
+      {
+        store: "The Combat Company",
+        price: 36.34,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/abominant?_pos=1&_sid=253d3d9e7&_ss=r"
       }
     ]
   },
@@ -163,6 +181,12 @@ export const Products: Product[] = [
         price: 100,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/legions-imperialis-mechanicum-acastus-knights-asterius-2025?queryID=59839102e80c37b3a4e42f19b4be92d9"
+      },
+      {
+        store: "The Combat Company",
+        price: 79,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/li-mechanicum-acastus-knights-asterius?_pos=1&_sid=f632fca93&_ss=r"
       }
     ]
   },
@@ -186,6 +210,12 @@ export const Products: Product[] = [
         price: 963,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Acastus-Knight-Porphyrion?queryID=0dd29f7ff97159e2c690610e1926a8dc"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/li-acastus-knights-porphyrion-pre-order-29-6-24?_pos=1&_sid=69fdba369&_ss=r"
       }
     ]
   },
@@ -209,6 +239,12 @@ export const Products: Product[] = [
         price: 94.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-accursed-cultists-2022?queryID=aed4cc632df2cb512dbaed0c64a37fb9"
+      },
+      {
+        store: "The Combat Company",
+        price: 74.65,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/accursed-cultists?_pos=1&_sid=1933b8e51&_ss=r"
       }
     ]
   },
@@ -232,6 +268,12 @@ export const Products: Product[] = [
         price: 89,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Achilles-Ridgerunner-2019?queryID=6aced51bfce3430abb4c1bd3b3623a3e"
+      },
+      {
+        store: "The Combat Company",
+        price: 70.31,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/achilles-ridgerunner?_pos=1&_sid=3bac2c983&_ss=r"
       }
     ]
   },
@@ -255,6 +297,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-genestealer-cults-2024?queryID=c6cab7b7188f86764ebdd3425b750466"
+      },
+      {
+        store: "The Combat Company",
+        price: 211.72,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-genestealer-cults-pre-order-22-6-24?_pos=1&_sid=10720fd20&_ss=r"
       }
     ]
   },
@@ -278,6 +326,12 @@ export const Products: Product[] = [
         price: 34,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/acolyte-iconward-2016?queryID=78a8755d27d8532e4eb753cbdabbff55"
+      },
+      {
+        store: "The Combat Company",
+        price: 32.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/acolyte-iconward?_pos=1&_sid=ca650dae2&_ss=r"
       }
     ]
   },
@@ -301,6 +355,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-adepta-soritas-2024?queryID=c97c38118bc3a24b1b79cc6f13683e68"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/battle-sisters-squad-dominions-celestians?_pos=1&_sid=122e7be12&_ss=r"
       }
     ]
   },
@@ -324,6 +384,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-adepta-soritas-2024?queryID=1f4cbfc905318eb01e83f91df11c95cf"
+      },
+      {
+        store: "The Combat Company",
+        price: 86.9,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/adepta-sororitas-rhino?_pos=1&_sid=cda915b91&_ss=r"
       }
     ]
   },
@@ -347,6 +413,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-adeptus-mechanicus-2023?queryID=fd3e84eb1e7bfdb2c63143c6d3739e43"
+      },
+      {
+        store: "The Combat Company",
+        price: 75.05,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/ironstrider-ballistarius-sydonian-dragoon?_pos=1&_sid=e8d927524&_ss=r"
       }
     ]
   },
@@ -370,6 +442,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-adeptus-mechanicus-2023?queryID=a80ead1f23bc88c512fc863db4c51ec2"
+      },
+      {
+        store: "The Combat Company",
+        price: 98.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/onager-dunecrawler?_pos=1&_sid=2f7d834b7&_ss=r"
       }
     ]
   },
@@ -393,6 +471,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-salamanders-2025?queryID=6a5a8add908adfdc4bd7d8a7e368d7b7"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-salamanders?_pos=1&_sid=6e67400bf&_ss=r"
       }
     ]
   },
@@ -416,6 +500,12 @@ export const Products: Product[] = [
         price: 140,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-aegis-defence-line-2023?queryID=1cdf997e2abaa3cf6e9825de47bb04eb"
+      },
+      {
+        store: "The Combat Company",
+        price: 110.6,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/astra-militarum-aegis-defence-line?_pos=1&_sid=d0d2c5292&_ss=r"
       }
     ]
   },
@@ -433,6 +523,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Aestred-Thurga-Relinquant-At-Arms?queryID=02dd14d80a145196f29dab922f9ba4c4"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/aestred-thurga-relinquant-at-arms?_pos=1&_sid=e61f8bdd9&_ss=r"
       }
     ]
   },
@@ -456,6 +552,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/raven-guard-aethon-shaan-2025?queryID=53746d42de55c69e23edfb944526c2da"
+      },
+      {
+        store: "The Combat Company",
+        price: 7.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/two-thin-coats-skeleton-legion?_pos=1&_sid=008cec8a1&_ss=r"
       }
     ]
   },
@@ -479,6 +581,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Primaris-Aggressors-2020?queryID=43051ac05f7859d1469fda1ad341a4b6"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/primaris-aggressors?_pos=1&_sid=966cada77&_ss=r"
       }
     ]
   },
@@ -496,6 +604,12 @@ export const Products: Product[] = [
         price: 20,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/ahriman-eternal-pb-eng-2023?queryID=11f23914a0b43f3203bd2f66caddcbff"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/ahriman?_pos=1&_sid=dd0991675&_ss=r"
       }
     ]
   },
@@ -519,6 +633,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adeptus-Custodes-Allarus-Custodians-2018?queryID=686b3f0a62b28772ef60937b4f41e46c"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/allarus-custodians?_pos=1&_sid=8a23f04a9&_ss=r"
       }
     ]
   },
@@ -536,6 +656,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-primaris-ancient-2022?queryID=0ef92d95b9673257667a4908caab265e"
+      },
+      {
+        store: "The Combat Company",
+        price: 58.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/black-templars-crusade-ancient?_pos=1&_sid=fbb29f6d8&_ss=r"
       }
     ]
   },
@@ -553,6 +679,12 @@ export const Products: Product[] = [
         price: 285,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/world-eaters-angron-daemon-primarch-of-khorne-2023?queryID=476e3f56550b48c3284369c98d0da33a"
+      },
+      {
+        store: "The Combat Company",
+        price: 225.15,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/angron-daemon-primarch-of-khorne?_pos=1&_sid=4e56e6d23&_ss=r"
       }
     ]
   },
@@ -576,6 +708,12 @@ export const Products: Product[] = [
         price: 11.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Apothecary-White-2019?queryID=ad6b2e43c856555910c574ceab20cb1f"
+      },
+      {
+        store: "The Combat Company",
+        price: 9.08,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/citadel-contrast-apothecary-white-18ml?_pos=1&_sid=110808634&_ss=r"
       }
     ]
   },
@@ -593,6 +731,12 @@ export const Products: Product[] = [
         price: 190,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adeptus-Mechanicus-Archaeopter-2020?queryID=bb88678a03d4ba66996b134241098675"
+      },
+      {
+        store: "The Combat Company",
+        price: 26.15,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/shale-elipse-120mm?_pos=1&_sid=8248f1d10&_ss=r"
       }
     ]
   },
@@ -616,6 +760,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Arco-Flagellants-2020?queryID=f9b5ff5fb19e67d73d68b5653867ce0c"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/arco-flagellants?_pos=1&_sid=3dd51e338&_ss=r"
       }
     ]
   },
@@ -639,6 +789,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-wolves-arjac-rockfist-2025?queryID=09571f6a23e178c3aa547ad9bfce6bf5"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/space-wolves-arjac-rockfist?_pos=1&_sid=09743e48f&_ss=r"
       }
     ]
   },
@@ -662,6 +818,12 @@ export const Products: Product[] = [
         price: 66,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/leagues-of-votann-arkanyst-evaluator-2025?queryID=e9edfba05616c3f958013d0c6ead4865"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.14,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/leagues-of-votann-arkanyst-evaluator?_pos=1&_sid=599ff97a5&_ss=r"
       }
     ]
   },
@@ -685,6 +847,12 @@ export const Products: Product[] = [
         price: 160,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/imperial-knights-knight-armigers-armiger-helverin-2022?queryID=53c3a7f4153efb8e2bb96a879e33db8d"
+      },
+      {
+        store: "The Combat Company",
+        price: 126.4,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/armiger-helverins-warglaives?_pos=1&_sid=b73b7557e&_ss=r"
       }
     ]
   },
@@ -708,6 +876,12 @@ export const Products: Product[] = [
         price: 160,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/imperial-knights-knight-armigers-armiger-warglaive-2022?queryID=a7dc2ab01d4b3959c10b27aa8541012d"
+      },
+      {
+        store: "The Combat Company",
+        price: 126.4,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/armiger-helverins-warglaives?_pos=1&_sid=41ee2560f&_ss=r"
       }
     ]
   },
@@ -731,6 +905,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-armoured-sentinel-2023?queryID=1002034297256ed0f1021920910dbffa"
+      },
+      {
+        store: "The Combat Company",
+        price: 86.9,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/solar-auxilia-hermes-sentinel-squadron-pre-order-11-5-24?_pos=1&_sid=66175dce6&_ss=r"
       }
     ]
   },
@@ -754,6 +934,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-krieg-artillery-team-2025?queryID=befff021eb9e946590ad873594d83ea5"
+      },
+      {
+        store: "The Combat Company",
+        price: 18.66,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/italian-bersaglieri-foo-team?_pos=1&_sid=82dc065c3&_ss=r"
       }
     ]
   },
@@ -777,6 +963,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/dark-angels-asmodai-master-of-repentance-2024?queryID=0d0734c16bd63575423313d69d20f789"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/asmodai-master-of-repentance?_pos=1&_sid=4445b2e52&_ss=r"
       }
     ]
   },
@@ -800,6 +992,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Assault-Intercessors-2020?queryID=a774c358ad59230e9d508ad5a9255d9b"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/assault-intercessors?_pos=1&_sid=c65a3d737&_ss=r"
       }
     ]
   },
@@ -823,6 +1021,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/blood-angels-astorath-the-grim-2024?queryID=37a15917df63c45f448da246a0e58e90"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/astorath-the-grim?_pos=1&_sid=a6b9586d2&_ss=r"
       }
     ]
   },
@@ -846,6 +1050,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-astra-militarum-2025?queryID=9e05b18b899bdabf5113b7859f3f9ef9"
+      },
+      {
+        store: "The Combat Company",
+        price: 25.17,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/astra-militarum-tank-accessories?_pos=1&_sid=929744304&_ss=r"
       }
     ]
   },
@@ -863,6 +1073,12 @@ export const Products: Product[] = [
         price: 570,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Astraeus-Super-heavy-Tank-2017?queryID=464be5acb304a487cb8c0e5a60defaf2"
+      },
+      {
+        store: "The Combat Company",
+        price: 67.94,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/li-mastodon-super-heavy-assault-transports?_pos=1&_sid=f4f52506b&_ss=r"
       }
     ]
   },
@@ -886,6 +1102,12 @@ export const Products: Product[] = [
         price: 11.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/contrast-asurmen-blue-18ml-2022?queryID=e7a19bc11d716429a77c726d5018c7f8"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/aeldari-asurmen-pre-order-8-2-25?_pos=1&_sid=676e737ef&_ss=r"
       }
     ]
   },
@@ -909,6 +1131,12 @@ export const Products: Product[] = [
         price: 104,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Atalan-Jackals-2019?queryID=3f0c336f94d2f37bb9893a343091f12c"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.16,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/atalan-jackals?_pos=1&_sid=487042e86&_ss=r"
       }
     ]
   },
@@ -932,6 +1160,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-attilan-rough-riders-2023?queryID=b30a4473f2df75b9113ba8cb63cf1c7e"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-astra-militarum-pre-order-22-2-25?_pos=1&_sid=54b15c7f3&_ss=r"
       }
     ]
   },
@@ -955,6 +1189,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/aeldari-autarch-2022?queryID=daa3b99718624fd8b286cd25781f906b"
+      },
+      {
+        store: "The Combat Company",
+        price: 31.35,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/winged-autarch?_pos=1&_sid=a149ac866&_ss=r"
       }
     ]
   },
@@ -972,6 +1212,12 @@ export const Products: Product[] = [
         price: 33,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Eldar-Autarch?queryID=9ed15465e279a9348ee56f9e13736c56"
+      },
+      {
+        store: "The Combat Company",
+        price: 31.35,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/winged-autarch?_pos=1&_sid=1ee5ee9b6&_ss=r"
       }
     ]
   },
@@ -995,6 +1241,12 @@ export const Products: Product[] = [
         price: 185,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/aeldari-avatar-of-khaine-2022?queryID=24d6097a5f4c2e811a886f16c42a8f8c"
+      },
+      {
+        store: "The Combat Company",
+        price: 146.15,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/avatar-of-khaine?_pos=1&_sid=1a8b8d42d&_ss=r"
       }
     ]
   },
@@ -1012,6 +1264,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/dark-angels-azrael-2023?queryID=8c45205ac1b430ed5cac4b64415f48d8"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/dark-angels-azrael?_pos=1&_sid=fa07505e6&_ss=r"
       }
     ]
   },
@@ -1029,6 +1287,12 @@ export const Products: Product[] = [
         price: 37,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/the-horus-heresy-blood-angels-predator-upgrade-pack-2024?queryID=98a0e463d94d1154c1996a3b8c85225c"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.85,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-supplement-blood-angels?_pos=1&_sid=9febdc51c&_ss=r"
       }
     ]
   },
@@ -1052,6 +1316,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/aeldari-phoenix-lord-baharroth-2025?queryID=841add1e42af77594045d62e6dd3fef8"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/aeldari-phoenix-lord-baharroth-pre-order-8-2-25?_pos=1&_sid=b817016a4&_ss=r"
       }
     ]
   },
@@ -1075,6 +1345,12 @@ export const Products: Product[] = [
         price: 120,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-ballistus-dreadnought-2023?queryID=15e947d7b89598fdcf60fcc3311aba6f"
+      },
+      {
+        store: "The Combat Company",
+        price: 94.8,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/space-marines-ballistus-dreadnought?_pos=1&_sid=23510a7a9&_ss=r"
       }
     ]
   },
@@ -1092,6 +1368,12 @@ export const Products: Product[] = [
         price: 200,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-baneblade-2023?queryID=664179061253dc696b730231321a55b6"
+      },
+      {
+        store: "The Combat Company",
+        price: 158,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/baneblade?_pos=1&_sid=9d387a0de&_ss=r"
       }
     ]
   },
@@ -1115,6 +1397,12 @@ export const Products: Product[] = [
         price: 48,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Barbed-Bracken-2017?queryID=1c6215442c7fdf907b63f20f469e54dd"
+      },
+      {
+        store: "The Combat Company",
+        price: 37.92,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/citadel-barbed-bracken?_pos=1&_sid=7448a8c69&_ss=r"
       }
     ]
   },
@@ -1138,6 +1426,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/tyranids-barbgaunts-2023?queryID=79136abc6b52ffa263a19fdcf316fdf5"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/tyranids-barbgaunts-pre-order-15-7-23?_pos=1&_sid=034d51323&_ss=r"
       }
     ]
   },
@@ -1161,6 +1455,12 @@ export const Products: Product[] = [
         price: 97.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Imperial-Guard-Basilisk?queryID=f01fec5e4361cdb7db6e7c5e732f51f3"
+      },
+      {
+        store: "The Combat Company",
+        price: 86.9,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/solar-auxilia-basilisk-medusa-pre-order-11-5-24?_pos=1&_sid=3916f99c1&_ss=r"
       }
     ]
   },
@@ -1184,6 +1484,12 @@ export const Products: Product[] = [
         price: 66,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/warhammer-40000-battlefield-trophies-2025?queryID=6d7a8925cfeaad6ebd4e5abcd52420c2"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.14,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/warhammer-40k-battlefield-trophies-pre-order-25-1-25?_pos=1&_sid=ca8679429&_ss=r"
       }
     ]
   },
@@ -1207,6 +1513,12 @@ export const Products: Product[] = [
         price: 190,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/orks-battlewagon-2021?queryID=41bb46cc2b39a413444c265a9e0d0f17"
+      },
+      {
+        store: "The Combat Company",
+        price: 150.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/battlewagon?_pos=1&_sid=746a6cf3e&_ss=r"
       }
     ]
   },
@@ -1224,6 +1536,12 @@ export const Products: Product[] = [
         price: 134,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/battlezone-fronteris-landing-pad-2022?queryID=465926e4cb0cb1fc56a2292d672f4418"
+      },
+      {
+        store: "The Combat Company",
+        price: 105.86,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/battlezone-fronteris-landing-pad?_pos=1&_sid=9086cd188&_ss=r"
       }
     ]
   },
@@ -1241,6 +1559,12 @@ export const Products: Product[] = [
         price: 150,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/battlezone-fronteris-stc-hab-bunker-and-stockades-2022?queryID=f06fbba1fb81a2c8d0a97515acc88bdf"
+      },
+      {
+        store: "The Combat Company",
+        price: 118.5,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/stc-hab-bunker-stockades?_pos=1&_sid=f5fe2ee40&_ss=r"
       }
     ]
   },
@@ -1264,6 +1588,12 @@ export const Products: Product[] = [
         price: 134,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/battlezone-fronteris-vox-antenna-and-auspex-shrine-2022?queryID=55e1b403b6076551a7011d9008d4a543"
+      },
+      {
+        store: "The Combat Company",
+        price: 16.53,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/bolt-action-mdf-unit-pin-markers-usa?_pos=1&_sid=498ae0b2d&_ss=r"
       }
     ]
   },
@@ -1281,6 +1611,12 @@ export const Products: Product[] = [
         price: 70,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/battlezone-manufactorum-autochoral-transmitter-2025?queryID=35fa9b875be52e8dbc653bf40f578817"
+      },
+      {
+        store: "The Combat Company",
+        price: 66.5,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/battlezone-manufactorum-autochoral-transmitter?_pos=1&_sid=c6317ba75&_ss=r"
       }
     ]
   },
@@ -1298,6 +1634,12 @@ export const Products: Product[] = [
         price: 104,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Battlezone-Manufactorum-Munitorum-Armoured-Containers-2020?queryID=9b02fb0c7744b1bcd840563a62fa4841"
+      },
+      {
+        store: "The Combat Company",
+        price: 34.02,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/british-bombardier-automated-mobile-platform-special-order?_pos=1&_sid=fa48e343c&_ss=r"
       }
     ]
   },
@@ -1321,6 +1663,12 @@ export const Products: Product[] = [
         price: 164,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Battlezone-Manufactorum-Sanctum-Administratus-2020?queryID=cd36f735f89d6c65553e80085f562f46"
+      },
+      {
+        store: "The Combat Company",
+        price: 129.56,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/battlezone-manufactorum-sanctum-administratus?_pos=1&_sid=cf2615833&_ss=r"
       }
     ]
   },
@@ -1338,6 +1686,12 @@ export const Products: Product[] = [
         price: 110,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/battlezone-manufactorum-storage-fane-and-sub-cloister-2025?queryID=e01fd1b72b23a08ac28c1944af38db3c"
+      },
+      {
+        store: "The Combat Company",
+        price: 104.5,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/battlezone-manufactorum-sub-cloister-and-storage-fane?_pos=1&_sid=09c50daf3&_ss=r"
       }
     ]
   },
@@ -1355,6 +1709,12 @@ export const Products: Product[] = [
         price: 70,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/battlezone-manufactorum-thermoexchanger-shrine-2025?queryID=782302bda553fcd663dd35425dcdf1d0"
+      },
+      {
+        store: "The Combat Company",
+        price: 66.5,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/battlezone-manufactorum-thermoexchanger-shrine?_pos=1&_sid=ac17ea17f&_ss=r"
       }
     ]
   },
@@ -1378,6 +1738,12 @@ export const Products: Product[] = [
         price: 260,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Daemons-Belakor-The-Dark-Master-2021?queryID=c85423f68988b80cff2290482bee3dc4"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/belial-grand-master-of-the-deathwing?_pos=1&_sid=48c596ec8&_ss=r"
       }
     ]
   },
@@ -1401,6 +1767,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Beast-Of-Nurgle-2018?queryID=ca568163a0f838d7e55ea2d2cb776676"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/beast-of-nurgle?_pos=1&_sid=f093a37db&_ss=r"
       }
     ]
   },
@@ -1424,6 +1796,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/beastboss-on-squigosaur-2021?queryID=f7978824c2e8e9dd87455d3047ed2470"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/beastboss-on-squigosaur-mozrog-skragbad?_pos=1&_sid=f9eea93eb&_ss=r"
       }
     ]
   },
@@ -1447,6 +1825,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/beastboss-on-squigosaur-2021?queryID=1221a85bdfbf93f7919791211086fc04"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/beastboss-on-squigosaur-mozrog-skragbad?_pos=1&_sid=48bfdbdfc&_ss=r"
       }
     ]
   },
@@ -1470,6 +1854,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/dark-angelsbelial-grand-master-of-the-deathwing-2024?queryID=888b3f329489286343e8f0db76521766"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/belial-grand-master-of-the-deathwing?_pos=1&_sid=f3207e26e&_ss=r"
       }
     ]
   },
@@ -1493,6 +1883,12 @@ export const Products: Product[] = [
         price: 104,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adeptus-Mechanicus-Belisarius-Cawl-2017?queryID=a06df6e4d9ddd2e55121e71cb4bd2f69"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.16,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/belisarius-cawl?_pos=1&_sid=029c0c9aa&_ss=r"
       }
     ]
   },
@@ -1516,6 +1912,12 @@ export const Products: Product[] = [
         price: 57,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/genestealer-cults-benefictus-2024?queryID=d4bafbb70a88f9dafc734a85c08a4732"
+      },
+      {
+        store: "The Combat Company",
+        price: 45.03,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/benefictus-pre-order-19-10-24?_pos=1&_sid=91d2c6184&_ss=r"
       }
     ]
   },
@@ -1539,6 +1941,12 @@ export const Products: Product[] = [
         price: 46,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Big-Mek-with-Shokk-Attack-Gun?queryID=c4991b74cfb52205482dc5bc32aafbaf"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.7,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/big-mek-with-shokk-attack-gun?_pos=1&_sid=5a48faf9b&_ss=r"
       }
     ]
   },
@@ -1562,6 +1970,12 @@ export const Products: Product[] = [
         price: 46,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Big-Mek-with-Shokk-Attack-Gun?queryID=f9cba551407a3cf50c753afe724d4ebe"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.7,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/big-mek-with-shokk-attack-gun?_pos=1&_sid=2244370d6&_ss=r"
       }
     ]
   },
@@ -1585,6 +1999,12 @@ export const Products: Product[] = [
         price: 125,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/orks-big-ed-bossbunka-2021?queryID=2f37f7f59f47e4d6706bc0759d0b0e74"
+      },
+      {
+        store: "The Combat Company",
+        price: 98.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/big-ed-bossbunka?_pos=1&_sid=6f2fe941a&_ss=r"
       }
     ]
   },
@@ -1608,6 +2028,12 @@ export const Products: Product[] = [
         price: 46,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Biologus-Putrifier-2020?queryID=2e61481a5465539e2fd4fd09e53771b6"
+      },
+      {
+        store: "The Combat Company",
+        price: 36.34,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/biologus-putrifier?_pos=1&_sid=347cce66f&_ss=r"
       }
     ]
   },
@@ -1631,6 +2057,12 @@ export const Products: Product[] = [
         price: 46,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Biophagus-2019?queryID=6a0b4ebf54017ebca69d956e626bf2c7"
+      },
+      {
+        store: "The Combat Company",
+        price: 36.34,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/biophagus?_pos=1&_sid=2903df27a&_ss=r"
       }
     ]
   },
@@ -1654,6 +2086,12 @@ export const Products: Product[] = [
         price: 86,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/tyranids-biovore-2023?queryID=6083b4e4c4fb138a5a799bd72bec7c89"
+      },
+      {
+        store: "The Combat Company",
+        price: 67.94,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/tyranids-biovore-pre-order-9-9-23?_pos=1&_sid=67e8a17df&_ss=r"
       }
     ]
   },
@@ -1677,6 +2115,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-castellan-2021?queryID=67001abd708aa7f7a079ecb93f62a26f"
+      },
+      {
+        store: "The Combat Company",
+        price: 49.77,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/black-templars-castellan?_pos=1&_sid=c0b48cee1&_ss=r"
       }
     ]
   },
@@ -1700,6 +2144,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-high-marshal-helbrecht-2021?queryID=83fdda43953ad4333a0a2322890a3caa"
+      },
+      {
+        store: "The Combat Company",
+        price: 49.77,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/black-templars-marshal?_pos=1&_sid=1527be87f&_ss=r"
       }
     ]
   },
@@ -1723,6 +2173,12 @@ export const Products: Product[] = [
         price: 104,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-sword-brethren-2021?queryID=b7507b8529e666155b7a8cc60f6d2ab2"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.16,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/sword-brethren?_pos=1&_sid=7dfe8a89f&_ss=r"
       }
     ]
   },
@@ -1740,6 +2196,12 @@ export const Products: Product[] = [
         price: 57,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-upgrades-and-transfers-2021?queryID=fa864c84d17b7f5830c3a6afb32d9012"
+      },
+      {
+        store: "The Combat Company",
+        price: 45.03,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/black-templars-upgrades-and-transfers?_pos=1&_sid=6786e4b59&_ss=r"
       }
     ]
   },
@@ -1763,6 +2225,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/adeptus-custodes-blade-champion-2022?queryID=eaa285d1288c9b4881df6497634e3961"
+      },
+      {
+        store: "The Combat Company",
+        price: 21.33,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/warriors-of-chaos-champion-of-chaos-pre-order-14-9-24?_pos=1&_sid=673883111&_ss=r"
       }
     ]
   },
@@ -1780,6 +2248,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Bladeguard-Veterans-2020?queryID=98b8785ea2f9bd88898badf399db0b44"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/bladeguard-veterans?_pos=1&_sid=ae7a155c1&_ss=r"
       }
     ]
   },
@@ -1803,6 +2277,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Blightlord-Terminators-2020?queryID=423d9f9c448dd49cce4d9d938eb5bb47"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/blightlord-terminators?_pos=1&_sid=869a26d94&_ss=r"
       }
     ]
   },
@@ -1820,6 +2300,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/blood-angels-captain-2024?queryID=b246cfa752b7e278a139e45b6f75906d"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-blood-angels?_pos=1&_sid=cd1ba4bcc&_ss=r"
       }
     ]
   },
@@ -1843,6 +2329,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Blood-Angels-Chaplain-with-Jump-Pack-2020?queryID=27c25ae3c126b35d17ce684b270b83eb"
+      },
+      {
+        store: "The Combat Company",
+        price: 49.77,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/blood-angels-chaplain-with-jump-pack?_pos=1&_sid=923fa5bfe&_ss=r"
       }
     ]
   },
@@ -1860,6 +2352,12 @@ export const Products: Product[] = [
         price: 30,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Blood-Angels-Legion-MkIII-Shoulder-Pads?queryID=5cb5168a3cda6f41c5d9abd18b5acf6f"
+      },
+      {
+        store: "The Combat Company",
+        price: 45.03,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/blood-angels-upgrades-transfers?_pos=1&_sid=c2ae7273c&_ss=r"
       }
     ]
   },
@@ -1883,6 +2381,12 @@ export const Products: Product[] = [
         price: 34,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Blood-Angels-Terminator-Librarian-2014?queryID=93563261d93d913c7091371ead4a8218"
+      },
+      {
+        store: "The Combat Company",
+        price: 31.35,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/winged-autarch?_pos=1&_sid=ff3658ed1&_ss=r"
       }
     ]
   },
@@ -1906,6 +2410,12 @@ export const Products: Product[] = [
         price: 85,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Blood-Angels-Terminator-Assault-Squad?queryID=35f8756babefc5cad6251bef47a20345"
+      },
+      {
+        store: "The Combat Company",
+        price: 44.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/tiangou-orbital-activity-squad-box?_pos=1&_sid=728291179&_ss=r"
       }
     ]
   },
@@ -1923,6 +2433,12 @@ export const Products: Product[] = [
         price: 57,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/blood-angels-upgrades-and-transfers-2024?queryID=de58931bf7b45a066528a929db441815"
+      },
+      {
+        store: "The Combat Company",
+        price: 45.03,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/blood-angels-upgrades-transfers?_pos=1&_sid=d86d3dd29&_ss=r"
       }
     ]
   },
@@ -1946,6 +2462,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-wolves-blood-claws-2025?queryID=2956a4adb0130928d9542278875eef66"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/space-wolves-blood-claws-new?_pos=1&_sid=585999acb&_ss=r"
       }
     ]
   },
@@ -1969,6 +2491,12 @@ export const Products: Product[] = [
         price: 170,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Daemons-Of-Khorne-Bloodcrushers?queryID=5182b4a23b2cca3593792c7efc218219"
+      },
+      {
+        store: "The Combat Company",
+        price: 32.78,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/index-cards-chaos-daemons?_pos=1&_sid=9307d5377&_ss=r"
       }
     ]
   },
@@ -1992,6 +2520,12 @@ export const Products: Product[] = [
         price: 61,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Daemons-Of-Khorne-Bloodletters-40k-2017?queryID=c53b6978c97ae870e3f46144063d3fe2"
+      },
+      {
+        store: "The Combat Company",
+        price: 48.19,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/bloodletters?_pos=1&_sid=f42f443bb&_ss=r"
       }
     ]
   },
@@ -2015,6 +2549,12 @@ export const Products: Product[] = [
         price: 46,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Bloodmaster-Herald-of-Khorne-2019?queryID=d09c517f7e3e9f98ee4c98d24da79aaf"
+      },
+      {
+        store: "The Combat Company",
+        price: 36.34,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/blood-master-herald-of-khorne?_pos=1&_sid=ccb866b57&_ss=r"
       }
     ]
   },
@@ -2038,6 +2578,12 @@ export const Products: Product[] = [
         price: 195,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Daemons-Of-Khorne-Bloodthirster?queryID=cfcde55dd85fd1b929d12c870d4c3888"
+      },
+      {
+        store: "The Combat Company",
+        price: 154.05,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/bloodthirster?_pos=1&_sid=4ac1c8767&_ss=r"
       }
     ]
   },
@@ -2061,6 +2607,12 @@ export const Products: Product[] = [
         price: 70,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/blue-horrors-2016?queryID=03e976e911c2691b7b288d939b033968"
+      },
+      {
+        store: "The Combat Company",
+        price: 5.05,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/citadel-layer-blue-horror?_pos=1&_sid=eedfed3d2&_ss=r"
       }
     ]
   },
@@ -2078,6 +2630,12 @@ export const Products: Product[] = [
         price: 101,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/the-white-council-vanquishers-of-necro-2021?queryID=691e7678629ff79c26dc0a1f91713af6"
+      },
+      {
+        store: "The Combat Company",
+        price: 55.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/wh40k-void-war-bases?_pos=1&_sid=965293f8a&_ss=r"
       }
     ]
   },
@@ -2101,6 +2659,12 @@ export const Products: Product[] = [
         price: 89,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Orks-Boomdakka-Snazzwagon-2018?queryID=07e8611e7f1e0997d6bb13afefd1d576"
+      },
+      {
+        store: "The Combat Company",
+        price: 70.31,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/boomdakka-snazzwagon?_pos=1&_sid=7b89d59f3&_ss=r"
       }
     ]
   },
@@ -2124,6 +2688,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/orks-boss-snikrot-2023?queryID=7b256edd3b88759ee2b8646c8b274287"
+      },
+      {
+        store: "The Combat Company",
+        price: 58.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/orks-boss-snikrot-pre-order-15-7-23?_pos=1&_sid=f4979793a&_ss=r"
       }
     ]
   },
@@ -2141,6 +2711,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/ork-boyz-combat-patrol-2022?queryID=5a9b9a9a9a5f911ffabd717f0dd06b5c"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/orks-boyz?_pos=1&_sid=c712ce614&_ss=r"
       }
     ]
   },
@@ -2164,6 +2740,12 @@ export const Products: Product[] = [
         price: 6.4,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Layer-Genestealer-Purple-2019?queryID=6d3e4682eaa9a80cf6cdd5b6227fd32d"
+      },
+      {
+        store: "The Combat Company",
+        price: 94.8,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/broodcoven?_pos=1&_sid=c862dddb1&_ss=r"
       }
     ]
   },
@@ -2187,6 +2769,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Tyranid-Broodlord?queryID=e8bc349b9fab09da38055bdc5d63a89b"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/broodlord?_pos=1&_sid=32d8ccf0e&_ss=r"
       }
     ]
   },
@@ -2210,6 +2798,12 @@ export const Products: Product[] = [
         price: 140,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-brutalis-dreadnought-2023?queryID=c31b8788518ff193f50d9e23d0404c09"
+      },
+      {
+        store: "The Combat Company",
+        price: 110.6,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/brutalis-dreadnought?_pos=1&_sid=6b5c8efed&_ss=r"
       }
     ]
   },
@@ -2233,6 +2827,12 @@ export const Products: Product[] = [
         price: 94.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/lov-brokhyr-iron-master-2022?queryID=e628a9cdaec7ba2eaa15d09d61cb0315"
+      },
+      {
+        store: "The Combat Company",
+        price: 20,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/tiefling-cleric-male-d-d-miniature?_pos=1&_sid=b3acc78d3&_ss=r"
       }
     ]
   },
@@ -2256,6 +2856,12 @@ export const Products: Product[] = [
         price: 49,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/contemptor-dreadnought-weapons-frame-2-2022?queryID=90f5dabeeee2edf4485ba488969b5f97"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/grundstok-thunderers?_pos=1&_sid=ce6db6e27&_ss=r"
       }
     ]
   },
@@ -2279,6 +2885,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/leagues-of-votann-buri-aegnirsson-2025?queryID=8cffa0b8aa083359093c4adfb354d4ad"
+      },
+      {
+        store: "The Combat Company",
+        price: 58.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/leagues-of-votann-buri-aegnirsson?_pos=1&_sid=6ad5dd2bb&_ss=r"
       }
     ]
   },
@@ -2302,6 +2914,12 @@ export const Products: Product[] = [
         price: 235,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-tau-empire-2024?queryID=cb1b87d02c00bee88b4b6dcfc624eba5"
+      },
+      {
+        store: "The Combat Company",
+        price: 69.35,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/ctan-shard-of-the-deceiver?_pos=1&_sid=b7840ff7e&_ss=r"
       }
     ]
   },
@@ -2325,6 +2943,12 @@ export const Products: Product[] = [
         price: 235,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-tau-empire-2024?queryID=d4a3a9b5758f9f7a6532f3dbb1cef3f3"
+      },
+      {
+        store: "The Combat Company",
+        price: 69.35,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/ctan-shard-of-the-nightbringer?_pos=1&_sid=5985e5e75&_ss=r"
       }
     ]
   },
@@ -2348,6 +2972,12 @@ export const Products: Product[] = [
         price: 235,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-tau-empire-2024?queryID=123b685b7b661ab868bf60ffb860d1c3"
+      },
+      {
+        store: "The Combat Company",
+        price: 161.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/ctan-shard-of-the-void-dragon?_pos=1&_sid=3df5d7eeb&_ss=r"
       }
     ]
   },
@@ -2371,6 +3001,12 @@ export const Products: Product[] = [
         price: 64,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-cadian-castellan-2023?queryID=77ad67d316c49b4491cd2ac6414dcf14"
+      },
+      {
+        store: "The Combat Company",
+        price: 50.56,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/cadian-castellan?_pos=1&_sid=b5c05ed51&_ss=r"
       }
     ]
   },
@@ -2447,6 +3083,12 @@ export const Products: Product[] = [
         price: 86,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-cadian-shock-troops-2023?queryID=9a0e678c6bace8ac8d5dacdcb1458154"
+      },
+      {
+        store: "The Combat Company",
+        price: 67.94,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/cadian-shock-troops-2?_pos=1&_sid=244374933&_ss=r"
       }
     ]
   },
@@ -2470,6 +3112,12 @@ export const Products: Product[] = [
         price: 57,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-cadian-upgrades-2023?queryID=cae6856f65132fc19f1f303e9ef19628"
+      },
+      {
+        store: "The Combat Company",
+        price: 45.03,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/cadian-upgrades?_pos=1&_sid=291683660&_ss=r"
       }
     ]
   },
@@ -2493,6 +3141,12 @@ export const Products: Product[] = [
         price: 29,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Tau-Empire-Cadre-Fireblade-2017?queryID=edb20cb6bfcfdfb5636697ad732706c5"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.74,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/us-army-m1-57mm-anti-tank-gun-winter?_pos=1&_sid=175dcfd6f&_ss=r"
       }
     ]
   },
@@ -2516,6 +3170,12 @@ export const Products: Product[] = [
         price: 60,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/imperial-agents-callidus-assassin-2024?queryID=96f78afc0f54a98ab305dbeb2687dca7"
+      },
+      {
+        store: "The Combat Company",
+        price: 38.36,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/noxious-atmosphere-pre-order?_pos=1&_sid=6f7f82aa6&_ss=r"
       }
     ]
   },
@@ -2539,6 +3199,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Canoness-2020?queryID=db5f634b5a43862d580f05c614576c61"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/canoness-with-jump-pack-pre-order-19-10-24?_pos=1&_sid=b2c36738f&_ss=r"
       }
     ]
   },
@@ -2556,6 +3222,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/adepta-sororitas-canoness-with-jump-pack-2024?queryID=07cb36f5583476f3bad00bf8039d9601"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/canoness-with-jump-pack-pre-order-19-10-24?_pos=1&_sid=0e877f8ab&_ss=r"
       }
     ]
   },
@@ -2579,6 +3251,12 @@ export const Products: Product[] = [
         price: 82,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Canoptek-Doomstalker-2020?queryID=ba83c4b6b6f897b29cddef560827de05"
+      },
+      {
+        store: "The Combat Company",
+        price: 64.78,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/canoptek-doomstalker?_pos=1&_sid=1bd2c7c20&_ss=r"
       }
     ]
   },
@@ -2602,6 +3280,12 @@ export const Products: Product[] = [
         price: 70,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Canoptek-Spyder-2020?queryID=9bf91d3482b17d257eb8f30bbbd490c9"
+      },
+      {
+        store: "The Combat Company",
+        price: 55.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/canoptek-spyder?_pos=1&_sid=de8286ed7&_ss=r"
       }
     ]
   },
@@ -2625,6 +3309,12 @@ export const Products: Product[] = [
         price: 91,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Necron-Canoptek-Wraiths-2020?queryID=f59b8dce251eeb5952bfdd23b8bfbd4a"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.89,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/canoptek-wraiths?_pos=1&_sid=f6acf937b&_ss=r"
       }
     ]
   },
@@ -2648,6 +3338,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-captain-in-gravis-armour-2022?queryID=d5c69fccbe2a27bada4d763f9126c5c8"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/captain-in-gravis-armour?_pos=1&_sid=68cfd1cfe&_ss=r"
       }
     ]
   },
@@ -2665,6 +3361,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Captain-With-Master-crafted-Bolt-Rifle-2021?queryID=214d7be437853e379d72fd1d2d7d6d9e"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/captain-with-master-crafted-heavy-bolt-rifle?_pos=1&_sid=67086b281&_ss=r"
       }
     ]
   },
@@ -2688,6 +3390,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Primaris-Captain-In-Phobos-Armour-2020?queryID=8e8cb38b6895b62f4ec9ad8e40ac0ca5"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/captain-in-phobos-armour?_pos=1&_sid=c8149a093&_ss=r"
       }
     ]
   },
@@ -2711,6 +3419,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-captain-in-terminator-armour-2023?queryID=f26dc851c127cbae66dd39e4d2fb2f8f"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/space-marines-captain-in-terminator-armour?_pos=1&_sid=6a7712566&_ss=r"
       }
     ]
   },
@@ -2734,6 +3448,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-captain-with-jump-pack-2023?queryID=2ed17bc5fd4320a78a33ac299fb60138"
+      },
+      {
+        store: "The Combat Company",
+        price: 58.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/captain-with-jump-pack?_pos=1&_sid=508061093&_ss=r"
       }
     ]
   },
@@ -2757,6 +3477,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-captain-with-storm-shield-2023?queryID=166fcc34063f80456c946cb3fcdab934"
+      },
+      {
+        store: "The Combat Company",
+        price: 70.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/captain-with-relic-shield?_pos=1&_sid=7e7ed04ab&_ss=r"
       }
     ]
   },
@@ -2780,6 +3506,12 @@ export const Products: Product[] = [
         price: 75,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Captain-general-Trajann-Valoris-2018?queryID=45feffed5e80a71c4be12272f09951ea"
+      },
+      {
+        store: "The Combat Company",
+        price: 59.25,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/captain-general-trajann-valoris?_pos=1&_sid=d44bb68e5&_ss=r"
       }
     ]
   },
@@ -2803,6 +3535,12 @@ export const Products: Product[] = [
         price: 145,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Carnifex-Brood?queryID=056caa41ba0751f1fe2d27dfbfead445"
+      },
+      {
+        store: "The Combat Company",
+        price: 137.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/carnifex-brood?_pos=1&_sid=9836217f4&_ss=r"
       }
     ]
   },
@@ -2826,6 +3564,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/grey-knights-castellan-crowe-2022?queryID=04a2b8f663604ad4ef29f5e3a64d5a72"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/castellan-crowe?_pos=1&_sid=73e9490dd&_ss=r"
       }
     ]
   },
@@ -2849,6 +3593,12 @@ export const Products: Product[] = [
         price: 155,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Castigator?queryID=b4e91cfe4b5db27b2f5a11e797c31898"
+      },
+      {
+        store: "The Combat Company",
+        price: 122.45,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/castigator?_pos=1&_sid=b06080bb2&_ss=r"
       }
     ]
   },
@@ -2872,6 +3622,12 @@ export const Products: Product[] = [
         price: 47,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Imperial-Guard-Catachan-Command-Squad?queryID=61a3c2fc5c8373b197cfac0404cbaca8"
+      },
+      {
+        store: "The Combat Company",
+        price: 28.86,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/german-veteran-infantry-mmg-team?_pos=1&_sid=03283979d&_ss=r"
       }
     ]
   },
@@ -2895,6 +3651,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Imperial-Guard-Catachan-Heavy-Weapon-Squad?queryID=3bb1f5e68d5569d9d805b28ed0a847ae"
+      },
+      {
+        store: "The Combat Company",
+        price: 70.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/catachan-heavy-weapons-squad?_pos=1&_sid=8e1150d0a&_ss=r"
       }
     ]
   },
@@ -2918,6 +3680,12 @@ export const Products: Product[] = [
         price: 56,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Imperial-Guard-Catachan-Jungle-Fighters?queryID=65c5c13b0d4c3b701c61856abdb6789a"
+      },
+      {
+        store: "The Combat Company",
+        price: 53.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/catachan-jungle-fighters?_pos=1&_sid=c73b8a0c0&_ss=r"
       }
     ]
   },
@@ -2941,6 +3709,12 @@ export const Products: Product[] = [
         price: 104,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Celestian-Sacresants-2021?queryID=ca7fac7f69b0078bced79d646db9d2d4"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.16,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/celestian-sacresants?_pos=1&_sid=44582f8b8&_ss=r"
       }
     ]
   },
@@ -2964,6 +3738,12 @@ export const Products: Product[] = [
         price: 104,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Space-Marine-Celestine-The-Living-Saint-2018?queryID=1a4915806e54579014d9bc0b40b1ce41"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.16,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/celestine-the-living-saint?_pos=1&_sid=fe5ba169b&_ss=r"
       }
     ]
   },
@@ -2987,6 +3767,12 @@ export const Products: Product[] = [
         price: 95,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Centurion-Assault-Squad-2020?queryID=375b3b875627e1d9119d0192a1673429"
+      },
+      {
+        store: "The Combat Company",
+        price: 104,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/italian-centurion-heavy-infantry-squad?_pos=1&_sid=74954ee31&_ss=r"
       }
     ]
   },
@@ -3010,6 +3796,12 @@ export const Products: Product[] = [
         price: 95,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Centurion-Devastator-Squad-2020?queryID=9e5cfb9d6814836c217ee8b3b5c2287f"
+      },
+      {
+        store: "The Combat Company",
+        price: 418.7,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/hh-age-of-darkness-saturnine?_pos=1&_sid=07d42f628&_ss=r"
       }
     ]
   },
@@ -3033,6 +3825,12 @@ export const Products: Product[] = [
         price: 350,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/horus-heresy-cerastus-knight-acheron-2023?queryID=178fc2999cd0d97a51a2b0a29e09cf2f"
+      },
+      {
+        store: "The Combat Company",
+        price: 98.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/li-cerastus-knights-acheron-castigator-pre-order-29-6-24?_pos=1&_sid=7ea9eee00&_ss=r"
       }
     ]
   },
@@ -3056,6 +3854,12 @@ export const Products: Product[] = [
         price: 125,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/legions-imperialis-cerastus-knights-acheron-and-castigator-2024?queryID=5733b97a3822a6793136208bacdc1f29"
+      },
+      {
+        store: "The Combat Company",
+        price: 98.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/li-cerastus-knights-acheron-castigator-pre-order-29-6-24?_pos=1&_sid=99b933a58&_ss=r"
       }
     ]
   },
@@ -3079,6 +3883,12 @@ export const Products: Product[] = [
         price: 60,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/legions-imperialis-cerastus-knights-lancer-2023?queryID=f42b32ce2277f073fbe973d0700e4df1"
+      },
+      {
+        store: "The Combat Company",
+        price: 276.5,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/horus-heresy-cerastus-knight-lancer-pre-order-12-8-23?_pos=1&_sid=d22d82802&_ss=r"
       }
     ]
   },
@@ -3102,6 +3912,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marine-Bikers-2019?queryID=33ba10fda159d84a1ad7e00572aef477"
+      },
+      {
+        store: "The Combat Company",
+        price: 49.77,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaos-bikers?_pos=1&_sid=f509b7398&_ss=r"
       }
     ]
   },
@@ -3125,6 +3941,12 @@ export const Products: Product[] = [
         price: 86,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-chaos-cultists-2022?queryID=8208f1fa9ff1196e9c57193ccc16a80c"
+      },
+      {
+        store: "The Combat Company",
+        price: 67.94,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaos-cultists?_pos=1&_sid=b3d8cdb47&_ss=r"
       }
     ]
   },
@@ -3148,6 +3970,12 @@ export const Products: Product[] = [
         price: 125,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marines-Land-Raider?queryID=abed2282ace4238928d259fd87be575a"
+      },
+      {
+        store: "The Combat Company",
+        price: 118.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaos-land-raider?_pos=1&_sid=75ecfa319&_ss=r"
       }
     ]
   },
@@ -3171,6 +3999,12 @@ export const Products: Product[] = [
         price: 43,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marine-Chaos-Lord-2019?queryID=e74291624a8a906dbbbe3b0126cb4f5d"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/lord-of-virulence?_pos=1&_sid=80b0dfe01&_ss=r"
       }
     ]
   },
@@ -3194,6 +4028,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-lord-with-jump-pack-2024?queryID=507f60fba86f1c8c8c0bdaeabe5b7e59"
+      },
+      {
+        store: "The Combat Company",
+        price: 58.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaos-space-marines-lord-with-jump-pack-pre-order-9-11-24?_pos=1&_sid=5606fb7fb&_ss=r"
       }
     ]
   },
@@ -3217,6 +4057,12 @@ export const Products: Product[] = [
         price: 95,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marines-Predator?queryID=2201c10a14e0f191fbaed4d95f350811"
+      },
+      {
+        store: "The Combat Company",
+        price: 90.25,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaos-predator?_pos=1&_sid=4f11294f9&_ss=r"
       }
     ]
   },
@@ -3234,6 +4080,12 @@ export const Products: Product[] = [
         price: 2653,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/mars-pattern-warlord-titan-body?queryID=f6e808ce0a6db439f736bb6b2d993d6c"
+      },
+      {
+        store: "The Combat Company",
+        price: 179.96,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/warcrow-battle-pack-the-song-of-the-dormant-pre-order-29-8-25?_pos=1&_sid=5cefa41fe&_ss=r"
       }
     ]
   },
@@ -3257,6 +4109,12 @@ export const Products: Product[] = [
         price: 70,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marine-Rhino-2019?queryID=3f9af11cb6376ea851720330fe52e0e5"
+      },
+      {
+        store: "The Combat Company",
+        price: 55.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaos-rhino?_pos=1&_sid=088ddffca&_ss=r"
       }
     ]
   },
@@ -3280,6 +4138,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-chaos-space-marines-2024?queryID=a9da85cb57410f4c0f5dad4bd6e7a512"
+      },
+      {
+        store: "The Combat Company",
+        price: 33.97,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaos-terminator-sorceror-lord?_pos=1&_sid=fe64c126a&_ss=r"
       }
     ]
   },
@@ -3303,6 +4167,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-chaos-space-marines-2024?queryID=bb07d1e5e8c9711f8d80466a55d6bb10"
+      },
+      {
+        store: "The Combat Company",
+        price: 33.97,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaos-terminator-sorceror-lord?_pos=1&_sid=ebb2708b7&_ss=r"
       }
     ]
   },
@@ -3326,6 +4196,12 @@ export const Products: Product[] = [
         price: 30,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Tzeentch-Arcanites-Magister?queryID=fe3e871ca7fb2729a4eee2da7c7ff4ac"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-chaos-space-marines-pre-order-25-4-24?_pos=1&_sid=2e77aaf52&_ss=r"
       }
     ]
   },
@@ -3343,6 +4219,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marine-Terminators-2019?queryID=c6a4d404a53b8fcb6caf64ee18c18b3a"
+      },
+      {
+        store: "The Combat Company",
+        price: 86.9,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/terminator-squad-1?_pos=1&_sid=10b9493ed&_ss=r"
       }
     ]
   },
@@ -3366,6 +4248,12 @@ export const Products: Product[] = [
         price: 95,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marines-Vindicator?queryID=7ebe03658476af94aec1d06fe80f0222"
+      },
+      {
+        store: "The Combat Company",
+        price: 90.25,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaos-vindicator?_pos=1&_sid=07b1dd3ca&_ss=r"
       }
     ]
   },
@@ -3383,6 +4271,12 @@ export const Products: Product[] = [
         price: 806,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Warhound-Titan-Body?queryID=d813ef30bbf25c910212218ac07de30a"
+      },
+      {
+        store: "The Combat Company",
+        price: 98.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/li-warhound-titans-with-ursus-claws-pre-order-29-6-24?_pos=1&_sid=066c138e8&_ss=r"
       }
     ]
   },
@@ -3400,6 +4294,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-grimaldus-and-retinue-2021?queryID=f3c71daadcea0c706c620a92ee0feec1"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaplain-in-terminator-armour?_pos=1&_sid=169ed280a&_ss=r"
       }
     ]
   },
@@ -3423,6 +4323,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-grimaldus-and-retinue-2021?queryID=980a9aedfa07b79731af3108dded260c"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaplain-grimaldus-retinue?_pos=1&_sid=9e0db8719&_ss=r"
       }
     ]
   },
@@ -3446,6 +4352,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-chaplain-in-terminator-armour-2023?queryID=9296e4d29b158e92cbad486f4846d661"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chaplain-in-terminator-armour?_pos=1&_sid=65855a78b&_ss=r"
       }
     ]
   },
@@ -3469,6 +4381,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Primaris-Chaplain-on-Bike-2020?queryID=63a47f9508598e2717ed819622e1d823"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/primaris-chaplain-on-bike?_pos=1&_sid=dbc446b76&_ss=r"
       }
     ]
   },
@@ -3486,6 +4404,12 @@ export const Products: Product[] = [
         price: 55,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/chapter-approved-mission-pack-2025-eng?queryID=4c3438bf55c6e585eeebeeeba3f09add"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.45,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chapter-approved-mission-pack?_pos=1&_sid=b6a41d9d7&_ss=r"
       }
     ]
   },
@@ -3509,6 +4433,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Ultramarines-Chief-Librarian-Tigurius-2020?queryID=a486fb6f16982d4b28a2510f620afdd7"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/ultramarine-chief-librarian-tigurius?_pos=1&_sid=06704a88c&_ss=r"
       }
     ]
   },
@@ -3532,6 +4462,12 @@ export const Products: Product[] = [
         price: 79,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Imperial-Guard-Chimera?queryID=2648aed83b44114e5c43a8c44d97458f"
+      },
+      {
+        store: "The Combat Company",
+        price: 62.41,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chimera?_pos=1&_sid=9b515b41d&_ss=r"
       }
     ]
   },
@@ -3549,6 +4485,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-chosen-2022?queryID=5624ecf44a5cd717057912dacf17843d"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/chosen?_pos=1&_sid=bb8f14b66&_ss=r"
       }
     ]
   },
@@ -3572,6 +4514,12 @@ export const Products: Product[] = [
         price: 45,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Deathshroud-Power-Scythes?queryID=d1923352f6d1e9be776531a4d60cce6a"
+      },
+      {
+        store: "The Combat Company",
+        price: 17.48,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/morrowan-battle-priest?_pos=1&_sid=a07107d26&_ss=r"
       }
     ]
   },
@@ -3595,6 +4543,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Necrons-Chronomancer-2021?queryID=f6d2b6bf365994c351afc65ef0f06246"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/necrons-orikan-the-diviner-pre-order-16-12-23?_pos=1&_sid=27e556f98&_ss=r"
       }
     ]
   },
@@ -3618,6 +4572,12 @@ export const Products: Product[] = [
         price: 48,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Citadel-Skulls-2017?queryID=adce0da095ad9b03d5f7c2ef7ef5190b"
+      },
+      {
+        store: "The Combat Company",
+        price: 37.92,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/citadel-skulls?_pos=1&_sid=9de69a69b&_ss=r"
       }
     ]
   },
@@ -3641,6 +4601,12 @@ export const Products: Product[] = [
         price: 46,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Clamavus-2019?queryID=f81d6e1d5842a336701b440030ae1a34"
+      },
+      {
+        store: "The Combat Company",
+        price: 36.34,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/clamavus?_pos=1&_sid=7a5b92bf7&_ss=r"
       }
     ]
   },
@@ -3664,6 +4630,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-supplement-black-templars-2025-eng?queryID=329b49fae27cdb7793bbf5d31e0bca16"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.85,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/datasheet-cards-black-templars?_pos=1&_sid=afb520bde&_ss=r"
       }
     ]
   },
@@ -3687,6 +4659,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-supplement-blood-angels-2024-eng?queryID=045ea44f3687154219dd67d145b7e097"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.85,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-supplement-blood-angels?_pos=1&_sid=0aa265917&_ss=r"
       }
     ]
   },
@@ -3710,6 +4688,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-supplement-dark-angels-eng-2024?queryID=b1a665920c6d2fa9e54c5729ec936015"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.85,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-supplement-blood-angels?_pos=1&_sid=f2d4487c2&_ss=r"
       }
     ]
   },
@@ -3733,6 +4717,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-supplement-space-wolves-2025-eng?queryID=be16eedf19a32c6d2a9fe6c26e8778e5"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.85,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-supplement-space-wolves-new?_pos=1&_sid=f07e34b93&_ss=r"
       }
     ]
   },
@@ -3756,6 +4746,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-adepta-soritas-2024?queryID=0bc1b5f56dc984a1b3fa73387ac1749a"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-adepta-sororitas-pre-order-22-6-24?_pos=1&_sid=70b7850f7&_ss=r"
       }
     ]
   },
@@ -3779,6 +4775,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-adeptus-custodes-eng-2024?queryID=d5e1902e4ff036ed8762455f0de30fb1"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-adeptus-custodes-pre-order-27-4-24?_pos=1&_sid=839ec531e&_ss=r"
       }
     ]
   },
@@ -3802,6 +4804,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-adeptus-mechanicus-2023?queryID=33b0739f1df6b6e62dba669976238688"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-adeptus-mechanicus-1?_pos=1&_sid=1ba247519&_ss=r"
       }
     ]
   },
@@ -3825,6 +4833,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-aeldari-2025-eng?queryID=973d40a108f5aff9b36550e96a794d4e"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-aeldari-pre-order-8-2-25?_pos=1&_sid=964681d11&_ss=r"
       }
     ]
   },
@@ -3842,6 +4856,12 @@ export const Products: Product[] = [
         price: 180,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-aeldari-collectors-edition-eng-2025?queryID=da9ec33b5a53f15954143603f992d7ac"
+      },
+      {
+        store: "The Combat Company",
+        price: 23.7,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/gotrek-felix-the-first-omnibus?_pos=1&_sid=d893c8427&_ss=r"
       }
     ]
   },
@@ -3865,6 +4885,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-astra-militarum-2025?queryID=5d50eb26d8d437be31bee2579329a3d2"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-astra-militarum-pre-order-22-2-25?_pos=1&_sid=9884d2890&_ss=r"
       }
     ]
   },
@@ -3888,6 +4914,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-chaos-knights-2025-eng?queryID=f588bc16552504f8c0d16b316a52159d"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-chaos-knights-new?_pos=1&_sid=cd64e4233&_ss=r"
       }
     ]
   },
@@ -3911,6 +4943,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-chaos-space-marines-2024?queryID=12fa6bc87e7e9f6333fd313eed24d2cb"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-chaos-space-marines-pre-order-25-4-24?_pos=1&_sid=f81c41311&_ss=r"
       }
     ]
   },
@@ -3934,6 +4972,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-death-guard-hb-2025-eng?queryID=9fcd151d8ecc665b06e0f26383303ea9"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-death-guard-new?_pos=1&_sid=3c41a8f04&_ss=r"
       }
     ]
   },
@@ -3957,6 +5001,12 @@ export const Products: Product[] = [
         price: 370,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/drukhari-realspace-raiders-2025?queryID=df5e1d4c07511f3c980c197d0db36f7a"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.16,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-drukhari-2025?_pos=1&_sid=be19b951b&_ss=r"
       }
     ]
   },
@@ -3968,7 +5018,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "The Combat Company",
+        price: 23.7,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/gotrek-felix-the-first-omnibus?_pos=1&_sid=64f96ea99&_ss=r"
+      }
+    ]
   },
   {
     id: "179",
@@ -3990,6 +5047,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-emperors-children-2025-eng?queryID=b2a727860c69f393e524c9ba1afb3e30"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-emperors-children?_pos=1&_sid=d53e0a266&_ss=r"
       }
     ]
   },
@@ -4013,6 +5076,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-genestealer-cults-2024?queryID=f346123a9adf22c9393f4b03ad61dba6"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-genestealer-cults-pre-order-22-6-24?_pos=1&_sid=13491e561&_ss=r"
       }
     ]
   },
@@ -4036,6 +5105,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-grey-knights-2025-eng?queryID=d4f9624f6fa066cd349448d6a0d929e3"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-imperial-agents-pre-order-24-8-24?_pos=1&_sid=2667b8b77&_ss=r"
       }
     ]
   },
@@ -4059,6 +5134,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-imperial-agents-2024-eng?queryID=1cb3d9637e60c3b60e619add5eb3f6b1"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-imperial-agents-pre-order-24-8-24?_pos=1&_sid=6f992d073&_ss=r"
       }
     ]
   },
@@ -4082,6 +5163,12 @@ export const Products: Product[] = [
         price: 235,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/imperial-knights-knight-questoris-2025?queryID=8d3fe9711891c8145087ac24d02c2689"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-imperial-knights-2025?_pos=1&_sid=70b269517&_ss=r"
       }
     ]
   },
@@ -4099,6 +5186,12 @@ export const Products: Product[] = [
         price: 235,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/imperial-knights-knight-questoris-2025?queryID=4d88848c7981e6f6d9efb9803bce7cdc"
+      },
+      {
+        store: "The Combat Company",
+        price: 14.22,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/horus-heresy-false-gods-paperback?_pos=1&_sid=c4a819e68&_ss=r"
       }
     ]
   },
@@ -4122,6 +5215,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-leagues-of-votann-2025?queryID=12d65cb4bd88e98cc96d9cc370beb4b8"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-leagues-of-votann-new?_pos=1&_sid=2cb01a637&_ss=r"
       }
     ]
   },
@@ -4145,6 +5244,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-necrons-2023?queryID=895ed23aa737b9047ecebe1f79074c5c"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-necrons?_pos=1&_sid=f63e993f3&_ss=r"
       }
     ]
   },
@@ -4168,6 +5273,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-orks-hb-english-2024?queryID=3dc7acc1f4ab4dd8f14d2c8a5a34aad5"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-orks-pre-order-27-4-24?_pos=1&_sid=f3570546e&_ss=r"
       }
     ]
   },
@@ -4191,6 +5302,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-space-marines-hb-2023-eng?queryID=0eb2926cc66f94d36012b60973fd0f7e"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-space-marines-1?_pos=1&_sid=71ec07fac&_ss=r"
       }
     ]
   },
@@ -4214,6 +5331,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-tau-empire-2024-eng?queryID=8e763b4cece491e3b5596ac608624c3d"
+      },
+      {
+        store: "The Combat Company",
+        price: 14.22,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/horus-heresy-false-gods-paperback?_pos=1&_sid=9c4bb9944&_ss=r"
       }
     ]
   },
@@ -4237,6 +5360,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-thousand-sons-hb-2025-eng?queryID=148fcfdcc1ad99d24b3ffad45630a7b6"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-thousand-sons-new?_pos=1&_sid=3960a6d13&_ss=r"
       }
     ]
   },
@@ -4260,6 +5389,12 @@ export const Products: Product[] = [
         price: 40,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/warhammer-art-codex-tyranids-2001-2024?queryID=e24543132d7270b1f719885f52948bbf"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-tyranids-1?_pos=1&_sid=5d02d8a8e&_ss=r"
       }
     ]
   },
@@ -4283,6 +5418,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-world-eaters-2025-eng?queryID=931e1ecfecf6933b4cee95499e8d4803"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.85,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/datasheet-cards-world-eaters?_pos=1&_sid=a6d5f4ee1&_ss=r"
       }
     ]
   },
@@ -4306,6 +5447,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-adepta-soritas-2024?queryID=c08bc0e503437a69cfa0fbb466783fd8"
+      },
+      {
+        store: "The Combat Company",
+        price: 211.72,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-adepta-sororitas-pre-order-22-6-24?_pos=1&_sid=b9b459530&_ss=r"
       }
     ]
   },
@@ -4329,6 +5476,12 @@ export const Products: Product[] = [
         price: 278,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-adeptus-custodes-2024?queryID=116ac6ec9cf10d788447f13500951040"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-adeptus-custodes-pre-order-27-4-24?_pos=1&_sid=289794d47&_ss=r"
       }
     ]
   },
@@ -4352,6 +5505,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-adeptus-mechanicus-2023?queryID=6b75d3e037ba8fa7713bc8d1b6b6f57f"
+      },
+      {
+        store: "The Combat Company",
+        price: 211.72,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-adeptus-mechanicus-1?_pos=1&_sid=c7313a885&_ss=r"
       }
     ]
   },
@@ -4375,6 +5534,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-aeldari-2025?queryID=4f28e2ba3dc981195f2bfadfe3423648"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-aeldari-pre-order-15-3-25?_pos=1&_sid=fc27fded3&_ss=r"
       }
     ]
   },
@@ -4398,6 +5563,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-astra-militarum-2025?queryID=93782990b4a3f9d56a4738bc23858dab"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-astra-militarum-pre-order-22-2-25?_pos=1&_sid=5d657cc16&_ss=r"
       }
     ]
   },
@@ -4421,6 +5592,12 @@ export const Products: Product[] = [
         price: 270,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-black-templars-2025?queryID=f192cf06c7fd473a5c2b9745d812ed93"
+      },
+      {
+        store: "The Combat Company",
+        price: 213.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-black-templars-new?_pos=1&_sid=6e069e5af&_ss=r"
       }
     ]
   },
@@ -4444,6 +5621,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-blood-angels-2024?queryID=6aa154e6f5486cb446450ced816a2e79"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-blood-angels?_pos=1&_sid=32f412e72&_ss=r"
       }
     ]
   },
@@ -4467,6 +5650,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-chaos-space-marines-2024?queryID=88ef746ac509d30b2dd2995d8ad00e53"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-chaos-space-marines-pre-order-25-4-24?_pos=1&_sid=b37fb1845&_ss=r"
       }
     ]
   },
@@ -4490,6 +5679,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-dark-angels-2024?queryID=1c50a9c92743c2a3a41855bfd3dfd4f6"
+      },
+      {
+        store: "The Combat Company",
+        price: 211.72,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-dark-angels-1?_pos=1&_sid=c42ccf515&_ss=r"
       }
     ]
   },
@@ -4513,6 +5708,12 @@ export const Products: Product[] = [
         price: 17,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/white-dwarf-512-may-2025-eng?queryID=fd309078ea9592cd12c22c0d6bca11e7"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-death-guard-new?_pos=1&_sid=fd6f2b755&_ss=r"
       }
     ]
   },
@@ -4536,6 +5737,12 @@ export const Products: Product[] = [
         price: 285,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-death-korps-of-krieg-2025?queryID=81c8ca73b0253f30312180d8e7b7221b"
+      },
+      {
+        store: "The Combat Company",
+        price: 225.15,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-death-korps-of-krieg?_pos=1&_sid=b508dcc0b&_ss=r"
       }
     ]
   },
@@ -4559,6 +5766,12 @@ export const Products: Product[] = [
         price: 370,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/drukhari-realspace-raiders-2025?queryID=fbfb860bdaf479d6b5edbb600b674bc6"
+      },
+      {
+        store: "The Combat Company",
+        price: 201.45,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-drukhari-2025?_pos=1&_sid=8a7fafdc4&_ss=r"
       }
     ]
   },
@@ -4582,6 +5795,12 @@ export const Products: Product[] = [
         price: 17,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/white-dwarf-511-april-2025-eng?queryID=04e1030e12ab5fed0a5f83e10df88658"
+      },
+      {
+        store: "The Combat Company",
+        price: 213.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-black-templars-new?_pos=1&_sid=6d9ca95e0&_ss=r"
       }
     ]
   },
@@ -4605,6 +5824,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-genestealer-cults-2024?queryID=4b22b1e11af57448c1b386e4dd3e8fbe"
+      },
+      {
+        store: "The Combat Company",
+        price: 211.72,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-genestealer-cults-pre-order-22-6-24?_pos=1&_sid=547da9aac&_ss=r"
       }
     ]
   },
@@ -4628,6 +5853,12 @@ export const Products: Product[] = [
         price: 255,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-grey-knights-2025?queryID=4a108abf7cb8fbb33ba041cd12683d8e"
+      },
+      {
+        store: "The Combat Company",
+        price: 201.45,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-grey-knights-new?_pos=1&_sid=d5b2bcbe0&_ss=r"
       }
     ]
   },
@@ -4651,6 +5882,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-imperial-agents-2024?queryID=d96973a06eeb2b7b31193b9050518db1"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-imperial-agents-pre-order-24-8-24?_pos=1&_sid=56f8410e8&_ss=r"
       }
     ]
   },
@@ -4674,6 +5911,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-imperial-fists-2025?queryID=fe90506b67962b1537a33384fd58e4ba"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-imperial-fists?_pos=1&_sid=bc47ea400&_ss=r"
       }
     ]
   },
@@ -4697,6 +5940,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-leagues-of-votann-2025?queryID=77811fd791d728139441f9749ee85b07"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-leagues-of-votann-new?_pos=1&_sid=f9cbd6822&_ss=r"
       }
     ]
   },
@@ -4720,6 +5969,12 @@ export const Products: Product[] = [
         price: 268,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-necrons-2023?queryID=4a04145d232f90da7111db53df415403"
+      },
+      {
+        store: "The Combat Company",
+        price: 211.72,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-necrons?_pos=1&_sid=a2d4e3bd7&_ss=r"
       }
     ]
   },
@@ -4743,6 +5998,12 @@ export const Products: Product[] = [
         price: 262,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-orks-2024?queryID=c56abcc291f578857061217546d7a163"
+      },
+      {
+        store: "The Combat Company",
+        price: 206.98,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-orks-pre-order-27-4-24?_pos=1&_sid=aba095bde&_ss=r"
       }
     ]
   },
@@ -4766,6 +6027,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-raven-guard-2025?queryID=efc73dea2d43f3b9a2f21cca16a60701"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-raven-guard?_pos=1&_sid=5ae50c484&_ss=r"
       }
     ]
   },
@@ -4789,6 +6056,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-salamanders-2025?queryID=ab4a654b8a6d990baba61a10044e2b99"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-salamanders?_pos=1&_sid=2b297a37f&_ss=r"
       }
     ]
   },
@@ -4812,6 +6085,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-space-marines-2023?queryID=2d8387308be9feca1af40b8c04ae3f0d"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-salamanders?_pos=1&_sid=52ecd3f9c&_ss=r"
       }
     ]
   },
@@ -4835,6 +6114,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-supplement-space-wolves-2025-eng?queryID=6c1ec59acd38df9c7abcc0cbe378354a"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-space-wolves-new?_pos=1&_sid=660e06f75&_ss=r"
       }
     ]
   },
@@ -4858,6 +6143,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/codex-thousand-sons-hb-2025-eng?queryID=4db6f0d8a63c88fb4ee5175a6d910434"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/codex-thousand-sons-new?_pos=1&_sid=bc5e290be&_ss=r"
       }
     ]
   },
@@ -4881,6 +6172,12 @@ export const Products: Product[] = [
         price: 255,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-tyranid-assault-brood-2025?queryID=718b6aa30f6175ce1bcd70441c904149"
+      },
+      {
+        store: "The Combat Company",
+        price: 201.45,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-tyranid-assault-brood?_pos=1&_sid=7b7f997d7&_ss=r"
       }
     ]
   },
@@ -4904,6 +6201,12 @@ export const Products: Product[] = [
         price: 235,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-tau-empire-2024?queryID=62f9b0a70e94969f8d8a885ce4de84be"
+      },
+      {
+        store: "The Combat Company",
+        price: 185.65,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-tau-empire-2024?_pos=1&_sid=686a096a4&_ss=r"
       }
     ]
   },
@@ -4927,6 +6230,12 @@ export const Products: Product[] = [
         price: 17,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/white-dwarf-513-june-2025-eng?queryID=23ec021783edfd6e56f92c5e8582fc2d"
+      },
+      {
+        store: "The Combat Company",
+        price: 221.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-world-eaters?_pos=1&_sid=15cea691d&_ss=r"
       }
     ]
   },
@@ -4950,6 +6259,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/blood-angels-commander-dante-2023?queryID=2e93a331d379fb231b035c1b0018d76f"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/blood-angels-commander-dante?_pos=1&_sid=d72f46220&_ss=r"
       }
     ]
   },
@@ -4973,6 +6288,12 @@ export const Products: Product[] = [
         price: 110,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/tau-empire-commander-farsight-2023?queryID=7e704355010bd163b7cd746bbb8b6b24"
+      },
+      {
+        store: "The Combat Company",
+        price: 86.9,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/tau-empire-commander-farsight-pre-order-15-7-23?_pos=1&_sid=440f360a8&_ss=r"
       }
     ]
   },
@@ -4996,6 +6317,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Tau-Empire-Commander-Shadowsun-2020?queryID=302d74b0e5377455af821b3808b83fe7"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/commander-shadowsun?_pos=1&_sid=8139502bb&_ss=r"
       }
     ]
   },
@@ -5019,6 +6346,12 @@ export const Products: Product[] = [
         price: 64,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-commissar-2023?queryID=64fe4689c6ef373390b98a312f568109"
+      },
+      {
+        store: "The Combat Company",
+        price: 50.56,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/commissar?_pos=1&_sid=6f1674cbd&_ss=r"
       }
     ]
   },
@@ -5042,6 +6375,12 @@ export const Products: Product[] = [
         price: 110,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-company-heroes-2023?queryID=3bc4196886c3610d01e66e3f0d17af3d"
+      },
+      {
+        store: "The Combat Company",
+        price: 86.9,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/company-heroes?_pos=1&_sid=2baee7f15&_ss=r"
       }
     ]
   },
@@ -5065,6 +6404,12 @@ export const Products: Product[] = [
         price: 49,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/contemptor-dreadnought-weapons-frame-2-2022?queryID=934636a3a12fee9a071174b95d12c6ca"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/legiones-astartes-contemptor-dreadnought?_pos=1&_sid=91337fd51&_ss=r"
       }
     ]
   },
@@ -5082,6 +6427,12 @@ export const Products: Product[] = [
         price: 110,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Convergence-of-Dominion-2020?queryID=83c8abe972173b36083ec383502cf343"
+      },
+      {
+        store: "The Combat Company",
+        price: 18.16,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/dominion-genesis-paperback?_pos=1&_sid=ed5f95c38&_ss=r"
       }
     ]
   },
@@ -5105,6 +6456,12 @@ export const Products: Product[] = [
         price: 135,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Deathwatch-Corvus-Blackstar-2020?queryID=8e598b34158d69065b43e1184af88ed6"
+      },
+      {
+        store: "The Combat Company",
+        price: 5.05,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/citadel-base-corvus-black?_pos=1&_sid=4028af658&_ss=r"
       }
     ]
   },
@@ -5128,6 +6485,12 @@ export const Products: Product[] = [
         price: 118,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/ruins-of-dol-guldur-2021?queryID=be3d8eacbc11eb17ed83cac0bfbabb4d"
+      },
+      {
+        store: "The Combat Company",
+        price: 37.92,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/citadel-creeping-vines?_pos=1&_sid=70b449bb9&_ss=r"
       }
     ]
   },
@@ -5151,6 +6514,12 @@ export const Products: Product[] = [
         price: 95,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Eldar-Crimson-Hunter-2017?queryID=d01a42660bb54ff69fc85b7bcaf9f91e"
+      },
+      {
+        store: "The Combat Company",
+        price: 75.05,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/crimson-hunter-hemlock-wraithfighter?_pos=1&_sid=f9fd48785&_ss=r"
       }
     ]
   },
@@ -5174,6 +6543,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-crusade-ancient-2025?queryID=a0cd22431c01b797a82d9576ce0a01b5"
+      },
+      {
+        store: "The Combat Company",
+        price: 58.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/black-templars-crusade-ancient?_pos=1&_sid=a59b62d97&_ss=r"
       }
     ]
   },
@@ -5197,6 +6572,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-crusade-ancient-2025?queryID=0b3853ebf91634052b3984768e12f7bd"
+      },
+      {
+        store: "The Combat Company",
+        price: 58.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/black-templars-crusade-ancient?_pos=1&_sid=58b7b2e29&_ss=r"
       }
     ]
   },
@@ -5220,6 +6601,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/nachmund-gauntlet-crusade-campaign-book-2025-eng?queryID=4263cca70c44766a07afb64839ff4ce8"
+      },
+      {
+        store: "The Combat Company",
+        price: 18.16,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/broken-crusade-paperback?_pos=1&_sid=70e769324&_ss=r"
       }
     ]
   },
@@ -5243,6 +6630,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Necron-Cryptek-2020?queryID=1210c74cc06f7e0afe2cab6511b51c7b"
+      },
+      {
+        store: "The Combat Company",
+        price: 49.77,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/cryptek?_pos=1&_sid=aa94c3207&_ss=r"
       }
     ]
   },
@@ -5266,6 +6659,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/lov-chonian-berserks-2022?queryID=5aadbafe726741d8d794adcf9ae7affc"
+      },
+      {
+        store: "The Combat Company",
+        price: 4.99,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/145-heavy-grey?_pos=1&_sid=821b8a76b&_ss=r"
       }
     ]
   },
@@ -5289,6 +6688,12 @@ export const Products: Product[] = [
         price: 94.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/leagues-of-votann-cthonian-earthshakers-2025?queryID=8fc5f380ee8e18ef6dc2022ee84fbc11"
+      },
+      {
+        store: "The Combat Company",
+        price: 74.66,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/leagues-of-votann-cthonian-earthshakers?_pos=1&_sid=a68816ec8&_ss=r"
       }
     ]
   },
@@ -5312,6 +6717,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/imperial-agents-culexus-assassin-2024?queryID=9db009a362d35a777efa578fc7660aa1"
+      },
+      {
+        store: "The Combat Company",
+        price: 49.77,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/imperial-agents-culexus-assassin-pre-order-24-8-24?_pos=1&_sid=798de71f1&_ss=r"
       }
     ]
   },
@@ -5335,6 +6746,12 @@ export const Products: Product[] = [
         price: 57,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-cultist-firebrand-2024?queryID=2f2357083f81fdf16d29c96fc0e792ce"
+      },
+      {
+        store: "The Combat Company",
+        price: 54.15,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/cultist-firebrand?_pos=1&_sid=d4661735f&_ss=r"
       }
     ]
   },
@@ -5358,6 +6775,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adeptus-Custodes-Custodian-Guard-2018?queryID=aed727f12026b41f933631d0ffa5e425"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/custodian-guard?_pos=1&_sid=4ca660892&_ss=r"
       }
     ]
   },
@@ -5381,6 +6804,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adeptus-Custodes-Custodian-Wardens-2018?queryID=099cf8b8afcd113418db5735074d09a5"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/custodian-wardens?_pos=1&_sid=937323b64&_ss=r"
       }
     ]
   },
@@ -5398,6 +6827,12 @@ export const Products: Product[] = [
         price: 43,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Cyclops-Demolition-Vehicle?queryID=7be39a4e5b77a3820051e1fac504026c"
+      },
+      {
+        store: "The Combat Company",
+        price: 67.94,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/necromunda-the-book-of-desolation-pre-order-31-8-24?_pos=1&_sid=7734a3815&_ss=r"
       }
     ]
   },
@@ -5421,6 +6856,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Cypher-2018?queryID=92b335d3a32e407c718bfe1c9092e6ac"
+      },
+      {
+        store: "The Combat Company",
+        price: 59.85,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/cypher?_pos=1&_sid=71c9860af&_ss=r"
       }
     ]
   },
@@ -5444,6 +6885,12 @@ export const Products: Product[] = [
         price: 145,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/slaves-to-darkness-daemon-prince-2023?queryID=33340b8430f7d1289c8065238a552dbf"
+      },
+      {
+        store: "The Combat Company",
+        price: 114.55,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/slaves-to-darkness-daemon-prince?_pos=1&_sid=95263fb86&_ss=r"
       }
     ]
   },
@@ -5467,6 +6914,12 @@ export const Products: Product[] = [
         price: 61,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Daemonettes-of-Slaanesh-2021?queryID=f88326b5a4ac229b8a665c37c1639616"
+      },
+      {
+        store: "The Combat Company",
+        price: 48.19,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/daemonettes-of-slaanesh?_pos=1&_sid=64660e6bd&_ss=r"
       }
     ]
   },
@@ -5484,6 +6937,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Daemonifuge-Ephrael-Stern-and-Kyganil-2020?queryID=e6cf67b17f792285dad5f1d83c2b9c17"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/daemonifuge-ephrael-stern-kyganil?_pos=1&_sid=9fd36adbc&_ss=r"
       }
     ]
   },
@@ -5507,6 +6966,12 @@ export const Products: Product[] = [
         price: 125,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Ork-Dakkajet-NEW?queryID=703efea5cc21a12c8d9f06142260426c"
+      },
+      {
+        store: "The Combat Company",
+        price: 98.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/blitza-bommer-dakkajet-wazbom-blastajet?_pos=1&_sid=9c0017e1d&_ss=r"
       }
     ]
   },
@@ -5530,6 +6995,12 @@ export const Products: Product[] = [
         price: 34,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Dark-Angels-Interrogator-Chaplain-2017?queryID=d1d3cafe988d22952d59d900c714c1bb"
+      },
+      {
+        store: "The Combat Company",
+        price: 32.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/interrogator-chaplain?_pos=1&_sid=1c9112c13&_ss=r"
       }
     ]
   },
@@ -5553,6 +7024,12 @@ export const Products: Product[] = [
         price: 57,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/dark-angels-upgrades-and-transfers-2024?queryID=81584651519e941b5eadeeffc15aa0bd"
+      },
+      {
+        store: "The Combat Company",
+        price: 45.03,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/dark-angels-upgrades-and-transfers?_pos=1&_sid=5be25c59d&_ss=r"
       }
     ]
   },
@@ -5576,6 +7053,12 @@ export const Products: Product[] = [
         price: 18,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/The-Horus-Heresy-False-Gods?queryID=ff31760ac1645195c17be3218befcc0c"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/dark-apostle?_pos=1&_sid=0943895f3&_ss=r"
       }
     ]
   },
@@ -5599,6 +7082,12 @@ export const Products: Product[] = [
         price: 94.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-dark-commune-2022?queryID=c451a2d24a06975f66a30bb489111e26"
+      },
+      {
+        store: "The Combat Company",
+        price: 74.65,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/dark-commune?_pos=1&_sid=13eb999d4&_ss=r"
       }
     ]
   },
@@ -5622,6 +7111,12 @@ export const Products: Product[] = [
         price: 6.4,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Layer-Dark-Reaper-2019?queryID=6d0031bcc3029b3a4f60eaa51316a953"
+      },
+      {
+        store: "The Combat Company",
+        price: 5.05,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/citadel-layer-dark-reaper?_pos=1&_sid=3a35c49ef&_ss=r"
       }
     ]
   },
@@ -5645,6 +7140,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/tau-empire-darkstrider-2022?queryID=c82ecde2a63e2e9942991d178b808df0"
+      },
+      {
+        store: "The Combat Company",
+        price: 49.77,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/darkstrider?_pos=1&_sid=61a980c1e&_ss=r"
       }
     ]
   },
@@ -5668,6 +7169,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/imperial-fists-darnath-lysander-2025?queryID=f83f0094409cc59080c7e814968cfd14"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/imperial-fists-darnath-lysander?_pos=1&_sid=3d0648366&_ss=r"
       }
     ]
   },
@@ -5691,6 +7198,12 @@ export const Products: Product[] = [
         price: 370,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/drukhari-realspace-raiders-2025?queryID=65751a679e0719c3b155f93c715377e7"
+      },
+      {
+        store: "The Combat Company",
+        price: 44.24,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/datasheet-cards-drukhari?_pos=1&_sid=fd856d8f2&_ss=r"
       }
     ]
   },
@@ -5714,6 +7227,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/datasheet-cards-grey-knights-2025-eng?queryID=5d2800b8c735aa3b611d343973fc284e"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.85,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/datasheet-cards-grey-knights?_pos=1&_sid=651e07c79&_ss=r"
       }
     ]
   },
@@ -5737,6 +7256,12 @@ export const Products: Product[] = [
         price: 235,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/imperial-knights-knight-questoris-2025?queryID=94a41ad92e531857e8d093abd8f72cbd"
+      },
+      {
+        store: "The Combat Company",
+        price: 33.97,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/datasheet-cards-imperial-knights?_pos=1&_sid=073d1a5a6&_ss=r"
       }
     ]
   },
@@ -5760,6 +7285,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-leagues-of-votann-2025?queryID=e74e254a232bfe17a53787697695b4f9"
+      },
+      {
+        store: "The Combat Company",
+        price: 43.85,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/datacards-leagues-of-votann-new?_pos=1&_sid=d787846fc&_ss=r"
       }
     ]
   },
@@ -5783,6 +7314,12 @@ export const Products: Product[] = [
         price: 35.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Harlequin-Death-Jester?queryID=0611fb6dd8feb3f82f4708e485ed2960"
+      },
+      {
+        store: "The Combat Company",
+        price: 32.76,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/killjoy-1?_pos=1&_sid=67aa1b9c7&_ss=r"
       }
     ]
   },
@@ -5806,6 +7343,12 @@ export const Products: Product[] = [
         price: 86,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-death-korps-of-krieg-2025?queryID=378aa3b99bfb915e165f5e7a14f1de6d"
+      },
+      {
+        store: "The Combat Company",
+        price: 67.94,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/astra-militarum-death-korps-of-krieg-pre-order-22-2-25?_pos=1&_sid=5c7ae4207&_ss=r"
       }
     ]
   },
@@ -5829,6 +7372,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-death-riders-2025?queryID=32b23ed46922cc33f0107e861860eb63"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/astra-militarum-death-riders-pre-order-22-2-25?_pos=1&_sid=c7937a2da&_ss=r"
       }
     ]
   },
@@ -5852,6 +7401,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/tyranids-deathleaper-2023?queryID=60b55ae4de4a02cda3782f0baad3d44f"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/tyranids-deathleaper-pre-order-9-9-23?_pos=1&_sid=492b94825&_ss=r"
       }
     ]
   },
@@ -5869,6 +7424,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Deathshroud-Bodyguard-2020?queryID=8c196f30cfa975364ee42b9c1e2d7aef"
+      },
+      {
+        store: "The Combat Company",
+        price: 35.99,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/corregidor-bandits?_pos=1&_sid=09e243133&_ss=r"
       }
     ]
   },
@@ -5892,6 +7453,12 @@ export const Products: Product[] = [
         price: 97.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Imperial-Guard-Deathstrike?queryID=9db5b00b4831377242caa9bcdc193d9d"
+      },
+      {
+        store: "The Combat Company",
+        price: 92.62,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/deathstrike-manticore?_pos=1&_sid=1433b5f8c&_ss=r"
       }
     ]
   },
@@ -5915,6 +7482,12 @@ export const Products: Product[] = [
         price: 26.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Deathwatch-Upgrades-2020?queryID=a9d6a0e103822376ac5b3f6df3e1ec60"
+      },
+      {
+        store: "The Combat Company",
+        price: 31.6,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/watch-master?_pos=1&_sid=bab60afe2&_ss=r"
       }
     ]
   },
@@ -5938,6 +7511,12 @@ export const Products: Product[] = [
         price: 120,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/dark-angels-deathwing-knights-2024?queryID=f301970dcaabd6cff98410825b13cb5f"
+      },
+      {
+        store: "The Combat Company",
+        price: 94.8,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/deathwing-knights?_pos=1&_sid=860852e1f&_ss=r"
       }
     ]
   },
@@ -5961,6 +7540,12 @@ export const Products: Product[] = [
         price: 95,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Ork-Deff-Dread?queryID=e7c701b4e0fcecae5a7612959f92c97a"
+      },
+      {
+        store: "The Combat Company",
+        price: 90.25,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/deff-dread?_pos=1&_sid=186bc07cf&_ss=r"
       }
     ]
   },
@@ -5984,6 +7569,12 @@ export const Products: Product[] = [
         price: 89,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Orks-Deffkilla-Wartrike-2018?queryID=8f026e9e365ae1e971ba0ee8b05e3241"
+      },
+      {
+        store: "The Combat Company",
+        price: 70.31,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/deffkilla-wartrike?_pos=1&_sid=afb3b0d4e&_ss=r"
       }
     ]
   },
@@ -6007,6 +7598,12 @@ export const Products: Product[] = [
         price: 110,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/deffkoptas-2022?queryID=23fa0f3d8833cb04bbd4d2c7082ccc3d"
+      },
+      {
+        store: "The Combat Company",
+        price: 86.9,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/deffkoptas?_pos=1&_sid=f4c3ce07b&_ss=r"
       }
     ]
   },
@@ -6030,6 +7627,12 @@ export const Products: Product[] = [
         price: 125,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marines-Defiler?queryID=bf312860a4bae1fe1ea41a1c06cfc2b8"
+      },
+      {
+        store: "The Combat Company",
+        price: 118.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/defiler?_pos=1&_sid=0219faa23&_ss=r"
       }
     ]
   },
@@ -6053,6 +7656,12 @@ export const Products: Product[] = [
         price: 100,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-desolation-squad-2023?queryID=33879ad783730e6dedef10312f9e0825"
+      },
+      {
+        store: "The Combat Company",
+        price: 79,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/desolation-squad?_pos=1&_sid=6e4dcedce&_ss=r"
       }
     ]
   },
@@ -6076,6 +7685,12 @@ export const Products: Product[] = [
         price: 96,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Space-Marine-Devastator-Squad-2020?queryID=0c8e451091edbbedec76944d3af6f002"
+      },
+      {
+        store: "The Combat Company",
+        price: 75.84,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/devastator-squad?_pos=1&_sid=077e3cac6&_ss=r"
       }
     ]
   },
@@ -6099,6 +7714,12 @@ export const Products: Product[] = [
         price: 79,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Tau-Empire-TY7-Devilfish-2015?queryID=33b33303e3f5880f321a92e325dbe0b4"
+      },
+      {
+        store: "The Combat Company",
+        price: 62.41,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/ty7-devilfish?_pos=1&_sid=841274dc3&_ss=r"
       }
     ]
   },
@@ -6122,6 +7743,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Dialogus-2020?queryID=4ed3d2a4c6e57a2da5c9d11c4a1b3a9c"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/dialogus?_pos=1&_sid=3ee8cef28&_ss=r"
       }
     ]
   },
@@ -6145,6 +7772,12 @@ export const Products: Product[] = [
         price: 19,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/dice-cube-12mm-2024?queryID=20567f67778fcc5c6897a28b6feb96e9"
+      },
+      {
+        store: "The Combat Company",
+        price: 15.01,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/dice-set-green?_pos=1&_sid=f3ef21651&_ss=r"
       }
     ]
   },
@@ -6168,6 +7801,12 @@ export const Products: Product[] = [
         price: 68,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Eldar-Dire-Avengers-2017?queryID=402a8e9769c6029e8c2a62c063c8e9f0"
+      },
+      {
+        store: "The Combat Company",
+        price: 53.72,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/dire-avengers?_pos=1&_sid=3f41eaaac&_ss=r"
       }
     ]
   },
@@ -6191,6 +7830,12 @@ export const Products: Product[] = [
         price: 97.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Doomsday-Ark-2020?queryID=edaa06ffc26d65a5e46a559d8bbe28cf"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.02,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/doomsday-ghost-ark?_pos=1&_sid=84534dbd8&_ss=r"
       }
     ]
   },
@@ -6214,6 +7859,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Drukhari-Drazhar-2020?queryID=610b9e758c234acac18d152b00e938a5"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/drazhar?_pos=1&_sid=d4453081a&_ss=r"
       }
     ]
   },
@@ -6237,6 +7888,12 @@ export const Products: Product[] = [
         price: 140,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-marines-drop-pods-2025?queryID=fdca093958fd7fbe64d293b287e2094f"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/legiones-astartes-drop-pod?_pos=1&_sid=b99036dda&_ss=r"
       }
     ]
   },
@@ -6254,6 +7911,12 @@ export const Products: Product[] = [
         price: 370,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/drukhari-realspace-raiders-2025?queryID=a8e4cafb44faf0143d7add301a948728"
+      },
+      {
+        store: "The Combat Company",
+        price: 27.25,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/index-cards-drukhari?_pos=1&_sid=d141a8c7e&_ss=r"
       }
     ]
   },
@@ -6277,6 +7940,12 @@ export const Products: Product[] = [
         price: 370,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/drukhari-realspace-raiders-2025?queryID=186fb86f9c28cfed90e36d22a5138d7a"
+      },
+      {
+        store: "The Combat Company",
+        price: 42.66,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/drukhari-dice?_pos=1&_sid=80fee2895&_ss=r"
       }
     ]
   },
@@ -6300,6 +7969,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/world-eaters-eightbound-2023?queryID=1a7b81a502190f4f28afdc05c727745b"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/world-eaters-exalted-eightbound?_pos=1&_sid=ec0d821cc&_ss=r"
       }
     ]
   },
@@ -6323,6 +7998,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/lov-einhyr-champion-2022?queryID=73876d98c8b9e0c6c7ee93c8bdc02755"
+      },
+      {
+        store: "The Combat Company",
+        price: 58.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/einhyr-champion?_pos=1&_sid=baa153016&_ss=r"
       }
     ]
   },
@@ -6346,6 +8027,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/lov-einhyr-hearthguard-2022?queryID=348da9cb5b3447a0c76adcdfc42c8f1b"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/einhyr-hearthguard?_pos=1&_sid=7d7d2f2ae&_ss=r"
       }
     ]
   },
@@ -6369,6 +8056,12 @@ export const Products: Product[] = [
         price: 30,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/eisenhorn-the-omnibus-pb-eng-2022?queryID=7c7e52a90fa60a0dbde2f9113524726b"
+      },
+      {
+        store: "The Combat Company",
+        price: 23.7,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/eisenhorn-the-omnibus-pb?_pos=1&_sid=7e2e17c86&_ss=r"
       }
     ]
   },
@@ -6392,6 +8085,12 @@ export const Products: Product[] = [
         price: 52,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Eldrad-Ulthran-2017?queryID=68a96dc314797c38ab2e643b3ad7a478"
+      },
+      {
+        store: "The Combat Company",
+        price: 41.08,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/eldrad-ulthran?_pos=1&_sid=1516bb988&_ss=r"
       }
     ]
   },
@@ -6415,6 +8114,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Primaris-Eliminators-2020?queryID=0f2e16b901acd7181b57932971368627"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/eliminators?_pos=1&_sid=221555e4c&_ss=r"
       }
     ]
   },
@@ -6438,6 +8143,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-emperors-champion-2021?queryID=4504d0a00455095710d24699f4b4a2ff"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/emperors-champion?_pos=1&_sid=6aa8f93ee&_ss=r"
       }
     ]
   },
@@ -6461,6 +8172,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/tau-empire-ethereal-2022?queryID=1cd2619d214e3f4138fbe795016b2f43"
+      },
+      {
+        store: "The Combat Company",
+        price: 7.2,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/two-thin-coats-ethereal-green?_pos=1&_sid=06161154b&_ss=r"
       }
     ]
   },
@@ -6484,6 +8201,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/imperial-agents-eversor-assassin-2024?queryID=27fafdeacfab169630951f31356bc346"
+      },
+      {
+        store: "The Combat Company",
+        price: 49.77,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/imperial-agents-eversor-assassin-pre-order-24-8-24?_pos=1&_sid=85a3988c2&_ss=r"
       }
     ]
   },
@@ -6507,6 +8230,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/exalted-sorcerers?queryID=a0300d6cf38436c8f722ef6c7e9a867c"
+      },
+      {
+        store: "The Combat Company",
+        price: 23.19,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/pneumarch-of-the-ur-hegemony-hvt?_pos=1&_sid=bed5b8400&_ss=r"
       }
     ]
   },
@@ -6530,6 +8259,12 @@ export const Products: Product[] = [
         price: 70,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-execrator-2025?queryID=09cb8171712262b592de8a906f2715a3"
+      },
+      {
+        store: "The Combat Company",
+        price: 55.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/black-templars-execrator?_pos=1&_sid=12efeac65&_ss=r"
       }
     ]
   },
@@ -6553,6 +8288,12 @@ export const Products: Product[] = [
         price: 155,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Exorcist-2020?queryID=791e18398124363b897b8b62cc23db26"
+      },
+      {
+        store: "The Combat Company",
+        price: 122.45,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/exorcist?_pos=1&_sid=9070f2a47&_ss=r"
       }
     ]
   },
@@ -6576,6 +8317,12 @@ export const Products: Product[] = [
         price: 32,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Dark-Angels-Ezekiel-Grand-Master-of-Librarians?queryID=25fe862be6eaa5574fb45d663d4e904b"
+      },
+      {
+        store: "The Combat Company",
+        price: 30.4,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/ezekiel-grand-master-of-librarians?_pos=1&_sid=de8baa3ce&_ss=r"
       }
     ]
   },
@@ -6599,6 +8346,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marines-Fabius-Bile-2020?queryID=da9465e55d7222861114b27e7801ef3e"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/fabius-bile?_pos=1&_sid=4c17e8cbf&_ss=r"
       }
     ]
   },
@@ -6616,6 +8369,12 @@ export const Products: Product[] = [
         price: 0,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/fall-of-the-necromancer-epub-2021-eng?queryID=1213b918386e4cf3ea0ff4706e7eb113"
+      },
+      {
+        store: "The Combat Company",
+        price: 20.14,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/necromancer?_pos=1&_sid=70617e1f3&_ss=r"
       }
     ]
   },
@@ -6639,6 +8398,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Eldar-Farseer-Skyrunner-2017?queryID=858fad3ec8eac18af493a71213aeabea"
+      },
+      {
+        store: "The Combat Company",
+        price: 22.91,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/farseer?_pos=1&_sid=b2e9fef4b&_ss=r"
       }
     ]
   },
@@ -6662,6 +8427,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Eldar-Farseer-Skyrunner-2017?queryID=b6c42209b0770849075c85f534e94ffa"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/farseer-warlock-skyrunner?_pos=1&_sid=a12a1ab2a&_ss=r"
       }
     ]
   },
@@ -6685,6 +8456,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/herald-of-tzeentch-on-burning-chariot-2016?queryID=2b6e5f8f25b0dffc13344cfd92c635de"
+      },
+      {
+        store: "The Combat Company",
+        price: 13.43,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/white-dwarf-514-pre-order-18-7-25?_pos=1&_sid=440c6c48a&_ss=r"
       }
     ]
   },
@@ -6708,6 +8485,12 @@ export const Products: Product[] = [
         price: 72,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Feculent-Gnarlmaw-2018?queryID=17b5f3b779a75373b02464a7a7888555"
+      },
+      {
+        store: "The Combat Company",
+        price: 68.4,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/feculent-gnarlmaw?_pos=1&_sid=45dece0f6&_ss=r"
       }
     ]
   },
@@ -6731,6 +8514,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Fenrisian-Wolves-2020?queryID=59ed524e86c1db79ac7f04350229f954"
+      },
+      {
+        store: "The Combat Company",
+        price: 57,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/space-wolves-legion-transfer-sheet?_pos=1&_sid=4b6ffee08&_ss=r"
       }
     ]
   },
@@ -6754,6 +8543,12 @@ export const Products: Product[] = [
         price: 94.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-field-ordnance-battery-2023?queryID=e38c228f3ec5c35c550dac3e4a01b28d"
+      },
+      {
+        store: "The Combat Company",
+        price: 74.65,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/field-ordnance-battery?_pos=1&_sid=a4e0cd29d&_ss=r"
       }
     ]
   },
@@ -6771,6 +8566,12 @@ export const Products: Product[] = [
         price: 87,
         inStock: false,
         url: "https://www.warforless.com.au/~88631736"
+      },
+      {
+        store: "The Combat Company",
+        price: 92.15,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/fiends-of-slaanesh?_pos=1&_sid=1da94aee1&_ss=r"
       }
     ]
   },
@@ -6794,6 +8595,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/aeldari-fire-dragons-2025?queryID=07a58e3de254dc9a24069769b516a2d9"
+      },
+      {
+        store: "The Combat Company",
+        price: 5.05,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/citadel-layer-fire-dragon-bright?_pos=1&_sid=bb6ba917a&_ss=r"
       }
     ]
   },
@@ -6817,6 +8624,12 @@ export const Products: Product[] = [
         price: 97.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Eldar-Fire-Prism?queryID=d37e235a92ab3eddbe07219f0a021a55"
+      },
+      {
+        store: "The Combat Company",
+        price: 92.62,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/fire-prism-night-spinner?_pos=1&_sid=6e906cb79&_ss=r"
       }
     ]
   },
@@ -6840,6 +8653,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Tau-Empire-Fire-Warriors-2017?queryID=02228d9eb068e4a291361a88b3dbed43"
+      },
+      {
+        store: "The Combat Company",
+        price: 77.42,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/fire-warriors-breacher-strike-team?_pos=1&_sid=68b5fb31b&_ss=r"
       }
     ]
   },
@@ -6863,6 +8682,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Primaris-Firestrike-Servo-turret-2020?queryID=2d7be6660cf1c59142fdd7de75ed3427"
+      },
+      {
+        store: "The Combat Company",
+        price: 49.77,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/primaris-firestrike-servo-turret?_pos=1&_sid=f4355d1d6&_ss=r"
       }
     ]
   },
@@ -6886,6 +8711,12 @@ export const Products: Product[] = [
         price: 52,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/flamers-of-tzeentch-2017?queryID=113a5b72371433ff1d54068f3ed41860"
+      },
+      {
+        store: "The Combat Company",
+        price: 41.08,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/flamers-of-tzeentch?_pos=1&_sid=05bb47814&_ss=r"
       }
     ]
   },
@@ -6909,6 +8740,12 @@ export const Products: Product[] = [
         price: 82,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Flash-Gitz?queryID=d479b5808a221aa1557a9462620c926b"
+      },
+      {
+        store: "The Combat Company",
+        price: 64.78,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/flash-gitz?_pos=1&_sid=7fe9fb20a&_ss=r"
       }
     ]
   },
@@ -6932,6 +8769,12 @@ export const Products: Product[] = [
         price: 100,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/emperors-children-flawless-blades-2025?queryID=1e212556f80a68c1a2e4fa1e1c4397fe"
+      },
+      {
+        store: "The Combat Company",
+        price: 79,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/emperors-children-flawless-blades?_pos=1&_sid=85f45218c&_ss=r"
       }
     ]
   },
@@ -6955,6 +8798,12 @@ export const Products: Product[] = [
         price: 6.4,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Layer-Flayed-One-Flesh-2019?queryID=c6e9f254dfaf774c64dac7b74c7878d2"
+      },
+      {
+        store: "The Combat Company",
+        price: 5.05,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/citadel-layer-flayed-one-flesh?_pos=1&_sid=e561f7b81&_ss=r"
       }
     ]
   },
@@ -6978,6 +8827,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Flesh-Hounds-2019?queryID=58f775f6285ebace3701ee5b9076c232"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/flesh-hounds?_pos=1&_sid=b74247fc0&_ss=r"
       }
     ]
   },
@@ -6995,6 +8850,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/death-guard-foetid-bloat-drone"
+      },
+      {
+        store: "The Combat Company",
+        price: 35.99,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/animal-adventures-enemies-of-gullet-cove?_pos=1&_sid=0b1cd9f6d&_ss=r"
       }
     ]
   },
@@ -7018,6 +8879,12 @@ export const Products: Product[] = [
         price: 93,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Meganobz?queryID=d6aad45a0a44f7ab183a938917c9c3f8"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.76,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/forge-a-new-path?_pos=1&_sid=beff5f6c5&_ss=r"
       }
     ]
   },
@@ -7041,6 +8908,12 @@ export const Products: Product[] = [
         price: 46,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Foul-Blightspawn-2020?queryID=15b18c80e783496c8403f0b11d0b481e"
+      },
+      {
+        store: "The Combat Company",
+        price: 36.34,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/foul-blightspawn?_pos=1&_sid=cc71e2471&_ss=r"
       }
     ]
   },
@@ -7064,6 +8937,12 @@ export const Products: Product[] = [
         price: 11.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/shade-fuegan-orange-18ml-2022?queryID=00b1fe682984c37177b72fcc2aae9a82"
+      },
+      {
+        store: "The Combat Company",
+        price: 60.83,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/aeldari-phoenix-lord-fuegan-pre-order-8-2-25?_pos=1&_sid=c0b42b07f&_ss=r"
       }
     ]
   },
@@ -7087,6 +8966,12 @@ export const Products: Product[] = [
         price: 285,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/emperors-children-fulgrim-2025?queryID=c6809dccd35f4ddd0936709e162a7b01"
+      },
+      {
+        store: "The Combat Company",
+        price: 225.15,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/emperors-children-fulgrim?_pos=1&_sid=79fe66d13&_ss=r"
       }
     ]
   },
@@ -7104,6 +8989,12 @@ export const Products: Product[] = [
         price: 60.8,
         inStock: false,
         url: "https://www.warforless.com.au/adeptus-mechanicus-electro-priests-2021"
+      },
+      {
+        store: "The Combat Company",
+        price: 63.99,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/corpuscarii-fulgarite-electro-priests?_pos=1&_sid=249819224&_ss=r"
       }
     ]
   },
@@ -7121,6 +9012,12 @@ export const Products: Product[] = [
         price: 14,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Games-Workshop-Tape-Measure?queryID=f65f7647d5833ea77284b5985f6a9977"
+      },
+      {
+        store: "The Combat Company",
+        price: 11.06,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/gw-tape-measure?_pos=1&_sid=cd0793b5a&_ss=r"
       }
     ]
   },
@@ -7138,6 +9035,12 @@ export const Products: Product[] = [
         price: 66,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Tyranid-Gargoyle-Brood?queryID=e5fd63975eb16458da5bbfd90f9a540f"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.14,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/gargoyle-brood?_pos=1&_sid=805a7b8af&_ss=r"
       }
     ]
   },
@@ -7161,6 +9064,12 @@ export const Products: Product[] = [
         price: 125,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Astra-Militarum-Gaunts-Ghosts-2021?queryID=f8439df24fab83878afada24310d6ac9"
+      },
+      {
+        store: "The Combat Company",
+        price: 23.7,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/gaunts-ghosts-the-founding?_pos=1&_sid=c95ab83ec&_ss=r"
       }
     ]
   },
@@ -7184,6 +9093,12 @@ export const Products: Product[] = [
         price: 94.5,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/tyranids-genestealers-2023?queryID=afd1e9cb0241f3d02380ea005793d3d9"
+      },
+      {
+        store: "The Combat Company",
+        price: 211.72,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-genestealer-cults-pre-order-22-6-24?_pos=1&_sid=6f272b0b8&_ss=r"
       }
     ]
   },
@@ -7207,6 +9122,12 @@ export const Products: Product[] = [
         price: 30,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/getting-started-with-warhammer-40k-2023-eng?queryID=e16d4073ce924c9fc6b984f9851a7597"
+      },
+      {
+        store: "The Combat Company",
+        price: 127.19,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/wh40k-starter-set?_pos=1&_sid=5d9939fcb&_ss=r"
       }
     ]
   },
@@ -7230,6 +9151,12 @@ export const Products: Product[] = [
         price: 125,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Ghazghkull-Thraka-2020?queryID=67aa62e89c40433c0ff7ebd4895aec15"
+      },
+      {
+        store: "The Combat Company",
+        price: 98.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/ghazghkull-thraka?_pos=1&_sid=51eac589e&_ss=r"
       }
     ]
   },
@@ -7253,6 +9180,12 @@ export const Products: Product[] = [
         price: 155,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Gladiator-Lancer-2020?queryID=156269007f08cdd02bde370006306f94"
+      },
+      {
+        store: "The Combat Company",
+        price: 122.45,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/gladiator-lancer-reaper-valiant?_pos=1&_sid=795c15263&_ss=r"
       }
     ]
   },
@@ -7276,6 +9209,12 @@ export const Products: Product[] = [
         price: 110,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/goliath-truck-2016?queryID=134c244285b3b91a3a8eab390c30c655"
+      },
+      {
+        store: "The Combat Company",
+        price: 54.92,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/guy-ant-truck?_pos=1&_sid=0029b5818&_ss=r"
       }
     ]
   },
@@ -7293,6 +9232,12 @@ export const Products: Product[] = [
         price: 130,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Gorkanaut?queryID=99260e23f6476b2eba02330969ca8b09"
+      },
+      {
+        store: "The Combat Company",
+        price: 102.7,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/gorkanaut-morkanaut?_pos=1&_sid=c96ba5086&_ss=r"
       }
     ]
   },
@@ -7316,6 +9261,12 @@ export const Products: Product[] = [
         price: 68,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Grey-Knights-Grand-Master-Voldus-2017?queryID=17b21faf9b8909abd151b4f7a732594a"
+      },
+      {
+        store: "The Combat Company",
+        price: 53.72,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/grand-master-voldus?_pos=1&_sid=8459cf5cf&_ss=r"
       }
     ]
   },
@@ -7339,6 +9290,12 @@ export const Products: Product[] = [
         price: 120,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/grey-knights-grandmaster-in-nemesis-dreadknight-2025?queryID=e8a1b052e15384e5607373b7c0918934"
+      },
+      {
+        store: "The Combat Company",
+        price: 94.8,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/grandmaster-in-nemesis-dreadknight?_pos=1&_sid=88e6fe41b&_ss=r"
       }
     ]
   },
@@ -7362,6 +9319,12 @@ export const Products: Product[] = [
         price: 260,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Great-Unclean-One-2018?queryID=b4e4c56a83ca580d6361bd362abf2767"
+      },
+      {
+        store: "The Combat Company",
+        price: 205.4,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/great-unclean-one?_pos=1&_sid=38cf92b48&_ss=r"
       }
     ]
   },
@@ -7379,6 +9342,12 @@ export const Products: Product[] = [
         price: 110,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Nurgle-Blight-Drone?queryID=6e1b61ce67fd5e4c07e29a2c431267de"
+      },
+      {
+        store: "The Combat Company",
+        price: 40.98,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/blight-archon-legion-archon?_pos=1&_sid=ca9f20cf6&_ss=r"
       }
     ]
   },
@@ -7396,6 +9365,12 @@ export const Products: Product[] = [
         price: 79,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-grey-hunters"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.95,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/space-wolves-grey-hunters?_pos=1&_sid=d51f6416d&_ss=r"
       }
     ]
   },
@@ -7419,6 +9394,12 @@ export const Products: Product[] = [
         price: 93,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Grey-Knights-Terminators-2017?queryID=f257c97d25c86b99f570f3cc2c57ac39"
+      },
+      {
+        store: "The Combat Company",
+        price: 201.45,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-grey-knights-new?_pos=1&_sid=5f14de40a&_ss=r"
       }
     ]
   },
@@ -7442,6 +9423,12 @@ export const Products: Product[] = [
         price: 107,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Grey-Knights-Interceptor-Squad-2022?queryID=de34fade991cd3f4be87847fa91e3524"
+      },
+      {
+        store: "The Combat Company",
+        price: 84.53,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/interceptor-purgation-purifier-strike-squad?_pos=1&_sid=0441300f4&_ss=r"
       }
     ]
   },
@@ -7465,6 +9452,12 @@ export const Products: Product[] = [
         price: 93,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Grey-Knights-Paladins-2017?queryID=bd5964f48699cdd8ef8f6c167419820c"
+      },
+      {
+        store: "The Combat Company",
+        price: 201.45,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-grey-knights-new?_pos=1&_sid=547650de6&_ss=r"
       }
     ]
   },
@@ -7488,6 +9481,12 @@ export const Products: Product[] = [
         price: 107,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Grey-Knights-Purgation-Squad-2022?queryID=083fa4c0890f3c4d5e7d934706162d93"
+      },
+      {
+        store: "The Combat Company",
+        price: 84.53,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/interceptor-purgation-purifier-strike-squad?_pos=1&_sid=2bc60003a&_ss=r"
       }
     ]
   },
@@ -7511,6 +9510,12 @@ export const Products: Product[] = [
         price: 107,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Grey-Knights-Purifier-Squad-2022?queryID=edaaeeea33288df5a6925bfe27c7c01b"
+      },
+      {
+        store: "The Combat Company",
+        price: 84.53,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/interceptor-purgation-purifier-strike-squad?_pos=1&_sid=50b5f50a4&_ss=r"
       }
     ]
   },
@@ -7534,6 +9539,12 @@ export const Products: Product[] = [
         price: 107,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Grey-Knights-Strike-Squad-2017?queryID=93cb40d37e7f7a04b415e6a515c227c1"
+      },
+      {
+        store: "The Combat Company",
+        price: 201.45,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/combat-patrol-grey-knights-new?_pos=1&_sid=7951d5566&_ss=r"
       }
     ]
   },
@@ -7557,6 +9568,12 @@ export const Products: Product[] = [
         price: 120,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/space-wolves-logan-grimnar-2025?queryID=1ab6e84e90b162ec22f58a8341c6be7b"
+      },
+      {
+        store: "The Combat Company",
+        price: 94.8,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/space-wolves-logan-grimnar?_pos=1&_sid=e9b24d692&_ss=r"
       }
     ]
   },
@@ -7580,6 +9597,12 @@ export const Products: Product[] = [
         price: 100,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/aeldari-guardians-2022?queryID=832e9406a370f62346f9d0ace7fddc91"
+      },
+      {
+        store: "The Combat Company",
+        price: 57.59,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/ursa-major-red-guardian?_pos=1&_sid=228673495&_ss=r"
       }
     ]
   },
@@ -7597,6 +9620,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Haarken-Worldclaimer-2018?queryID=2a0a6a97b98da2d1fd404b2e7aa22126"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/haarken-world-claimer?_pos=1&_sid=7442030a0&_ss=r"
       }
     ]
   },
@@ -7620,6 +9649,12 @@ export const Products: Product[] = [
         price: 32,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Haemonculus-2017?queryID=2984dabeb5f231d49530efef32189edf"
+      },
+      {
+        store: "The Combat Company",
+        price: 30.4,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/haemonculus?_pos=1&_sid=f8895fc13&_ss=r"
       }
     ]
   },
@@ -7643,6 +9678,12 @@ export const Products: Product[] = [
         price: 110,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Hammerfall-Bunker-2020?queryID=ed089ba458a81af3475c61d4238a4e39"
+      },
+      {
+        store: "The Combat Company",
+        price: 19.99,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/dawn-02-aplekton-scenery-pack?_pos=1&_sid=6849d7cd2&_ss=r"
       }
     ]
   },
@@ -7666,6 +9707,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Tau-Empire-Hammerhead-Gunship?queryID=8994a13bdddd60e99cae754c18070b57"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/hammerhead-gunship?_pos=1&_sid=522174b31&_ss=r"
       }
     ]
   },
@@ -7689,6 +9736,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Harlequin-Troupe-Troop-2017?queryID=4c170bc97e569dd62eebe05fc44c14bb"
+      },
+      {
+        store: "The Combat Company",
+        price: 58.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/harlequin-troupe?_pos=1&_sid=44798ff3c&_ss=r"
       }
     ]
   },
@@ -7712,6 +9765,12 @@ export const Products: Product[] = [
         price: 115,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Haruspex?queryID=fa14564d43ba04ef1a9a6a11a215330b"
+      },
+      {
+        store: "The Combat Company",
+        price: 109.25,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/exocrine-haruspex?_pos=1&_sid=d7299b75b&_ss=r"
       }
     ]
   },
@@ -7735,6 +9794,12 @@ export const Products: Product[] = [
         price: 104,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marine-Havocs-2019?queryID=91d859f4f5044a09fc4b663f427348c9"
+      },
+      {
+        store: "The Combat Company",
+        price: 82.16,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/havocs?_pos=1&_sid=f66f3afc5&_ss=r"
       }
     ]
   },
@@ -7758,6 +9823,12 @@ export const Products: Product[] = [
         price: 280,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/combat-patrol-leagues-of-votann-2025?queryID=e860d74e5d32aab4dfd61308172ec62d"
+      },
+      {
+        store: "The Combat Company",
+        price: 79,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/hearthkyn-warriors?_pos=1&_sid=d25797806&_ss=r"
       }
     ]
   },
@@ -7781,6 +9852,12 @@ export const Products: Product[] = [
         price: 110,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Heavy-Intercessors-2021?queryID=4f587aa6f202ec3bdec73a84346b42dd"
+      },
+      {
+        store: "The Combat Company",
+        price: 86.9,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/heavy-intercessors?_pos=1&_sid=4026a19d5&_ss=r"
       }
     ]
   },
@@ -7804,6 +9881,12 @@ export const Products: Product[] = [
         price: 86,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/astra-militarum-cadian-heavy-weapons-squad-2023?queryID=75de35b26efa0301c8c1124baa83065c"
+      },
+      {
+        store: "The Combat Company",
+        price: 70.3,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/catachan-heavy-weapons-squad?_pos=1&_sid=0b72dd7fc&_ss=r"
       }
     ]
   },
@@ -7827,6 +9910,12 @@ export const Products: Product[] = [
         price: 198,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/lov-hekaton-land-fortress-2022?queryID=b15014fa6eb5c386b6654cf77a1f6b59"
+      },
+      {
+        store: "The Combat Company",
+        price: 10.23,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/jungle-fortress?_pos=1&_sid=2d994f27b&_ss=r"
       }
     ]
   },
@@ -7850,6 +9939,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-high-marshal-helbrecht-2021?queryID=54f76ccbd2441af904a672ce835ab802"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/high-marshal-helbrecht?_pos=1&_sid=f4f801b13&_ss=r"
       }
     ]
   },
@@ -7873,6 +9968,12 @@ export const Products: Product[] = [
         price: 22.99,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/morvenn-vahl-spear-of-faith-pb-eng-2025?queryID=03d8138bddf2241081dd9e210c627044"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/heldrake?_pos=1&_sid=b12286952&_ss=r"
       }
     ]
   },
@@ -7896,6 +9997,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Primaris-Hellblasters-2020?queryID=a2d8d367d80e2e1b4be0b31c397c315b"
+      },
+      {
+        store: "The Combat Company",
+        price: 36.34,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/white-scars-primaris-upgrades-transfers?_pos=1&_sid=4f3728e77&_ss=r"
       }
     ]
   },
@@ -7913,6 +10020,12 @@ export const Products: Product[] = [
         price: 150,
         inStock: false,
         url: "https://www.warforless.com.au/astra-militarum-baneblade"
+      },
+      {
+        store: "The Combat Company",
+        price: 158,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/baneblade?_pos=1&_sid=88823416a&_ss=r"
       }
     ]
   },
@@ -7936,6 +10049,12 @@ export const Products: Product[] = [
         price: 98,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Imperial-Guard-Hellhound?queryID=d876674b0070ffb50b8446845a78a2f6"
+      },
+      {
+        store: "The Combat Company",
+        price: 93.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/hellhound?_pos=1&_sid=658823332&_ss=r"
       }
     ]
   },
@@ -7959,6 +10078,12 @@ export const Products: Product[] = [
         price: 370,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/drukhari-realspace-raiders-2025?queryID=85ec9a0471aacf4c947d4c9e99890c30"
+      },
+      {
+        store: "The Combat Company",
+        price: 50.74,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/armoured-clash-enlightened-infantry-regiment-special-order?_pos=1&_sid=881b0a0ce&_ss=r"
       }
     ]
   },
@@ -7982,6 +10107,12 @@ export const Products: Product[] = [
         price: 110,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/lov-hernkyn-pioneers-2022?queryID=d95ef127c57405ba8f76b492885f21f0"
+      },
+      {
+        store: "The Combat Company",
+        price: 86.9,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/hernkyn-pioneers?_pos=1&_sid=630a348c6&_ss=r"
       }
     ]
   },
@@ -7999,6 +10130,12 @@ export const Products: Product[] = [
         price: 167,
         inStock: false,
         url: "https://www.warforless.com.au/~92081499"
+      },
+      {
+        store: "The Combat Company",
+        price: 175.75,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/space-marines-chapter-heroes?_pos=1&_sid=93735b93e&_ss=r"
       }
     ]
   },
@@ -8022,6 +10159,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Hexmark-Destroyer-2020?queryID=2bfa931637799c12be87b36bf157f654"
+      },
+      {
+        store: "The Combat Company",
+        price: 49.77,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/hexmark-destroyer?_pos=1&_sid=153a30496&_ss=r"
       }
     ]
   },
@@ -8045,6 +10188,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/black-templars-high-marshal-helbrecht-2021?queryID=9ea84118d3ad73e3b6f15347f4fc2d28"
+      },
+      {
+        store: "The Combat Company",
+        price: 71.1,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/high-marshal-helbrecht?_pos=1&_sid=2ba9383e2&_ss=r"
       }
     ]
   },
@@ -8068,6 +10217,12 @@ export const Products: Product[] = [
         price: 100,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Hive-Guard?queryID=a56d32a99ee69f382b73da76a3fb887a"
+      },
+      {
+        store: "The Combat Company",
+        price: 79,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/hive-guard-tyrant-guard?_pos=1&_sid=9cde1874e&_ss=r"
       }
     ]
   },
@@ -8091,6 +10246,12 @@ export const Products: Product[] = [
         price: 101,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/tyranids-hive-tyrant-no-wings-2022?queryID=8dceed1077b44cb9f1b6c946394dc018"
+      },
+      {
+        store: "The Combat Company",
+        price: 79.79,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/hive-tyrant-swarmlord?_pos=1&_sid=fe67d7f72&_ss=r"
       }
     ]
   },
@@ -8114,6 +10275,12 @@ export const Products: Product[] = [
         price: 86,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/tyranids-hormagaunts-2023?queryID=3bbc55f463f27e8386bf2e13ca065ff0"
+      },
+      {
+        store: "The Combat Company",
+        price: 67.94,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/tyranids-hormagaunts-pre-order-9-9-23?_pos=1&_sid=0f4574d3d&_ss=r"
       }
     ]
   },
@@ -8137,6 +10304,12 @@ export const Products: Product[] = [
         price: 71,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/outland-beastmaster-w-wastelnd-giant-rat-2024?queryID=6c4abb488a8678dc82616fa5443b9152"
+      },
+      {
+        store: "The Combat Company",
+        price: 15.8,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/krieg-pb?_pos=1&_sid=df5efd958&_ss=r"
       }
     ]
   },
@@ -8154,6 +10327,12 @@ export const Products: Product[] = [
         price: 93,
         inStock: false,
         url: "https://www.warforless.com.au/~52326293"
+      },
+      {
+        store: "The Combat Company",
+        price: 98.8,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/horticulous-slimux?_pos=1&_sid=305f960a0&_ss=r"
       }
     ]
   },
@@ -8177,6 +10356,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Hospitaller-2020?queryID=8e425e442da36e524434a33584b93170"
+      },
+      {
+        store: "The Combat Company",
+        price: 52.93,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/hospitaller?_pos=1&_sid=71f1f1f7d&_ss=r"
       }
     ]
   },
@@ -8200,6 +10385,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/aeldari-autarch-2022?queryID=241d4cab34e4e86153c96c9aa944dddc"
+      },
+      {
+        store: "The Combat Company",
+        price: 58.46,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/autarch?_pos=1&_sid=5efa12ab7&_ss=r"
       }
     ]
   },
@@ -8240,6 +10431,12 @@ export const Products: Product[] = [
         price: 97,
         inStock: false,
         url: "https://www.warhammer.com/en-AU/shop/Necrons-Illuminor-Szeras-2020?queryID=9e2fc65324169ee1dc15eed9780fc39b"
+      },
+      {
+        store: "The Combat Company",
+        price: 76.63,
+        inStock: false,
+        url: "https://thecombatcompany.com/products/illuminor-szeras?_pos=1&_sid=6e4cf54c6&_ss=r"
       }
     ]
   },
@@ -10210,6 +12407,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/tau-empire-krootox-rider"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tau-empire-krootox-rider-2024?queryID=0ce87693d3c3192a68dccce3117b0558"
       }
     ]
   },
@@ -10227,6 +12430,12 @@ export const Products: Product[] = [
         price: 66.8,
         inStock: false,
         url: "https://www.warforless.com.au/orks-kustom-boosta-blasta"
+      },
+      {
+        store: "Warhammer Official",
+        price: 89,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Orks-Kustom-Boosta-Blasta-2019?queryID=345f34f684982594bc336565eda2cce4"
       }
     ]
   },
@@ -10244,6 +12453,12 @@ export const Products: Product[] = [
         price: 18,
         inStock: false,
         url: "https://www.warforless.com.au/highland-tuft-set-wild"
+      },
+      {
+        store: "Warhammer Official",
+        price: 125,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Astra-Militarum-Gaunts-Ghosts-2021?queryID=b62404bf0369211d3bae557a740ab3cd"
       }
     ]
   },
@@ -10261,6 +12476,12 @@ export const Products: Product[] = [
         price: 60,
         inStock: false,
         url: "https://www.warforless.com.au/drukhari-lady-malys"
+      },
+      {
+        store: "Warhammer Official",
+        price: 79.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/drukhari-lady-malys-2025?queryID=f80c31b91910c2b6c9bc4614847bb28c"
       }
     ]
   },
@@ -10278,6 +12499,12 @@ export const Products: Product[] = [
         price: 116.3,
         inStock: false,
         url: "https://www.warforless.com.au/legiones-astartes-land-raider-proteus"
+      },
+      {
+        store: "Warhammer Official",
+        price: 155,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/legiones-astartes-land-raider-proteus-2022?queryID=b624a661753ef2efd84389b976b61aa9"
       }
     ]
   },
@@ -10295,6 +12522,12 @@ export const Products: Product[] = [
         price: 112.5,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-land-raider-crusader-redeemer"
+      },
+      {
+        store: "Warhammer Official",
+        price: 150,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Land-Raider-Crusader-2020?queryID=f84f490b6021d293f94042779efd209c"
       }
     ]
   },
@@ -10312,6 +12545,12 @@ export const Products: Product[] = [
         price: 112.5,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-land-raider-crusader-redeemer"
+      },
+      {
+        store: "Warhammer Official",
+        price: 150,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Landraider-Redeemer-2020?queryID=edb201e86c47f45a4537cfdae829e0db"
       }
     ]
   },
@@ -10329,6 +12568,12 @@ export const Products: Product[] = [
         price: 86,
         inStock: false,
         url: "https://www.warforless.com.au/~88631610"
+      },
+      {
+        store: "Warhammer Official",
+        price: 96,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dark-Angels-Land-Speeder-Vengeance?queryID=2a0f369a32775fe9eb2a149d7db1d374"
       }
     ]
   },
@@ -10340,7 +12585,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Adrasite-Spears-2018?queryID=6f88546dfd3cb135b0fd48985927c971"
+      }
+    ]
   },
   {
     id: "473",
@@ -10350,7 +12602,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 140,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Aquilon-Terminators-2017?queryID=053ce55bbba673c1742c402a306ff164"
+      }
+    ]
   },
   {
     id: "474",
@@ -10360,7 +12619,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 140,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Aquilon-Terminators-with-Infernus-Firepikes-2017?queryID=87480ba813b22d2ade0495d6585fc553"
+      }
+    ]
   },
   {
     id: "475",
@@ -10370,7 +12636,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 87,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeronautica-imperialis-legio-custodes-ares-gunship-2022?queryID=0ad3ce521f22a67244f0c2178e3ae054"
+      }
+    ]
   },
   {
     id: "476",
@@ -10380,7 +12653,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 241,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Caladius-Grav-Tank-Annihilator-2017?queryID=f47686d7b3175f5752d1055e7a64f3e7"
+      }
+    ]
   },
   {
     id: "477",
@@ -10390,7 +12670,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 241,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Caladius-Grav-Tank-Annihilator-2017?queryID=65fab2d2f20e128b5cca07ba74dd5fb9"
+      }
+    ]
   },
   {
     id: "478",
@@ -10400,7 +12687,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 161,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Contemptor-Achillus-Dreadnought?queryID=b235125b992712f6d915ed499ee44aa4"
+      }
+    ]
   },
   {
     id: "479",
@@ -10410,7 +12704,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 161,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Contemptor-Galatus-Dreadnought-2018?queryID=ab314cc10991503d03ab0cff9af2c250"
+      }
+    ]
   },
   {
     id: "480",
@@ -10420,7 +12721,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 241,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Caladius-Grav-Tank-Annihilator-2017?queryID=6cc41381ea044c14a9511d690116ba7f"
+      }
+    ]
   },
   {
     id: "481",
@@ -10430,7 +12738,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 113,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Venatari-Squad-2019?queryID=252c18fc82a8a18919091546b5160c43"
+      }
+    ]
   },
   {
     id: "482",
@@ -10440,7 +12755,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 102,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Gyrfalcon-Pattern-Jetbike?queryID=114b5c3bd904f3cdb3799569f1e8cf49"
+      }
+    ]
   },
   {
     id: "483",
@@ -10450,7 +12772,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 783,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Custodes-Gunship-2017?queryID=0e1fd74fdee6431bd563a18bda40735a"
+      }
+    ]
   },
   {
     id: "484",
@@ -10460,7 +12789,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 173,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Pallas-Grav-attack?queryID=eb61da8547d53d43d77bd6a3c0bf30ba"
+      }
+    ]
   },
   {
     id: "485",
@@ -10470,7 +12806,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Pyrithite-Spears-2018?queryID=6834709e05c937c76df1614cf1331b1c"
+      }
+    ]
   },
   {
     id: "486",
@@ -10480,7 +12823,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 44,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Sagittarum-Guard-Upgrade-Set?queryID=41989501b2724c28335491d039830ee2"
+      }
+    ]
   },
   {
     id: "487",
@@ -10490,7 +12840,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 88,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Shield-Captain-2018?queryID=27227a7ecfc03816a35f5b3715556af1"
+      }
+    ]
   },
   {
     id: "488",
@@ -10500,7 +12857,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 41,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Telemon-Storm-Cannon-Arm-2017?queryID=ec32ad68c136f576c56748f5d8a4e45b"
+      }
+    ]
   },
   {
     id: "489",
@@ -10510,7 +12874,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 41,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-custodes-heavy-dreadnought-arm-2017?queryID=4cb9f7fa65f6ca86989d55a4c25cd475"
+      }
+    ]
   },
   {
     id: "490",
@@ -10520,7 +12891,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 41,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-Custodes-Telemon-Dreadnought-Iliastus-Accelerator-Culverin-2017?queryID=60038b1388aaf424c941f0891e445abd"
+      }
+    ]
   },
   {
     id: "491",
@@ -10530,7 +12908,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 137,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Legio-custodes-heavy-dreadnought-body-2017?queryID=6af90c98762692bd50116baba0db3c0e"
+      }
+    ]
   },
   {
     id: "492",
@@ -10540,7 +12925,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 145,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/legiones-astartes-mk2-tactical-squad-2025?queryID=c7af76e265d38178ac2f9fc26c31f3c8"
+      }
+    ]
   },
   {
     id: "493",
@@ -10556,6 +12948,12 @@ export const Products: Product[] = [
         price: 41.6,
         inStock: false,
         url: "https://www.warforless.com.au/legiones-astartes-praetor-with-power-axe"
+      },
+      {
+        store: "Warhammer Official",
+        price: 62,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/ultramarines-legion-praetor-2021?queryID=e86715c1957326065c72b5d32dfe128b"
       }
     ]
   },
@@ -10573,6 +12971,12 @@ export const Products: Product[] = [
         price: 64.5,
         inStock: false,
         url: "https://www.warforless.com.au/legions-imperialis-astartes-thunderhawk-gunship"
+      },
+      {
+        store: "Warhammer Official",
+        price: 86,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/legions-imperialis-thunderhawk-gunship-2023?queryID=270b2a77a5ea21772dad60e886a747ab"
       }
     ]
   },
@@ -10590,6 +12994,12 @@ export const Products: Product[] = [
         price: 94,
         inStock: false,
         url: "https://www.warforless.com.au/kill-team-legionaries"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marines-2019?queryID=f81d0b033719ee93dc8cdad0f7470708"
       }
     ]
   },
@@ -10607,6 +13017,12 @@ export const Products: Product[] = [
         price: 56.3,
         inStock: false,
         url: "https://www.warforless.com.au/drukhari-lelith-hesperax"
+      },
+      {
+        store: "Warhammer Official",
+        price: 75,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Drukhari-Lelith-Hesperax-2021?queryID=d824abc71f6746d333dd6aad7481fde9"
       }
     ]
   },
@@ -10624,6 +13040,12 @@ export const Products: Product[] = [
         price: 84,
         inStock: false,
         url: "https://www.warforless.com.au/astra-militarum-leman-russ-battle-tank"
+      },
+      {
+        store: "Warhammer Official",
+        price: 112,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/astra-militarum-leman-russ-battle-tank-2023?queryID=32a7f426fa981eaaaa43e92d602ac9b3"
       }
     ]
   },
@@ -10641,6 +13063,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/blood-angels-lemartes"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/blood-angels-lemartes-2024?queryID=e082d1eb2af7ff24c24a3bbabaf2d02b"
       }
     ]
   },
@@ -10658,6 +13086,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-phoenix-lord-lhykhis"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-phoenix-lord-lhykhis-2025?queryID=dd2fd25b205a94df4bea577a93920c22"
       }
     ]
   },
@@ -10675,6 +13109,12 @@ export const Products: Product[] = [
         price: 52.5,
         inStock: false,
         url: "https://www.warforless.com.au/space-marine-librarian-in-terminator-armour"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-marine-librarian-in-terminator-armour-2023?queryID=7a29ae818984e3dd1da2d987818b7e59"
       }
     ]
   },
@@ -10692,6 +13132,12 @@ export const Products: Product[] = [
         price: 64.5,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-lictor"
+      },
+      {
+        store: "Warhammer Official",
+        price: 86,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tyranids-lictor-2023?queryID=7f1e0c8bb9980ad964ae8b29aab6d9a7"
       }
     ]
   },
@@ -10709,6 +13155,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/primaris-lieutenant-in-reiver-armour"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Primaris-Lieutenant-In-Phobos-Armour-2020?queryID=ebcbe43c97bdae445e95dd625930c794"
       }
     ]
   },
@@ -10726,6 +13178,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/~88631574"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marine-Primaris-Lieutenant-With-Power-Sword-2020?queryID=f52f0614bb34d51a3cfc741380914e54"
       }
     ]
   },
@@ -10743,6 +13201,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/~88631574"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-marines-lieutenant-with-storm-shield-2023?queryID=61d9cee5b6ab560ac406281995f4714d"
       }
     ]
   },
@@ -10754,7 +13218,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 120,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/dark-angels-lion-el-johnson-2023?queryID=0c4baee4e16dff023a772017328467f7"
+      }
+    ]
   },
   {
     id: "506",
@@ -10770,6 +13241,12 @@ export const Products: Product[] = [
         price: 34.5,
         inStock: false,
         url: "https://www.warforless.com.au/genestealer-cults-locus"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Locus-2019?queryID=09d6a24258232a27d29c9d171965d372"
       }
     ]
   },
@@ -10787,6 +13264,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-logan-grimnar"
+      },
+      {
+        store: "Warhammer Official",
+        price: 120,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-wolves-logan-grimnar-2025?queryID=fade2fa002a758b117b2b2ac5f02bc17"
       }
     ]
   },
@@ -10804,6 +13287,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warforless.com.au/~62219064"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Necron-Destroyer-Squadron-2020?queryID=12a9ab107da48d86abdb89a2e6c3ad82"
       }
     ]
   },
@@ -10821,6 +13310,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-lokhusts-heavy-destroyer"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lokhust-Heavy-Destroyer-2020?queryID=2ba216cf9ce41309d4dec8d2d6236d73"
       }
     ]
   },
@@ -10838,6 +13333,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/astra-militarum-lord-castellan-ursula-creed"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/astra-militarum-lord-castellan-ursula-creed-2023?queryID=a616036b9142c62649a41ebb02738a90"
       }
     ]
   },
@@ -10855,6 +13356,12 @@ export const Products: Product[] = [
         price: 93.8,
         inStock: false,
         url: "https://www.warforless.com.au/csm-lord-discordant-on-helstalker"
+      },
+      {
+        store: "Warhammer Official",
+        price: 125,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marines-Vex-Machinator-2019?queryID=e887273f95b2b34a7e4c73ec33217320"
       }
     ]
   },
@@ -10872,6 +13379,12 @@ export const Products: Product[] = [
         price: 56,
         inStock: false,
         url: "https://www.warforless.com.au/emperors-children-lord-exultant"
+      },
+      {
+        store: "Warhammer Official",
+        price: 74,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/emperors-children-lord-exultant-2025?queryID=e14aa83c3352644f8cf67f5ed83c151f"
       }
     ]
   },
@@ -10889,6 +13402,12 @@ export const Products: Product[] = [
         price: 47,
         inStock: false,
         url: "https://www.warforless.com.au/~12783710"
+      },
+      {
+        store: "Warhammer Official",
+        price: 280,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/combat-patrol-imperial-agents-2024?queryID=90ee06f12fb8a7f18e5f7ef8c9c6cb3e"
       }
     ]
   },
@@ -10906,6 +13425,12 @@ export const Products: Product[] = [
         price: 53,
         inStock: false,
         url: "https://www.warforless.com.au/emperors-children-lord-kakophonist"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/emperors-children-lord-kakophonist-2025?queryID=bf2be4742eda77175837caa80c224bb5"
       }
     ]
   },
@@ -10923,6 +13448,12 @@ export const Products: Product[] = [
         price: 75,
         inStock: false,
         url: "https://www.warforless.com.au/astra-militarum-krieg-lord-marshal-dreir"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/astra-militarum-krieg-lord-marshal-dreir-2025?queryID=518d66eb8280a6277aff964a4dd84ccc"
       }
     ]
   },
@@ -10940,6 +13471,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/astra-militarum-lord-solar-leontus"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/astra-militarum-lord-solar-leontus-2023?queryID=5af5c939d603f0d1100012276bf9b835"
       }
     ]
   },
@@ -10957,6 +13494,12 @@ export const Products: Product[] = [
         price: 161.3,
         inStock: false,
         url: "https://www.warforless.com.au/daemons-of-tzeentch-lord-of-change"
+      },
+      {
+        store: "Warhammer Official",
+        price: 215,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/lord-of-change-2016?queryID=da884cfbcf95d5d2a4f1a80567554125"
       }
     ]
   },
@@ -10974,6 +13517,12 @@ export const Products: Product[] = [
         price: 57,
         inStock: false,
         url: "https://www.warforless.com.au/~2830"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lord-Felthius-And-The-Tainted-Cohort-2021?queryID=ed131094318e1cb9eb9a15a0b2a3a4fd"
       }
     ]
   },
@@ -10991,6 +13540,12 @@ export const Products: Product[] = [
         price: 56,
         inStock: false,
         url: "https://www.warforless.com.au/death-guard-lord-of-poxes"
+      },
+      {
+        store: "Warhammer Official",
+        price: 205,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-knight-draconis-2021?queryID=27293dc74ab4747e8dbb16e23cde98d6"
       }
     ]
   },
@@ -11008,6 +13563,12 @@ export const Products: Product[] = [
         price: 50.3,
         inStock: false,
         url: "https://www.warforless.com.au/death-guard-lord-of-virulence"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Lord-of-Virulence-2020?queryID=f730b1c60f1a242cb4289448b10dcd42"
       }
     ]
   },
@@ -11025,6 +13586,12 @@ export const Products: Product[] = [
         price: 82.5,
         inStock: false,
         url: "https://www.warforless.com.au/world-eaters-lord-invocatus"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/world-eaters-lord-on-juggernaut-2023?queryID=0f2f2ff0eaaeaefaff43d37d98b9667f"
       }
     ]
   },
@@ -11042,6 +13609,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/emperors-children-lucius-the-eternal"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/emperors-children-lucius-the-eternal-2025?queryID=e070a22dca153d766d344207ea1a0a9d"
       }
     ]
   },
@@ -11059,6 +13632,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-triarch-praetorians-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Necron-Lychguard-2020?queryID=33c06b3cf5d116066512280b7e650d9a"
       }
     ]
   },
@@ -11070,7 +13649,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 145,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/legiones-astartes-mk2-tactical-squad-2025?queryID=36ac608c82318e6260d4611d1d043795"
+      }
+    ]
   },
   {
     id: "525",
@@ -11086,6 +13672,12 @@ export const Products: Product[] = [
         price: 187.5,
         inStock: false,
         url: "https://www.warforless.com.au/thousand-sons-magnus-the-red"
+      },
+      {
+        store: "Warhammer Official",
+        price: 98,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/codex-thousand-sons-hb-2025-eng?queryID=fd7679399f4dc25d54b965016642f218"
       }
     ]
   },
@@ -11103,6 +13695,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warforless.com.au/genestealer-cults-broodcoven"
+      },
+      {
+        store: "Warhammer Official",
+        price: 120,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Broodcoven?queryID=5c31b64751d01908d1a299365fc439b0"
       }
     ]
   },
@@ -11120,6 +13718,12 @@ export const Products: Product[] = [
         price: 15,
         inStock: false,
         url: "https://www.warforless.com.au/the-end-and-the-death-volume-iii-pb"
+      },
+      {
+        store: "Warhammer Official",
+        price: 242,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Malcador-Defender?queryID=6793c5d9136f73db43ddf3767cefaa15"
       }
     ]
   },
@@ -11137,6 +13741,12 @@ export const Products: Product[] = [
         price: 104,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-maleceptor-toxicrene"
+      },
+      {
+        store: "Warhammer Official",
+        price: 115,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Maleceptor?queryID=dae41955d5c5cd784ea1246438ee9d7f"
       }
     ]
   },
@@ -11154,6 +13764,12 @@ export const Products: Product[] = [
         price: 101,
         inStock: false,
         url: "https://www.warforless.com.au/warriors-of-chaos-lord-on-manticore"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Astra-Militarum-Manticore?queryID=74c68fb437b309725a98fa2c09eea7bc"
       }
     ]
   },
@@ -11165,7 +13781,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 2653,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/mars-pattern-warlord-titan-body?queryID=558a30260c6ee58a614cb0b9bda44a8d"
+      }
+    ]
   },
   {
     id: "531",
@@ -11175,7 +13798,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 2653,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/mars-pattern-warlord-titan-body?queryID=a39984ca2b89f5a4d57f48b073fbae01"
+      }
+    ]
   },
   {
     id: "532",
@@ -11185,7 +13815,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 2653,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/mars-pattern-warlord-titan-body?queryID=b01687f366143e76e8802b39b91a7825"
+      }
+    ]
   },
   {
     id: "533",
@@ -11201,6 +13838,12 @@ export const Products: Product[] = [
         price: 69,
         inStock: false,
         url: "https://www.warforless.com.au/dark-angels-master-lazarus"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dark-Angels-Master-Lazarus-2020?queryID=d2c79fb9d1499a17da0d36d104ed9d84"
       }
     ]
   },
@@ -11218,6 +13861,12 @@ export const Products: Product[] = [
         price: 34.5,
         inStock: false,
         url: "https://www.warforless.com.au/chaos-space-marines-master-of-executions"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Master-Of-Executions-2019?queryID=912fe0a57ad9958035e3455678efc901"
       }
     ]
   },
@@ -11235,6 +13884,12 @@ export const Products: Product[] = [
         price: 59,
         inStock: false,
         url: "https://www.warforless.com.au/~22792739"
+      },
+      {
+        store: "Warhammer Official",
+        price: 280,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/combat-patrol-chaos-space-marines-2024?queryID=58b1fc6fc05a4af3c4a99defda82bd46"
       }
     ]
   },
@@ -11252,6 +13907,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-maugan-ra"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-maugan-ra-2022?queryID=a7aadaf0af90b64ba5f372c1f6468944"
       }
     ]
   },
@@ -11269,6 +13930,12 @@ export const Products: Product[] = [
         price: 108,
         inStock: false,
         url: "https://www.warforless.com.au/~67531857"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/kill-team-exaction-squad-2024?queryID=e04c088a0fba9093e9f6653e4cb30509"
       }
     ]
   },
@@ -11286,6 +13953,12 @@ export const Products: Product[] = [
         price: 101,
         inStock: false,
         url: "https://www.warforless.com.au/legion-imperialis-mechanicum-cerastus-knights-atra"
+      },
+      {
+        store: "Warhammer Official",
+        price: 135,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/legions-imperialis-mechanicum-acastus-knights-atrapos-2025?queryID=752c61c02adbc4849954588ae3b29f39"
       }
     ]
   },
@@ -11297,7 +13970,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 37,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Mechanicum-Knight-Conversion-Beam-Cannon-2019?queryID=2f9de92433feb50a9062ca3fbb4d843e"
+      }
+    ]
   },
   {
     id: "540",
@@ -11307,7 +13987,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 37,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Mechanicum-Knight-Moirax-Graviton-Pulsar-2019?queryID=7beade3e5f4410fe4574ae7be76dc1da"
+      }
+    ]
   },
   {
     id: "541",
@@ -11317,7 +14004,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 83,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/legions-imperialis-mechanicum-knights-moirax-2023?queryID=0d842702f4bb13d5523c97b95133fe01"
+      }
+    ]
   },
   {
     id: "542",
@@ -11327,7 +14021,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 83,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/legions-imperialis-mechanicum-knights-moirax-2023?queryID=359402af82c9e64b46ae89f9ea05a1ff"
+      }
+    ]
   },
   {
     id: "543",
@@ -11343,6 +14044,12 @@ export const Products: Product[] = [
         price: 69.8,
         inStock: false,
         url: "https://www.warforless.com.au/orks-meganobz"
+      },
+      {
+        store: "Warhammer Official",
+        price: 93,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Meganobz?queryID=f3893206a2da76857e0f512fee58a244"
       }
     ]
   },
@@ -11360,6 +14067,12 @@ export const Products: Product[] = [
         price: 66.8,
         inStock: false,
         url: "https://www.warforless.com.au/orks-megatrakk-scrapjet"
+      },
+      {
+        store: "Warhammer Official",
+        price: 89,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Orks-Megatrakk-Scrapjet-2018?queryID=e381de40e30543aaeda3275de2fde3cd"
       }
     ]
   },
@@ -11371,7 +14084,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 78,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Mek-Gunz-Kustom-Mega-kannon?queryID=44ea72fc5ad26608ac9b01150974585b"
+      }
+    ]
   },
   {
     id: "546",
@@ -11387,6 +14107,12 @@ export const Products: Product[] = [
         price: 50,
         inStock: false,
         url: "https://www.warforless.com.au/leagues-of-votann-memnyr-strategist"
+      },
+      {
+        store: "Warhammer Official",
+        price: 66,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/leagues-of-votann-memnyr-strategist-2025?queryID=02d7b4426e3e5d47f8716d6ce0e1ed15"
       }
     ]
   },
@@ -11404,6 +14130,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/blood-angels-mephiston-lord-of-death"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Mephiston-Lord-of-Death-2020?queryID=e89ef6f140a356b946119d711a5eb35d"
       }
     ]
   },
@@ -11415,7 +14147,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Miasmic-Malignifier-2020?queryID=2f4a11407d1e0b264a50989e203d5bd4"
+      }
+    ]
   },
   {
     id: "549",
@@ -11425,7 +14164,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 0,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Best-Of-White-Dwarf-Epub-2020?queryID=30dab594aea11bdcc975fe381f992a9c"
+      }
+    ]
   },
   {
     id: "550",
@@ -11441,6 +14187,12 @@ export const Products: Product[] = [
         price: 43,
         inStock: false,
         url: "https://www.warforless.com.au/adepta-sororitas-ministorum-priest"
+      },
+      {
+        store: "Warhammer Official",
+        price: 57,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/adepta-sororitas-ministorum-priest-2024?queryID=2a6badad39470f837c3b8d63157ef2ef"
       }
     ]
   },
@@ -11458,6 +14210,12 @@ export const Products: Product[] = [
         price: 42,
         inStock: false,
         url: "https://www.warforless.com.au/adepta-sororitas-ministorum-priest-with-vindictor"
+      },
+      {
+        store: "Warhammer Official",
+        price: 56,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/adepta-sororitas-ministorum-priest-with-vindicator-2024?queryID=0f64c3f3464fba8ef2b7bab00f4966e5"
       }
     ]
   },
@@ -11475,6 +14233,12 @@ export const Products: Product[] = [
         price: 236.3,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-monolith-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 315,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Monolith-2020?queryID=7b58083c200c7b92db8dd939c323062f"
       }
     ]
   },
@@ -11492,6 +14256,12 @@ export const Products: Product[] = [
         price: 195,
         inStock: false,
         url: "https://www.warforless.com.au/mortarion-daemon-primarch-of-nurgle"
+      },
+      {
+        store: "Warhammer Official",
+        price: 20,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/dark-imperium-pb-eng-2022?queryID=2b7f7e912431ce1683ea18b30af4f80b"
       }
     ]
   },
@@ -11509,6 +14279,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/adepta-sororitas-engines-of-redemption-penitent-en"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Mortifier-2020?queryID=e23d9a23593f4d055d301d5797a505c8"
       }
     ]
   },
@@ -11526,6 +14302,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/morvenn-vahl-abbess-sancotrum"
+      },
+      {
+        store: "Warhammer Official",
+        price: 268,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/combat-patrol-adepta-soritas-2024?queryID=9114f5e7b38cd68eba18a0897f0cb3ac"
       }
     ]
   },
@@ -11543,6 +14325,12 @@ export const Products: Product[] = [
         price: 100,
         inStock: false,
         url: "https://www.warforless.com.au/~6586184"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Mutalith-Vortex-Beast?queryID=4e774d9c38ca9c5b2405c12ab71d8375"
       }
     ]
   },
@@ -11571,7 +14359,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Nauseous-Rotbone-2020?queryID=ba15e2af700e18b3fdee3b4c2cf1486d"
+      }
+    ]
   },
   {
     id: "559",
@@ -11587,6 +14382,12 @@ export const Products: Product[] = [
         price: 43,
         inStock: false,
         url: "https://www.warforless.com.au/imperial-agents-navigator"
+      },
+      {
+        store: "Warhammer Official",
+        price: 57,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/imperial-agents-navigator-2024?queryID=004d5851a110b0603d2bdcc2bba30377"
       }
     ]
   },
@@ -11604,6 +14405,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-catacomb-command-barge-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 268,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/combat-patrol-necrons-2023?queryID=fe8e26854cd180792067764990a04a65"
       }
     ]
   },
@@ -11621,6 +14428,12 @@ export const Products: Product[] = [
         price: 61.5,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-necron-warriors-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 268,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/combat-patrol-necrons-2023?queryID=2449eb66c9901c64cb3e923d65899286"
       }
     ]
   },
@@ -11638,6 +14451,12 @@ export const Products: Product[] = [
         price: 185,
         inStock: false,
         url: "https://www.warforless.com.au/~73212848"
+      },
+      {
+        store: "Warhammer Official",
+        price: 268,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/combat-patrol-necrons-2023?queryID=90d29ccf38a8c195de2c33ae71077bb9"
       }
     ]
   },
@@ -11655,6 +14474,12 @@ export const Products: Product[] = [
         price: 67.5,
         inStock: false,
         url: "https://www.warforless.com.au/genestealer-cults-neophyte-hybrids"
+      },
+      {
+        store: "Warhammer Official",
+        price: 90,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/neophite-hybrids-2016?queryID=c4cc00f7d950ea935ffaf42339275944"
       }
     ]
   },
@@ -11672,6 +14497,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warforless.com.au/~34371280"
+      },
+      {
+        store: "Warhammer Official",
+        price: 74,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tyranids-neurogaunts-2023?queryID=28fdbbaee18752f9f7bb334927dc9ff6"
       }
     ]
   },
@@ -11689,6 +14520,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-neurolictor"
+      },
+      {
+        store: "Warhammer Official",
+        price: 74,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tyranids-neurolictor-2023?queryID=40ebce64b91037a1934f59c93b20d871"
       }
     ]
   },
@@ -11706,6 +14543,12 @@ export const Products: Product[] = [
         price: 34.5,
         inStock: false,
         url: "https://www.warforless.com.au/genestealer-cults-nexos"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Nexos-2019?queryID=6d02adbad135e3c8d51b3b7832a5156b"
       }
     ]
   },
@@ -11723,6 +14566,12 @@ export const Products: Product[] = [
         price: 75,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-doom-scythe-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 60,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/night-lords-legion-transfer-sheet-2022?queryID=9c15d8214269144ea3f3370b6f6695b2"
       }
     ]
   },
@@ -11740,6 +14589,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-njal-stormcaller"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-wolves-njal-stormcaller-2025?queryID=963886c5584b3b87f4024ef4569c8429"
       }
     ]
   },
@@ -11751,7 +14606,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marines-Noctilith-Crown-2019?queryID=5e05ae4ce1374a7257a88d07f2c6b790"
+      }
+    ]
   },
   {
     id: "570",
@@ -11767,6 +14629,12 @@ export const Products: Product[] = [
         price: 83,
         inStock: false,
         url: "https://www.warforless.com.au/emperors-children-noise-marines"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/emperors-children-noise-marines-2025?queryID=9a304d0d14332385efe6a814fc352848"
       }
     ]
   },
@@ -11784,6 +14652,12 @@ export const Products: Product[] = [
         price: 148.5,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-norn-emissary"
+      },
+      {
+        store: "Warhammer Official",
+        price: 198,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tyranids-norn-assimilator-2023?queryID=596dc86016dae5611a9a669058173d0b"
       }
     ]
   },
@@ -11801,6 +14675,12 @@ export const Products: Product[] = [
         price: 148.5,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-norn-emissary"
+      },
+      {
+        store: "Warhammer Official",
+        price: 198,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tyranids-norn-emissary-2023?queryID=9807e8e31b3501360f9a551c26da77b5"
       }
     ]
   },
@@ -11818,6 +14698,12 @@ export const Products: Product[] = [
         price: 40.5,
         inStock: false,
         url: "https://www.warforless.com.au/maggotkin-of-nurgle-nurglings"
+      },
+      {
+        store: "Warhammer Official",
+        price: 54,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Nurglings-2017?queryID=c5bd0cc07fc50add5cf50edb08f21590"
       }
     ]
   },
@@ -11835,6 +14721,12 @@ export const Products: Product[] = [
         price: 169,
         inStock: false,
         url: "https://www.warforless.com.au/necron-tesseract-vault-obelisk-transcendent-ctan"
+      },
+      {
+        store: "Warhammer Official",
+        price: 235,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/combat-patrol-tau-empire-2024?queryID=32db4a33c4dbd996580547f8d54d3e9d"
       }
     ]
   },
@@ -11852,6 +14744,12 @@ export const Products: Product[] = [
         price: 58.5,
         inStock: false,
         url: "https://www.warforless.com.au/jotunn-h-grade-servitor-ogryns"
+      },
+      {
+        store: "Warhammer Official",
+        price: 75,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Militarum-Auxilla-Ogryns?queryID=c375ca53858725f0ac7c63e0e486b29e"
       }
     ]
   },
@@ -11869,6 +14767,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-ophydian-destroyers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 104,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ophydian-Destroyers-2020?queryID=ea7f7c184a8f24654074e9259a1b8234"
       }
     ]
   },
@@ -11886,6 +14790,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-orikan-the-diviner"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/necrons-orikan-the-diviner-2023?queryID=c331855461555451b0a8c2d0e68468c3"
       }
     ]
   },
@@ -11903,6 +14813,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/orks-beast-snagga-boyz"
+      },
+      {
+        store: "Warhammer Official",
+        price: 31,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/squig-bottle-opener-2024?queryID=d5c974325a36b830fd5d300bdfaa58cf"
       }
     ]
   },
@@ -11920,6 +14836,12 @@ export const Products: Product[] = [
         price: 49.5,
         inStock: false,
         url: "https://www.warforless.com.au/ork-boyz"
+      },
+      {
+        store: "Warhammer Official",
+        price: 31,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/squig-bottle-opener-2024?queryID=db637a1dccab0e76a7bf3fc15ba9ec5e"
       }
     ]
   },
@@ -11937,6 +14859,12 @@ export const Products: Product[] = [
         price: 42.8,
         inStock: false,
         url: "https://www.warforless.com.au/orks-lootas"
+      },
+      {
+        store: "Warhammer Official",
+        price: 31,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/squig-bottle-opener-2024?queryID=56bba551ca4b9ca07f9652546a56a7dc"
       }
     ]
   },
@@ -11948,7 +14876,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 11.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ork-Flesh-2019?queryID=4b945121251396781de9a6bdaaf92e50"
+      }
+    ]
   },
   {
     id: "582",
@@ -11964,6 +14899,12 @@ export const Products: Product[] = [
         price: 25.5,
         inStock: false,
         url: "https://www.warforless.com.au/runtherd-and-gretchin"
+      },
+      {
+        store: "Warhammer Official",
+        price: 52,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Blood-Bowl-Gretchen-Wachter-2021?queryID=2d108313caeb031f387f08bfbbbd4ac4"
       }
     ]
   },
@@ -11981,6 +14922,12 @@ export const Products: Product[] = [
         price: 42.8,
         inStock: false,
         url: "https://www.warforless.com.au/orks-lootas"
+      },
+      {
+        store: "Warhammer Official",
+        price: 0,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/arcane-journal-orc-goblin-tribes-epub-2024?queryID=69dfb5cd25a14d98dccd09d9784a9db2"
       }
     ]
   },
@@ -11998,6 +14945,12 @@ export const Products: Product[] = [
         price: 25,
         inStock: false,
         url: "https://www.warforless.com.au/~124662192"
+      },
+      {
+        store: "Warhammer Official",
+        price: 28,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-40000-ork-choppa-bottle-opener-2023?queryID=905355824f26367a69380a53d78a370d"
       }
     ]
   },
@@ -12015,6 +14968,12 @@ export const Products: Product[] = [
         price: 42.8,
         inStock: false,
         url: "https://www.warforless.com.au/orks-nobz"
+      },
+      {
+        store: "Warhammer Official",
+        price: 49,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/high-elf-realms-high-elf-loremaster-2025?queryID=99e54423d832d14224db1074737fcf0e"
       }
     ]
   },
@@ -12032,6 +14991,12 @@ export const Products: Product[] = [
         price: 26.6,
         inStock: false,
         url: "https://www.warforless.com.au/~1254455"
+      },
+      {
+        store: "Warhammer Official",
+        price: 30,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/hb-grotsnik-da-mad-dok-eng-2025?queryID=ecf8edab487e854a68a17278683a319d"
       }
     ]
   },
@@ -12049,6 +15014,12 @@ export const Products: Product[] = [
         price: 42.8,
         inStock: false,
         url: "https://www.warforless.com.au/orks-stormboyz"
+      },
+      {
+        store: "Warhammer Official",
+        price: 11.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ork-Flesh-2019?queryID=1e377719acd22fe9f6fe711747623a2f"
       }
     ]
   },
@@ -12060,7 +15031,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 450,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/old-world-kingdom-of-bretonnia-eng-2024?queryID=181990bf366c7d4774c9a8ca483283ca"
+      }
+    ]
   },
   {
     id: "589",
@@ -12076,6 +15054,12 @@ export const Products: Product[] = [
         price: 59,
         inStock: false,
         url: "https://www.warforless.com.au/~1255028"
+      },
+      {
+        store: "Warhammer Official",
+        price: 106,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/orc-goblin-tribes-night-goblin-command-set-2024?queryID=7cf448a16af5f587253f0c202212e872"
       }
     ]
   },
@@ -12093,6 +15077,12 @@ export const Products: Product[] = [
         price: 64.5,
         inStock: false,
         url: "https://www.warforless.com.au/necromunda-orlock-outrider-quads"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Outriders-2020?queryID=687dbff61014f1e7031e8eb0b514084a"
       }
     ]
   },
@@ -12110,6 +15100,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warforless.com.au/~88631579"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/necrons-overlord-2023?queryID=0d6b0921c5f179fa0a670fe470a5c36c"
       }
     ]
   },
@@ -12127,6 +15123,12 @@ export const Products: Product[] = [
         price: 52.5,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-overlord-translocation-shroud"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/necrons-overlord-and-translocation-shroud-2023?queryID=deb07fcfe03da5ae8fc2ec8e77a52799"
       }
     ]
   },
@@ -12144,6 +15146,12 @@ export const Products: Product[] = [
         price: 50.3,
         inStock: false,
         url: "https://www.warforless.com.au/orks-painboss"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/orks-painboss-2021?queryID=87fec2209a1cb768d409f96a0f9ef80a"
       }
     ]
   },
@@ -12161,6 +15169,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/adepta-sororitas-palatine"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Palatine-2021?queryID=d535bde66a9a4327aec991fce6c15433"
       }
     ]
   },
@@ -12178,6 +15192,12 @@ export const Products: Product[] = [
         price: 93.8,
         inStock: false,
         url: "https://www.warforless.com.au/adepta-sororitas-paragon-warsuit"
+      },
+      {
+        store: "Warhammer Official",
+        price: 125,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Paragon-Warsuit-2021?queryID=ac319ae4bfda6c97876a94f837d6e51b"
       }
     ]
   },
@@ -12195,6 +15215,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-parasite-of-mortrex"
+      },
+      {
+        store: "Warhammer Official",
+        price: 74,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tyranids-parasite-of-mortrex-2022?queryID=e1fb2c78f9b88a93bb1e57a93a317b4f"
       }
     ]
   },
@@ -12212,6 +15238,12 @@ export const Products: Product[] = [
         price: 45.8,
         inStock: false,
         url: "https://www.warforless.com.au/tau-empire-pathfinder-team"
+      },
+      {
+        store: "Warhammer Official",
+        price: 61,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Pathfinder-Team-2017?queryID=206ae9520a51e0c3f1d574e3869fdfc8"
       }
     ]
   },
@@ -12229,6 +15261,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/adepta-sororitas-engines-of-redemption-penitent-en"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Penitent-Engines-2020?queryID=0894d2725530ccc89a85baea7e66a303"
       }
     ]
   },
@@ -12246,6 +15284,12 @@ export const Products: Product[] = [
         price: 52.5,
         inStock: false,
         url: "https://www.warforless.com.au/daemons-of-tzeentch-pink-horrors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/pink-horrors-2018?queryID=e7c7cf7cdf3e8da09a9e923f2977396a"
       }
     ]
   },
@@ -12263,6 +15307,12 @@ export const Products: Product[] = [
         price: 38.3,
         inStock: false,
         url: "https://www.warforless.com.au/tau-empire-tx4-piranha"
+      },
+      {
+        store: "Warhammer Official",
+        price: 51,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tau-Empire-TX4-Piranha-2015?queryID=3db00fb4db2150b9aeed7b16a068b63b"
       }
     ]
   },
@@ -12280,6 +15330,12 @@ export const Products: Product[] = [
         price: 94,
         inStock: false,
         url: "https://www.warforless.com.au/~25693242"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/plague-drones-of-nurgle-2017?queryID=06ac6c255698d634f5438f04adb81913"
       }
     ]
   },
@@ -12297,6 +15353,12 @@ export const Products: Product[] = [
         price: 34.5,
         inStock: false,
         url: "https://www.warforless.com.au/death-guard-plague-marine-champion"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Plague-Marines-2020?queryID=457a47757758ea88425dfdf9c711ef97"
       }
     ]
   },
@@ -12314,6 +15376,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/death-guard-plague-marines-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Plague-Marine-Icon-Bearer-2020?queryID=e670b2321f16d2d01695ab4b8d9a2c73"
       }
     ]
   },
@@ -12331,6 +15399,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/death-guard-plague-marines-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Plague-Marine-Icon-Bearer-2020?queryID=35ccded29b98bf98d5bc4b053c4378bf"
       }
     ]
   },
@@ -12348,6 +15422,12 @@ export const Products: Product[] = [
         price: 45.8,
         inStock: false,
         url: "https://www.warforless.com.au/maggotkin-of-nurgle-plaguebearers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 61,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Chaos-Daemons-Plaguebearers-of-Nurgle-2018?queryID=ffe350249dd0cabcf63236293cf8472b"
       }
     ]
   },
@@ -12365,6 +15445,12 @@ export const Products: Product[] = [
         price: 93.8,
         inStock: false,
         url: "https://www.warforless.com.au/death-guard-plagueburst-crawler-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 125,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Plagueburst-Crawler-2020?queryID=a3fd9262874765b9be6817f5dac4fd27"
       }
     ]
   },
@@ -12382,6 +15468,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/chaos-space-marines-possessed"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-possessed-2022?queryID=edaffcfafd96ce25666e54134049c95b"
       }
     ]
   },
@@ -12399,6 +15491,12 @@ export const Products: Product[] = [
         price: 26,
         inStock: false,
         url: "https://www.warforless.com.au/~41961878"
+      },
+      {
+        store: "Warhammer Official",
+        price: 29,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Poxbringer-Herald-Of-Nurgle-2018?queryID=6e83761c9516591cc142cd0c5ee80d88"
       }
     ]
   },
@@ -12416,6 +15514,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/death-guard-poxwalkers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 11.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/shade-poxwalker-18ml-2022?queryID=5d1d282f93c84246c4506f623c07b866"
       }
     ]
   },
@@ -12433,6 +15537,12 @@ export const Products: Product[] = [
         price: 71.3,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-predator-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 95,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Predator-2020?queryID=805367e102b555973ca138fbc6465596"
       }
     ]
   },
@@ -12450,6 +15560,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/black-templars-primaris-crusader-squad"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/black-templars-primaris-crusader-squad-2021?queryID=76cf1016c438479f023229f201e07814"
       }
     ]
   },
@@ -12467,6 +15583,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-primaris-eradicators"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Primaris-Eradicators-2020?queryID=69995d95b881aa0d1ba2d82b58637ea0"
       }
     ]
   },
@@ -12484,6 +15606,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-primaris-impulsor-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 140,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Primaris-Impulsor-2020?queryID=8646f546cdce3aa1aa0821e77b9547d6"
       }
     ]
   },
@@ -12501,6 +15629,12 @@ export const Products: Product[] = [
         price: 61.5,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-primaris-invader-atv"
+      },
+      {
+        store: "Warhammer Official",
+        price: 82,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Primaris-Invader-ATV-2020?queryID=4c60b1e67a8a5061ee91ffe803fe5bd7"
       }
     ]
   },
@@ -12518,6 +15652,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-primaris-librarian-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Primaris-Librarian-2020?queryID=e44b415643ecb2685d27e707ca9fa507"
       }
     ]
   },
@@ -12535,6 +15675,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/primaris-librarian-in-phobos-armour-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Primaris-Librarian-In-Phobos-Armour-2020?queryID=3698d6ab24fedd66e946668f14e9b2e3"
       }
     ]
   },
@@ -12552,6 +15698,12 @@ export const Products: Product[] = [
         price: 41.6,
         inStock: false,
         url: "https://www.warforless.com.au/astra-militarum-psyker"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/astra-militarum-primaris-psyker-2023?queryID=7bd224a49d7c37d3e691fbf8bfbdec1e"
       }
     ]
   },
@@ -12569,6 +15721,12 @@ export const Products: Product[] = [
         price: 93.8,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-redemptor-dreadnought-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 125,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Primaris-Redemptor-Dreadnought-2020?queryID=acdd36956ff3e6ea0799dcb1faf99257"
       }
     ]
   },
@@ -12586,6 +15744,12 @@ export const Products: Product[] = [
         price: 116.3,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-primaris-repulsor-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 155,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Primaris-Repulsor-2020?queryID=12ea593955901565e07d638072d78889"
       }
     ]
   },
@@ -12603,6 +15767,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-psychomancer"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Necrons-Psychomancer-2020?queryID=8dd653d7fc73bdd9b85bdae5cbea2cb0"
       }
     ]
   },
@@ -12620,6 +15790,12 @@ export const Products: Product[] = [
         price: 75,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-psychophage"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tyranids-psychophage-2023?queryID=da80522c6e703f527c190ee08cb8fe8f"
       }
     ]
   },
@@ -12637,6 +15813,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/pteraxii-skystalkers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adeptus-Mechanicus-Pteraxii-2020?queryID=daf15b4742f09c60ba4184621f65a9a8"
       }
     ]
   },
@@ -12654,6 +15836,12 @@ export const Products: Product[] = [
         price: 191,
         inStock: false,
         url: "https://www.warforless.com.au/combat-patrol-tyranid-assault-brood"
+      },
+      {
+        store: "Warhammer Official",
+        price: 86,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tyranids-pyrovore-2023?queryID=6f6ef7e235b177e9b89ddc29d86adb05"
       }
     ]
   },
@@ -12671,6 +15859,12 @@ export const Products: Product[] = [
         price: 65,
         inStock: false,
         url: "https://www.warforless.com.au/legion-imperialis-mechanicum-questoris-knights-mag"
+      },
+      {
+        store: "Warhammer Official",
+        price: 326,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Questoris-Knight-Magaera?queryID=b0f1d076c0b5d50ed2e0635210a61a67"
       }
     ]
   },
@@ -12688,6 +15882,12 @@ export const Products: Product[] = [
         price: 65,
         inStock: false,
         url: "https://www.warforless.com.au/legion-imperialis-mechanicum-questoris-knights-mag"
+      },
+      {
+        store: "Warhammer Official",
+        price: 86,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/legions-imperialis-mechanicum-knights-magaera-styrix-2025?queryID=b0612ee0fab347749551d45c96229bc7"
       }
     ]
   },
@@ -12705,6 +15905,12 @@ export const Products: Product[] = [
         price: 56.3,
         inStock: false,
         url: "https://www.warforless.com.au/ragnar-blackmane"
+      },
+      {
+        store: "Warhammer Official",
+        price: 75,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ragnar-Blackmane-2020?queryID=86cf4485fc45547fcf9a519df97c4f5d"
       }
     ]
   },
@@ -12722,6 +15928,12 @@ export const Products: Product[] = [
         price: 116.3,
         inStock: false,
         url: "https://www.warforless.com.au/legiones-astartes-land-raider-proteus"
+      },
+      {
+        store: "Warhammer Official",
+        price: 79,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Drukhari-Raider?queryID=047a7ff569e739526a261210d62da24e"
       }
     ]
   },
@@ -12739,6 +15951,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-rangers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-rangers-2022?queryID=47bcd1cde2ef561e8725cb69a7863bfc"
       }
     ]
   },
@@ -12756,6 +15974,12 @@ export const Products: Product[] = [
         price: 52.5,
         inStock: false,
         url: "https://www.warforless.com.au/chaos-space-marines-raptors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Chaos-Space-Marine-Raptors-2018?queryID=1307f784b7ba4deebdf87d9a3ffaccc2"
       }
     ]
   },
@@ -12773,6 +15997,12 @@ export const Products: Product[] = [
         price: 80,
         inStock: false,
         url: "https://www.warforless.com.au/~25120890"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dark-Eldar-Ravager?queryID=c773d604fc9114b00f95dd439e68f5ed"
       }
     ]
   },
@@ -12790,6 +16020,12 @@ export const Products: Product[] = [
         price: 34.5,
         inStock: false,
         url: "https://www.warforless.com.au/raven-guard-primaris-upgrades"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Raven-Guard-Primaris-Upgrades-2020?queryID=3987242ce0cf8955ef1b83949fb2c7a1"
       }
     ]
   },
@@ -12807,6 +16043,12 @@ export const Products: Product[] = [
         price: 72,
         inStock: false,
         url: "https://www.warforless.com.au/~88631607"
+      },
+      {
+        store: "Warhammer Official",
+        price: 80,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dark-Angels-Ravenwing-Bike-Squadron?queryID=20043b69064ab6bc9d96c920046aec75"
       }
     ]
   },
@@ -12824,6 +16066,12 @@ export const Products: Product[] = [
         price: 65.3,
         inStock: false,
         url: "https://www.warforless.com.au/dark-angels-ravenwing-command-squad-2021"
+      },
+      {
+        store: "Warhammer Official",
+        price: 87,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ravenwing-Command-Squad-2020?queryID=fa760e2b57eb5ba73364b4556ee66c87"
       }
     ]
   },
@@ -12841,6 +16089,12 @@ export const Products: Product[] = [
         price: 81,
         inStock: false,
         url: "https://www.warforless.com.au/~92081490"
+      },
+      {
+        store: "Warhammer Official",
+        price: 90,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dark-Angels-Ravenwing-Dark-Talon?queryID=dc0edb39a7b3e5c8dcb3ec61f285a20c"
       }
     ]
   },
@@ -12858,6 +16112,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warforless.com.au/~14147000"
+      },
+      {
+        store: "Warhammer Official",
+        price: 130,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Voidraven-Bomber?queryID=199c7f5b33f56b85531515718395a306"
       }
     ]
   },
@@ -12875,6 +16135,12 @@ export const Products: Product[] = [
         price: 60,
         inStock: false,
         url: "https://www.warforless.com.au/the-reikland-reavers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 66,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dark-Eldar-Reavers?queryID=03b5ce5605e79b7c5a94545bc92f1c97"
       }
     ]
   },
@@ -12892,6 +16158,12 @@ export const Products: Product[] = [
         price: 48,
         inStock: false,
         url: "https://www.warforless.com.au/genestealer-cults-reductus-saboteur"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/genestealer-cults-reductus-saboteur-2022?queryID=d90402720ef64e3e8382e2d4653c7f13"
       }
     ]
   },
@@ -12909,6 +16181,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-primaris-reivers-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Primaris-Reivers-2020?queryID=410d97b44052b631c162bba905780c0d"
       }
     ]
   },
@@ -12926,6 +16204,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/adepta-sororitas-repentia-squad"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Repentia-Squad-2020?queryID=1c35ca0ff582135f529aecebe74d4190"
       }
     ]
   },
@@ -12943,6 +16227,12 @@ export const Products: Product[] = [
         price: 138.8,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-primaris-repulsor-executioner"
+      },
+      {
+        store: "Warhammer Official",
+        price: 185,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Primaris-Repulsor-Executioner-2020?queryID=46381a5a64752655e344d99601fa5432"
       }
     ]
   },
@@ -12960,6 +16250,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/retributor-squad"
+      },
+      {
+        store: "Warhammer Official",
+        price: 104,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Retributor-Squad-2020?queryID=b16001634ddfd366334bd4a10e139350"
       }
     ]
   },
@@ -12977,6 +16273,12 @@ export const Products: Product[] = [
         price: 67.5,
         inStock: false,
         url: "https://www.warforless.com.au/legiones-astartes-deimos-pattern-rhino"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Rhino-2020?queryID=4bd72451ea1f2f2c8242ca4a190d1d8a"
       }
     ]
   },
@@ -12994,6 +16296,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warforless.com.au/ultramarines-robout-guilliman"
+      },
+      {
+        store: "Warhammer Official",
+        price: 120,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Roboute-Guilliman-Ultramarines-Primarch-2020?queryID=2c01e0acae6a8f7ce147cc9696097974"
       }
     ]
   },
@@ -13011,6 +16319,12 @@ export const Products: Product[] = [
         price: 129.4,
         inStock: false,
         url: "https://www.warforless.com.au/astra-militarum-rogal-dorn-battle-tank"
+      },
+      {
+        store: "Warhammer Official",
+        price: 57,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/astra-militarum-cadian-upgrades-2023?queryID=0b985d67cf1ba1d6d7e6e50965d62912"
       }
     ]
   },
@@ -13028,6 +16342,12 @@ export const Products: Product[] = [
         price: 95,
         inStock: false,
         url: "https://www.warforless.com.au/~88631647"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/imperial-agents-rogue-trader-entourage-and-voidsmen-at-arm-2024?queryID=26a33cf00ed393c4560ae321e72c6774"
       }
     ]
   },
@@ -13045,6 +16365,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/~53692153"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/necrons-royal-warden-2023?queryID=395d5fa8a674442fd61f03d64b93814a"
       }
     ]
   },
@@ -13062,6 +16388,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/thousand-sons-rubric-marines"
+      },
+      {
+        store: "Warhammer Official",
+        price: 104,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/rubric-marines?queryID=0aa09710a5d7fdc30a2bb484e2e6a62f"
       }
     ]
   },
@@ -13079,6 +16411,12 @@ export const Products: Product[] = [
         price: 66.8,
         inStock: false,
         url: "https://www.warforless.com.au/orks-rukkatrukk-squigbuggy"
+      },
+      {
+        store: "Warhammer Official",
+        price: 89,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Orks-Rukkatrukk-Squigbuggy-2018?queryID=f0c2b1949371913df798d3d1240c04a8"
       }
     ]
   },
@@ -13096,6 +16434,12 @@ export const Products: Product[] = [
         price: 82.5,
         inStock: false,
         url: "https://www.warforless.com.au/leagues-of-votann-sagitaur"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/lov-sagitaur-2022?queryID=6ff7aa59c5a41accfcf0612b72e09560"
       }
     ]
   },
@@ -13113,6 +16457,12 @@ export const Products: Product[] = [
         price: 34.5,
         inStock: false,
         url: "https://www.warforless.com.au/salamanders-primaris-upgrades"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Salamanders-Primaris-Upgrades-2020?queryID=55ccc4531983e182ac4c77e17f35de43"
       }
     ]
   },
@@ -13124,7 +16474,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 96,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dark-Angels-Sammael?queryID=e4e5b2d66c1266520eaa261867ffb67a"
+      }
+    ]
   },
   {
     id: "652",
@@ -13140,6 +16497,12 @@ export const Products: Product[] = [
         price: 34.5,
         inStock: false,
         url: "https://www.warforless.com.au/genestealer-cults-sanctus"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Sanctus-2019?queryID=6d85cc8c6adaf6c467571d2cef086a71"
       }
     ]
   },
@@ -13157,6 +16520,12 @@ export const Products: Product[] = [
         price: 75,
         inStock: false,
         url: "https://www.warforless.com.au/blood-angels-sanguinary-guard"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/blood-angels-sanguinary-guard-2024?queryID=33b75bd499b7f30205f8eca918bbf795"
       }
     ]
   },
@@ -13174,6 +16543,12 @@ export const Products: Product[] = [
         price: 53,
         inStock: false,
         url: "https://www.warforless.com.au/blood-angels-sanguinary-priest"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/blood-angels-sanguinary-priest-2024?queryID=5a806efc142a77fec77892f4fa96f47c"
       }
     ]
   },
@@ -13191,6 +16566,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/thousand-sons-scarab-occult-terminators"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/scarab-occult-terminators?queryID=c41e89faa3e249b7bc6193ec6a5f37fd"
       }
     ]
   },
@@ -13208,6 +16589,12 @@ export const Products: Product[] = [
         price: 40.5,
         inStock: false,
         url: "https://www.warforless.com.au/drukhari-scourges-2021"
+      },
+      {
+        store: "Warhammer Official",
+        price: 54,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dark-Eldar-Scourges?queryID=fd0bb5bafb4af6642c61213f0dee04ed"
       }
     ]
   },
@@ -13225,6 +16612,12 @@ export const Products: Product[] = [
         price: 56,
         inStock: false,
         url: "https://www.warforless.com.au/~79083303"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/screamers-2016?queryID=b12186d45d909ab48f80813150bf72da"
       }
     ]
   },
@@ -13242,6 +16635,12 @@ export const Products: Product[] = [
         price: 34.5,
         inStock: false,
         url: "https://www.warforless.com.au/death-guard-scribbus-wretch-the-tallyman"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Scribbus-Wretch-2020?queryID=179f7220d2b299c070bab7f0432b1456"
       }
     ]
   },
@@ -13259,6 +16658,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/sector-imperialis-ruins"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Sector-Imperialis-Ruins-2018?queryID=4fe73399672669e5cf34d9fc17410b2c"
       }
     ]
   },
@@ -13276,6 +16681,12 @@ export const Products: Product[] = [
         price: 72,
         inStock: false,
         url: "https://www.warforless.com.au/sector-mechanicus-sacristan-forgeshrine"
+      },
+      {
+        store: "Warhammer Official",
+        price: 96,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Sector-Mechanicus-Sacristan-Forgeshrine-new?queryID=e979a1556413cc4091ab5c55d0460efa"
       }
     ]
   },
@@ -13293,6 +16704,12 @@ export const Products: Product[] = [
         price: 45,
         inStock: false,
         url: "https://www.warforless.com.au/~106331170"
+      },
+      {
+        store: "Warhammer Official",
+        price: 50,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Seeker-Chariot-of-Slaanesh?queryID=c465631470f81889bf8ae6ec37c103fa"
       }
     ]
   },
@@ -13310,6 +16727,12 @@ export const Products: Product[] = [
         price: 44,
         inStock: false,
         url: "https://www.warforless.com.au/~88631731"
+      },
+      {
+        store: "Warhammer Official",
+        price: 235,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead-hedonites-of-slaanesh-2024?queryID=425a8801931cecb57874cc00a0ef1e2e"
       }
     ]
   },
@@ -13327,6 +16750,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warforless.com.au/thousand-sons-sekhetar-robots"
+      },
+      {
+        store: "Warhammer Official",
+        price: 84,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/thousand-sons-sekhetar-robots-2025?queryID=d3b088179d24deec1c0842b0a3e76642"
       }
     ]
   },
@@ -13344,6 +16773,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/seraphim-zephyrim-squad"
+      },
+      {
+        store: "Warhammer Official",
+        price: 104,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Seraphim-Squad-2020?queryID=57c18dc3f5b08f6349465df5b427b07c"
       }
     ]
   },
@@ -13355,7 +16790,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 577,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/seraptek-heavy-construct-with-synaptic-obliterators-2025?queryID=e6748437223ec1c4ef44a4ba34ad9295"
+      }
+    ]
   },
   {
     id: "666",
@@ -13371,6 +16813,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/adeptus-mechanicus-serberys-raiders"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adeptus-Mechanicus-Serberys-Raiders-2020?queryID=942da759005ccaaf9ac5cdd00df7308f"
       }
     ]
   },
@@ -13388,6 +16836,12 @@ export const Products: Product[] = [
         price: 26.6,
         inStock: false,
         url: "https://www.warforless.com.au/harlequin-shadowseer"
+      },
+      {
+        store: "Warhammer Official",
+        price: 35.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Harlequin-Shadowseer?queryID=3853c2077262a7b576911b09fdfe2ac6"
       }
     ]
   },
@@ -13405,6 +16859,12 @@ export const Products: Product[] = [
         price: 43,
         inStock: false,
         url: "https://www.warforless.com.au/~121188778"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/adeptus-custodes-shield-captain-2024?queryID=37c1cc698935e6c3935be593b3d96d23"
       }
     ]
   },
@@ -13422,6 +16882,12 @@ export const Products: Product[] = [
         price: 82.5,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-shining-spears"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-shining-spears-2022?queryID=9becfa0823f25b57a72b645528b07ee8"
       }
     ]
   },
@@ -13439,6 +16905,12 @@ export const Products: Product[] = [
         price: 66.8,
         inStock: false,
         url: "https://www.warforless.com.au/orks-shokjump-dragsta"
+      },
+      {
+        store: "Warhammer Official",
+        price: 89,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Orks-Shokkjump-Dragsta-2019?queryID=f5b21ca07002343e5dfbeda4a8577731"
       }
     ]
   },
@@ -13456,6 +16928,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-shroud-runners"
+      },
+      {
+        store: "Warhammer Official",
+        price: 120,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-shroud-runners-2022?queryID=798bc05588cae6d70a546fd1d0da626b"
       }
     ]
   },
@@ -13473,6 +16951,12 @@ export const Products: Product[] = [
         price: 72,
         inStock: false,
         url: "https://www.warforless.com.au/adeptus-mechanicus-sicarians-infiltrators-ruststal"
+      },
+      {
+        store: "Warhammer Official",
+        price: 96,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Sicarian-Infiltrators-2017?queryID=2a797e937d13d64bf897d80110668b08"
       }
     ]
   },
@@ -13490,6 +16974,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/adepta-sororitas-sister-dogmata"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Sister-Dogmata-2021?queryID=5d9c90e01c2561b25846807a012bd69b"
       }
     ]
   },
@@ -13507,6 +16997,12 @@ export const Products: Product[] = [
         price: 55,
         inStock: false,
         url: "https://www.warforless.com.au/~3241797"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Sister-Superior-Amalia-Novena-2019?queryID=27a1e10ee2aa57b7350598a820e72f2b"
       }
     ]
   },
@@ -13524,6 +17020,12 @@ export const Products: Product[] = [
         price: 83,
         inStock: false,
         url: "https://www.warforless.com.au/kill-team-novitiates"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/adepta-sororitas-sisters-novitiate-squad-2025?queryID=b5882cad63f94cf286211e58b2122bc8"
       }
     ]
   },
@@ -13541,6 +17043,12 @@ export const Products: Product[] = [
         price: 168.8,
         inStock: false,
         url: "https://www.warforless.com.au/chaos-daemons-skarbrand"
+      },
+      {
+        store: "Warhammer Official",
+        price: 225,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Skarbrand-Bloodthirster?queryID=eb54bf2b73a47cec1b5be4cc5ac38282"
       }
     ]
   },
@@ -13558,6 +17066,12 @@ export const Products: Product[] = [
         price: 41.6,
         inStock: false,
         url: "https://www.warforless.com.au/adeptus-mechanicus-skitarii-marshall"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adeptus-Mechanicus-Skitarii-Marshall-2021?queryID=6458519ba8f0358cc0a3c1d0acb674f9"
       }
     ]
   },
@@ -13575,6 +17089,12 @@ export const Products: Product[] = [
         price: 62.3,
         inStock: false,
         url: "https://www.warforless.com.au/skitarii-rangers-vanguard"
+      },
+      {
+        store: "Warhammer Official",
+        price: 83,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Skitarii-Rangers-2017?queryID=f4dcbbb2ad3c8c4f3b73308b985e134f"
       }
     ]
   },
@@ -13592,6 +17112,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/~68321456"
+      },
+      {
+        store: "Warhammer Official",
+        price: 104,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Skorpekh-Destroyers-2020?queryID=afed001d7607ede6afdb690841314eac"
       }
     ]
   },
@@ -13603,7 +17129,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 140,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adeptus-Mechanicus-Skorpius-Dunerider-2019?queryID=2fdca188527369bcde9df01cb98976bb"
+      }
+    ]
   },
   {
     id: "681",
@@ -13619,6 +17152,12 @@ export const Products: Product[] = [
         price: 72,
         inStock: false,
         url: "https://www.warforless.com.au/~18205541"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Skull-Altar-2019?queryID=448ae5aaecba02c294d758b46f98c60a"
       }
     ]
   },
@@ -13636,6 +17175,12 @@ export const Products: Product[] = [
         price: 57,
         inStock: false,
         url: "https://www.warforless.com.au/~22917329"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Daemons-Of-Khorne-Skull-Cannon?queryID=af01496b9c9a7bda47910ee5b5b90d8f"
       }
     ]
   },
@@ -13653,6 +17198,12 @@ export const Products: Product[] = [
         price: 50.3,
         inStock: false,
         url: "https://www.warforless.com.au/blades-of-khorne-skulltaker"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Skulltaker-2019?queryID=21e176589587f37676aa082df45bdc0d"
       }
     ]
   },
@@ -13670,6 +17221,12 @@ export const Products: Product[] = [
         price: 61.5,
         inStock: false,
         url: "https://www.warforless.com.au/harlequin-skyweavers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 82,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Harlequin-Skyweavers?queryID=e670737dc12138cb1efcab03cc1dafd9"
       }
     ]
   },
@@ -13687,6 +17244,12 @@ export const Products: Product[] = [
         price: 56,
         inStock: false,
         url: "https://www.warforless.com.au/world-eaters-slaughter-bound"
+      },
+      {
+        store: "Warhammer Official",
+        price: 17,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/white-dwarf-513-june-2025-eng?queryID=7b87bf1375ff3367ff40ef10207a5aa2"
       }
     ]
   },
@@ -13704,6 +17267,12 @@ export const Products: Product[] = [
         price: 39,
         inStock: false,
         url: "https://www.warforless.com.au/maggotkin-of-nurgle-sloppity-bilepiper"
+      },
+      {
+        store: "Warhammer Official",
+        price: 52,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Sloppity-Bilepiper-Herald-Of-Nurgle-2018?queryID=8a4766f31e8c31374956ec13bb68c7a4"
       }
     ]
   },
@@ -13721,6 +17290,12 @@ export const Products: Product[] = [
         price: 43,
         inStock: false,
         url: "https://www.warforless.com.au/astra-militarum-sly-marbo"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Astra-Militarum-Sly-Marbo-2018?queryID=efeb034ade4fcb4992eb6f90cb57625f"
       }
     ]
   },
@@ -13738,6 +17313,12 @@ export const Products: Product[] = [
         price: 30,
         inStock: false,
         url: "https://www.warforless.com.au/harlequin-solitaire"
+      },
+      {
+        store: "Warhammer Official",
+        price: 25,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/wood-elf-realms-wood-elf-waystalker-2025?queryID=29edbf5f03f46e98befe988e25fc23d7"
       }
     ]
   },
@@ -13755,6 +17336,12 @@ export const Products: Product[] = [
         price: 113,
         inStock: false,
         url: "https://www.warforless.com.au/~103055526"
+      },
+      {
+        store: "Warhammer Official",
+        price: 125,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Soul-Grinder?queryID=527d64a09e004223658a6626fc2ec32f"
       }
     ]
   },
@@ -13772,6 +17359,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warforless.com.au/~88631617"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marine-Primaris-Captain-2020?queryID=23bcf0c897574fa5afad8283cf8ed5f9"
       }
     ]
   },
@@ -13789,6 +17382,12 @@ export const Products: Product[] = [
         price: 234,
         inStock: false,
         url: "https://www.warforless.com.au/~6945200"
+      },
+      {
+        store: "Warhammer Official",
+        price: 260,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Honoured-Of-The-Chapter-2021?queryID=a8a38cf3ed7db09fee5c1236120d241d"
       }
     ]
   },
@@ -13806,6 +17405,12 @@ export const Products: Product[] = [
         price: 121,
         inStock: false,
         url: "https://www.warforless.com.au/warhammer-40-000-elite-edition"
+      },
+      {
+        store: "Warhammer Official",
+        price: 60,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/infernus-marines-and-paints-gb-es-eu-ie-au-nz-us-ww-2023?queryID=e7afd7dd689bda9718cb9d81894e08fe"
       }
     ]
   },
@@ -13823,6 +17428,12 @@ export const Products: Product[] = [
         price: 48,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-lieutenant"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-marines-lieutenant-2023?queryID=02e9599ef39109160b6f2431b30357d3"
       }
     ]
   },
@@ -13840,6 +17451,12 @@ export const Products: Product[] = [
         price: 19.9,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-primaris-upgrades"
+      },
+      {
+        store: "Warhammer Official",
+        price: 26.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Wolves-Primaris-Upgrades-2020?queryID=ff3b7ac3ada45be9fd6d79ec958fb144"
       }
     ]
   },
@@ -13857,6 +17474,12 @@ export const Products: Product[] = [
         price: 69,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-venerable-dreadnought-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 92,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Wolves-Venerable-Dreadnought-2020?queryID=82e1fa1c93e2aeac3a65755005bd363d"
       }
     ]
   },
@@ -13874,6 +17497,12 @@ export const Products: Product[] = [
         price: 180,
         inStock: false,
         url: "https://www.warforless.com.au/spearhead-blades-of-khorne-fangs-of-the-blood-god"
+      },
+      {
+        store: "Warhammer Official",
+        price: 240,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead-blades-of-khorne-fangs-of-the-blood-god-2025?queryID=17d677a5e57e29a9b29506f966232f98"
       }
     ]
   },
@@ -13891,6 +17520,12 @@ export const Products: Product[] = [
         price: 26,
         inStock: false,
         url: "https://www.warforless.com.au/faction-pack-disciples-of-tzeentch"
+      },
+      {
+        store: "Warhammer Official",
+        price: 240,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead-disciples-of-tzeentch-2024?queryID=c0cbc68b6f285d0bd941d13c49bc4ed6"
       }
     ]
   },
@@ -13908,6 +17543,12 @@ export const Products: Product[] = [
         price: 161,
         inStock: false,
         url: "https://www.warforless.com.au/vanguard-maggotkin-of-nurgle"
+      },
+      {
+        store: "Warhammer Official",
+        price: 28,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/faction-pack-maggotkin-of-nurgle-2024-eng?queryID=413573715c813febf59cc7fcc0a61beb"
       }
     ]
   },
@@ -13925,6 +17566,12 @@ export const Products: Product[] = [
         price: 41.3,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-spiritseer"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Craftworlds-Spiritseer-2019?queryID=08959f9679f329fd56299d589c2c6345"
       }
     ]
   },
@@ -13942,6 +17589,12 @@ export const Products: Product[] = [
         price: 82.5,
         inStock: false,
         url: "https://www.warforless.com.au/orks-squighog-boyz"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/orks-squighog-boyz-2021?queryID=06d5f1ed67dddd330e5b4a390cd2e2b0"
       }
     ]
   },
@@ -13959,6 +17612,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/harlequin-starweaver-voidweaver"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Harlequin-Starweaver?queryID=947488a6a7c3fa475a88d38c3664f574"
       }
     ]
   },
@@ -13976,6 +17635,12 @@ export const Products: Product[] = [
         price: 36,
         inStock: false,
         url: "https://www.warforless.com.au/tau-empire-xv25-stealth-battlesuits"
+      },
+      {
+        store: "Warhammer Official",
+        price: 48,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tau-Empire-XV25-Stealth-Battlesuits-2017?queryID=1a5d499f211c82ff8d10ae2d986ec9cf"
       }
     ]
   },
@@ -13993,6 +17658,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/s-marines-sternguard-veteran-squad"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-marines-sternguard-veteran-squad-2023?queryID=ce3c9096e7f755b4119e568189437fa6"
       }
     ]
   },
@@ -14010,6 +17681,12 @@ export const Products: Product[] = [
         price: 170,
         inStock: false,
         url: "https://www.warforless.com.au/orks-stompa"
+      },
+      {
+        store: "Warhammer Official",
+        price: 52.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-40000-imperial-knights-dice-2025?queryID=52b0f3ce61d80fef5bf51bc96491f208"
       }
     ]
   },
@@ -14027,6 +17704,12 @@ export const Products: Product[] = [
         price: 93.8,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-storm-speeder"
+      },
+      {
+        store: "Warhammer Official",
+        price: 125,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marines-Storm-Speeder-2020?queryID=59655e84d663b6ecf73704c7081ca024"
       }
     ]
   },
@@ -14044,6 +17727,12 @@ export const Products: Product[] = [
         price: 77.3,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-stormhawk-interceptor-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 103,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Stormhawk-Interceptor-2020?queryID=fbc374a9dd482ed6cecba083fb2d9b47"
       }
     ]
   },
@@ -14061,6 +17750,12 @@ export const Products: Product[] = [
         price: 108.8,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-stormraven-gunship"
+      },
+      {
+        store: "Warhammer Official",
+        price: 145,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Stormraven-Gunship-2020?queryID=8157bfbf686b768e945642d1b142abaf"
       }
     ]
   },
@@ -14078,6 +17773,12 @@ export const Products: Product[] = [
         price: 26,
         inStock: false,
         url: "https://www.warforless.com.au/drukhari-succubus"
+      },
+      {
+        store: "Warhammer Official",
+        price: 29,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Succubus-2014?queryID=b93d663ea699076e320ef31f71318b4d"
       }
     ]
   },
@@ -14095,6 +17796,12 @@ export const Products: Product[] = [
         price: 42,
         inStock: false,
         url: "https://www.warforless.com.au/~28178942"
+      },
+      {
+        store: "Warhammer Official",
+        price: 47,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Eldar-Support-Weapon?queryID=293e4f996bd2e083ae6934220da2fa8e"
       }
     ]
   },
@@ -14112,6 +17819,12 @@ export const Products: Product[] = [
         price: 79,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-swooping-hawks"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-swooping-hawks-2025?queryID=8a918d167f4e9901a358256fec223514"
       }
     ]
   },
@@ -14129,6 +17842,12 @@ export const Products: Product[] = [
         price: 52.5,
         inStock: false,
         url: "https://www.warforless.com.au/adeptus-mechanicus-sydonian-skatros"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/adeptus-mechanicus-sydonian-skatros-2023?queryID=470f8e0e426a988dc463793863e2af93"
       }
     ]
   },
@@ -14146,6 +17865,12 @@ export const Products: Product[] = [
         price: 87,
         inStock: false,
         url: "https://www.warforless.com.au/~88631739"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/The-Vengeful-Allegiance-2019?queryID=b86f2068ad8d344f5baf7e325361001b"
       }
     ]
   },
@@ -14163,6 +17888,12 @@ export const Products: Product[] = [
         price: 210,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-szarekh-the-silent-king"
+      },
+      {
+        store: "Warhammer Official",
+        price: 280,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Szarekh-The-Silent-King-2020?queryID=5320b5c2237b9b556fc96fb37208a7ae"
       }
     ]
   },
@@ -14180,6 +17911,12 @@ export const Products: Product[] = [
         price: 176.3,
         inStock: false,
         url: "https://www.warforless.com.au/combat-patrol-tau-empire~57422401"
+      },
+      {
+        store: "Warhammer Official",
+        price: 98,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tau-Empire-Commander-2017?queryID=e24e93fdb5d39ddfb66e94d3eb30252d"
       }
     ]
   },
@@ -14197,6 +17934,12 @@ export const Products: Product[] = [
         price: 130,
         inStock: false,
         url: "https://www.warforless.com.au/legiones-astartes-mkiv-tactical-squad"
+      },
+      {
+        store: "Warhammer Official",
+        price: 81,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marine-Tactical-Squad-2020?queryID=5d5418a6a5bc913fc57b05a200b91d2b"
       }
     ]
   },
@@ -14214,6 +17957,12 @@ export const Products: Product[] = [
         price: 87,
         inStock: false,
         url: "https://www.warforless.com.au/talons-of-the-emperor-valerian-and-aleya"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Talons-Of-The-Emperor-Valerian-And-Aleya-2020?queryID=b9534282aa2a026000e8823c674740c8"
       }
     ]
   },
@@ -14231,6 +17980,12 @@ export const Products: Product[] = [
         price: 64.5,
         inStock: false,
         url: "https://www.warforless.com.au/drukhari-talos-2021"
+      },
+      {
+        store: "Warhammer Official",
+        price: 86,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dark-Eldar-Talos-Pain-Engine-2018?queryID=0a24652cb4725afe293c17135fbe5322"
       }
     ]
   },
@@ -14248,6 +18003,12 @@ export const Products: Product[] = [
         price: 59,
         inStock: false,
         url: "https://www.warforless.com.au/~138724625"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/necromunda-palanite-enforcer-tauros-venator-2023?queryID=9af30d42010942605c9d170203606b33"
       }
     ]
   },
@@ -14265,6 +18026,12 @@ export const Products: Product[] = [
         price: 50.3,
         inStock: false,
         url: "https://www.warforless.com.au/tech-priest-dominus"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ad-Mec-Tech-Priest-Dominus?queryID=bd67bb3aba45b728b5973f78fde98655"
       }
     ]
   },
@@ -14282,6 +18049,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/tech-priest-enginseer"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Astra-Militarum-Tech-Priest-Enginseer?queryID=da5c90b3c71eb4574e572749c94eb439"
       }
     ]
   },
@@ -14299,6 +18072,12 @@ export const Products: Product[] = [
         price: 50.3,
         inStock: false,
         url: "https://www.warforless.com.au/tech-priest-manipulus"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adeptus-Mechanicus-Tech-priest-Manipulus-2020?queryID=0f13e98be23cf8024a3a569da3dfa0f3"
       }
     ]
   },
@@ -14316,6 +18095,12 @@ export const Products: Product[] = [
         price: 50.3,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-primaris-techmarine"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Primaris-Techmarine-2020?queryID=69b8077e4e1c8504b93340f37c4e437d"
       }
     ]
   },
@@ -14333,6 +18118,12 @@ export const Products: Product[] = [
         price: 41.6,
         inStock: false,
         url: "https://www.warforless.com.au/adeptus-mechanicus-technoarchaeologist"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/adeptus-mechanicus-technoarchaeologist-2022?queryID=d0817a8071d73fe1cd1dfad41185a099"
       }
     ]
   },
@@ -14350,6 +18141,12 @@ export const Products: Product[] = [
         price: 42.8,
         inStock: false,
         url: "https://www.warforless.com.au/militarum-tempestus-scions-command-squad"
+      },
+      {
+        store: "Warhammer Official",
+        price: 57,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Militarum-Tempestus-Scions-2017?queryID=f4236dae0170f030a3ae2e7f426beb32"
       }
     ]
   },
@@ -14367,6 +18164,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-termagants~18439702"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tyranids-termagants-2023?queryID=9ad67d55a7654d85323340bad71893b9"
       }
     ]
   },
@@ -14384,6 +18187,12 @@ export const Products: Product[] = [
         price: 77,
         inStock: false,
         url: "https://www.warforless.com.au/~22789987"
+      },
+      {
+        store: "Warhammer Official",
+        price: 98,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marine-Terminator-Close-Combat%20Squad-2020?queryID=305fac8c6c4fbea151d885c64ce31a4c"
       }
     ]
   },
@@ -14401,6 +18210,12 @@ export const Products: Product[] = [
         price: 69.8,
         inStock: false,
         url: "https://www.warforless.com.au/grey-knights-brotherhood-paladin-terminator-squad"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-marines-terminator-squad-2023?queryID=4e29f285500cdc5ef95defc76b9bddca"
       }
     ]
   },
@@ -14418,6 +18233,12 @@ export const Products: Product[] = [
         price: 81.8,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-tyrannofex"
+      },
+      {
+        store: "Warhammer Official",
+        price: 109,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tyranid-Tervigon?queryID=3f0bbd1f4733e48ec28ed4636c369567"
       }
     ]
   },
@@ -14435,6 +18256,12 @@ export const Products: Product[] = [
         price: 44.25,
         inStock: false,
         url: "https://www.warforless.com.au/daemons-of-tzeentch-the-changeling"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Idoneth-Deepkin-Akhelian-Guard-2018?queryID=bf6143e17f6ce9385307d0928cda3235"
       }
     ]
   },
@@ -14452,6 +18279,12 @@ export const Products: Product[] = [
         price: 87,
         inStock: false,
         url: "https://www.warforless.com.au/~59545819"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/The-Contorted-Epitome-2019?queryID=bdff997264296da420d8933a2ecff650"
       }
     ]
   },
@@ -14469,6 +18302,12 @@ export const Products: Product[] = [
         price: 39,
         inStock: false,
         url: "https://www.warforless.com.au/daemons-of-slaanesh-the-masque"
+      },
+      {
+        store: "Warhammer Official",
+        price: 52,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/The-Masque-2019?queryID=220e8b05f10aef0416f90d86b2ab65a8"
       }
     ]
   },
@@ -14486,6 +18325,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/blood-angels-the-sanguinor"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/blood-angels-the-sanguinor-2024?queryID=708d1aedf9f7057b2d15773ed879750b"
       }
     ]
   },
@@ -14503,6 +18348,12 @@ export const Products: Product[] = [
         price: 23,
         inStock: false,
         url: "https://www.warforless.com.au/saints-and-martyrs-omnibus-pb"
+      },
+      {
+        store: "Warhammer Official",
+        price: 198,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-The-Triumph-Of-St-Katherine-2020?queryID=14dbedbea40eeb5e682d07d068fda57c"
       }
     ]
   },
@@ -14520,6 +18371,12 @@ export const Products: Product[] = [
         price: 50,
         inStock: false,
         url: "https://www.warforless.com.au/the-visarch"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-the-visarch-2022?queryID=8539dbc52518734c22057a3f76aa367e"
       }
     ]
   },
@@ -14537,6 +18394,12 @@ export const Products: Product[] = [
         price: 85,
         inStock: false,
         url: "https://www.warforless.com.au/yncarne"
+      },
+      {
+        store: "Warhammer Official",
+        price: 94.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-the-yncarne-2022?queryID=25b9e17e36270accfef69e0485c1a772"
       }
     ]
   },
@@ -14554,6 +18417,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-thunderwolf-cavalry-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Thunderwolf-Cavalry-2020?queryID=d89db2b0ceddf610b38433514452e1ff"
       }
     ]
   },
@@ -14571,6 +18440,12 @@ export const Products: Product[] = [
         price: 95,
         inStock: false,
         url: "https://www.warforless.com.au/~88631657"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tidewall-Droneport?queryID=304b52be0d3b5e5416c0ad1bd8efbc12"
       }
     ]
   },
@@ -14588,6 +18463,12 @@ export const Products: Product[] = [
         price: 87,
         inStock: false,
         url: "https://www.warforless.com.au/tau-empire-tidewall-shieldline"
+      },
+      {
+        store: "Warhammer Official",
+        price: 116,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tidewall-Shieldline?queryID=be16fe44560daf6a320e405f662f60b9"
       }
     ]
   },
@@ -14599,7 +18480,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 2653,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/mars-pattern-warlord-titan-body?queryID=78a17a718557e302061384c3b845c0ac"
+      }
+    ]
   },
   {
     id: "740",
@@ -14615,6 +18503,12 @@ export const Products: Product[] = [
         price: 69,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-tomb-blades-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 92,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Necron-Tomb-Blades-2020?queryID=a341cbf9ecb2ef2c970350c360212654"
       }
     ]
   },
@@ -14632,6 +18526,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/imperial-fists-tor-garadon"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Imperial-Fists-Tor-Garadon-2020?queryID=4523f1741fd263685163e7a1e7635531"
       }
     ]
   },
@@ -14649,6 +18549,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warforless.com.au/emperors-children-tormentors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 120,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/emperors-children-tormentors-2025?queryID=87703a56a562d454d356da7328ecf1d4"
       }
     ]
   },
@@ -14666,6 +18572,12 @@ export const Products: Product[] = [
         price: 51,
         inStock: false,
         url: "https://www.warforless.com.au/~32368160"
+      },
+      {
+        store: "Warhammer Official",
+        price: 32,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Necron-Trazyn-the-Infinite?queryID=c2f914911446a321802bf7a45b7587f3"
       }
     ]
   },
@@ -14683,6 +18595,12 @@ export const Products: Product[] = [
         price: 68.3,
         inStock: false,
         url: "https://www.warforless.com.au/necrons-triarch-stalker-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 91,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Triarch-Stalker-2020?queryID=166403138f36abc7331916457e4e5489"
       }
     ]
   },
@@ -14700,6 +18618,12 @@ export const Products: Product[] = [
         price: 52.5,
         inStock: false,
         url: "https://www.warforless.com.au/orks-trukk"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ork-Trukk?queryID=ad8052c5fa95c561e0902f1e64487b52"
       }
     ]
   },
@@ -14717,6 +18641,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/death-guard-typhus-herald-of-the-plague-god"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Death-Guard-Typhus-2020?queryID=1ae2855af05b4e28042bde6c7738094c"
       }
     ]
   },
@@ -14734,6 +18664,12 @@ export const Products: Product[] = [
         price: 117,
         inStock: false,
         url: "https://www.warforless.com.au/~3241157"
+      },
+      {
+        store: "Warhammer Official",
+        price: 130,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tyranid-Harpy?queryID=ff6568f4e1286d10230cb9949e463e38"
       }
     ]
   },
@@ -14745,7 +18681,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 702,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tyranid-Harridan?queryID=44771c41b2abf8aaf43ff59d4bbb646f"
+      }
+    ]
   },
   {
     id: "749",
@@ -14755,7 +18698,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 2653,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/mars-pattern-warlord-titan-body?queryID=2f2c793de217e0843bd41463fbbcb44e"
+      }
+    ]
   },
   {
     id: "750",
@@ -14771,6 +18721,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warforless.com.au/~88631644"
+      },
+      {
+        store: "Warhammer Official",
+        price: 161,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-40000-starter-set-2023-eng?queryID=7e48a961a49e8478ef93cc6685bddae6"
       }
     ]
   },
@@ -14788,6 +18744,12 @@ export const Products: Product[] = [
         price: 56.3,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-warriors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 161,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-40000-starter-set-2023-eng?queryID=b81f0418c0f73878688909951f0ee943"
       }
     ]
   },
@@ -14805,6 +18767,12 @@ export const Products: Product[] = [
         price: 45,
         inStock: false,
         url: "https://www.warforless.com.au/tyranid-paint-set"
+      },
+      {
+        store: "Warhammer Official",
+        price: 60,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/termagants-and-ripper-swarm-and-paints-gb-es-eu-ie-au-nz-us-ww-2023?queryID=7d494677470912e717d0543b355116bd"
       }
     ]
   },
@@ -14822,6 +18790,12 @@ export const Products: Product[] = [
         price: 86,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-tyrannocyte"
+      },
+      {
+        store: "Warhammer Official",
+        price: 96,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tyrannocyte?queryID=6fd5683bed7c0231a7ca322f874b5c95"
       }
     ]
   },
@@ -14839,6 +18813,12 @@ export const Products: Product[] = [
         price: 62.3,
         inStock: false,
         url: "https://www.warforless.com.au/tzeentch-arcanites-tzaangor-enlightened"
+      },
+      {
+        store: "Warhammer Official",
+        price: 83,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tzaangor-Enlightened?queryID=3fed21a6c9669838091ed0abdcc20618"
       }
     ]
   },
@@ -14856,6 +18836,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/tzeentch-arcanites-tzaangor-shaman"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tzaangor-Shaman?queryID=021ea86ac43770f10c6592a187aa509c"
       }
     ]
   },
@@ -14873,6 +18859,12 @@ export const Products: Product[] = [
         price: 67.5,
         inStock: false,
         url: "https://www.warforless.com.au/tzeentch-arcanites-tzaangors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 23.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tzaangor-Upgrades-2018?queryID=7864dd250e395276e986234c7540a477"
       }
     ]
   },
@@ -14890,6 +18882,12 @@ export const Products: Product[] = [
         price: 67.5,
         inStock: false,
         url: "https://www.warforless.com.au/tzeentch-arcanites-tzaangors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 23.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tzaangor-Upgrades-2018?queryID=de87cd94efe303bb5bef2e19d7bfd773"
       }
     ]
   },
@@ -14901,7 +18899,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 427,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tau-Tigershark-AX-1-0-2017?queryID=87d9c9348365d799ddbdda5701fafb54"
+      }
+    ]
   },
   {
     id: "759",
@@ -14917,6 +18922,12 @@ export const Products: Product[] = [
         price: 46.5,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-ulrik-the-slayer-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 62,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Wolves-Ulrik-the-Slayer-2020?queryID=6682aac5be784036d3718416999171a1"
       }
     ]
   },
@@ -14934,6 +18945,12 @@ export const Products: Product[] = [
         price: 101.3,
         inStock: false,
         url: "https://www.warforless.com.au/astra-militarum-valkyrie"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/blood-bowl-norse-team-2022?queryID=8aebbd975d89783c04f17f92e1213254"
       }
     ]
   },
@@ -14945,7 +18962,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warscroll-cards-kharadron-overlords-2025-eng?queryID=08703f7b6d3da85c94b21ab091cf1b5f"
+      }
+    ]
   },
   {
     id: "762",
@@ -14961,6 +18985,12 @@ export const Products: Product[] = [
         price: 67.5,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-vanguard-veteran-squad"
+      },
+      {
+        store: "Warhammer Official",
+        price: 90,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marine-Vanguard-Veteran-Squad-2020?queryID=97069781eb3bda7367e57cd4cfb47a4f"
       }
     ]
   },
@@ -14978,6 +19008,12 @@ export const Products: Product[] = [
         price: 129.4,
         inStock: false,
         url: "https://www.warforless.com.au/chaos-space-marine-vashtorr-the-arkifane"
+      },
+      {
+        store: "Warhammer Official",
+        price: 172.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-vashtorr-the-arkifane-2023?queryID=6f8da166da41e7e724f412c6564cc4ce"
       }
     ]
   },
@@ -14995,6 +19031,12 @@ export const Products: Product[] = [
         price: 66.8,
         inStock: false,
         url: "https://www.warforless.com.au/space-marines-venerable-dreadnought"
+      },
+      {
+        store: "Warhammer Official",
+        price: 89,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marine-Venerable-Dreadnought-2020?queryID=8324cc0a1d07f4b1533e81b68ababed2"
       }
     ]
   },
@@ -15012,6 +19054,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/drukhari-venom-2021"
+      },
+      {
+        store: "Warhammer Official",
+        price: 134,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-warpforged-venomcrawler-and-obliterators-2022?queryID=148781dc46d1190be625b7f032622281"
       }
     ]
   },
@@ -15029,6 +19077,12 @@ export const Products: Product[] = [
         price: 120,
         inStock: false,
         url: "https://www.warforless.com.au/warpforged-venomcrawler-and-obliterator"
+      },
+      {
+        store: "Warhammer Official",
+        price: 134,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-warpforged-venomcrawler-and-obliterators-2022?queryID=d21400e946fa7e26fbd5371dd5f2cd28"
       }
     ]
   },
@@ -15046,6 +19100,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/vertus-praetors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adeptus-Custodes-Vertus-Praetors-2018?queryID=3712a35c4b550555a609bbb7e7621011"
       }
     ]
   },
@@ -15063,6 +19123,12 @@ export const Products: Product[] = [
         price: 47,
         inStock: false,
         url: "https://www.warforless.com.au/officio-assassinorum-vindicare-assassin"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/imperial-agents-vindicare-assassin-2024?queryID=3bef4105b5e6e5b2d8621a91bbf76f53"
       }
     ]
   },
@@ -15080,6 +19146,12 @@ export const Products: Product[] = [
         price: 93.8,
         inStock: false,
         url: "https://www.warforless.com.au/legiones-astartes-vindicator-siege-tank"
+      },
+      {
+        store: "Warhammer Official",
+        price: 95,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marine-Vindicator-2020?queryID=1de78e4a74b335d2daae8ae7ece361f3"
       }
     ]
   },
@@ -15091,7 +19163,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/GW-Virtual-Gift-Voucher?queryID=cfb5cb10e8f2b4dcaf44ad5ab8b271af"
+      }
+    ]
   },
   {
     id: "771",
@@ -15107,6 +19186,12 @@ export const Products: Product[] = [
         price: 117,
         inStock: false,
         url: "https://www.warforless.com.au/drukhari-voidraven-bomber"
+      },
+      {
+        store: "Warhammer Official",
+        price: 130,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Voidraven-Bomber?queryID=e34ce979bdbe77399b9fc2682d07785c"
       }
     ]
   },
@@ -15124,6 +19209,12 @@ export const Products: Product[] = [
         price: 64.5,
         inStock: false,
         url: "https://www.warforless.com.au/~34371282"
+      },
+      {
+        store: "Warhammer Official",
+        price: 86,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tyranids-von-ryans-leapers-2023?queryID=3a5db43c42b49436b009ad3339034bd1"
       }
     ]
   },
@@ -15141,6 +19232,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/salamanders-vulkan-hestan"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/salamanders-vulkan-hestan-2025?queryID=cdabd3e8c0a92608139d8993efe00353"
       }
     ]
   },
@@ -15158,6 +19255,12 @@ export const Products: Product[] = [
         price: 52,
         inStock: false,
         url: "https://www.warforless.com.au/~36400477"
+      },
+      {
+        store: "Warhammer Official",
+        price: 71,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Endless-Spells-Daughters-Of-Khaine-2021?queryID=5c559aa1995675efbd8cb25481dca565"
       }
     ]
   },
@@ -15175,6 +19278,12 @@ export const Products: Product[] = [
         price: 120,
         inStock: false,
         url: "https://www.warforless.com.au/chaos-knights-wardogs"
+      },
+      {
+        store: "Warhammer Official",
+        price: 160,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/chaos-knights-war-dog-brigand-2022?queryID=77e7853552f3255dd844e492edbee6de"
       }
     ]
   },
@@ -15192,6 +19301,12 @@ export const Products: Product[] = [
         price: 120,
         inStock: false,
         url: "https://www.warforless.com.au/imperial-knights-knight-armigers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 160,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/war-dog-executioner-2022?queryID=c44dd9f52ceddc3e9965c77cf7cd083e"
       }
     ]
   },
@@ -15209,6 +19324,12 @@ export const Products: Product[] = [
         price: 120,
         inStock: false,
         url: "https://www.warforless.com.au/imperial-knights-knight-armigers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 160,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/war-dog-huntsman-2022?queryID=67c00417efc5ebd90484c6b4e9d1ee54"
       }
     ]
   },
@@ -15226,6 +19347,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-war-walker"
+      },
+      {
+        store: "Warhammer Official",
+        price: 140,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-war-walkers-2025?queryID=7ada110be3724b5eef6162e679dee96a"
       }
     ]
   },
@@ -15243,6 +19370,12 @@ export const Products: Product[] = [
         price: 50.3,
         inStock: false,
         url: "https://www.warforless.com.au/orks-ork-warboss-in-mega-armour"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/ork-warboss-in-mega-armour-2022?queryID=c2b59ef13c309209559ef408f25cf5d4"
       }
     ]
   },
@@ -15260,6 +19393,12 @@ export const Products: Product[] = [
         price: 273.8,
         inStock: false,
         url: "https://www.warforless.com.au/warhammer-40-000-boarding-actions-terrain-set"
+      },
+      {
+        store: "Warhammer Official",
+        price: 365,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/40k-boarding-actions-terrain-set-2022?queryID=a482eace702d64ecf09a00bccc05c40e"
       }
     ]
   },
@@ -15277,6 +19416,12 @@ export const Products: Product[] = [
         price: 240,
         inStock: false,
         url: "https://www.warforless.com.au/warhammer-40-000-command-edition"
+      },
+      {
+        store: "Warhammer Official",
+        price: 320,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-40000-ultimate-starter-set-2023-eng?queryID=d28d8cf0c311c248d135840791aa7c5d"
       }
     ]
   },
@@ -15294,6 +19439,12 @@ export const Products: Product[] = [
         price: 82.5,
         inStock: false,
         url: "https://www.warforless.com.au/warhammer-40-000-core-rule-book"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-40000-core-book-2023-eng?queryID=d869d2c6a2e6420fcd7bde500f5ed2e2"
       }
     ]
   },
@@ -15311,6 +19462,12 @@ export const Products: Product[] = [
         price: 68.3,
         inStock: false,
         url: "https://www.warforless.com.au/warhammer-40-000-recruit-edition"
+      },
+      {
+        store: "Warhammer Official",
+        price: 161,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-40000-starter-set-2023-eng?queryID=292258b00c234988a020bfd9955bb366"
       }
     ]
   },
@@ -15328,6 +19485,12 @@ export const Products: Product[] = [
         price: 121,
         inStock: false,
         url: "https://www.warforless.com.au/warhammer-40-000-elite-edition"
+      },
+      {
+        store: "Warhammer Official",
+        price: 161,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-40000-starter-set-2023-eng?queryID=0400fafa2c7163fe5dd21167caa9d4a2"
       }
     ]
   },
@@ -15345,6 +19508,12 @@ export const Products: Product[] = [
         price: 273.8,
         inStock: false,
         url: "https://www.warforless.com.au/warhammer-40-000-boarding-actions-terrain-set"
+      },
+      {
+        store: "Warhammer Official",
+        price: 365,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/40k-boarding-actions-terrain-set-2022?queryID=e1ab2d19e033680a8e15ab20b43404f9"
       }
     ]
   },
@@ -15362,6 +19531,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/warhammer-40k-paints-and-tools-set"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-40000-paints-and-tools-set-gb-es-eu-ie-au-nz-us-ww-2023?queryID=f1833667861d6c73644e71c8b58ffe99"
       }
     ]
   },
@@ -15373,7 +19548,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 280,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/combat-patrol-astra-militarum-2025?queryID=4bb3b9026d375393490aed77ed00459a"
+      }
+    ]
   },
   {
     id: "788",
@@ -15383,7 +19565,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 280,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/combat-patrol-imperial-agents-2024?queryID=e438ba69d7ced902525646fc8b8670cf"
+      }
+    ]
   },
   {
     id: "789",
@@ -15393,7 +19582,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-plus-aeldari-infinitys-lament-2025-year-5?queryID=ed85a4eed3c67b6db692bb295c4c517e"
+      }
+    ]
   },
   {
     id: "790",
@@ -15409,6 +19605,12 @@ export const Products: Product[] = [
         price: 65,
         inStock: false,
         url: "https://www.warforless.com.au/doomfire-warlocks-dark-riders"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-warlocks-2022?queryID=dbb046740f4fad49cb104ddb33533af7"
       }
     ]
   },
@@ -15426,6 +19628,12 @@ export const Products: Product[] = [
         price: 126,
         inStock: false,
         url: "https://www.warforless.com.au/legions-imperialis-warbringer-nemesis-titan-w-quak"
+      },
+      {
+        store: "Warhammer Official",
+        price: 2653,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/mars-pattern-warlord-titan-body?queryID=ff53d26b6aaac7e27159c86f322e4d2b"
       }
     ]
   },
@@ -15443,6 +19651,12 @@ export const Products: Product[] = [
         price: 79,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-warp-spiders"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-warp-spiders-2025?queryID=853956c8fe0fcd737eb6c86623a50db7"
       }
     ]
   },
@@ -15460,6 +19674,12 @@ export const Products: Product[] = [
         price: 55.5,
         inStock: false,
         url: "https://www.warforless.com.au/chaos-space-marines-warpsmith"
+      },
+      {
+        store: "Warhammer Official",
+        price: 74,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/chaos-space-marines-warpsmith-2022?queryID=2bf3f2207a3a311ae4fd3601bbbe89e9"
       }
     ]
   },
@@ -15477,6 +19697,12 @@ export const Products: Product[] = [
         price: 50,
         inStock: false,
         url: "https://www.warforless.com.au/imperial-agents-deathwatch-captain-artemis"
+      },
+      {
+        store: "Warhammer Official",
+        price: 66,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/imperial-agents-deathwatch-captain-artemis-2024?queryID=2d37fe03bee4199d58af26b0564acdb4"
       }
     ]
   },
@@ -15494,6 +19720,12 @@ export const Products: Product[] = [
         price: 30,
         inStock: false,
         url: "https://www.warforless.com.au/deathwatch-watch-master-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 40,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Deathwatch-Watch-Master-2020?queryID=e6e9b82f368ddc1f4bbcb4d7c6e1eda9"
       }
     ]
   },
@@ -15511,6 +19743,12 @@ export const Products: Product[] = [
         price: 83,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-wave-serpent"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-wave-serpent-2025?queryID=b437f159b12b45e80af1aed6c7cee456"
       }
     ]
   },
@@ -15528,6 +19766,12 @@ export const Products: Product[] = [
         price: 41,
         inStock: false,
         url: "https://www.warforless.com.au/orks-weirdboy"
+      },
+      {
+        store: "Warhammer Official",
+        price: 45,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ork-Weirdboy?queryID=16037b5a4ac91b5dda0c4f7adf7ce9b8"
       }
     ]
   },
@@ -15545,6 +19789,12 @@ export const Products: Product[] = [
         price: 65,
         inStock: false,
         url: "https://www.warforless.com.au/legions-imperialis-whirlwind-skorpius-missile-tank"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Space-Marine-Whirlwind?queryID=2e283655a88a9524681cf348b30dac9e"
       }
     ]
   },
@@ -15562,6 +19812,12 @@ export const Products: Product[] = [
         price: 34.5,
         inStock: false,
         url: "https://www.warforless.com.au/white-scars-primaris-upgrades"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/White-Scar-Primaris-Upgrades-2020?queryID=c5f45032445e72172baf5b3a5ee762ca"
       }
     ]
   },
@@ -15579,6 +19835,12 @@ export const Products: Product[] = [
         price: 60.8,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-windriders"
+      },
+      {
+        store: "Warhammer Official",
+        price: 81,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Eldar-Windriders-2017?queryID=3666fada5892e53bd2d78c47b5fa66c2"
       }
     ]
   },
@@ -15596,6 +19858,12 @@ export const Products: Product[] = [
         price: 66,
         inStock: false,
         url: "https://www.warforless.com.au/sisters-of-silence-vigilator-prosecutors-witchseek"
+      },
+      {
+        store: "Warhammer Official",
+        price: 88,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Witchseeker-Squad?queryID=9c5de10e575af2cfca02332a5f97ca77"
       }
     ]
   },
@@ -15613,6 +19881,12 @@ export const Products: Product[] = [
         price: 56,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-wolf-guard-battle-leader"
+      },
+      {
+        store: "Warhammer Official",
+        price: 74,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-wolves-wolf-guard-battle-leader-2025?queryID=90287c07a701e1b04cb900b0628142f4"
       }
     ]
   },
@@ -15630,6 +19904,12 @@ export const Products: Product[] = [
         price: 83,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-wolf-guard-headtakers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-wolves-wolf-guard-headtakers-2025?queryID=bed85d51ff40ae6cd43a8b620878d2e9"
       }
     ]
   },
@@ -15647,6 +19927,12 @@ export const Products: Product[] = [
         price: 83,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-wolf-guard-terminators"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-wolves-wolf-guard-terminators-2025?queryID=50e10917e1d51a9f34bb795f4269970b"
       }
     ]
   },
@@ -15664,6 +19950,12 @@ export const Products: Product[] = [
         price: 53,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-wolf-priest"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/space-wolves-wolf-priest-2025?queryID=a9935c905be252b9be1cc6b2fbbcf0b1"
       }
     ]
   },
@@ -15681,6 +19973,12 @@ export const Products: Product[] = [
         price: 191,
         inStock: false,
         url: "https://www.warforless.com.au/combat-patrol-drukhari~179636012"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/drukhari-wracks-2025?queryID=32ae5a464c757960889e8b0119c7e0a2"
       }
     ]
   },
@@ -15698,6 +19996,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-wraithguard"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Eldar-Wraithguard-2017?queryID=a231ab70b98d251c0898e200a6ccdb14"
       }
     ]
   },
@@ -15715,6 +20019,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warforless.com.au/aeldari-wraithknight"
+      },
+      {
+        store: "Warhammer Official",
+        price: 140,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Eldar-Wraithknight-2017?queryID=0af3d007dcea3bdd51a041f58baebea4"
       }
     ]
   },
@@ -15732,6 +20042,12 @@ export const Products: Product[] = [
         price: 64.5,
         inStock: false,
         url: "https://www.warforless.com.au/~41140507"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warhammer-plus-aeldari-infinitys-lament-2025-year-5?queryID=a7d6741438ddc7a45f0338954976350e"
       }
     ]
   },
@@ -15749,6 +20065,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/space-wolves-wulfen-2020"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Blood-Bowl-Necromantic-Horror-Team-2020?queryID=a2d8065bbbf4fe49561b4210a6e45291"
       }
     ]
   },
@@ -15766,6 +20088,12 @@ export const Products: Product[] = [
         price: 49.5,
         inStock: false,
         url: "https://www.warforless.com.au/drukhari-wyches-2021"
+      },
+      {
+        store: "Warhammer Official",
+        price: 66,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dark-Eldar-Wyches?queryID=349395cbf38282843566bbd747ef3b5d"
       }
     ]
   },
@@ -15783,6 +20111,12 @@ export const Products: Product[] = [
         price: 75,
         inStock: false,
         url: "https://www.warforless.com.au/tau-empire-xv104-riptide-battlesuit"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tau-Empire-XV104-Riptide-Battlesuit-2017?queryID=cc879a0f79284f803576dc51d6c2ee4d"
       }
     ]
   },
@@ -15794,7 +20128,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 140,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/XV8-Crisis-Battlesuits?queryID=7a51ca4fff278d6345f8de5c326a812e"
+      }
+    ]
   },
   {
     id: "814",
@@ -15810,6 +20151,12 @@ export const Products: Product[] = [
         price: 64.5,
         inStock: false,
         url: "https://www.warforless.com.au/xv88-broadside-battlesuit"
+      },
+      {
+        store: "Warhammer Official",
+        price: 86,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Tau-Empire-XV88-Broadside-Battlesuit-2017?queryID=9a9be498eb5b1473d83013920035af87"
       }
     ]
   },
@@ -15827,6 +20174,12 @@ export const Products: Product[] = [
         price: 105,
         inStock: false,
         url: "https://www.warforless.com.au/xv95-ghostkeel-battlesuit"
+      },
+      {
+        store: "Warhammer Official",
+        price: 140,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/XV95-Ghostkeel-Battlesuit?queryID=526877198b1c3d9bba94ceb8822014f2"
       }
     ]
   },
@@ -15844,6 +20197,12 @@ export const Products: Product[] = [
         price: 67,
         inStock: false,
         url: "https://www.warforless.com.au/yvraine"
+      },
+      {
+        store: "Warhammer Official",
+        price: 74,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/aeldari-yvraine-2022?queryID=d75f6430409296c1c53bdd171e3f4898"
       }
     ]
   },
@@ -15861,6 +20220,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/seraphim-zephyrim-squad"
+      },
+      {
+        store: "Warhammer Official",
+        price: 104,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Adepta-Sororitas-Zephyrim-Squad-2020?queryID=c92e4190a56b041adbbe7a6ff64d20c9"
       }
     ]
   },
@@ -15878,6 +20243,12 @@ export const Products: Product[] = [
         price: 77.3,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-venomthropes"
+      },
+      {
+        store: "Warhammer Official",
+        price: 103,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Zoanthropes?queryID=b173bc14fb8068c58f9e1c199e8e68a9"
       }
     ]
   },
@@ -15895,6 +20266,12 @@ export const Products: Product[] = [
         price: 56.3,
         inStock: false,
         url: "https://www.warforless.com.au/orks-zodgrod-wortsnagga"
+      },
+      {
+        store: "Warhammer Official",
+        price: 75,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/orks-zodgrod-wortsnagga-2021?queryID=1a37dbe60afa39ef0da0a49a235a7508"
       }
     ]
   },
@@ -15912,6 +20289,12 @@ export const Products: Product[] = [
         price: 180,
         inStock: false,
         url: "https://www.warforless.com.au/spearhead-soulblight-gravelords-deathrattle-tomb-h"
+      },
+      {
+        store: "Warhammer Official",
+        price: 240,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead-soulblight-gravelords-deathrattle-tomb-host-2025?queryID=9377d5f3655469a3e28cf16ceca78e6e"
       }
     ]
   },
@@ -15929,6 +20312,12 @@ export const Products: Product[] = [
         price: 180,
         inStock: false,
         url: "https://www.warforless.com.au/spearhead-snarlpack-huntaz"
+      },
+      {
+        store: "Warhammer Official",
+        price: 240,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead-gloomspite-gitz-snarlpack-huntaz-2025?queryID=e6c35991b8c34e23af24b887b91491af"
       }
     ]
   },
@@ -15946,6 +20335,12 @@ export const Products: Product[] = [
         price: 86,
         inStock: false,
         url: "https://www.warforless.com.au/~59706000"
+      },
+      {
+        store: "Warhammer Official",
+        price: 95,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Skaven-Hell-Pit-Abomination?queryID=49ef84b91e9627459184ce5a138e8c02"
       }
     ]
   },
@@ -15963,6 +20358,12 @@ export const Products: Product[] = [
         price: 75,
         inStock: false,
         url: "https://www.warforless.com.au/warcry-royal-beastflayers-warband"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warcry-royal-beastflayers-warband-2023?queryID=69291e222b9e278a7ccc478dec42d34e"
       }
     ]
   },
@@ -15980,6 +20381,12 @@ export const Products: Product[] = [
         price: 82.5,
         inStock: false,
         url: "https://www.warforless.com.au/seraphon-raptadon-hunters"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/seraphon-raptadon-chargers-2023?queryID=577c58ee978481d1c123800c18bc8e18"
       }
     ]
   },
@@ -15997,6 +20404,12 @@ export const Products: Product[] = [
         price: 112.5,
         inStock: false,
         url: "https://www.warforless.com.au/seraphon-slann-starmaster"
+      },
+      {
+        store: "Warhammer Official",
+        price: 150,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/seraphon-slann-starmaster-2023?queryID=7bcc029e5dd0f47812a3e294642bcf36"
       }
     ]
   },
@@ -16014,6 +20427,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/seraphon-saurus-astrolith-bearer"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/seraphon-saurus-astrolith-bearer-2023?queryID=556160f75e17ad0d5ddd4e3eda5b04c1"
       }
     ]
   },
@@ -16031,6 +20450,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/seraphon-aggradon-lancers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/seraphon-aggradon-lancers-2023?queryID=21d9451d84c95eb05c5ff47e3cb6e03c"
       }
     ]
   },
@@ -16048,6 +20473,12 @@ export const Products: Product[] = [
         price: 70.9,
         inStock: false,
         url: "https://www.warforless.com.au/seraphon-spawn-of-chotec"
+      },
+      {
+        store: "Warhammer Official",
+        price: 94.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/seraphon-spawn-of-chotec-2023?queryID=6ad8baedfc62291a93ccf73d81a6641b"
       }
     ]
   },
@@ -16065,6 +20496,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/seraphon-kroxigor"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/seraphon-kroxigor-2023?queryID=df24d422a6ded6ce19509399e3414585"
       }
     ]
   },
@@ -16082,6 +20519,12 @@ export const Products: Product[] = [
         price: 75,
         inStock: false,
         url: "https://www.warforless.com.au/seraphon-saurus-scar-veteran-on-aggradon"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/seraphon-saurus-scar-veteran-on-aggradon-2023?queryID=e98eb6c08e33bdb79d01f9c0cf7e5e12"
       }
     ]
   },
@@ -16099,6 +20542,12 @@ export const Products: Product[] = [
         price: 75,
         inStock: false,
         url: "https://www.warforless.com.au/seraphon-skink-starseer"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/seraphon-skink-starseer-2023?queryID=08182559189075c0ad8190e37b4116ab"
       }
     ]
   },
@@ -16116,6 +20565,12 @@ export const Products: Product[] = [
         price: 48,
         inStock: false,
         url: "https://www.warforless.com.au/~1320433"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/soulblight-gravelords-ivya-volga-2023?queryID=1e6edbbafe514ab0e8c013cd8dae1aa0"
       }
     ]
   },
@@ -16133,6 +20588,12 @@ export const Products: Product[] = [
         price: 180,
         inStock: false,
         url: "https://www.warforless.com.au/spearhead-ossiarch-bonereapers-mortisan-elite"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/ossiarch-bonereapers-mortisan-ossifector-2023?queryID=3e954b57439f5afe68abe809f5dd30a9"
       }
     ]
   },
@@ -16150,6 +20611,12 @@ export const Products: Product[] = [
         price: 48,
         inStock: false,
         url: "https://www.warforless.com.au/kharadron-overlords-codewright"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/kharadron-overlords-codewright-2023?queryID=97ea9de29969ddd06d3137050b6f8aec"
       }
     ]
   },
@@ -16167,6 +20634,12 @@ export const Products: Product[] = [
         price: 48,
         inStock: false,
         url: "https://www.warforless.com.au/~2666"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/hedonites-of-slaanesh-lord-of-hubris-2023?queryID=5d48e996755589013d9e40b6d2613f3d"
       }
     ]
   },
@@ -16184,6 +20657,12 @@ export const Products: Product[] = [
         price: 48,
         inStock: false,
         url: "https://www.warforless.com.au/~2641"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/blades-of-khorne-realmgore-ritualist-2023?queryID=d425380d772ef09b58bebbf7ddb75264"
       }
     ]
   },
@@ -16195,7 +20674,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/gloomspite-gitz-snarlfang-riders-2023?queryID=609bff5a9ee8335628a61919e457c6b0"
+      }
+    ]
   },
   {
     id: "838",
@@ -16211,6 +20697,12 @@ export const Products: Product[] = [
         price: 41.6,
         inStock: false,
         url: "https://www.warforless.com.au/squigboss-with-gnasha-squig"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/gloomspite-gitz-squigboss-with-gnasha-squig-2023?queryID=a4db548c2f564029be970a2a626b3bcf"
       }
     ]
   },
@@ -16228,6 +20720,12 @@ export const Products: Product[] = [
         price: 48,
         inStock: false,
         url: "https://www.warforless.com.au/slaves-to-darkness-exalted-hero-of-chaos"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/slaves-to-darkness-exalted-hero-of-chaos-2023?queryID=131b78dd9625c19f39ad0f118c52acc5"
       }
     ]
   },
@@ -16245,6 +20743,12 @@ export const Products: Product[] = [
         price: 109,
         inStock: false,
         url: "https://www.warforless.com.au/warriors-of-chaos-chaos-warriors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/slaves-to-darkness-chaos-warriors-2023?queryID=05799320c5616d3bd7d7ee18a3277df3"
       }
     ]
   },
@@ -16262,6 +20766,12 @@ export const Products: Product[] = [
         price: 108.8,
         inStock: false,
         url: "https://www.warforless.com.au/slaves-to-darkness-daemon-prince"
+      },
+      {
+        store: "Warhammer Official",
+        price: 145,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/slaves-to-darkness-daemon-prince-2023?queryID=d3b306f2789adb9d373ea8533ee18300"
       }
     ]
   },
@@ -16279,6 +20789,12 @@ export const Products: Product[] = [
         price: 82.5,
         inStock: false,
         url: "https://www.warforless.com.au/slaves-to-darkness-ogroid-theridons"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/slaves-to-darkness-ogroid-theridons-2023?queryID=41902b7e357ce2f0be21e68b08600e27"
       }
     ]
   },
@@ -16296,6 +20812,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/slaves-to-darkness-chaos-chosen"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/slaves-to-darkness-chaos-chosen-2023?queryID=1421ec148951df46c28bbcb4b46fae60"
       }
     ]
   },
@@ -16307,7 +20829,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/slaves-to-darkness-eternus-blade-of-the-first-prince-2023?queryID=18bad1d13bcb442e50176d4650ce0f8f"
+      }
+    ]
   },
   {
     id: "845",
@@ -16323,6 +20852,12 @@ export const Products: Product[] = [
         price: 109,
         inStock: false,
         url: "https://www.warforless.com.au/warriors-of-chaos-chaos-knights"
+      },
+      {
+        store: "Warhammer Official",
+        price: 235,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/imperial-knights-knight-questoris-2025?queryID=77f9b76d8f7c839066bad4019015aff7"
       }
     ]
   },
@@ -16340,6 +20875,12 @@ export const Products: Product[] = [
         price: 64.5,
         inStock: false,
         url: "https://www.warforless.com.au/slaves-to-darkness-lord-on-karkadrak"
+      },
+      {
+        store: "Warhammer Official",
+        price: 86,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/slaves-to-darkness-lord-on-karkadrak-2023?queryID=d7ed7405378851390bc57437b708243f"
       }
     ]
   },
@@ -16357,6 +20898,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/warcry-compendium"
+      },
+      {
+        store: "Warhammer Official",
+        price: 100,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/khainite-shadowstalkers-2022?queryID=302cc44ea5d62487948b0d4f2e33c5d4"
       }
     ]
   },
@@ -16368,7 +20915,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 94.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/chaotic-beasts-2022?queryID=1e0d988d59b1c0dbc5e30cf262c38fdf"
+      }
+    ]
   },
   {
     id: "849",
@@ -16384,6 +20938,12 @@ export const Products: Product[] = [
         price: 48,
         inStock: false,
         url: "https://www.warforless.com.au/tzeentch-curseling-eye-of-tzeentch"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/tzeentch-curseling-eye-of-tzeentch-2022?queryID=8019a4497931d7b658b0cb982c9295ea"
       }
     ]
   },
@@ -16401,6 +20961,12 @@ export const Products: Product[] = [
         price: 41.6,
         inStock: false,
         url: "https://www.warforless.com.au/lumineth-realm-lords-scinary-enlightener"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/lumineth-scinari-enlightener-2022?queryID=57e5b3f23cd73a9c85e2955a385e6716"
       }
     ]
   },
@@ -16412,7 +20978,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 172.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/ogor-mawtribes-2022?queryID=fd35f1f77e8ad5dbf78ccb2f84dfbedc"
+      }
+    ]
   },
   {
     id: "852",
@@ -16428,6 +21001,12 @@ export const Products: Product[] = [
         price: 273.8,
         inStock: false,
         url: "https://www.warforless.com.au/sons-of-behemat-king-brodd"
+      },
+      {
+        store: "Warhammer Official",
+        price: 365,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/sons-of-behemat-king-brodd-2022?queryID=4a8737ab268c1c57c401b037521ae973"
       }
     ]
   },
@@ -16445,6 +21024,12 @@ export const Products: Product[] = [
         price: 69,
         inStock: false,
         url: "https://www.warforless.com.au/ogor-mawtribes-bloodpelt-hunter"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/ogor-mawtribes-bloodpelt-hunter-2022?queryID=2808b1d2ab8ca6a5dfeae25617d0046a"
       }
     ]
   },
@@ -16462,6 +21047,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/aos-krondspine-incarnate-of-ghur"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/age-of-sigmar-krondspine-incarnate-of-ghur-2022?queryID=58c81f01e204e485ee6b133d2cc5265a"
       }
     ]
   },
@@ -16479,6 +21070,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/kharadron-overlords-drekki-flynt"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/kharadron-overlords-drekki-flynt-2022?queryID=5f55df490cb0810d9cc3ff9c800cf858"
       }
     ]
   },
@@ -16496,6 +21093,12 @@ export const Products: Product[] = [
         price: 68,
         inStock: false,
         url: "https://www.warforless.com.au/sylvaneth-lady-of-vines"
+      },
+      {
+        store: "Warhammer Official",
+        price: 94.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/sylvaneth-lady-of-vines-2022?queryID=1d6b2eb7ceae6c06240c945e249baade"
       }
     ]
   },
@@ -16513,6 +21116,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/skaven-deathmaster"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/skaven-deathmaster-2022?queryID=4c105c63232de5d51271cb0ec5c91c64"
       }
     ]
   },
@@ -16530,6 +21139,12 @@ export const Products: Product[] = [
         price: 57.8,
         inStock: false,
         url: "https://www.warforless.com.au/warcry-centaurion-marshal"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/warcry-centaurion-marshal-2022?queryID=b13b518febee9cac6ea90bdc1047ad29"
       }
     ]
   },
@@ -16541,7 +21156,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/mibyllorr-darkfang-chaos-sorcerer-lord-2022?queryID=f90f18b6bb3a68d67c9f3f415658ec4e"
+      }
+    ]
   },
   {
     id: "860",
@@ -16557,6 +21179,12 @@ export const Products: Product[] = [
         price: 82.5,
         inStock: false,
         url: "https://www.warforless.com.au/sylvaneth-spiterider-lancers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/sylvaneth-revenant-seekers-2022?queryID=bd0c3a0987caf07676b600f23802583b"
       }
     ]
   },
@@ -16574,6 +21202,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/sylvaneth-gossamid-archers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/sylvaneth-gossamid-archers-2022?queryID=75854c75428c2216b0431c0dc44756ff"
       }
     ]
   },
@@ -16591,6 +21225,12 @@ export const Products: Product[] = [
         price: 41.25,
         inStock: false,
         url: "https://www.warforless.com.au/idoneth-deepkin-akhelian-thrallmaster"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/idoneth-deepkin-akhelian-thrallmaster-2022?queryID=a383f51b50f8c03f01b100311884da70"
       }
     ]
   },
@@ -16608,6 +21248,12 @@ export const Products: Product[] = [
         price: 58,
         inStock: false,
         url: "https://www.warforless.com.au/daughters-of-khaine-high-gladiatrix"
+      },
+      {
+        store: "Warhammer Official",
+        price: 64,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/daughters-of-khaine-high-gladiatrix-2022?queryID=f97ce7e9b6d2b4da60619923604792fa"
       }
     ]
   },
@@ -16625,6 +21271,12 @@ export const Products: Product[] = [
         price: 70.9,
         inStock: false,
         url: "https://www.warforless.com.au/nighthaunt-awlrach-the-drowner"
+      },
+      {
+        store: "Warhammer Official",
+        price: 94.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/nighthaunt-awlrach-the-drowner-2022?queryID=bf73a487d3b120acc38ef1681ce368a1"
       }
     ]
   },
@@ -16642,6 +21294,12 @@ export const Products: Product[] = [
         price: 64.5,
         inStock: false,
         url: "https://www.warforless.com.au/nighthaunt-craventhrone-guard"
+      },
+      {
+        store: "Warhammer Official",
+        price: 86,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/nighthaunt-craventhrone-guard-2022?queryID=3293a112b28e755a223d1ef26d5daacd"
       }
     ]
   },
@@ -16659,6 +21317,12 @@ export const Products: Product[] = [
         price: 148.5,
         inStock: false,
         url: "https://www.warforless.com.au/fyreslayers-auric-runefather-magnadroth"
+      },
+      {
+        store: "Warhammer Official",
+        price: 198,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/fyreslayers-auric-runefather-on-magmadroth-2022?queryID=097557dfe926dbf2e048ba4d68340876"
       }
     ]
   },
@@ -16676,6 +21340,12 @@ export const Products: Product[] = [
         price: 153.8,
         inStock: false,
         url: "https://www.warforless.com.au/stormcast-eternals-stormdrake-guard"
+      },
+      {
+        store: "Warhammer Official",
+        price: 205,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-knight-draconis-2021?queryID=27b77a4040883ce126681b4a01d5982d"
       }
     ]
   },
@@ -16693,6 +21363,12 @@ export const Products: Product[] = [
         price: 210,
         inStock: false,
         url: "https://www.warforless.com.au/s-eternals-krondys-son-of-dracothian"
+      },
+      {
+        store: "Warhammer Official",
+        price: 280,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-krondys-son-of-dracothian-2021?queryID=f1e40b5bd4bc37e3a85e38add190c146"
       }
     ]
   },
@@ -16710,6 +21386,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/vertus-praetors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 90,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-praetors-2021?queryID=14041fed1817873a7348efe2fa6414fa"
       }
     ]
   },
@@ -16727,6 +21409,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/stormcast-eternals-vindictors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-vindictors-2021?queryID=ff54f0cb026662469ea1db5fac0ac206"
       }
     ]
   },
@@ -16744,6 +21432,12 @@ export const Products: Product[] = [
         price: 65,
         inStock: false,
         url: "https://www.warforless.com.au/legion-imperialis-leman-russ-exterminator-annihila"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-annihilators-2021?queryID=7d78dc0c311691a9a1a6fc0379738d3b"
       }
     ]
   },
@@ -16761,6 +21455,12 @@ export const Products: Product[] = [
         price: 82.5,
         inStock: false,
         url: "https://www.warforless.com.au/stormcast-eternals-vanquishers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-vanquishers-2021?queryID=270f6db432a565c9bb45c6097df8735c"
       }
     ]
   },
@@ -16778,6 +21478,12 @@ export const Products: Product[] = [
         price: 82.5,
         inStock: false,
         url: "https://www.warforless.com.au/stormcast-eternals-vigilors"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-vigilors-2021?queryID=4c31f90e876039e7e070436301a8f54f"
       }
     ]
   },
@@ -16795,6 +21501,12 @@ export const Products: Product[] = [
         price: 56,
         inStock: false,
         url: "https://www.warforless.com.au/s-e-lord-commander-bastian-carthalos"
+      },
+      {
+        store: "Warhammer Official",
+        price: 75,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-lord-commander-bastian-carthalos-2021?queryID=37d2eedf165679231042d02e10edbefe"
       }
     ]
   },
@@ -16812,6 +21524,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/orruk-warclans-hobgrot-slittas"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/orruk-warclans-hobgrot-slittas-2021?queryID=c4b35b26a89a298f9988c7088b1ff6c2"
       }
     ]
   },
@@ -16829,6 +21547,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/stormcast-eternals-knight-relictor"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-knight-relictor-2021?queryID=8d8b9b17dc794f870a43cd771ea42e7d"
       }
     ]
   },
@@ -16846,6 +21570,12 @@ export const Products: Product[] = [
         price: 195,
         inStock: false,
         url: "https://www.warforless.com.au/o-warclans-gobsprakk-the-mouth-of-mork"
+      },
+      {
+        store: "Warhammer Official",
+        price: 260,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/killaboss-on-corpse-rippa-vulcha-2021?queryID=947342af20fe9cbf5326c0bdf778372a"
       }
     ]
   },
@@ -16863,6 +21593,12 @@ export const Products: Product[] = [
         price: 195,
         inStock: false,
         url: "https://www.warforless.com.au/o-warclans-gobsprakk-the-mouth-of-mork"
+      },
+      {
+        store: "Warhammer Official",
+        price: 260,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/gobsprakk-the-mouth-of-mork-2021?queryID=d44d58bd38cb6a6ac49a86f33fe51ff1"
       }
     ]
   },
@@ -16880,6 +21616,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/orruk-warclans-gutrippaz"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/gutrippaz-2021?queryID=a1a175e2d6ba0303c15cc541a930f017"
       }
     ]
   },
@@ -16897,6 +21639,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/orruk-warclans-marshcrawla-sloggoth"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/marshcrawla-sloggoth-2021?queryID=c3ec86a5d660ed85e327b6ecd18112a4"
       }
     ]
   },
@@ -16914,6 +21662,12 @@ export const Products: Product[] = [
         price: 67.5,
         inStock: false,
         url: "https://www.warforless.com.au/orruk-warclans-man-skewer-boltboyz"
+      },
+      {
+        store: "Warhammer Official",
+        price: 90,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/man-skewer-boltboyz-2021?queryID=c1d292ebce4c12fb5ebdaa250fb3bf5e"
       }
     ]
   },
@@ -16931,6 +21685,12 @@ export const Products: Product[] = [
         price: 67.5,
         inStock: false,
         url: "https://www.warforless.com.au/stormcast-eternals-stormstrike-chariot"
+      },
+      {
+        store: "Warhammer Official",
+        price: 90,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-stormstrike-chariot-2021?queryID=a8859ba7c5a57663c30541bc2e6d2c1d"
       }
     ]
   },
@@ -16942,7 +21702,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/stormcast-eternals-knight-judicator-with-gryph-hounds-2021?queryID=afe8baeb7240a00ca523771251bfadc0"
+      }
+    ]
   },
   {
     id: "884",
@@ -16958,6 +21725,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/breaka-boss-on-mirebrute-troggoth"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/orruk-warclans-breaka-boss-on-mirebrute-troggoth-2021?queryID=c9b95448a7c47c827c4b9e2acf24b279"
       }
     ]
   },
@@ -16975,6 +21748,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/orruk-warclans-beast-skewer-killbow"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/orruk-warclans-beast-skewer-killbow-2021?queryID=a6001169876856fcf929c6c04117c3f4"
       }
     ]
   },
@@ -16986,7 +21765,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 82,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Forbidden-Power-Spells-2021?queryID=e975bd050c192e3e667a0a55917843f8"
+      }
+    ]
   },
   {
     id: "887",
@@ -17002,6 +21788,12 @@ export const Products: Product[] = [
         price: 113,
         inStock: false,
         url: "https://www.warforless.com.au/warhammer-age-of-sigmar-malign-sorcery"
+      },
+      {
+        store: "Warhammer Official",
+        price: 125,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Malign-Sorcery-Spells-2021?queryID=1bfa591f7f87efe60b5dac65c8401f12"
       }
     ]
   },
@@ -17019,6 +21811,12 @@ export const Products: Product[] = [
         price: 153.8,
         inStock: false,
         url: "https://www.warforless.com.au/dexcessa-the-talon-of-slaanesh"
+      },
+      {
+        store: "Warhammer Official",
+        price: 205,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dexcessa-The-Talon-Of-Slaanesh-2021?queryID=b32f7ae8cb2bb6ceb5087d5aff77c083"
       }
     ]
   },
@@ -17036,6 +21834,12 @@ export const Products: Product[] = [
         price: 225,
         inStock: false,
         url: "https://www.warforless.com.au/kragnos-the-end-of-empires"
+      },
+      {
+        store: "Warhammer Official",
+        price: 300,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Kragnos-The-End-Of-Empires-2021?queryID=1636c43bf0aa712f2df5645dce96a337"
       }
     ]
   },
@@ -17053,6 +21857,12 @@ export const Products: Product[] = [
         price: 161.3,
         inStock: false,
         url: "https://www.warforless.com.au/seraphon-lord-kroak"
+      },
+      {
+        store: "Warhammer Official",
+        price: 215,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lord-Kroak-2021?queryID=ae4f5f68c5f8ade657dc1865534dc66a"
       }
     ]
   },
@@ -17070,6 +21880,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/sylvaneth-warsong-revenant"
+      },
+      {
+        store: "Warhammer Official",
+        price: 104,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Sylvaneth-Warsong-Revenant-2021?queryID=bf22a6b96135da5b1a38139d3267a25f"
       }
     ]
   },
@@ -17087,6 +21903,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/cities-of-sigmar-galen-doralia-ven-denst"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Galen-And-Doralia-Ven-Denst-2021?queryID=9a17825335bb589d0fe262f840f04d0d"
       }
     ]
   },
@@ -17104,6 +21926,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/lady-annika-the-thirsting-blade"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lady-Annika-The-Thirsting-Blade-2021?queryID=683ee77379fe4dce9a32513eb12157fc"
       }
     ]
   },
@@ -17121,6 +21949,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/soulblight-gravelords-dire-wolves"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Soulblight-Gravelords-Dire-Wolves-2021?queryID=3b4d51125ca502904de369585db3ea57"
       }
     ]
   },
@@ -17138,6 +21972,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/soulblight-gravelords-radukar-the-beast"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Soulblight-Gravelords-Radukar-The-Beast-2021?queryID=197d98402f6dbb502817e6375848a2d5"
       }
     ]
   },
@@ -17155,6 +21995,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/belladamma-volga-first-of-the-vyrkos"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Belladamma-Volga-First-Of-The-Vyrkos-2021?queryID=f0f6827b53dcd119d0309a281f0a7e84"
       }
     ]
   },
@@ -17172,6 +22018,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/kritza-the-rat-prince"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Kritza-The-Rat-Prince-2021?queryID=49c592e7ec609fddb0dbbfd91cba8913"
       }
     ]
   },
@@ -17189,6 +22041,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warforless.com.au/soulblight-gravelords-blood-knights"
+      },
+      {
+        store: "Warhammer Official",
+        price: 120,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Soulblight-Gravelords-Blood-Knights-2021?queryID=1e0278c2efc17a394b33174b1c3f242b"
       }
     ]
   },
@@ -17206,6 +22064,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/soulblight-gravelords-fell-bats"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Soulblight-Gravelords-Fell-Bats-2021?queryID=0074166d5b874f4bfffdcab7c6ffb4f9"
       }
     ]
   },
@@ -17223,6 +22087,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warforless.com.au/lauka-vai-mother-of-nightmares"
+      },
+      {
+        store: "Warhammer Official",
+        price: 120,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lauka-Vai-Mother-Of-Nightmares-2021?queryID=ed3fe2ecd5a269d4a5c3aef95d957349"
       }
     ]
   },
@@ -17240,6 +22110,12 @@ export const Products: Product[] = [
         price: 71,
         inStock: false,
         url: "https://www.warforless.com.au/soulblight-gravelords-vampire-lord-on-nightmare-st"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Soulblight-Gravelords-Vampire-Lord-2021?queryID=d0ffb7c45f973ded1dc43b43eac37aeb"
       }
     ]
   },
@@ -17257,6 +22133,12 @@ export const Products: Product[] = [
         price: 195,
         inStock: false,
         url: "https://www.warforless.com.au/belakor-the-dark-master"
+      },
+      {
+        store: "Warhammer Official",
+        price: 260,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Chaos-Daemons-Belakor-The-Dark-Master-2021?queryID=1bf1103703966df6535fcab5d7367b7e"
       }
     ]
   },
@@ -17274,6 +22156,12 @@ export const Products: Product[] = [
         price: 60,
         inStock: false,
         url: "https://www.warforless.com.au/~88631715"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Stormcast-Eternals-Gardus-Steel-Soul-2021?queryID=e6c422288e6619138cba2e75aac67b0b"
       }
     ]
   },
@@ -17291,6 +22179,12 @@ export const Products: Product[] = [
         price: 50,
         inStock: false,
         url: "https://www.warforless.com.au/nighthaunt-krulghast-cruciator"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Nighthaunt-Krulghast-Cruciator-2021?queryID=2c24336e64bed908777d999c1cfd9ea1"
       }
     ]
   },
@@ -17308,6 +22202,12 @@ export const Products: Product[] = [
         price: 45.8,
         inStock: false,
         url: "https://www.warforless.com.au/daemons-of-slaanesh-daemonettes"
+      },
+      {
+        store: "Warhammer Official",
+        price: 61,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Daemonettes-of-Slaanesh-2021?queryID=b0646e1e8a6ed7eec85adca22c961d89"
       }
     ]
   },
@@ -17319,7 +22219,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Vanari-Bannerblade-2021?queryID=f2826b9ccac1851f633ca15046283942"
+      }
+    ]
   },
   {
     id: "907",
@@ -17335,6 +22242,12 @@ export const Products: Product[] = [
         price: 90,
         inStock: false,
         url: "https://www.warforless.com.au/lumineth-realm-lords-hurakan-windchargers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 120,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Hurakan-Windchargers-2021?queryID=5312010fef5f14da1e2ccf34d9f369e8"
       }
     ]
   },
@@ -17352,6 +22265,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/lumineth-realm-lords-sevireth"
+      },
+      {
+        store: "Warhammer Official",
+        price: 104,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Sevireth-Lord-of-the-Seventh-Wind-2021?queryID=5d345f2ff2133818bf38bce2aa7885c7"
       }
     ]
   },
@@ -17363,7 +22282,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Scinari-Calligrave-2021?queryID=e4b7c7d85bd0d7283d28c4f9c8d49b2e"
+      }
+    ]
   },
   {
     id: "910",
@@ -17379,6 +22305,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/lumineth-realm-lords-vanari-bladelords"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Vanari-Bladelords-2021?queryID=cd113dbe6a78fff78e7bcf8ec5ee4c01"
       }
     ]
   },
@@ -17390,7 +22322,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 90,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Ellania-And-Ellathor-2021?queryID=659e27879ab0e8428a23639f988d92bd"
+      }
+    ]
   },
   {
     id: "912",
@@ -17400,7 +22339,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Vanari-Starshard-Ballista-2021?queryID=88909effa7515a34e39f948a9c027cee"
+      }
+    ]
   },
   {
     id: "913",
@@ -17410,7 +22356,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Scinari-Loreseeker-2021?queryID=34e832e889371ea41304971e9f0f726f"
+      }
+    ]
   },
   {
     id: "914",
@@ -17426,6 +22379,12 @@ export const Products: Product[] = [
         price: 106,
         inStock: false,
         url: "https://www.warforless.com.au/~88631664"
+      },
+      {
+        store: "Warhammer Official",
+        price: 118,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Hedonites-Of-Slaanesh-Blissbarb-Seekers-2020?queryID=cdd6fe0baff9321b0d4e010685a6aafd"
       }
     ]
   },
@@ -17443,6 +22402,12 @@ export const Products: Product[] = [
         price: 64,
         inStock: false,
         url: "https://www.warforless.com.au/~70934723"
+      },
+      {
+        store: "Warhammer Official",
+        price: 71,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Endless-Spells-Daughters-Of-Khaine-2021?queryID=f8c05b57aa52d50ff009d793c977455f"
       }
     ]
   },
@@ -17460,6 +22425,12 @@ export const Products: Product[] = [
         price: 194,
         inStock: false,
         url: "https://www.warforless.com.au/glutos-orscollion-lord-of-gluttony"
+      },
+      {
+        store: "Warhammer Official",
+        price: 215,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Hedonites-Of-Slaanesh-Glutos-Orscollion-Lord-Of-Gluttony-2020?queryID=00d4fb1e442509538f7900e7b9b0b8e5"
       }
     ]
   },
@@ -17477,6 +22448,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/~4897880"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Hedonites-Of-Slaanesh-Blissbarb-Archers-2020?queryID=537ba3bf58f0a1285c424d58fe0137bf"
       }
     ]
   },
@@ -17494,6 +22471,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/hedonites-of-slaanesh-sigvald-price-of-slaanesh"
+      },
+      {
+        store: "Warhammer Official",
+        price: 104,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Hedonites-Of-Slaanesh-Sigvald-Prince-Of-Slaanesh-2020?queryID=b89025fe0836cb0fbe0e55c2216066a1"
       }
     ]
   },
@@ -17505,7 +22488,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Hedonites-Of-Slaanesh-Myrmidesh-Painbringers-2020?queryID=6105ec437b543032be9f9d254eed1348"
+      }
+    ]
   },
   {
     id: "920",
@@ -17521,6 +22511,12 @@ export const Products: Product[] = [
         price: 41.6,
         inStock: false,
         url: "https://www.warforless.com.au/hedonites-of-slaanesh-lord-of-pain"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Hedonites-Of-Slaanesh-Lord-Of-Pain-2020?queryID=988bd632b93064b8462df42b2b8a4110"
       }
     ]
   },
@@ -17538,6 +22534,12 @@ export const Products: Product[] = [
         price: 41.6,
         inStock: false,
         url: "https://www.warforless.com.au/hedonites-of-slaanesh-shardspeaker-of-slaanesh"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Hedonites-Of-Slaanesh-Shardspeaker-Of-Slaanesh-2020?queryID=192671c0521f44456f4b350705c726e2"
       }
     ]
   },
@@ -17555,6 +22557,12 @@ export const Products: Product[] = [
         price: 185,
         inStock: false,
         url: "https://www.warforless.com.au/lumineth-realm-lords-the-stoneheart-king"
+      },
+      {
+        store: "Warhammer Official",
+        price: 205,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Sprit-of-the-Mountain-2020?queryID=bcdf3804c43c2a705a7e3ca5db0246fd"
       }
     ]
   },
@@ -17566,7 +22574,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 120,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Vanari-Dawnriders-2020?queryID=b008299169db00aea4d5948fc1c1277b"
+      }
+    ]
   },
   {
     id: "924",
@@ -17582,6 +22597,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/lumineth-realm-lords-alarith-stoneguard"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Relam-lords-Alarith-Stoneguard-2020?queryID=932fcd984e00774dba08312bcf1a886c"
       }
     ]
   },
@@ -17599,6 +22620,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/lumineth-realm-lords-vanari-auralan-wardens"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Vanari-Auralan-Wardens-2020?queryID=a09caa78d79ababbe4ba84902edb0a2c"
       }
     ]
   },
@@ -17616,6 +22643,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/vanari-auralan-sentinels"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Vanari-Auralan-Sentinels-2020?queryID=21fcfb1cce142eb4aae1dade5092f15f"
       }
     ]
   },
@@ -17627,7 +22660,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 75,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-The-Light-of-Eltharion-2020?queryID=843e4afc5915d2e273edde9e1187c6c3"
+      }
+    ]
   },
   {
     id: "928",
@@ -17643,6 +22683,12 @@ export const Products: Product[] = [
         price: 263,
         inStock: false,
         url: "https://www.warforless.com.au/lumineth-realm-lords-archmage-teclis"
+      },
+      {
+        store: "Warhammer Official",
+        price: 315,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Archmage-Teclis-2020?queryID=09fa294144fde974065791fdebed165e"
       }
     ]
   },
@@ -17660,6 +22706,12 @@ export const Products: Product[] = [
         price: 64,
         inStock: false,
         url: "https://www.warforless.com.au/~70934720"
+      },
+      {
+        store: "Warhammer Official",
+        price: 71,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Endless-Spells-Lumineth-Realm-lords-2020?queryID=521644ab41cf870f679acf5b482107f2"
       }
     ]
   },
@@ -17671,7 +22723,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 55.5,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Lumineth-Realm-lords-Scinari-Cathallar-2020?queryID=08014964dd61358ebd8544dc3c629add"
+      }
+    ]
   },
   {
     id: "931",
@@ -17687,6 +22746,12 @@ export const Products: Product[] = [
         price: 180,
         inStock: false,
         url: "https://www.warforless.com.au/spearhead-kharadron-overlords-grundstok-trailblaze"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Endrinmaster-with-Dirigible-Suit-2020?queryID=910dad56e77adbbe1590b7218676df43"
       }
     ]
   },
@@ -17704,6 +22769,12 @@ export const Products: Product[] = [
         price: 99,
         inStock: false,
         url: "https://www.warforless.com.au/~88631694"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Seraphon-Realmshaper-Engine-2020?queryID=0d665d792ed4e4b00e49b70b9ec0e6cb"
       }
     ]
   },
@@ -17721,6 +22792,12 @@ export const Products: Product[] = [
         price: 75.8,
         inStock: false,
         url: "https://www.warforless.com.au/tyranids-hive-tyrant"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ogor-Mawtribes-Tyrant-2020?queryID=875e4c8fe63ca1e221a8dd1dfbdfac90"
       }
     ]
   },
@@ -17732,7 +22809,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Gloomspte-Gitz-Loonboss-On-Giant-Cave-Squig-2020?queryID=d48c0dfcdad48f10111ef6c90cc795c7"
+      }
+    ]
   },
   {
     id: "935",
@@ -17748,6 +22832,12 @@ export const Products: Product[] = [
         price: 50.3,
         inStock: false,
         url: "https://www.warforless.com.au/sylvaneth-arch-revenant"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Sylvaneth-Druanti-The-Arch-Revenant-2020?queryID=59cb55ce0efe31bf359c4016e3876344"
       }
     ]
   },
@@ -17759,7 +22849,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 55,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Vokmortian-Master-Of-The-Bone-Tithe-2020?queryID=ef2300322e165924451aa283ed8145e1"
+      }
+    ]
   },
   {
     id: "937",
@@ -17775,6 +22872,12 @@ export const Products: Product[] = [
         price: 41.3,
         inStock: false,
         url: "https://www.warforless.com.au/flesh-eater-courts-abhorrant-archregent"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Flesh-Eater-Courts-Abhorrant-Archregent-2020?queryID=7b91ab2825afd4dd1939f6cf0b4dfb9d"
       }
     ]
   },
@@ -17792,6 +22895,12 @@ export const Products: Product[] = [
         price: 41.3,
         inStock: false,
         url: "https://www.warforless.com.au/skaven-warlock-bombardier"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Skaven-Warlock-Bombardier-2020?queryID=b16d8e333bd239d7cd4e3d8b104d5ed6"
       }
     ]
   },
@@ -17809,6 +22918,12 @@ export const Products: Product[] = [
         price: 69,
         inStock: false,
         url: "https://www.warforless.com.au/~70934697"
+      },
+      {
+        store: "Warhammer Official",
+        price: 240,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead-disciples-of-tzeentch-2024?queryID=71fc2cd9ae15631f6e8fc554a80c846b"
       }
     ]
   },
@@ -17826,6 +22941,12 @@ export const Products: Product[] = [
         price: 69,
         inStock: false,
         url: "https://www.warforless.com.au/~41820684"
+      },
+      {
+        store: "Warhammer Official",
+        price: 220,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead-slaves-to-darkness-2024?queryID=fe6f7cc53c10e383b1d17bfaa803ee5f"
       }
     ]
   },
@@ -17843,6 +22964,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/mortek-guard"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ossiarch-Bonereapers-Mortek-Guard-2019?queryID=82629839aaa339c214109660e86aeefa"
       }
     ]
   },
@@ -17877,6 +23004,12 @@ export const Products: Product[] = [
         price: 41.3,
         inStock: false,
         url: "https://www.warforless.com.au/ossiarch-bonereapers-mortisan-boneshaper"
+      },
+      {
+        store: "Warhammer Official",
+        price: 55,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ossiarch-Bonereapers-Mortisan-Boneshaper-2019?queryID=052a7e51d03c2e343293cecb938c0cbd"
       }
     ]
   },
@@ -17894,6 +23027,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/arch-kavalos-zandtos-dark-lance-of-ossia"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Arch-Kavalos-Zandtos-Dark-Lance-Of-Ossia-2019?queryID=926cf70ddb4eb79c4528a76ae69c6f01"
       }
     ]
   },
@@ -17911,6 +23050,12 @@ export const Products: Product[] = [
         price: 74,
         inStock: false,
         url: "https://www.warforless.com.au/~130803952"
+      },
+      {
+        store: "Warhammer Official",
+        price: 82,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ogre-Mawtribes-Great-Mawpot-2019?queryID=076a8238741908abdcea43be1ce878f0"
       }
     ]
   },
@@ -17928,6 +23073,12 @@ export const Products: Product[] = [
         price: 94,
         inStock: false,
         url: "https://www.warforless.com.au/~69995679"
+      },
+      {
+        store: "Warhammer Official",
+        price: 110,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Ossiarch-Bonereapers-Bone-Tithe-Nexus-2019?queryID=1583510dc6cb922cfff029f1e1437a6b"
       }
     ]
   },
@@ -17945,6 +23096,12 @@ export const Products: Product[] = [
         price: 70,
         inStock: false,
         url: "https://www.warforless.com.au/~130809438"
+      },
+      {
+        store: "Warhammer Official",
+        price: 240,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead--ossiarch-bonereapers-2024?queryID=0ae3e93753067df768b32b26b35ec3aa"
       }
     ]
   },
@@ -17962,6 +23119,12 @@ export const Products: Product[] = [
         price: 57,
         inStock: false,
         url: "https://www.warforless.com.au/~88631675"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Gotrek-Gurnisson-2019?queryID=7b67c8d465a29ecf684c2cf865c18a16"
       }
     ]
   },
@@ -17979,6 +23142,12 @@ export const Products: Product[] = [
         price: 78,
         inStock: false,
         url: "https://www.warforless.com.au/~63173895"
+      },
+      {
+        store: "Warhammer Official",
+        price: 104,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Awakened-Wyldwood-2019?queryID=15203e9c9d723e01279ec1a525406889"
       }
     ]
   },
@@ -17990,7 +23159,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 96,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Dominion-of-Sigmar-Timeworn-Ruins-2019?queryID=f1ee84a0a297abac8dd383d3037e103f"
+      }
+    ]
   },
   {
     id: "951",
@@ -18006,6 +23182,12 @@ export const Products: Product[] = [
         price: 69,
         inStock: false,
         url: "https://www.warforless.com.au/~70938804"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Endless-Spells-Sylvaneth-2019?queryID=75f059fecf3aa3dcb4ecfcbcf7626832"
       }
     ]
   },
@@ -18023,6 +23205,12 @@ export const Products: Product[] = [
         price: 195,
         inStock: false,
         url: "https://www.warforless.com.au/daemons-of-slaanesh-keeper-of-secrets"
+      },
+      {
+        store: "Warhammer Official",
+        price: 260,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Keeper-of-Secrets-2019?queryID=f82047535a0d2a3fcc4f06cc93cc298b"
       }
     ]
   },
@@ -18040,6 +23228,12 @@ export const Products: Product[] = [
         price: 87,
         inStock: false,
         url: "https://www.warforless.com.au/~88631739"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/The-Vengeful-Allegiance-2019?queryID=e0a930f0754c01c46211423b35465222"
       }
     ]
   },
@@ -18051,7 +23245,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Fane-of-Slaanesh-2019?queryID=6d574dba50d2d4f6e22a331d64940ad6"
+      }
+    ]
   },
   {
     id: "955",
@@ -18067,6 +23268,12 @@ export const Products: Product[] = [
         price: 64,
         inStock: false,
         url: "https://www.warforless.com.au/~12784195"
+      },
+      {
+        store: "Warhammer Official",
+        price: 235,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead-hedonites-of-slaanesh-2024?queryID=9598260ab8187d6ed67d735ffba7cd84"
       }
     ]
   },
@@ -18084,6 +23291,12 @@ export const Products: Product[] = [
         price: 39,
         inStock: false,
         url: "https://www.warforless.com.au/daemons-of-slaanesh-the-masque"
+      },
+      {
+        store: "Warhammer Official",
+        price: 52,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/The-Masque-2019?queryID=3b88327a972cf8ef8bb537960f6b446a"
       }
     ]
   },
@@ -18095,7 +23308,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Fyreslayers-Magmic-Battleforge-2019?queryID=1a37eb093be9d3391a7f4cb081d01b48"
+      }
+    ]
   },
   {
     id: "958",
@@ -18105,7 +23325,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Fyreslayers-Magmic-Invocations-2019?queryID=33ee711b74a7033198cb45acfa719f95"
+      }
+    ]
   },
   {
     id: "959",
@@ -18121,6 +23348,12 @@ export const Products: Product[] = [
         price: 50.3,
         inStock: false,
         url: "https://www.warforless.com.au/blades-of-khorne-skulltaker"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Skulltaker-2019?queryID=3a7ae33a0f2690eaf159567dd1d6545a"
       }
     ]
   },
@@ -18138,6 +23371,12 @@ export const Products: Product[] = [
         price: 72.8,
         inStock: false,
         url: "https://www.warforless.com.au/blades-of-khorne-flesh-hounds"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Flesh-Hounds-2019?queryID=e261f44623f84d5eddc8d6cd3645315b"
       }
     ]
   },
@@ -18155,6 +23394,12 @@ export const Products: Product[] = [
         price: 72,
         inStock: false,
         url: "https://www.warforless.com.au/~18205541"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Skull-Altar-2019?queryID=9b2950133f3b7d76c16b673524e361c7"
       }
     ]
   },
@@ -18172,6 +23417,12 @@ export const Products: Product[] = [
         price: 63,
         inStock: false,
         url: "https://www.warforless.com.au/~70938795"
+      },
+      {
+        store: "Warhammer Official",
+        price: 70,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Judgements-of-Khorne-2019?queryID=66f245e00e939ac0a0183523953b12b4"
       }
     ]
   },
@@ -18189,6 +23440,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/warcry-claws-of-karanak"
+      },
+      {
+        store: "Warhammer Official",
+        price: 67,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Karanak-the-Hound-of-Vengeance-2019?queryID=a67a8894190d916718f002673a7f995e"
       }
     ]
   },
@@ -18206,6 +23463,12 @@ export const Products: Product[] = [
         price: 34.5,
         inStock: false,
         url: "https://www.warforless.com.au/blood-master-herald-of-khorne"
+      },
+      {
+        store: "Warhammer Official",
+        price: 46,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Bloodmaster-Herald-of-Khorne-2019?queryID=68267214d497bb3b5d23fd58e27ab03e"
       }
     ]
   },
@@ -18223,6 +23486,12 @@ export const Products: Product[] = [
         price: 69,
         inStock: false,
         url: "https://www.warforless.com.au/flesh-eater-courts-charnel-throne"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Flesh-Eater-Courts-Charnel-Throne-2019?queryID=a38f87f1ec78e94c279256c27c14071c"
       }
     ]
   },
@@ -18234,7 +23503,14 @@ export const Products: Product[] = [
     category: "",
     points: 0,
     image: "",
-    retailers: []
+    retailers: [
+      {
+        store: "Warhammer Official",
+        price: 215,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead-skaven-2024?queryID=bae409686ba1c6549d1934b338399677"
+      }
+    ]
   },
   {
     id: "967",
@@ -18250,6 +23526,12 @@ export const Products: Product[] = [
         price: 94,
         inStock: false,
         url: "https://www.warforless.com.au/~70930612"
+      },
+      {
+        store: "Warhammer Official",
+        price: 215,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/spearhead-skaven-2024?queryID=f580ad075761fcb45b49af2de08bb577"
       }
     ]
   },
@@ -18267,6 +23549,12 @@ export const Products: Product[] = [
         price: 168.8,
         inStock: false,
         url: "https://www.warforless.com.au/gloomspite-gitz-braggits-bottle-snatchaz"
+      },
+      {
+        store: "Warhammer Official",
+        price: 97,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz-Gobbapalooza-2019?queryID=f85ea39292794bf2fabc9f4dc6911984"
       }
     ]
   },
@@ -18284,6 +23572,12 @@ export const Products: Product[] = [
         price: 93.8,
         inStock: false,
         url: "https://www.warforless.com.au/dankhold-troggoth-troggboss"
+      },
+      {
+        store: "Warhammer Official",
+        price: 125,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz-Dankhold-Troggoth-2019?queryID=9b0d1a33df6303dd2d4cecfe59c7e4b3"
       }
     ]
   },
@@ -18301,6 +23595,12 @@ export const Products: Product[] = [
         price: 116.3,
         inStock: false,
         url: "https://www.warforless.com.au/gloomspite-gitz-mangler-squigs"
+      },
+      {
+        store: "Warhammer Official",
+        price: 155,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz-Mangler-Squigs-2019?queryID=e1bd53f15565b6238372f6c0ea756a14"
       }
     ]
   },
@@ -18318,6 +23618,12 @@ export const Products: Product[] = [
         price: 78.8,
         inStock: false,
         url: "https://www.warforless.com.au/rockgut-troggoths"
+      },
+      {
+        store: "Warhammer Official",
+        price: 105,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz-Rockgut-Troggoths-2019?queryID=6fe14dc8aa512bb532c3a598f0db5310"
       }
     ]
   },
@@ -18335,6 +23641,12 @@ export const Products: Product[] = [
         price: 70,
         inStock: false,
         url: "https://www.warforless.com.au/~136470247"
+      },
+      {
+        store: "Warhammer Official",
+        price: 77,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz-Sneaky-Snufflers-2019?queryID=e65ba5a0e89745771fa2d1dd9b7b8a9b"
       }
     ]
   },
@@ -18583,6 +23895,12 @@ export const Products: Product[] = [
         price: 67.5,
         inStock: false,
         url: "https://www.warforless.com.au/kurdoss-valentian-the-craven-king"
+      },
+      {
+        store: "Warhammer Official",
+        price: 90,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Kurdoss-Valentian-The-Craven-King-2018?queryID=f2523897d0ceda1dea5ff5f9d98e4d0a"
       }
     ]
   },
@@ -18600,6 +23918,12 @@ export const Products: Product[] = [
         price: 47.3,
         inStock: false,
         url: "https://www.warforless.com.au/nighthaunt-reikenor-the-grimhailer"
+      },
+      {
+        store: "Warhammer Official",
+        price: 63,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Etb-Nighthaunt-Reikenor-The-Grimhailer-2018?queryID=a12224607f338170219b698733b61ea4"
       }
     ]
   },
@@ -18617,6 +23941,12 @@ export const Products: Product[] = [
         price: 64,
         inStock: false,
         url: "https://www.warforless.com.au/~70938828"
+      },
+      {
+        store: "Warhammer Official",
+        price: 71,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Battlemagic-Stormcast-2018?queryID=f4e6a351bcb3887f0d3d322cfe2a9cec"
       }
     ]
   },
@@ -18634,6 +23964,12 @@ export const Products: Product[] = [
         price: 67.5,
         inStock: false,
         url: "https://www.warforless.com.au/nighthaunt-grimghast-reapers"
+      },
+      {
+        store: "Warhammer Official",
+        price: 90,
+        inStock: false,
+        url: "https://www.warhammer.com/en-AU/shop/Nighthaunt-Grimghast-Reapers-2018?queryID=c6707670a8690b56e5e77b600434faa6"
       }
     ]
   },

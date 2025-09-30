@@ -239,7 +239,7 @@ export async function searchSeller(
         sale: seller.sale_selector,
       }
     );
-
+    console.log("found cards", cards.length, "for", product.search_term)
     // Fetch image buffers server-side
     const out: Candidate[] = [];
     for (const c of cards) {
