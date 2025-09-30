@@ -810,12 +810,12 @@ export const Products: Product[] = [
   },
   {
     "id": "78",
-    "name": "Black \"Templars\": Upgrades and Transfers",
+    "name": "Black Templars: Upgrades and Transfers",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Black_\"Templars\":_Upgrades_and_Transfers.png",
+    "image": "Black_Templars:_Upgrades_and_Transfers.png",
     "retailers": []
   },
   {
@@ -970,12 +970,12 @@ export const Products: Product[] = [
   },
   {
     "id": "94",
-    "name": "Boarding \"Actions\": Void War Bases",
+    "name": "Boarding Actions: Void War Bases",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Boarding_\"Actions\":_Void_War_Bases.png",
+    "image": "Boarding_Actions:_Void_War_Bases.png",
     "retailers": []
   },
   {
@@ -1670,42 +1670,42 @@ export const Products: Product[] = [
   },
   {
     "id": "164",
-    "name": "Codex \"Supplement\": Black Templars",
+    "name": "Codex Supplement: Black Templars",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex_\"Supplement\":_Black_Templars.png",
+    "image": "Codex_Supplement:_Black_Templars.png",
     "retailers": []
   },
   {
     "id": "165",
-    "name": "Codex \"Supplement\": Blood Angels",
+    "name": "Codex Supplement: Blood Angels",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex_\"Supplement\":_Blood_Angels.png",
+    "image": "Codex_Supplement:_Blood_Angels.png",
     "retailers": []
   },
   {
     "id": "166",
-    "name": "Codex \"Supplement\": Dark Angels",
+    "name": "Codex Supplement: Dark Angels",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex_\"Supplement\":_Dark_Angels.png",
+    "image": "Codex_Supplement:_Dark_Angels.png",
     "retailers": []
   },
   {
     "id": "167",
-    "name": "Codex \"Supplement\": Space Wolves",
+    "name": "Codex Supplement: Space Wolves",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex_\"Supplement\":_Space_Wolves.png",
+    "image": "Codex_Supplement:_Space_Wolves.png",
     "retailers": []
   },
   {
@@ -1960,282 +1960,282 @@ export const Products: Product[] = [
   },
   {
     "id": "193",
-    "name": "Combat \"Patrol\": Adepta Sororitas",
+    "name": "Combat Patrol: Adepta Sororitas",
     "game": "warhammer40k",
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Adepta_Sororitas.png",
+    "image": "Combat_Patrol:_Adepta_Sororitas.png",
     "retailers": []
   },
   {
     "id": "194",
-    "name": "Combat \"Patrol\": Adeptus Custodes",
+    "name": "Combat Patrol: Adeptus Custodes",
     "game": "warhammer40k",
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Adeptus_Custodes.png",
+    "image": "Combat_Patrol:_Adeptus_Custodes.png",
     "retailers": []
   },
   {
     "id": "195",
-    "name": "Combat \"Patrol\": Adeptus Mechanicus",
+    "name": "Combat Patrol: Adeptus Mechanicus",
     "game": "warhammer40k",
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Adeptus_Mechanicus.png",
+    "image": "Combat_Patrol:_Adeptus_Mechanicus.png",
     "retailers": []
   },
   {
     "id": "196",
-    "name": "Combat \"Patrol\": Aeldari",
+    "name": "Combat Patrol: Aeldari",
     "game": "warhammer40k",
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Aeldari.png",
+    "image": "Combat_Patrol:_Aeldari.png",
     "retailers": []
   },
   {
     "id": "197",
-    "name": "Combat \"Patrol\": Astra Militarum",
+    "name": "Combat Patrol: Astra Militarum",
     "game": "warhammer40k",
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Astra_Militarum.png",
+    "image": "Combat_Patrol:_Astra_Militarum.png",
     "retailers": []
   },
   {
     "id": "198",
-    "name": "Combat \"Patrol\": Black Templars",
+    "name": "Combat Patrol: Black Templars",
     "game": "warhammer40k",
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Black_Templars.png",
+    "image": "Combat_Patrol:_Black_Templars.png",
     "retailers": []
   },
   {
     "id": "199",
-    "name": "Combat \"Patrol\": Blood Angels",
+    "name": "Combat Patrol: Blood Angels",
     "game": "warhammer40k",
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Blood_Angels.png",
+    "image": "Combat_Patrol:_Blood_Angels.png",
     "retailers": []
   },
   {
     "id": "200",
-    "name": "Combat \"Patrol\": Chaos Space Marines",
+    "name": "Combat Patrol: Chaos Space Marines",
     "game": "warhammer40k",
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Chaos_Space_Marines.png",
+    "image": "Combat_Patrol:_Chaos_Space_Marines.png",
     "retailers": []
   },
   {
     "id": "201",
-    "name": "Combat \"Patrol\": Dark Angels",
+    "name": "Combat Patrol: Dark Angels",
     "game": "warhammer40k",
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Dark_Angels.png",
+    "image": "Combat_Patrol:_Dark_Angels.png",
     "retailers": []
   },
   {
     "id": "202",
-    "name": "Combat \"Patrol\": Death Guard",
+    "name": "Combat Patrol: Death Guard",
     "game": "warhammer40k",
     "faction": "Death Guard",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Death_Guard.png",
+    "image": "Combat_Patrol:_Death_Guard.png",
     "retailers": []
   },
   {
     "id": "203",
-    "name": "Combat \"Patrol\": Death Korps of Krieg",
+    "name": "Combat Patrol: Death Korps of Krieg",
     "game": "warhammer40k",
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Death_Korps_of_Krieg.png",
+    "image": "Combat_Patrol:_Death_Korps_of_Krieg.png",
     "retailers": []
   },
   {
     "id": "204",
-    "name": "Combat \"Patrol\": Drukhari",
+    "name": "Combat Patrol: Drukhari",
     "game": "warhammer40k",
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Drukhari.png",
+    "image": "Combat_Patrol:_Drukhari.png",
     "retailers": []
   },
   {
     "id": "205",
-    "name": "Combat \"Patrol\": Emperor's Children",
+    "name": "Combat Patrol: Emperor's Children",
     "game": "warhammer40k",
     "faction": "Emperor’s Children",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Emperor's_Children.png",
+    "image": "Combat_Patrol:_Emperor's_Children.png",
     "retailers": []
   },
   {
     "id": "206",
-    "name": "Combat \"Patrol\": Genestealer Cults",
+    "name": "Combat Patrol: Genestealer Cults",
     "game": "warhammer40k",
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Genestealer_Cults.png",
+    "image": "Combat_Patrol:_Genestealer_Cults.png",
     "retailers": []
   },
   {
     "id": "207",
-    "name": "Combat \"Patrol\": Grey Knights",
+    "name": "Combat Patrol: Grey Knights",
     "game": "warhammer40k",
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Grey_Knights.png",
+    "image": "Combat_Patrol:_Grey_Knights.png",
     "retailers": []
   },
   {
     "id": "208",
-    "name": "Combat \"Patrol\": Imperial Agents",
+    "name": "Combat Patrol: Imperial Agents",
     "game": "warhammer40k",
     "faction": "Imperial Agents",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Imperial_Agents.png",
+    "image": "Combat_Patrol:_Imperial_Agents.png",
     "retailers": []
   },
   {
     "id": "209",
-    "name": "Combat \"Patrol\": Imperial Fists",
+    "name": "Combat Patrol: Imperial Fists",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Imperial_Fists.png",
+    "image": "Combat_Patrol:_Imperial_Fists.png",
     "retailers": []
   },
   {
     "id": "210",
-    "name": "Combat \"Patrol\": Leagues of Votann",
+    "name": "Combat Patrol: Leagues of Votann",
     "game": "warhammer40k",
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Leagues_of_Votann.png",
+    "image": "Combat_Patrol:_Leagues_of_Votann.png",
     "retailers": []
   },
   {
     "id": "211",
-    "name": "Combat \"Patrol\": Necrons",
+    "name": "Combat Patrol: Necrons",
     "game": "warhammer40k",
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Necrons.png",
+    "image": "Combat_Patrol:_Necrons.png",
     "retailers": []
   },
   {
     "id": "212",
-    "name": "Combat \"Patrol\": Orks",
+    "name": "Combat Patrol: Orks",
     "game": "warhammer40k",
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Orks.png",
+    "image": "Combat_Patrol:_Orks.png",
     "retailers": []
   },
   {
     "id": "213",
-    "name": "Combat \"Patrol\": Raven Guard",
+    "name": "Combat Patrol: Raven Guard",
     "game": "warhammer40k",
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Raven_Guard.png",
+    "image": "Combat_Patrol:_Raven_Guard.png",
     "retailers": []
   },
   {
     "id": "214",
-    "name": "Combat \"Patrol\": Salamanders",
+    "name": "Combat Patrol: Salamanders",
     "game": "warhammer40k",
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Salamanders.png",
+    "image": "Combat_Patrol:_Salamanders.png",
     "retailers": []
   },
   {
     "id": "215",
-    "name": "Combat \"Patrol\": Space Marines",
+    "name": "Combat Patrol: Space Marines",
     "game": "warhammer40k",
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Space_Marines.png",
+    "image": "Combat_Patrol:_Space_Marines.png",
     "retailers": []
   },
   {
     "id": "216",
-    "name": "Combat \"Patrol\": Space Wolves",
+    "name": "Combat Patrol: Space Wolves",
     "game": "warhammer40k",
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Space_Wolves.png",
+    "image": "Combat_Patrol:_Space_Wolves.png",
     "retailers": []
   },
   {
     "id": "217",
-    "name": "Combat \"Patrol\": Thousand Sons",
+    "name": "Combat Patrol: Thousand Sons",
     "game": "warhammer40k",
     "faction": "Thousand Sons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Thousand_Sons.png",
+    "image": "Combat_Patrol:_Thousand_Sons.png",
     "retailers": []
   },
   {
     "id": "218",
-    "name": "Combat \"Patrol\": Tyranid Assault Brood",
+    "name": "Combat Patrol: Tyranid Assault Brood",
     "game": "warhammer40k",
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Tyranid_Assault_Brood.png",
+    "image": "Combat_Patrol:_Tyranid_Assault_Brood.png",
     "retailers": []
   },
   {
     "id": "219",
-    "name": "Combat \"Patrol\": Tâau Empire",
+    "name": "Combat Patrol: Tau Empire",
     "game": "warhammer40k",
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_Tâau_Empire.png",
+    "image": "Combat_Patrol:_Tau_Empire.png",
     "retailers": []
   },
   {
     "id": "220",
-    "name": "Combat \"Patrol\": World Eaters",
+    "name": "Combat Patrol: World Eaters",
     "game": "warhammer40k",
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_\"Patrol\":_World_Eaters.png",
+    "image": "Combat_Patrol:_World_Eaters.png",
     "retailers": []
   },
   {
@@ -2480,12 +2480,12 @@ export const Products: Product[] = [
   },
   {
     "id": "245",
-    "name": "Daemonifuge â Ephrael Stern & Kyganil",
+    "name": "Daemonifuge  Ephrael Stern & Kyganil",
     "game": "warhammer40k",
     "faction": "Adepta Sororitas",
     "category": "Named Hero",
     "points": 0,
-    "image": "Daemonifuge_â_Ephrael_Stern_&_Kyganil.png",
+    "image": "Daemonifuge__Ephrael_Stern_&_Kyganil.png",
     "retailers": []
   },
   {
@@ -2510,12 +2510,12 @@ export const Products: Product[] = [
   },
   {
     "id": "248",
-    "name": "Dark \"Angels\": Upgrades and Transfers",
+    "name": "Dark Angels: Upgrades and Transfers",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Dark_\"Angels\":_Upgrades_and_Transfers.png",
+    "image": "Dark_Angels:_Upgrades_and_Transfers.png",
     "retailers": []
   },
   {
@@ -2570,42 +2570,42 @@ export const Products: Product[] = [
   },
   {
     "id": "254",
-    "name": "Datasheet \"Cards\": Drukhari",
+    "name": "Datasheet Cards: Drukhari",
     "game": "warhammer40k",
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Datasheet_\"Cards\":_Drukhari.png",
+    "image": "Datasheet_Cards:_Drukhari.png",
     "retailers": []
   },
   {
     "id": "255",
-    "name": "Datasheet \"Cards\": Grey Knights",
+    "name": "Datasheet Cards: Grey Knights",
     "game": "warhammer40k",
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Datasheet_\"Cards\":_Grey_Knights.png",
+    "image": "Datasheet_Cards:_Grey_Knights.png",
     "retailers": []
   },
   {
     "id": "256",
-    "name": "Datasheet \"Cards\": Imperial Knights",
+    "name": "Datasheet Cards: Imperial Knights",
     "game": "warhammer40k",
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Datasheet_\"Cards\":_Imperial_Knights.png",
+    "image": "Datasheet_Cards:_Imperial_Knights.png",
     "retailers": []
   },
   {
     "id": "257",
-    "name": "Datasheet \"Cards\": Leagues of Votann",
+    "name": "Datasheet Cards: Leagues of Votann",
     "game": "warhammer40k",
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Datasheet_\"Cards\":_Leagues_of_Votann.png",
+    "image": "Datasheet_Cards:_Leagues_of_Votann.png",
     "retailers": []
   },
   {
@@ -2820,12 +2820,12 @@ export const Products: Product[] = [
   },
   {
     "id": "279",
-    "name": "Drukhari \"Battleforce\": Realspace Raiders",
+    "name": "Drukhari Battleforce: Realspace Raiders",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Box Set",
     "points": 0,
-    "image": "Drukhari_\"Battleforce\":_Realspace_Raiders.png",
+    "image": "Drukhari_Battleforce:_Realspace_Raiders.png",
     "retailers": []
   },
   {
@@ -4230,242 +4230,242 @@ export const Products: Product[] = [
   },
   {
     "id": "420",
-    "name": "Kill \"Team\": Battleclade",
+    "name": "Kill Team: Battleclade",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Battleclade.png",
+    "image": "Kill_Team:_Battleclade.png",
     "retailers": []
   },
   {
     "id": "421",
-    "name": "Kill \"Team\": Blades of Khaine",
+    "name": "Kill Team: Blades of Khaine",
     "game": "warhammer40k",
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Blades_of_Khaine.png",
+    "image": "Kill_Team:_Blades_of_Khaine.png",
     "retailers": []
   },
   {
     "id": "422",
-    "name": "Kill \"Team\": Brood Brothers",
+    "name": "Kill Team: Brood Brothers",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Brood_Brothers.png",
+    "image": "Kill_Team:_Brood_Brothers.png",
     "retailers": []
   },
   {
     "id": "423",
-    "name": "Kill \"Team\": Corsair Voidscarred",
+    "name": "Kill Team: Corsair Voidscarred",
     "game": "ageofsigmar",
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Corsair_Voidscarred.png",
+    "image": "Kill_Team:_Corsair_Voidscarred.png",
     "retailers": []
   },
   {
     "id": "424",
-    "name": "Kill \"Team\": Exaction Squad",
+    "name": "Kill Team: Exaction Squad",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Exaction_Squad.png",
+    "image": "Kill_Team:_Exaction_Squad.png",
     "retailers": []
   },
   {
     "id": "425",
-    "name": "Kill \"Team\": Farstalker Kinband",
+    "name": "Kill Team: Farstalker Kinband",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Farstalker_Kinband.png",
+    "image": "Kill_Team:_Farstalker_Kinband.png",
     "retailers": []
   },
   {
     "id": "426",
-    "name": "Kill \"Team\": Fellgor Ravagers",
+    "name": "Kill Team: Fellgor Ravagers",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Fellgor_Ravagers.png",
+    "image": "Kill_Team:_Fellgor_Ravagers.png",
     "retailers": []
   },
   {
     "id": "427",
-    "name": "Kill \"Team\": Goremongers",
+    "name": "Kill Team: Goremongers",
     "game": "ageofsigmar",
     "faction": "Beasts of Chaos",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Goremongers.png",
+    "image": "Kill_Team:_Goremongers.png",
     "retailers": []
   },
   {
     "id": "428",
-    "name": "Kill \"Team\": Hand of the Archon",
+    "name": "Kill Team: Hand of the Archon",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Hand_of_the_Archon.png",
+    "image": "Kill_Team:_Hand_of_the_Archon.png",
     "retailers": []
   },
   {
     "id": "429",
-    "name": "Kill \"Team\": Hearthkyn Salvagers",
+    "name": "Kill Team: Hearthkyn Salvagers",
     "game": "warhammer40k",
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Hearthkyn_Salvagers.png",
+    "image": "Kill_Team:_Hearthkyn_Salvagers.png",
     "retailers": []
   },
   {
     "id": "430",
-    "name": "Kill \"Team\": Hernkyn Yaegirs",
+    "name": "Kill Team: Hernkyn Yaegirs",
     "game": "warhammer40k",
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Hernkyn_Yaegirs.png",
+    "image": "Kill_Team:_Hernkyn_Yaegirs.png",
     "retailers": []
   },
   {
     "id": "431",
-    "name": "Kill \"Team\": Hierotek Circle",
+    "name": "Kill Team: Hierotek Circle",
     "game": "warhammer40k",
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Hierotek_Circle.png",
+    "image": "Kill_Team:_Hierotek_Circle.png",
     "retailers": []
   },
   {
     "id": "432",
-    "name": "Kill \"Team\": Imperial Navy Breachers",
+    "name": "Kill Team: Imperial Navy Breachers",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Imperial_Navy_Breachers.png",
+    "image": "Kill_Team:_Imperial_Navy_Breachers.png",
     "retailers": []
   },
   {
     "id": "433",
-    "name": "Kill \"Team\": Inquisitorial Agents",
+    "name": "Kill Team: Inquisitorial Agents",
     "game": "warhammer40k",
     "faction": "Imperial Agents",
     "category": "Hero",
     "points": 0,
-    "image": "Kill_\"Team\":_Inquisitorial_Agents.png",
+    "image": "Kill_Team:_Inquisitorial_Agents.png",
     "retailers": []
   },
   {
     "id": "434",
-    "name": "Kill \"Team\": Kasrkin",
+    "name": "Kill Team: Kasrkin",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Kasrkin.png",
+    "image": "Kill_Team:_Kasrkin.png",
     "retailers": []
   },
   {
     "id": "435",
-    "name": "Kill \"Team\": Mandrakes",
+    "name": "Kill Team: Mandrakes",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Mandrakes.png",
+    "image": "Kill_Team:_Mandrakes.png",
     "retailers": []
   },
   {
     "id": "436",
-    "name": "Kill \"Team\": Nemesis Claw",
+    "name": "Kill Team: Nemesis Claw",
     "game": "warhammer40k",
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Nemesis_Claw.png",
+    "image": "Kill_Team:_Nemesis_Claw.png",
     "retailers": []
   },
   {
     "id": "437",
-    "name": "Kill \"Team\": Ratlings",
+    "name": "Kill Team: Ratlings",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Ratlings.png",
+    "image": "Kill_Team:_Ratlings.png",
     "retailers": []
   },
   {
     "id": "438",
-    "name": "Kill \"Team\": Raveners",
+    "name": "Kill Team: Raveners",
     "game": "warhammer40k",
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Raveners.png",
+    "image": "Kill_Team:_Raveners.png",
     "retailers": []
   },
   {
     "id": "439",
-    "name": "Kill \"Team\": Sanctifiers",
+    "name": "Kill Team: Sanctifiers",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Sanctifiers.png",
+    "image": "Kill_Team:_Sanctifiers.png",
     "retailers": []
   },
   {
     "id": "440",
-    "name": "Kill \"Team\": Scout Squad",
+    "name": "Kill Team: Scout Squad",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Scout_Squad.png",
+    "image": "Kill_Team:_Scout_Squad.png",
     "retailers": []
   },
   {
     "id": "441",
-    "name": "Kill \"Team\": Tempestus Aquilons",
+    "name": "Kill Team: Tempestus Aquilons",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Tempestus_Aquilons.png",
+    "image": "Kill_Team:_Tempestus_Aquilons.png",
     "retailers": []
   },
   {
     "id": "442",
-    "name": "Kill \"Team\": Vespid Stingwings",
+    "name": "Kill Team: Vespid Stingwings",
     "game": "warhammer40k",
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Vespid_Stingwings.png",
+    "image": "Kill_Team:_Vespid_Stingwings.png",
     "retailers": []
   },
   {
     "id": "443",
-    "name": "Kill \"Team\": Wrecka Krew",
+    "name": "Kill Team: Wrecka Krew",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_\"Team\":_Wrecka_Krew.png",
+    "image": "Kill_Team:_Wrecka_Krew.png",
     "retailers": []
   },
   {
@@ -4480,22 +4480,22 @@ export const Products: Product[] = [
   },
   {
     "id": "445",
-    "name": "Killzone \"Upgrade\": Compound Siege",
+    "name": "Killzone Upgrade: Compound Siege",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Killzone_\"Upgrade\":_Compound_Siege.png",
+    "image": "Killzone_Upgrade:_Compound_Siege.png",
     "retailers": []
   },
   {
     "id": "446",
-    "name": "Killzone \"Upgrade\": Tyranid Infestation",
+    "name": "Killzone Upgrade: Tyranid Infestation",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Killzone_\"Upgrade\":_Tyranid_Infestation.png",
+    "image": "Killzone_Upgrade:_Tyranid_Infestation.png",
     "retailers": []
   },
   {
@@ -5480,12 +5480,12 @@ export const Products: Product[] = [
   },
   {
     "id": "545",
-    "name": "Mek \"Gunz\": Kustom Mega-kannon",
+    "name": "Mek Gunz: Kustom Mega-kannon",
     "game": "warhammer40k",
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mek_\"Gunz\":_Kustom_Mega-kannon.png",
+    "image": "Mek_Gunz:_Kustom_Mega-kannon.png",
     "retailers": []
   },
   {
@@ -5520,12 +5520,12 @@ export const Products: Product[] = [
   },
   {
     "id": "549",
-    "name": "Middle-earthâ¢ Strategy Battle \"Game\": The Best of White Dwarf Magazine (ePub)",
+    "name": "Middle-earthâ¢ Strategy Battle Game: The Best of White Dwarf Magazine (ePub)",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Middle-earthâ¢_Strategy_Battle_\"Game\":_The_Best_of_White_Dwarf_Magazine_(ePub).png",
+    "image": "Middle-earthâ¢_Strategy_Battle_Game:_The_Best_of_White_Dwarf_Magazine_(ePub).png",
     "retailers": []
   },
   {
@@ -6940,32 +6940,32 @@ export const Products: Product[] = [
   },
   {
     "id": "691",
-    "name": "Space \"Marines\": Honoured of the Chapter",
+    "name": "Space Marines: Honoured of the Chapter",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Space_\"Marines\":_Honoured_of_the_Chapter.png",
+    "image": "Space_Marines:_Honoured_of_the_Chapter.png",
     "retailers": []
   },
   {
     "id": "692",
-    "name": "Space \"Marines\": Infernus Marines + Paints Set",
+    "name": "Space Marines: Infernus Marines + Paints Set",
     "game": "warhammer40k",
     "faction": "No Faction / Misc",
     "category": "Paints",
     "points": 0,
-    "image": "Space_\"Marines\":_Infernus_Marines_+_Paints_Set.png",
+    "image": "Space_Marines:_Infernus_Marines_+_Paints_Set.png",
     "retailers": []
   },
   {
     "id": "693",
-    "name": "Space \"Marines\": Lieutenant",
+    "name": "Space Marines: Lieutenant",
     "game": "warhammer40k",
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Space_\"Marines\":_Lieutenant.png",
+    "image": "Space_Marines:_Lieutenant.png",
     "retailers": []
   },
   {
@@ -6990,12 +6990,12 @@ export const Products: Product[] = [
   },
   {
     "id": "696",
-    "name": "Spearhead: Blades of Khorne â Fangs of the Blood God",
+    "name": "Spearhead: Blades of Khorne  Fangs of the Blood God",
     "game": "ageofsigmar",
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Blades_of_Khorne_â_Fangs_of_the_Blood_God.png",
+    "image": "Spearhead:_Blades_of_Khorne__Fangs_of_the_Blood_God.png",
     "retailers": []
   },
   {
@@ -7190,12 +7190,12 @@ export const Products: Product[] = [
   },
   {
     "id": "716",
-    "name": "Talons of the \"Emperor\": Valerian and Aleya",
+    "name": "Talons of the Emperor: Valerian and Aleya",
     "game": "warhammer40k",
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Talons_of_the_\"Emperor\":_Valerian_and_Aleya.png",
+    "image": "Talons_of_the_Emperor:_Valerian_and_Aleya.png",
     "retailers": []
   },
   {
@@ -7610,12 +7610,12 @@ export const Products: Product[] = [
   },
   {
     "id": "758",
-    "name": "Tâau Tiger Shark AX-1-0",
+    "name": "Tau Tiger Shark AX-1-0",
     "game": "warhammer40k",
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tâau_Tiger_Shark_AX-1-0.png",
+    "image": "Tau_Tiger_Shark_AX-1-0.png",
     "retailers": []
   },
   {
@@ -7900,32 +7900,32 @@ export const Products: Product[] = [
   },
   {
     "id": "787",
-    "name": "Warhammer+ Year 3: Astra Militarum â Unbroken",
+    "name": "Warhammer+ Year 3: Astra Militarum Unbroken",
     "game": "warhammer40k",
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer+_Year_3:_Astra_Militarum_â_Unbroken.png",
+    "image": "Warhammer+_Year_3:_Astra_Militarum_Unbroken.png",
     "retailers": []
   },
   {
     "id": "788",
-    "name": "Warhammer+ Year 4: Imperial Agents â Inquisitor Ostromandeus",
+    "name": "Warhammer+ Year 4: Imperial Agents  Inquisitor Ostromandeus",
     "game": "warhammer40k",
     "faction": "Imperial Agents",
     "category": "Hero",
     "points": 0,
-    "image": "Warhammer+_Year_4:_Imperial_Agents_â_Inquisitor_Ostromandeus.png",
+    "image": "Warhammer+_Year_4:_Imperial_Agents_Inquisitor_Ostromandeus.png",
     "retailers": []
   },
   {
     "id": "789",
-    "name": "Warhammer+ Year 5: Aeldari â Infinityâs Lament",
+    "name": "Warhammer+ Year 5: Aeldari  Infinity's Lament",
     "game": "warhammer40k",
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer+_Year_5:_Aeldari_â_Infinityâs_Lament.png",
+    "image": "Warhammer+_Year_5:_Aeldari__Infinity's_Lament.png",
     "retailers": []
   },
   {
@@ -8890,22 +8890,22 @@ export const Products: Product[] = [
   },
   {
     "id": "886",
-    "name": "Warhammer Age of \"Sigmar\": Forbidden Power",
+    "name": "Warhammer Age of Sigmar: Forbidden Power",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer_Age_of_\"Sigmar\":_Forbidden_Power.png",
+    "image": "Warhammer_Age_of_Sigmar:_Forbidden_Power.png",
     "retailers": []
   },
   {
     "id": "887",
-    "name": "Warhammer Age of \"Sigmar\": Malign Sorcery",
+    "name": "Warhammer Age of Sigmar: Malign Sorcery",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer_Age_of_\"Sigmar\":_Malign_Sorcery.png",
+    "image": "Warhammer_Age_of_Sigmar:_Malign_Sorcery.png",
     "retailers": []
   },
   {
@@ -9180,12 +9180,12 @@ export const Products: Product[] = [
   },
   {
     "id": "915",
-    "name": "Endless \"Spells\": Daughters of Khaine",
+    "name": "Endless Spells: Daughters of Khaine",
     "game": "ageofsigmar",
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Daughters_of_Khaine.png",
+    "image": "Endless_Spells:_Daughters_of_Khaine.png",
     "retailers": []
   },
   {
@@ -9320,12 +9320,12 @@ export const Products: Product[] = [
   },
   {
     "id": "929",
-    "name": "Endless \"Spells\": Lumineth Realm-lords",
+    "name": "Endless Spells: Lumineth Realm-lords",
     "game": "ageofsigmar",
     "faction": "Lumineth Realm-lords",
     "category": "Hero",
     "points": 0,
-    "image": "Endless_\"Spells\":_Lumineth_Realm-lords.png",
+    "image": "Endless_Spells:_Lumineth_Realm-lords.png",
     "retailers": []
   },
   {
@@ -9420,22 +9420,22 @@ export const Products: Product[] = [
   },
   {
     "id": "939",
-    "name": "Endless \"Spells\": Disciples of Tzeentch",
+    "name": "Endless Spells: Disciples of Tzeentch",
     "game": "ageofsigmar",
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Disciples_of_Tzeentch.png",
+    "image": "Endless_Spells:_Disciples_of_Tzeentch.png",
     "retailers": []
   },
   {
     "id": "940",
-    "name": "Endless \"Spells\": Slaves to Darkness",
+    "name": "Endless Spells: Slaves to Darkness",
     "game": "ageofsigmar",
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Slaves_to_Darkness.png",
+    "image": "Endless_Spells:_Slaves_to_Darkness.png",
     "retailers": []
   },
   {
@@ -9500,12 +9500,12 @@ export const Products: Product[] = [
   },
   {
     "id": "947",
-    "name": "Endless \"Spells\": Ossiarch Bonereapers",
+    "name": "Endless Spells: Ossiarch Bonereapers",
     "game": "ageofsigmar",
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Ossiarch_Bonereapers.png",
+    "image": "Endless_Spells:_Ossiarch_Bonereapers.png",
     "retailers": []
   },
   {
@@ -9530,22 +9530,22 @@ export const Products: Product[] = [
   },
   {
     "id": "950",
-    "name": "Dominion of \"Sigmar\": Timeworn Ruins",
+    "name": "Dominion of Sigmar: Timeworn Ruins",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Terrain",
     "points": 0,
-    "image": "Dominion_of_\"Sigmar\":_Timeworn_Ruins.png",
+    "image": "Dominion_of_Sigmar:_Timeworn_Ruins.png",
     "retailers": []
   },
   {
     "id": "951",
-    "name": "Endless \"Spells\": Sylvaneth",
+    "name": "Endless Spells: Sylvaneth",
     "game": "ageofsigmar",
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Sylvaneth.png",
+    "image": "Endless_Spells:_Sylvaneth.png",
     "retailers": []
   },
   {
@@ -9580,12 +9580,12 @@ export const Products: Product[] = [
   },
   {
     "id": "955",
-    "name": "Endless \"Spells\": Hedonites of Slaanesh",
+    "name": "Endless Spells: Hedonites of Slaanesh",
     "game": "ageofsigmar",
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Hedonites_of_Slaanesh.png",
+    "image": "Endless_Spells:_Hedonites_of_Slaanesh.png",
     "retailers": []
   },
   {
@@ -9690,12 +9690,12 @@ export const Products: Product[] = [
   },
   {
     "id": "966",
-    "name": "Endless \"Spells\": Skaven",
+    "name": "Endless Spells: Skaven",
     "game": "ageofsigmar",
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Skaven.png",
+    "image": "Endless_Spells:_Skaven.png",
     "retailers": []
   },
   {
@@ -9780,12 +9780,12 @@ export const Products: Product[] = [
   },
   {
     "id": "975",
-    "name": "Endless \"Spells\": Gloomspite Gitz",
+    "name": "Endless Spells: Gloomspite Gitz",
     "game": "ageofsigmar",
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Gloomspite_Gitz.png",
+    "image": "Endless_Spells:_Gloomspite_Gitz.png",
     "retailers": []
   },
   {
@@ -9920,12 +9920,12 @@ export const Products: Product[] = [
   },
   {
     "id": "989",
-    "name": "Endless \"Spells\": Stormcast Eternals",
+    "name": "Endless Spells: Stormcast Eternals",
     "game": "ageofsigmar",
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Stormcast_Eternals.png",
+    "image": "Endless_Spells:_Stormcast_Eternals.png",
     "retailers": []
   },
   {
@@ -9950,12 +9950,12 @@ export const Products: Product[] = [
   },
   {
     "id": "992",
-    "name": "Endless \"Spells\": Nighthaunt",
+    "name": "Endless Spells: Nighthaunt",
     "game": "ageofsigmar",
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Nighthaunt.png",
+    "image": "Endless_Spells:_Nighthaunt.png",
     "retailers": []
   },
   {
@@ -11210,12 +11210,12 @@ export const Products: Product[] = [
   },
   {
     "id": "1118",
-    "name": "Regiment of \"Renown\": The Scarlet Jury",
+    "name": "Regiment of Renown: The Scarlet Jury",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Regiment_of_\"Renown\":_The_Scarlet_Jury.png",
+    "image": "Regiment_of_Renown:_The_Scarlet_Jury.png",
     "retailers": []
   },
   {
@@ -11330,12 +11330,12 @@ export const Products: Product[] = [
   },
   {
     "id": "1130",
-    "name": "Regiment of \"Renown\": Drekki's Privateers",
+    "name": "Regiment of Renown: Drekki's Privateers",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Regiment_of_\"Renown\":_Drekki's_Privateers.png",
+    "image": "Regiment_of_Renown:_Drekki's_Privateers.png",
     "retailers": []
   },
   {
@@ -11390,12 +11390,12 @@ export const Products: Product[] = [
   },
   {
     "id": "1136",
-    "name": "Regiment of \"Renown\": The Red Revelation",
+    "name": "Regiment of Renown: The Red Revelation",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Regiment_of_\"Renown\":_The_Red_Revelation.png",
+    "image": "Regiment_of_Renown:_The_Red_Revelation.png",
     "retailers": []
   },
   {
@@ -11410,12 +11410,12 @@ export const Products: Product[] = [
   },
   {
     "id": "1138",
-    "name": "Idoneth \"Deepkin\": Manifestations",
+    "name": "Idoneth Deepkin: Manifestations",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Idoneth_\"Deepkin\":_Manifestations.png",
+    "image": "Idoneth_Deepkin:_Manifestations.png",
     "retailers": []
   },
   {
@@ -11500,12 +11500,12 @@ export const Products: Product[] = [
   },
   {
     "id": "1147",
-    "name": "Soulblight \"Gravelords\": Manifestations",
+    "name": "Soulblight Gravelords: Manifestations",
     "game": "ageofsigmar",
     "faction": "Soulblight Gravelords",
     "category": "Hero",
     "points": 0,
-    "image": "Soulblight_\"Gravelords\":_Manifestations.png",
+    "image": "Soulblight_Gravelords:_Manifestations.png",
     "retailers": []
   },
   {
@@ -11620,12 +11620,12 @@ export const Products: Product[] = [
   },
   {
     "id": "1159",
-    "name": "Orruk \"Warclans\": Manifestations",
+    "name": "Orruk Warclans: Manifestations",
     "game": "ageofsigmar",
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Orruk_\"Warclans\":_Manifestations.png",
+    "image": "Orruk_Warclans:_Manifestations.png",
     "retailers": []
   },
   {
@@ -12040,12 +12040,12 @@ export const Products: Product[] = [
   },
   {
     "id": "1201",
-    "name": "Warhammer Age of \"Sigmar\": Spearhead Starter Set",
+    "name": "Warhammer Age of Sigmar: Spearhead Starter Set",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Starter Set",
     "points": 0,
-    "image": "Warhammer_Age_of_\"Sigmar\":_Spearhead_Starter_Set.png",
+    "image": "Warhammer_Age_of_Sigmar:_Spearhead_Starter_Set.png",
     "retailers": []
   },
   {
@@ -12750,62 +12750,62 @@ export const Products: Product[] = [
   },
   {
     "id": "1272",
-    "name": "Warscroll \"Cards\": Flesh-eater Courts",
+    "name": "Warscroll Cards: Flesh-eater Courts",
     "game": "ageofsigmar",
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warscroll_\"Cards\":_Flesh-eater_Courts.png",
+    "image": "Warscroll_Cards:_Flesh-eater_Courts.png",
     "retailers": []
   },
   {
     "id": "1273",
-    "name": "Death \"Battletome\": Flesh-eater Courts",
+    "name": "Death Battletome: Flesh-eater Courts",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Death_\"Battletome\":_Flesh-eater_Courts.png",
+    "image": "Death_Battletome:_Flesh-eater_Courts.png",
     "retailers": []
   },
   {
     "id": "1274",
-    "name": "Death \"Battletome\": Flesh-eater Courts – Gamer's Edition",
+    "name": "Death Battletome: Flesh-eater Courts – Gamer's Edition",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Death_\"Battletome\":_Flesh-eater_Courts_–_Gamer's_Edition.png",
+    "image": "Death_Battletome:_Flesh-eater_Courts_–_Gamer's_Edition.png",
     "retailers": []
   },
   {
     "id": "1275",
-    "name": "Warscroll \"Cards\": Nighthaunt",
+    "name": "Warscroll Cards: Nighthaunt",
     "game": "ageofsigmar",
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warscroll_\"Cards\":_Nighthaunt.png",
+    "image": "Warscroll_Cards:_Nighthaunt.png",
     "retailers": []
   },
   {
     "id": "1276",
-    "name": "Death \"Battletome\": Nighthaunt",
+    "name": "Death Battletome: Nighthaunt",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Death_\"Battletome\":_Nighthaunt.png",
+    "image": "Death_Battletome:_Nighthaunt.png",
     "retailers": []
   },
   {
     "id": "1277",
-    "name": "Death \"Battletome\": Nighthaunt – Gamer's Edition",
+    "name": "Death Battletome: Nighthaunt – Gamer's Edition",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Death_\"Battletome\":_Nighthaunt_–_Gamer's_Edition.png",
+    "image": "Death_Battletome:_Nighthaunt_–_Gamer's_Edition.png",
     "retailers": []
   },
   {
@@ -12820,32 +12820,32 @@ export const Products: Product[] = [
   },
   {
     "id": "1279",
-    "name": "Warscroll \"Cards\": Kharadron Overlords",
+    "name": "Warscroll Cards: Kharadron Overlords",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Hero",
     "points": 0,
-    "image": "Warscroll_\"Cards\":_Kharadron_Overlords.png",
+    "image": "Warscroll_Cards:_Kharadron_Overlords.png",
     "retailers": []
   },
   {
     "id": "1280",
-    "name": "Order \"Battletome\": Kharadron Overlords",
+    "name": "Order Battletome: Kharadron Overlords",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Order_\"Battletome\":_Kharadron_Overlords.png",
+    "image": "Order_Battletome:_Kharadron_Overlords.png",
     "retailers": []
   },
   {
     "id": "1281",
-    "name": "Order \"Battletome\": Kharadron Overlords - Gamer's Edition",
+    "name": "Order Battletome: Kharadron Overlords - Gamer's Edition",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Order_\"Battletome\":_Kharadron_Overlords_-_Gamer's_Edition.png",
+    "image": "Order_Battletome:_Kharadron_Overlords_-_Gamer's_Edition.png",
     "retailers": []
   },
   {
@@ -12860,32 +12860,32 @@ export const Products: Product[] = [
   },
   {
     "id": "1283",
-    "name": "Warscroll \"Cards\": Blades of Khorne",
+    "name": "Warscroll Cards: Blades of Khorne",
     "game": "ageofsigmar",
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warscroll_\"Cards\":_Blades_of_Khorne.png",
+    "image": "Warscroll_Cards:_Blades_of_Khorne.png",
     "retailers": []
   },
   {
     "id": "1284",
-    "name": "Chaos \"Battletome\": Blades of Khorne",
+    "name": "Chaos Battletome: Blades of Khorne",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Chaos_\"Battletome\":_Blades_of_Khorne.png",
+    "image": "Chaos_Battletome:_Blades_of_Khorne.png",
     "retailers": []
   },
   {
     "id": "1285",
-    "name": "Chaos \"Battletome\": Blades of Khorne - Gamer's Edition",
+    "name": "Chaos Battletome: Blades of Khorne - Gamer's Edition",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Chaos_\"Battletome\":_Blades_of_Khorne_-_Gamer's_Edition.png",
+    "image": "Chaos_Battletome:_Blades_of_Khorne_-_Gamer's_Edition.png",
     "retailers": []
   },
   {
@@ -12900,32 +12900,32 @@ export const Products: Product[] = [
   },
   {
     "id": "1287",
-    "name": "Warscroll \"Cards\": Idoneth Deepkin",
+    "name": "Warscroll Cards: Idoneth Deepkin",
     "game": "ageofsigmar",
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warscroll_\"Cards\":_Idoneth_Deepkin.png",
+    "image": "Warscroll_Cards:_Idoneth_Deepkin.png",
     "retailers": []
   },
   {
     "id": "1288",
-    "name": "Order \"Battletome\": Idoneth Deepkin",
+    "name": "Order Battletome: Idoneth Deepkin",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Order_\"Battletome\":_Idoneth_Deepkin.png",
+    "image": "Order_Battletome:_Idoneth_Deepkin.png",
     "retailers": []
   },
   {
     "id": "1289",
-    "name": "Order \"Battletome\": Idoneth Deepkin - Gamer's Edition",
+    "name": "Order Battletome: Idoneth Deepkin - Gamer's Edition",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Order_\"Battletome\":_Idoneth_Deepkin_-_Gamer's_Edition.png",
+    "image": "Order_Battletome:_Idoneth_Deepkin_-_Gamer's_Edition.png",
     "retailers": []
   },
   {
@@ -12950,12 +12950,12 @@ export const Products: Product[] = [
   },
   {
     "id": "1292",
-    "name": "Death \"Battletome\": Soulblight Gravelords",
+    "name": "Death Battletome: Soulblight Gravelords",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Death_\"Battletome\":_Soulblight_Gravelords.png",
+    "image": "Death_Battletome:_Soulblight_Gravelords.png",
     "retailers": []
   },
   {
@@ -12970,32 +12970,32 @@ export const Products: Product[] = [
   },
   {
     "id": "1294",
-    "name": "Destruction \"Battletome\": Gloomspite Gitz",
+    "name": "Destruction Battletome: Gloomspite Gitz",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Destruction_\"Battletome\":_Gloomspite_Gitz.png",
+    "image": "Destruction_Battletome:_Gloomspite_Gitz.png",
     "retailers": []
   },
   {
     "id": "1295",
-    "name": "Path to \"Glory\": Ravaged Coast",
+    "name": "Path to Glory: Ravaged Coast",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Path_to_\"Glory\":_Ravaged_Coast.png",
+    "image": "Path_to_Glory:_Ravaged_Coast.png",
     "retailers": []
   },
   {
     "id": "1296",
-    "name": "Destruction \"Battletome\": Orruk Warclans",
+    "name": "Destruction Battletome: Orruk Warclans",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Destruction_\"Battletome\":_Orruk_Warclans.png",
+    "image": "Destruction_Battletome:_Orruk_Warclans.png",
     "retailers": []
   },
   {
@@ -13010,32 +13010,32 @@ export const Products: Product[] = [
   },
   {
     "id": "1298",
-    "name": "Chaos \"Battletome\": Slaves to Darkness",
+    "name": "Chaos Battletome: Slaves to Darkness",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Chaos_\"Battletome\":_Slaves_to_Darkness.png",
+    "image": "Chaos_Battletome:_Slaves_to_Darkness.png",
     "retailers": []
   },
   {
     "id": "1299",
-    "name": "Order \"Battletome\": Stormcast Eternals",
+    "name": "Order Battletome: Stormcast Eternals",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Order_\"Battletome\":_Stormcast_Eternals.png",
+    "image": "Order_Battletome:_Stormcast_Eternals.png",
     "retailers": []
   },
   {
     "id": "1300",
-    "name": "Chaos \"Battletome\": Skaven",
+    "name": "Chaos Battletome: Skaven",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Chaos_\"Battletome\":_Skaven.png",
+    "image": "Chaos_Battletome:_Skaven.png",
     "retailers": []
   },
   {
@@ -13060,132 +13060,132 @@ export const Products: Product[] = [
   },
   {
     "id": "1303",
-    "name": "Warhammer Age of \"Sigmar\": Paints + Tools Set",
+    "name": "Warhammer Age of Sigmar: Paints + Tools Set",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Paints",
     "points": 0,
-    "image": "Warhammer_Age_of_\"Sigmar\":_Paints_+_Tools_Set.png",
+    "image": "Warhammer_Age_of_Sigmar:_Paints_+_Tools_Set.png",
     "retailers": []
   },
   {
     "id": "1304",
-    "name": "Faction \"Pack\": Hedonites of Slaanesh",
+    "name": "Faction Pack: Hedonites of Slaanesh",
     "game": "ageofsigmar",
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Hedonites_of_Slaanesh.png",
+    "image": "Faction_Pack:_Hedonites_of_Slaanesh.png",
     "retailers": []
   },
   {
     "id": "1305",
-    "name": "Faction \"Pack\": Maggotkin of Nurgle",
+    "name": "Faction Pack: Maggotkin of Nurgle",
     "game": "ageofsigmar",
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Maggotkin_of_Nurgle.png",
+    "image": "Faction_Pack:_Maggotkin_of_Nurgle.png",
     "retailers": []
   },
   {
     "id": "1306",
-    "name": "Faction \"Pack\": Disciples of Tzeentch",
+    "name": "Faction Pack: Disciples of Tzeentch",
     "game": "ageofsigmar",
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Disciples_of_Tzeentch.png",
+    "image": "Faction_Pack:_Disciples_of_Tzeentch.png",
     "retailers": []
   },
   {
     "id": "1307",
-    "name": "Faction \"Pack\": Ossiarch Bonereapers",
+    "name": "Faction Pack: Ossiarch Bonereapers",
     "game": "ageofsigmar",
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Ossiarch_Bonereapers.png",
+    "image": "Faction_Pack:_Ossiarch_Bonereapers.png",
     "retailers": []
   },
   {
     "id": "1308",
-    "name": "Faction \"Pack\": Sons of Behemat",
+    "name": "Faction Pack: Sons of Behemat",
     "game": "ageofsigmar",
     "faction": "Sons of Behemat",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Sons_of_Behemat.png",
+    "image": "Faction_Pack:_Sons_of_Behemat.png",
     "retailers": []
   },
   {
     "id": "1309",
-    "name": "Faction \"Pack\": Ogor Mawtribes",
+    "name": "Faction Pack: Ogor Mawtribes",
     "game": "ageofsigmar",
     "faction": "Beasts of Chaos",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Ogor_Mawtribes.png",
+    "image": "Faction_Pack:_Ogor_Mawtribes.png",
     "retailers": []
   },
   {
     "id": "1310",
-    "name": "Faction \"Pack\": Fyreslayers",
+    "name": "Faction Pack: Fyreslayers",
     "game": "ageofsigmar",
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Fyreslayers.png",
+    "image": "Faction_Pack:_Fyreslayers.png",
     "retailers": []
   },
   {
     "id": "1311",
-    "name": "Faction \"Pack\": Sylvaneth",
+    "name": "Faction Pack: Sylvaneth",
     "game": "ageofsigmar",
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Sylvaneth.png",
+    "image": "Faction_Pack:_Sylvaneth.png",
     "retailers": []
   },
   {
     "id": "1312",
-    "name": "Faction \"Pack\": Daughters of Khaine",
+    "name": "Faction Pack: Daughters of Khaine",
     "game": "ageofsigmar",
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Daughters_of_Khaine.png",
+    "image": "Faction_Pack:_Daughters_of_Khaine.png",
     "retailers": []
   },
   {
     "id": "1313",
-    "name": "Faction \"Pack\": Lumineth Realm-lords",
+    "name": "Faction Pack: Lumineth Realm-lords",
     "game": "ageofsigmar",
     "faction": "Lumineth Realm-lords",
     "category": "Hero",
     "points": 0,
-    "image": "Faction_\"Pack\":_Lumineth_Realm-lords.png",
+    "image": "Faction_Pack:_Lumineth_Realm-lords.png",
     "retailers": []
   },
   {
     "id": "1314",
-    "name": "Faction \"Pack\": Seraphon",
+    "name": "Faction Pack: Seraphon",
     "game": "ageofsigmar",
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Seraphon.png",
+    "image": "Faction_Pack:_Seraphon.png",
     "retailers": []
   },
   {
     "id": "1315",
-    "name": "Faction \"Pack\": Cities of Sigmar",
+    "name": "Faction Pack: Cities of Sigmar",
     "game": "ageofsigmar",
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_\"Pack\":_Cities_of_Sigmar.png",
+    "image": "Faction_Pack:_Cities_of_Sigmar.png",
     "retailers": []
   },
   {
@@ -13480,12 +13480,12 @@ export const Products: Product[] = [
   },
   {
     "id": "1345",
-    "name": "Endless \"Spells\": Flesh-eater Courts",
+    "name": "Endless Spells: Flesh-eater Courts",
     "game": "ageofsigmar",
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_\"Spells\":_Flesh-eater_Courts.png",
+    "image": "Endless_Spells:_Flesh-eater_Courts.png",
     "retailers": []
   },
   {
@@ -14070,22 +14070,22 @@ export const Products: Product[] = [
   },
   {
     "id": "1404",
-    "name": "Warhammer Age of \"Sigmar\": Starter Set",
+    "name": "Warhammer Age of Sigmar: Starter Set",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Starter Set",
     "points": 0,
-    "image": "Warhammer_Age_of_\"Sigmar\":_Starter_Set.png",
+    "image": "Warhammer_Age_of_Sigmar:_Starter_Set.png",
     "retailers": []
   },
   {
     "id": "1405",
-    "name": "Warhammer Age of \"Sigmar\": Introductory Set",
+    "name": "Warhammer Age of Sigmar: Introductory Set",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Starter Set",
     "points": 0,
-    "image": "Warhammer_Age_of_\"Sigmar\":_Introductory_Set.png",
+    "image": "Warhammer_Age_of_Sigmar:_Introductory_Set.png",
     "retailers": []
   },
   {
@@ -14130,12 +14130,12 @@ export const Products: Product[] = [
   },
   {
     "id": "1410",
-    "name": "Warhammer \"Quest\": Cursed City",
+    "name": "Warhammer Quest: Cursed City",
     "game": "ageofsigmar",
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer_\"Quest\":_Cursed_City.png",
+    "image": "Warhammer_Quest:_Cursed_City.png",
     "retailers": []
   }
 ];

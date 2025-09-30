@@ -1,122 +1,195 @@
+// src/app/tinder/route.ts
 import { NextResponse } from "next/server";
 import { query } from "@/lib/sql";
 import { searchSeller } from "@/lib/scraper";
-import { getLastAction } from "./_state";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function originOf(req: Request) {
-  const u = new URL(req.url);
-  const host = req.headers.get("x-forwarded-host") || req.headers.get("host") || u.host;
-  const proto = req.headers.get("x-forwarded-proto") || u.protocol.replace(":", "");
-  return `${proto}://${host}`;
+async function remainingCount(): Promise<number> {
+  const rows = await query("all", "select/count_unsorted");
+  return rows.length;
+}
+
+type Seller = any;
+type Product = any;
+
+function htmlPage(opts: {
+  seller: Seller;
+  product: Product;
+  items: { link: string; price: number | string; img: string }[];
+  showAltBox: boolean;              // show alt-search panel (e.g., when no hits)
+  altTerm?: string;                 // the term we just used (if any)
+  remaining: number;
+}) {
+  const { seller, product, items, showAltBox, altTerm = "", remaining } = opts;
+
+  return `
+  <div style="max-width:900px;margin:24px auto;font-family:system-ui,Segoe UI,Arial">
+    <div style="font-size: 48px; margin-bottom: 4px;">Is this ${product.name}?</div>
+    <div style="margin-bottom: 12px; color:#555;">
+      <div><b>Store:</b> ${seller?.name ?? "(unknown)"} ${seller?.base_url ? `— <a href="${seller.base_url}" target="_blank" rel="noopener">open store</a>` : ""}</div>
+      <div><b>Search term:</b> ${product?.search_term ?? ""}</div>
+    </div>
+    <div style="font-size: 20px; margin-bottom: 16px; text-align:center;">
+      Remaining unchecked prices: ${remaining}
+    </div>
+
+    <div style="text-align: center; margin-bottom: 10px;">
+      <a id="productLink" href="#" target="_blank" style="font-size: 20px; color: #3498db; text-decoration: underline;">#</a>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:20px; margin-bottom:20px;">
+      <button class="yuckBtn" onclick="yuck()">❌ Yuck</button>
+      <img id="productImage" />
+      <button class="yumBtn" onclick="yum()">✅ Yum</button>
+    </div>
+
+    <div style="display:flex; justify-content:center; gap:12px; margin-bottom:20px;">
+      <a class="backBtn" href="/tinder/undo">⬅ Undo Last</a>
+    </div>
+
+    <!-- Alt-search tools (kept BELOW the controls) -->
+    <div id="altBox" style="display:${showAltBox ? "block" : "none"};margin-top:16px;">
+      <div style="border:1px solid #ddd; border-radius:10px; padding:12px;">
+        <h3 style="margin:0 0 6px 0;">No matches? Try an alternate search</h3>
+        <form id="altSearchForm" method="POST" action="/tinder" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <input type="hidden" name="s" value="${seller.id}" />
+          <input type="hidden" name="p" value="${product.id}" />
+          <input id="altTerm" name="altTerm" placeholder="Alternate keywords / SKU / different spelling..."
+                 value="${altTerm || ""}"
+                 style="flex:1; min-width:280px; padding:8px; border:1px solid #ccd; border-radius:8px;" />
+          <button type="submit" style="padding:8px 12px; border-radius:8px; background:#3498db; color:#fff; border:none;">Search</button>
+          <button type="submit" formaction="/tinder" formmethod="POST" name="useName" value="1"
+                  style="padding:8px 12px; border-radius:8px; background:#6c757d; color:#fff; border:none;">
+            Use product name
+          </button>
+        </form>
+
+        <div style="margin-top:10px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <label style="display:flex; gap:8px; align-items:center;">
+            <input type="checkbox" id="updateTerm" />
+            <span>Update search term in DB if I click <b>Yum</b></span>
+          </label>
+          <a id="forceInvalidate" href="/tinder/invalidate?s=${seller.id}&p=${product.id}"
+             style="padding:8px 12px; border-radius:8px; background:#e74c3c; color:#fff; text-decoration:none;">
+            Force Invalidate
+          </a>
+        </div>
+        <div style="font-size:12px;color:#666;margin-top:6px;">
+          Tip: “Search” uses your custom text; “Use product name” runs with the product’s DB name.
+        </div>
+      </div>
+    </div>
+
+    <style>
+      a.backBtn, button { font-size:22px; font-weight:bold; padding:12px 24px; border-radius:10px; border:none; cursor:pointer; transition:all .2s; text-align:center; }
+      .yuckBtn { background:#e74c3c; color:#fff; } .yuckBtn:hover{ background:#c0392b; }
+      .yumBtn  { background:#2ecc71; color:#fff; } .yumBtn:hover { background:#27ae60; }
+      .backBtn { background:#f1c40f; color:#000; display:inline-block; } .backBtn:hover{ background:#d4ac0d; }
+      #productImage { display:block; width:100%; height:auto; max-width:70vw; max-height:80vh; object-fit:contain; border:2px solid #ddd; border-radius:12px; margin:0 auto; }
+    </style>
+
+    <script>
+      const products = ${JSON.stringify(opts.items).replace(/</g, "\\u003c")};
+      let idx = 0;
+
+      function render() {
+        const cand = products[idx];
+        const imgEl = document.getElementById("productImage");
+        const a = document.getElementById("productLink");
+        const altBox = document.getElementById("altBox");
+
+        if (!cand) {
+          if (altBox) altBox.style.display = "block";
+          document.querySelector(".yuckBtn").disabled = true;
+          document.querySelector(".yumBtn").disabled = true;
+          a.href = "#"; a.textContent = "#";
+          imgEl.removeAttribute("src");
+          return;
+        }
+
+        if (cand.img) imgEl.src = "data:image/jpeg;base64," + cand.img;
+        else imgEl.removeAttribute("src");
+        a.href = cand.link || "#";
+        a.textContent = cand.link || "#";
+      }
+
+      function yuck() { idx++; render(); }
+
+      function yum() {
+        const cand = products[idx] || { link:"", price:"" };
+        const update = document.getElementById("updateTerm")?.checked ? "1" : "";
+        const altTermVal = document.getElementById("altTerm")?.value || "";
+        const href = "/tinder/validate?s=${seller.id}&p=${product.id}" +
+                     "&link=" + encodeURIComponent(cand.link || "") +
+                     "&price=" + encodeURIComponent(String(cand.price || "")) +
+                     (update ? ("&updateTerm=1&altTerm=" + encodeURIComponent(altTermVal)) : "");
+        window.location.href = href;
+      }
+
+      render();
+    </script>
+  </div>
+  `;
 }
 
 export async function GET(req: Request) {
-  const url = new URL(req.url);
-
-  // allow focusing a specific pair (optional)
-  const focusS = url.searchParams.get("s");
-  const focusP = url.searchParams.get("p");
-
-  let sellerId: number;
-  let productId: number;
-
-  if (focusS && focusP) {
-    sellerId = Number(focusS);
-    productId = Number(focusP);
-  } else {
-    const unchecked = await query("get", "select/unchecked_prices");
-    if (!unchecked) {
-      const html = `
-        <div style="max-width:900px;margin:24px auto;font-family:system-ui,Segoe UI,Arial">
-          <h2>No unchecked prices left!</h2>
-          <a href="/admin"><button>Admin Panel</button></a>
-        </div>`;
-      return new NextResponse(html, { headers: { "content-type": "text/html; charset=utf-8" } });
-    }
-    sellerId = unchecked.seller_id;
-    productId = unchecked.product_id;
+  const price = await query("get", "select/unchecked_prices");
+  if (!price) {
+    const html = `
+      <div style="max-width:900px;margin:24px auto;font-family:system-ui,Segoe UI,Arial">
+        <h2>No unchecked prices left!</h2>
+        <a href="/admin"><button>Admin Panel</button></a>
+      </div>`;
+    return new NextResponse(html, { headers: { "content-type": "text/html; charset=utf-8" } });
   }
 
-  const seller  = await query("get", "select/seller_id", [sellerId]);
-  const product = await query("get", "select/product_id", [productId]);
+  const seller  = await query("get", "select/seller_id",  [price.seller_id]);
+  const product = await query("get", "select/product_id", [price.product_id]);
 
-  const cands = await searchSeller(seller, product);
-  const usable = (cands || []).filter((c) => !!c.link);
+  const results = await searchSeller(seller, product);
+  const usable = (results || [])
+    .filter((c: any) => !!c.link)
+    .map((c: any) => ({ link: c.link, price: c.price ?? "", img: c.img ? c.img.toString("base64") : "" }));
 
-  if (!usable.length) {
-    await query("run", "update/invalidate_price", [seller.id, product.id]);
-    return NextResponse.redirect(new URL("/tinder", originOf(req)));
-  }
+  const html = htmlPage({
+    seller,
+    product,
+    items: usable,
+    showAltBox: true,
+    remaining: await remainingCount(),
+  });
 
-  const items = usable.map((c) => ({
-    link: c.link || "",
-    price: c.price ?? "",
-    img: c.img ? c.img.toString("base64") : "",
-  }));
+  return new NextResponse(html, { headers: { "content-type": "text/html; charset=utf-8" } });
+}
 
-  // ←—— here’s the previous action you just recorded on validate/invalidate:
-  const prev = getLastAction();
-  const undoHref = prev
-    ? `/tinder/undo?s=${prev.s}&p=${prev.p}`
-    : `/tinder/undo`; // fallback does nothing meaningful
+export async function POST(req: Request) {
+  const form = await req.formData();
+  const s = Number(form.get("s"));
+  const p = Number(form.get("p"));
+  const useName = form.get("useName");
+  const altTermRaw = (form.get("altTerm") || "").toString().trim();
 
-  const html = `
-    <div style="max-width:900px;margin:24px auto;font-family:system-ui,Segoe UI,Arial">
-      <div style="font-size: 48px; margin-bottom: 12px;">Is this ${product.name}?</div>
+  const seller  = await query("get", "select/seller_id", [s]);
+  const product = await query("get", "select/product_id", [p]);
 
-      <div style="text-align: center; margin-bottom: 10px;">
-        <a id="productLink" href="#" target="_blank" style="font-size: 20px; color: #3498db; text-decoration: underline;">#</a>
-      </div>
+  const altTerm = useName ? product.name : altTermRaw;
+  const productForSearch = { ...product, search_term: altTerm || product.search_term };
 
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:20px; margin-bottom:20px;">
-        <button class="yuckBtn" onclick="yuck()">❌ Yuck</button>
-        <img id="productImage" />
-        <button class="yumBtn" onclick="yum()">✅ Yum</button>
-      </div>
+  const results = await searchSeller(seller, productForSearch);
+  const usable = (results || [])
+    .filter((c: any) => !!c.link)
+    .map((c: any) => ({ link: c.link, price: c.price ?? "", img: c.img ? c.img.toString("base64") : "" }));
 
-      <div style="display:flex; justify-content:center; gap:12px; margin-bottom:20px;">
-        <a class="backBtn" href="${undoHref}">⬅ Undo Last</a>
-      </div>
-
-      <style>
-        a.backBtn, button { font-size:22px; font-weight:bold; padding:12px 24px; border-radius:10px; border:none; cursor:pointer; transition:all .2s; text-align:center; }
-        .yuckBtn { background:#e74c3c; color:#fff; } .yuckBtn:hover{ background:#c0392b; }
-        .yumBtn  { background:#2ecc71; color:#fff; } .yumBtn:hover { background:#27ae60; }
-        .backBtn { background:#f1c40f; color:#000; display:inline-block; } .backBtn:hover{ background:#d4ac0d; }
-        #productImage { display:block; width:100%; height:auto; max-width:70vw; max-height:80vh; object-fit:contain; border:2px solid #ddd; border-radius:12px; margin:0 auto; }
-      </style>
-
-      <script>
-        const products = ${JSON.stringify(items).replace(/</g, "\\u003c")};
-        let idx = 0;
-
-        function render() {
-          const cand = products[idx];
-          if (!cand) {
-            window.location.href = "/tinder/invalidate?s=${seller.id}&p=${product.id}";
-            return;
-          }
-          const imgEl = document.getElementById("productImage");
-          if (cand.img) imgEl.src = "data:image/jpeg;base64," + cand.img;
-          else imgEl.removeAttribute("src");
-          const a = document.getElementById("productLink");
-          a.href = cand.link || "#";
-          a.textContent = cand.link || "#";
-        }
-        function yuck(){ idx++; render(); }
-        function yum(){
-          const cand = products[idx] || { link:"", price:"" };
-          const href = "/tinder/validate?s=${seller.id}&p=${product.id}"
-                     + "&link=" + encodeURIComponent(cand.link||"")
-                     + "&price=" + encodeURIComponent(String(cand.price||""));
-          window.location.href = href;
-        }
-        render();
-      </script>
-    </div>`;
+  const html = htmlPage({
+    seller,
+    product,
+    items: usable,
+    showAltBox: true,
+    altTerm,
+    remaining: await remainingCount(),
+  });
 
   return new NextResponse(html, { headers: { "content-type": "text/html; charset=utf-8" } });
 }

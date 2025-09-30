@@ -2,6 +2,8 @@
 import { useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+import Link from "next/link";
+
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
@@ -201,6 +203,7 @@ const sample = <T,>(arr: T[], n: number) => {
    Page
 --------------------------------------------------*/
 export function ProductLookup() {
+  const [queryInput, setQueryInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGame, setSelectedGame] = useState<string>("all");
   const [selectedFaction, setSelectedFaction] = useState<string>("all");
@@ -309,15 +312,39 @@ const groupedFactions = useMemo(() => {
       {/* Filters */}
       <div className="flex gap-4 flex-wrap">
         {/* search */}
-        <div className="relative flex-1 min-w-[300px]">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search units, factions, or keywords..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-white dark:bg-slate-800"
-          />
-        </div>
+<form
+  onSubmit={(e) => {
+    e.preventDefault();
+    setSearchTerm(queryInput.trim());
+  }}
+  className="relative flex-1 min-w-[300px] group focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-1 rounded-md"
+>
+  {/* the text field */}
+  <Input
+    placeholder="Search units, factions, or keywords..."
+    value={queryInput}
+    onChange={(e) => setQueryInput(e.target.value)}
+    // room for the button on the right
+    className="pr-12 bg-white dark:bg-slate-800"
+  />
+
+  {/* right-side magnifying-glass button */}
+  <button
+    type="submit"
+    aria-label="Search"
+    className="
+      absolute right-2 top-1/2 -translate-y-1/2
+      p-2 rounded-full
+      transition-all duration-150
+      hover:bg-slate-100 dark:hover:bg-slate-800/60
+      active:scale-95
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
+    "
+  >
+    <Search className="h-5 w-5 text-slate-600 dark:text-slate-300" />
+  </button>
+</form>
+
 
         {/* game */}
         <Select value={selectedGame} onValueChange={setSelectedGame}>
@@ -442,6 +469,9 @@ const groupedFactions = useMemo(() => {
 function ProductCard({ product }: { product: ProductExtended }) {
   const [showAll, setShowAll] = useState(false);
   const [zoomed, setZoomed] = useState(false);
+  
+  //for linking
+  const productUrl = `/product/${product.id}`; 
 
   const sortedRetailers = [...(product.retailers ?? [])].sort((a, b) => a.price - b.price);
   const best = sortedRetailers[0];
@@ -459,20 +489,28 @@ function ProductCard({ product }: { product: ProductExtended }) {
           <div className="flex flex-col md:flex-row gap-4">
             {/* Image */}
             <div className="w-full min-h md:w-40 flex-shrink-0">
-              <div
-                className="aspect-square overflow-hidden rounded-md border bg-white cursor-pointer"
-                onClick={() => setZoomed(true)}
-                aria-label="Open image preview"
-              >
-                <img src={thumb} alt={product.name} className="h-full w-full object-contain" loading="lazy" />
-              </div>
-            </div>
+  <Link href={productUrl} className="block">
+    <div
+      className="aspect-square overflow-hidden rounded-md border bg-white cursor-pointer"
+      aria-label={`Open ${product.name}`}
+      onClick={(e) => { e.preventDefault(); setZoomed(true); }} // keep your zoom on click
+      onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); setZoomed(true);} }}
+      role="button"
+      tabIndex={0}
+    >
+      <img src={thumb} alt={product.name} className="h-full w-full object-contain" loading="lazy" />
+    </div>
+  </Link>
+</div>
+
 
             {/* Text meta */}
             <div className="flex-1 flex flex-col justify-between">
               <div>
                 <CardTitle className="font-display text-lg md:text-xl">
+                <Link href={productUrl} className="hover:underline">
                   {product.name || "Unnamed Product"}
+                </Link>
                 </CardTitle>
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
                   <Badge variant="outline">{product.faction || "Unknown Faction"}</Badge>

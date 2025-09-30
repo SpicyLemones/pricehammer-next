@@ -23,12 +23,6 @@ export const RetailersByProduct = {
       "url": "https://www.gapgames.com.au/products/tau-empire-ax39-sun-shark-bomber"
     },
     {
-      "store": "Gumnut",
-      "price": 12,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/nanoblock-great-white-shark-bagged?_pos=1&_sid=c1eff9b94&_ss=r"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 80.75,
       "inStock": false,
@@ -38,7 +32,7 @@ export const RetailersByProduct = {
   "2": [
     {
       "store": "War For Less",
-      "price": 41.6,
+      "price": 90,
       "inStock": false,
       "url": "https://www.warforless.com.au/chaos-space-marines-abaddon-the-despoiler"
     },
@@ -65,12 +59,6 @@ export const RetailersByProduct = {
       "price": 96,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/chaos-space-marines-abaddon-the-despoiler?_pos=1&_sid=a8413509f&_ss=r"
-    },
-    {
-      "store": "Gumnut",
-      "price": 39.5,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/abracada-broom?_pos=1&_sid=bbbbf9154&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -103,12 +91,6 @@ export const RetailersByProduct = {
       "price": 60.83,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/genestealer-cults-aberrants"
-    },
-    {
-      "store": "Emerald Hobbies",
-      "price": 37.59,
-      "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/conquest-wadrhun-aberration?_pos=1&_sid=1b9fb2d73&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -214,7 +196,7 @@ export const RetailersByProduct = {
   "6": [
     {
       "store": "War For Less",
-      "price": 116.3,
+      "price": 73,
       "inStock": false,
       "url": "https://www.warforless.com.au/legion-imperialis-acastus-knights-porphyrion"
     },
@@ -258,7 +240,7 @@ export const RetailersByProduct = {
   "7": [
     {
       "store": "War For Less",
-      "price": 94,
+      "price": 70.9,
       "inStock": false,
       "url": "https://www.warforless.com.au/chaos-space-marines-accursed-cultists"
     },
@@ -302,7 +284,7 @@ export const RetailersByProduct = {
   "8": [
     {
       "store": "War For Less",
-      "price": 72.8,
+      "price": 66.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/genestealer-cults-achilles-ridgerunner"
     },
@@ -346,7 +328,7 @@ export const RetailersByProduct = {
   "9": [
     {
       "store": "War For Less",
-      "price": 213,
+      "price": 57.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/genestealer-cults-acolyte-hybrids"
     },
@@ -390,7 +372,7 @@ export const RetailersByProduct = {
   "10": [
     {
       "store": "War For Less",
-      "price": 82.5,
+      "price": 30,
       "inStock": false,
       "url": "https://www.warforless.com.au/~72838876"
     },
@@ -422,7 +404,7 @@ export const RetailersByProduct = {
   "11": [
     {
       "store": "War For Less",
-      "price": 66,
+      "price": 78.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/battle-sisters-squad"
     },
@@ -466,7 +448,7 @@ export const RetailersByProduct = {
   "12": [
     {
       "store": "War For Less",
-      "price": 87,
+      "price": 82.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/adepta-sororitas-rhino"
     },
@@ -510,7 +492,7 @@ export const RetailersByProduct = {
   "13": [
     {
       "store": "War For Less",
-      "price": 72.8,
+      "price": 71.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/ironstrider-ballistarii-sydonian-dragoon"
     },
@@ -548,7 +530,7 @@ export const RetailersByProduct = {
   "14": [
     {
       "store": "War For Less",
-      "price": 48,
+      "price": 93.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/adeptus-mechanicus-onager-dunecrawler"
     },
@@ -592,7 +574,7 @@ export const RetailersByProduct = {
   "15": [
     {
       "store": "War For Less",
-      "price": 69,
+      "price": 57.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/salamanders-adrax-agatone"
     },
@@ -636,7 +618,7 @@ export const RetailersByProduct = {
   "16": [
     {
       "store": "War For Less",
-      "price": 129.4,
+      "price": 105,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-aegis-defence-line"
     },
@@ -718,7 +700,7 @@ export const RetailersByProduct = {
   "18": [
     {
       "store": "War For Less",
-      "price": 66,
+      "price": 58,
       "inStock": false,
       "url": "https://www.warforless.com.au/raven-guard-aethon-shaan"
     },
@@ -762,7 +744,7 @@ export const RetailersByProduct = {
   "19": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 72.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-primaris-aggressors-2020"
     },
@@ -844,7 +826,7 @@ export const RetailersByProduct = {
   "21": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 72.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/allarus-custodians"
     },
@@ -964,7 +946,7 @@ export const RetailersByProduct = {
   "24": [
     {
       "store": "War For Less",
-      "price": 55.5,
+      "price": 47.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-primaris-apothecary-2020"
     },
@@ -1028,7 +1010,7 @@ export const RetailersByProduct = {
   "26": [
     {
       "store": "War For Less",
-      "price": 273.8,
+      "price": 72.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/adepta-sororitas-arco-flagellants-2021"
     },
@@ -1072,7 +1054,7 @@ export const RetailersByProduct = {
   "27": [
     {
       "store": "War For Less",
-      "price": 19.9,
+      "price": 58,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-wolves-arjac-rockfist"
     },
@@ -1116,7 +1098,7 @@ export const RetailersByProduct = {
   "28": [
     {
       "store": "War For Less",
-      "price": 42.8,
+      "price": 50,
       "inStock": false,
       "url": "https://www.warforless.com.au/leagues-of-votann-arkanyst-evaluator"
     },
@@ -1160,7 +1142,7 @@ export const RetailersByProduct = {
   "29": [
     {
       "store": "War For Less",
-      "price": 67.5,
+      "price": 120,
       "inStock": false,
       "url": "https://www.warforless.com.au/imperial-knights-knight-armigers"
     },
@@ -1192,7 +1174,7 @@ export const RetailersByProduct = {
   "30": [
     {
       "store": "War For Less",
-      "price": 67.5,
+      "price": 120,
       "inStock": false,
       "url": "https://www.warforless.com.au/imperial-knights-knight-armigers"
     },
@@ -1224,7 +1206,7 @@ export const RetailersByProduct = {
   "31": [
     {
       "store": "War For Less",
-      "price": 50,
+      "price": 57.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-sentinel"
     },
@@ -1268,7 +1250,7 @@ export const RetailersByProduct = {
   "32": [
     {
       "store": "War For Less",
-      "price": 83,
+      "price": 79,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-krieg-artillery-team"
     },
@@ -1312,7 +1294,7 @@ export const RetailersByProduct = {
   "33": [
     {
       "store": "War For Less",
-      "price": 83,
+      "price": 57.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/dark-angels-asmodai-master-of-repentance"
     },
@@ -1356,7 +1338,7 @@ export const RetailersByProduct = {
   "34": [
     {
       "store": "War For Less",
-      "price": 94,
+      "price": 78.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-primaris-assault-intercessors"
     },
@@ -1388,7 +1370,7 @@ export const RetailersByProduct = {
   "35": [
     {
       "store": "War For Less",
-      "price": 47,
+      "price": 58,
       "inStock": false,
       "url": "https://www.warforless.com.au/blood-angels-astorath-the-grim"
     },
@@ -1432,7 +1414,7 @@ export const RetailersByProduct = {
   "36": [
     {
       "store": "War For Less",
-      "price": 83,
+      "price": 24,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-tank-accessories"
     },
@@ -1502,7 +1484,7 @@ export const RetailersByProduct = {
   "38": [
     {
       "store": "War For Less",
-      "price": 57.8,
+      "price": 58,
       "inStock": false,
       "url": "https://www.warforless.com.au/aeldari-asurmen"
     },
@@ -1546,7 +1528,7 @@ export const RetailersByProduct = {
   "39": [
     {
       "store": "War For Less",
-      "price": 56.3,
+      "price": 78,
       "inStock": false,
       "url": "https://www.warforless.com.au/genestealer-cults-atalan-jackals"
     },
@@ -1590,7 +1572,7 @@ export const RetailersByProduct = {
   "40": [
     {
       "store": "War For Less",
-      "price": 84,
+      "price": 78.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-attilan-rough-riders"
     },
@@ -1634,7 +1616,7 @@ export const RetailersByProduct = {
   "41": [
     {
       "store": "War For Less",
-      "price": 75,
+      "price": 30,
       "inStock": false,
       "url": "https://www.warforless.com.au/aeldari-winged-autarch"
     },
@@ -1710,7 +1692,7 @@ export const RetailersByProduct = {
   "43": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 138.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/aeldari-avatar-of-khaine"
     },
@@ -1824,7 +1806,7 @@ export const RetailersByProduct = {
   "46": [
     {
       "store": "War For Less",
-      "price": 71.3,
+      "price": 58,
       "inStock": false,
       "url": "https://www.warforless.com.au/aeldari-phoenix-lord-baharroth"
     },
@@ -1868,7 +1850,7 @@ export const RetailersByProduct = {
   "47": [
     {
       "store": "War For Less",
-      "price": 94,
+      "price": 90,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-ballistus-dreadnought"
     },
@@ -1950,7 +1932,7 @@ export const RetailersByProduct = {
   "49": [
     {
       "store": "War For Less",
-      "price": 44.3,
+      "price": 36,
       "inStock": false,
       "url": "https://www.warforless.com.au/citadel-barbed-bracken"
     },
@@ -1988,7 +1970,7 @@ export const RetailersByProduct = {
   "50": [
     {
       "store": "War For Less",
-      "price": 6,
+      "price": 57.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/tyranids-barbgaunts"
     },
@@ -2032,7 +2014,7 @@ export const RetailersByProduct = {
   "51": [
     {
       "store": "War For Less",
-      "price": 83,
+      "price": 82.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/solar-auxilia-basilisk-medusa"
     },
@@ -2076,7 +2058,7 @@ export const RetailersByProduct = {
   "52": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 50,
       "inStock": false,
       "url": "https://www.warforless.com.au/warhammer-40000-battlefield-trophies"
     },
@@ -2120,7 +2102,7 @@ export const RetailersByProduct = {
   "53": [
     {
       "store": "War For Less",
-      "price": 82.5,
+      "price": 142.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/orks-battlewagon"
     },
@@ -2234,7 +2216,7 @@ export const RetailersByProduct = {
   "56": [
     {
       "store": "War For Less",
-      "price": 121,
+      "price": 100.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/battlezone-fronteris-vox-antenna-auspex-shrine"
     },
@@ -2318,7 +2300,7 @@ export const RetailersByProduct = {
   "59": [
     {
       "store": "War For Less",
-      "price": 101.3,
+      "price": 123,
       "inStock": false,
       "url": "https://www.warforless.com.au/battlezone-manufactorum-sanctum-administratus"
     },
@@ -2396,7 +2378,7 @@ export const RetailersByProduct = {
   "62": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 195,
       "inStock": false,
       "url": "https://www.warforless.com.au/belakor-the-dark-master"
     },
@@ -2440,7 +2422,7 @@ export const RetailersByProduct = {
   "63": [
     {
       "store": "War For Less",
-      "price": 195,
+      "price": 67.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/maggotkin-of-nurgle-beast-of-nurgle"
     },
@@ -2484,7 +2466,7 @@ export const RetailersByProduct = {
   "64": [
     {
       "store": "War For Less",
-      "price": 59.3,
+      "price": 50.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/orks-beastboss"
     },
@@ -2566,7 +2548,7 @@ export const RetailersByProduct = {
   "66": [
     {
       "store": "War For Less",
-      "price": 70.9,
+      "price": 57.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/dark-angels-belial-grand-master-of-the-deathwing"
     },
@@ -2610,7 +2592,7 @@ export const RetailersByProduct = {
   "67": [
     {
       "store": "War For Less",
-      "price": 72.8,
+      "price": 78,
       "inStock": false,
       "url": "https://www.warforless.com.au/belisarius-cawl"
     },
@@ -2654,7 +2636,7 @@ export const RetailersByProduct = {
   "68": [
     {
       "store": "War For Less",
-      "price": 64.5,
+      "price": 43,
       "inStock": false,
       "url": "https://www.warforless.com.au/genestealer-cults-benefictus"
     },
@@ -2698,7 +2680,7 @@ export const RetailersByProduct = {
   "69": [
     {
       "store": "War For Less",
-      "price": 105,
+      "price": 65,
       "inStock": false,
       "url": "https://www.warforless.com.au/orks-big-mek"
     },
@@ -2742,7 +2724,7 @@ export const RetailersByProduct = {
   "70": [
     {
       "store": "War For Less",
-      "price": 74,
+      "price": 39,
       "inStock": false,
       "url": "https://www.warforless.com.au/orks-big-mek-with-shokk-attack-gun"
     },
@@ -2780,7 +2762,7 @@ export const RetailersByProduct = {
   "71": [
     {
       "store": "War For Less",
-      "price": 64.5,
+      "price": 93.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/orks-big-ed-bossbunka"
     },
@@ -2824,7 +2806,7 @@ export const RetailersByProduct = {
   "72": [
     {
       "store": "War For Less",
-      "price": 47,
+      "price": 34.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/death-guard-biologus-putrifier"
     },
@@ -2912,7 +2894,7 @@ export const RetailersByProduct = {
   "74": [
     {
       "store": "War For Less",
-      "price": 108.8,
+      "price": 64.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/tyranids-biovore"
     },
@@ -2956,7 +2938,7 @@ export const RetailersByProduct = {
   "75": [
     {
       "store": "War For Less",
-      "price": 19.9,
+      "price": 47.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/black-templars-castellan"
     },
@@ -3000,7 +2982,7 @@ export const RetailersByProduct = {
   "76": [
     {
       "store": "War For Less",
-      "price": 70.9,
+      "price": 47.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/black-templars-marshal"
     },
@@ -3044,7 +3026,7 @@ export const RetailersByProduct = {
   "77": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 78,
       "inStock": false,
       "url": "https://www.warforless.com.au/black-templars-sword-brethren"
     },
@@ -3126,7 +3108,7 @@ export const RetailersByProduct = {
   "79": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/adeptus-custodes-blade-champion"
     },
@@ -3202,7 +3184,7 @@ export const RetailersByProduct = {
   "81": [
     {
       "store": "War For Less",
-      "price": 64.5,
+      "price": 78.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/death-guard-blightlord-terminators"
     },
@@ -3284,7 +3266,7 @@ export const RetailersByProduct = {
   "83": [
     {
       "store": "War For Less",
-      "price": 55.5,
+      "price": 47,
       "inStock": false,
       "url": "https://www.warforless.com.au/blood-angels-chaplain-with-jump-pack-2020"
     },
@@ -3354,7 +3336,7 @@ export const RetailersByProduct = {
   "85": [
     {
       "store": "War For Less",
-      "price": 108.8,
+      "price": 31,
       "inStock": false,
       "url": "https://www.warforless.com.au/blood-angels-librarian-in-terminator-armour"
     },
@@ -3398,7 +3380,7 @@ export const RetailersByProduct = {
   "86": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 77,
       "inStock": false,
       "url": "https://www.warforless.com.au/~22789987"
     },
@@ -3474,7 +3456,7 @@ export const RetailersByProduct = {
   "88": [
     {
       "store": "War For Less",
-      "price": 116.3,
+      "price": 79,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-wolves-blood-claws"
     },
@@ -3518,7 +3500,7 @@ export const RetailersByProduct = {
   "89": [
     {
       "store": "War For Less",
-      "price": 84,
+      "price": 153,
       "inStock": false,
       "url": "https://www.warforless.com.au/~25699066"
     },
@@ -3556,7 +3538,7 @@ export const RetailersByProduct = {
   "90": [
     {
       "store": "War For Less",
-      "price": 41.6,
+      "price": 45.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/bloodletters"
     },
@@ -3600,7 +3582,7 @@ export const RetailersByProduct = {
   "91": [
     {
       "store": "War For Less",
-      "price": 11,
+      "price": 34.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/blood-master-herald-of-khorne"
     },
@@ -3644,7 +3626,7 @@ export const RetailersByProduct = {
   "92": [
     {
       "store": "War For Less",
-      "price": 72.8,
+      "price": 146.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/daemons-of-khorne-bloodthirster"
     },
@@ -3688,7 +3670,7 @@ export const RetailersByProduct = {
   "93": [
     {
       "store": "War For Less",
-      "price": 6,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/daemons-of-tzeentch-blue-horrors"
     },
@@ -3746,7 +3728,7 @@ export const RetailersByProduct = {
   "95": [
     {
       "store": "War For Less",
-      "price": 90,
+      "price": 66.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/orks-boomdakka-snazzwagon"
     },
@@ -3790,7 +3772,7 @@ export const RetailersByProduct = {
   "96": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/orks-boss-snikrot"
     },
@@ -3916,7 +3898,7 @@ export const RetailersByProduct = {
   "99": [
     {
       "store": "War For Less",
-      "price": 47.3,
+      "price": 57.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/tyranids-broodlord"
     },
@@ -3960,7 +3942,7 @@ export const RetailersByProduct = {
   "100": [
     {
       "store": "War For Less",
-      "price": 67.5,
+      "price": 105,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-brutalis-dreadnought"
     },
@@ -4004,7 +3986,7 @@ export const RetailersByProduct = {
   "101": [
     {
       "store": "War For Less",
-      "price": 34.5,
+      "price": 70.9,
       "inStock": false,
       "url": "https://www.warforless.com.au/leagues-of-votann-brokhyr-iron-master"
     },
@@ -4030,7 +4012,7 @@ export const RetailersByProduct = {
   "102": [
     {
       "store": "War For Less",
-      "price": 6,
+      "price": 75,
       "inStock": false,
       "url": "https://www.warforless.com.au/leagues-of-votann-brokhyr-thunderkyn"
     },
@@ -4056,7 +4038,7 @@ export const RetailersByProduct = {
   "103": [
     {
       "store": "War For Less",
-      "price": 72.8,
+      "price": 56,
       "inStock": false,
       "url": "https://www.warforless.com.au/leagues-of-votann-buri-aegnirsson"
     },
@@ -4100,7 +4082,7 @@ export const RetailersByProduct = {
   "104": [
     {
       "store": "War For Less",
-      "price": 130,
+      "price": 65,
       "inStock": false,
       "url": "https://www.warforless.com.au/ctan-shard-of-the-deceiver"
     },
@@ -4144,7 +4126,7 @@ export const RetailersByProduct = {
   "105": [
     {
       "store": "War For Less",
-      "price": 94,
+      "price": 66,
       "inStock": false,
       "url": "https://www.warforless.com.au/~88631763"
     },
@@ -4188,7 +4170,7 @@ export const RetailersByProduct = {
   "106": [
     {
       "store": "War For Less",
-      "price": 94,
+      "price": 153.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/necrons-ctan-shard-of-the-void-dragon"
     },
@@ -4232,7 +4214,7 @@ export const RetailersByProduct = {
   "107": [
     {
       "store": "War For Less",
-      "price": 57.8,
+      "price": 48,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-cadian-castellan"
     },
@@ -4276,7 +4258,7 @@ export const RetailersByProduct = {
   "108": [
     {
       "store": "War For Less",
-      "price": 66,
+      "price": 57.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-cadian-command-squad"
     },
@@ -4320,7 +4302,7 @@ export const RetailersByProduct = {
   "109": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 64.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-cadian-shock-troops"
     },
@@ -4364,7 +4346,7 @@ export const RetailersByProduct = {
   "110": [
     {
       "store": "War For Less",
-      "price": 87,
+      "price": 42.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-cadian-upgrades"
     },
@@ -4408,7 +4390,7 @@ export const RetailersByProduct = {
   "111": [
     {
       "store": "War For Less",
-      "price": 32.3,
+      "price": 21.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/tau-empire-cadre-fireblade"
     },
@@ -4452,7 +4434,7 @@ export const RetailersByProduct = {
   "112": [
     {
       "store": "War For Less",
-      "price": 66,
+      "price": 45,
       "inStock": false,
       "url": "https://www.warforless.com.au/callidus-assassin"
     },
@@ -4496,7 +4478,7 @@ export const RetailersByProduct = {
   "113": [
     {
       "store": "War For Less",
-      "price": 41.3,
+      "price": 50.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/adepta-sororitas-canoness"
     },
@@ -4578,7 +4560,7 @@ export const RetailersByProduct = {
   "115": [
     {
       "store": "War For Less",
-      "price": 47.3,
+      "price": 61.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/necrons-canoptek-doomstalker"
     },
@@ -4622,7 +4604,7 @@ export const RetailersByProduct = {
   "116": [
     {
       "store": "War For Less",
-      "price": 83,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/necrons-canoptek-spyder-2020"
     },
@@ -4666,7 +4648,7 @@ export const RetailersByProduct = {
   "117": [
     {
       "store": "War For Less",
-      "price": 90,
+      "price": 68.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/necrons-canoptek-wraiths-2020"
     },
@@ -4710,7 +4692,7 @@ export const RetailersByProduct = {
   "118": [
     {
       "store": "War For Less",
-      "price": 38,
+      "price": 50.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-captain-in-gravis-armour"
     },
@@ -4780,7 +4762,7 @@ export const RetailersByProduct = {
   "120": [
     {
       "store": "War For Less",
-      "price": 55.5,
+      "price": 50.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-captain-in-phobos-armour-2020"
     },
@@ -4824,7 +4806,7 @@ export const RetailersByProduct = {
   "121": [
     {
       "store": "War For Less",
-      "price": 55.5,
+      "price": 57.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-captain-in-terminator-armour"
     },
@@ -4862,7 +4844,7 @@ export const RetailersByProduct = {
   "122": [
     {
       "store": "War For Less",
-      "price": 94,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-captain-with-jump-pack"
     },
@@ -4906,7 +4888,7 @@ export const RetailersByProduct = {
   "123": [
     {
       "store": "War For Less",
-      "price": 116.3,
+      "price": 67,
       "inStock": false,
       "url": "https://www.warforless.com.au/~88631617"
     },
@@ -4950,7 +4932,7 @@ export const RetailersByProduct = {
   "124": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 56.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/captain-general-trajann-valoris"
     },
@@ -4982,7 +4964,7 @@ export const RetailersByProduct = {
   "125": [
     {
       "store": "War For Less",
-      "price": 78.8,
+      "price": 130,
       "inStock": false,
       "url": "https://www.warforless.com.au/~38446294"
     },
@@ -5020,7 +5002,7 @@ export const RetailersByProduct = {
   "126": [
     {
       "store": "War For Less",
-      "price": 19.9,
+      "price": 57.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/grey-knights-castellan-crowe"
     },
@@ -5064,7 +5046,7 @@ export const RetailersByProduct = {
   "127": [
     {
       "store": "War For Less",
-      "price": 94,
+      "price": 116.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/adepta-sororitas-castigator"
     },
@@ -5108,7 +5090,7 @@ export const RetailersByProduct = {
   "128": [
     {
       "store": "War For Less",
-      "price": 83,
+      "price": 42,
       "inStock": false,
       "url": "https://www.warforless.com.au/~22911785"
     },
@@ -5146,7 +5128,7 @@ export const RetailersByProduct = {
   "129": [
     {
       "store": "War For Less",
-      "price": 50.3,
+      "price": 66,
       "inStock": false,
       "url": "https://www.warforless.com.au/~66135757"
     },
@@ -5184,7 +5166,7 @@ export const RetailersByProduct = {
   "130": [
     {
       "store": "War For Less",
-      "price": 44,
+      "price": 52,
       "inStock": false,
       "url": "https://www.warforless.com.au/catachan-jungle-fighters"
     },
@@ -5216,7 +5198,7 @@ export const RetailersByProduct = {
   "131": [
     {
       "store": "War For Less",
-      "price": 83,
+      "price": 78,
       "inStock": false,
       "url": "https://www.warforless.com.au/adepta-sororitas-celestian-sacresants"
     },
@@ -5260,7 +5242,7 @@ export const RetailersByProduct = {
   "132": [
     {
       "store": "War For Less",
-      "price": 50.3,
+      "price": 78,
       "inStock": false,
       "url": "https://www.warforless.com.au/celestine-the-living-saint"
     },
@@ -5304,7 +5286,7 @@ export const RetailersByProduct = {
   "133": [
     {
       "store": "War For Less",
-      "price": 93.8,
+      "price": 71.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-centurion-assault-squad-2020"
     },
@@ -5348,7 +5330,7 @@ export const RetailersByProduct = {
   "134": [
     {
       "store": "War For Less",
-      "price": 93.8,
+      "price": 71.3,
       "inStock": false,
       "url": "https://www.warforless.com.au/space-marines-centurion-assault-squad-2020"
     },
@@ -5386,7 +5368,7 @@ export const RetailersByProduct = {
   "135": [
     {
       "store": "War For Less",
-      "price": 129.4,
+      "price": 94,
       "inStock": false,
       "url": "https://www.warforless.com.au/legion-imperialis-cerastus-knights-acheron-castiga"
     },
@@ -5430,7 +5412,7 @@ export const RetailersByProduct = {
   "136": [
     {
       "store": "War For Less",
-      "price": 50,
+      "price": 262.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/horus-heresy-cerastus-knight-castigator"
     },
@@ -5474,7 +5456,7 @@ export const RetailersByProduct = {
   "137": [
     {
       "store": "War For Less",
-      "price": 72,
+      "price": 54,
       "inStock": false,
       "url": "https://www.warforless.com.au/~32530139"
     },
@@ -5518,7 +5500,7 @@ export const RetailersByProduct = {
   "138": [
     {
       "store": "War For Less",
-      "price": 90,
+      "price": 47,
       "inStock": false,
       "url": "https://www.warforless.com.au/~68072493"
     },
@@ -7693,6 +7675,12 @@ export const RetailersByProduct = {
       "price": 98,
       "inStock": false,
       "url": "https://www.warhammer.com/en-AU/shop/codex-world-eaters-2025-eng?queryID=931e1ecfecf6933b4cee95499e8d4803"
+    },
+    {
+      "store": "The Combat Company",
+      "price": 77.42,
+      "inStock": false,
+      "url": "https://thecombatcompany.com/products/codex-world-eaters-new?_pos=19&_sid=b10a1f969&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -17315,6 +17303,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-goremongers"
     },
     {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-goremongers-2025?queryID=6c9b6163299eb5ad5c84fe9c3b02502e"
+    },
+    {
       "store": "The Combat Company",
       "price": 86.9,
       "inStock": false,
@@ -17551,12 +17545,6 @@ export const RetailersByProduct = {
       "price": 88,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/kill-team-imperial-navy-breachers-1?_pos=1&_sid=8041f50c6&_ss=r"
-    },
-    {
-      "store": "Gumnut",
-      "price": 39,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/kill-team-datacards-imperial-navy-breachers?_pos=1&_sid=7d38201ae&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -22113,6 +22101,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/nauseous-rotbone?_pos=1&_sid=7b4f3e0cf&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 36.34,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/death-guard-nauseous-rotbone"
+    },
+    {
       "store": "Emerald Hobbies",
       "price": 36.8,
       "inStock": false,
@@ -25429,6 +25423,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/primaris-reivers?_pos=1&_sid=5fb90e86e&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 82.95,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/space-marines-primaris-reivers"
+    },
+    {
       "store": "Gumnut",
       "price": 116,
       "inStock": false,
@@ -28189,6 +28189,12 @@ export const RetailersByProduct = {
       "price": 98.75,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/storm-speeder?_pos=1&_sid=1108a576f&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 98.75,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/space-marines-storm-speeder-pre-order"
     },
     {
       "store": "Emerald Hobbies",
@@ -31061,6 +31067,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/chaos-knights-war-dogs?_pos=1&_sid=4228426c7&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 126.4,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/chaos-knights-wardogs-pre-order"
+    },
+    {
       "store": "Emerald Hobbies",
       "price": 67.5,
       "inStock": false,
@@ -31135,12 +31147,6 @@ export const RetailersByProduct = {
       "price": 126.4,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/imperial-knights-knight-armigers-pre-order"
-    },
-    {
-      "store": "Emerald Hobbies",
-      "price": 67.5,
-      "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/fallout-miniatures-hollywood-heroes?_pos=1&_sid=4bf0e7ae9&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -31925,24 +31931,6 @@ export const RetailersByProduct = {
       "price": 42.75,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/orks-weirdboy"
-    },
-    {
-      "store": "Emerald Hobbies",
-      "price": 50.4,
-      "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/ironjawz-orruk-weirdnob-shaman?_pos=1&_sid=99f7843ce&_ss=r"
-    },
-    {
-      "store": "Gumnut",
-      "price": 79,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-orruk-weirdnob-shaman-blister?_pos=1&_sid=58a5c2325&_ss=r"
-    },
-    {
-      "store": "Frontline Hobbies",
-      "price": 55.13,
-      "inStock": false,
-      "url": "https://www.frontlinehobbies.com.au/warhammer-age-of-sigmar-orruk-warclans-weirdnob-sh"
     }
   ],
   "798": [
@@ -32095,6 +32083,12 @@ export const RetailersByProduct = {
       "price": 75.99,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/fallout-wasteland-warfare-creatures-ghoulish-remnants-pre-order-june-2024?_pos=1&_sid=cc73c7d29&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 69.52,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/astra-telepathica-sisters-of-silence"
     },
     {
       "store": "Gumnut",
@@ -32763,6 +32757,12 @@ export const RetailersByProduct = {
       "price": 82.16,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/seraphim-zephyrim-squad?_pos=1&_sid=a8d6c07c7&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 82.16,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/adepta-sororitas-battle-sisters-squad-1"
     },
     {
       "store": "Gumnut",
@@ -34423,12 +34423,6 @@ export const RetailersByProduct = {
       "url": "https://www.gapgames.com.au/products/skaven-deathmaster-pre-order"
     },
     {
-      "store": "Gumnut",
-      "price": 36,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/card-sleeves-ultra-pro-apex-deck-protector-sleeves-mana-8-swamp-black-105?_pos=1&_sid=261421cc0&_ss=r"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 60.8,
       "inStock": false,
@@ -35149,6 +35143,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/hobgrot-slittas?_pos=1&_sid=92142d73b&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 66.36,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/orruk-warclans-hobgrot-slittas-pre-order"
+    },
+    {
       "store": "Emerald Hobbies",
       "price": 67.9,
       "inStock": false,
@@ -35443,6 +35443,12 @@ export const RetailersByProduct = {
       "price": 71.1,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/stormstrike-chariot?_pos=1&_sid=b55e71223&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 71.1,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/stormcast-eternals-stormstrike-chariot-pre-order"
     },
     {
       "store": "Emerald Hobbies",
@@ -40995,6 +41001,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/arachnarok-spider?_pos=1&_sid=ba3b9df8a&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 97.85,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/gloomspite-gitz-arachnarok-spider"
+    },
+    {
       "store": "Emerald Hobbies",
       "price": 130,
       "inStock": false,
@@ -42679,18 +42691,6 @@ export const RetailersByProduct = {
       "price": 50.4,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/ironjawz-orruk-weirdnob-shaman?_pos=1&_sid=efb48482a&_ss=r"
-    },
-    {
-      "store": "Gumnut",
-      "price": 63,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-orruk-weirdnob-shaman-blister?_pos=1&_sid=b0a8f9584&_ss=r"
-    },
-    {
-      "store": "Frontline Hobbies",
-      "price": 55.13,
-      "inStock": false,
-      "url": "https://www.frontlinehobbies.com.au/warhammer-age-of-sigmar-orruk-warclans-weirdnob-sh"
     }
   ],
   "1066": [
@@ -44325,12 +44325,6 @@ export const RetailersByProduct = {
       "price": 51.3,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/cities-of-sigmar-dark-elf-cold-one-knights-drakespawn-knights"
-    },
-    {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/tales-of-the-arthurian-knights-board-game?_pos=1&_sid=76acf9af6&_ss=r"
     }
   ],
   "1109": [
@@ -49267,12 +49261,6 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/callis-and-toll-saviours-of-cinderfall?_pos=1&_sid=1c8c8320b&_ss=r"
     },
     {
-      "store": "Gumnut",
-      "price": 57,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-dawnbringers-book-v-shadow-of-the-crone?_pos=1&_sid=34194c38c&_ss=r"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 117.25,
       "inStock": false,
@@ -50393,18 +50381,6 @@ export const RetailersByProduct = {
       "price": 79,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/orruk-warclans-weirdbrute-wrekkaz-pre-order"
-    },
-    {
-      "store": "Emerald Hobbies",
-      "price": 192,
-      "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/orruk-warclans-spearhead?_pos=1&_sid=2ebf5ce7c&_ss=r"
-    },
-    {
-      "store": "Gumnut",
-      "price": 74,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-weirdbrute-wrekkaz?_pos=1&_sid=7832f4701&_ss=r"
     },
     {
       "store": "Frontline Hobbies",

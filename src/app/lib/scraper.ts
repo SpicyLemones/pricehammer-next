@@ -1,6 +1,6 @@
 // src/app/lib/scraper.ts
 // Server-only helpers for scraping. Import only from routes with `export const runtime = "nodejs"`.
-
+import pLimit from "p-limit";
 // Add these optional fields to your Seller type at the top:
 type Seller = {
   id?: number;
@@ -37,6 +37,7 @@ type BrowserLike = {
   newPage(): Promise<PageLike>;
   close(): Promise<void>;
 };
+
 type PageLike = {
   setUserAgent(ua: string): Promise<void>;
   goto(url: string, opts: { waitUntil: any; timeout: number }): Promise<any>;
@@ -88,6 +89,8 @@ export async function fetchPriceFromLinkWithSellerSelectors(
 ): Promise<number | null> {
   const browser = await launchPuppeteer();
   const page = await browser.newPage();
+
+  
   try {
     await page.setUserAgent(UA);
     await page.goto(link, { waitUntil: "domcontentloaded", timeout: 30_000 });
@@ -183,8 +186,25 @@ export async function searchSeller(
 ): Promise<Candidate[]> {
   const browser = await launchPuppeteer();
   const page = await browser.newPage();
+  
   try {
     await page.setUserAgent(UA);
+
+      // block 3rd party
+    try {
+  const anyPage = page as any;
+  await anyPage.setRequestInterception?.(true);
+  anyPage.on?.("request", (req: any) => {
+    const type = req.resourceType?.() || "";
+    const url = req.url?.() || "";
+    if (type === "image" || type === "media" || type === "font" ||
+        /doubleclick|google-analytics|facebook\.com|hotjar|gtag\./i.test(url)) {
+      return req.abort();
+    }
+    return req.continue();
+  });
+} catch {}
+
 
     const searchUrl =
       seller.base_url +
@@ -301,21 +321,21 @@ export async function searchSeller(
     );
     console.log("found cards", cards.length, "for", product.search_term)
     // Fetch image buffers server-side
-    const out: Candidate[] = [];
-    for (const c of cards) {
-      let buf: Buffer | null = null;
-      if (c.img) {
-        try {
-          const r = await fetch(c.img);
-          const ab = await r.arrayBuffer();
-          buf = Buffer.from(ab);
-        } catch {
-          buf = null;
-        }
-      }
-      out.push({ link: c.link, price: c.price, img: buf });
+    const limit = pLimit(6);
+const out = await Promise.all(
+  cards.map((c) => limit(async () => {
+    let buf: Buffer | null = null;
+    if (c.img) {
+      try {
+        const r = await fetch(c.img);
+        const ab = await r.arrayBuffer();
+        buf = Buffer.from(ab);
+      } catch {}
     }
-    return out;
+    return { link: c.link, price: c.price, img: buf };
+  }))
+);
+return out;
   } finally {
     await page.close().catch(() => {});
     await (browser as any).close?.().catch?.(() => {});
