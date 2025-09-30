@@ -1,18 +1,25 @@
 // src/app/lib/scraper.ts
 // Server-only helpers for scraping. Import only from routes with `export const runtime = "nodejs"`.
 
+// Add these optional fields to your Seller type at the top:
 type Seller = {
   id?: number;
   name?: string;
   base_url: string;
-  search_url: string;       // e.g. "/search?q=*"
-  product_selector: string; // CSS list items
+  search_url: string;
+  product_selector: string;
   name_selector?: string;
   link_selector?: string;
   price_selector?: string;
   sale_selector?: string;
   image_selector?: string;
+
+  // NEW: product page selectors (optional)
+  product_price_selector?: string;
+  product_sale_selector?: string;
+  product_image_selector?: string;
 };
+
 
 type Product = {
   id?: number;
@@ -76,7 +83,7 @@ function pickNumber(txt?: string | null): number | null {
  * Refresh a product page by seller selectors and return the best price found.
  */
 export async function fetchPriceFromLinkWithSellerSelectors(
-  seller: { price_selector?: string; sale_selector?: string },
+  seller: { product_price_selector?: string; product_sale_selector?: string; price_selector?: string; sale_selector?: string },
   link: string
 ): Promise<number | null> {
   const browser = await launchPuppeteer();
@@ -85,25 +92,77 @@ export async function fetchPriceFromLinkWithSellerSelectors(
     await page.setUserAgent(UA);
     await page.goto(link, { waitUntil: "domcontentloaded", timeout: 30_000 });
 
-    const price = await page.evaluate(
-      ({ priceSel, saleSel }: { priceSel: string; saleSel: string }) => {
-        const pick = (t?: string | null) => {
-          if (!t) return null;
-          const m = t.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
-          return m ? parseFloat(m[0]) : null;
-        };
+    const price = await page.evaluate((sel: {
+      product_price_selector?: string | null;
+      product_sale_selector?: string | null;
+      price_selector?: string | null;
+      sale_selector?: string | null;
+    }) => {
+      const pick = (t?: string | null) => {
+        if (!t) return null;
+        const m = t.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
+        return m ? parseFloat(m[0]) : null;
+      };
+      const by = (css?: string | null) => (css ? pick(document.querySelector(css)?.textContent ?? "") : null);
 
-        const saleTxt = saleSel ? document.querySelector(saleSel)?.textContent ?? "" : "";
-        const regTxt  = priceSel ? document.querySelector(priceSel)?.textContent ?? "" : "";
-        const itemTxt =
-          document.querySelector("[itemprop='price']")?.getAttribute?.("content") ||
-          document.querySelector("[itemprop='price']")?.textContent ||
-          "";
+      const candidates: Array<number | null> = [];
 
-        return pick(saleTxt) ?? pick(regTxt) ?? pick(itemTxt) ?? null;
-      },
-      { priceSel: seller.price_selector || "", saleSel: seller.sale_selector || "" }
-    );
+      // 1) Prefer explicit product-page selectors (if you add them)
+      candidates.push(by(sel.product_sale_selector));
+      candidates.push(by(sel.product_price_selector));
+
+      // 2) Fall back to your listing selectors
+      candidates.push(by(sel.sale_selector));
+      candidates.push(by(sel.price_selector));
+
+      // 3) itemprop and common classes
+      const itemProp =
+        document.querySelector("[itemprop='price']")?.getAttribute?.("content") ||
+        document.querySelector("[itemprop='price']")?.textContent ||
+        "";
+      candidates.push(pick(itemProp));
+
+      const COMMON = [
+        ".price--withTax",".price--main",".productView-price",".productView-price-value",
+        ".product__price",".product-price",".price",".price__value",".price-item",".money"
+      ];
+      for (const c of COMMON) {
+        const t = document.querySelector(c)?.textContent || "";
+        const v = pick(t);
+        if (v != null) candidates.push(v);
+      }
+
+      // 4) Meta tags
+      const og = document.querySelector("meta[property='og:price:amount']")?.getAttribute("content");
+      candidates.push(pick(og || ""));
+
+      // 5) JSON-LD (schema.org Product/Offer)
+      try {
+        const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
+        for (const s of scripts) {
+          try {
+            const data = JSON.parse(s.textContent || "null");
+            const arr = Array.isArray(data) ? data : [data];
+            for (const d of arr) {
+              const offers = d?.offers;
+              const raw =
+                (Array.isArray(offers) ? offers[0]?.price : offers?.price) ??
+                (Array.isArray(offers) ? offers[0]?.priceSpecification?.price : offers?.priceSpecification?.price);
+              const v = pick(raw != null ? String(raw) : "");
+              if (v != null) candidates.push(v);
+            }
+          } catch {}
+        }
+      } catch {}
+
+      const first = candidates.find((n) => typeof n === "number" && Number.isFinite(n)) as number | undefined;
+      return first ?? null;
+    }, {
+      product_price_selector: seller.product_price_selector || null,
+      product_sale_selector: seller.product_sale_selector || null,
+      price_selector: seller.price_selector || null,
+      sale_selector: seller.sale_selector || null,
+    });
 
     return price;
   } catch {
@@ -113,6 +172,7 @@ export async function fetchPriceFromLinkWithSellerSelectors(
     await (browser as any).close?.().catch?.(() => {});
   }
 }
+
 
 /**
  * Search a seller for a product and return candidate cards (link, price, small image buffer).

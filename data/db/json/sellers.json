@@ -65,7 +65,7 @@
   "link_selector": ".desc h5 a",
 
   "price_selector": ".desc .compare-price",
-  "sale_selector": "desc .price",
+  "sale_selector": ".desc .price",
 
   "image_selector": ".product-image img"
 }

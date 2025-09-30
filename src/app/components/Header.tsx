@@ -40,8 +40,10 @@ export function Header() {
         <Link href="/" className="inline-flex items-center gap-2 font-semibold text-slate-900">
           {/* you can swap to next/image later if you want */}
           <img
-            className="h-6 w-6 sm:h-7 sm:w-7 rounded-md"
-            src="/images/armybuilderlogo.png"
+            className="rounded-md"
+            src="/logo/logo.png"
+            width={50}
+            height={50}
             alt="Logo"
           />
           <span className="text-base sm:text-lg">PriceHammer</span>

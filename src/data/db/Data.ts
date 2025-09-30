@@ -24,7 +24,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 12,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/nanoblock-great-white-shark-bagged?_pos=1&_sid=c1eff9b94&_ss=r"
     },
@@ -68,7 +68,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39.5,
+      "price": 36,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/abracada-broom?_pos=1&_sid=bbbbf9154&_ss=r"
     },
@@ -112,7 +112,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 42,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-wadrhun-aberration?_pos=1&_sid=8028c6372&_ss=r"
     },
@@ -156,7 +156,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-abominant-2021-boxed?_pos=1&_sid=a485faff5&_ss=r"
     },
@@ -244,7 +244,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 94,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-knight-households-acastus-knights-porphyrion?_pos=1&_sid=98ad0cd5e&_ss=r"
     },
@@ -288,7 +288,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-spires-abomination?_pos=1&_sid=cf7fbeed1&_ss=r"
     },
@@ -332,7 +332,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 201,
+      "price": 89,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-achilles-ridgerunner-boxed?_pos=1&_sid=ba1416adc&_ss=r"
     },
@@ -376,7 +376,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 201,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-acolyte-hybrids-boxed?_pos=1&_sid=ab7d19b6c&_ss=r"
     },
@@ -414,7 +414,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-acolyte-globadiers?_pos=1&_sid=5c632af16&_ss=r"
     }
@@ -496,7 +496,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 116,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-rhino-2021-boxed?_pos=1&_sid=e4f53ffc8&_ss=r"
     },
@@ -540,7 +540,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 95,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-ironstrider-2022-boxed?_pos=1&_sid=dd6558d8d&_ss=r"
     }
@@ -578,7 +578,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 190,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-archaeopter?_pos=1&_sid=7b95aee52&_ss=r"
     },
@@ -622,7 +622,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-salamanders-combat-patrol?_pos=1&_sid=b329cc94a&_ss=r"
     },
@@ -666,7 +666,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 140,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-aegis-defence-line?_pos=1&_sid=0fe969293&_ss=r"
     },
@@ -704,7 +704,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-aestred-thurga-reliquant-at-arms?_pos=1&_sid=401fad8db&_ss=r"
     },
@@ -792,7 +792,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-raven-guard-primaris-upgrades-transfers-blister?_pos=1&_sid=870b7f713&_ss=r"
     },
@@ -830,7 +830,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 20,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/ahriman-undying-paperback?_pos=1&_sid=ed30f1beb&_ss=r"
     },
@@ -874,7 +874,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-allarus-custodians-boxed?_pos=1&_sid=059b0169f&_ss=r"
     },
@@ -912,7 +912,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 52,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-black-templars-crusade-ancient?_pos=1&_sid=fab9dae6d&_ss=r"
     },
@@ -994,7 +994,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 9,
+      "price": 12.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/gift-republic-astrology-cards?_pos=1&_sid=7c9060021&_ss=r"
     },
@@ -1020,7 +1020,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 190,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-archaeopter?_pos=1&_sid=f1a557747&_ss=r"
     }
@@ -1102,7 +1102,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 90,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-wolves-arjac-rockfist?_pos=1&_sid=2fdd4726f&_ss=r"
     },
@@ -1184,7 +1184,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 120,
+      "price": 160,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-knights-knight-armigers?_pos=1&_sid=5385a120f&_ss=r"
     }
@@ -1216,7 +1216,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 120,
+      "price": 160,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-knights-knight-armigers?_pos=1&_sid=cb993cd28&_ss=r"
     }
@@ -1224,7 +1224,7 @@ export const RetailersByProduct = {
   "31": [
     {
       "store": "War For Less",
-      "price": 50,
+      "price": 43,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-sentinel"
     },
@@ -1298,7 +1298,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-artillery-team?_pos=1&_sid=a05c4a234&_ss=r"
     },
@@ -1380,7 +1380,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-terminator-assault-squad?_pos=1&_sid=af156f6d8&_ss=r"
     }
@@ -1418,7 +1418,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 249,
+      "price": 342,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/tainted-grail-the-fall-of-avalon-core-game-kickstarter-special-edition-includes-stretch-goal-box?_pos=1&_sid=b3a0ab1e2&_ss=r"
     },
@@ -1462,7 +1462,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-cadian-upgrades?_pos=1&_sid=a90f1bbf8&_ss=r"
     }
@@ -1532,7 +1532,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 8.5,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-contrast-asurmen-blue?_pos=1&_sid=7d24f403e&_ss=r"
     },
@@ -1576,7 +1576,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-atalan-jackals-2022?_pos=1&_sid=61e12ebef&_ss=r"
     },
@@ -1590,7 +1590,7 @@ export const RetailersByProduct = {
   "40": [
     {
       "store": "War For Less",
-      "price": 84,
+      "price": 43,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-attilan-rough-riders"
     },
@@ -1620,7 +1620,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-combat-patrol-2025?_pos=1&_sid=571298568&_ss=r"
     },
@@ -1696,7 +1696,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 41.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-index-cards-aeldari?_pos=1&_sid=0ca7eca10&_ss=r"
     },
@@ -1778,7 +1778,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 20.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/lazarus-enmitys-edge-paperback?_pos=1&_sid=75e62d505&_ss=r"
     },
@@ -1854,7 +1854,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-phoenix-lord-baharroth?_pos=1&_sid=694cd6b5c&_ss=r"
     },
@@ -1979,6 +1979,12 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/citadel-barbed-bracken?_pos=1&_sid=b2bd04bba&_ss=r"
     },
     {
+      "store": "Gumnut",
+      "price": 22,
+      "inStock": false,
+      "url": "https://www.gumnut.com.au/products/gsw-simulated-barbed-wire-1-48-1-52-30mm?_pos=1&_sid=2f0f04257&_ss=r"
+    },
+    {
       "store": "Frontline Hobbies",
       "price": 48,
       "inStock": false,
@@ -2018,7 +2024,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-barbgaunts?_pos=1&_sid=3c499d5cc&_ss=r"
     },
@@ -2062,7 +2068,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 25,
+      "price": 8,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/wizkids-unpainted-miniatures-nolzurs-classic-basilisk-january-2025-release?_pos=1&_sid=430cc5b80&_ss=r"
     },
@@ -2106,7 +2112,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 72,
+      "price": 66,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-scenery-battlefield-trophies?_pos=1&_sid=48975a7c9&_ss=r"
     },
@@ -2150,7 +2156,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 59,
+      "price": 190,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-battlewagon?_pos=1&_sid=3d0be5eb9&_ss=r"
     },
@@ -2182,7 +2188,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 67.5,
+      "price": 71.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/battletech-premium-battlemat-grasslands-lunar?_pos=1&_sid=e2b69a793&_ss=r"
     },
@@ -2220,7 +2226,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 67.5,
+      "price": 71.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/battletech-premium-battlemat-grasslands-lunar?_pos=1&_sid=4d97077f4&_ss=r"
     },
@@ -2275,6 +2281,12 @@ export const RetailersByProduct = {
       "price": 66.5,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/battlezone-manufactorum-autochoral-transmitter?_pos=1&_sid=c6317ba75&_ss=r"
+    },
+    {
+      "store": "Gumnut",
+      "price": 21.5,
+      "inStock": false,
+      "url": "https://www.gumnut.com.au/products/metal-earth-dr-who-rusty-k9?_pos=1&_sid=0c62c504f&_ss=r"
     }
   ],
   "58": [
@@ -2348,7 +2360,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 78,
+      "price": 164,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-battlezone-manufactorum-sanctum-administratus?_pos=1&_sid=8837fb640&_ss=r"
     },
@@ -2371,6 +2383,12 @@ export const RetailersByProduct = {
       "price": 104.5,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/battlezone-manufactorum-sub-cloister-and-storage-fane?_pos=1&_sid=09c50daf3&_ss=r"
+    },
+    {
+      "store": "Gumnut",
+      "price": 9.5,
+      "inStock": false,
+      "url": "https://www.gumnut.com.au/products/reaper-miniatures-dire-rats-8?_pos=1&_sid=95f46f2f1&_ss=r"
     }
   ],
   "61": [
@@ -2426,7 +2444,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 21,
+      "price": 16,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/ark-nova-map-pack-001-expansion?_pos=1&_sid=2aeaacec1&_ss=r"
     },
@@ -2470,7 +2488,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1?_pos=1&_sid=c8ec0019d&_ss=r"
     },
@@ -2514,7 +2532,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 262,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-orks-combat-patrol-1?_pos=1&_sid=2dadb4f0f&_ss=r"
     },
@@ -2596,7 +2614,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 108,
+      "price": 31.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/deck-of-many-insults?_pos=1&_sid=d19621459&_ss=r"
     },
@@ -2684,7 +2702,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-benefictus?_pos=1&_sid=9a590f137&_ss=r"
     },
@@ -2728,7 +2746,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20.5,
+      "price": 18,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/brutal-kunnin-softcover?_pos=1&_sid=f86652179&_ss=r"
     },
@@ -2766,7 +2784,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 23,
+      "price": 20,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/gun-puzzle-wooden-puzzle?_pos=1&_sid=c6bf999a6&_ss=r"
     },
@@ -2810,7 +2828,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 94,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-big-ed-bossbunka?_pos=1&_sid=1f28d7c9c&_ss=r"
     },
@@ -2854,7 +2872,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-biologus-putrifier-blister?_pos=1&_sid=b0a10248f&_ss=r"
     },
@@ -3074,7 +3092,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 55,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-black-templars-sword-brethren?_pos=1&_sid=817ebb8be&_ss=r"
     },
@@ -3156,7 +3174,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-blade-champion?_pos=1&_sid=d3eaa06a7&_ss=r"
     },
@@ -3194,7 +3212,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-bladeguard-veterans-boxed?_pos=1&_sid=63ed37c92&_ss=r"
     }
@@ -3232,7 +3250,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-blightlord-terminators-boxed?_pos=1&_sid=359b096a1&_ss=r"
     },
@@ -3270,7 +3288,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-blood-angels-captain?_pos=1&_sid=496739eb3&_ss=r"
     },
@@ -3314,7 +3332,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-blood-angels-chaplain-with-jump-pack-blister?_pos=1&_sid=aad152884&_ss=r"
     },
@@ -3428,7 +3446,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-terminator-assault-squad?_pos=1&_sid=7fb791a90&_ss=r"
     },
@@ -3548,7 +3566,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-datacards-imperial-navy-breachers?_pos=1&_sid=1a07061bc&_ss=r"
     }
@@ -3586,7 +3604,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 149,
+      "price": 48,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/scenery-citadel-skulls?_pos=1&_sid=ceeb46c90&_ss=r"
     },
@@ -3630,7 +3648,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 37,
+      "price": 49,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-underworlds-rivals-deck-realmstone-raiders?_pos=1&_sid=41f8c092a&_ss=r"
     },
@@ -3712,7 +3730,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 70,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-daemons-of-tzeentch-blue-horrors?_pos=1&_sid=6e01f65a2&_ss=r"
     }
@@ -3776,7 +3794,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 31,
+      "price": 17,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/boggle-plastic-case-edition?_pos=1&_sid=dd33786d0&_ss=r"
     },
@@ -3820,7 +3838,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-orks-boss-snikrot?_pos=1&_sid=dac403164&_ss=r"
     },
@@ -3858,7 +3876,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 197,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-beast-snagga-boyz?_pos=1&_sid=c7e8ef61a&_ss=r"
     },
@@ -3902,7 +3920,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-broodcoven-2021?_pos=1&_sid=29dc28a5a&_ss=r"
     },
@@ -3916,7 +3934,7 @@ export const RetailersByProduct = {
   "99": [
     {
       "store": "War For Less",
-      "price": 47.3,
+      "price": 43,
       "inStock": false,
       "url": "https://www.warforless.com.au/tyranids-broodlord"
     },
@@ -3946,7 +3964,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-phoenix-lord-baharroth?_pos=1&_sid=2007f0807&_ss=r"
     },
@@ -3990,7 +4008,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 140,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-brutalis-dreadnought?_pos=1&_sid=591a41523&_ss=r"
     },
@@ -4130,7 +4148,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 205,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-necrons-ctan-shard-of-the-void-dragon-boxed?_pos=1&_sid=279a3bd0c&_ss=r"
     },
@@ -4174,7 +4192,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 16,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-base-naggaroth-night?_pos=1&_sid=934480f3c&_ss=r"
     },
@@ -4218,7 +4236,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 205,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-necrons-ctan-shard-of-the-void-dragon-boxed?_pos=1&_sid=e47d6c12d&_ss=r"
     },
@@ -4306,7 +4324,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-cadian-command-squad?_pos=1&_sid=8aa378206&_ss=r"
     },
@@ -4350,7 +4368,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-cadian-shock-troops?_pos=1&_sid=2e555e3cb&_ss=r"
     },
@@ -4394,7 +4412,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-cadian-upgrades?_pos=1&_sid=60ccc7d03&_ss=r"
     },
@@ -4438,7 +4456,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 23,
+      "price": 20,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/gun-puzzle-wooden-puzzle?_pos=1&_sid=1e53e780f&_ss=r"
     },
@@ -4564,7 +4582,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-canoness-with-jump-pack?_pos=1&_sid=a7b30358e&_ss=r"
     },
@@ -4608,7 +4626,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 268,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-necrons-combat-patrol-1?_pos=1&_sid=0eeb49865&_ss=r"
     },
@@ -4652,7 +4670,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 70,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-necron-canoptek-spyder-boxed?_pos=1&_sid=03a11944d&_ss=r"
     },
@@ -4696,7 +4714,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 9,
+      "price": 18,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/wizkids-unpainted-miniatures-nolzurs-venom-troll?_pos=1&_sid=b671d8efb&_ss=r"
     },
@@ -4848,7 +4866,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-captain-in-terminator-armour?_pos=1&_sid=d4c6d8003&_ss=r"
     },
@@ -4892,7 +4910,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 176,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-raven-guard-combat-patrol?_pos=1&_sid=d82b73051&_ss=r"
     },
@@ -4936,7 +4954,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-shield-captain?_pos=1&_sid=fcac5dce6&_ss=r"
     },
@@ -4974,7 +4992,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 75,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-trajann-valoris-2021-boxed?_pos=1&_sid=40f531b4b&_ss=r"
     }
@@ -5006,7 +5024,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 13.5,
+      "price": 16.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/gamers-grass-dry-xl-12mm-wild-tufts?_pos=1&_sid=33e1b84e6&_ss=r"
     },
@@ -5050,7 +5068,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 255,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-grey-knights-combat-patrol-2025?_pos=1&_sid=c611b9fca&_ss=r"
     },
@@ -5094,7 +5112,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 263,
+      "price": 350,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/horus-heresy-knight-houses-cerastus-knight-castigator?_pos=1&_sid=dc2c0860c&_ss=r"
     },
@@ -5108,7 +5126,7 @@ export const RetailersByProduct = {
   "128": [
     {
       "store": "War For Less",
-      "price": 83,
+      "price": 43,
       "inStock": false,
       "url": "https://www.warforless.com.au/~22911785"
     },
@@ -5176,7 +5194,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 78,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/horus-heresy-legiones-astartes-heavy-weapons-upgrade-set?_pos=1&_sid=41b558dae&_ss=r"
     }
@@ -5184,7 +5202,7 @@ export const RetailersByProduct = {
   "130": [
     {
       "store": "War For Less",
-      "price": 44,
+      "price": 84,
       "inStock": false,
       "url": "https://www.warforless.com.au/catachan-jungle-fighters"
     },
@@ -5208,7 +5226,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 63,
+      "price": 21.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-british-chindit-hq?_pos=1&_sid=34fc15b28&_ss=r"
     }
@@ -5246,7 +5264,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 268,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-combat-patrol-2024?_pos=1&_sid=8ca314885&_ss=r"
     },
@@ -5290,7 +5308,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 12.5,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-celestine-the-living-saint-boxed?_pos=1&_sid=27b3dbf29&_ss=r"
     },
@@ -5334,7 +5352,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 13.5,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-dungeon-dwellers-bloodscale-kobolds-6?_pos=1&_sid=9e283ccdf&_ss=r"
     },
@@ -5378,7 +5396,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 90,
+      "price": 42,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/centurion-rpg-legionaries-of-rome?_pos=1&_sid=f388e977b&_ss=r"
     }
@@ -5416,7 +5434,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 263,
+      "price": 350,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/horus-heresy-knight-houses-cerastus-knight-acheron?_pos=1&_sid=7d80698f4&_ss=r"
     },
@@ -5504,7 +5522,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 11.5,
+      "price": 9.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-anhurian-cavalry?_pos=1&_sid=e0045d273&_ss=r"
     },
@@ -5518,7 +5536,7 @@ export const RetailersByProduct = {
   "138": [
     {
       "store": "War For Less",
-      "price": 90,
+      "price": 43,
       "inStock": false,
       "url": "https://www.warforless.com.au/~68072493"
     },
@@ -5548,7 +5566,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 16,
+      "price": 11,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/gsw-resin-crabs?_pos=1&_sid=ed4437444&_ss=r"
     },
@@ -5650,7 +5668,7 @@ export const RetailersByProduct = {
   "141": [
     {
       "store": "War For Less",
-      "price": 87,
+      "price": 43,
       "inStock": false,
       "url": "https://www.warforless.com.au/csm-chaos-lord-in-terminator-armour"
     },
@@ -5724,7 +5742,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-lord-with-jump-pack?_pos=1&_sid=87f5ab536&_ss=r"
     },
@@ -5788,7 +5806,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 77,
+      "price": 221,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-spires-siege-breaker-behemoth?_pos=1&_sid=73be0d119&_ss=r"
     }
@@ -5914,7 +5932,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-chaos-lord?_pos=1&_sid=d5831d384&_ss=r"
     },
@@ -5958,7 +5976,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 124,
+      "price": 165,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-underworlds-chaos-warbands-despoilers-and-daemons?_pos=1&_sid=8602fe0d5&_ss=r"
     },
@@ -5996,7 +6014,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 37,
+      "price": 81,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/circadians-chaos-order?_pos=1&_sid=4fca9d4d6&_ss=r"
     }
@@ -6060,7 +6078,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 224,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-titan-legions-warhound-scout-titans?_pos=1&_sid=ff70b0e06&_ss=r"
     }
@@ -6092,7 +6110,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-chaplain-in-terminator-armour?_pos=1&_sid=4ac74ece8&_ss=r"
     },
@@ -6218,7 +6236,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 68,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-chaplain-on-bike?_pos=1&_sid=ae843b02b&_ss=r"
     },
@@ -6294,7 +6312,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ultramarines-chief-librarian-tigurius-2020?_pos=1&_sid=ae4bc09f2&_ss=r"
     },
@@ -6376,7 +6394,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-wardrhun-chosen-of-death?_pos=1&_sid=19684511f&_ss=r"
     },
@@ -6420,7 +6438,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 7,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-air-mortarion-green-24ml?_pos=1&_sid=17faf530c&_ss=r"
     }
@@ -6458,7 +6476,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-necrons-chronomancer-blister?_pos=1&_sid=3d553f494&_ss=r"
     },
@@ -6546,7 +6564,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-clamavus-blister?_pos=1&_sid=b94ccb693&_ss=r"
     },
@@ -6590,7 +6608,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-black-templars-codex-10th-ed?_pos=1&_sid=e18a6ce8f&_ss=r"
     }
@@ -6628,7 +6646,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-blood-angels-codex-10th-ed?_pos=1&_sid=147fc26f3&_ss=r"
     },
@@ -6672,7 +6690,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 46,
+      "price": 81,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/dark-souls-rpg-core-rulebook?_pos=1&_sid=e82367f91&_ss=r"
     },
@@ -6716,7 +6734,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-wolves-codex-10th-ed?_pos=1&_sid=890a3da83&_ss=r"
     },
@@ -6760,7 +6778,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 112,
+      "price": 43,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/dnd-5e-mini-dungeon-tome-ii-pocket-edition?_pos=1&_sid=ef064b0c1&_ss=r"
     },
@@ -6804,7 +6822,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-codex-10th-ed?_pos=1&_sid=5347ed662&_ss=r"
     },
@@ -6892,7 +6910,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-datasheet-cards?_pos=1&_sid=2a72fab01&_ss=r"
     },
@@ -6918,7 +6936,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 25,
+      "price": 13.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/trivia-after-dinner-cards?_pos=1&_sid=b903f3ba2&_ss=r"
     }
@@ -6956,7 +6974,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5.5,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-codex-10th-ed?_pos=1&_sid=6202cf978&_ss=r"
     },
@@ -7000,7 +7018,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 32,
+      "price": 43,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-knights-datasheet-cards?_pos=1&_sid=a1cb02cbb&_ss=r"
     },
@@ -7044,7 +7062,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-codex-10th-edition?_pos=1&_sid=0e6a07dae&_ss=r"
     },
@@ -7088,7 +7106,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 37,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-datasheet-cards-2025?_pos=1&_sid=cf1ab89ec&_ss=r"
     },
@@ -7228,7 +7246,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 37,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-codex?_pos=1&_sid=502d36cb8&_ss=r"
     },
@@ -7272,7 +7290,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-grey-knights-codex-10th-ed?_pos=1&_sid=9e15e6bfb&_ss=r"
     }
@@ -7310,7 +7328,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-codex?_pos=1&_sid=14ea8d85b&_ss=r"
     },
@@ -7354,7 +7372,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-knights-codex-10th-edition?_pos=1&_sid=8ab6ab115&_ss=r"
     },
@@ -7412,7 +7430,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-leagues-of-votann-codex-10th-ed?_pos=1&_sid=4c8b9aa0b&_ss=r"
     },
@@ -7456,7 +7474,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-necrons-codex-1?_pos=1&_sid=c5c7e5586&_ss=r"
     },
@@ -7544,7 +7562,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-codex-10th-edition?_pos=1&_sid=ff1c8172b&_ss=r"
     },
@@ -7582,7 +7600,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 28,
+      "price": 61.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/empires-end-board-game?_pos=1&_sid=28da3e1fd&_ss=r"
     },
@@ -7626,7 +7644,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-thousand-sons-codex?_pos=1&_sid=72d499c18&_ss=r"
     },
@@ -7670,7 +7688,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-codex-10th-ed?_pos=1&_sid=68bbc8ddf&_ss=r"
     },
@@ -7708,7 +7726,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 37,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-world-eaters-datasheet-cards?_pos=1&_sid=1d2fcebbc&_ss=r"
     },
@@ -7796,7 +7814,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 278,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-combat-patrol?_pos=1&_sid=0a6ea2934&_ss=r"
     },
@@ -7884,7 +7902,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-combat-patrol-2025?_pos=1&_sid=5cc8cd188&_ss=r"
     },
@@ -8016,7 +8034,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-blood-angels-combat-patrol?_pos=1&_sid=b1dd12057&_ss=r"
     },
@@ -8060,7 +8078,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-combat-patrol?_pos=1&_sid=c781d9ff1&_ss=r"
     },
@@ -8148,7 +8166,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 37,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-datasheet-cards-2025?_pos=1&_sid=d1bbe4639&_ss=r"
     },
@@ -8192,7 +8210,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 285,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-korps-of-krieg-combat-patrol?_pos=1&_sid=dd5209302&_ss=r"
     },
@@ -8236,7 +8254,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 255,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-drukhari-combat-patrol-2025?_pos=1&_sid=324a3396c&_ss=r"
     },
@@ -8280,7 +8298,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-emperors-children-datasheet-cards?_pos=1&_sid=2dcac6103&_ss=r"
     },
@@ -8324,7 +8342,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 201,
+      "price": 268,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-combat-patrol-2024?_pos=1&_sid=40d4d6e99&_ss=r"
     },
@@ -8368,7 +8386,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 255,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-grey-knights-combat-patrol-2025?_pos=1&_sid=36d3521a9&_ss=r"
     },
@@ -8412,7 +8430,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 201,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-combat-patrol?_pos=1&_sid=8053db72c&_ss=r"
     },
@@ -8500,7 +8518,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-leagues-of-votann-combat-patrol-2025?_pos=1&_sid=9671b9d9f&_ss=r"
     },
@@ -8632,7 +8650,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 176,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-raven-guard-combat-patrol?_pos=1&_sid=625329c75&_ss=r"
     },
@@ -8720,7 +8738,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-combat-patrol?_pos=1&_sid=0ce523e1b&_ss=r"
     },
@@ -8764,7 +8782,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 12,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-wolves-combat-patrol?_pos=1&_sid=1c085e101&_ss=r"
     },
@@ -8808,7 +8826,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-thousand-sons-datasheet-cards?_pos=1&_sid=3832c1197&_ss=r"
     },
@@ -8852,7 +8870,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 255,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-combat-patrol-assault-brood?_pos=1&_sid=d3d259047&_ss=r"
     },
@@ -8940,7 +8958,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 201,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-world-eaters-combat-patrol-2025?_pos=1&_sid=c1b487006&_ss=r"
     },
@@ -8984,7 +9002,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-blood-angels-commander-dante?_pos=1&_sid=5b5157309&_ss=r"
     },
@@ -9028,7 +9046,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 68,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-empire-commander-farsight?_pos=1&_sid=eb24d8858&_ss=r"
     },
@@ -9072,7 +9090,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-commander-shadowsun?_pos=1&_sid=d4d176bbe&_ss=r"
     },
@@ -9116,7 +9134,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 64,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-commissar?_pos=1&_sid=eb26d8dc7&_ss=r"
     },
@@ -9160,7 +9178,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-company-heroes?_pos=1&_sid=8da5db3ad&_ss=r"
     },
@@ -9242,7 +9260,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 117,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/norman-conquests-men-of-iron-volume-v?_pos=1&_sid=c5086e5e3&_ss=r"
     },
@@ -9286,7 +9304,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 8.5,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-base-corvus-black?_pos=1&_sid=ebd8578a5&_ss=r"
     },
@@ -9330,7 +9348,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20,
+      "price": 36,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/scenery-citadel-creeping-vines?_pos=1&_sid=e981234b9&_ss=r"
     },
@@ -9374,7 +9392,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 105,
+      "price": 95,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-hemlock-wraithfighter?_pos=1&_sid=0d5aeb7f7&_ss=r"
     }
@@ -9456,7 +9474,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 20.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/broken-crusade-paperback?_pos=1&_sid=a2f0aeb45&_ss=r"
     },
@@ -9494,7 +9512,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18.5,
+      "price": 14.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-townsfolk-ii-3?_pos=1&_sid=b5dca7b15&_ss=r"
     },
@@ -9582,7 +9600,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-leagues-of-votann-cthonian-berserks?_pos=1&_sid=575b1ef17&_ss=r"
     },
@@ -9708,7 +9726,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 42,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-sorcerer-kings-maharajah?_pos=1&_sid=a4b3cca71&_ss=r"
     }
@@ -9746,7 +9764,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-custodian-guard-boxed?_pos=1&_sid=5236f3f12&_ss=r"
     },
@@ -9790,7 +9808,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-custodian-wardens-2022-boxed?_pos=1&_sid=0985cc02d&_ss=r"
     },
@@ -9822,7 +9840,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 62,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/necromunda-the-book-of-desolation?_pos=1&_sid=ce7e23f9b&_ss=r"
     }
@@ -9904,7 +9922,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 145,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-daemon-prince?_pos=1&_sid=52e70cd29&_ss=r"
     },
@@ -9948,7 +9966,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 61,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-40k-daemons-of-slaanesh-daemonettes-of-slaanesh-boxed?_pos=1&_sid=c14a38536&_ss=r"
     },
@@ -9986,7 +10004,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-ephrael-stern-and-kyganil?_pos=1&_sid=56be64a2d&_ss=r"
     },
@@ -10030,7 +10048,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 52,
+      "price": 28,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-korsan-corsairs-of-the-gate-event-exclusive-edition?_pos=1&_sid=8ff21dceb&_ss=r"
     },
@@ -10068,7 +10086,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 13.5,
+      "price": 16.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-reapercon-2024-sophie?_pos=1&_sid=9cacf1823&_ss=r"
     },
@@ -10288,7 +10306,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-t-au-empire-darkstrider?_pos=1&_sid=4e52ed8ed&_ss=r"
     },
@@ -10332,7 +10350,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 58,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-fists-darnath-lysander?_pos=1&_sid=4771c2b7a&_ss=r"
     },
@@ -10376,7 +10394,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 78,
+      "price": 56,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-drukhari-datasheet-cards-10th-edition?_pos=1&_sid=83c7c7c15&_ss=r"
     },
@@ -10420,7 +10438,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 32,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-grey-knights-datasheet-cards-10th-ed?_pos=1&_sid=7ab112bcd&_ss=r"
     },
@@ -10464,7 +10482,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 32,
+      "price": 43,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-knights-datasheet-cards-10th-edition?_pos=1&_sid=3e914ff6b&_ss=r"
     },
@@ -10508,7 +10526,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-leagues-of-votann-datacards-2025?_pos=1&_sid=2e2abeb2c&_ss=r"
     }
@@ -10590,7 +10608,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-death-korps-of-krieg?_pos=1&_sid=9b842cbdb&_ss=r"
     },
@@ -10634,7 +10652,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 172,
+      "price": 42,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-dweghom-raegh-drake-rider?_pos=1&_sid=291315f2a&_ss=r"
     },
@@ -10716,7 +10734,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 44,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/death-throes-rpg?_pos=1&_sid=0aa1bb540&_ss=r"
     },
@@ -10798,7 +10816,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 53,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/deathmatch-island-rpg?_pos=1&_sid=c5f6b4ff1&_ss=r"
     },
@@ -10842,7 +10860,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 61.5,
+      "price": 46.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/frostgrave-knights-plastic?_pos=1&_sid=5e475326b&_ss=r"
     },
@@ -10918,7 +10936,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 172.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-the-old-world-tomb-kings-of-khemri-tomb-king-on-necrolith-bone-dragon?_pos=1&_sid=d52d554d0&_ss=r"
     },
@@ -10962,7 +10980,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-canoness-with-jump-pack?_pos=1&_sid=8a90548b8&_ss=r"
     },
@@ -11050,7 +11068,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 34,
+      "price": 80,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/necromunda-delaque-gang-boxed?_pos=1&_sid=5e77f6171&_ss=r"
     },
@@ -11182,7 +11200,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-dialogus-boxed?_pos=1&_sid=ed6fe759f&_ss=r"
     },
@@ -11226,7 +11244,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-dice-2025?_pos=1&_sid=6e1976eb0&_ss=r"
     },
@@ -11352,7 +11370,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-drukhari-drazhar-2021-boxed?_pos=1&_sid=9c875ecd6&_ss=r"
     },
@@ -11396,7 +11414,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-legiones-astartes-drop-pods?_pos=1&_sid=939208174&_ss=r"
     },
@@ -11510,7 +11528,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-world-eaters-exalted-eightbound?_pos=1&_sid=e838b993e&_ss=r"
     },
@@ -11554,7 +11572,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-leagues-of-votann-einhyr-champion?_pos=1&_sid=d2a7e1485&_ss=r"
     },
@@ -11598,7 +11616,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-leagues-of-votann-einhyr-hearthguard?_pos=1&_sid=de4ba15d5&_ss=r"
     },
@@ -11680,7 +11698,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 52,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-eldrad-ulthran-blister?_pos=1&_sid=701f8bd40&_ss=r"
     },
@@ -11724,7 +11742,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-eliminators-2020-boxed?_pos=1&_sid=90b963fe0&_ss=r"
     },
@@ -11738,7 +11756,7 @@ export const RetailersByProduct = {
   "287": [
     {
       "store": "War For Less",
-      "price": 83,
+      "price": 43,
       "inStock": false,
       "url": "https://www.warforless.com.au/black-templars-emperors-champion"
     },
@@ -11768,7 +11786,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 14,
+      "price": 22.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/marvel-champions-lcg-valkyrie-hero-pack?_pos=1&_sid=f568f173d&_ss=r"
     },
@@ -11856,7 +11874,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-eversor-assassin?_pos=1&_sid=c07b6b0b8&_ss=r"
     },
@@ -11944,7 +11962,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 55,
+      "price": 70,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-black-templars-execrator?_pos=1&_sid=fb7487246&_ss=r"
     },
@@ -12032,7 +12050,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 90,
+      "price": 68,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-grey-knights-grand-master-voldus-blister?_pos=1&_sid=9529f2d64&_ss=r"
     }
@@ -12070,7 +12088,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-fabius-bile?_pos=1&_sid=f5d17d0b3&_ss=r"
     },
@@ -12096,7 +12114,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 38,
+      "price": 27,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/here-to-slay-berserkers-necromancers-expansion?_pos=1&_sid=b6e4e752e&_ss=r"
     }
@@ -12134,7 +12152,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 29,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-farseer-blister?_pos=1&_sid=5780d9bb2&_ss=r"
     },
@@ -12178,7 +12196,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 22,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-farseer-skyrunner-2022?_pos=1&_sid=531d92dbe&_ss=r"
     },
@@ -12222,7 +12240,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-city-states-war-chariot-flogobolon?_pos=1&_sid=c6a09e975&_ss=r"
     }
@@ -12260,7 +12278,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 45,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-murderous-fish-gnome-mystery-pack-assorted?_pos=1&_sid=f2ccb11cf&_ss=r"
     }
@@ -12336,7 +12354,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 129,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-field-ordnance-battery?_pos=1&_sid=49cecb121&_ss=r"
     },
@@ -12506,7 +12524,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-empire-fire-warriors-2022-boxed?_pos=1&_sid=846160d04&_ss=r"
     }
@@ -12544,7 +12562,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 94,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-firestrike-servo-turret?_pos=1&_sid=3875a4d4a&_ss=r"
     },
@@ -12588,7 +12606,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/necromunda-cawdor-weapons-and-upgrades?_pos=1&_sid=824e54ae5&_ss=r"
     },
@@ -12632,7 +12650,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 8.5,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-layer-flash-gitz-yellow?_pos=1&_sid=00bc763f8&_ss=r"
     },
@@ -12676,7 +12694,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 90,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-emperors-children-flawless-blades?_pos=1&_sid=36760c2d6&_ss=r"
     },
@@ -12720,7 +12738,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-layer-flayed-one-flesh?_pos=1&_sid=8bc5d893f&_ss=r"
     },
@@ -12764,7 +12782,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 112,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-spearhead-fangs-of-the-blood-god?_pos=1&_sid=8d06f1513&_ss=r"
     },
@@ -12802,7 +12820,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 54,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/metal-earth-iconx-star-wars-mandalorian-the-child?_pos=1&_sid=b8af5753f&_ss=r"
     },
@@ -12890,7 +12908,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-foul-blightspawn-blister?_pos=1&_sid=6e3b11b86&_ss=r"
     },
@@ -12934,7 +12952,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 10,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-phoenix-lord-fuegan?_pos=1&_sid=5093f21c7&_ss=r"
     },
@@ -12978,7 +12996,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 285,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-emperors-children-fulgrim?_pos=1&_sid=664212473&_ss=r"
     },
@@ -13016,7 +13034,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 81,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-electro-priests-2021-boxed?_pos=1&_sid=b4d61073e&_ss=r"
     }
@@ -13048,7 +13066,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 15,
+      "price": 14,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/accessories-tape-measure?_pos=1&_sid=38dee3628&_ss=r"
     }
@@ -13112,7 +13130,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 85.5,
+      "price": 30,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/gaunts-ghosts-the-founding-omnibus?_pos=1&_sid=e1e32f5e8&_ss=r"
     },
@@ -13156,7 +13174,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-broodcoven-2021?_pos=1&_sid=69ecea16e&_ss=r"
     },
@@ -13244,7 +13262,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 27,
+      "price": 16,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/ghazghkull-thraka-prophet-of-the-waaagh-paperback?_pos=1&_sid=bdd9ce844&_ss=r"
     },
@@ -13352,7 +13370,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 67,
+      "price": 230,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-arkanaut-ironclad?_pos=1&_sid=e6659c5b6&_ss=r"
     },
@@ -13440,7 +13458,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 51,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-grey-knights-grandmaster-in-nemesis-dreadknight?_pos=1&_sid=bdda40abc&_ss=r"
     },
@@ -13484,7 +13502,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 9.85,
+      "price": 16.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/uno-teams?_pos=1&_sid=fd8134cb1&_ss=r"
     },
@@ -13630,7 +13648,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 191,
+      "price": 107,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-grey-knights-strike-squad-2020-boxed?_pos=1&_sid=4fc1a83e0&_ss=r"
     },
@@ -13788,7 +13806,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 191,
+      "price": 107,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-grey-knights-strike-squad-2020-boxed?_pos=1&_sid=0032f1a15&_ss=r"
     },
@@ -13832,7 +13850,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-wolves-logan-grimnar?_pos=1&_sid=977103f91&_ss=r"
     },
@@ -13876,7 +13894,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 7,
+      "price": 64,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/guardians?_pos=1&_sid=247091e26&_ss=r"
     }
@@ -13902,7 +13920,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-haarken-worldclaimer-herald-of-the-apocalypse?_pos=1&_sid=10302bd63&_ss=r"
     }
@@ -13940,7 +13958,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 31,
+      "price": 34.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-index-cards-drukhari?_pos=1&_sid=b5ffa87d1&_ss=r"
     },
@@ -13984,7 +14002,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 38,
+      "price": 50,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-anti-tank-flak-bunker?_pos=1&_sid=2f50237c3&_ss=r"
     },
@@ -14154,7 +14172,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 94,
+      "price": 18,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/fighting-fantasy-creature-of-havoc?_pos=1&_sid=8ca3a7943&_ss=r"
     },
@@ -14198,7 +14216,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-leagues-of-votann-combat-patrol-2025?_pos=1&_sid=efe500c72&_ss=r"
     },
@@ -14242,7 +14260,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-heavy-intercessors-boxed?_pos=1&_sid=96d8d715b&_ss=r"
     }
@@ -14280,7 +14298,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 78,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/horus-heresy-legiones-astartes-heavy-weapons-upgrade-set?_pos=1&_sid=49c1c88e6&_ss=r"
     },
@@ -14324,7 +14342,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 52,
+      "price": 71,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/loke-rpg-toolbox-the-long-road?_pos=1&_sid=eeeb68b99&_ss=r"
     },
@@ -14412,7 +14430,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-heldrake-2022?_pos=1&_sid=22a48c189&_ss=r"
     },
@@ -14456,7 +14474,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-hellblasters?_pos=1&_sid=ae874e29b&_ss=r"
     }
@@ -14482,7 +14500,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-baneblade-squadron?_pos=1&_sid=4e9d38f2b&_ss=r"
     },
@@ -14520,7 +14538,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 11,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/wizkids-unpainted-miniatures-nolzurs-blink-dogs?_pos=1&_sid=ed8d15922&_ss=r"
     },
@@ -14564,7 +14582,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 54,
+      "price": 55,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/battletech-clan-ad-hoc-star?_pos=1&_sid=3a805432f&_ss=r"
     },
@@ -14608,7 +14626,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 36,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/skyliners?_pos=1&_sid=d77ef90a3&_ss=r"
     },
@@ -14860,7 +14878,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-hormagaunts?_pos=1&_sid=69ad4d293&_ss=r"
     },
@@ -15018,7 +15036,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 41.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-index-cards-aeldari?_pos=1&_sid=fc12f9c68&_ss=r"
     },
@@ -15056,7 +15074,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 29,
+      "price": 40.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/catapult-feud-hydra-expansion?_pos=1&_sid=3a574a5b0&_ss=r"
     },
@@ -15100,7 +15118,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-lumineth-realm-lords-scinari-enlightener?_pos=1&_sid=744032b59&_ss=r"
     },
@@ -15232,7 +15250,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 62,
+      "price": 54,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/dune-imperium-immortality?_pos=1&_sid=bff8e6206&_ss=r"
     },
@@ -15276,7 +15294,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-necrons-imotekh-the-stormlord?_pos=1&_sid=804a32735&_ss=r"
     },
@@ -15320,7 +15338,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-fists-dice?_pos=1&_sid=8f86ddd75&_ss=r"
     },
@@ -15364,7 +15382,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-fists-primaris-upgrades-and-transfers-blister?_pos=1&_sid=e089f8245&_ss=r"
     }
@@ -15402,7 +15420,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-knights-dice?_pos=1&_sid=f2811e7bf&_ss=r"
     },
@@ -15434,7 +15452,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-solar-auxilia-avenger-strike-fighters?_pos=1&_sid=f3bad3c52&_ss=r"
     },
@@ -15466,7 +15484,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-solar-auxilia-thunderbolt-fighter-squadron?_pos=1&_sid=ad107259e&_ss=r"
     }
@@ -15486,7 +15504,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 26,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-german-veteran-infantry-medium-mortar-team?_pos=1&_sid=54caba625&_ss=r"
     }
@@ -15524,7 +15542,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-drukhari-incubi-2021?_pos=1&_sid=4d173dcdd&_ss=r"
     },
@@ -15600,7 +15618,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 120,
+      "price": 103,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-reinforcements-yu-jing-pack-alpha?_pos=1&_sid=c24ac9d5d&_ss=r"
     },
@@ -15644,7 +15662,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 54,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/d-d-rpg-5th-ed-baldur-s-gate-descent-into-avernus?_pos=1&_sid=c72d8fe76&_ss=r"
     },
@@ -15720,7 +15738,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 76,
+      "price": 37,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-boxed-advance-pack-convention-exclusive-pre-release?_pos=1&_sid=4865da898&_ss=r"
     }
@@ -15752,7 +15770,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-dark-angels-inner-circle-companions?_pos=1&_sid=6db3491c7&_ss=r"
     },
@@ -15796,7 +15814,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-inquisitor-coteaz-and-the-glodovan-eagle?_pos=1&_sid=a73abe91c&_ss=r"
     },
@@ -15884,7 +15902,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-inquisitorial-agents?_pos=1&_sid=97e41fedb&_ss=r"
     },
@@ -15966,7 +15984,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-invictor-tactical-warsuit?_pos=1&_sid=161632ae3&_ss=r"
     }
@@ -16004,7 +16022,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 14,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/a-fistful-of-feathers-be-like-a-crow-rpg-expansion?_pos=1&_sid=aa1df2467&_ss=r"
     },
@@ -16048,7 +16066,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-iron-hands-primaris-upgrades-transfers-2022-blister?_pos=1&_sid=cf9e1feaf&_ss=r"
     }
@@ -16086,7 +16104,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 14.5,
+      "price": 7.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-bones-black-brother-hammond?_pos=1&_sid=a98172ade&_ss=r"
     },
@@ -16130,7 +16148,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-solar-auxilia-malcador-infernus-and-valdors?_pos=1&_sid=c1f1e34bf&_ss=r"
     },
@@ -16218,7 +16236,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-craftworlds-jain-zar-boxed?_pos=1&_sid=7d9568c05&_ss=r"
     },
@@ -16262,7 +16280,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-world-eaters-jakhals?_pos=1&_sid=2551a0c8d&_ss=r"
     },
@@ -16300,7 +16318,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 90,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-jump-pack-intercessors?_pos=1&_sid=535396130&_ss=r"
     },
@@ -16344,7 +16362,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 68,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-junith-eruita?_pos=1&_sid=7618c398a&_ss=r"
     },
@@ -16408,7 +16426,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 49.5,
+      "price": 45,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-soviet-us6-u3-u4-allies-2-1-2-ton-6x6-cargo-truck?_pos=1&_sid=e1343ddef&_ss=r"
     }
@@ -16482,7 +16500,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43.5,
+      "price": 73.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-german-afrika-korps-8-8cm-flak-37-anti-tank-gun-plastic?_pos=1&_sid=3c733d033&_ss=r"
     }
@@ -16502,7 +16520,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/ugears-rescue-hovercraft?_pos=1&_sid=a9fe6fc10&_ss=r"
     }
@@ -16704,7 +16722,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 62,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-kataphron-2021-boxed?_pos=1&_sid=78df2178b&_ss=r"
     }
@@ -16786,7 +16804,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 46,
+      "price": 260,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-warhammer-40k-daemons-of-slaanesh-keeper-of-secrets?_pos=1&_sid=b255b79fc&_ss=r"
     },
@@ -16874,7 +16892,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-world-eaters-khorne-berzerkers?_pos=1&_sid=007d77313&_ss=r"
     },
@@ -16950,7 +16968,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 50,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-kharn-the-betrayer?_pos=1&_sid=7a357a0e8&_ss=r"
     }
@@ -16988,7 +17006,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 82,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-ratlings?_pos=1&_sid=5b0476cf5&_ss=r"
     },
@@ -17032,7 +17050,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-battleclade-datacards?_pos=1&_sid=a7454da6b&_ss=r"
     },
@@ -17120,7 +17138,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-datacards-phobos-strike-team?_pos=1&_sid=1338a4475&_ss=r"
     },
@@ -17208,7 +17226,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 101,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-exaction-squad-2024?_pos=1&_sid=dca8dd9cd&_ss=r"
     },
@@ -17315,6 +17333,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-goremongers"
     },
     {
+      "store": "Warhammer Official",
+      "price": 161,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-starter-set-2024-eng?queryID=184c138aa956ea91e306c50b1ae350d3"
+    },
+    {
       "store": "The Combat Company",
       "price": 86.9,
       "inStock": false,
@@ -17378,7 +17402,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-datacards-hand-of-the-archon?_pos=1&_sid=ab7a21cf5&_ss=r"
     },
@@ -17422,7 +17446,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 90,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-hearthkyn-salvagers-2024?_pos=1&_sid=61f6a38ad&_ss=r"
     },
@@ -17466,7 +17490,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-datacards-hernkyn-yaegirs-2024?_pos=1&_sid=b556160ae&_ss=r"
     },
@@ -17510,7 +17534,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-datacards-hierotek-circle?_pos=1&_sid=3d6e4db1a&_ss=r"
     },
@@ -17554,7 +17578,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-datacards-imperial-navy-breachers?_pos=1&_sid=7d38201ae&_ss=r"
     },
@@ -17598,7 +17622,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-tempestus-aquilons?_pos=1&_sid=4b11f648b&_ss=r"
     },
@@ -17642,7 +17666,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-datacards-kasrkin?_pos=1&_sid=1aab8a7f7&_ss=r"
     },
@@ -17686,7 +17710,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-datacards-mandrakes-2024?_pos=1&_sid=92bb0741e&_ss=r"
     },
@@ -17730,7 +17754,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 41,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-nemesis-claw?_pos=1&_sid=8e0b4f4ae&_ss=r"
     },
@@ -17812,7 +17836,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 94,
+      "price": 135,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-scout-squad-2024?_pos=1&_sid=59d8dec5e&_ss=r"
     },
@@ -17856,7 +17880,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-sanctifiers-datacards?_pos=1&_sid=daf3e0bbf&_ss=r"
     },
@@ -17988,7 +18012,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-datacards-vespid-stingwings?_pos=1&_sid=971405d1b&_ss=r"
     },
@@ -18026,7 +18050,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 29,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-wrecka-krew-datacards?_pos=1&_sid=824f70432&_ss=r"
     },
@@ -18064,7 +18088,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 65,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-killa-kans-boxed?_pos=1&_sid=f7d44b819&_ss=r"
     },
@@ -18130,7 +18154,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 30,
+      "price": 55,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-approved-ops-card-pack-2024?_pos=1&_sid=d77222b8c&_ss=r"
     },
@@ -18168,7 +18192,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 120,
+      "price": 320,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-knights-dominus?_pos=1&_sid=64636449f&_ss=r"
     },
@@ -18188,7 +18212,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 13.5,
+      "price": 7.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-kagunk-ogre-chieftain?_pos=1&_sid=e43825ce2&_ss=r"
     }
@@ -18220,7 +18244,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-questoris-knights?_pos=1&_sid=832d3c3b2&_ss=r"
     },
@@ -18258,7 +18282,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 19.5,
+      "price": 9.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/dungeon-dwellers-rictus-the-undying-dark-heaven-blister?_pos=1&_sid=28c23a91f&_ss=r"
     },
@@ -18296,7 +18320,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 82,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-kommandos-2024?_pos=1&_sid=b55e512b3&_ss=r"
     },
@@ -18442,7 +18466,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-krieg-heavy-weapons-squad?_pos=1&_sid=b943ce182&_ss=r"
     },
@@ -18480,7 +18504,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-empire-kroot-carnivore-squad?_pos=1&_sid=e7227e540&_ss=r"
     },
@@ -18562,7 +18586,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 48,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-empire-kroot-hounds?_pos=1&_sid=aec14f1c3&_ss=r"
     },
@@ -18606,7 +18630,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 48,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-empire-kroot-lone-spear?_pos=1&_sid=535b0ec32&_ss=r"
     },
@@ -18650,7 +18674,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 48,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-empire-kroot-trail-shaper?_pos=1&_sid=170e8baa2&_ss=r"
     },
@@ -18738,7 +18762,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-empire-krootox-rampagers?_pos=1&_sid=4b5b49e9c&_ss=r"
     },
@@ -18782,7 +18806,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-empire-krootox-rider?_pos=1&_sid=59bbd58b3&_ss=r"
     },
@@ -18826,7 +18850,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-kustom-boosta-blasta-boxed?_pos=1&_sid=cdb147296&_ss=r"
     },
@@ -19072,7 +19096,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-dark-angels-codex-1?_pos=1&_sid=ac5a0c838&_ss=r"
     },
@@ -19104,7 +19128,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 16,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/valdor-birth-of-the-imperium-paperback?_pos=1&_sid=0da13789e&_ss=r"
     }
@@ -19130,7 +19154,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 24,
+      "price": 36.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/necromunda-bastions-of-law-tactics-cards?_pos=1&_sid=8584257f2&_ss=r"
     }
@@ -19150,7 +19174,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 77,
+      "price": 99,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-sorcerer-kings-efreet-sword-dancers?_pos=1&_sid=85a5af013&_ss=r"
     }
@@ -19202,7 +19226,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 31.5,
+      "price": 34.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/metal-earth-tank-british-mark-iv?_pos=1&_sid=e13c7f156&_ss=r"
     }
@@ -19222,7 +19246,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 31.5,
+      "price": 34.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/metal-earth-tank-british-mark-iv?_pos=1&_sid=2aef42624&_ss=r"
     }
@@ -19254,7 +19278,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 19,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-maggotkin-of-nurgle-lord-of-blights?_pos=1&_sid=e9d002e13&_ss=r"
     }
@@ -19306,7 +19330,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 11.5,
+      "price": 14.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-henchmen-henchmen-and-chest?_pos=1&_sid=6044bd772&_ss=r"
     }
@@ -19369,6 +19393,18 @@ export const RetailersByProduct = {
       "price": 783,
       "inStock": false,
       "url": "https://www.warhammer.com/en-AU/shop/Custodes-Gunship-2017?queryID=0e1fd74fdee6431bd563a18bda40735a"
+    },
+    {
+      "store": "The Combat Company",
+      "price": 23.19,
+      "inStock": false,
+      "url": "https://thecombatcompany.com/products/roger-van-zant-cpt-6th-airborne-heavy-pistol-ap-ccw?_pos=1&_sid=5cbbdd94e&_ss=r"
+    },
+    {
+      "store": "Gumnut",
+      "price": 28,
+      "inStock": false,
+      "url": "https://www.gumnut.com.au/products/aleph-hector-homerid-champion-heavy-pistol-ecp-ccw?_pos=1&_sid=908d3943d&_ss=r"
     }
   ],
   "484": [
@@ -19386,7 +19422,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 132,
+      "price": 68,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-city-states-thorakites?_pos=1&_sid=ac667434f&_ss=r"
     }
@@ -19426,7 +19462,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 85,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-hundred-kingdoms-tactical-retinue?_pos=1&_sid=ffe80e205&_ss=r"
     }
@@ -19452,7 +19488,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-shield-captain?_pos=1&_sid=b15e54f35&_ss=r"
     }
@@ -19472,7 +19508,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 68,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-sorcerer-kings-mahabharati-initiates?_pos=1&_sid=a7a7d8be2&_ss=r"
     }
@@ -19532,7 +19568,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 68,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-city-states-clockwork-hoplites?_pos=1&_sid=fddb89850&_ss=r"
     }
@@ -19558,7 +19594,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 78,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/horus-heresy-legiones-astartes-heavy-weapons-upgrade-set?_pos=1&_sid=1b1bf53f4&_ss=r"
     }
@@ -19596,7 +19632,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/horus-heresy-legiones-astartes-praetor-chaplain-consul-boxed?_pos=1&_sid=33c611aa8&_ss=r"
     },
@@ -19684,7 +19720,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 101,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-legionaries-2024?_pos=1&_sid=920601ccc&_ss=r"
     },
@@ -19728,7 +19764,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 101,
+      "price": 75,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-drukhari-lelith-hesperax-boxed?_pos=1&_sid=7fea60cf5&_ss=r"
     },
@@ -19772,7 +19808,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 129,
+      "price": 112,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-leman-russ-battle-tank?_pos=1&_sid=325459cd1&_ss=r"
     },
@@ -19860,7 +19896,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-phoenix-lord-lhykhis?_pos=1&_sid=a82c693b8&_ss=r"
     },
@@ -19948,7 +19984,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 15,
+      "price": 14,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/white-dwarf-497-february?_pos=1&_sid=12bfa6075&_ss=r"
     },
@@ -20036,7 +20072,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 19.5,
+      "price": 9.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/dungeon-dwellers-rictus-the-undying-dark-heaven-blister?_pos=1&_sid=92d81fbb0&_ss=r"
     },
@@ -20080,7 +20116,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-custodian-guard-boxed?_pos=1&_sid=b6afa9970&_ss=r"
     }
@@ -20156,7 +20192,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20,
+      "price": 19,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/locust-clandestine-action-team-hacker-pan-oceana-blister?_pos=1&_sid=a78aa4bd3&_ss=r"
     },
@@ -20244,7 +20280,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-necrons-lokhusts-heavy-destroyer?_pos=1&_sid=10a193734&_ss=r"
     },
@@ -20332,7 +20368,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-lord-castellan-ursula-creed?_pos=1&_sid=c8e975bfd&_ss=r"
     },
@@ -20376,7 +20412,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-lord-discordant-on-helstalker?_pos=1&_sid=34bf846c2&_ss=r"
     },
@@ -20420,7 +20456,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 90,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-emperors-children-lord-exultant?_pos=1&_sid=4b4d687f5&_ss=r"
     },
@@ -20452,7 +20488,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5.5,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-inquisitor-draxus?_pos=1&_sid=137807869&_ss=r"
     },
@@ -20496,7 +20532,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 53,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-emperors-children-lord-kakophonist?_pos=1&_sid=ec78842fe&_ss=r"
     },
@@ -20540,7 +20576,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-lord-marshal-dreir?_pos=1&_sid=9d2feed6f&_ss=r"
     },
@@ -20584,7 +20620,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 27,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/leontus-lord-solar-hardback?_pos=1&_sid=367de353f&_ss=r"
     },
@@ -20710,7 +20746,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-lord-of-poxes?_pos=1&_sid=0bd0cf70d&_ss=r"
     },
@@ -20754,7 +20790,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 55,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-lord-of-virulence-boxed?_pos=1&_sid=8a55c0b6c&_ss=r"
     },
@@ -20798,7 +20834,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 42,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-sorcerer-kings-sorcerer?_pos=1&_sid=7e899f99f&_ss=r"
     },
@@ -20842,7 +20878,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 40,
+      "price": 85.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/orleans?_pos=1&_sid=4fc8def39&_ss=r"
     },
@@ -20886,7 +20922,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-necrons-triarch-praetorians?_pos=1&_sid=5ba18b78c&_ss=r"
     }
@@ -20950,7 +20986,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 64,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/horus-heresy-liber-hereticus?_pos=1&_sid=3d22e7d2f&_ss=r"
     }
@@ -20988,7 +21024,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-magus-2021-boxed?_pos=1&_sid=01ca3050d&_ss=r"
     },
@@ -21058,7 +21094,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 22,
+      "price": 18,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/metal-earth-star-wars-x-wing?_pos=1&_sid=7673ef68e&_ss=r"
     },
@@ -21102,7 +21138,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 38,
+      "price": 135,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-the-old-world-warriors-of-chaos-chaos-lord-on-manticore?_pos=1&_sid=34f9ca953&_ss=r"
     },
@@ -21128,7 +21164,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 54,
+      "price": 80,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/loke-giant-book-of-battle-mats-revised?_pos=1&_sid=06e79f030&_ss=r"
     }
@@ -21154,7 +21190,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 94,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-titan-legions-warhound-titans-with-ursus-claws?_pos=1&_sid=236bf9de3&_ss=r"
     }
@@ -21174,7 +21210,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 68,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-city-states-clockwork-hoplites?_pos=1&_sid=ea8d5b962&_ss=r"
     }
@@ -21294,7 +21330,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 94,
+      "price": 45,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/fear-of-the-unknown-roleplaying-game?_pos=1&_sid=faa9a1e9c&_ss=r"
     }
@@ -21332,7 +21368,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-maugan-ra?_pos=1&_sid=591b4ae51&_ss=r"
     },
@@ -21414,7 +21450,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 135,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legion-imperialis-mechanicum-cerastus-knights-atrapos?_pos=1&_sid=cde49372f&_ss=r"
     },
@@ -21440,7 +21476,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 65,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-hungarian-army-42m-toldi-iia-light-tank?_pos=1&_sid=7f4b5c2ee&_ss=r"
     }
@@ -21538,7 +21574,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 23,
+      "price": 18,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/nanoblock-pokemon-mega-venusaur?_pos=1&_sid=31c3d1a6e&_ss=r"
     },
@@ -21620,7 +21656,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 78,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-mek-gun-2021-boxed?_pos=1&_sid=cdbec0cc1&_ss=r"
     }
@@ -21658,7 +21694,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 66,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-leagues-of-votann-memnyr-strategist?_pos=1&_sid=6fbb722fb&_ss=r"
     },
@@ -21702,7 +21738,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 7,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-air-mephiston-red-24ml?_pos=1&_sid=ba2cd147a&_ss=r"
     },
@@ -21804,7 +21840,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-ministorum-priest?_pos=1&_sid=8fd97e2eb&_ss=r"
     },
@@ -21892,7 +21928,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 62,
+      "price": 84,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/monolith-arena?_pos=1&_sid=c0a071f24&_ss=r"
     },
@@ -21974,7 +22010,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 405,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-battleforce-penitent-crusader-host?_pos=1&_sid=ee20c287a&_ss=r"
     }
@@ -22012,7 +22048,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-morvenn-vahl?_pos=1&_sid=3e6a9469d&_ss=r"
     },
@@ -22050,7 +22086,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 70,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-underworlds-borgits-beastgrabbaz?_pos=1&_sid=208c995c9&_ss=r"
     },
@@ -22088,7 +22124,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 150,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/magic-the-gathering-aetherdrift-finish-line-bundle?_pos=1&_sid=a8f921158&_ss=r"
     },
@@ -22120,7 +22156,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-nauseous-rotbone-the-plague-surgeon-blister?_pos=1&_sid=d428235b8&_ss=r"
     },
@@ -22164,7 +22200,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-navigator?_pos=1&_sid=e7e4393b4&_ss=r"
     },
@@ -22378,7 +22414,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-neurogaunts?_pos=1&_sid=810738741&_ss=r"
     },
@@ -22422,7 +22458,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 77,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-neurolictor?_pos=1&_sid=648857f10&_ss=r"
     },
@@ -22466,7 +22502,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-nexos-2021-blister?_pos=1&_sid=fea56255c&_ss=r"
     },
@@ -22510,7 +22546,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 99,
+      "price": 36,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/scythe-encounters?_pos=1&_sid=5ed916b9e&_ss=r"
     }
@@ -22548,7 +22584,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 82,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-wolves-njal-stormcaller-2025?_pos=1&_sid=b9537ba3b&_ss=r"
     },
@@ -22744,7 +22780,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 8.5,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-dry-nurgling-green?_pos=1&_sid=a7f73eece&_ss=r"
     },
@@ -22782,7 +22818,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 61.5,
+      "price": 14,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/metal-earth-eiffel-tower?_pos=1&_sid=987964a36&_ss=r"
     },
@@ -22826,7 +22862,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-layer-ogryn-camo?_pos=1&_sid=0373d9a08&_ss=r"
     },
@@ -22870,7 +22906,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 145,
+      "price": 81,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/panoceania-seraphs-boxed?_pos=1&_sid=8a28bff7e&_ss=r"
     },
@@ -22996,7 +23032,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 197,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-beast-snagga-boyz?_pos=1&_sid=f4a0d8841&_ss=r"
     },
@@ -23040,7 +23076,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 197,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-lootas-boxed?_pos=1&_sid=5ced9dcef&_ss=r"
     },
@@ -23174,7 +23210,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 78,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-mek-gun-2021-boxed?_pos=1&_sid=64f4597da&_ss=r"
     },
@@ -23218,7 +23254,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 85.5,
+      "price": 46.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/orc-borg?_pos=1&_sid=3984bffbd&_ss=r"
     },
@@ -23262,7 +23298,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 35.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-painboy-2021-blister?_pos=1&_sid=f1fc38313&_ss=r"
     }
@@ -23326,7 +23362,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 145,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-the-old-world-orc-goblin-tribes-orc-boyz-orc-arrer-boyz-mobs?_pos=1&_sid=c802fc326&_ss=r"
     }
@@ -23408,7 +23444,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-the-old-world-empire-of-man-pistoliers?_pos=1&_sid=20bd0b9a2&_ss=r"
     },
@@ -23534,7 +23570,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 27,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-painboss?_pos=1&_sid=2a8fa34ae&_ss=r"
     },
@@ -23578,7 +23614,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-palatine?_pos=1&_sid=152ca3865&_ss=r"
     },
@@ -23622,7 +23658,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-paragon-warsuits?_pos=1&_sid=af2bb0251&_ss=r"
     },
@@ -23666,7 +23702,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 191,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-parasite-of-mortrex?_pos=1&_sid=cc44ebc08&_ss=r"
     },
@@ -23710,7 +23746,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kill-team-pathfinders-2024?_pos=1&_sid=f2f27050b&_ss=r"
     },
@@ -23836,7 +23872,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 36,
+      "price": 26.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/mario-kart-around-the-world-1000pc?_pos=1&_sid=ba76db4ab&_ss=r"
     },
@@ -23880,7 +23916,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-plague-marine-champion-blister?_pos=1&_sid=d6ff0b6cb&_ss=r"
     }
@@ -23918,7 +23954,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-plague-marine-champion-blister?_pos=1&_sid=d48903b0f&_ss=r"
     },
@@ -24050,7 +24086,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 19,
+      "price": 61,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-warhammer-40k-maggotkin-of-nurgle-plaguebearers-2021?_pos=1&_sid=4bad6c728&_ss=r"
     },
@@ -24094,7 +24130,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-plagueburst-crawler-2020-boxed?_pos=1&_sid=88ae2b289&_ss=r"
     },
@@ -24138,7 +24174,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-possessed-boxed?_pos=1&_sid=fec0776a3&_ss=r"
     },
@@ -24182,7 +24218,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 161,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-maggotkin-of-nurgle-rotbringer-sorceror?_pos=1&_sid=0cbd7ed9a&_ss=r"
     },
@@ -24226,7 +24262,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 8.5,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-shade-poxwalker?_pos=1&_sid=23a0c274b&_ss=r"
     },
@@ -24264,7 +24300,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 95,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-predator-2020?_pos=1&_sid=e91eae100&_ss=r"
     }
@@ -24472,7 +24508,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-librarian-boxed?_pos=1&_sid=91889da79&_ss=r"
     },
@@ -24516,7 +24552,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-librarian-in-phobos-armour-blister-1?_pos=1&_sid=cf2667baf&_ss=r"
     },
@@ -24554,7 +24590,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 48,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-psyker?_pos=1&_sid=acef82b3b&_ss=r"
     },
@@ -24680,7 +24716,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 45,
+      "price": 36,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/psycho-killer-a-card-game-for-psychos-refresh?_pos=1&_sid=54713ec4e&_ss=r"
     },
@@ -24724,7 +24760,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-psychophage?_pos=1&_sid=33893655c&_ss=r"
     },
@@ -24938,7 +24974,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 26.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-wolves-primaris-upgrades-blister?_pos=1&_sid=cd18578a0&_ss=r"
     },
@@ -25026,7 +25062,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 85.5,
+      "price": 85,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-united-states-us-rangers-plastic?_pos=1&_sid=55cb9ddf9&_ss=r"
     },
@@ -25070,7 +25106,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 75,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-vanguard-raptors-2021-boxed?_pos=1&_sid=98fd653aa&_ss=r"
     },
@@ -25114,7 +25150,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 14.5,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-blackmane-gnoll-ravager?_pos=1&_sid=e42d7677a&_ss=r"
     },
@@ -25196,7 +25232,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 55,
+      "price": 75,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/haqqislam-nazarova-twins-kum-enforcers-boxed?_pos=1&_sid=40d62a662&_ss=r"
     },
@@ -25240,7 +25276,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42.56,
+      "price": 41.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/odins-ravens-card-game?_pos=1&_sid=9cfdd86bc&_ss=r"
     }
@@ -25354,7 +25390,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-reaver-titan-with-melta-cannon-and-chainfist?_pos=1&_sid=288d954a0&_ss=r"
     },
@@ -25398,7 +25434,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 64,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-reductus-saboteur?_pos=1&_sid=5ce4f245f&_ss=r"
     },
@@ -25430,7 +25466,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 116,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-reivers-2020-boxed?_pos=1&_sid=39ed80c84&_ss=r"
     }
@@ -25462,7 +25498,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-repentia-squad-2022?_pos=1&_sid=1b6ba9258&_ss=r"
     },
@@ -25550,7 +25586,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 26,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-german-veteran-infantry-medium-mortar-team?_pos=1&_sid=140d2fffd&_ss=r"
     },
@@ -25638,7 +25674,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ultramarines-primarch-roboute-guilliman-boxed?_pos=1&_sid=83d6bdf1e&_ss=r"
     },
@@ -25682,7 +25718,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 84,
+      "price": 172.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-rogal-dorn-battle-tank?_pos=1&_sid=eb5956d53&_ss=r"
     },
@@ -25720,7 +25756,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 37,
+      "price": 28,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-index-cards-imperial-agents?_pos=1&_sid=b42b4cadf&_ss=r"
     }
@@ -25746,7 +25782,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 124,
+      "price": 165,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-underworlds-death-warbands-revenants-of-the-realms?_pos=1&_sid=5cc66b70f&_ss=r"
     },
@@ -25834,7 +25870,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 94,
+      "price": 89,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-rukkatrukk-squigbuggy-boxed?_pos=1&_sid=f11398d66&_ss=r"
     },
@@ -25878,7 +25914,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-leagues-of-votann-sagitaur?_pos=1&_sid=b2922382b&_ss=r"
     },
@@ -25922,7 +25958,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-salamanders-primaris-upgrades-2022-blister?_pos=1&_sid=ea05b4982&_ss=r"
     }
@@ -25948,7 +25984,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 36,
+      "price": 44,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/salem-1692-2nd-edition?_pos=1&_sid=0e5e08ebe&_ss=r"
     }
@@ -25986,7 +26022,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-sanctus-2022-blister?_pos=1&_sid=a0e452696&_ss=r"
     },
@@ -26030,7 +26066,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-blood-angels-sanguinary-guard?_pos=1&_sid=4efb9b3cb&_ss=r"
     },
@@ -26074,7 +26110,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 70,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-blood-angels-sanguinary-priest?_pos=1&_sid=17190c2e2&_ss=r"
     },
@@ -26118,7 +26154,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-thousand-sons-scarab-occult-terminators-boxed?_pos=1&_sid=3be5cc79f&_ss=r"
     },
@@ -26162,7 +26198,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 31,
+      "price": 27,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/journeys-in-middle-earth-scourges-of-the-wastes-figure-pack?_pos=1&_sid=433022a31&_ss=r"
     },
@@ -26250,7 +26286,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-scribbus-wretch-the-tallyman-boxed?_pos=1&_sid=37c05a0be&_ss=r"
     },
@@ -26294,7 +26330,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 310,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-scenery-manufactorum-imperialis-sector?_pos=1&_sid=b15fb2766&_ss=r"
     },
@@ -26382,7 +26418,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-city-states-war-chariot-flogobolon?_pos=1&_sid=2567e3a87&_ss=r"
     }
@@ -26420,7 +26456,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 235,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-hedonites-of-slaanesh-spearhead?_pos=1&_sid=5af41624c&_ss=r"
     },
@@ -26502,7 +26538,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 154,
+      "price": 220,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-spearhead?_pos=1&_sid=d41063c3e&_ss=r"
     },
@@ -26528,7 +26564,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 15,
+      "price": 18,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/railroad-ink-challenge-underground-expansion-pack?_pos=1&_sid=678d18084&_ss=r"
     }
@@ -26566,7 +26602,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-serberys-raiders-boxed?_pos=1&_sid=7f0618e43&_ss=r"
     },
@@ -26610,7 +26646,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 62,
+      "price": 35.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-shadowseer-2022?_pos=1&_sid=5f161e65e&_ss=r"
     },
@@ -26786,7 +26822,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-shroud-runners?_pos=1&_sid=6c913cf68&_ss=r"
     },
@@ -26824,7 +26860,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 62,
+      "price": 96,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-sicarians-boxed?_pos=1&_sid=11c8855ea&_ss=r"
     }
@@ -26900,7 +26936,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18.5,
+      "price": 14.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-townsfolk-ii-3?_pos=1&_sid=fa6452913&_ss=r"
     }
@@ -26938,7 +26974,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-sisters-novitiate-squad?_pos=1&_sid=c7a468596&_ss=r"
     },
@@ -26982,7 +27018,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 134,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-darkoath-brands-oathbound?_pos=1&_sid=f61a2a836&_ss=r"
     },
@@ -27026,7 +27062,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-skitarii-marshall-blister?_pos=1&_sid=930d60378&_ss=r"
     },
@@ -27070,7 +27106,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 72,
+      "price": 83,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-skitarii-2021-boxed?_pos=1&_sid=32cf6c6a7&_ss=r"
     },
@@ -27146,7 +27182,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 23,
+      "price": 14,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/folios-ultra-pro-pokemon-3pk-tournament-folios-pack-s2?_pos=1&_sid=fd8403f80&_ss=r"
     }
@@ -27266,7 +27302,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 28,
+      "price": 36,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/card-sleeves-ultra-pro-apex-deck-protector-sleeves-mana-8-swamp-black-105?_pos=1&_sid=665bdc52b&_ss=r"
     },
@@ -27310,7 +27346,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 82,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-harlequin-skyweavers-2022?_pos=1&_sid=24597c182&_ss=r"
     },
@@ -27354,7 +27390,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 40,
+      "price": 33,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/final-girl-slaughter-in-the-groves-feature-film-box?_pos=1&_sid=b0fe584a1&_ss=r"
     },
@@ -27398,7 +27434,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 39,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-maggotkin-of-nurgle-sloppity-bilepiper-2021?_pos=1&_sid=23f073be5&_ss=r"
     },
@@ -27556,7 +27592,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-captain-in-phobos-armour-2020-blister?_pos=1&_sid=e9c143ecf&_ss=r"
     },
@@ -27732,7 +27768,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 26.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-wolves-primaris-upgrades-blister?_pos=1&_sid=e099a5906&_ss=r"
     },
@@ -27864,7 +27900,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 27,
+      "price": 34.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-disciples-of-tzeentch-faction-pack?_pos=1&_sid=d3ec4854f&_ss=r"
     },
@@ -27908,7 +27944,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 17,
+      "price": 215,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-maggotkin-of-nurgle-spearhead?_pos=1&_sid=9b5cbc4f7&_ss=r"
     }
@@ -27946,7 +27982,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 210,
+      "price": 55,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-craftworlds-spiritseer-blister?_pos=1&_sid=0f9d2c97c&_ss=r"
     },
@@ -27990,7 +28026,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 262,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-orks-combat-patrol-1?_pos=1&_sid=d6ba52751&_ss=r"
     },
@@ -28078,7 +28114,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 45,
+      "price": 36,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/battletech-counters-pack-battleforce?_pos=1&_sid=1b4d942be&_ss=r"
     },
@@ -28122,7 +28158,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 38,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-sternguard-veteran-squad?_pos=1&_sid=b4858cc53&_ss=r"
     },
@@ -28198,7 +28234,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-storm-speeder-hailstrike-boxed?_pos=1&_sid=725dec3f0&_ss=r"
     }
@@ -28236,7 +28272,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 31.5,
+      "price": 34.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/metal-earth-aircraft-blackbird-coloured?_pos=1&_sid=e35ea6b42&_ss=r"
     },
@@ -28280,7 +28316,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 23,
+      "price": 20,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/gun-puzzle-wooden-puzzle?_pos=1&_sid=fddd689b7&_ss=r"
     },
@@ -28368,7 +28404,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 89,
+      "price": 38,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-germany-fallschirmjager-weapons-teams-winter?_pos=1&_sid=5a5ca9bd0&_ss=r"
     },
@@ -28412,7 +28448,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-swooping-hawks?_pos=1&_sid=d5da916f8&_ss=r"
     },
@@ -28494,7 +28530,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 14,
+      "price": 32,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/res-arcana-lux-et-tenebrae-expansion?_pos=1&_sid=183325f99&_ss=r"
     },
@@ -28538,7 +28574,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 280,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-necrons-szarekh-the-silent-king?_pos=1&_sid=b65bea126&_ss=r"
     },
@@ -28576,7 +28612,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 11,
+      "price": 35,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/imperius-empire-of-the-dawn-expansion?_pos=1&_sid=af92b0b76&_ss=r"
     },
@@ -28620,7 +28656,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 81,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-tactical-squad-boxed?_pos=1&_sid=53f175149&_ss=r"
     },
@@ -28658,7 +28694,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 75,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-trajann-valoris-2021-boxed?_pos=1&_sid=29a445d39&_ss=r"
     },
@@ -28784,7 +28820,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-tech-priest-dominus-2021-blister?_pos=1&_sid=3b668e471&_ss=r"
     },
@@ -28828,7 +28864,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-tech-priest-enginseer-blister?_pos=1&_sid=dbe3ac2ea&_ss=r"
     },
@@ -28872,7 +28908,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-tech-priest-manipulus?_pos=1&_sid=b8602fa43&_ss=r"
     },
@@ -28916,7 +28952,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 34,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-techmarine-boxed?_pos=1&_sid=2b903abe2&_ss=r"
     },
@@ -28960,7 +28996,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-mechanicus-technoarcheologist?_pos=1&_sid=e66131c79&_ss=r"
     },
@@ -29004,7 +29040,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 112.5,
+      "price": 279,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/a-time-for-trumpets-board-game?_pos=1&_sid=055229c9a&_ss=r"
     },
@@ -29136,7 +29172,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-terminator-squad?_pos=1&_sid=9edea62af&_ss=r"
     },
@@ -29180,7 +29216,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 82,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-tyrannofex-2022?_pos=1&_sid=bc246ce03&_ss=r"
     }
@@ -29262,7 +29298,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 55,
+      "price": 92,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-aleph-combined-army-caskuda-vs-maximus?_pos=1&_sid=a551eae15&_ss=r"
     },
@@ -29306,7 +29342,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 46,
+      "price": 52,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-40k-daemons-of-slaanesh-the-masque-blister?_pos=1&_sid=e00c88e56&_ss=r"
     },
@@ -29432,7 +29468,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 41.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-index-cards-aeldari?_pos=1&_sid=f5d027a9e&_ss=r"
     },
@@ -29514,7 +29550,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 35,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/kharnage-tricks-mercenaries?_pos=1&_sid=790df94f7&_ss=r"
     },
@@ -29552,7 +29588,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 14.5,
+      "price": 22,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/metal-earth-black-hawk?_pos=1&_sid=5d76f2261&_ss=r"
     }
@@ -29660,7 +29696,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 80,
+      "price": 78,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/blades-in-the-dark-rpg-band-of-blades?_pos=1&_sid=8dc03aa4f&_ss=r"
     },
@@ -29704,7 +29740,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-fists-tor-garadon-boxed?_pos=1&_sid=977317ca6&_ss=r"
     },
@@ -29748,7 +29784,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-emperors-children-tormentors?_pos=1&_sid=0f81da3f1&_ss=r"
     },
@@ -29792,7 +29828,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 124,
+      "price": 25,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-freelance-operator-samsa-plasma-rifle-tournament-exclusive-edition?_pos=1&_sid=d31d73951&_ss=r"
     },
@@ -29880,7 +29916,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 53,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-ork-trukk-boxed?_pos=1&_sid=f7e5ae1e8&_ss=r"
     },
@@ -29924,7 +29960,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-typhus-herald-of-the-plague-god-boxed?_pos=1&_sid=67405219c&_ss=r"
     },
@@ -29962,7 +29998,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 21,
+      "price": 45,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/farsight-blade-of-truth-hardback?_pos=1&_sid=0054997a3&_ss=r"
     },
@@ -30008,7 +30044,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 21.5,
+      "price": 49.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/dungeon-crawl-classics-dice-sezrekans-sanguivorous-solids?_pos=1&_sid=4630acf84&_ss=r"
     }
@@ -30210,7 +30246,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-tzeentch-arcanites-tzaangor-shaman-blister?_pos=1&_sid=34d86db0a&_ss=r"
     },
@@ -30298,7 +30334,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 19,
+      "price": 56,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/wyrmspan-upgrade-pack?_pos=1&_sid=13866e50f&_ss=r"
     }
@@ -30362,7 +30398,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 12,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/nanoblock-great-white-shark-bagged?_pos=1&_sid=d9c3bae9f&_ss=r"
     }
@@ -30400,7 +30436,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 13.5,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-caerindra-thistlemoor?_pos=1&_sid=968728a16&_ss=r"
     },
@@ -30526,7 +30562,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 61,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-vanguard-veteran-squad-boxed?_pos=1&_sid=fe23b5359&_ss=r"
     },
@@ -30746,7 +30782,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-adeptus-custodes-vertus-praetors-boxed?_pos=1&_sid=eddf18561&_ss=r"
     },
@@ -30790,7 +30826,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-vindicare-assassin?_pos=1&_sid=d1068aae1&_ss=r"
     },
@@ -30834,7 +30870,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 64,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-vindicator-siege-tank-squadron?_pos=1&_sid=bdc43ca76&_ss=r"
     },
@@ -30866,7 +30902,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 36,
+      "price": 57.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bitzee-interactive-digital-pet-magicals?_pos=1&_sid=20fc80abe&_ss=r"
     }
@@ -30986,7 +31022,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 77,
+      "price": 99,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/star-wars-shatterpoint-yub-nub-squad-pack?_pos=1&_sid=7d09029f3&_ss=r"
     },
@@ -31068,7 +31104,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 120,
+      "price": 160,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-knights-wardogs-2022?_pos=1&_sid=eba9fd1ec&_ss=r"
     }
@@ -31144,7 +31180,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 120,
+      "price": 160,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-knights-knight-armigers?_pos=1&_sid=c0346e496&_ss=r"
     }
@@ -31270,7 +31306,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 68,
+      "price": 365,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-boarding-actions-terrain-set?_pos=1&_sid=f22e4e17a&_ss=r"
     },
@@ -31440,7 +31476,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 145,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-the-old-world-tomb-kings-of-khemri-skeleton-warriors?_pos=1&_sid=9fdd56cbd&_ss=r"
     },
@@ -31484,7 +31520,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-boarding-actions?_pos=1&_sid=4a345a8ef&_ss=r"
     },
@@ -31580,7 +31616,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-codex?_pos=1&_sid=c17e9c9b4&_ss=r"
     }
@@ -31600,7 +31636,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 17,
+      "price": 40,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warcry-harbingers-of-destruction?_pos=1&_sid=fd7774217&_ss=r"
     }
@@ -31638,7 +31674,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-warlocks?_pos=1&_sid=12ece2e18&_ss=r"
     },
@@ -31682,7 +31718,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 66,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-deathwatch-captain-artemis?_pos=1&_sid=00453d4b9&_ss=r"
     }
@@ -31764,7 +31800,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-warpsmith?_pos=1&_sid=ee100ffa6&_ss=r"
     },
@@ -31890,7 +31926,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-wave-serpent-2025?_pos=1&_sid=5c14794e2&_ss=r"
     },
@@ -31934,7 +31970,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-orruk-weirdnob-shaman-blister?_pos=1&_sid=58a5c2325&_ss=r"
     },
@@ -31978,7 +32014,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-nords-ulfhednar?_pos=1&_sid=5da71958e&_ss=r"
     },
@@ -32022,7 +32058,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-white-scars-primaris-upgrades-transfers-blister?_pos=1&_sid=acbe2c035&_ss=r"
     },
@@ -32136,7 +32172,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 52,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-wolves-wolf-guard-battle-leader?_pos=1&_sid=aa7bc8fae&_ss=r"
     },
@@ -32180,7 +32216,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 52,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-wolves-wolf-guard-headtakers?_pos=1&_sid=b5023eeb2&_ss=r"
     },
@@ -32224,7 +32260,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-space-wolves-wolf-guard-terminators?_pos=1&_sid=6fc2678dc&_ss=r"
     },
@@ -32312,7 +32348,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 37,
+      "price": 49,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-underworlds-wrack-and-ruin-rivals-deck?_pos=1&_sid=e16ac70da&_ss=r"
     },
@@ -32400,7 +32436,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 140,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-wraithknight-boxed?_pos=1&_sid=dcc7291bd&_ss=r"
     },
@@ -32576,7 +32612,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 48,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-na2-aragoto-senkenbutai-boxed?_pos=1&_sid=2d062eea7&_ss=r"
     },
@@ -32766,7 +32802,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 7.5,
+      "price": 13.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-goblin-pillagers-6?_pos=1&_sid=9577ec42d&_ss=r"
     }
@@ -32804,7 +32840,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 45,
+      "price": 103,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-venomthropes-2022?_pos=1&_sid=e7448d3c9&_ss=r"
     },
@@ -32980,7 +33016,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 82,
+      "price": 60,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/the-well-roleplaying-game?_pos=1&_sid=968b4ae22&_ss=r"
     },
@@ -33024,7 +33060,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 99,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-hundred-kingdoms-the-order-of-the-crimson-tower?_pos=1&_sid=c4883248c&_ss=r"
     },
@@ -33100,7 +33136,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 150,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-slann-starmaster?_pos=1&_sid=9845e028f&_ss=r"
     },
@@ -33138,7 +33174,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 16.5,
+      "price": 9.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-troll?_pos=1&_sid=c5e5acfc5&_ss=r"
     },
@@ -33182,7 +33218,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 154,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-aggradon-lancers?_pos=1&_sid=a3bb66bca&_ss=r"
     },
@@ -33226,7 +33262,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-spawn-of-chotec?_pos=1&_sid=f687641ef&_ss=r"
     },
@@ -33270,7 +33306,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-kroxigor?_pos=1&_sid=d246eec33&_ss=r"
     },
@@ -33358,7 +33394,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 113,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-skink-starseer?_pos=1&_sid=66daba23b&_ss=r"
     },
@@ -33402,7 +33438,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 105,
+      "price": 64,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-soulblight-gravelords-ivya-volga?_pos=1&_sid=7bc4aeec7&_ss=r"
     }
@@ -33440,7 +33476,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 41,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ossiarch-bonereapers-mortisan-ossifector?_pos=1&_sid=471e8d7ba&_ss=r"
     },
@@ -33484,7 +33520,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 67,
+      "price": 64,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-codewright?_pos=1&_sid=1769cbad1&_ss=r"
     },
@@ -33528,7 +33564,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 78,
+      "price": 64,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-hedonites-of-slaanesh-lord-of-hubris?_pos=1&_sid=9fbba6a20&_ss=r"
     },
@@ -33698,7 +33734,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 64,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-exalted-hero-of-chaos?_pos=1&_sid=de6543485&_ss=r"
     },
@@ -33742,7 +33778,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 310,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-the-old-world-warriors-of-chaos-battalion?_pos=1&_sid=91ec9f7c7&_ss=r"
     },
@@ -33830,7 +33866,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-ogroid-theridons?_pos=1&_sid=11a68ecbb&_ss=r"
     },
@@ -33912,7 +33948,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-eternus-blade-of-the-first-prince?_pos=1&_sid=71240df5d&_ss=r"
     },
@@ -34064,7 +34100,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 310,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-the-old-world-warriors-of-chaos-battalion?_pos=1&_sid=d60dbd36c&_ss=r"
     },
@@ -34108,7 +34144,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 64,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-tzeentch-curseling-eye-of-tzeentch?_pos=1&_sid=dabfa2885&_ss=r"
     },
@@ -34184,7 +34220,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 27,
+      "price": 33,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/mantis-card-game?_pos=1&_sid=01f5920d6&_ss=r"
     }
@@ -34260,7 +34296,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 84,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ogor-mawtribes-battletome-1?_pos=1&_sid=6eb088499&_ss=r"
     },
@@ -34392,7 +34428,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 32,
+      "price": 39.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/the-details-of-our-escape-rpg?_pos=1&_sid=4707cf2de&_ss=r"
     }
@@ -34468,7 +34504,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 35,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-magus-2021-boxed?_pos=1&_sid=28a22e53a&_ss=r"
     },
@@ -34494,7 +34530,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20,
+      "price": 51.25,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-the-old-world-warriors-of-chaos-sorcerer-of-chaos?_pos=1&_sid=b8124f8ea&_ss=r"
     }
@@ -34526,7 +34562,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 59,
+      "price": 121.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/the-revenant-society-deluxe-box-set?_pos=1&_sid=b19fb233d&_ss=r"
     }
@@ -34564,7 +34600,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 220.5,
+      "price": 66.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/a-song-of-ice-and-fire-tabletop-miniatures-game-stormcrow-archers?_pos=1&_sid=2f253a3ea&_ss=r"
     },
@@ -34608,7 +34644,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-idoneth-deepkin-akhelian-allopex?_pos=1&_sid=02f13d638&_ss=r"
     },
@@ -34690,7 +34726,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 52,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-awlrach-the-drowner?_pos=1&_sid=7ee16e36f&_ss=r"
     },
@@ -34772,7 +34808,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 61,
+      "price": 198,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-fyreslayers-auric-runefather-maggmadroth?_pos=1&_sid=9be653beb&_ss=r"
     },
@@ -34854,7 +34890,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 8.5,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-contrast-kroxigor-scales?_pos=1&_sid=6042c41b7&_ss=r"
     },
@@ -34898,7 +34934,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-praetors-boxed?_pos=1&_sid=5f0ce403c&_ss=r"
     },
@@ -34986,7 +35022,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/legions-imperialis-solar-auxilia-leman-russ-exterminator-and-annihilator-squadron?_pos=1&_sid=7403e3cb4&_ss=r"
     },
@@ -35030,7 +35066,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 40.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/command-of-nature-card-game?_pos=1&_sid=0dbad50e0&_ss=r"
     },
@@ -35074,7 +35110,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 100,
+      "price": 49,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-reinforcements-nomads-nomads-pack-beta?_pos=1&_sid=b5d9470f0&_ss=r"
     },
@@ -35118,7 +35154,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 75,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-lord-commander-bastian-carthalos-boxed?_pos=1&_sid=be13feef1&_ss=r"
     },
@@ -35156,7 +35192,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-hobgrot-slittaz-boxed?_pos=1&_sid=89f61ea51&_ss=r"
     },
@@ -35326,7 +35362,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-gutrippaz?_pos=1&_sid=08298d238&_ss=r"
     },
@@ -35414,7 +35450,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-man-skewer-boltboyz-boxed?_pos=1&_sid=930e9f75c&_ss=r"
     },
@@ -35452,7 +35488,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 235,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-spearhead?_pos=1&_sid=7f6ef0375&_ss=r"
     },
@@ -35572,7 +35608,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-beast-skewer-killbow?_pos=1&_sid=454d1a6f2&_ss=r"
     },
@@ -35692,7 +35728,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 112.5,
+      "price": 315,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-fantasy-rpg-4th-ed-enemy-within-empire-in-ruins-campaign-directors-cut-vol-5-collectors-edition?_pos=1&_sid=a05076865&_ss=r"
     },
@@ -35736,7 +35772,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 84,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/battletome-orruk-warclans-hardback?_pos=1&_sid=869c18568&_ss=r"
     },
@@ -35780,7 +35816,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 179,
+      "price": 189,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/lords-of-ragnarok-board-game?_pos=1&_sid=b1d1330cc&_ss=r"
     },
@@ -35824,7 +35860,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 82,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-sylvaneth-tree-revenants-2022?_pos=1&_sid=0b86ea68e&_ss=r"
     },
@@ -35868,7 +35904,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 19,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-galen-doralia-ven-denst?_pos=1&_sid=fe9b6a5a8&_ss=r"
     }
@@ -35994,7 +36030,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 90,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/raiatea-board-game?_pos=1&_sid=86961a1ed&_ss=r"
     },
@@ -36038,7 +36074,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58.23,
+      "price": 89,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/concordia-board-game?_pos=1&_sid=cade87cde&_ss=r"
     },
@@ -36120,7 +36156,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 23.5,
+      "price": 39.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/card-sleeves-dragon-shield-dual-matte-art-dark-knight?_pos=1&_sid=6102856ed&_ss=r"
     },
@@ -36164,7 +36200,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 72,
+      "price": 73,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-soulblight-gravelords-fell-bats-boxed?_pos=1&_sid=11aadcae7&_ss=r"
     },
@@ -36208,7 +36244,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 72,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-soulblight-gravelords-lauka-vai-mother-of-nightmares-vengorian-lord?_pos=1&_sid=11a181efc&_ss=r"
     },
@@ -36252,7 +36288,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 91,
+      "price": 162,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/arcadia-quest-board-game?_pos=1&_sid=fe0702d7b&_ss=r"
     },
@@ -36296,7 +36332,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 54,
+      "price": 16,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/d-d-curse-of-strahd-tarokka-deck?_pos=1&_sid=64b7ea949&_ss=r"
     },
@@ -36384,7 +36420,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-krulghast-cruciator-boxed?_pos=1&_sid=8b94ddfc1&_ss=r"
     },
@@ -36504,7 +36540,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 25,
+      "price": 15.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/wizkids-unpainted-miniatures-nolzur-s-giant-dragonfly?_pos=1&_sid=3ef028c99&_ss=r"
     },
@@ -36548,7 +36584,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1?_pos=1&_sid=08ff97b36&_ss=r"
     },
@@ -36624,7 +36660,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-lumineth-realm-lords-vanari-bladelords?_pos=1&_sid=cca487f76&_ss=r"
     },
@@ -36694,7 +36730,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 90,
+      "price": 40,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/darts-jan-van-haasteren-1000pc?_pos=1&_sid=1ba398f01&_ss=r"
     },
@@ -36802,7 +36838,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1?_pos=1&_sid=807d3b973&_ss=r"
     },
@@ -36840,7 +36876,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 165,
+      "price": 83,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ogor-mawtribes-ogor-gluttons?_pos=1&_sid=057bd08d0&_ss=r"
     },
@@ -36966,7 +37002,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 78,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-hedonites-of-slaanesh-myrmidesh-painbringers?_pos=1&_sid=0565c809d&_ss=r"
     },
@@ -37010,7 +37046,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 78,
+      "price": 67.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/astromythos-rpg-lair-of-the-spider-lord?_pos=1&_sid=8440e2514&_ss=r"
     },
@@ -37098,7 +37134,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 70,
+      "price": 84.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-italy-alpini-mountain-troops-plastic?_pos=1&_sid=25b90cadb&_ss=r"
     }
@@ -37168,7 +37204,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 42,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-sorcerer-kings-sardar?_pos=1&_sid=83c9964fb&_ss=r"
     },
@@ -37212,7 +37248,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-lumineth-realm-lords-vanari-auralan-wardens-1?_pos=1&_sid=82aec2050&_ss=r"
     },
@@ -37326,7 +37362,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 21.5,
+      "price": 49.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/dungeon-crawl-classics-dice-sezrekans-sanguivorous-solids?_pos=1&_sid=d1a76e294&_ss=r"
     }
@@ -37358,7 +37394,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 23,
+      "price": 40,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-lumineth-realm-lords-warscrolls?_pos=1&_sid=ca58e5aa1&_ss=r"
     },
@@ -37396,7 +37432,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-lumineth-realm-lords-spearhead?_pos=1&_sid=4a8c998a6&_ss=r"
     },
@@ -37440,7 +37476,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-spearhead-grundstok-trailblazers?_pos=1&_sid=a3e34f2d2&_ss=r"
     }
@@ -37516,7 +37552,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-dry-tyrant-skull?_pos=1&_sid=fddb64de3&_ss=r"
     },
@@ -37554,7 +37590,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-loonboss-on-giant-cave-squig?_pos=1&_sid=f5baa712f&_ss=r"
     },
@@ -37598,7 +37634,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 62,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-sylvaneth-druanti-the-arch-revenant-2022?_pos=1&_sid=9b3fccfe9&_ss=r"
     },
@@ -37680,7 +37716,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 55,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-fleash-eater-courts-abhorrant-archregent?_pos=1&_sid=ff14e3b24&_ss=r"
     },
@@ -37724,7 +37760,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 55,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-warlock-bombardier-blister-2022?_pos=1&_sid=5d406244b&_ss=r"
     },
@@ -37856,7 +37892,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 41,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ossiarch-bonereapers-mortek-guard?_pos=1&_sid=c4b08e520&_ss=r"
     },
@@ -37894,7 +37930,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 85,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-hundred-kingdoms-mounted-squires?_pos=1&_sid=e9f284a52&_ss=r"
     },
@@ -37982,7 +38018,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 81,
+      "price": 88,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/cobblestone-city-mat-4x4?_pos=1&_sid=3f9d043d6&_ss=r"
     },
@@ -38064,7 +38100,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 13.5,
+      "price": 6.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-norgol-irongrave-knight?_pos=1&_sid=53af3d22e&_ss=r"
     },
@@ -38146,7 +38182,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 45,
+      "price": 40.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/gotrek-gurnisson-verminslayer-hardback?_pos=1&_sid=2b084800b&_ss=r"
     },
@@ -38228,7 +38264,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 70,
+      "price": 68,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/conquest-conquest-cloth-map-of-alektria-the-first-continent-of-ea?_pos=1&_sid=7679ae975&_ss=r"
     },
@@ -38354,7 +38390,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 85,
+      "price": 154,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/scythe?_pos=1&_sid=057fe73c1&_ss=r"
     },
@@ -38392,7 +38428,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 61,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-40k-daemons-of-slaanesh-daemonettes-of-slaanesh-boxed?_pos=1&_sid=adc4e53cb&_ss=r"
     },
@@ -38512,7 +38548,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 192,
+      "price": 179.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warmachine-2-player-starter-khador-vs-cygnar?_pos=1&_sid=5fd2bdf2f&_ss=r"
     },
@@ -38544,7 +38580,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 20,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/magic-the-gathering-modern-horizons-3-play-booster?_pos=1&_sid=53ea91605&_ss=r"
     },
@@ -38720,7 +38756,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 150,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-the-red-revelation?_pos=1&_sid=93030cf9b&_ss=r"
     },
@@ -38764,7 +38800,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 112,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-spearhead-fangs-of-the-blood-god?_pos=1&_sid=e7e32db48&_ss=r"
     },
@@ -38916,7 +38952,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 37,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-warscroll-cards-2024?_pos=1&_sid=c576e8516&_ss=r"
     },
@@ -38954,7 +38990,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 17,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warcry-compendium?_pos=1&_sid=cc6aeb0e6&_ss=r"
     },
@@ -38998,7 +39034,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 16,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-dankhold-troggoth?_pos=1&_sid=37d54d55b&_ss=r"
     },
@@ -39042,7 +39078,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 155,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-mangler-squigs?_pos=1&_sid=cc5bb9ed9&_ss=r"
     },
@@ -39124,7 +39160,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 27,
+      "price": 13,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/swipee-card-game?_pos=1&_sid=484a6c2be&_ss=r"
     },
@@ -39276,7 +39312,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 8.5,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-contrast-bad-moon-yellow?_pos=1&_sid=1e96374e0&_ss=r"
     },
@@ -39366,7 +39402,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 38,
+      "price": 30,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/horsing-around-500pc-ravensburger?_pos=1&_sid=b025db6e3&_ss=r"
     },
@@ -39404,7 +39440,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 36,
+      "price": 25,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/shoot-the-moon-family-game?_pos=1&_sid=53fb9aa2d&_ss=r"
     }
@@ -39436,7 +39472,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 62,
+      "price": 220,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ogor-mawtribes-spearhead-scrapglutt?_pos=1&_sid=8369cba83&_ss=r"
     }
@@ -39468,7 +39504,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 68,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-bladegheist-revenant?_pos=1&_sid=910f08e15&_ss=r"
     },
@@ -39538,7 +39574,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 30,
+      "price": 23,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/rubiks-coach-cube?_pos=1&_sid=d1381615c&_ss=r"
     },
@@ -39602,7 +39638,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 68,
+      "price": 230,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-spearhead-cursed-shacklehorde?_pos=1&_sid=a718de056&_ss=r"
     },
@@ -39646,7 +39682,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-kurdoss-valentian-the-craven-king-2022?_pos=1&_sid=a0c29cf11&_ss=r"
     },
@@ -39734,7 +39770,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1?_pos=1&_sid=4fb446716&_ss=r"
     },
@@ -39778,7 +39814,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 68,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-grimghast-reapers?_pos=1&_sid=f9049f4f1&_ss=r"
     },
@@ -39866,7 +39902,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1?_pos=1&_sid=31226199c&_ss=r"
     },
@@ -39910,7 +39946,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 68,
+      "price": 23,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-myrmourn-banshees-2022?_pos=1&_sid=6784a110f&_ss=r"
     },
@@ -39954,7 +39990,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-idoneth-deepkin-spearhead-akhelian-tide-guard?_pos=1&_sid=ab9a81743&_ss=r"
     },
@@ -39998,7 +40034,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-idoneth-deepkin-akhelian-allopex?_pos=1&_sid=5f701fb68&_ss=r"
     },
@@ -40074,7 +40110,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20,
+      "price": 31,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-ariadna-highlander-cateran-t2-sniper?_pos=1&_sid=34c4f35e0&_ss=r"
     }
@@ -40232,7 +40268,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 154,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-daughters-of-khaine-melusai-blood-sisters-stalkers-boxed?_pos=1&_sid=d0bc96151&_ss=r"
     }
@@ -40270,7 +40306,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 70,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-daemons-of-tzeentch-pink-horrors?_pos=1&_sid=144e260f8&_ss=r"
     },
@@ -40314,7 +40350,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 36,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/the-dungeons-dragons-tarot-deck?_pos=1&_sid=5ea394ffe&_ss=r"
     }
@@ -40396,7 +40432,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 17,
+      "price": 215,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-maggotkin-of-nurgle-spearhead?_pos=1&_sid=578032a04&_ss=r"
     }
@@ -40434,7 +40470,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ossiarch-bonereapers-spearhead-mortisan-elite?_pos=1&_sid=fce48ccb0&_ss=r"
     },
@@ -40592,7 +40628,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 9.85,
+      "price": 16.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/uno-teams?_pos=1&_sid=7cd0f6422&_ss=r"
     },
@@ -40636,7 +40672,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1?_pos=1&_sid=6ada1118b&_ss=r"
     },
@@ -40724,7 +40760,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 161,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-maggotkin-of-nurgle-rotbringer-sorceror?_pos=1&_sid=0cbd7ed9a&_ss=r"
     },
@@ -40856,7 +40892,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 149,
+      "price": 48,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/scenery-citadel-skulls?_pos=1&_sid=b960068b1&_ss=r"
     },
@@ -40932,7 +40968,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 61.5,
+      "price": 59.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/frostgrave-gnolls-plastic?_pos=1&_sid=c81c2d096&_ss=r"
     }
@@ -41002,7 +41038,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 12.5,
+      "price": 9,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/snap-spiderman-crown?_pos=1&_sid=b90482c0f&_ss=r"
     }
@@ -41084,7 +41120,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71.5,
+      "price": 59,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/battletech-premium-battlemat-grasslands-savannah?_pos=1&_sid=3034a7b5b&_ss=r"
     },
@@ -41282,7 +41318,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 13.5,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-caerindra-thistlemoor?_pos=1&_sid=73371ea8e&_ss=r"
     },
@@ -41314,7 +41350,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20.5,
+      "price": 40,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/the-ghosts-of-barak-minoz-hardback?_pos=1&_sid=eea161e5f&_ss=r"
     }
@@ -41396,7 +41432,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 173,
+      "price": 89,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-arkanaut-company?_pos=1&_sid=2cee2ef6e&_ss=r"
     },
@@ -41440,7 +41476,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 67,
+      "price": 230,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-drekkis-privateers?_pos=1&_sid=936a938cb&_ss=r"
     },
@@ -41588,7 +41624,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 14,
+      "price": 17,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/white-dwarf-498-march-2024?_pos=1&_sid=b77802ae5&_ss=r"
     },
@@ -41632,7 +41668,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-gryph-hounds-2022-boxed?_pos=1&_sid=986348dd6&_ss=r"
     },
@@ -41796,7 +41832,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 63,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-tzeentch-arcanites-tzaangor-shaman-blister?_pos=1&_sid=34d86db0a&_ss=r"
     },
@@ -41954,7 +41990,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 20.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/final-deployment-an-astra-militarum-novel-paperback?_pos=1&_sid=70aa6c9de&_ss=r"
     },
@@ -41992,7 +42028,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-layer-knight-questor-flesh?_pos=1&_sid=928b65d5f&_ss=r"
     },
@@ -42080,7 +42116,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-darkoath-chieftain-on-warsteed?_pos=1&_sid=b30fbf5ce&_ss=r"
     },
@@ -42250,7 +42286,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 105,
+      "price": 109,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ogor-mawtribes-frostlord-on-stonehorn?_pos=1&_sid=04ce554b2&_ss=r"
     }
@@ -42276,7 +42312,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 89,
+      "price": 24,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/wyrmspan-playmat?_pos=1&_sid=0fb77c60d&_ss=r"
     }
@@ -42302,7 +42338,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 89,
+      "price": 27,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-germany-fallschirmjager-hq-winter?_pos=1&_sid=bcc02b4e7&_ss=r"
     }
@@ -42328,7 +42364,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 3,
+      "price": 500,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/frosthaven?_pos=1&_sid=1ac7137f0&_ss=r"
     },
@@ -42372,7 +42408,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 54,
+      "price": 42.56,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/munchkin-original-edition?_pos=1&_sid=841d975ac&_ss=r"
     },
@@ -42442,7 +42478,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 154,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-sylvaneth-kurnoth-hunters?_pos=1&_sid=1f55dddfd&_ss=r"
     },
@@ -42550,7 +42586,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 67,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/blood-bowl-necromantic-horror-team-the-wolfenburg-crypt-stealers-boxed?_pos=1&_sid=f178486de&_ss=r"
     },
@@ -42594,7 +42630,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-contrast-gore-grunta-fur?_pos=1&_sid=0eea8f585&_ss=r"
     },
@@ -42638,7 +42674,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ironjawz-orruk-brutes-boxed?_pos=1&_sid=ad7d31965&_ss=r"
     },
@@ -42714,7 +42750,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 33,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-drukhari-archon-2021?_pos=1&_sid=029610b8d&_ss=r"
     },
@@ -42758,7 +42794,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 78,
+      "price": 76,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-megaboss-2021-blister?_pos=1&_sid=6e230103e&_ss=r"
     },
@@ -42802,7 +42838,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 155,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-pestilens-verminlord-corruptor-boxed?_pos=1&_sid=e6ecd3efc&_ss=r"
     },
@@ -42872,7 +42908,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 81,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-fyreslayers-hearthguard-berzerkers?_pos=1&_sid=a11b84282&_ss=r"
     }
@@ -42910,7 +42946,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 109,
+      "price": 310,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-the-old-world-warriors-of-chaos-battalion?_pos=1&_sid=201c2c9ee&_ss=r"
     }
@@ -42948,7 +42984,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 27,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/soulblight-gravelords-masters-of-death-paperback?_pos=1&_sid=439787ac9&_ss=r"
     }
@@ -42986,7 +43022,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 68,
+      "price": 54.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-spirit-hosts-2022?_pos=1&_sid=0d24025a7&_ss=r"
     },
@@ -43068,7 +43104,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-fyreslayers-vulkite-berzerkers?_pos=1&_sid=21f1a166a&_ss=r"
     },
@@ -43138,7 +43174,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 19,
+      "price": 18,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-panoceania-patsy-garnett-orc-troops-varuna-div-nco-submachine-gun-blister?_pos=1&_sid=fc48f7a3f&_ss=r"
     },
@@ -43182,7 +43218,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 9,
+      "price": 25,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/wizkids-unpainted-miniatures-nolzurs-fire-giant?_pos=1&_sid=ce8265fcf&_ss=r"
     },
@@ -43302,7 +43338,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 113,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-skink-starseer?_pos=1&_sid=3062579bf&_ss=r"
     },
@@ -43346,7 +43382,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 112,
+      "price": 215,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-spearhead?_pos=1&_sid=3b88b234b&_ss=r"
     }
@@ -43372,7 +43408,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 235,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-spearhead?_pos=1&_sid=6044bd85a&_ss=r"
     }
@@ -43398,7 +43434,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 67.5,
+      "price": 28.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/forbidden-psalm-forbidden-wilderness?_pos=1&_sid=3b70bda27&_ss=r"
     }
@@ -43676,7 +43712,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 134,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-darkoath-brands-oathbound?_pos=1&_sid=07a3dcde8&_ss=r"
     },
@@ -43808,7 +43844,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-layer-bloodreaver-flesh?_pos=1&_sid=473bbd9af&_ss=r"
     },
@@ -43852,7 +43888,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 19.5,
+      "price": 22.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/flesh-and-blood-heavy-hitters-blitz-deck-assorted?_pos=1&_sid=59f772874&_ss=r"
     },
@@ -44042,7 +44078,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 112,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-stormfiends-2022?_pos=1&_sid=198fbe260&_ss=r"
     },
@@ -44226,7 +44262,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 15,
+      "price": 18,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/dominoes-double-six-in-wooden-box?_pos=1&_sid=41cb12733&_ss=r"
     },
@@ -44328,7 +44364,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 134,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/tales-of-the-arthurian-knights-board-game?_pos=1&_sid=76acf9af6&_ss=r"
     }
@@ -44398,7 +44434,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 24,
+      "price": 25,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/yo-yo-yomega-fireball?_pos=1&_sid=12791872d&_ss=r"
     },
@@ -44486,7 +44522,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 124,
+      "price": 165,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-underworlds-death-warbands-revenants-of-the-realms?_pos=1&_sid=0019072c6&_ss=r"
     },
@@ -44530,7 +44566,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 25.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-supreme-sorceress?_pos=1&_sid=4288a5d50&_ss=r"
     },
@@ -44606,7 +44642,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 171,
+      "price": 103.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/rob-zombies-house-of-1000-corpses-a-game-of-horror?_pos=1&_sid=c65732219&_ss=r"
     },
@@ -44702,7 +44738,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 150,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-flesh-eater-courts-the-scarlet-jury?_pos=1&_sid=365e6382e&_ss=r"
     }
@@ -44740,7 +44776,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 70,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-flesh-eater-courts-high-falconer-felgryn?_pos=1&_sid=796c0d8ce&_ss=r"
     },
@@ -44822,7 +44858,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 13.5,
+      "price": 11.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/reaper-miniatures-caerindra-thistlemoor?_pos=1&_sid=61e1238ca&_ss=r"
     },
@@ -44866,7 +44902,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 70,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-lord-vitriolic?_pos=1&_sid=20ff5ef17&_ss=r"
     },
@@ -44910,7 +44946,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 68,
+      "price": 230,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-spearhead-cursed-shacklehorde?_pos=1&_sid=4500438c4&_ss=r"
     },
@@ -44954,7 +44990,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 304,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-spearhead-fusil-platoon?_pos=1&_sid=69723dec3&_ss=r"
     },
@@ -44992,7 +45028,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 75,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warcry-questor-soulsworn-warband?_pos=1&_sid=f827dd6fc&_ss=r"
     },
@@ -45036,7 +45072,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-spearhead-sunblooded-prowlers?_pos=1&_sid=210db9646&_ss=r"
     },
@@ -45080,7 +45116,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-dawnbringers-book-iii-the-long-hunt?_pos=1&_sid=0efd3817f&_ss=r"
     },
@@ -45206,7 +45242,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 67,
+      "price": 230,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-drekkis-privateers?_pos=1&_sid=b5d7989dc&_ss=r"
     }
@@ -45244,7 +45280,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-vongrim-harpoon-crew?_pos=1&_sid=00df1723a&_ss=r"
     },
@@ -45332,7 +45368,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 112,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-spearhead-fangs-of-the-blood-god?_pos=1&_sid=cb1ecbdcc&_ss=r"
     },
@@ -45364,7 +45400,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 11,
+      "price": 14.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/vallejo-tools-strong-curved-stainless-steel-tweezers-175-mm?_pos=1&_sid=c52b9fe59&_ss=r"
     },
@@ -45484,7 +45520,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 112,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-spearhead-fangs-of-the-blood-god?_pos=1&_sid=96be30f48&_ss=r"
     },
@@ -45528,7 +45564,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 49,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-idoneth-deepkin-manifestations?_pos=1&_sid=d8b349409&_ss=r"
     },
@@ -45604,7 +45640,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-idoneth-deepkin-mathaela-oracle-of-the-abyss?_pos=1&_sid=a94f57554&_ss=r"
     },
@@ -45636,7 +45672,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 66,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-idoneth-deepkin-ikon-of-the-sea?_pos=1&_sid=b74aba687&_ss=r"
     }
@@ -45712,7 +45748,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-spearhead-sunblooded-prowlers?_pos=1&_sid=9eb2b8e51&_ss=r"
     },
@@ -45800,7 +45836,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ossiarch-bonereapers-spearhead-mortisan-elite?_pos=1&_sid=847e05b20&_ss=r"
     },
@@ -45888,7 +45924,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 105,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-soulblight-gravelords-manifestations?_pos=1&_sid=2119cd71d&_ss=r"
     },
@@ -45952,7 +45988,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-soulblight-gravelords-deathrattle-skeletons-2025?_pos=1&_sid=1da3e1bf4&_ss=r"
     },
@@ -46084,7 +46120,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20.5,
+      "price": 18,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/the-hollow-king-paperback?_pos=1&_sid=916b96d36&_ss=r"
     },
@@ -46128,7 +46164,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 180,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-doom-diver-catapult?_pos=1&_sid=6a6ef5ca9&_ss=r"
     },
@@ -46172,7 +46208,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 124,
+      "price": 155,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-sunsteala-wheelas?_pos=1&_sid=b0f818c84&_ss=r"
     },
@@ -46216,7 +46252,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-snarlpack-cavalry?_pos=1&_sid=b8e0edd37&_ss=r"
     },
@@ -46260,7 +46296,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 165,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-snarlboss-on-war-wheela?_pos=1&_sid=c83e2d492&_ss=r"
     },
@@ -46304,7 +46340,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 293,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-snarlboss-wolfgit-retinue?_pos=1&_sid=598ffd166&_ss=r"
     }
@@ -46342,7 +46378,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-bossrokk-tower?_pos=1&_sid=a844e5255&_ss=r"
     },
@@ -46386,7 +46422,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-manifestations?_pos=1&_sid=eb849e251&_ss=r"
     },
@@ -46430,7 +46466,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-hobgrot-slittaboss?_pos=1&_sid=a9a58bc8a&_ss=r"
     },
@@ -46488,7 +46524,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 68,
+      "price": 235,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-spearhead?_pos=1&_sid=8ba5c2e71&_ss=r"
     }
@@ -46526,7 +46562,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-spearhead-ironjawz-bigmob?_pos=1&_sid=a386eff62&_ss=r"
     },
@@ -46740,7 +46776,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 140,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-stormreach-portal?_pos=1&_sid=c83ccb8ef&_ss=r"
     },
@@ -46816,7 +46852,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 11,
+      "price": 35,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/imperius-empire-of-the-dawn-expansion?_pos=1&_sid=a948782ab&_ss=r"
     }
@@ -46918,7 +46954,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 22,
+      "price": 28.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/ugears-liberation-of-snake-island?_pos=1&_sid=9ccbf2457&_ss=r"
     },
@@ -46962,7 +46998,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 198,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-iridan-the-witness?_pos=1&_sid=7e85d3149&_ss=r"
     },
@@ -47006,7 +47042,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-lord-celestant?_pos=1&_sid=7b4e2e3a8&_ss=r"
     },
@@ -47050,7 +47086,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-reclusians?_pos=1&_sid=ae7183e6f&_ss=r"
     },
@@ -47094,7 +47130,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-lord-terminos?_pos=1&_sid=279901340&_ss=r"
     },
@@ -47138,7 +47174,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-lord-relictor?_pos=1&_sid=35e420daa&_ss=r"
     },
@@ -47270,7 +47306,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 173,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warcry-teratic-cohort?_pos=1&_sid=4145a04f2&_ss=r"
     },
@@ -47314,7 +47350,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 230,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warcry-briar-and-bone?_pos=1&_sid=253fa9ec8&_ss=r"
     },
@@ -47358,7 +47394,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 125,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-thanquol-on-boneripper-2024?_pos=1&_sid=09d519485&_ss=r"
     }
@@ -47396,7 +47432,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 120,
+      "price": 30,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-getting-started-4th-ed?_pos=1&_sid=a47b25a56&_ss=r"
     },
@@ -47522,7 +47558,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-rat-ogors?_pos=1&_sid=64b1342e5&_ss=r"
     },
@@ -47566,7 +47602,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 66,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-arch-warlock?_pos=1&_sid=83fcb6cab&_ss=r"
     },
@@ -47654,7 +47690,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 27,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-warplock-jezzails?_pos=1&_sid=ca12abe83&_ss=r"
     },
@@ -47698,7 +47734,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-brood-terror?_pos=1&_sid=5a003ddb2&_ss=r"
     },
@@ -47742,7 +47778,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-warlock-galvaneer?_pos=1&_sid=99dc913bf&_ss=r"
     },
@@ -47830,7 +47866,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-warp-grinder?_pos=1&_sid=55d962fab&_ss=r"
     },
@@ -47874,7 +47910,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 120,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-warpspark-weapon-battery?_pos=1&_sid=906771759&_ss=r"
     },
@@ -47962,7 +47998,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-master-moulder?_pos=1&_sid=5fb563e2c&_ss=r"
     },
@@ -48006,7 +48042,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-stormvermin-2024?_pos=1&_sid=3d31f1f0a&_ss=r"
     },
@@ -48140,7 +48176,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 120,
+      "price": 30,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-getting-started-4th-ed?_pos=1&_sid=013b2224f&_ss=r"
     },
@@ -48184,7 +48220,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warcry-ydrilan-riverblades?_pos=1&_sid=61cc02db2&_ss=r"
     },
@@ -48228,7 +48264,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 230,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warcry-pyre-and-flood?_pos=1&_sid=5ec11d3e8&_ss=r"
     },
@@ -48316,7 +48352,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 78,
+      "price": 205,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-daughters-of-khaine-spearhead?_pos=1&_sid=39ca6567a&_ss=r"
     },
@@ -48448,7 +48484,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-spearhead-sunblooded-prowlers?_pos=1&_sid=a0b0cb0cb&_ss=r"
     },
@@ -48486,7 +48522,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 61,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-fyreslayers-spearhead?_pos=1&_sid=da81b4959&_ss=r"
     },
@@ -48706,7 +48742,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 195,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-daughters-of-khaine-krethusa-the-croneseer?_pos=1&_sid=634533ff9&_ss=r"
     },
@@ -48750,7 +48786,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-nexus-chaotica?_pos=1&_sid=90d32f951&_ss=r"
     },
@@ -48782,7 +48818,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 40.5,
+      "price": 20,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/darkoath-paperback?_pos=1&_sid=17bb5307e&_ss=r"
     }
@@ -48820,7 +48856,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-darkoath-chieftain-on-warsteed?_pos=1&_sid=0e53a9285&_ss=r"
     },
@@ -48864,7 +48900,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-darkoath-fellriders?_pos=1&_sid=326dbc286&_ss=r"
     },
@@ -48908,7 +48944,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-darkoath-marauders?_pos=1&_sid=6bccc7f67&_ss=r"
     },
@@ -49084,7 +49120,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 205,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-sylvaneth-spearhead?_pos=1&_sid=55c67204d&_ss=r"
     },
@@ -49268,7 +49304,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-dawnbringers-book-v-shadow-of-the-crone?_pos=1&_sid=34194c38c&_ss=r"
     },
@@ -49514,7 +49550,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 41,
+      "price": 70,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-flesh-eater-courts-abhorrant-cardina?_pos=1&_sid=8255f35c7&_ss=r"
     },
@@ -49602,7 +49638,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 64,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-flesh-eater-courts-royal-decapitator?_pos=1&_sid=0a2de88fe&_ss=r"
     },
@@ -49646,7 +49682,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 176,
+      "price": 405,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-flesh-eater-courts-battleforce-charnelgrand-jury?_pos=1&_sid=d9ea150f3&_ss=r"
     },
@@ -49690,7 +49726,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 53,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-flesh-eater-courts-cryptguard?_pos=1&_sid=31c7aa182&_ss=r"
     },
@@ -49734,7 +49770,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20.5,
+      "price": 27,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/ushoran-mortarch-of-delusion-hardback?_pos=1&_sid=2f9890b7e&_ss=r"
     },
@@ -49810,7 +49846,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-dawnbringers-book-i-harbingers?_pos=1&_sid=bcaa9896b&_ss=r"
     }
@@ -49848,7 +49884,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 58,
+      "price": 134,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-the-blacktalons?_pos=1&_sid=9a1ecc834&_ss=r"
     },
@@ -49892,7 +49928,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-venestra-matriarch-of-the-great-wheel?_pos=1&_sid=0578d8737&_ss=r"
     },
@@ -49936,7 +49972,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 48,
+      "price": 265,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-tahlia-vedra-lioness-of-the-parch?_pos=1&_sid=164a6f092&_ss=r"
     },
@@ -50018,7 +50054,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 405,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-battleforce-founding-foray?_pos=1&_sid=b7fc19fbe&_ss=r"
     }
@@ -50056,7 +50092,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 83,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-freeguild-cavalier-marshal?_pos=1&_sid=1ee0a1370&_ss=r"
     },
@@ -50100,7 +50136,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-ironweld-great-cannon?_pos=1&_sid=1f4a1ede3&_ss=r"
     },
@@ -50188,7 +50224,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-freeguild-fusilliers?_pos=1&_sid=722e641c5&_ss=r"
     },
@@ -50232,7 +50268,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 94.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-freeguild-command-corps?_pos=1&_sid=2160311b1&_ss=r"
     },
@@ -50276,7 +50312,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-freeguild-cavaliers?_pos=1&_sid=6327b471b&_ss=r"
     },
@@ -50320,7 +50356,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 304,
+      "price": 240,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-cities-of-sigmar-spearhead-fusil-platoon?_pos=1&_sid=deaad9993&_ss=r"
     },
@@ -50402,7 +50438,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 100,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-weirdbrute-wrekkaz?_pos=1&_sid=7832f4701&_ss=r"
     },
@@ -50446,7 +50482,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-zoggrok-anvilsmasha?_pos=1&_sid=a51a41095&_ss=r"
     },
@@ -50490,7 +50526,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 140,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-tuskboss-on-maw-grunta?_pos=1&_sid=246c60b18&_ss=r"
     }
@@ -50610,7 +50646,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 48,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-orruk-ardboys?_pos=1&_sid=8fa019dbd&_ss=r"
     },
@@ -50654,7 +50690,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 129,
+      "price": 57,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-rabble-rowza?_pos=1&_sid=c6d1441e0&_ss=r"
     },
@@ -50698,7 +50734,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 64,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-ardboy-big-boss?_pos=1&_sid=11864ad84&_ss=r"
     },
@@ -50724,7 +50760,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 45,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-the-old-world-matched-play-guide?_pos=1&_sid=0052f28b5&_ss=r"
     }
@@ -50750,7 +50786,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 97,
+      "price": 47,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-hlokk-station-scenery-expansion-pack?_pos=1&_sid=b08287d0c&_ss=r"
     }
@@ -50802,7 +50838,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 40.5,
+      "price": 45,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/dominoes-mexican-train-in-carry-case?_pos=1&_sid=7e282b5e5&_ss=r"
     }
@@ -50860,7 +50896,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 15,
+      "price": 14,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/accessories-tape-measure?_pos=1&_sid=66d0e5da5&_ss=r"
     }
@@ -50898,7 +50934,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 23,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-flesh-eater-courts-dice-2025?_pos=1&_sid=6904be0f4&_ss=r"
     },
@@ -50942,7 +50978,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-dice?_pos=1&_sid=0e033ae05&_ss=r"
     },
@@ -50986,7 +51022,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 23,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-flesh-eater-courts-warscroll-cards-4th-edition?_pos=1&_sid=eb9241956&_ss=r"
     },
@@ -51030,7 +51066,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 63,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-flesh-eater-courts-battletome-4th-edition?_pos=1&_sid=4bb5bfd97&_ss=r"
     }
@@ -51094,7 +51130,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-warscroll-cards-4th-edition?_pos=1&_sid=5aacbf22b&_ss=r"
     },
@@ -51138,7 +51174,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-battletome-4th-edition?_pos=1&_sid=1bcba2806&_ss=r"
     }
@@ -51164,7 +51200,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-nighthaunt-battletome-4th-edition?_pos=1&_sid=4d09ef4d1&_ss=r"
     }
@@ -51290,7 +51326,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-battletome-4th-ed?_pos=1&_sid=559c2b45f&_ss=r"
     }
@@ -51316,7 +51352,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-battletome-4th-ed?_pos=1&_sid=9b1122b27&_ss=r"
     }
@@ -51354,7 +51390,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-dice-2025?_pos=1&_sid=959678112&_ss=r"
     },
@@ -51398,7 +51434,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-warscroll-cards-4th-ed?_pos=1&_sid=5c5e242bd&_ss=r"
     },
@@ -51442,7 +51478,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-battletome-4th-ed?_pos=1&_sid=3b5376a74&_ss=r"
     }
@@ -51468,7 +51504,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-battletome-4th-ed?_pos=1&_sid=12c5be139&_ss=r"
     }
@@ -51506,7 +51542,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 49,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-idoneth-deepkin-dice?_pos=1&_sid=54d4234b8&_ss=r"
     },
@@ -51550,7 +51586,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 55.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-idoneth-deepkin-warscroll-cards?_pos=1&_sid=8f2ea603e&_ss=r"
     },
@@ -51594,7 +51630,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-idoneth-deepkin-battletome?_pos=1&_sid=41c22ef88&_ss=r"
     }
@@ -51646,7 +51682,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 110,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-spearhead-sand-and-bone-gaming-pack?_pos=1&_sid=3870ab35b&_ss=r"
     }
@@ -51684,7 +51720,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-generals-handbook-2025-2026?_pos=1&_sid=4afbefb78&_ss=r"
     },
@@ -51728,7 +51764,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 37,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-soulblight-gravelords-battletome-2025?_pos=1&_sid=ec1d16023&_ss=r"
     }
@@ -51810,7 +51846,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-battletome-2025?_pos=1&_sid=1100f15a9&_ss=r"
     }
@@ -51892,7 +51928,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 63,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-battletome-2025?_pos=1&_sid=fc016750b&_ss=r"
     }
@@ -51930,7 +51966,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 39,
+      "price": 52.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-dice-2025?_pos=1&_sid=e7e072617&_ss=r"
     },
@@ -51974,7 +52010,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-battletome-2024?_pos=1&_sid=88f0a78d2&_ss=r"
     }
@@ -52012,7 +52048,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-battletome-2024?_pos=1&_sid=8dff3f8a9&_ss=r"
     }
@@ -52050,7 +52086,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 74,
+      "price": 98,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-battletome-2024?_pos=1&_sid=3fde29f37&_ss=r"
     }
@@ -52088,7 +52124,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 45,
+      "price": 60,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-paint-set-2024?_pos=1&_sid=cb29a9b48&_ss=r"
     },
@@ -52132,7 +52168,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 45,
+      "price": 60,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-skaven-paint-set?_pos=1&_sid=3c1e99f99&_ss=r"
     },
@@ -52176,7 +52212,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 45,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-paint-and-tools-set-2024?_pos=1&_sid=afc9f2e81&_ss=r"
     },
@@ -52220,7 +52256,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 6,
+      "price": 34.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-hedonites-of-slaanesh-faction-pack?_pos=1&_sid=1a1a40ff6&_ss=r"
     },
@@ -52460,7 +52496,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 27,
+      "price": 28,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-fyreslayers-faction-pack?_pos=1&_sid=2fd5fabdd&_ss=r"
     },
@@ -52498,7 +52534,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 27,
+      "price": 28,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-sylvaneth-faction-pack?_pos=1&_sid=24fa0b1d9&_ss=r"
     },
@@ -52580,7 +52616,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 21,
+      "price": 34.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-lumineth-realm-lords-faction-pack?_pos=1&_sid=c6ade4a63&_ss=r"
     },
@@ -52618,7 +52654,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 60,
+      "price": 86,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/necromunda-palanite-enforcer-patrol-boxed?_pos=1&_sid=fe45d7491&_ss=r"
     },
@@ -52706,7 +52742,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 12,
+      "price": 120,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-core-book-4th-edition?_pos=1&_sid=926cde618&_ss=r"
     },
@@ -52808,7 +52844,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 13,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/snakes-ladders-crown?_pos=1&_sid=7fa66bad6&_ss=r"
     },
@@ -52852,7 +52888,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 75,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-seraphon-saurus-warriors?_pos=1&_sid=d3128c83a&_ss=r"
     },
@@ -52890,7 +52926,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 10,
+      "price": 20,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/batman-joker-tokens-lasertouch-blister?_pos=1&_sid=f98ad1276&_ss=r"
     },
@@ -52922,7 +52958,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 12.5,
+      "price": 11,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/schylling-nee-doh-gumdrop?_pos=1&_sid=9171fda2b&_ss=r"
     },
@@ -53030,7 +53066,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 157,
+      "price": 36,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/caveat-emptor-rpg?_pos=1&_sid=fa9d55bf6&_ss=r"
     },
@@ -53106,7 +53142,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 54,
+      "price": 49.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/chessex-accessory-reversible-battlemat-1a-a-square-1a-a-hex-23a-a-x-26?_pos=1&_sid=0f1f13d59&_ss=r"
     }
@@ -53188,7 +53224,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 43,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-orruk-warclans-swampboss-skumdrekk?_pos=1&_sid=3237f9c8c&_ss=r"
     }
@@ -53264,7 +53300,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 96,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-soulblight-gravelords-deadwalker-zombies?_pos=1&_sid=cd648e695&_ss=r"
     },
@@ -53296,7 +53332,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 90,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-lumineth-realm-lords-hurakan-windchargers?_pos=1&_sid=74a1fce41&_ss=r"
     },
@@ -53334,7 +53370,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-lumineth-realm-lords-vanari-bladelords?_pos=1&_sid=8038db144&_ss=r"
     }
@@ -53404,7 +53440,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 78,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-hedonites-of-slaanesh-slaangor-fiendbloods-boxed?_pos=1&_sid=166bf9e6e&_ss=r"
     },
@@ -53436,7 +53472,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 24.5,
+      "price": 20.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-vallejo-diorama-effects-black-lava-asphalt?_pos=1&_sid=39c7edcf2&_ss=r"
     },
@@ -53480,7 +53516,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 97,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ossiarch-bonereapers-necropolis-stalkers-boxed?_pos=1&_sid=e378c6d55&_ss=r"
     },
@@ -53638,7 +53674,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 85,
+      "price": 108,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/harvest-board-game?_pos=1&_sid=d02b346a0&_ss=r"
     },
@@ -53682,7 +53718,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 55,
+      "price": 92,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-aleph-combined-army-caskuda-vs-maximus?_pos=1&_sid=82534745b&_ss=r"
     },
@@ -53726,7 +53762,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 120,
+      "price": 103,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/infinity-reinforcements-yu-jing-pack-alpha?_pos=1&_sid=6249bb1b4&_ss=r"
     },
@@ -53858,7 +53894,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 165,
+      "price": 83,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-ogor-mawtribes-ogor-gluttons?_pos=1&_sid=983b4f78c&_ss=r"
     },
@@ -54022,7 +54058,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 16,
+      "price": 20.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/leviathan-paperback?_pos=1&_sid=26d811f1d&_ss=r"
     },
@@ -54212,7 +54248,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 195,
+      "price": 104,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-daughters-of-khaine-khinerai-heartrenders?_pos=1&_sid=e125bb234&_ss=r"
     },
@@ -54244,7 +54280,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 56,
+      "price": 260,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-daughters-of-khaine-morathi?_pos=1&_sid=32e55a233&_ss=r"
     }
@@ -54320,7 +54356,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20,
+      "price": 36,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/scenery-citadel-creeping-vines?_pos=1&_sid=ee6486d5b&_ss=r"
     },
@@ -54616,7 +54652,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 249,
+      "price": 34,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/magic-the-gathering-outlaws-of-thunder-junction-collector-booster?_pos=1&_sid=e3ef2c1b3&_ss=r"
     },
@@ -54686,7 +54722,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 80.5,
+      "price": 22.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/diy-3d-puzzle-creation-set-evergreen-pine-bonsai?_pos=1&_sid=40972cdd4&_ss=r"
     },
@@ -54844,7 +54880,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 36,
+      "price": 19.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/bolt-action-british-chindit-flame-thrower-and-light-mortar?_pos=1&_sid=f8e028a0e&_ss=r"
     }
@@ -54882,7 +54918,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 180,
+      "price": 81,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-fyreslayers-hearthguard-berzerkers?_pos=1&_sid=8aa64fbd0&_ss=r"
     }
@@ -54914,7 +54950,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 77,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-thousand-sons-ahriman-arch-sorccerer-of-tzeentch-2021-boxed?_pos=1&_sid=ae16a22b0&_ss=r"
     }
@@ -54978,7 +55014,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 55,
+      "price": 75,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/haqqislam-nazarova-twins-kum-enforcers-boxed?_pos=1&_sid=f59e1dcd8&_ss=r"
     },
@@ -55022,7 +55058,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 8.5,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-base-stegadon-scale-green?_pos=1&_sid=008e03ce8&_ss=r"
     },
@@ -55066,7 +55102,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 40,
+      "price": 85.5,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/orleans?_pos=1&_sid=1329ecbb0&_ss=r"
     },
@@ -55180,7 +55216,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 45,
+      "price": 35.45,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/gloom?_pos=1&_sid=7ee7344d5&_ss=r"
     },
@@ -55312,7 +55348,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 5,
+      "price": 6.4,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/paint-citadel-base-dryad-bark?_pos=1&_sid=97036aa0a&_ss=r"
     },
@@ -55382,7 +55418,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 134,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-slaves-to-darkness-darkoath-brands-oathbound?_pos=1&_sid=9c5e71216&_ss=r"
     }
@@ -55420,7 +55456,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 235,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-hedonites-of-slaanesh-spearhead?_pos=1&_sid=3d9d18347&_ss=r"
     },
@@ -55496,7 +55532,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 71,
+      "price": 70,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-underworlds-borgits-beastgrabbaz?_pos=1&_sid=32fdb5d27&_ss=r"
     },
@@ -55528,7 +55564,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 19,
+      "price": 27,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/crystal-puzzle-pirate-ship-black-101pc?_pos=1&_sid=1d8224267&_ss=r"
     }
@@ -55844,7 +55880,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 79,
+      "price": 105,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warcry-askurgan-trueblades?_pos=1&_sid=ec30dea4c&_ss=r"
     },
@@ -55908,7 +55944,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 94.5,
+      "price": 34,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/vampire-the-masquerade-rpg-5th-edition-dice-renegade-games-version?_pos=1&_sid=1b127fc48&_ss=r"
     },
@@ -55966,7 +56002,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 23,
+      "price": 390,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-gloomspite-gitz-gitmob-army-set?_pos=1&_sid=6965f86ba&_ss=r"
     }
@@ -55998,7 +56034,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 73,
+      "price": 46,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-40k-death-guard-plague-marine-champion-blister?_pos=1&_sid=7ad1d506c&_ss=r"
     },
@@ -56118,7 +56154,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 112.5,
+      "price": 71,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-fantasy-rpg-4th-ed-starter-set?_pos=1&_sid=a3cf34191&_ss=r"
     },
@@ -56226,7 +56262,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-dawnbringers-book-i-harbingers?_pos=1&_sid=371e9de59&_ss=r"
     }
@@ -56258,7 +56294,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 57,
+      "price": 74,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/age-of-sigmar-dawnbringers-book-i-harbingers?_pos=1&_sid=6d1f13c27&_ss=r"
     }
@@ -56290,7 +56326,7 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 233,
+      "price": 310,
       "inStock": false,
       "url": "https://www.gumnut.com.au/products/warhammer-quest-cursed-city-boxed-set?_pos=1&_sid=28ed4b8ba&_ss=r"
     },

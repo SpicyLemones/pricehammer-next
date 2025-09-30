@@ -1,3 +1,4 @@
+// src/app/api/refresh-prices/route.ts
 import { NextResponse } from "next/server";
 import pLimit from "p-limit";
 import { query } from "@/lib/sql";
@@ -6,25 +7,73 @@ import { fetchPriceFromLinkWithSellerSelectors } from "@/lib/scraper";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+type PairRow = { seller_id: number; product_id: number; link: string | null };
+
+// Read `seller` from ?seller=, form data, or JSON
+async function readSellerId(req: Request): Promise<number | null> {
+  let raw: string | null = null;
+
+  // 1) query string
+  const url = new URL(req.url);
+  raw = url.searchParams.get("seller");
+
+  // 2) form-encoded
+  if (!raw) {
+    const ct = req.headers.get("content-type") || "";
+    if (ct.includes("application/x-www-form-urlencoded") || ct.includes("multipart/form-data")) {
+      try {
+        const fd = await req.formData();
+        const v = fd.get("seller");
+        if (v != null) raw = String(v);
+      } catch {}
+    }
+  }
+
+  // 3) JSON
+  if (!raw) {
+    const ct = req.headers.get("content-type") || "";
+    if (ct.includes("application/json")) {
+      try {
+        const body = (await req.json()) as { seller?: string | number } | undefined;
+        if (body && body.seller != null) raw = String(body.seller);
+      } catch {}
+    }
+  }
+
+  const id = raw ? Number(raw) : NaN;
+  return Number.isFinite(id) ? id : null;
+}
+
 export async function POST(req: Request) {
-  const { seller } = await req.json().catch(() => ({} as any));
+  const sellerId = await readSellerId(req);
 
-  const sellers = seller
-    ? [await query("get", "select/seller_id", [seller])]
-    : await query("all", "select/all_sellers");
+  // Helpful debug in logs
+  console.log("[refresh-prices] sellerId =", sellerId ?? "(all)");
 
-  const pairs = seller
-    ? await query("all", "select/validated_pairs_by_seller", [seller])
-    : await query("all", "select/validated_pairs");
+  const sellers =
+    sellerId != null
+      ? [await query("get", "select/seller_id", [sellerId])]
+      : await query("all", "select/all_sellers");
+
+  if (sellerId != null && !sellers?.[0]) {
+    return NextResponse.json({ ok: false, error: `Seller ${sellerId} not found` }, { status: 404 });
+  }
+
+  const pairs: PairRow[] =
+    sellerId != null
+      ? await query("all", "select/validated_pairs_by_seller", [sellerId])
+      : await query("all", "select/validated_pairs");
+
+  console.log("[refresh-prices] pairs =", pairs?.length ?? 0);
 
   const sById: Record<number, any> = {};
-  sellers?.forEach((s: any) => s && (sById[s.id] = s));
+  (sellers || []).forEach((s: any) => s && (sById[s.id] = s));
 
   const limit = pLimit(3);
   let updated = 0;
 
   await Promise.all(
-    pairs.map(({ seller_id, product_id, link }: any) =>
+    (pairs || []).map(({ seller_id, product_id, link }) =>
       limit(async () => {
         if (!link) return;
         const s = sById[seller_id] || (await query("get", "select/seller_id", [seller_id]));
@@ -38,10 +87,16 @@ export async function POST(req: Request) {
         } catch {}
 
         await query("run", "update/price_only_validated", [price, link, seller_id, product_id]);
+        console.log(`[refresh-prices] updated seller=${seller_id} product=${product_id} price=${price}`);
         updated++;
       })
     )
   );
 
-  return NextResponse.json({ ok: true, updated, total: pairs?.length || 0 });
+  return NextResponse.json({
+    ok: true,
+    sellerId: sellerId ?? "all",
+    updated,
+    total: (pairs || []).length,
+  });
 }

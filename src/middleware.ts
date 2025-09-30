@@ -12,6 +12,7 @@ export const config = {
     "/admin/:path*",
     "/tinder",
     "/tinder/:path*",
+    "/api/download/:path*",
     "/api/export",
     "/api/seed/:path*",
     "/api/auto-validate",

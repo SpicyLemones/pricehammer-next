@@ -15,12 +15,28 @@ import {
   SelectGroup,
   SelectLabel,
 } from "./ui/select";
-
 import { Separator } from "./ui/separator";
 import { Search, ExternalLink, X } from "lucide-react";
 
-// ⬇️ still using the static bundle for now
-import { Products as sourceProducts, type Product } from "../../../data/db/Data";
+// ⬇️ Import manual metadata (no retailers)
+// Manual metadata
+import {
+  Products as ManualProducts,
+  type Product,
+} from "../../../data/db/Product";
+
+// Generated retailers map (untyped literal)
+import { RetailersByProduct as RetailersRaw } from "../../../data/db/Data";
+
+// Give it a usable type for indexing by string ids
+type Retailer = { store: string; price: number; inStock: boolean; url: string | null };
+const RetailersByProduct = RetailersRaw as unknown as Record<string, Retailer[]>;
+
+// Merge manual metadata with generated retailers
+const sourceProducts: Product[] = ManualProducts.map((p) => ({
+  ...p,
+  retailers: RetailersByProduct[p.id] ?? [],
+}));
 
 
 /* ------------------------------------------------
@@ -42,7 +58,7 @@ const fmtAUD = (n?: number | null) => {
 
 // Super-groups
 const FACTION_GROUPS: Record<
-  "No Faction" | "Imperium" | "Chaos" | "Xenos" | "Order" | "Destruction" | "Death",
+  "No Faction" | "Imperium" | "Chaos" | "Chaos (AoS)"|"Xenos" | "Order" | "Destruction" | "Death",
   string[]
 > = {
   "No Faction": ["No Faction / Misc"],
@@ -54,7 +70,7 @@ const FACTION_GROUPS: Record<
 
   Chaos: [
     "Chaos Daemons","Chaos Knights","Chaos Space Marines","Death Guard",
-    "Emperor’s Children","Thousand Sons","World Eaters",
+    "Emperor’s Children","Thousand Sons","World Eaters"
   ],
 
   Xenos: [
@@ -64,6 +80,10 @@ const FACTION_GROUPS: Record<
   Order: [
     "Cities of Sigmar","Daughters of Khaine","Fyreslayers","Idoneth Deepkin","Kharadron Overlords",
     "Lumineth Realm-lords","Seraphon","Stormcast Eternals","Sylvaneth",
+  ],
+    "Chaos (AoS)" : [
+    "Beasts of Chaos","Blades of Khorne","Disciples of Tzeentch","Hedonites of Slaanesh","Maggotkin of Nurgle",
+    "Skaven","Slaves to Darkness"
   ],
 
   Destruction: [
@@ -278,11 +298,11 @@ const groupedFactions = useMemo(() => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-display font-bold">WargamingPrice Lookup</h1>
+        <h1 className="text-3xl font-display font-bold">Price Lookup</h1>
         <p>Compare prices for Wargaming kits across AU retailers, including Warhammer.</p>
 
         <p className="text-muted-foreground">
-          Search for Wargaming units and compare prices across retailers
+          Search for units and compare prices across retailers
         </p>
       </div>
 
@@ -428,7 +448,9 @@ function ProductCard({ product }: { product: ProductExtended }) {
   const highest = sortedRetailers[sortedRetailers.length - 1];
   const visible = showAll ? sortedRetailers : sortedRetailers.slice(0, 3);
 
-  const thumb = product.image || "./images/placeholder.png";
+
+  // fix this later
+  const thumb = "./logo/logo.png";
 
   return (
     <>
