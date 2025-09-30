@@ -42,7 +42,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
     manual = Products.find((p) => p.id === String(product.id)) || null;
   } catch {}
 
-    //placeholder
+  //placeholder
   //const image = manual?.image ? `/images/${manual.image}` : "/images/placeholder.png";
   const image = "/images/placeholder.png";
   const faction = manual?.faction ?? "—";
@@ -51,51 +51,81 @@ export default async function ProductPage({ params }: { params: { id: string } }
   const points = typeof manual?.points === "number" ? manual.points : null;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <div className="flex gap-6 items-start">
-        <div className="w-56 h-56 border rounded bg-white flex items-center justify-center overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} alt={product.name} className="object-contain w-full h-full" />
-        </div>
-        <div className="flex-1">
-          <h1 className="text-3xl font-bold">{product.name}</h1>
-          <div className="text-slate-600 mt-2">
-            <div><span className="font-semibold">Game:</span> {game}</div>
-            <div><span className="font-semibold">Faction:</span> {faction}</div>
-            <div><span className="font-semibold">Category:</span> {category}</div>
-            <div><span className="font-semibold">Points:</span> {points ?? "—"}</div>
-          </div>
-        </div>
-      </div>
+    <div className="relative">
+      {/* Soft overlay over busy wallpaper for legibility */}
+      <div
+        aria-hidden
+        className="fixed inset-0 -z-10 pointer-events-none
+                   bg-gradient-to-b from-black/85 to-white/10
+                   dark:from-slate-950/80 dark:to-slate-950/70
+                   backdrop-blur-md-100"
+      />
 
-      <div>
-        <h2 className="text-xl font-semibold mb-2">Retailers</h2>
-        {prices?.length ? (
-          <div className="rounded border divide-y">
-            {prices.map((r, i) => (
-              <div key={i} className="p-3 grid grid-cols-[1fr_auto_auto] items-center gap-3">
-                <div className="font-medium">{r.seller_name}</div>
-                <div className="font-bold tabular-nums">{fmtAUD(r.price)}</div>
-                <div>
-                  {r.link ? (
-                    <a
-                      href={r.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
-                    >
-                      Visit
-                    </a>
-                  ) : (
-                    <span className="text-slate-400">No link</span>
-                  )}
-                </div>
+      <div className="max-w-4xl mx-auto p-6">
+        {/* Opaque panel so text/prices don't fight the background */}
+        <div className="space-y-6 rounded-xl border border-slate-200 shadow-lg
+                        bg-white/95 dark:bg-slate-900/95
+                        supports-[backdrop-filter]:backdrop-blur-sm p-6">
+
+          <div className="flex gap-6 items-start">
+            <div className="w-56 h-56 border rounded bg-white dark:bg-slate-950
+                            border-slate-200 flex items-center justify-center overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={image} alt={product.name} className="object-contain w-full h-full" />
+            </div>
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">{product.name}</h1>
+              <div className="text-slate-700 dark:text-slate-200 mt-2">
+                <div><span className="font-semibold">Game:</span> {game}</div>
+                <div><span className="font-semibold">Faction:</span> {faction}</div>
+                <div><span className="font-semibold">Category:</span> {category}</div>
+                <div><span className="font-semibold">Points:</span> {points ?? "—"}</div>
               </div>
-            ))}
+            </div>
           </div>
-        ) : (
-          <div className="text-slate-500">No prices yet.</div>
-        )}
+
+          <div>
+            <h2 className="text-xl font-semibold mb-2 text-slate-900 dark:text-slate-100">Retailers</h2>
+            {prices?.length ? (
+              <div className="rounded-md overflow-hidden border border-slate-200/90
+                              divide-y divide-slate-200/90
+                              bg-white/95 dark:bg-slate-900/95">
+                {prices.map((r, i) => (
+                  <div
+                    key={i}
+                    className="p-3 grid grid-cols-[1fr_auto_auto] items-center gap-3
+                               odd:bg-slate-50/70 dark:odd:bg-slate-800/50
+                               even:bg-white/95 dark:even:bg-slate-900/95
+                               hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <div className="font-medium text-slate-900 dark:text-slate-100">{r.seller_name}</div>
+                    <div className="font-semibold tabular-nums text-slate-900 dark:text-slate-50">{fmtAUD(r.price)}</div>
+                    <div className="text-right">
+                      {r.link ? (
+                        <a
+                          href={r.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center rounded-md border border-slate-300
+                                     px-3 py-1.5 text-sm font-medium
+                                     bg-white hover:bg-slate-50
+                                     dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700
+                                     text-slate-800 dark:text-slate-100"
+                        >
+                          Visit
+                        </a>
+                      ) : (
+                        <span className="text-slate-500 dark:text-slate-300 text-sm">No link</span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-slate-600 dark:text-slate-300">No prices yet.</div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
