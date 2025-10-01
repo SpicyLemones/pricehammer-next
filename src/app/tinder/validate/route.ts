@@ -24,14 +24,13 @@ export async function GET(req: Request) {
   // Validate (same param order you used previously: link, price, seller, product)
   await query("run", "update/validate_price", [link, price, s, p]);
   
-    // record previous decision
-  setLastAction(s, p);    
   // Optional: update search_term if the checkbox was ticked and a term was provided
   if (updateTerm && altTerm) {
     await query("run", "UPDATE products SET search_term = ? WHERE id = ?", [altTerm, p]);
     console.log("Name Updated to",altTerm)
   }
-
+      // record previous decision
+  setLastAction(s, p);    
 
   // Go back to the main Tinder page (relative – respects current host)
   return NextResponse.redirect(new URL("/tinder", req.url));

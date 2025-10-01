@@ -5,6 +5,7 @@ import { searchSeller } from "@/lib/scraper";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 async function remainingCount(): Promise<number> {
   const rows = await query("all", "select/count_unsorted");
@@ -18,8 +19,8 @@ function htmlPage(opts: {
   seller: Seller;
   product: Product;
   items: { link: string; price: number | string; img: string }[];
-  showAltBox: boolean;              // show alt-search panel (e.g., when no hits)
-  altTerm?: string;                 // the term we just used (if any)
+  showAltBox: boolean;
+  altTerm?: string;
   remaining: number;
 }) {
   const { seller, product, items, showAltBox, altTerm = "", remaining } = opts;
@@ -35,6 +36,8 @@ function htmlPage(opts: {
       Remaining unchecked prices: ${remaining}
     </div>
 
+    <div id="loading" style="text-align:center; margin:8px 0 10px; color:#666;">Loading candidates…</div>
+
     <div style="text-align: center; margin-bottom: 10px;">
       <a id="productLink" href="#" target="_blank" style="font-size: 20px; color: #3498db; text-decoration: underline;">#</a>
     </div>
@@ -49,8 +52,7 @@ function htmlPage(opts: {
       <a class="backBtn" href="/tinder/undo">⬅ Undo Last</a>
     </div>
 
-    <!-- Alt-search tools (kept BELOW the controls) -->
-    <div id="altBox" style="display:${showAltBox ? "block" : "none"};margin-top:16px;">
+    <div id="altBox" style="display:block;margin-top:16px;">
       <div style="border:1px solid #ddd; border-radius:10px; padding:12px;">
         <h3 style="margin:0 0 6px 0;">No matches? Try an alternate search</h3>
         <form id="altSearchForm" method="POST" action="/tinder" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
@@ -91,36 +93,57 @@ function htmlPage(opts: {
     </style>
 
     <script>
-      const products = ${JSON.stringify(opts.items).replace(/</g, "\\u003c")};
+      const products = ${JSON.stringify(items).replace(/</g, "\\u003c")};
       let idx = 0;
 
+      function $q(sel){ return document.querySelector(sel); }
+
+      function setControls(enabled) {
+        const yumBtn  = $q(".yumBtn");
+        const yuckBtn = $q(".yuckBtn");
+        if (yumBtn)  yumBtn.disabled  = !enabled;
+        if (yuckBtn) yuckBtn.disabled = !enabled;
+      }
+
+      function showAlt(show) {
+        const altBox = $q("#altBox");
+        if (altBox) altBox.style.display = "block";
+      }
+
       function render() {
-        const cand = products[idx];
-        const imgEl = document.getElementById("productImage");
-        const a = document.getElementById("productLink");
-        const altBox = document.getElementById("altBox");
+        const cand  = products[idx];
+        const imgEl = $q("#productImage");
+        const a     = $q("#productLink");
+        const loading = $q("#loading");
 
         if (!cand) {
-          if (altBox) altBox.style.display = "block";
-          document.querySelector(".yuckBtn").disabled = true;
-          document.querySelector(".yumBtn").disabled = true;
-          a.href = "#"; a.textContent = "#";
-          imgEl.removeAttribute("src");
+          if (loading) loading.textContent = "No results loaded. Try the alternate search below.";
+          showAlt();
+          setControls(false);
+          if (a) { a.href = "#"; a.textContent = "#"; }
+          if (imgEl) imgEl.removeAttribute("src");
           return;
         }
 
+        if (loading) loading.style.display = "none";
+        showAlt();
+        setControls(true);
+
         if (cand.img) imgEl.src = "data:image/jpeg;base64," + cand.img;
         else imgEl.removeAttribute("src");
+
         a.href = cand.link || "#";
         a.textContent = cand.link || "#";
+
+        console.log("Product image src:", imgEl.src || "(none)");
+        console.log("Product link href:", a.href || "(none)");
       }
 
       function yuck() { idx++; render(); }
-
       function yum() {
         const cand = products[idx] || { link:"", price:"" };
-        const update = document.getElementById("updateTerm")?.checked ? "1" : "";
-        const altTermVal = document.getElementById("altTerm")?.value || "";
+        const update = $q("#updateTerm")?.checked ? "1" : "";
+        const altTermVal = $q("#altTerm")?.value || "";
         const href = "/tinder/validate?s=${seller.id}&p=${product.id}" +
                      "&link=" + encodeURIComponent(cand.link || "") +
                      "&price=" + encodeURIComponent(String(cand.price || "")) +
@@ -128,10 +151,31 @@ function htmlPage(opts: {
         window.location.href = href;
       }
 
+      // expose to inline onclick
+      window.yuck = yuck;
+      window.yum  = yum;
+
       render();
+
+      // Failsafe: if array empty after 1.5s, show alt box
+      setTimeout(() => {
+        if (!products || products.length === 0) {
+          const loading = $q("#loading");
+          if (loading) loading.textContent = "No results loaded. Try the alternate search below.";
+          showAlt(); setControls(false);
+        }
+      }, 1500);
     </script>
   </div>
   `;
+}
+
+function noStoreHeaders() {
+  return {
+    "content-type": "text/html; charset=utf-8",
+    "cache-control": "no-store, no-cache, must-revalidate, max-age=0",
+    pragma: "no-cache",
+  };
 }
 
 export async function GET(req: Request) {
@@ -142,7 +186,7 @@ export async function GET(req: Request) {
         <h2>No unchecked prices left!</h2>
         <a href="/admin"><button>Admin Panel</button></a>
       </div>`;
-    return new NextResponse(html, { headers: { "content-type": "text/html; charset=utf-8" } });
+    return new NextResponse(html, { headers: noStoreHeaders() });
   }
 
   const seller  = await query("get", "select/seller_id",  [price.seller_id]);
@@ -153,6 +197,9 @@ export async function GET(req: Request) {
     .filter((c: any) => !!c.link)
     .map((c: any) => ({ link: c.link, price: c.price ?? "", img: c.img ? c.img.toString("base64") : "" }));
 
+  // server-side breadcrumb to spot "nothing appears"
+  console.log("[/tinder] usable", usable.length, "store:", seller?.name, "term:", product?.search_term);
+
   const html = htmlPage({
     seller,
     product,
@@ -161,7 +208,7 @@ export async function GET(req: Request) {
     remaining: await remainingCount(),
   });
 
-  return new NextResponse(html, { headers: { "content-type": "text/html; charset=utf-8" } });
+  return new NextResponse(html, { headers: noStoreHeaders() });
 }
 
 export async function POST(req: Request) {
@@ -182,6 +229,8 @@ export async function POST(req: Request) {
     .filter((c: any) => !!c.link)
     .map((c: any) => ({ link: c.link, price: c.price ?? "", img: c.img ? c.img.toString("base64") : "" }));
 
+  console.log("[/tinder POST] usable", usable.length, "term:", productForSearch.search_term);
+
   const html = htmlPage({
     seller,
     product,
@@ -191,5 +240,5 @@ export async function POST(req: Request) {
     remaining: await remainingCount(),
   });
 
-  return new NextResponse(html, { headers: { "content-type": "text/html; charset=utf-8" } });
+  return new NextResponse(html, { headers: noStoreHeaders() });
 }

@@ -1,35 +1,56 @@
-// Download data.sqlite
+// src/app/api/download/db/route.ts
+import { NextResponse } from "next/server";
+import { all, query } from "@/lib/sql"; // uses your existing DB connection
 import fs from "fs";
+import os from "os";
 import path from "path";
-import { Readable } from "stream";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const DB_FILE = path.join(process.cwd(), "data", "db", "data.sqlite");
-
 export async function GET() {
-  if (!fs.existsSync(DB_FILE)) {
-    return new Response(JSON.stringify({ ok: false, error: "data.sqlite not found" }), {
-      status: 404,
-      headers: { "content-type": "application/json" },
-    });
-  }
+  try {
+    // 1) Ask SQLite which file the CURRENT connection is using
+    //    (works regardless of persistent disk vs repo path)
+    const pragma = (await all<any>("PRAGMA database_list")) || [];
+    const main = pragma.find((r: any) => r?.name === "main");
+    const livePath: string =
+      main?.file ||
+      process.env.DB_PATH ||
+      path.resolve(process.cwd(), "data", "db", "data.sqlite");
 
-  const stat = fs.statSync(DB_FILE);
-  const nodeStream = fs.createReadStream(DB_FILE);
-  // Node 18+: convert Node stream → Web stream for Response
-  // @ts-ignore
-  const webStream: ReadableStream = (Readable as any).toWeb
-    ? (Readable as any).toWeb(nodeStream)
-    : (nodeStream as unknown as ReadableStream);
+    // 2) Make a consistent snapshot
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "dbsnap-"));
+    const snapshot = path.join(tmpDir, "data.sqlite");
 
-  return new Response(webStream, {
-    headers: {
+    try {
+      // Prefer VACUUM INTO for a safe, point-in-time copy
+      // Note: can't parameterize the filename in SQLite VACUUM, so escape single quotes
+      const safe = snapshot.replace(/'/g, "''");
+      await query("run", `VACUUM INTO '${safe}'`);
+    } catch {
+      // Fallback: best-effort copy (not perfect in WAL mode, but better than failing)
+      fs.copyFileSync(livePath, snapshot);
+      // if WAL/SHM exist, include them too so SQLite can recover state if needed
+      for (const ext of ["-wal", "-shm"] as const) {
+        const src = livePath + ext;
+        const dst = snapshot + ext;
+        if (fs.existsSync(src)) fs.copyFileSync(src, dst);
+      }
+    }
+
+    // 3) Stream back the snapshot
+    const buf = fs.readFileSync(snapshot);
+    const headers = new Headers({
       "content-type": "application/octet-stream",
       "content-disposition": `attachment; filename="data.sqlite"`,
-      "content-length": String(stat.size),
-      "cache-control": "no-store",
-    },
-  });
+      "cache-control": "no-store, max-age=0",
+    });
+    return new NextResponse(buf, { headers });
+  } catch (e: any) {
+    return NextResponse.json(
+      { ok: false, error: e?.message || "Failed to export DB" },
+      { status: 500 }
+    );
+  }
 }

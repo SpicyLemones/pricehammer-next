@@ -15,8 +15,20 @@ const sans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Pricehammer",
-  description: "Compare Wargaming prices across AU retailers",
+title: "Pricehammer",
+  description: "Get the best Warhammer prices in Australia.",
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon.ico" }, // fallback
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/favicon.ico"],
+  },
+  manifest: "/site.webmanifest",
+  // optional polish:
+  themeColor: "#0ea5e9",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

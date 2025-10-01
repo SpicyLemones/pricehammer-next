@@ -18,8 +18,8 @@ export async function GET(req: Request) {
   const p = Number(u.searchParams.get("p"));
 
   // Prefer explicit s/p from the link; otherwise fall back to lastAction
-  const prev = (s && p) ? { s, p } : getLastAction();
-
+  const prev = getLastAction();
+  console.log (prev)
   if (prev?.s && prev?.p) {
     await query("run", "update/unvalidate_price", [prev.s, prev.p]);
     // focus that exact pair again

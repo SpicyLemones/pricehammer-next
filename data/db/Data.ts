@@ -40,13 +40,13 @@ export const RetailersByProduct = {
       "store": "Warhammer Official",
       "price": 120,
       "inStock": false,
-      "url": "https://www.warhammer.com/en-AU/shop/Abaddon-the-Despoiler-2019?queryID=593aae9bce1e3d348cf8e050be7b5613"
+      "url": "https://www.warhammer.com/en-AU/shop/Abaddon-the-Despoiler-2019?queryID=bd620275e05eca30bbb5d4ea594d8e9a"
     },
     {
       "store": "The Combat Company",
       "price": 94.8,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/abaddon-the-despoiler?_pos=1&_sid=c11e43e0a&_ss=r"
+      "url": "https://thecombatcompany.com/products/abaddon-the-despoiler?_pos=1&_sid=440fd5542&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -58,7 +58,7 @@ export const RetailersByProduct = {
       "store": "Emerald Hobbies",
       "price": 96,
       "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/chaos-space-marines-abaddon-the-despoiler?_pos=1&_sid=a8413509f&_ss=r"
+      "url": "https://www.emeraldhobbies.com.au/products/chaos-space-marines-abaddon-the-despoiler?_pos=1&_sid=df058023b&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -78,13 +78,13 @@ export const RetailersByProduct = {
       "store": "Warhammer Official",
       "price": 77,
       "inStock": false,
-      "url": "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Aberrants-2019?queryID=67ac29e0ade97c61bd1c5ecd9eba967e"
+      "url": "https://www.warhammer.com/en-AU/shop/Genestealer-Cults-Aberrants-2019?queryID=8524523811159b3b7fcded1e28ddef96"
     },
     {
       "store": "The Combat Company",
-      "price": 107.99,
+      "price": 60.83,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/exulon-nostilla-and-aberration?_pos=1&_sid=f8c1e0689&_ss=r"
+      "url": "https://thecombatcompany.com/products/aberrants?_pos=5&_sid=b15e76085&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -93,16 +93,10 @@ export const RetailersByProduct = {
       "url": "https://www.gapgames.com.au/products/genestealer-cults-aberrants"
     },
     {
-      "store": "Gumnut",
-      "price": 33,
+      "store": "Emerald Hobbies",
+      "price": 77,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/conquest-wadrhun-aberration?_pos=1&_sid=8028c6372&_ss=r"
-    },
-    {
-      "store": "Frontline Hobbies",
-      "price": 67.38,
-      "inStock": false,
-      "url": "https://www.frontlinehobbies.com.au/warhammer-40k-genestealer-cults-aberrants"
+      "url": "https://www.emeraldhobbies.com.au/products/genestealer-cult-aberrants?_pos=3&_sid=512add931&_ss=r"
     }
   ],
   "4": [
@@ -1001,6 +995,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/shale-elipse-120mm?_pos=1&_sid=8248f1d10&_ss=r"
     },
     {
+      "store": "Emerald Hobbies",
+      "price": 152,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/adeptus-mechanicus-archaeopter-limit-1-per-customer?_pos=1&_sid=a39eebe5f&_ss=r"
+    },
+    {
       "store": "Gumnut",
       "price": 143,
       "inStock": false,
@@ -1195,6 +1195,12 @@ export const RetailersByProduct = {
       "price": 137.75,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/horus-heresy-legion-astartes-armiger-helverins-warglaives-pre-order"
+    },
+    {
+      "store": "Emerald Hobbies",
+      "price": 128,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/imperial-knights-armigers?_pos=1&_sid=c03f575a2&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -1675,6 +1681,12 @@ export const RetailersByProduct = {
       "price": 31.35,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/craftworlds-autarch"
+    },
+    {
+      "store": "Emerald Hobbies",
+      "price": 59.2,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/aeldari-autarch?_pos=1&_sid=c73e5f45c&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -4007,6 +4019,12 @@ export const RetailersByProduct = {
       "price": 27.49,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/pathfinder-second-edition-flip-mat-rusthenge"
+    },
+    {
+      "store": "Emerald Hobbies",
+      "price": 75.6,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/leagues-of-votann-brokhyr-iron-master?_pos=1&_sid=4d75fe7bd&_ss=r"
     }
   ],
   "102": [
@@ -4027,6 +4045,12 @@ export const RetailersByProduct = {
       "price": 71.1,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/grundstok-thunderers?_pos=1&_sid=ce6db6e27&_ss=r"
+    },
+    {
+      "store": "Emerald Hobbies",
+      "price": 100,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/leagues-of-votann-brokhyr-thunderkyn?_pos=1&_sid=bc7db9843&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -4953,6 +4977,12 @@ export const RetailersByProduct = {
       "price": 59.25,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/adeptus-custodes-captain-general-trajann-valoris"
+    },
+    {
+      "store": "Emerald Hobbies",
+      "price": 60,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/adeptus-custodes-captain-general-trajann-valoris?_pos=1&_sid=2d90285b7&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -7554,19 +7584,25 @@ export const RetailersByProduct = {
       "store": "Warhammer Official",
       "price": 98,
       "inStock": false,
-      "url": "https://www.warhammer.com/en-AU/shop/codex-tau-empire-2024-eng?queryID=8e763b4cece491e3b5596ac608624c3d"
+      "url": "https://www.warhammer.com/en-AU/shop/codex-tau-empire-2024-eng?queryID=020f5996259ae403eb8186109b1539bf"
     },
     {
       "store": "The Combat Company",
-      "price": 14.22,
+      "price": 77.42,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/horus-heresy-false-gods-paperback?_pos=1&_sid=9c4bb9944&_ss=r"
+      "url": "https://thecombatcompany.com/products/codex-tau-empire-pre-order-25-4-24?_pos=20&_sid=fca65edba&_ss=r"
     },
     {
       "store": "Gap Games",
       "price": 77.42,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/codex-tau-empire-pre-order-1"
+    },
+    {
+      "store": "Emerald Hobbies",
+      "price": 73.6,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/tau-empire-codex?_pos=1&_sid=c9ee491de&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -13293,6 +13329,12 @@ export const RetailersByProduct = {
       "url": "https://www.gapgames.com.au/products/space-marines-gladiator"
     },
     {
+      "store": "Emerald Hobbies",
+      "price": 124,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/space-marine-gladiator?_pos=1&_sid=6e245b664&_ss=r"
+    },
+    {
       "store": "Gumnut",
       "price": 21,
       "inStock": false,
@@ -17211,6 +17253,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-corsair-voidscarred"
     },
     {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-corsair-voidscarred-2024?queryID=cdf2132beb9b2f5ef0cfd15c3b098f78"
+    },
+    {
       "store": "The Combat Company",
       "price": 86.9,
       "inStock": false,
@@ -17247,6 +17295,12 @@ export const RetailersByProduct = {
       "price": 83,
       "inStock": false,
       "url": "https://www.warforless.com.au/kill-team-exaction-squad"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-exaction-squad-2024?queryID=7afcb798853ebb1bf3ddfff40dbcd2dd"
     },
     {
       "store": "The Combat Company",
@@ -17287,6 +17341,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-farstalker-kinband"
     },
     {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-farstalker-kinband-2024?queryID=8409f5fe0caa01fec13acc5f22d4e72d"
+    },
+    {
       "store": "The Combat Company",
       "price": 86.9,
       "inStock": false,
@@ -17323,6 +17383,12 @@ export const RetailersByProduct = {
       "price": 83,
       "inStock": false,
       "url": "https://www.warforless.com.au/kill-team-fellgor-ravagers"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-fellgor-ravagers-2024?queryID=725b518936e127aaddc5b957bfebad23"
     },
     {
       "store": "The Combat Company",
@@ -17363,6 +17429,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-goremongers"
     },
     {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-goremongers-2025?queryID=a5cc75df7b267538292f36637791bcfe"
+    },
+    {
       "store": "The Combat Company",
       "price": 86.9,
       "inStock": false,
@@ -17399,6 +17471,12 @@ export const RetailersByProduct = {
       "price": 74,
       "inStock": false,
       "url": "https://www.warforless.com.au/kill-team-hand-of-the-archon"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 98,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-hand-of-the-archon-2024?queryID=e641bd24aec073a87e9f921b35aa38e1"
     },
     {
       "store": "The Combat Company",
@@ -17439,6 +17517,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-hearthkyn-salvagers"
     },
     {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-hearthkyn-salvagers-2024?queryID=95a5ea4e940766bf92368bf8976ae0f0"
+    },
+    {
       "store": "The Combat Company",
       "price": 41.48,
       "inStock": false,
@@ -17475,6 +17559,12 @@ export const RetailersByProduct = {
       "price": 83,
       "inStock": false,
       "url": "https://www.warforless.com.au/kill-team-hernkyn-yaegirs"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-hernkyn-yaegirs-2024?queryID=815e906d53659f9c873699c122353f7e"
     },
     {
       "store": "The Combat Company",
@@ -17515,6 +17605,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-necron-hierotek-circle"
     },
     {
+      "store": "Warhammer Official",
+      "price": 125,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-hierotek-circle-2024?queryID=9d429edd4ac9ea9759efd6e0a9d2254b"
+    },
+    {
       "store": "The Combat Company",
       "price": 98.75,
       "inStock": false,
@@ -17553,6 +17649,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-imperial-navy-breachers"
     },
     {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-imperial-navy-breachers-2024?queryID=c40d305e0839efbdea2f22cc08b86c81"
+    },
+    {
       "store": "The Combat Company",
       "price": 86.9,
       "inStock": false,
@@ -17583,6 +17685,12 @@ export const RetailersByProduct = {
       "price": 74,
       "inStock": false,
       "url": "https://www.warforless.com.au/kill-team-inquisitorial-agents~91067664"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 98,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-inquisitorial-agents-2024?queryID=27d7eb14a41660c73de16b05b3405790"
     },
     {
       "store": "The Combat Company",
@@ -17623,6 +17731,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-kasrkin~91067663"
     },
     {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-kasrkin-2024?queryID=5b3549ff3b7be2742dd69467bfef5352"
+    },
+    {
       "store": "The Combat Company",
       "price": 86.9,
       "inStock": false,
@@ -17659,6 +17773,12 @@ export const RetailersByProduct = {
       "price": 101,
       "inStock": false,
       "url": "https://www.warforless.com.au/kill-team-mandrakes"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 135,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-mandrakes-2024?queryID=a0be01dd38b2032103b58d360bae7b2e"
     },
     {
       "store": "The Combat Company",
@@ -17699,6 +17819,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-nemesis-claw"
     },
     {
+      "store": "Warhammer Official",
+      "price": 125,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-nemesis-claw-2024?queryID=a7ef6f938d8831beec638426fa17af26"
+    },
+    {
       "store": "The Combat Company",
       "price": 98.75,
       "inStock": false,
@@ -17735,6 +17861,12 @@ export const RetailersByProduct = {
       "price": 83,
       "inStock": false,
       "url": "https://www.warforless.com.au/kill-team-ratlings"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-ratlings-2025?queryID=fb399cce1001acef246340ce96adf942"
     },
     {
       "store": "The Combat Company",
@@ -17775,6 +17907,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-raveners"
     },
     {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-raveners-2025?queryID=109626cae950b1878605ad06eb80fae1"
+    },
+    {
       "store": "The Combat Company",
       "price": 106.65,
       "inStock": false,
@@ -17811,6 +17949,12 @@ export const RetailersByProduct = {
       "price": 83,
       "inStock": false,
       "url": "https://www.warforless.com.au/kill-team-sanctifiers"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-sanctifiers-2025?queryID=1d7c1a176d9bd7a1aed1b512ffcd34c6"
     },
     {
       "store": "The Combat Company",
@@ -17851,6 +17995,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-space-marine-scout-squad"
     },
     {
+      "store": "Warhammer Official",
+      "price": 135,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-scout-squad-2024?queryID=7105f6809cda3f3acd83ebbc4e1ac0ea"
+    },
+    {
       "store": "The Combat Company",
       "price": 106.65,
       "inStock": false,
@@ -17887,6 +18037,12 @@ export const RetailersByProduct = {
       "price": 83,
       "inStock": false,
       "url": "https://www.warforless.com.au/kill-team-tempestus-aquilons"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-tempestus-aquilons-2024?queryID=990f435b8ab361548125298e19438bac"
     },
     {
       "store": "The Combat Company",
@@ -17927,6 +18083,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/kill-team-tau-empire-vespid-stingwings"
     },
     {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-tau-empire-vespid-stingwings-2024?queryID=005f2a869105894ddeca95d5ca040d9d"
+    },
+    {
       "store": "The Combat Company",
       "price": 86.9,
       "inStock": false,
@@ -17963,6 +18125,12 @@ export const RetailersByProduct = {
       "price": 83,
       "inStock": false,
       "url": "https://www.warforless.com.au/kill-team-wrecka-krew"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/kill-team-wrecka-krew-2025?queryID=183069444c7edd94e76a643b3c72c0b7"
     },
     {
       "store": "The Combat Company",
@@ -18003,6 +18171,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/orks-killa-kans"
     },
     {
+      "store": "Warhammer Official",
+      "price": 86,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Ork-Killa-Kans?queryID=02e8d567b8a5746286cc8f8cc96e5a5e"
+    },
+    {
       "store": "The Combat Company",
       "price": 67.94,
       "inStock": false,
@@ -18035,6 +18209,12 @@ export const RetailersByProduct = {
   ],
   "445": [
     {
+      "store": "Warhammer Official",
+      "price": 105,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/killzone-upgrade-compound-siege-2025?queryID=f28c922edb0a5a09d544ae8ae384bcaa"
+    },
+    {
       "store": "The Combat Company",
       "price": 99.75,
       "inStock": false,
@@ -18048,6 +18228,12 @@ export const RetailersByProduct = {
     }
   ],
   "446": [
+    {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/killzone-upgrade-tyranid-infestation-2025?queryID=3f7d8bc71c3346f13a0f8bc14991cf95"
+    },
     {
       "store": "The Combat Company",
       "price": 104.5,
@@ -18073,6 +18259,12 @@ export const RetailersByProduct = {
       "price": 165,
       "inStock": false,
       "url": "https://www.warforless.com.au/killzone-volkus"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 220,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/killzone-volkus-2024?queryID=72bf1bf42e4636a8d211c7e573ce664b"
     },
     {
       "store": "The Combat Company",
@@ -18107,6 +18299,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/imperial-knights-knight-dominus"
     },
     {
+      "store": "Warhammer Official",
+      "price": 320,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/imperial-knights-knight-dominus-knight-castellan-2022?queryID=bf5fcc28d5f7a6c05c0116c16641dd06"
+    },
+    {
       "store": "The Combat Company",
       "price": 60.83,
       "inStock": false,
@@ -18139,6 +18337,12 @@ export const RetailersByProduct = {
   ],
   "449": [
     {
+      "store": "Warhammer Official",
+      "price": 235,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/imperial-knights-knight-preceptor-canis-rex-2025?queryID=d059aa948df0ea4c7ace7a14e49027f5"
+    },
+    {
       "store": "The Combat Company",
       "price": 223.25,
       "inStock": false,
@@ -18157,6 +18361,12 @@ export const RetailersByProduct = {
       "price": 176,
       "inStock": false,
       "url": "https://www.warforless.com.au/imperial-knights-knight-questoris~173252733"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 235,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/imperial-knights-knight-questoris-2025?queryID=0113d859a6bd4aaeacb3b37f776f197a"
     },
     {
       "store": "The Combat Company",
@@ -18197,6 +18407,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/chaos-knights-chaos-knight-ruinator"
     },
     {
+      "store": "Warhammer Official",
+      "price": 245,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/chaos-knights-chaos-knight-ruinator-2025?queryID=21ee9df0c2ea55518277e1e2d6a4d819"
+    },
+    {
       "store": "The Combat Company",
       "price": 193.55,
       "inStock": false,
@@ -18233,6 +18449,12 @@ export const RetailersByProduct = {
       "price": 83,
       "inStock": false,
       "url": "https://www.warforless.com.au/orks-kommandos"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/orks-kommandos-2025?queryID=ec6ad1ba52754c8ac6e73104756df686"
     },
     {
       "store": "The Combat Company",
@@ -18273,6 +18495,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/~1254566"
     },
     {
+      "store": "Warhammer Official",
+      "price": 77,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/White-Scars-KorSarro-Khan-2020?queryID=0f73ba7391815476a3c028536b558228"
+    },
+    {
       "store": "The Combat Company",
       "price": 5.05,
       "inStock": false,
@@ -18303,6 +18531,12 @@ export const RetailersByProduct = {
       "price": 58,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-krieg-combat-engineers"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 77,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/astra-militarum-krieg-combat-engineers-2025?queryID=9474c0054a30ec40bae02d31f41a2aa1"
     },
     {
       "store": "The Combat Company",
@@ -18343,6 +18577,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/astra-militarum-krieg-command-squad"
     },
     {
+      "store": "Warhammer Official",
+      "price": 77,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/astra-militarum-krieg-command-squad-2025?queryID=bb0999114e4913fd8cfcb2f2fe69401b"
+    },
+    {
       "store": "The Combat Company",
       "price": 225.15,
       "inStock": false,
@@ -18379,6 +18619,12 @@ export const RetailersByProduct = {
       "price": 65,
       "inStock": false,
       "url": "https://www.warforless.com.au/astra-militarum-krieg-heavy-weapons-squad"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 86,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/astra-militarum-krieg-heavy-weapons-squad-2025?queryID=b2d871815bd5193c7547d64a88d13a3c"
     },
     {
       "store": "The Combat Company",
@@ -18419,6 +18665,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/tau-empire-kroot-carnivore-squad"
     },
     {
+      "store": "Warhammer Official",
+      "price": 94.5,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/tau-empire-kroot-carnivore-squad-2024?queryID=a153377f706e4b9ab53238860b25c614"
+    },
+    {
       "store": "The Combat Company",
       "price": 74.65,
       "inStock": false,
@@ -18455,6 +18707,12 @@ export const RetailersByProduct = {
       "price": 42.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/tau-empire-kroot-flesh-shaper"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 57,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/tau-empire-kroot-flesh-shaper-2024?queryID=4b1449d31716c2a3daed541342813e3c"
     },
     {
       "store": "The Combat Company",
@@ -22013,6 +22271,12 @@ export const RetailersByProduct = {
       "price": 30.4,
       "inStock": false,
       "url": "https://www.warforless.com.au/death-guard-myphitic-blight-hauler"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 40.5,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Etb-Death-Guard-Myphitic-Blight-hauler-2020?queryID=2fae995cf840bf91e90f5e09875dccd1"
     },
     {
       "store": "The Combat Company",
@@ -37827,6 +38091,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/ossiarch-bonereapers-kavalos-deathriders"
     },
     {
+      "store": "Warhammer Official",
+      "price": 105,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Ossiarch-Bonereapers-Kavalos-Deathriders-2019?queryID=5dc68e28f95fb7d41eeceea9bd6f96d0"
+    },
+    {
       "store": "The Combat Company",
       "price": 82.95,
       "inStock": false,
@@ -39083,6 +39353,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/bad-loon-rising-hb"
     },
     {
+      "store": "Warhammer Official",
+      "price": 46,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz-Loonboss-2019?queryID=d2b105556dd983093b82a98c6616a226"
+    },
+    {
       "store": "The Combat Company",
       "price": 43.7,
       "inStock": false,
@@ -39119,6 +39395,12 @@ export const RetailersByProduct = {
       "price": 72.8,
       "inStock": false,
       "url": "https://www.warforless.com.au/gloomspite-gitz-squig-hoppers"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 97,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz-Squig-Hoppers-2019?queryID=9a98e4d013eb3808c843bab23e1baaef"
     },
     {
       "store": "The Combat Company",
@@ -39159,6 +39441,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/~6945215"
     },
     {
+      "store": "Warhammer Official",
+      "price": 71,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Endless-spells-gloomspite-gitz-2019?queryID=cda61aa9478e046e72cf5f1e31972caf"
+    },
+    {
       "store": "The Combat Company",
       "price": 67.45,
       "inStock": false,
@@ -39195,6 +39483,12 @@ export const RetailersByProduct = {
       "price": 99,
       "inStock": false,
       "url": "https://www.warforless.com.au/~88631697"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 110,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Gloomspite-gitz-bad-moon-loonshrine-2019?queryID=a2be55996bdf46a3236e5997037482e7"
     },
     {
       "store": "The Combat Company",
@@ -39235,6 +39529,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/~3243070"
     },
     {
+      "store": "Warhammer Official",
+      "price": 77,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz:-Fanatics-2019?queryID=e09414a8df4ac8f010407602d6f51325"
+    },
+    {
       "store": "The Combat Company",
       "price": 43.7,
       "inStock": false,
@@ -39253,6 +39553,12 @@ export const RetailersByProduct = {
       "price": 60,
       "inStock": false,
       "url": "https://www.warforless.com.au/gloomspite-gitz-skragrott-the-loonking"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 67,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz-Skragrott-The-Loonking-2019?queryID=b35a603e6f999501a43c610b97435bc3"
     },
     {
       "store": "The Combat Company",
@@ -39285,6 +39591,12 @@ export const RetailersByProduct = {
       "price": 67.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/gloomspite-gitz-squig-herd"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 90,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz-Squig-Herd-2019?queryID=4d5efdcc5722f39a8d8a4ea47e60a65d"
     },
     {
       "store": "The Combat Company",
@@ -39325,6 +39637,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/gloomspite-gitz-grots-stabbas-shootas"
     },
     {
+      "store": "Warhammer Official",
+      "price": 70,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Gloomspite-Gitz-Grots-2019?queryID=18819832f0a4ec96087b509a3129d3d5"
+    },
+    {
       "store": "The Combat Company",
       "price": 181.7,
       "inStock": false,
@@ -39355,6 +39673,12 @@ export const RetailersByProduct = {
       "price": 56,
       "inStock": false,
       "url": "https://www.warforless.com.au/~88631710"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 62,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Gutbusters-Ironblaster-2018?queryID=f2f1f76eaad49dfbd6096c3cb0c4ab53"
     },
     {
       "store": "The Combat Company",
@@ -39389,6 +39713,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/nighthaunt-bladegheist-revenants"
     },
     {
+      "store": "Warhammer Official",
+      "price": 90,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Nighthaunt-Bladegheist-Revenants-2018?queryID=04715e09f25f7470f0cc976335c42c07"
+    },
+    {
       "store": "The Combat Company",
       "price": 71.1,
       "inStock": false,
@@ -39420,6 +39750,12 @@ export const RetailersByProduct = {
     }
   ],
   "983": [
+    {
+      "store": "Warhammer Official",
+      "price": 77,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Etb-Chainrasp-Hordes-2018?queryID=4d9d6f7ee685268e94907f6467a8b2c1"
+    },
     {
       "store": "The Combat Company",
       "price": 60.83,
@@ -39457,6 +39793,12 @@ export const RetailersByProduct = {
       "price": 172.5,
       "inStock": false,
       "url": "https://www.warforless.com.au/nighthaunt-black-coach"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 230,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Nighthaunts-The-Black-Coach-2018?queryID=1f4dbb637b95c620bf8dd678cafc71d7"
     },
     {
       "store": "The Combat Company",
@@ -39497,6 +39839,12 @@ export const RetailersByProduct = {
       "url": "https://www.warforless.com.au/imperial-knights-knight-armigers"
     },
     {
+      "store": "Warhammer Official",
+      "price": 52,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Nighthaunt-Liekoron-The-Executioner-2018?queryID=ce247d656a9ee14e5888894a167da4e8"
+    },
+    {
       "store": "The Combat Company",
       "price": 58.46,
       "inStock": false,
@@ -39521,6 +39869,12 @@ export const RetailersByProduct = {
       "price": 30.4,
       "inStock": false,
       "url": "https://www.warforless.com.au/nighthaunt-dreadblade-harrows"
+    },
+    {
+      "store": "Warhammer Official",
+      "price": 40.5,
+      "inStock": false,
+      "url": "https://www.warhammer.com/en-AU/shop/Etb-Nighthaunt-Dreadblade-Harrows-2018?queryID=d151aa9ebc49d8c224314bea9ece7432"
     },
     {
       "store": "The Combat Company",
@@ -41125,6 +41479,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/endrinmaster-with-dirigible-suit?_pos=1&_sid=b103a1a7f&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 38,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/kharadron-overlords-endrinmaster"
+    },
+    {
       "store": "Emerald Hobbies",
       "price": 50.4,
       "inStock": false,
@@ -41425,6 +41785,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/vanguard-raptors?_pos=1&_sid=10af64607&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 59.25,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/stormcast-eternals-vanguard-raptors"
+    },
+    {
       "store": "Emerald Hobbies",
       "price": 60,
       "inStock": false,
@@ -41689,6 +42055,12 @@ export const RetailersByProduct = {
       "price": 5.05,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/citadel-layer-blue-horror?_pos=1&_sid=8ad7bbea6&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 55.3,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/daemons-of-tzeentch-blue-horrors"
     },
     {
       "store": "Emerald Hobbies",
@@ -42449,6 +42821,12 @@ export const RetailersByProduct = {
       "price": 103.55,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/terrorgheist-zombie-dragon?_pos=1&_sid=98446dcc7&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 99.75,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/flesh-eater-courts-terrorgheist-zombie-dragon"
     },
     {
       "store": "Gumnut",
@@ -43291,6 +43669,12 @@ export const RetailersByProduct = {
       "price": 147.25,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/celestant-prime?_pos=1&_sid=d56242e67&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 147.25,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/stormcast-eternal-celestant-prime"
     },
     {
       "store": "Emerald Hobbies",
@@ -45551,6 +45935,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/idoneth-deepkin-ikon-of-the-sea?_pos=1&_sid=23a576a96&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 52.14,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/idoneth-deepkin-ikon-of-the-sea-pre-order"
+    },
+    {
       "store": "Emerald Hobbies",
       "price": 75.6,
       "inStock": false,
@@ -45833,6 +46223,12 @@ export const RetailersByProduct = {
       "price": 110.6,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/soulblight-gravelords-cursed-sepulchre?_pos=1&_sid=980da8ac7&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 110.6,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/soulblight-gravelords-cursed-sepulchre-pre-order"
     },
     {
       "store": "Gumnut",
@@ -50647,6 +51043,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/aos-shattered-dominion-large-base-detail?_pos=1&_sid=a70b3b702&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 46.61,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/aos-shattered-dominion-large-base-detail"
+    },
+    {
       "store": "Emerald Hobbies",
       "price": 47.2,
       "inStock": false,
@@ -50671,6 +51073,12 @@ export const RetailersByProduct = {
       "price": 46.61,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/aos-shattered-dominion-60-90mm-oval-bases?_pos=1&_sid=86d096ccc&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 46.61,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/aos-shattered-dominion-60-90mm-oval-bases"
     },
     {
       "store": "Emerald Hobbies",
@@ -50699,6 +51107,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/aos-shattered-dominion-25-32mm-round-bases?_pos=1&_sid=2c4078657&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 46.61,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/aos-shattered-dominion-65-40mm-round-bases"
+    },
+    {
       "store": "Emerald Hobbies",
       "price": 47.2,
       "inStock": false,
@@ -50723,6 +51137,12 @@ export const RetailersByProduct = {
       "price": 46.61,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/aos-shattered-dominion-25-32mm-round-bases?_pos=1&_sid=fda52a19b&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 46.61,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/aos-shattered-dominion-25-32mm-round-bases"
     },
     {
       "store": "Emerald Hobbies",
@@ -51541,6 +51961,12 @@ export const RetailersByProduct = {
       "price": 86.9,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/aos-sand-and-bone-gaming-pack-pre-order-14-6-25?_pos=1&_sid=916825f62&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 86.9,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/age-of-sigmar-sand-and-bone-gaming-pack-pre-order"
     },
     {
       "store": "Emerald Hobbies",
@@ -54141,6 +54567,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/monument-pro-acryl-shadow-flesh-22ml?_pos=1&_sid=0156c7f60&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 205.4,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/daughters-of-khaine-morathi"
+    },
+    {
       "store": "Emerald Hobbies",
       "price": 208,
       "inStock": false,
@@ -55773,6 +56205,12 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/wight-king-with-baleful-tomb-blade?_pos=1&_sid=0d85910c1&_ss=r"
     },
     {
+      "store": "Gap Games",
+      "price": 58.46,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/soulblight-gravelords-wight-king-on-steed-pre-order"
+    },
+    {
       "store": "Gumnut",
       "price": 6.5,
       "inStock": false,
@@ -55835,6 +56273,12 @@ export const RetailersByProduct = {
       "price": 21.56,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/barbaros?_pos=1&_sid=cb445ab61&_ss=r"
+    },
+    {
+      "store": "Gap Games",
+      "price": 252.8,
+      "inStock": false,
+      "url": "https://www.gapgames.com.au/products/soulblight-gravelords-prince-vhordrai-lord-of-the-crimson-keep-pre-order"
     },
     {
       "store": "Emerald Hobbies",

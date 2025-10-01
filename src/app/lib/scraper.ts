@@ -4,7 +4,7 @@
 import pLimit from "p-limit";
 
 /* ---------------- Types ---------------- */
-type Seller = {
+export type Seller = {
   id?: number;
   name?: string;
   base_url: string;
@@ -22,7 +22,7 @@ type Seller = {
   product_image_selector?: string;
 };
 
-type Product = {
+export type Product = {
   id?: number;
   name: string;
   search_term: string;
@@ -31,7 +31,7 @@ type Product = {
 export type Candidate = {
   link: string | null;
   price: number | null;
-  img: Buffer | null;
+  img: string | null; // IMAGE URL (not a Buffer)
 };
 
 type BrowserLike = {
@@ -53,12 +53,23 @@ const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
 
 /* ---- price sanity (AUD-ish) ---- */
-const MIN_PRICE = 0.5;     // ignore zero/negative and sub-$0.50 noise
-const MAX_PRICE = 5000;    // hard cap to kill nonsense like 12345678910
+const MIN_PRICE = 0.5;
+const MAX_PRICE = 5000;
 const isSanePrice = (n: unknown) =>
   typeof n === "number" && Number.isFinite(n) && n >= MIN_PRICE && n <= MAX_PRICE;
 
-/* ---------------- Launch Puppeteer ---------------- */
+/* ---------------- Single shared Puppeteer instance ---------------- */
+let _browserPromise: Promise<BrowserLike> | null = null;
+async function getBrowser(): Promise<BrowserLike> {
+  if (!_browserPromise) _browserPromise = launchPuppeteer();
+  try {
+    return await _browserPromise;
+  } catch (e) {
+    _browserPromise = null;
+    throw e;
+  }
+}
+
 async function launchPuppeteer(): Promise<BrowserLike> {
   const puppeteer = (await import("puppeteer")).default as any;
 
@@ -94,8 +105,29 @@ function toAbs(href: string | null | undefined, base: string): string | null {
   }
 }
 
+/* ---------------- Tiny in-memory cache ---------------- */
+type CacheEntry = { ts: number; items: Candidate[] };
+const CACHE = new Map<string, CacheEntry>();
+const TTL_MS = 1000 * 60 * 5; // 5 minutes
+
+export function cacheKey(sellerId?: number, productId?: number, term?: string) {
+  return `${sellerId || 0}:${productId || 0}:${(term || "").trim().toLowerCase()}`;
+}
+export function cacheGet(key: string): Candidate[] | null {
+  const hit = CACHE.get(key);
+  if (!hit) return null;
+  if (Date.now() - hit.ts > TTL_MS) {
+    CACHE.delete(key);
+    return null;
+  }
+  return hit.items;
+}
+export function cacheSet(key: string, items: Candidate[]) {
+  CACHE.set(key, { ts: Date.now(), items });
+}
+
 /* -------------------------------------------------------
-   Product-page price fetch (with Warhammer-specific logic)
+   Product-page price fetch (same logic as before)
 -------------------------------------------------------- */
 export async function fetchPriceFromLinkWithSellerSelectors(
   seller: {
@@ -106,7 +138,7 @@ export async function fetchPriceFromLinkWithSellerSelectors(
   },
   link: string
 ): Promise<number | null> {
-  const browser = await launchPuppeteer();
+  const browser = await getBrowser();
   const page = await browser.newPage();
 
   try {
@@ -114,23 +146,10 @@ export async function fetchPriceFromLinkWithSellerSelectors(
     await page.setExtraHTTPHeaders?.({ "accept-language": "en-AU,en;q=0.9" });
     await page.setViewport?.({ width: 1280, height: 900, deviceScaleFactor: 1 });
 
-    await page.goto(link, { waitUntil: "networkidle2", timeout: 45_000 });
+    await page.goto(link, { waitUntil: "domcontentloaded", timeout: 15_000 });
 
     // small settle
-    await page.evaluate(() => new Promise((r) => setTimeout(r, 350 + Math.random() * 350)));
-
-    // Detect common challenge pages early
-    const lookedLikeChallenge = await page.evaluate(() => {
-      const t = (document.title || "").toLowerCase();
-      const body = document.body?.innerText?.toLowerCase?.() || "";
-      return (
-        t.includes("just a moment") ||
-        t.includes("attention required") ||
-        body.includes("checking if the site connection is secure") ||
-        body.includes("enable javascript and cookies")
-      );
-    });
-    if (lookedLikeChallenge) return null;
+    await page.evaluate(() => new Promise((r) => setTimeout(r, 250 + Math.random() * 250)));
 
     const price = await page.evaluate((sel: any) => {
       const parseNum = (t?: string | null) => {
@@ -158,7 +177,6 @@ export async function fetchPriceFromLinkWithSellerSelectors(
         // require a currency hint
         if (!/\$|aud/i.test(s)) return null;
 
-        // pick currency-looking number (with $ or AUD near it)
         const m = s.replace(/,/g, "").match(/(?:\$|aud)\s*(-?\d+(?:\.\d+)?)/i);
         if (m) {
           const v = parseFloat(m[1]);
@@ -173,23 +191,13 @@ export async function fetchPriceFromLinkWithSellerSelectors(
       const reg = by(sel.product_price_selector);
       if (sane(reg)) return reg!;
 
-      // 2) Warhammer: use the specific container, *require* currency and ignore <option> noise
-      try {
-        const host = location.hostname.replace(/^www\./, "");
-        if (host.endsWith("warhammer.com")) {
-          const box = document.querySelector("[data-testid='quantity-and-price-container']");
-          const val = extractCurrencyFromEl(box as Element | null);
-          if (sane(val)) return val!;
-        }
-      } catch {}
-
-      // 3) Listing selectors (if someone stored those instead)
+      // 2) Listing selectors
       const sale2 = by(sel.sale_selector);
       if (sane(sale2)) return sale2!;
       const reg2 = by(sel.price_selector);
       if (sane(reg2)) return reg2!;
 
-      // 4) itemprop=price
+      // 3) itemprop=price
       const itemProp =
         document.querySelector("[itemprop='price']")?.getAttribute?.("content") ||
         document.querySelector("[itemprop='price']")?.textContent ||
@@ -197,7 +205,7 @@ export async function fetchPriceFromLinkWithSellerSelectors(
       const itemNum = parseNum(itemProp);
       if (sane(itemNum)) return itemNum!;
 
-      // 5) common price classes (DO NOT fall back to "any number"; must look like currency)
+      // 4) common price classes requiring currency nearby
       const COMMON = [
         ".price--withTax",
         ".price--main",
@@ -212,11 +220,21 @@ export async function fetchPriceFromLinkWithSellerSelectors(
       ];
       for (const c of COMMON) {
         const el = document.querySelector(c);
-        const val = extractCurrencyFromEl(el);
-        if (sane(val)) return val!;
+        if (!el) continue;
+
+        const clone = el.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll("select, option").forEach((x) => x.remove());
+        const s = (clone.innerText || "").replace(/\s+/g, " ").trim();
+        if (!/\$|aud/i.test(s)) continue;
+
+        const mm = s.replace(/,/g, "").match(/(?:\$|aud)\s*(-?\d+(?:\.\d+)?)/i);
+        if (mm) {
+          const v = parseFloat(mm[1]);
+          if (sane(v)) return v!;
+        }
       }
 
-      // 6) Meta / JSON-LD — guard against absurd IDs
+      // 5) Meta / JSON-LD
       const og = document.querySelector("meta[property='og:price:amount']")?.getAttribute("content");
       const ogNum = parseNum(og || "");
       if (sane(ogNum)) return ogNum!;
@@ -247,40 +265,24 @@ export async function fetchPriceFromLinkWithSellerSelectors(
       sale_selector: seller.sale_selector || null,
     });
 
-    if (!isSanePrice(price)) {
-      if (process.env.DEBUG_SCRAPE) {
-        const dbg = await page.evaluate(() => {
-          const box = document.querySelector("[data-testid='quantity-and-price-container']");
-          return {
-            url: location.href,
-            title: document.title,
-            hasWarhammerBox: !!box,
-            warhammerBoxText: box ? (box as HTMLElement).innerText : null,
-            itemprop: document.querySelector("[itemprop='price']")?.outerHTML || null,
-          };
-        });
-        console.log("[scraper-debug] no sane price", dbg);
-      }
-      return null;
-    }
-
+    if (!isSanePrice(price)) return null;
     return price;
   } catch {
     return null;
   } finally {
     await page.close().catch(() => {});
-    await (browser as any).close?.().catch?.(() => {});
   }
 }
 
 /* ------------------------------------------------
-   Search a seller for candidates (link, price, img)
+   Search a seller for candidates (link, price, img URL)
+   NOTE: No server-side image downloads anymore.
 -------------------------------------------------- */
 export async function searchSeller(
   seller: Seller,
   product: Product
 ): Promise<Candidate[]> {
-  const browser = await launchPuppeteer();
+  const browser = await getBrowser();
   const page = await browser.newPage();
 
   try {
@@ -288,7 +290,7 @@ export async function searchSeller(
     await page.setExtraHTTPHeaders?.({ "accept-language": "en-AU,en;q=0.9" });
     await page.setViewport?.({ width: 1280, height: 900, deviceScaleFactor: 1 });
 
-    // best-effort resource blocking
+    // best-effort resource blocking (still useful)
     try {
       const anyPage = page as any;
       await anyPage.setRequestInterception?.(true);
@@ -296,7 +298,6 @@ export async function searchSeller(
         const type = req.resourceType?.() || "";
         const url = req.url?.() || "";
         if (
-          type === "image" ||
           type === "media" ||
           type === "font" ||
           /doubleclick|google-analytics|facebook\.com|hotjar|gtag\./i.test(url)
@@ -310,7 +311,7 @@ export async function searchSeller(
     const searchUrl = seller.base_url + seller.search_url.replace(/\*/g, encodeURIComponent(product.search_term));
 
     try {
-      await page.goto(searchUrl, { waitUntil: "networkidle2", timeout: 45_000 });
+      await page.goto(searchUrl, { waitUntil: "domcontentloaded", timeout: 15_000 });
     } catch {}
 
     // lazy lists / infinite scroll
@@ -318,9 +319,9 @@ export async function searchSeller(
       await page.evaluate(async () => {
         const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
         let last = 0;
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 4; i++) {
           window.scrollTo(0, document.body.scrollHeight);
-          await delay(350 + Math.random() * 200);
+          await delay(250 + Math.random() * 200);
           const h = document.body.scrollHeight;
           if (h === last) break;
           last = h;
@@ -331,7 +332,7 @@ export async function searchSeller(
 
     if (seller.product_selector) {
       try {
-        await page.waitForSelector(seller.product_selector, { timeout: 8_000 });
+        await page.waitForSelector(seller.product_selector, { timeout: 6_000 });
       } catch {}
     }
 
@@ -345,7 +346,7 @@ export async function searchSeller(
     };
 
     const cards = await page.$$eval<
-      { link: string | null; price: number | null; img: string | null }[],
+      Candidate[],
       EvalArgs
     >(
       seller.product_selector,
@@ -367,13 +368,13 @@ export async function searchSeller(
 
         return nodes
           .map((el) => {
-            // Link:
+            // Link
             let linkEl =
               (sel.link && (el.querySelector(sel.link) as HTMLAnchorElement | null)) ||
               (el.querySelector("a") as HTMLAnchorElement | null);
             const link = linkEl ? toAbs(linkEl.getAttribute("href") || linkEl.href, sel.base_url) : null;
 
-            // Image:
+            // Image URL
             let imgEl =
               (sel.img && (el.querySelector(sel.img) as HTMLElement | null)) ||
               (el.querySelector("img") as HTMLImageElement | null);
@@ -389,7 +390,7 @@ export async function searchSeller(
               null;
             const imgLink = toAbs(src, sel.base_url);
 
-            // Price:
+            // Price
             const saleText  = sel.sale  ? (el.querySelector(sel.sale)?.textContent  ?? "") : "";
             const priceText = sel.price ? (el.querySelector(sel.price)?.textContent ?? "") : "";
             const itemPropText =
@@ -419,28 +420,9 @@ export async function searchSeller(
       }
     );
 
-    // Fetch image buffers (concurrent & best-effort)
-    const limit = pLimit(6);
-    const out = await Promise.all(
-      cards.map((c) =>
-        limit(async () => {
-          let buf: Buffer | null = null;
-          if (c.img) {
-            try {
-              const r = await fetch(c.img);
-              const ab = await r.arrayBuffer();
-              buf = Buffer.from(ab);
-            } catch {
-              buf = null;
-            }
-          }
-          return { link: c.link, price: c.price, img: buf };
-        })
-      )
-    );
-    return out;
+    // No server-side image downloads anymore.
+    return cards;
   } finally {
     await page.close().catch(() => {});
-    await (browser as any).close?.().catch?.(() => {});
   }
 }
