@@ -1,7 +1,9 @@
 // src/app/lib/scraper.ts
 // Server-only helpers for scraping. Import only from routes with `export const runtime = "nodejs"`.
+
 import pLimit from "p-limit";
-// Add these optional fields to your Seller type at the top:
+
+/* ---------------- Types ---------------- */
 type Seller = {
   id?: number;
   name?: string;
@@ -14,12 +16,11 @@ type Seller = {
   sale_selector?: string;
   image_selector?: string;
 
-  // NEW: product page selectors (optional)
+  // Optional product page selectors:
   product_price_selector?: string;
   product_sale_selector?: string;
   product_image_selector?: string;
 };
-
 
 type Product = {
   id?: number;
@@ -37,109 +38,189 @@ type BrowserLike = {
   newPage(): Promise<PageLike>;
   close(): Promise<void>;
 };
-
 type PageLike = {
   setUserAgent(ua: string): Promise<void>;
+  setExtraHTTPHeaders?(hdrs: Record<string, string>): Promise<void>;
+  setViewport?(v: { width: number; height: number; deviceScaleFactor?: number }): Promise<void>;
   goto(url: string, opts: { waitUntil: any; timeout: number }): Promise<any>;
   waitForSelector(sel: string, opts?: { timeout?: number }): Promise<void>;
-  // allow 1 or 2 args like real Puppeteer
   evaluate<T = any>(fn: any, arg?: any): Promise<T>;
-  $$eval<T, A = unknown>(
-    selector: string,
-    fn: (els: Element[], args: A) => T,
-    args: A
-  ): Promise<T>;
+  $$eval<T, A = unknown>(selector: string, fn: (els: Element[], args: A) => T, args: A): Promise<T>;
   close(): Promise<void>;
 };
 
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
 
-// src/app/lib/scraper.ts
+/* ---- price sanity (AUD-ish) ---- */
+const MIN_PRICE = 0.5;     // ignore zero/negative and sub-$0.50 noise
+const MAX_PRICE = 5000;    // hard cap to kill nonsense like 12345678910
+const isSanePrice = (n: unknown) =>
+  typeof n === "number" && Number.isFinite(n) && n >= MIN_PRICE && n <= MAX_PRICE;
 
+/* ---------------- Launch Puppeteer ---------------- */
 async function launchPuppeteer(): Promise<BrowserLike> {
-  // Use plain Puppeteer and (optionally) a provided Chrome path.
-  // This is the most reliable setup on hosts like Render / Spaceship.
   const puppeteer = (await import("puppeteer")).default as any;
+
+  const args = ["--no-sandbox", "--disable-setuid-sandbox"];
+  const proxy = process.env.PUPPETEER_PROXY;
+  if (proxy) args.push(`--proxy-server=${proxy}`);
 
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, // use if provided
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, // optional
+    args,
   });
-
   return browser as unknown as BrowserLike;
 }
 
-/** Extracts a number from a price-like string. */
+/* ---------------- Utils ---------------- */
 function pickNumber(txt?: string | null): number | null {
   if (!txt) return null;
   const m = txt.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
   return m ? parseFloat(m[0]) : null;
 }
+function firstFromSrcset(srcset?: string | null): string | null {
+  if (!srcset) return null;
+  const first = srcset.split(",")[0]?.trim().split(" ")[0];
+  return first || null;
+}
+function toAbs(href: string | null | undefined, base: string): string | null {
+  if (!href) return null;
+  try {
+    return new URL(href, base).toString();
+  } catch {
+    return href;
+  }
+}
 
-
-
-/**
- * Refresh a product page by seller selectors and return the best price found.
- */
+/* -------------------------------------------------------
+   Product-page price fetch (with Warhammer-specific logic)
+-------------------------------------------------------- */
 export async function fetchPriceFromLinkWithSellerSelectors(
-  seller: { product_price_selector?: string; product_sale_selector?: string; price_selector?: string; sale_selector?: string },
+  seller: {
+    product_price_selector?: string;
+    product_sale_selector?: string;
+    price_selector?: string;
+    sale_selector?: string;
+  },
   link: string
 ): Promise<number | null> {
   const browser = await launchPuppeteer();
   const page = await browser.newPage();
 
-  
   try {
     await page.setUserAgent(UA);
-    await page.goto(link, { waitUntil: "domcontentloaded", timeout: 30_000 });
+    await page.setExtraHTTPHeaders?.({ "accept-language": "en-AU,en;q=0.9" });
+    await page.setViewport?.({ width: 1280, height: 900, deviceScaleFactor: 1 });
 
-    const price = await page.evaluate((sel: {
-      product_price_selector?: string | null;
-      product_sale_selector?: string | null;
-      price_selector?: string | null;
-      sale_selector?: string | null;
-    }) => {
-      const pick = (t?: string | null) => {
+    await page.goto(link, { waitUntil: "networkidle2", timeout: 45_000 });
+
+    // small settle
+    await page.evaluate(() => new Promise((r) => setTimeout(r, 350 + Math.random() * 350)));
+
+    // Detect common challenge pages early
+    const lookedLikeChallenge = await page.evaluate(() => {
+      const t = (document.title || "").toLowerCase();
+      const body = document.body?.innerText?.toLowerCase?.() || "";
+      return (
+        t.includes("just a moment") ||
+        t.includes("attention required") ||
+        body.includes("checking if the site connection is secure") ||
+        body.includes("enable javascript and cookies")
+      );
+    });
+    if (lookedLikeChallenge) return null;
+
+    const price = await page.evaluate((sel: any) => {
+      const parseNum = (t?: string | null) => {
         if (!t) return null;
         const m = t.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
         return m ? parseFloat(m[0]) : null;
       };
-      const by = (css?: string | null) => (css ? pick(document.querySelector(css)?.textContent ?? "") : null);
+      const by = (css?: string | null) =>
+        css ? parseNum(document.querySelector(css)?.textContent ?? "") : null;
 
-      const candidates: Array<number | null> = [];
+      const sane = (n: number | null) =>
+        typeof n === "number" && Number.isFinite(n) && n >= 0.5 && n <= 5000;
 
-      // 1) Prefer explicit product-page selectors (if you add them)
-      candidates.push(by(sel.product_sale_selector));
-      candidates.push(by(sel.product_price_selector));
+      // Strictly extract text from an element while excluding <option> values and requiring $/AUD somewhere
+      const extractCurrencyFromEl = (root: Element | null): number | null => {
+        if (!root) return null;
 
-      // 2) Fall back to your listing selectors
-      candidates.push(by(sel.sale_selector));
-      candidates.push(by(sel.price_selector));
+        // clone & strip selects/options to be safe
+        const clone = root.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll("select, option").forEach((el) => el.remove());
 
-      // 3) itemprop and common classes
+        const text = clone.innerText || "";
+        const s = text.replace(/\s+/g, " ").trim();
+
+        // require a currency hint
+        if (!/\$|aud/i.test(s)) return null;
+
+        // pick currency-looking number (with $ or AUD near it)
+        const m = s.replace(/,/g, "").match(/(?:\$|aud)\s*(-?\d+(?:\.\d+)?)/i);
+        if (m) {
+          const v = parseFloat(m[1]);
+          return sane(v) ? v : null;
+        }
+        return null;
+      };
+
+      // 1) Prefer explicit product-page selectors
+      const sale = by(sel.product_sale_selector);
+      if (sane(sale)) return sale!;
+      const reg = by(sel.product_price_selector);
+      if (sane(reg)) return reg!;
+
+      // 2) Warhammer: use the specific container, *require* currency and ignore <option> noise
+      try {
+        const host = location.hostname.replace(/^www\./, "");
+        if (host.endsWith("warhammer.com")) {
+          const box = document.querySelector("[data-testid='quantity-and-price-container']");
+          const val = extractCurrencyFromEl(box as Element | null);
+          if (sane(val)) return val!;
+        }
+      } catch {}
+
+      // 3) Listing selectors (if someone stored those instead)
+      const sale2 = by(sel.sale_selector);
+      if (sane(sale2)) return sale2!;
+      const reg2 = by(sel.price_selector);
+      if (sane(reg2)) return reg2!;
+
+      // 4) itemprop=price
       const itemProp =
         document.querySelector("[itemprop='price']")?.getAttribute?.("content") ||
         document.querySelector("[itemprop='price']")?.textContent ||
         "";
-      candidates.push(pick(itemProp));
+      const itemNum = parseNum(itemProp);
+      if (sane(itemNum)) return itemNum!;
 
+      // 5) common price classes (DO NOT fall back to "any number"; must look like currency)
       const COMMON = [
-        ".price--withTax",".price--main",".productView-price",".productView-price-value",
-        ".product__price",".product-price",".price",".price__value",".price-item",".money"
+        ".price--withTax",
+        ".price--main",
+        ".productView-price",
+        ".productView-price-value",
+        ".product__price",
+        ".product-price",
+        ".price",
+        ".price__value",
+        ".price-item",
+        ".money",
       ];
       for (const c of COMMON) {
-        const t = document.querySelector(c)?.textContent || "";
-        const v = pick(t);
-        if (v != null) candidates.push(v);
+        const el = document.querySelector(c);
+        const val = extractCurrencyFromEl(el);
+        if (sane(val)) return val!;
       }
 
-      // 4) Meta tags
+      // 6) Meta / JSON-LD — guard against absurd IDs
       const og = document.querySelector("meta[property='og:price:amount']")?.getAttribute("content");
-      candidates.push(pick(og || ""));
+      const ogNum = parseNum(og || "");
+      if (sane(ogNum)) return ogNum!;
 
-      // 5) JSON-LD (schema.org Product/Offer)
       try {
         const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
         for (const s of scripts) {
@@ -151,21 +232,37 @@ export async function fetchPriceFromLinkWithSellerSelectors(
               const raw =
                 (Array.isArray(offers) ? offers[0]?.price : offers?.price) ??
                 (Array.isArray(offers) ? offers[0]?.priceSpecification?.price : offers?.priceSpecification?.price);
-              const v = pick(raw != null ? String(raw) : "");
-              if (v != null) candidates.push(v);
+              const v2 = parseNum(raw != null ? String(raw) : "");
+              if (sane(v2)) return v2!;
             }
           } catch {}
         }
       } catch {}
 
-      const first = candidates.find((n) => typeof n === "number" && Number.isFinite(n)) as number | undefined;
-      return first ?? null;
+      return null;
     }, {
       product_price_selector: seller.product_price_selector || null,
       product_sale_selector: seller.product_sale_selector || null,
       price_selector: seller.price_selector || null,
       sale_selector: seller.sale_selector || null,
     });
+
+    if (!isSanePrice(price)) {
+      if (process.env.DEBUG_SCRAPE) {
+        const dbg = await page.evaluate(() => {
+          const box = document.querySelector("[data-testid='quantity-and-price-container']");
+          return {
+            url: location.href,
+            title: document.title,
+            hasWarhammerBox: !!box,
+            warhammerBoxText: box ? (box as HTMLElement).innerText : null,
+            itemprop: document.querySelector("[itemprop='price']")?.outerHTML || null,
+          };
+        });
+        console.log("[scraper-debug] no sane price", dbg);
+      }
+      return null;
+    }
 
     return price;
   } catch {
@@ -176,52 +273,54 @@ export async function fetchPriceFromLinkWithSellerSelectors(
   }
 }
 
-
-/**
- * Search a seller for a product and return candidate cards (link, price, small image buffer).
- */
+/* ------------------------------------------------
+   Search a seller for candidates (link, price, img)
+-------------------------------------------------- */
 export async function searchSeller(
   seller: Seller,
   product: Product
 ): Promise<Candidate[]> {
   const browser = await launchPuppeteer();
   const page = await browser.newPage();
-  
+
   try {
     await page.setUserAgent(UA);
+    await page.setExtraHTTPHeaders?.({ "accept-language": "en-AU,en;q=0.9" });
+    await page.setViewport?.({ width: 1280, height: 900, deviceScaleFactor: 1 });
 
-      // block 3rd party
+    // best-effort resource blocking
     try {
-  const anyPage = page as any;
-  await anyPage.setRequestInterception?.(true);
-  anyPage.on?.("request", (req: any) => {
-    const type = req.resourceType?.() || "";
-    const url = req.url?.() || "";
-    if (type === "image" || type === "media" || type === "font" ||
-        /doubleclick|google-analytics|facebook\.com|hotjar|gtag\./i.test(url)) {
-      return req.abort();
-    }
-    return req.continue();
-  });
-} catch {}
-
-
-    const searchUrl =
-      seller.base_url +
-      seller.search_url.replace(/\*/g, encodeURIComponent(product.search_term));
-
-    try {
-      await page.goto(searchUrl, { waitUntil: "networkidle2", timeout: 30_000 });
+      const anyPage = page as any;
+      await anyPage.setRequestInterception?.(true);
+      anyPage.on?.("request", (req: any) => {
+        const type = req.resourceType?.() || "";
+        const url = req.url?.() || "";
+        if (
+          type === "image" ||
+          type === "media" ||
+          type === "font" ||
+          /doubleclick|google-analytics|facebook\.com|hotjar|gtag\./i.test(url)
+        ) {
+          return req.abort();
+        }
+        return req.continue();
+      });
     } catch {}
 
-    // Help lazy lists / infinite scroll
+    const searchUrl = seller.base_url + seller.search_url.replace(/\*/g, encodeURIComponent(product.search_term));
+
+    try {
+      await page.goto(searchUrl, { waitUntil: "networkidle2", timeout: 45_000 });
+    } catch {}
+
+    // lazy lists / infinite scroll
     try {
       await page.evaluate(async () => {
         const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
         let last = 0;
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 5; i++) {
           window.scrollTo(0, document.body.scrollHeight);
-          await delay(400);
+          await delay(350 + Math.random() * 200);
           const h = document.body.scrollHeight;
           if (h === last) break;
           last = h;
@@ -319,23 +418,27 @@ export async function searchSeller(
         sale: seller.sale_selector,
       }
     );
-    console.log("found cards", cards.length, "for", product.search_term)
-    // Fetch image buffers server-side
+
+    // Fetch image buffers (concurrent & best-effort)
     const limit = pLimit(6);
-const out = await Promise.all(
-  cards.map((c) => limit(async () => {
-    let buf: Buffer | null = null;
-    if (c.img) {
-      try {
-        const r = await fetch(c.img);
-        const ab = await r.arrayBuffer();
-        buf = Buffer.from(ab);
-      } catch {}
-    }
-    return { link: c.link, price: c.price, img: buf };
-  }))
-);
-return out;
+    const out = await Promise.all(
+      cards.map((c) =>
+        limit(async () => {
+          let buf: Buffer | null = null;
+          if (c.img) {
+            try {
+              const r = await fetch(c.img);
+              const ab = await r.arrayBuffer();
+              buf = Buffer.from(ab);
+            } catch {
+              buf = null;
+            }
+          }
+          return { link: c.link, price: c.price, img: buf };
+        })
+      )
+    );
+    return out;
   } finally {
     await page.close().catch(() => {});
     await (browser as any).close?.().catch?.(() => {});

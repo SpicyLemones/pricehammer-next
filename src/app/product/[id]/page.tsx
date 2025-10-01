@@ -1,5 +1,7 @@
 // src/app/product/[id]/page.tsx
 import { query } from "@/lib/sql";
+import fs from "fs";
+import path from "path";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,9 +20,18 @@ function fmtAUD(n?: number | null) {
   }).format(v);
 }
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
-  const id = params.id;
-  const product = (await query("get", "select/product_id", [id])) as ProductRow | undefined;
+export default async function ProductPage({
+  params,
+}: {
+  // Next 15: params is a Promise
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  const product = (await query("get", "select/product_id", [id])) as
+    | ProductRow
+    | undefined;
+
   if (!product) {
     return (
       <div className="max-w-3xl mx-auto p-6">
@@ -30,21 +41,29 @@ export default async function ProductPage({ params }: { params: { id: string } }
     );
   }
 
-  // pull retailer prices
   const prices = (await query("all", "select/display_prices", [product.id])) as PriceRow[];
 
-  // try to merge with manual metadata from src/data/db/Products.ts
-  // (Optional — ignore if file not present or structure differs)
+  // Load manual metadata from your hand-edited file
   let manual: any = null;
   try {
-    const mod = await import("../../../../data/db/Product");
-    const { Products } = mod as { Products: Array<any> };
-    manual = Products.find((p) => p.id === String(product.id)) || null;
+    const mod: any = await import("../../../../data/db/Product");
+    const list: any[] = mod?.Products ?? mod?.default ?? [];
+    manual = Array.isArray(list) ? list.find((p) => p.id === String(product.id)) : null;
   } catch {}
 
-  //placeholder
-  //const image = manual?.image ? `/images/${manual.image}` : "/images/placeholder.png";
-  const image = "/images/placeholder.png";
+  // Server-side image fallback (no client event handlers)
+  const PLACEHOLDER = "/logo/logo.png"; // ensure public/logo/logo.png exists
+  const publicDir = path.join(process.cwd(), "public");
+  let imgSrc = PLACEHOLDER;
+
+  if (manual?.image && typeof manual.image === "string" && manual.image.trim()) {
+    const relative = path.join("images", manual.image.trim());
+    const absolute = path.join(publicDir, relative);
+    if (fs.existsSync(absolute)) {
+      imgSrc = "/" + relative.replace(/\\/g, "/");
+    }
+  }
+
   const faction = manual?.faction ?? "—";
   const game = manual?.game ?? "—";
   const category = manual?.category ?? "—";
@@ -71,10 +90,17 @@ export default async function ProductPage({ params }: { params: { id: string } }
             <div className="w-56 h-56 border rounded bg-white dark:bg-slate-950
                             border-slate-200 flex items-center justify-center overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={image} alt={product.name} className="object-contain w-full h-full" />
+              <img
+                src={imgSrc}
+                alt={product.name}
+                className="object-contain w-full h-full"
+              />
             </div>
+
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">{product.name}</h1>
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">
+                {product.name}
+              </h1>
               <div className="text-slate-700 dark:text-slate-200 mt-2">
                 <div><span className="font-semibold">Game:</span> {game}</div>
                 <div><span className="font-semibold">Faction:</span> {faction}</div>

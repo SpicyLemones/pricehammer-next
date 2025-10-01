@@ -7,96 +7,135 @@ import { fetchPriceFromLinkWithSellerSelectors } from "@/lib/scraper";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type PairRow = { seller_id: number; product_id: number; link: string | null };
-
-// Read `seller` from ?seller=, form data, or JSON
-async function readSellerId(req: Request): Promise<number | null> {
-  let raw: string | null = null;
-
-  // 1) query string
-  const url = new URL(req.url);
-  raw = url.searchParams.get("seller");
-
-  // 2) form-encoded
-  if (!raw) {
-    const ct = req.headers.get("content-type") || "";
-    if (ct.includes("application/x-www-form-urlencoded") || ct.includes("multipart/form-data")) {
-      try {
-        const fd = await req.formData();
-        const v = fd.get("seller");
-        if (v != null) raw = String(v);
-      } catch {}
+async function readSellerFromRequest(req: Request): Promise<number | null> {
+  // Try JSON
+  try {
+    if (req.headers.get("content-type")?.includes("application/json")) {
+      const body = await req.json();
+      if (body && body.seller !== undefined && body.seller !== "")
+        return Number(body.seller);
     }
-  }
-
-  // 3) JSON
-  if (!raw) {
-    const ct = req.headers.get("content-type") || "";
-    if (ct.includes("application/json")) {
-      try {
-        const body = (await req.json()) as { seller?: string | number } | undefined;
-        if (body && body.seller != null) raw = String(body.seller);
-      } catch {}
-    }
-  }
-
-  const id = raw ? Number(raw) : NaN;
-  return Number.isFinite(id) ? id : null;
+  } catch {}
+  // Try form
+  try {
+    const form = await req.formData();
+    const s = form.get("seller");
+    if (typeof s === "string" && s.trim() !== "") return Number(s);
+  } catch {}
+  return null;
 }
 
 export async function POST(req: Request) {
-  const sellerId = await readSellerId(req);
-
-  // Helpful debug in logs
-  console.log("[refresh-prices] sellerId =", sellerId ?? "(all)");
+  const t0 = Date.now();
+  const sellerFilter = await readSellerFromRequest(req);
+  console.log(
+    `[refresh-prices] START seller=${sellerFilter != null ? sellerFilter : "ALL"}`
+  );
 
   const sellers =
-    sellerId != null
-      ? [await query("get", "select/seller_id", [sellerId])]
+    sellerFilter != null
+      ? [await query("get", "select/seller_id", [sellerFilter])]
       : await query("all", "select/all_sellers");
 
-  if (sellerId != null && !sellers?.[0]) {
-    return NextResponse.json({ ok: false, error: `Seller ${sellerId} not found` }, { status: 404 });
-  }
-
-  const pairs: PairRow[] =
-    sellerId != null
-      ? await query("all", "select/validated_pairs_by_seller", [sellerId])
+  const pairs =
+    sellerFilter != null
+      ? await query("all", "select/validated_pairs_by_seller", [sellerFilter])
       : await query("all", "select/validated_pairs");
 
-  console.log("[refresh-prices] pairs =", pairs?.length ?? 0);
-
   const sById: Record<number, any> = {};
-  (sellers || []).forEach((s: any) => s && (sById[s.id] = s));
+  (sellers as any[])?.forEach((s) => s && (sById[s.id] = s));
 
-  const limit = pLimit(3);
+  const limit = pLimit(3); // <= at most 3 pages in-flight
+
   let updated = 0;
+  let skipped = 0;
+  let failed = 0;
 
-  await Promise.all(
-    (pairs || []).map(({ seller_id, product_id, link }) =>
+  await Promise.allSettled(
+    (pairs as any[]).map(({ seller_id, product_id, link }) =>
       limit(async () => {
-        if (!link) return;
-        const s = sById[seller_id] || (await query("get", "select/seller_id", [seller_id]));
-        if (!s) return;
+        if (!link) {
+          skipped++;
+          console.log(
+            `[refresh-prices] SKIP p=${product_id} s=${seller_id} (no link)`
+          );
+          return;
+        }
 
-        const price = await fetchPriceFromLinkWithSellerSelectors(s, link);
-        if (price == null) return;
+        const s =
+          sById[seller_id] ||
+          (await query("get", "select/seller_id", [seller_id]));
+        if (!s) {
+          skipped++;
+          console.log(
+            `[refresh-prices] SKIP p=${product_id} s=${seller_id} (seller missing)`
+          );
+          return;
+        }
+
+        console.log(
+          `[refresh-prices] FETCH  p=${product_id} s=${seller_id} -> ${link}`
+        );
+
+        let price: number | null = null;
+        try {
+          price = await fetchPriceFromLinkWithSellerSelectors(s, link);
+        } catch (e: any) {
+          failed++;
+          console.log(
+            `[refresh-prices] ERROR p=${product_id} s=${seller_id}: ${
+              e?.message || e
+            }`
+          );
+          return;
+        }
+
+        if (price == null) {
+          skipped++;
+          console.log(
+            `[refresh-prices] NONE  p=${product_id} s=${seller_id} (no price)`
+          );
+          return;
+        }
 
         try {
-          await query("run", "insert/price_history", [seller_id, product_id, price, link]);
-        } catch {}
+          await query("run", "insert/price_history", [
+            seller_id,
+            product_id,
+            price,
+            link,
+          ]);
+        } catch {
+          // ignore duplicates/history failure
+        }
 
-        await query("run", "update/price_only_validated", [price, link, seller_id, product_id]);
-        console.log(`[refresh-prices] updated seller=${seller_id} product=${product_id} price=${price}`);
+        await query("run", "update/price_only_validated", [
+          price,
+          link,
+          seller_id,
+          product_id,
+        ]);
         updated++;
+        console.log(
+          `[refresh-prices] UPDATED p=${product_id} s=${seller_id} price=${price}`
+        );
       })
     )
   );
 
+  const ms = Date.now() - t0;
+  console.log(
+    `[refresh-prices] DONE updated=${updated} skipped=${skipped} failed=${failed} total=${
+      (pairs as any[]).length
+    } in ${ms}ms`
+  );
+
   return NextResponse.json({
     ok: true,
-    sellerId: sellerId ?? "all",
     updated,
-    total: (pairs || []).length,
+    skipped,
+    failed,
+    total: (pairs as any[]).length,
+    ms,
   });
 }

@@ -30,6 +30,25 @@ import {
 // Generated retailers map (untyped literal)
 import { RetailersByProduct as RetailersRaw } from "../../../data/db/Data";
 
+
+//img helper
+const PLACEHOLDER = "/logo/logo.png";
+
+function imgSrc(image?: string | null) {
+  const val = image?.trim();
+  if (!val) return PLACEHOLDER; // no value → use logo
+  if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("/")) {
+    return val; // absolute or remote
+  }
+  return `/images/${val}`; // treat as filename in /public/images
+}
+
+
+//placeholder
+
+
+
+
 // Give it a usable type for indexing by string ids
 type Retailer = { store: string; price: number; inStock: boolean; url: string | null };
 const RetailersByProduct = RetailersRaw as unknown as Record<string, Retailer[]>;
@@ -480,7 +499,7 @@ function ProductCard({ product }: { product: ProductExtended }) {
 
 
   // fix this later
-  const thumb = "./logo/logo.png";
+  const thumb = imgSrc(product.image);
 
   return (
     <>
@@ -498,7 +517,17 @@ function ProductCard({ product }: { product: ProductExtended }) {
       role="button"
       tabIndex={0}
     >
-      <img src={thumb} alt={product.name} className="h-full w-full object-contain" loading="lazy" />
+            <img
+        src={thumb}
+        alt={product.name}
+        className="h-full w-full object-contain"
+        loading="lazy"
+        onError={(e) => {
+          // prevent infinite loops then swap to logo
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = PLACEHOLDER;
+        }}
+      />
     </div>
   </Link>
 </div>

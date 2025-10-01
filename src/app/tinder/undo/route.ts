@@ -23,7 +23,7 @@ export async function GET(req: Request) {
   if (prev?.s && prev?.p) {
     await query("run", "update/unvalidate_price", [prev.s, prev.p]);
     // focus that exact pair again
-    return NextResponse.redirect(new URL(`/tinder?s=${prev.s}&p=${prev.p}`, originOf(req)));
+    return NextResponse.redirect(new URL("/tinder", originOf(req)));
   }
 
   // nothing to undo—go back to queue
