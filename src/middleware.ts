@@ -18,11 +18,24 @@ export const config = {
     "/api/auto-validate",
     "/api/refresh-prices",
     "/api/report-wrong",
-    "/api/report-wrong-by-link",
+    "/api/report-wrong-by-link", // will be bypassed below
   ],
 };
 
 export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  // Publicly accessible endpoint(s): allow without auth.
+  if (
+    pathname === "/api/report-wrong-by-link" ||
+    pathname.startsWith("/api/report-wrong-by-link/")
+  ) {
+    return NextResponse.next();
+  }
+
+  // (Optional) allow CORS preflights through everywhere
+  if (req.method === "OPTIONS") return NextResponse.next();
+
   // If you don't set creds in env, allow through (handy in dev)
   const USER = process.env.ADMIN_USER;
   const PASS = process.env.ADMIN_PASS;

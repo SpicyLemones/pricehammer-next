@@ -9001,12 +9001,6 @@ export const RetailersByProduct = {
       "url": "https://thecombatcompany.com/products/blood-angels-commander-dante?_pos=1&_sid=d72f46220&_ss=r"
     },
     {
-      "store": "Gap Games",
-      "price": 28.5,
-      "inStock": false,
-      "url": "https://www.gapgames.com.au/products/blood-angels-commander-dante"
-    },
-    {
       "store": "Emerald Hobbies",
       "price": 61.6,
       "inStock": false,
@@ -15575,6 +15569,12 @@ export const RetailersByProduct = {
       "url": "https://www.gapgames.com.au/products/bolt-action-panzer-lehr-squad"
     },
     {
+      "store": "Emerald Hobbies",
+      "price": 77.6,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/space-marines-primaris-inceptors?_pos=1&_sid=ad96844aa&_ss=r"
+    },
+    {
       "store": "Gumnut",
       "price": 26,
       "inStock": false,
@@ -15807,6 +15807,12 @@ export const RetailersByProduct = {
       "price": 106.65,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/kill-team-scout-squad-pre-order-5-10-24?_pos=1&_sid=c34bfff4d&_ss=r"
+    },
+    {
+      "store": "Emerald Hobbies",
+      "price": 84,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/space-marine-primaris-infiltrators?_pos=1&_sid=76de8cde4&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -16489,6 +16495,12 @@ export const RetailersByProduct = {
       "url": "https://www.gapgames.com.au/products/tau-empire-kv128-stormsurge-1"
     },
     {
+      "store": "Emerald Hobbies",
+      "price": 224,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/tau-empire-kv128-stormsurge?_pos=1&_sid=47c817da6&_ss=r"
+    },
+    {
       "store": "Gumnut",
       "price": 210,
       "inStock": false,
@@ -16691,6 +16703,12 @@ export const RetailersByProduct = {
       "url": "https://www.gapgames.com.au/products/leagues-of-votann-kapricus-pre-order"
     },
     {
+      "store": "Emerald Hobbies",
+      "price": 84,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/leagues-of-votann-kapricus?_pos=1&_sid=a6bbc2542&_ss=r"
+    },
+    {
       "store": "Gumnut",
       "price": 79,
       "inStock": false,
@@ -16815,6 +16833,12 @@ export const RetailersByProduct = {
       "price": 82.95,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/adeptus-mechanicus-kataphron-battle-servitors"
+    },
+    {
+      "store": "Emerald Hobbies",
+      "price": 84,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/adeptus-mechanicus-kataphron-battle-servitors?_pos=1&_sid=1efdcb794&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -17061,6 +17085,12 @@ export const RetailersByProduct = {
       "price": 14.22,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/horus-heresy-betrayer-pb?_pos=1&_sid=80703ba32&_ss=r"
+    },
+    {
+      "store": "Emerald Hobbies",
+      "price": 53.6,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/chaos-space-marines-kharn-the-betrayer?_pos=1&_sid=0b29e2986&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -18513,6 +18543,12 @@ export const RetailersByProduct = {
       "url": "https://www.gapgames.com.au/products/white-scars-korsarro-khan"
     },
     {
+      "store": "Emerald Hobbies",
+      "price": 61.6,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/white-scars-korsarro-khan?_pos=1&_sid=2cfad93e2&_ss=r"
+    },
+    {
       "store": "Gumnut",
       "price": 58,
       "inStock": false,
@@ -19071,6 +19107,12 @@ export const RetailersByProduct = {
       "price": 51.99,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/a-song-of-ice-fire-rhllor-lightbringers-pre-order"
+    },
+    {
+      "store": "Emerald Hobbies",
+      "price": 59.2,
+      "inStock": false,
+      "url": "https://www.emeraldhobbies.com.au/products/leagues-of-votann-uthar-the-destined?_pos=1&_sid=0a20b1d9f&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -31784,21 +31826,9 @@ export const RetailersByProduct = {
   "788": [
     {
       "store": "Warhammer Official",
-      "price": 280,
-      "inStock": false,
-      "url": "https://www.warhammer.com/en-AU/shop/combat-patrol-imperial-agents-2024?queryID=e438ba69d7ced902525646fc8b8670cf"
-    },
-    {
-      "store": "The Combat Company",
-      "price": 43.45,
-      "inStock": false,
-      "url": "https://thecombatcompany.com/products/imagifier?_pos=1&_sid=06129994f&_ss=r"
-    },
-    {
-      "store": "Gumnut",
       "price": 74,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/warhammer-40k-imperial-agents-codex?_pos=1&_sid=c17e9c9b4&_ss=r"
+      "url": "https://www.warhammer.com/en-AU/shop/warhammer-plus-inquisitor-ostromandeus-2024-year-4?queryID=6f2dd95a637202dc0b8cf7e1c3df13d7"
     }
   ],
   "789": [
