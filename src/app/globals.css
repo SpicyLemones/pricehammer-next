@@ -221,4 +221,12 @@
 }
 
 /* ---- Scroll lock overrides (fixed nesting) ---- */
-body[data-scroll-locked] { overflow: auto !important; margin-right: 0 !important; }
+:root {
+   
+    body[data-scroll-locked][data-scroll-locked] {
+      overflow: auto !important;
+    }
+    body[data-scroll-locked] {
+      margin-right: 0 !important;
+    }
+  }

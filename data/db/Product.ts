@@ -45,7 +45,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "AX39_Sun_Shark_Bomber.png",
+    "image": "AX39_Sun_Shark_Bomber.jpg",
     "retailers": []
   },
   {
@@ -55,7 +55,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Named Hero",
     "points": 0,
-    "image": "Abaddon_the_Despoiler.png",
+    "image": "Abaddon_the_Despoiler.jpg",
     "retailers": []
   },
   {
@@ -65,7 +65,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Aberrants.png",
+    "image": "Aberrants.jpg",
     "retailers": []
   },
   {
@@ -75,7 +75,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Hero",
     "points": 0,
-    "image": "Abominant.png",
+    "image": "Abominant.jpg",
     "retailers": []
   },
   {
@@ -85,7 +85,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Acastus_Knight_Asterius.png",
+    "image": "Acastus_Knight_Asterius.jpg",
     "retailers": []
   },
   {
@@ -95,7 +95,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Acastus_Knight_Porphyrion.png",
+    "image": "Acastus_Knight_Porphyrion.jpg",
     "retailers": []
   },
   {
@@ -105,7 +105,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Accursed_Cultists.png",
+    "image": "Accursed_Cultists.jpg",
     "retailers": []
   },
   {
@@ -115,7 +115,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Achilles_Ridgerunner.png",
+    "image": "Achilles_Ridgerunner.jpg",
     "retailers": []
   },
   {
@@ -125,7 +125,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Acolyte_Hybrids.png",
+    "image": "Acolyte_Hybrids.jpg",
     "retailers": []
   },
   {
@@ -135,7 +135,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Hero",
     "points": 0,
-    "image": "Acolyte_Iconward.png",
+    "image": "Acolyte_Iconward.jpg",
     "retailers": []
   },
   {
@@ -145,7 +145,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Adepta_Sororitas_Battle_Sisters_Squad.png",
+    "image": "Adepta_Sororitas_Battle_Sisters_Squad.jpg",
     "retailers": []
   },
   {
@@ -155,7 +155,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Adepta_Sororitas_Rhino.png",
+    "image": "Adepta_Sororitas_Rhino.jpg",
     "retailers": []
   },
   {
@@ -165,7 +165,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Adeptus_Mechanicus_Ironstrider_Ballistarius.png",
+    "image": "Adeptus_Mechanicus_Ironstrider_Ballistarius.jpg",
     "retailers": []
   },
   {
@@ -175,7 +175,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Adeptus_Mechanicus_Onager_Dunecrawler.png",
+    "image": "Adeptus_Mechanicus_Onager_Dunecrawler.jpg",
     "retailers": []
   },
   {
@@ -185,7 +185,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Adrax_Agatone.png",
+    "image": "Adrax_Agatone.jpg",
     "retailers": []
   },
   {
@@ -195,7 +195,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "Aegis_Defence_Line.png",
+    "image": "Aegis_Defence_Line.jpg",
     "retailers": []
   },
   {
@@ -205,7 +205,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Aestred_Thurga,_Reliquant_at_Arms.png",
+    "image": "Aestred_Thurga,_Reliquant_at_Arms.jpg",
     "retailers": []
   },
   {
@@ -215,7 +215,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Aethon_Shaan.png",
+    "image": "Aethon_Shaan.jpg",
     "retailers": []
   },
   {
@@ -225,7 +225,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Aggressor_Squad.png",
+    "image": "Aggressor_Squad.jpg",
     "retailers": []
   },
   {
@@ -235,7 +235,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Named Hero",
     "points": 0,
-    "image": "Ahriman.png",
+    "image": "Ahriman.jpg",
     "retailers": []
   },
   {
@@ -245,7 +245,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Allarus_Custodians.png",
+    "image": "Allarus_Custodians.jpg",
     "retailers": []
   },
   {
@@ -255,7 +255,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Ancient.png",
+    "image": "Ancient.jpg",
     "retailers": []
   },
   {
@@ -265,7 +265,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Named Hero",
     "points": 0,
-    "image": "Angron.png",
+    "image": "Angron.jpg",
     "retailers": []
   },
   {
@@ -275,7 +275,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Apothecary.png",
+    "image": "Apothecary.jpg",
     "retailers": []
   },
   {
@@ -285,7 +285,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Archaeopter_Transvector.png",
+    "image": "Archaeopter_Transvector.jpg",
     "retailers": []
   },
   {
@@ -295,7 +295,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arco-flagellants.png",
+    "image": "Arco-flagellants.jpg",
     "retailers": []
   },
   {
@@ -305,7 +305,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arjac_Rockfist.png",
+    "image": "Arjac_Rockfist.jpg",
     "retailers": []
   },
   {
@@ -315,7 +315,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arkanyst_Evaluator.png",
+    "image": "Arkanyst_Evaluator.jpg",
     "retailers": []
   },
   {
@@ -325,7 +325,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Armiger_Helverins.png",
+    "image": "Armiger_Helverins.jpg",
     "retailers": []
   },
   {
@@ -335,7 +335,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Armiger_Warglaives.png",
+    "image": "Armiger_Warglaives.jpg",
     "retailers": []
   },
   {
@@ -345,7 +345,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Armoured_Sentinel.png",
+    "image": "Armoured_Sentinel.jpg",
     "retailers": []
   },
   {
@@ -355,7 +355,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Artillery_Team.png",
+    "image": "Artillery_Team.jpg",
     "retailers": []
   },
   {
@@ -365,7 +365,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Asmodai,_Master_of_Repentance.png",
+    "image": "Asmodai,_Master_of_Repentance.jpg",
     "retailers": []
   },
   {
@@ -375,7 +375,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Assault_Intercessor_Squad.png",
+    "image": "Assault_Intercessor_Squad.jpg",
     "retailers": []
   },
   {
@@ -385,7 +385,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Astorath_the_Grim.png",
+    "image": "Astorath_the_Grim.jpg",
     "retailers": []
   },
   {
@@ -395,7 +395,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Astra_Militarum_Tank_Accessories.png",
+    "image": "Astra_Militarum_Tank_Accessories.jpg",
     "retailers": []
   },
   {
@@ -405,7 +405,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Astraeus_Super-heavy_Tank.png",
+    "image": "Astraeus_Super-heavy_Tank.jpg",
     "retailers": []
   },
   {
@@ -415,7 +415,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Asurmen.png",
+    "image": "Asurmen.jpg",
     "retailers": []
   },
   {
@@ -425,7 +425,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Atalan_Jackals.png",
+    "image": "Atalan_Jackals.jpg",
     "retailers": []
   },
   {
@@ -435,7 +435,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Attilan_Rough_Riders.png",
+    "image": "Attilan_Rough_Riders.jpg",
     "retailers": []
   },
   {
@@ -445,7 +445,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Hero",
     "points": 0,
-    "image": "Autarch.png",
+    "image": "Autarch.jpg",
     "retailers": []
   },
   {
@@ -455,7 +455,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Hero",
     "points": 0,
-    "image": "Autarch_Wayleaper.png",
+    "image": "Autarch_Wayleaper.jpg",
     "retailers": []
   },
   {
@@ -465,7 +465,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Avatar_of_Khaine.png",
+    "image": "Avatar_of_Khaine.jpg",
     "retailers": []
   },
   {
@@ -475,7 +475,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Azrael.png",
+    "image": "Azrael.jpg",
     "retailers": []
   },
   {
@@ -485,7 +485,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Baal_Predator.png",
+    "image": "Baal_Predator.jpg",
     "retailers": []
   },
   {
@@ -495,7 +495,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Baharroth.png",
+    "image": "Baharroth.jpg",
     "retailers": []
   },
   {
@@ -505,7 +505,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ballistus_Dreadnought.png",
+    "image": "Ballistus_Dreadnought.jpg",
     "retailers": []
   },
   {
@@ -515,7 +515,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Baneblade.png",
+    "image": "Baneblade.jpg",
     "retailers": []
   },
   {
@@ -525,7 +525,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Terrain",
     "points": 0,
-    "image": "Barbed_Bracken.png",
+    "image": "Barbed_Bracken.jpg",
     "retailers": []
   },
   {
@@ -535,7 +535,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Barbgaunts.png",
+    "image": "Barbgaunts.jpg",
     "retailers": []
   },
   {
@@ -545,7 +545,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Basilisk.png",
+    "image": "Basilisk.jpg",
     "retailers": []
   },
   {
@@ -555,7 +555,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Terrain",
     "points": 0,
-    "image": "Battlefield_Trophies.png",
+    "image": "Battlefield_Trophies.jpg",
     "retailers": []
   },
   {
@@ -565,7 +565,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Battlewagon.png",
+    "image": "Battlewagon.jpg",
     "retailers": []
   },
   {
@@ -575,7 +575,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "battlezone_fronteris_landing_pad.png",
+    "image": "battlezone_fronteris_landing_pad.jpg",
     "retailers": []
   },
   {
@@ -585,7 +585,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "battlezone_fronteris_stc_hab_bunker_and_stockades.png",
+    "image": "battlezone_fronteris_stc_hab_bunker_and_stockades.jpg",
     "retailers": []
   },
   {
@@ -595,7 +595,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "battlezone_fronteris_vox_antenna_and_auspex_shrine.png",
+    "image": "battlezone_fronteris_vox_antenna_and_auspex_shrine.jpg",
     "retailers": []
   },
   {
@@ -605,7 +605,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Terrain",
     "points": 0,
-    "image": "battlezone_manufactorum_autochoral_transmitter.png",
+    "image": "battlezone_manufactorum_autochoral_transmitter.jpg",
     "retailers": []
   },
   {
@@ -615,7 +615,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "battlezone_manufactorum_munitorum_armoured_containers.png",
+    "image": "battlezone_manufactorum_munitorum_armoured_containers.jpg",
     "retailers": []
   },
   {
@@ -625,7 +625,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Terrain",
     "points": 0,
-    "image": "battlezone_manufactorum_sanctum_administratus.png",
+    "image": "battlezone_manufactorum_sanctum_administratus.jpg",
     "retailers": []
   },
   {
@@ -635,7 +635,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Terrain",
     "points": 0,
-    "image": "battlezone_manufactorum_sub_cloister_and_storage_fane.png",
+    "image": "battlezone_manufactorum_sub_cloister_and_storage_fane.jpg",
     "retailers": []
   },
   {
@@ -645,7 +645,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "battlezone_manufactorum_thermoexchanger_shrine.png",
+    "image": "battlezone_manufactorum_thermoexchanger_shrine.jpg",
     "retailers": []
   },
   {
@@ -655,7 +655,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Named Hero",
     "points": 0,
-    "image": "Be'lakor,_the_Dark_Master.png",
+    "image": "Be'lakor,_the_Dark_Master.jpg",
     "retailers": []
   },
   {
@@ -665,7 +665,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Beast_of_Nurgle.png",
+    "image": "Beast_of_Nurgle.jpg",
     "retailers": []
   },
   {
@@ -675,7 +675,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Beastboss.png",
+    "image": "Beastboss.jpg",
     "retailers": []
   },
   {
@@ -685,7 +685,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Hero",
     "points": 0,
-    "image": "Beastboss_on_Squigosaur.png",
+    "image": "Beastboss_on_Squigosaur.jpg",
     "retailers": []
   },
   {
@@ -695,7 +695,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Belial,_Grand_Master_of_The_Deathwing.png",
+    "image": "Belial,_Grand_Master_of_The_Deathwing.jpg",
     "retailers": []
   },
   {
@@ -705,7 +705,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Belisarius_Cawl.png",
+    "image": "Belisarius_Cawl.jpg",
     "retailers": []
   },
   {
@@ -715,7 +715,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Benefictus.png",
+    "image": "Benefictus.jpg",
     "retailers": []
   },
   {
@@ -725,7 +725,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Big_Mek.png",
+    "image": "Big_Mek.jpg",
     "retailers": []
   },
   {
@@ -735,7 +735,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Big_Mek_with_Shokk_Attack_Gun.png",
+    "image": "Big_Mek_with_Shokk_Attack_Gun.jpg",
     "retailers": []
   },
   {
@@ -745,7 +745,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Big'ed_Bossbunka.png",
+    "image": "Big'ed_Bossbunka.jpg",
     "retailers": []
   },
   {
@@ -755,7 +755,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Hero",
     "points": 0,
-    "image": "Biologus_Putrifier.png",
+    "image": "Biologus_Putrifier.jpg",
     "retailers": []
   },
   {
@@ -765,7 +765,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Hero",
     "points": 0,
-    "image": "Biophagus.png",
+    "image": "Biophagus.jpg",
     "retailers": []
   },
   {
@@ -775,7 +775,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Biovore.png",
+    "image": "Biovore.jpg",
     "retailers": []
   },
   {
@@ -785,7 +785,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Black_Templars_Castellan.png",
+    "image": "Black_Templars_Castellan.jpg",
     "retailers": []
   },
   {
@@ -795,7 +795,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Black_Templars_Marshal.png",
+    "image": "Black_Templars_Marshal.jpg",
     "retailers": []
   },
   {
@@ -805,7 +805,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Black_Templars_Sword_Brethren.png",
+    "image": "Black_Templars_Sword_Brethren.jpg",
     "retailers": []
   },
   {
@@ -815,7 +815,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Black_Templars:_Upgrades_and_Transfers.png",
+    "image": "Black_Templars:_Upgrades_and_Transfers.jpg",
     "retailers": []
   },
   {
@@ -825,7 +825,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blade_Champion.png",
+    "image": "Blade_Champion.jpg",
     "retailers": []
   },
   {
@@ -835,7 +835,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bladeguard_Veteran_Squad.png",
+    "image": "Bladeguard_Veteran_Squad.jpg",
     "retailers": []
   },
   {
@@ -845,7 +845,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Hero",
     "points": 0,
-    "image": "Blightlord_Terminators.png",
+    "image": "Blightlord_Terminators.jpg",
     "retailers": []
   },
   {
@@ -855,7 +855,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Blood_Angels_Captain.png",
+    "image": "Blood_Angels_Captain.jpg",
     "retailers": []
   },
   {
@@ -865,7 +865,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Blood_Angels_Chaplain_With_Jump_Pack.png",
+    "image": "Blood_Angels_Chaplain_With_Jump_Pack.jpg",
     "retailers": []
   },
   {
@@ -875,7 +875,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blood_Angels_Legion_MkIII_Shoulder_Pads.png",
+    "image": "Blood_Angels_Legion_MkIII_Shoulder_Pads.jpg",
     "retailers": []
   },
   {
@@ -885,7 +885,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Blood_Angels_Librarian_in_Terminator_Armour.png",
+    "image": "Blood_Angels_Librarian_in_Terminator_Armour.jpg",
     "retailers": []
   },
   {
@@ -895,7 +895,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blood_Angels_Terminator_Assault_Squad.png",
+    "image": "Blood_Angels_Terminator_Assault_Squad.jpg",
     "retailers": []
   },
   {
@@ -905,7 +905,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Blood_Angels_Upgrades_and_Transfers.png",
+    "image": "Blood_Angels_Upgrades_and_Transfers.jpg",
     "retailers": []
   },
   {
@@ -915,7 +915,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blood_Claws.png",
+    "image": "Blood_Claws.jpg",
     "retailers": []
   },
   {
@@ -925,7 +925,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bloodcrushers.png",
+    "image": "Bloodcrushers.jpg",
     "retailers": []
   },
   {
@@ -935,7 +935,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bloodletters.png",
+    "image": "Bloodletters.jpg",
     "retailers": []
   },
   {
@@ -945,7 +945,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Hero",
     "points": 0,
-    "image": "Bloodmaster,_Herald_of_Khorne.png",
+    "image": "Bloodmaster,_Herald_of_Khorne.jpg",
     "retailers": []
   },
   {
@@ -955,7 +955,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bloodthirster.png",
+    "image": "Bloodthirster.jpg",
     "retailers": []
   },
   {
@@ -965,7 +965,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blue_Horrors_and_Brimstone_Horrors.png",
+    "image": "Blue_Horrors_and_Brimstone_Horrors.jpg",
     "retailers": []
   },
   {
@@ -975,7 +975,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Boarding_Actions:_Void_War_Bases.png",
+    "image": "Boarding_Actions:_Void_War_Bases.jpg",
     "retailers": []
   },
   {
@@ -985,7 +985,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Boomdakka_Snazzwagon.png",
+    "image": "Boomdakka_Snazzwagon.jpg",
     "retailers": []
   },
   {
@@ -995,7 +995,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Boss_Snikrot.png",
+    "image": "Boss_Snikrot.jpg",
     "retailers": []
   },
   {
@@ -1005,7 +1005,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Boyz.png",
+    "image": "Boyz.jpg",
     "retailers": []
   },
   {
@@ -1015,7 +1015,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Broodcoven.png",
+    "image": "Broodcoven.jpg",
     "retailers": []
   },
   {
@@ -1025,7 +1025,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Hero",
     "points": 0,
-    "image": "Broodlord.png",
+    "image": "Broodlord.jpg",
     "retailers": []
   },
   {
@@ -1035,7 +1035,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Brutalis_Dreadnought.png",
+    "image": "Brutalis_Dreadnought.jpg",
     "retailers": []
   },
   {
@@ -1045,7 +1045,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Brokhyr_Iron-master.png",
+    "image": "Brokhyr_Iron-master.jpg",
     "retailers": []
   },
   {
@@ -1055,7 +1055,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Brokhyr_Thunderkyn.png",
+    "image": "Brokhyr_Thunderkyn.jpg",
     "retailers": []
   },
   {
@@ -1065,7 +1065,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Buri_Aegnirssen.png",
+    "image": "Buri_Aegnirssen.jpg",
     "retailers": []
   },
   {
@@ -1075,7 +1075,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "C'tan_Shard_of_The_Deceiver.png",
+    "image": "C'tan_Shard_of_The_Deceiver.jpg",
     "retailers": []
   },
   {
@@ -1085,7 +1085,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "C'tan_Shard_of_The_Nightbringer.png",
+    "image": "C'tan_Shard_of_The_Nightbringer.jpg",
     "retailers": []
   },
   {
@@ -1095,7 +1095,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "C'tan_Shard_of_the_Void_Dragon.png",
+    "image": "C'tan_Shard_of_the_Void_Dragon.jpg",
     "retailers": []
   },
   {
@@ -1105,7 +1105,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cadian_Castellan.png",
+    "image": "Cadian_Castellan.jpg",
     "retailers": []
   },
   {
@@ -1115,7 +1115,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cadian_Command_Squad.png",
+    "image": "Cadian_Command_Squad.jpg",
     "retailers": []
   },
   {
@@ -1125,7 +1125,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cadian_Shock_Troops.png",
+    "image": "Cadian_Shock_Troops.jpg",
     "retailers": []
   },
   {
@@ -1135,7 +1135,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Cadian_Upgrades.png",
+    "image": "Cadian_Upgrades.jpg",
     "retailers": []
   },
   {
@@ -1145,7 +1145,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cadre_Fireblade.png",
+    "image": "Cadre_Fireblade.jpg",
     "retailers": []
   },
   {
@@ -1155,7 +1155,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Callidus_Assassin.png",
+    "image": "Callidus_Assassin.jpg",
     "retailers": []
   },
   {
@@ -1165,7 +1165,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Hero",
     "points": 0,
-    "image": "Canoness.png",
+    "image": "Canoness.jpg",
     "retailers": []
   },
   {
@@ -1175,7 +1175,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Hero",
     "points": 0,
-    "image": "Canoness_with_Jump_Pack.png",
+    "image": "Canoness_with_Jump_Pack.jpg",
     "retailers": []
   },
   {
@@ -1185,7 +1185,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Canoptek_Doomstalker.png",
+    "image": "Canoptek_Doomstalker.jpg",
     "retailers": []
   },
   {
@@ -1195,7 +1195,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Canoptek_Spyder.png",
+    "image": "Canoptek_Spyder.jpg",
     "retailers": []
   },
   {
@@ -1205,7 +1205,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Canoptek_Wraiths.png",
+    "image": "Canoptek_Wraiths.jpg",
     "retailers": []
   },
   {
@@ -1215,7 +1215,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Captain_in_Gravis_Armour.png",
+    "image": "Captain_in_Gravis_Armour.jpg",
     "retailers": []
   },
   {
@@ -1225,7 +1225,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Captain_in_Gravis_Armour_with_Master-crafted_Heavy_Bolt_Rifle.png",
+    "image": "Captain_in_Gravis_Armour_with_Master-crafted_Heavy_Bolt_Rifle.jpg",
     "retailers": []
   },
   {
@@ -1235,7 +1235,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Captain_in_Phobos_Armour.png",
+    "image": "Captain_in_Phobos_Armour.jpg",
     "retailers": []
   },
   {
@@ -1245,7 +1245,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Captain_in_Terminator_Armour.png",
+    "image": "Captain_in_Terminator_Armour.jpg",
     "retailers": []
   },
   {
@@ -1255,7 +1255,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Captain_with_Jump_Pack.png",
+    "image": "Captain_with_Jump_Pack.jpg",
     "retailers": []
   },
   {
@@ -1265,7 +1265,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Captain_with_Relic_Shield.png",
+    "image": "Captain_with_Relic_Shield.jpg",
     "retailers": []
   },
   {
@@ -1275,7 +1275,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Hero",
     "points": 0,
-    "image": "Captain-General_Trajann_Valoris.png",
+    "image": "Captain-General_Trajann_Valoris.jpg",
     "retailers": []
   },
   {
@@ -1285,7 +1285,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Carnifex_Brood.png",
+    "image": "Carnifex_Brood.jpg",
     "retailers": []
   },
   {
@@ -1295,7 +1295,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Hero",
     "points": 0,
-    "image": "Castellan_Crowe.png",
+    "image": "Castellan_Crowe.jpg",
     "retailers": []
   },
   {
@@ -1305,7 +1305,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Castigator.png",
+    "image": "Castigator.jpg",
     "retailers": []
   },
   {
@@ -1315,7 +1315,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Catachan_Command_Squad.png",
+    "image": "Catachan_Command_Squad.jpg",
     "retailers": []
   },
   {
@@ -1325,7 +1325,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Catachan_Heavy_Weapons_Squad.png",
+    "image": "Catachan_Heavy_Weapons_Squad.jpg",
     "retailers": []
   },
   {
@@ -1335,7 +1335,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Catachan_Jungle_Fighters.png",
+    "image": "Catachan_Jungle_Fighters.jpg",
     "retailers": []
   },
   {
@@ -1345,7 +1345,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Celestian_Sacresants.png",
+    "image": "Celestian_Sacresants.jpg",
     "retailers": []
   },
   {
@@ -1355,7 +1355,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Named Hero",
     "points": 0,
-    "image": "Celestine,_the_Living_Saint.png",
+    "image": "Celestine,_the_Living_Saint.jpg",
     "retailers": []
   },
   {
@@ -1365,7 +1365,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Centurion_Assault_Squad.png",
+    "image": "Centurion_Assault_Squad.jpg",
     "retailers": []
   },
   {
@@ -1375,7 +1375,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Centurion_Devastator_Squad.png",
+    "image": "Centurion_Devastator_Squad.jpg",
     "retailers": []
   },
   {
@@ -1385,7 +1385,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cerastus_Knight_Acheron.png",
+    "image": "Cerastus_Knight_Acheron.jpg",
     "retailers": []
   },
   {
@@ -1395,7 +1395,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cerastus_Knight_Castigator.png",
+    "image": "Cerastus_Knight_Castigator.jpg",
     "retailers": []
   },
   {
@@ -1405,7 +1405,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cerastus_Knight_Lancer.png",
+    "image": "Cerastus_Knight_Lancer.jpg",
     "retailers": []
   },
   {
@@ -1415,7 +1415,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Bikers.png",
+    "image": "Chaos_Bikers.jpg",
     "retailers": []
   },
   {
@@ -1425,7 +1425,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Cultists.png",
+    "image": "Chaos_Cultists.jpg",
     "retailers": []
   },
   {
@@ -1435,7 +1435,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Land_Raider.png",
+    "image": "Chaos_Land_Raider.jpg",
     "retailers": []
   },
   {
@@ -1445,7 +1445,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Chaos_Lord_in_Terminator_Armour.png",
+    "image": "Chaos_Lord_in_Terminator_Armour.jpg",
     "retailers": []
   },
   {
@@ -1455,7 +1455,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Chaos_Lord_with_Jump_Pack.png",
+    "image": "Chaos_Lord_with_Jump_Pack.jpg",
     "retailers": []
   },
   {
@@ -1465,7 +1465,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Predator.png",
+    "image": "Chaos_Predator.jpg",
     "retailers": []
   },
   {
@@ -1475,7 +1475,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Reaver_Titan_(Body_Only).png",
+    "image": "Chaos_Reaver_Titan_(Body_Only).jpg",
     "retailers": []
   },
   {
@@ -1485,7 +1485,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Rhino.png",
+    "image": "Chaos_Rhino.jpg",
     "retailers": []
   },
   {
@@ -1495,7 +1495,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Chaos_Space_Marines_Sorcerer.png",
+    "image": "Chaos_Space_Marines_Sorcerer.jpg",
     "retailers": []
   },
   {
@@ -1505,7 +1505,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "chaos_space_marines_chaos_lord.png",
+    "image": "chaos_space_marines_chaos_lord.jpg",
     "retailers": []
   },
   {
@@ -1515,7 +1515,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Spawn.png",
+    "image": "Chaos_Spawn.jpg",
     "retailers": []
   },
   {
@@ -1525,7 +1525,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Terminator_Squad.png",
+    "image": "Chaos_Terminator_Squad.jpg",
     "retailers": []
   },
   {
@@ -1535,7 +1535,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Vindicator.png",
+    "image": "Chaos_Vindicator.jpg",
     "retailers": []
   },
   {
@@ -1545,7 +1545,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Warhound_Scout_Titan.png",
+    "image": "Chaos_Warhound_Scout_Titan.jpg",
     "retailers": []
   },
   {
@@ -1555,7 +1555,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Chaplain.png",
+    "image": "Chaplain.jpg",
     "retailers": []
   },
   {
@@ -1565,7 +1565,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Named Hero",
     "points": 0,
-    "image": "Chaplain_Grimaldus_&_Retinue.png",
+    "image": "Chaplain_Grimaldus_&_Retinue.jpg",
     "retailers": []
   },
   {
@@ -1575,7 +1575,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Chaplain_in_Terminator_Armour.png",
+    "image": "Chaplain_in_Terminator_Armour.jpg",
     "retailers": []
   },
   {
@@ -1585,7 +1585,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Chaplain_on_Bike.png",
+    "image": "Chaplain_on_Bike.jpg",
     "retailers": []
   },
   {
@@ -1595,7 +1595,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chapter_Approved_2025-26:_Mission_Deck.png",
+    "image": "Chapter_Approved_2025-26:_Mission_Deck.jpg",
     "retailers": []
   },
   {
@@ -1605,7 +1605,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Chief_Librarian_Tigurius.png",
+    "image": "Chief_Librarian_Tigurius.jpg",
     "retailers": []
   },
   {
@@ -1615,7 +1615,7 @@ export const Products: Product[] = [
     "faction": "Beasts of Chaos",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chimera.png",
+    "image": "Chimera.jpg",
     "retailers": []
   },
   {
@@ -1625,7 +1625,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chosen.png",
+    "image": "Chosen.jpg",
     "retailers": []
   },
   {
@@ -1635,7 +1635,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chosen_of_Mortarion.png",
+    "image": "Chosen_of_Mortarion.jpg",
     "retailers": []
   },
   {
@@ -1645,7 +1645,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chronomancer.png",
+    "image": "Chronomancer.jpg",
     "retailers": []
   },
   {
@@ -1655,7 +1655,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Misc",
     "points": 0,
-    "image": "Citadel_Skulls.png",
+    "image": "Citadel_Skulls.jpg",
     "retailers": []
   },
   {
@@ -1665,7 +1665,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Clamavus.png",
+    "image": "Clamavus.jpg",
     "retailers": []
   },
   {
@@ -1675,7 +1675,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex_Supplement:_Black_Templars.png",
+    "image": "Codex_Supplement:_Black_Templars.jpg",
     "retailers": []
   },
   {
@@ -1685,7 +1685,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex_Supplement:_Blood_Angels.png",
+    "image": "Codex_Supplement:_Blood_Angels.jpg",
     "retailers": []
   },
   {
@@ -1695,7 +1695,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex_Supplement:_Dark_Angels.png",
+    "image": "Codex_Supplement:_Dark_Angels.jpg",
     "retailers": []
   },
   {
@@ -1705,7 +1705,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex_Supplement:_Space_Wolves.png",
+    "image": "Codex_Supplement:_Space_Wolves.jpg",
     "retailers": []
   },
   {
@@ -1715,7 +1715,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Adepta_Sororitas.png",
+    "image": "Codex:_Adepta_Sororitas.jpg",
     "retailers": []
   },
   {
@@ -1725,7 +1725,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Adeptus_Custodes.png",
+    "image": "Codex:_Adeptus_Custodes.jpg",
     "retailers": []
   },
   {
@@ -1735,7 +1735,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Adeptus_Mechanicus.png",
+    "image": "Codex:_Adeptus_Mechanicus.jpg",
     "retailers": []
   },
   {
@@ -1745,7 +1745,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Aeldari.png",
+    "image": "Codex:_Aeldari.jpg",
     "retailers": []
   },
   {
@@ -1755,7 +1755,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Aeldari_(Collector's_Edition).png",
+    "image": "Codex:_Aeldari_(Collector's_Edition).jpg",
     "retailers": []
   },
   {
@@ -1765,7 +1765,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Astra_Militarum.png",
+    "image": "Codex:_Astra_Militarum.jpg",
     "retailers": []
   },
   {
@@ -1775,7 +1775,7 @@ export const Products: Product[] = [
     "faction": "Chaos Knights",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Chaos_Knights.png",
+    "image": "Codex:_Chaos_Knights.jpg",
     "retailers": []
   },
   {
@@ -1785,7 +1785,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Chaos_Space_Marines.png",
+    "image": "Codex:_Chaos_Space_Marines.jpg",
     "retailers": []
   },
   {
@@ -1795,7 +1795,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Death_Guard.png",
+    "image": "Codex:_Death_Guard.jpg",
     "retailers": []
   },
   {
@@ -1805,7 +1805,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Drukhari.png",
+    "image": "Codex:_Drukhari.jpg",
     "retailers": []
   },
   {
@@ -1815,7 +1815,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Drukhari_(Collector's_Edition).png",
+    "image": "Codex:_Drukhari_(Collector's_Edition).jpg",
     "retailers": []
   },
   {
@@ -1825,7 +1825,7 @@ export const Products: Product[] = [
     "faction": "Emperor's Children",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Emperor's_Children.png",
+    "image": "Codex:_Emperor's_Children.jpg",
     "retailers": []
   },
   {
@@ -1835,7 +1835,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Genestealer_Cults.png",
+    "image": "Codex:_Genestealer_Cults.jpg",
     "retailers": []
   },
   {
@@ -1845,7 +1845,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Grey_Knights.png",
+    "image": "Codex:_Grey_Knights.jpg",
     "retailers": []
   },
   {
@@ -1855,7 +1855,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Imperial_Agents.png",
+    "image": "Codex:_Imperial_Agents.jpg",
     "retailers": []
   },
   {
@@ -1865,7 +1865,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Imperial_Knights.png",
+    "image": "Codex:_Imperial_Knights.jpg",
     "retailers": []
   },
   {
@@ -1875,7 +1875,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Imperial_Knights_(Collector's_Edition).png",
+    "image": "Codex:_Imperial_Knights_(Collector's_Edition).jpg",
     "retailers": []
   },
   {
@@ -1885,7 +1885,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Leagues_of_Votann.png",
+    "image": "Codex:_Leagues_of_Votann.jpg",
     "retailers": []
   },
   {
@@ -1895,7 +1895,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Necrons.png",
+    "image": "Codex:_Necrons.jpg",
     "retailers": []
   },
   {
@@ -1905,7 +1905,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Orks.png",
+    "image": "Codex:_Orks.jpg",
     "retailers": []
   },
   {
@@ -1915,7 +1915,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Space_Marines.png",
+    "image": "Codex:_Space_Marines.jpg",
     "retailers": []
   },
   {
@@ -1925,7 +1925,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_T'au_Empire.png",
+    "image": "Codex:_T'au_Empire.jpg",
     "retailers": []
   },
   {
@@ -1935,7 +1935,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Thousand_Sons.png",
+    "image": "Codex:_Thousand_Sons.jpg",
     "retailers": []
   },
   {
@@ -1945,7 +1945,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_Tyranids.png",
+    "image": "Codex:_Tyranids.jpg",
     "retailers": []
   },
   {
@@ -1955,7 +1955,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Codex:_World_Eaters.png",
+    "image": "Codex:_World_Eaters.jpg",
     "retailers": []
   },
   {
@@ -1965,7 +1965,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Adepta_Sororitas.png",
+    "image": "Combat_Patrol:_Adepta_Sororitas.jpg",
     "retailers": []
   },
   {
@@ -1975,7 +1975,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Adeptus_Custodes.png",
+    "image": "Combat_Patrol:_Adeptus_Custodes.jpg",
     "retailers": []
   },
   {
@@ -1985,7 +1985,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Adeptus_Mechanicus.png",
+    "image": "Combat_Patrol:_Adeptus_Mechanicus.jpg",
     "retailers": []
   },
   {
@@ -1995,7 +1995,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Aeldari.png",
+    "image": "Combat_Patrol:_Aeldari.jpg",
     "retailers": []
   },
   {
@@ -2005,7 +2005,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Astra_Militarum.png",
+    "image": "Combat_Patrol:_Astra_Militarum.jpg",
     "retailers": []
   },
   {
@@ -2015,7 +2015,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Black_Templars.png",
+    "image": "Combat_Patrol:_Black_Templars.jpg",
     "retailers": []
   },
   {
@@ -2025,7 +2025,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Blood_Angels.png",
+    "image": "Combat_Patrol:_Blood_Angels.jpg",
     "retailers": []
   },
   {
@@ -2035,7 +2035,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Chaos_Space_Marines.png",
+    "image": "Combat_Patrol:_Chaos_Space_Marines.jpg",
     "retailers": []
   },
   {
@@ -2045,7 +2045,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Dark_Angels.png",
+    "image": "Combat_Patrol:_Dark_Angels.jpg",
     "retailers": []
   },
   {
@@ -2055,7 +2055,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Death_Guard.png",
+    "image": "Combat_Patrol:_Death_Guard.jpg",
     "retailers": []
   },
   {
@@ -2065,7 +2065,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Death_Korps_of_Krieg.png",
+    "image": "Combat_Patrol:_Death_Korps_of_Krieg.jpg",
     "retailers": []
   },
   {
@@ -2075,7 +2075,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Drukhari.png",
+    "image": "Combat_Patrol:_Drukhari.jpg",
     "retailers": []
   },
   {
@@ -2085,7 +2085,7 @@ export const Products: Product[] = [
     "faction": "Emperor’s Children",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Emperor's_Children.png",
+    "image": "Combat_Patrol:_Emperor's_Children.jpg",
     "retailers": []
   },
   {
@@ -2095,7 +2095,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Genestealer_Cults.png",
+    "image": "Combat_Patrol:_Genestealer_Cults.jpg",
     "retailers": []
   },
   {
@@ -2105,7 +2105,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Grey_Knights.png",
+    "image": "Combat_Patrol:_Grey_Knights.jpg",
     "retailers": []
   },
   {
@@ -2115,7 +2115,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Imperial_Agents.png",
+    "image": "Combat_Patrol:_Imperial_Agents.jpg",
     "retailers": []
   },
   {
@@ -2125,7 +2125,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Imperial_Fists.png",
+    "image": "Combat_Patrol:_Imperial_Fists.jpg",
     "retailers": []
   },
   {
@@ -2135,7 +2135,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Leagues_of_Votann.png",
+    "image": "Combat_Patrol:_Leagues_of_Votann.jpg",
     "retailers": []
   },
   {
@@ -2145,7 +2145,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Necrons.png",
+    "image": "Combat_Patrol:_Necrons.jpg",
     "retailers": []
   },
   {
@@ -2155,7 +2155,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Orks.png",
+    "image": "Combat_Patrol:_Orks.jpg",
     "retailers": []
   },
   {
@@ -2165,7 +2165,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Raven_Guard.png",
+    "image": "Combat_Patrol:_Raven_Guard.jpg",
     "retailers": []
   },
   {
@@ -2175,7 +2175,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Salamanders.png",
+    "image": "Combat_Patrol:_Salamanders.jpg",
     "retailers": []
   },
   {
@@ -2185,7 +2185,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Space_Marines.png",
+    "image": "Combat_Patrol:_Space_Marines.jpg",
     "retailers": []
   },
   {
@@ -2195,7 +2195,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Space_Wolves.png",
+    "image": "Combat_Patrol:_Space_Wolves.jpg",
     "retailers": []
   },
   {
@@ -2205,7 +2205,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Thousand_Sons.png",
+    "image": "Combat_Patrol:_Thousand_Sons.jpg",
     "retailers": []
   },
   {
@@ -2215,7 +2215,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Tyranid_Assault_Brood.png",
+    "image": "Combat_Patrol:_Tyranid_Assault_Brood.jpg",
     "retailers": []
   },
   {
@@ -2225,7 +2225,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_Tau_Empire.png",
+    "image": "Combat_Patrol:_Tau_Empire.jpg",
     "retailers": []
   },
   {
@@ -2235,7 +2235,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Combat_Patrol:_World_Eaters.png",
+    "image": "Combat_Patrol:_World_Eaters.jpg",
     "retailers": []
   },
   {
@@ -2245,7 +2245,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Named Hero",
     "points": 0,
-    "image": "Commander_Dante.png",
+    "image": "Commander_Dante.jpg",
     "retailers": []
   },
   {
@@ -2255,7 +2255,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Hero",
     "points": 0,
-    "image": "Commander_Farsight.png",
+    "image": "Commander_Farsight.jpg",
     "retailers": []
   },
   {
@@ -2265,7 +2265,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Hero",
     "points": 0,
-    "image": "Commander_Shadowsun.png",
+    "image": "Commander_Shadowsun.jpg",
     "retailers": []
   },
   {
@@ -2275,7 +2275,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Commissar.png",
+    "image": "Commissar.jpg",
     "retailers": []
   },
   {
@@ -2285,7 +2285,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Company_Heroes.png",
+    "image": "Company_Heroes.jpg",
     "retailers": []
   },
   {
@@ -2295,7 +2295,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Contemptor_Dreadnought.png",
+    "image": "Contemptor_Dreadnought.jpg",
     "retailers": []
   },
   {
@@ -2305,7 +2305,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Convergence_of_Dominion.png",
+    "image": "Convergence_of_Dominion.jpg",
     "retailers": []
   },
   {
@@ -2315,7 +2315,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Corvus_Blackstar.png",
+    "image": "Corvus_Blackstar.jpg",
     "retailers": []
   },
   {
@@ -2325,7 +2325,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Terrain",
     "points": 0,
-    "image": "Creeping_Vines.png",
+    "image": "Creeping_Vines.jpg",
     "retailers": []
   },
   {
@@ -2335,7 +2335,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Crimson_Hunter.png",
+    "image": "Crimson_Hunter.jpg",
     "retailers": []
   },
   {
@@ -2345,7 +2345,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Crusade_Ancient.png",
+    "image": "Crusade_Ancient.jpg",
     "retailers": []
   },
   {
@@ -2355,7 +2355,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Crusade:_Armageddon.png",
+    "image": "Crusade:_Armageddon.jpg",
     "retailers": []
   },
   {
@@ -2365,7 +2365,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Crusade:_Nachmund_Gauntlet.png",
+    "image": "Crusade:_Nachmund_Gauntlet.jpg",
     "retailers": []
   },
   {
@@ -2375,7 +2375,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cryptek.png",
+    "image": "Cryptek.jpg",
     "retailers": []
   },
   {
@@ -2385,7 +2385,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cthonian_Beserks.png",
+    "image": "Cthonian_Beserks.jpg",
     "retailers": []
   },
   {
@@ -2395,7 +2395,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cthonian_Earthshakers.png",
+    "image": "Cthonian_Earthshakers.jpg",
     "retailers": []
   },
   {
@@ -2405,7 +2405,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Culexus_Assassin.png",
+    "image": "Culexus_Assassin.jpg",
     "retailers": []
   },
   {
@@ -2415,7 +2415,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cultist_Firebrand.png",
+    "image": "Cultist_Firebrand.jpg",
     "retailers": []
   },
   {
@@ -2425,7 +2425,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Custodian_Guard.png",
+    "image": "Custodian_Guard.jpg",
     "retailers": []
   },
   {
@@ -2435,7 +2435,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Custodian_Wardens.png",
+    "image": "Custodian_Wardens.jpg",
     "retailers": []
   },
   {
@@ -2445,7 +2445,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cyclops_Demolition_Vehicle.png",
+    "image": "Cyclops_Demolition_Vehicle.jpg",
     "retailers": []
   },
   {
@@ -2455,7 +2455,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cypher.png",
+    "image": "Cypher.jpg",
     "retailers": []
   },
   {
@@ -2465,7 +2465,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Hero",
     "points": 0,
-    "image": "Daemon_Prince.png",
+    "image": "Daemon_Prince.jpg",
     "retailers": []
   },
   {
@@ -2475,7 +2475,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Daemonettes_of_Slaanesh.png",
+    "image": "Daemonettes_of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -2485,7 +2485,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Named Hero",
     "points": 0,
-    "image": "Daemonifuge__Ephrael_Stern_&_Kyganil.png",
+    "image": "Daemonifuge__Ephrael_Stern_&_Kyganil.jpg",
     "retailers": []
   },
   {
@@ -2495,7 +2495,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dakkajet.png",
+    "image": "Dakkajet.jpg",
     "retailers": []
   },
   {
@@ -2505,7 +2505,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Dark_Angels_Interrogator-Chaplain.png",
+    "image": "Dark_Angels_Interrogator-Chaplain.jpg",
     "retailers": []
   },
   {
@@ -2515,7 +2515,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Dark_Angels:_Upgrades_and_Transfers.png",
+    "image": "Dark_Angels:_Upgrades_and_Transfers.jpg",
     "retailers": []
   },
   {
@@ -2525,7 +2525,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dark_Apostle.png",
+    "image": "Dark_Apostle.jpg",
     "retailers": []
   },
   {
@@ -2535,7 +2535,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dark_Commune.png",
+    "image": "Dark_Commune.jpg",
     "retailers": []
   },
   {
@@ -2545,7 +2545,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dark_Reapers.png",
+    "image": "Dark_Reapers.jpg",
     "retailers": []
   },
   {
@@ -2555,7 +2555,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Darkstrider.png",
+    "image": "Darkstrider.jpg",
     "retailers": []
   },
   {
@@ -2565,7 +2565,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Darnath_Lysander.png",
+    "image": "Darnath_Lysander.jpg",
     "retailers": []
   },
   {
@@ -2575,7 +2575,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Datasheet_Cards:_Drukhari.png",
+    "image": "Datasheet_Cards:_Drukhari.jpg",
     "retailers": []
   },
   {
@@ -2585,7 +2585,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Datasheet_Cards:_Grey_Knights.png",
+    "image": "Datasheet_Cards:_Grey_Knights.jpg",
     "retailers": []
   },
   {
@@ -2595,7 +2595,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Datasheet_Cards:_Imperial_Knights.png",
+    "image": "Datasheet_Cards:_Imperial_Knights.jpg",
     "retailers": []
   },
   {
@@ -2605,7 +2605,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Datasheet_Cards:_Leagues_of_Votann.png",
+    "image": "Datasheet_Cards:_Leagues_of_Votann.jpg",
     "retailers": []
   },
   {
@@ -2615,7 +2615,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Death_Jester.png",
+    "image": "Death_Jester.jpg",
     "retailers": []
   },
   {
@@ -2625,7 +2625,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Death_Korps_of_Krieg.png",
+    "image": "Death_Korps_of_Krieg.jpg",
     "retailers": []
   },
   {
@@ -2635,7 +2635,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Death_Riders.png",
+    "image": "Death_Riders.jpg",
     "retailers": []
   },
   {
@@ -2645,7 +2645,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Deathleaper.png",
+    "image": "Deathleaper.jpg",
     "retailers": []
   },
   {
@@ -2655,7 +2655,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Deathshroud_Terminators.png",
+    "image": "Deathshroud_Terminators.jpg",
     "retailers": []
   },
   {
@@ -2665,7 +2665,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Deathstrike.png",
+    "image": "Deathstrike.jpg",
     "retailers": []
   },
   {
@@ -2675,7 +2675,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Deathwatch_Upgrades.png",
+    "image": "Deathwatch_Upgrades.jpg",
     "retailers": []
   },
   {
@@ -2685,7 +2685,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Deathwing_Knights.png",
+    "image": "Deathwing_Knights.jpg",
     "retailers": []
   },
   {
@@ -2695,7 +2695,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Deff_Dread.png",
+    "image": "Deff_Dread.jpg",
     "retailers": []
   },
   {
@@ -2705,7 +2705,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Deffkilla_Wartrike.png",
+    "image": "Deffkilla_Wartrike.jpg",
     "retailers": []
   },
   {
@@ -2715,7 +2715,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Deffkoptas.png",
+    "image": "Deffkoptas.jpg",
     "retailers": []
   },
   {
@@ -2725,7 +2725,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Defiler.png",
+    "image": "Defiler.jpg",
     "retailers": []
   },
   {
@@ -2735,7 +2735,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Desolation_Squad.png",
+    "image": "Desolation_Squad.jpg",
     "retailers": []
   },
   {
@@ -2745,7 +2745,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Devastator_Squad.png",
+    "image": "Devastator_Squad.jpg",
     "retailers": []
   },
   {
@@ -2755,7 +2755,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Devilfish.png",
+    "image": "Devilfish.jpg",
     "retailers": []
   },
   {
@@ -2765,7 +2765,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dialogus.png",
+    "image": "Dialogus.jpg",
     "retailers": []
   },
   {
@@ -2775,7 +2775,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Dice",
     "points": 0,
-    "image": "Dice_Cube.png",
+    "image": "Dice_Cube.jpg",
     "retailers": []
   },
   {
@@ -2785,7 +2785,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dire_Avengers.png",
+    "image": "Dire_Avengers.jpg",
     "retailers": []
   },
   {
@@ -2795,7 +2795,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Doomsday_Ark.png",
+    "image": "Doomsday_Ark.jpg",
     "retailers": []
   },
   {
@@ -2805,7 +2805,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Drazhar.png",
+    "image": "Drazhar.jpg",
     "retailers": []
   },
   {
@@ -2815,7 +2815,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Drop_Pods.png",
+    "image": "Drop_Pods.jpg",
     "retailers": []
   },
   {
@@ -2825,7 +2825,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Box Set",
     "points": 0,
-    "image": "Drukhari_Battleforce:_Realspace_Raiders.png",
+    "image": "Drukhari_Battleforce:_Realspace_Raiders.jpg",
     "retailers": []
   },
   {
@@ -2835,7 +2835,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Dice",
     "points": 0,
-    "image": "Drukhari_Dice.png",
+    "image": "Drukhari_Dice.jpg",
     "retailers": []
   },
   {
@@ -2845,7 +2845,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Eightbound.png",
+    "image": "Eightbound.jpg",
     "retailers": []
   },
   {
@@ -2855,7 +2855,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Einhyr_Champion.png",
+    "image": "Einhyr_Champion.jpg",
     "retailers": []
   },
   {
@@ -2865,7 +2865,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Einhyr_Hearthguard.png",
+    "image": "Einhyr_Hearthguard.jpg",
     "retailers": []
   },
   {
@@ -2875,7 +2875,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Eisenhorn.png",
+    "image": "Eisenhorn.jpg",
     "retailers": []
   },
   {
@@ -2885,7 +2885,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Eldrad_Ulthran.png",
+    "image": "Eldrad_Ulthran.jpg",
     "retailers": []
   },
   {
@@ -2895,7 +2895,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Eliminators.png",
+    "image": "Eliminators.jpg",
     "retailers": []
   },
   {
@@ -2905,7 +2905,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Emperor's_Champion.png",
+    "image": "Emperor's_Champion.jpg",
     "retailers": []
   },
   {
@@ -2915,7 +2915,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Hero",
     "points": 0,
-    "image": "Ethereal.png",
+    "image": "Ethereal.jpg",
     "retailers": []
   },
   {
@@ -2925,7 +2925,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Eversor_Assassin.png",
+    "image": "Eversor_Assassin.jpg",
     "retailers": []
   },
   {
@@ -2935,7 +2935,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Hero",
     "points": 0,
-    "image": "Exalted_Sorcerers.png",
+    "image": "Exalted_Sorcerers.jpg",
     "retailers": []
   },
   {
@@ -2945,7 +2945,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Execrator.png",
+    "image": "Execrator.jpg",
     "retailers": []
   },
   {
@@ -2955,7 +2955,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Exorcist.png",
+    "image": "Exorcist.jpg",
     "retailers": []
   },
   {
@@ -2965,7 +2965,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Hero",
     "points": 0,
-    "image": "Ezekiel,_Grand_Master_of_Librarians.png",
+    "image": "Ezekiel,_Grand_Master_of_Librarians.jpg",
     "retailers": []
   },
   {
@@ -2975,7 +2975,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fabius_Bile.png",
+    "image": "Fabius_Bile.jpg",
     "retailers": []
   },
   {
@@ -2985,7 +2985,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fall_of_the_Necromancer.png",
+    "image": "Fall_of_the_Necromancer.jpg",
     "retailers": []
   },
   {
@@ -2995,7 +2995,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Hero",
     "points": 0,
-    "image": "Farseer.png",
+    "image": "Farseer.jpg",
     "retailers": []
   },
   {
@@ -3005,7 +3005,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Hero",
     "points": 0,
-    "image": "Farseer_Skyrunner.png",
+    "image": "Farseer_Skyrunner.jpg",
     "retailers": []
   },
   {
@@ -3015,7 +3015,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fateskimmer,_Herald_of_Tzeentch_on_Burning_Chariot.png",
+    "image": "Fateskimmer,_Herald_of_Tzeentch_on_Burning_Chariot.jpg",
     "retailers": []
   },
   {
@@ -3025,7 +3025,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Feculent_Gnarlmaw.png",
+    "image": "Feculent_Gnarlmaw.jpg",
     "retailers": []
   },
   {
@@ -3035,7 +3035,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fenrisian_Wolves.png",
+    "image": "Fenrisian_Wolves.jpg",
     "retailers": []
   },
   {
@@ -3045,7 +3045,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Field_Ordnance_Battery.png",
+    "image": "Field_Ordnance_Battery.jpg",
     "retailers": []
   },
   {
@@ -3055,7 +3055,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fiends.png",
+    "image": "Fiends.jpg",
     "retailers": []
   },
   {
@@ -3065,7 +3065,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fire_Dragons.png",
+    "image": "Fire_Dragons.jpg",
     "retailers": []
   },
   {
@@ -3075,7 +3075,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fire_Prism.png",
+    "image": "Fire_Prism.jpg",
     "retailers": []
   },
   {
@@ -3085,7 +3085,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fire_Warriors_Strike_Team.png",
+    "image": "Fire_Warriors_Strike_Team.jpg",
     "retailers": []
   },
   {
@@ -3095,7 +3095,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Firestrike_Servo-turret.png",
+    "image": "Firestrike_Servo-turret.jpg",
     "retailers": []
   },
   {
@@ -3105,7 +3105,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Flamers.png",
+    "image": "Flamers.jpg",
     "retailers": []
   },
   {
@@ -3115,7 +3115,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Flash_Gitz.png",
+    "image": "Flash_Gitz.jpg",
     "retailers": []
   },
   {
@@ -3125,7 +3125,7 @@ export const Products: Product[] = [
     "faction": "Emperor's Children",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Flawless_Blades.png",
+    "image": "Flawless_Blades.jpg",
     "retailers": []
   },
   {
@@ -3135,7 +3135,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Flayed_Ones.png",
+    "image": "Flayed_Ones.jpg",
     "retailers": []
   },
   {
@@ -3145,7 +3145,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Flesh_Hounds.png",
+    "image": "Flesh_Hounds.jpg",
     "retailers": []
   },
   {
@@ -3155,7 +3155,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Foetid_Bloat-drone.png",
+    "image": "Foetid_Bloat-drone.jpg",
     "retailers": []
   },
   {
@@ -3165,7 +3165,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Forgefiend.png",
+    "image": "Forgefiend.jpg",
     "retailers": []
   },
   {
@@ -3175,7 +3175,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Foul_Blightspawn.png",
+    "image": "Foul_Blightspawn.jpg",
     "retailers": []
   },
   {
@@ -3185,7 +3185,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fuegan.png",
+    "image": "Fuegan.jpg",
     "retailers": []
   },
   {
@@ -3195,7 +3195,7 @@ export const Products: Product[] = [
     "faction": "Emperor's Children",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fulgrim.png",
+    "image": "Fulgrim.jpg",
     "retailers": []
   },
   {
@@ -3205,7 +3205,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Hero",
     "points": 0,
-    "image": "Fulgurite_Electro-Priests.png",
+    "image": "Fulgurite_Electro-Priests.jpg",
     "retailers": []
   },
   {
@@ -3215,7 +3215,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Games_Workshop_Tape_Measure.png",
+    "image": "Games_Workshop_Tape_Measure.jpg",
     "retailers": []
   },
   {
@@ -3225,7 +3225,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gargoyle_Brood.png",
+    "image": "Gargoyle_Brood.jpg",
     "retailers": []
   },
   {
@@ -3235,7 +3235,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gaunt's_Ghosts.png",
+    "image": "Gaunt's_Ghosts.jpg",
     "retailers": []
   },
   {
@@ -3245,7 +3245,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Genestealers.png",
+    "image": "Genestealers.jpg",
     "retailers": []
   },
   {
@@ -3255,7 +3255,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Getting_Started_with_Warhammer_40,000.png",
+    "image": "Getting_Started_with_Warhammer_40,000.jpg",
     "retailers": []
   },
   {
@@ -3265,7 +3265,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ghazghkull_Thraka.png",
+    "image": "Ghazghkull_Thraka.jpg",
     "retailers": []
   },
   {
@@ -3275,7 +3275,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gladiator_Lancer.png",
+    "image": "Gladiator_Lancer.jpg",
     "retailers": []
   },
   {
@@ -3285,7 +3285,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Goliath_Truck.png",
+    "image": "Goliath_Truck.jpg",
     "retailers": []
   },
   {
@@ -3295,7 +3295,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gorkanaut.png",
+    "image": "Gorkanaut.jpg",
     "retailers": []
   },
   {
@@ -3305,7 +3305,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grand_Master_Voldus.png",
+    "image": "Grand_Master_Voldus.jpg",
     "retailers": []
   },
   {
@@ -3315,7 +3315,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grand_Master_in_Nemesis_Dreadknight.png",
+    "image": "Grand_Master_in_Nemesis_Dreadknight.jpg",
     "retailers": []
   },
   {
@@ -3325,7 +3325,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Great_Unclean_One.png",
+    "image": "Great_Unclean_One.jpg",
     "retailers": []
   },
   {
@@ -3335,7 +3335,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Greater_Blight_Drone.png",
+    "image": "Greater_Blight_Drone.jpg",
     "retailers": []
   },
   {
@@ -3345,7 +3345,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grey_Hunters.png",
+    "image": "Grey_Hunters.jpg",
     "retailers": []
   },
   {
@@ -3355,7 +3355,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grey_Knights_Brotherhood_Terminator_Squad.png",
+    "image": "Grey_Knights_Brotherhood_Terminator_Squad.jpg",
     "retailers": []
   },
   {
@@ -3365,7 +3365,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grey_Knights_Interceptor_Squad.png",
+    "image": "Grey_Knights_Interceptor_Squad.jpg",
     "retailers": []
   },
   {
@@ -3375,7 +3375,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grey_Knights_Paladins.png",
+    "image": "Grey_Knights_Paladins.jpg",
     "retailers": []
   },
   {
@@ -3385,7 +3385,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grey_Knights_Purgation_Squad.png",
+    "image": "Grey_Knights_Purgation_Squad.jpg",
     "retailers": []
   },
   {
@@ -3395,7 +3395,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grey_Knights_Purifier_Squad.png",
+    "image": "Grey_Knights_Purifier_Squad.jpg",
     "retailers": []
   },
   {
@@ -3405,7 +3405,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grey_Knights_Strike_Squad.png",
+    "image": "Grey_Knights_Strike_Squad.jpg",
     "retailers": []
   },
   {
@@ -3415,7 +3415,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grimnyr.png",
+    "image": "Grimnyr.jpg",
     "retailers": []
   },
   {
@@ -3425,7 +3425,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Guardian_Defenders.png",
+    "image": "Guardian_Defenders.jpg",
     "retailers": []
   },
   {
@@ -3435,7 +3435,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Haarken_Worldclaimer,_Herald_of_the_Apocalypse.png",
+    "image": "Haarken_Worldclaimer,_Herald_of_the_Apocalypse.jpg",
     "retailers": []
   },
   {
@@ -3445,7 +3445,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Haemonculus.png",
+    "image": "Haemonculus.jpg",
     "retailers": []
   },
   {
@@ -3455,7 +3455,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hammerfall_Bunker.png",
+    "image": "Hammerfall_Bunker.jpg",
     "retailers": []
   },
   {
@@ -3465,7 +3465,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hammerhead_Gunship.png",
+    "image": "Hammerhead_Gunship.jpg",
     "retailers": []
   },
   {
@@ -3475,7 +3475,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Harlequin_Troupe.png",
+    "image": "Harlequin_Troupe.jpg",
     "retailers": []
   },
   {
@@ -3485,7 +3485,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Haruspex.png",
+    "image": "Haruspex.jpg",
     "retailers": []
   },
   {
@@ -3495,7 +3495,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Havocs.png",
+    "image": "Havocs.jpg",
     "retailers": []
   },
   {
@@ -3505,7 +3505,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hearthkyn_Warriors.png",
+    "image": "Hearthkyn_Warriors.jpg",
     "retailers": []
   },
   {
@@ -3515,7 +3515,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Heavy_Intercessor_Squad.png",
+    "image": "Heavy_Intercessor_Squad.jpg",
     "retailers": []
   },
   {
@@ -3525,7 +3525,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Heavy_Weapons_Squad.png",
+    "image": "Heavy_Weapons_Squad.jpg",
     "retailers": []
   },
   {
@@ -3535,7 +3535,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "Hekaton_Land_Fortress.png",
+    "image": "Hekaton_Land_Fortress.jpg",
     "retailers": []
   },
   {
@@ -3545,7 +3545,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Helbrute.png",
+    "image": "Helbrute.jpg",
     "retailers": []
   },
   {
@@ -3555,7 +3555,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Heldrake.png",
+    "image": "Heldrake.jpg",
     "retailers": []
   },
   {
@@ -3565,7 +3565,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hellblaster_Squad.png",
+    "image": "Hellblaster_Squad.jpg",
     "retailers": []
   },
   {
@@ -3575,7 +3575,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hellhammer.png",
+    "image": "Hellhammer.jpg",
     "retailers": []
   },
   {
@@ -3585,7 +3585,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hellhound.png",
+    "image": "Hellhound.jpg",
     "retailers": []
   },
   {
@@ -3595,7 +3595,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hellions.png",
+    "image": "Hellions.jpg",
     "retailers": []
   },
   {
@@ -3605,7 +3605,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hernkyn_Pioneers.png",
+    "image": "Hernkyn_Pioneers.jpg",
     "retailers": []
   },
   {
@@ -3615,7 +3615,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Heroes_of_the_Chapter.png",
+    "image": "Heroes_of_the_Chapter.jpg",
     "retailers": []
   },
   {
@@ -3625,7 +3625,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hexmark_Destroyer.png",
+    "image": "Hexmark_Destroyer.jpg",
     "retailers": []
   },
   {
@@ -3635,7 +3635,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Named Hero",
     "points": 0,
-    "image": "High_Marshal_Helbrecht.png",
+    "image": "High_Marshal_Helbrecht.jpg",
     "retailers": []
   },
   {
@@ -3645,7 +3645,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hive_Guard.png",
+    "image": "Hive_Guard.jpg",
     "retailers": []
   },
   {
@@ -3655,7 +3655,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Hero",
     "points": 0,
-    "image": "Hive_Tyrant.png",
+    "image": "Hive_Tyrant.jpg",
     "retailers": []
   },
   {
@@ -3665,7 +3665,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hormagaunts.png",
+    "image": "Hormagaunts.jpg",
     "retailers": []
   },
   {
@@ -3675,7 +3675,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Horrors_of_the_Hive.png",
+    "image": "Horrors_of_the_Hive.jpg",
     "retailers": []
   },
   {
@@ -3685,7 +3685,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Horticulous_Slimux.png",
+    "image": "Horticulous_Slimux.jpg",
     "retailers": []
   },
   {
@@ -3695,7 +3695,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hospitaller.png",
+    "image": "Hospitaller.jpg",
     "retailers": []
   },
   {
@@ -3705,7 +3705,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Howling_Banshees.png",
+    "image": "Howling_Banshees.jpg",
     "retailers": []
   },
   {
@@ -3715,7 +3715,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hydra.png",
+    "image": "Hydra.jpg",
     "retailers": []
   },
   {
@@ -3725,7 +3725,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Illuminor_Szeras.png",
+    "image": "Illuminor_Szeras.jpg",
     "retailers": []
   },
   {
@@ -3735,7 +3735,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Imagifier.png",
+    "image": "Imagifier.jpg",
     "retailers": []
   },
   {
@@ -3745,7 +3745,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Immolator.png",
+    "image": "Immolator.jpg",
     "retailers": []
   },
   {
@@ -3755,7 +3755,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Immortals.png",
+    "image": "Immortals.jpg",
     "retailers": []
   },
   {
@@ -3765,7 +3765,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Hero",
     "points": 0,
-    "image": "Imotekh_the_Stormlord.png",
+    "image": "Imotekh_the_Stormlord.jpg",
     "retailers": []
   },
   {
@@ -3775,7 +3775,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Dice",
     "points": 0,
-    "image": "Imperial_Fists_Dice.png",
+    "image": "Imperial_Fists_Dice.jpg",
     "retailers": []
   },
   {
@@ -3785,7 +3785,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Imperial_Fists_Primaris_Upgrades_and_Transfers.png",
+    "image": "Imperial_Fists_Primaris_Upgrades_and_Transfers.jpg",
     "retailers": []
   },
   {
@@ -3795,7 +3795,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Dice",
     "points": 0,
-    "image": "Imperial_Knights_Dice.png",
+    "image": "Imperial_Knights_Dice.jpg",
     "retailers": []
   },
   {
@@ -3805,7 +3805,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Imperial_Navy_Avenger_Strike_Fighter.png",
+    "image": "Imperial_Navy_Avenger_Strike_Fighter.jpg",
     "retailers": []
   },
   {
@@ -3815,7 +3815,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Imperial_Navy_Thunderbolt_Heavy_Fighter.png",
+    "image": "Imperial_Navy_Thunderbolt_Heavy_Fighter.jpg",
     "retailers": []
   },
   {
@@ -3825,7 +3825,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Inceptor_Squad.png",
+    "image": "Inceptor_Squad.jpg",
     "retailers": []
   },
   {
@@ -3835,7 +3835,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Incubi.png",
+    "image": "Incubi.jpg",
     "retailers": []
   },
   {
@@ -3845,7 +3845,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Incursor_Squad.png",
+    "image": "Incursor_Squad.jpg",
     "retailers": []
   },
   {
@@ -3855,7 +3855,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Infernal_Enrapturess.png",
+    "image": "Infernal_Enrapturess.jpg",
     "retailers": []
   },
   {
@@ -3865,7 +3865,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Infernal_Master.png",
+    "image": "Infernal_Master.jpg",
     "retailers": []
   },
   {
@@ -3875,7 +3875,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Infernus_Squad.png",
+    "image": "Infernus_Squad.jpg",
     "retailers": []
   },
   {
@@ -3885,7 +3885,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Infiltrator_Squad.png",
+    "image": "Infiltrator_Squad.jpg",
     "retailers": []
   },
   {
@@ -3895,7 +3895,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Inner_Circle_Companions.png",
+    "image": "Inner_Circle_Companions.jpg",
     "retailers": []
   },
   {
@@ -3905,7 +3905,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Hero",
     "points": 0,
-    "image": "Inquisitor_Coteaz.png",
+    "image": "Inquisitor_Coteaz.jpg",
     "retailers": []
   },
   {
@@ -3915,7 +3915,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Hero",
     "points": 0,
-    "image": "Inquisitor_Greyfax.png",
+    "image": "Inquisitor_Greyfax.jpg",
     "retailers": []
   },
   {
@@ -3925,7 +3925,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Hero",
     "points": 0,
-    "image": "Inquisitorial_Agents.png",
+    "image": "Inquisitorial_Agents.jpg",
     "retailers": []
   },
   {
@@ -3935,7 +3935,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Intercessors.png",
+    "image": "Intercessors.jpg",
     "retailers": []
   },
   {
@@ -3945,7 +3945,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Invictor_Tactical_Warsuit.png",
+    "image": "Invictor_Tactical_Warsuit.jpg",
     "retailers": []
   },
   {
@@ -3955,7 +3955,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Iron_Father_Feirros.png",
+    "image": "Iron_Father_Feirros.jpg",
     "retailers": []
   },
   {
@@ -3965,7 +3965,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Accessories",
     "points": 0,
-    "image": "Iron_Hands_Primaris_Upgrades_and_Transfers.png",
+    "image": "Iron_Hands_Primaris_Upgrades_and_Transfers.jpg",
     "retailers": []
   },
   {
@@ -3975,7 +3975,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Hero",
     "points": 0,
-    "image": "Iron_Priest.png",
+    "image": "Iron_Priest.jpg",
     "retailers": []
   },
   {
@@ -3985,7 +3985,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ironkin_Steeljacks.png",
+    "image": "Ironkin_Steeljacks.jpg",
     "retailers": []
   },
   {
@@ -3995,7 +3995,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Jackal_Alphus.png",
+    "image": "Jackal_Alphus.jpg",
     "retailers": []
   },
   {
@@ -4005,7 +4005,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Jain_Zar.png",
+    "image": "Jain_Zar.jpg",
     "retailers": []
   },
   {
@@ -4015,7 +4015,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Jakhals.png",
+    "image": "Jakhals.jpg",
     "retailers": []
   },
   {
@@ -4025,7 +4025,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Jump_Pack_Intercessors.png",
+    "image": "Jump_Pack_Intercessors.jpg",
     "retailers": []
   },
   {
@@ -4035,7 +4035,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Junith_Eruita.png",
+    "image": "Junith_Eruita.jpg",
     "retailers": []
   },
   {
@@ -4045,7 +4045,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "KV128_Stormsurge.png",
+    "image": "KV128_Stormsurge.jpg",
     "retailers": []
   },
   {
@@ -4055,7 +4055,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "KX139_Ta'unar_Nexus_Missile_System.png",
+    "image": "KX139_Ta'unar_Nexus_Missile_System.jpg",
     "retailers": []
   },
   {
@@ -4065,7 +4065,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "KX139_Ta'unar_Supremacy_Armour_Body.png",
+    "image": "KX139_Ta'unar_Supremacy_Armour_Body.jpg",
     "retailers": []
   },
   {
@@ -4075,7 +4075,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "KX139_Ta'unar_Supremacy_Armour_Fusion_Eradicator.png",
+    "image": "KX139_Ta'unar_Supremacy_Armour_Fusion_Eradicator.jpg",
     "retailers": []
   },
   {
@@ -4085,7 +4085,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "KX139_Ta'unar_Supremacy_Armour_Pulse_Ordnance_Multi-driver.png",
+    "image": "KX139_Ta'unar_Supremacy_Armour_Pulse_Ordnance_Multi-driver.jpg",
     "retailers": []
   },
   {
@@ -4095,7 +4095,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "KX139_Ta'unar_Supremacy_Armour_Tri-axis_Ion_Cannon.png",
+    "image": "KX139_Ta'unar_Supremacy_Armour_Tri-axis_Ion_Cannon.jpg",
     "retailers": []
   },
   {
@@ -4105,7 +4105,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "KX139_Ta'unar_Supremacy_Armour_Tri-axis_Heavy_Rail_Cannon_Array.png",
+    "image": "KX139_Ta'unar_Supremacy_Armour_Tri-axis_Heavy_Rail_Cannon_Array.jpg",
     "retailers": []
   },
   {
@@ -4115,7 +4115,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kabalite_Warriors.png",
+    "image": "Kabalite_Warriors.jpg",
     "retailers": []
   },
   {
@@ -4125,7 +4125,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kapricus_Defender/Carrier.png",
+    "image": "Kapricus_Defender/Carrier.jpg",
     "retailers": []
   },
   {
@@ -4135,7 +4135,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Karanak.png",
+    "image": "Karanak.jpg",
     "retailers": []
   },
   {
@@ -4145,7 +4145,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kastelan_Robots.png",
+    "image": "Kastelan_Robots.jpg",
     "retailers": []
   },
   {
@@ -4155,7 +4155,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kataphron_Breachers.png",
+    "image": "Kataphron_Breachers.jpg",
     "retailers": []
   },
   {
@@ -4165,7 +4165,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kayvaan_Shrike.png",
+    "image": "Kayvaan_Shrike.jpg",
     "retailers": []
   },
   {
@@ -4175,7 +4175,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Keeper_of_Secrets.png",
+    "image": "Keeper_of_Secrets.jpg",
     "retailers": []
   },
   {
@@ -4185,7 +4185,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kelermorph.png",
+    "image": "Kelermorph.jpg",
     "retailers": []
   },
   {
@@ -4195,7 +4195,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Khorne_Berzerkers.png",
+    "image": "Khorne_Berzerkers.jpg",
     "retailers": []
   },
   {
@@ -4205,17 +4205,17 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Misc",
     "points": 0,
-    "image": "Khorne_Lord_of_Skulls.png",
+    "image": "Khorne_Lord_of_Skulls.jpg",
     "retailers": []
   },
   {
     "id": "418",
-    "name": "KhÃ¢rn the Betrayer",
+    "name": "Kharn the Betrayer",
     "game": "warhammer40k",
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "KhÃ¢rn_the_Betrayer.png",
+    "image": "Kharn_the_Betrayer.jpg",
     "retailers": []
   },
   {
@@ -4225,7 +4225,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Rig.png",
+    "image": "Kill_Rig.jpg",
     "retailers": []
   },
   {
@@ -4235,7 +4235,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Battleclade.png",
+    "image": "Kill_Team:_Battleclade.jpg",
     "retailers": []
   },
   {
@@ -4245,7 +4245,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Blades_of_Khaine.png",
+    "image": "Kill_Team:_Blades_of_Khaine.jpg",
     "retailers": []
   },
   {
@@ -4255,7 +4255,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Brood_Brothers.png",
+    "image": "Kill_Team:_Brood_Brothers.jpg",
     "retailers": []
   },
   {
@@ -4265,7 +4265,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Corsair_Voidscarred.png",
+    "image": "Kill_Team:_Corsair_Voidscarred.jpg",
     "retailers": []
   },
   {
@@ -4275,7 +4275,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Exaction_Squad.png",
+    "image": "Kill_Team:_Exaction_Squad.jpg",
     "retailers": []
   },
   {
@@ -4285,7 +4285,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Farstalker_Kinband.png",
+    "image": "Kill_Team:_Farstalker_Kinband.jpg",
     "retailers": []
   },
   {
@@ -4295,7 +4295,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Fellgor_Ravagers.png",
+    "image": "Kill_Team:_Fellgor_Ravagers.jpg",
     "retailers": []
   },
   {
@@ -4305,7 +4305,7 @@ export const Products: Product[] = [
     "faction": "Beasts of Chaos",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Goremongers.png",
+    "image": "Kill_Team:_Goremongers.jpg",
     "retailers": []
   },
   {
@@ -4315,7 +4315,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Hand_of_the_Archon.png",
+    "image": "Kill_Team:_Hand_of_the_Archon.jpg",
     "retailers": []
   },
   {
@@ -4325,7 +4325,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Hearthkyn_Salvagers.png",
+    "image": "Kill_Team:_Hearthkyn_Salvagers.jpg",
     "retailers": []
   },
   {
@@ -4335,7 +4335,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Hernkyn_Yaegirs.png",
+    "image": "Kill_Team:_Hernkyn_Yaegirs.jpg",
     "retailers": []
   },
   {
@@ -4345,7 +4345,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Hierotek_Circle.png",
+    "image": "Kill_Team:_Hierotek_Circle.jpg",
     "retailers": []
   },
   {
@@ -4355,7 +4355,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Imperial_Navy_Breachers.png",
+    "image": "Kill_Team:_Imperial_Navy_Breachers.jpg",
     "retailers": []
   },
   {
@@ -4365,7 +4365,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Hero",
     "points": 0,
-    "image": "Kill_Team:_Inquisitorial_Agents.png",
+    "image": "Kill_Team:_Inquisitorial_Agents.jpg",
     "retailers": []
   },
   {
@@ -4375,7 +4375,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Kasrkin.png",
+    "image": "Kill_Team:_Kasrkin.jpg",
     "retailers": []
   },
   {
@@ -4385,7 +4385,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Mandrakes.png",
+    "image": "Kill_Team:_Mandrakes.jpg",
     "retailers": []
   },
   {
@@ -4395,7 +4395,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Nemesis_Claw.png",
+    "image": "Kill_Team:_Nemesis_Claw.jpg",
     "retailers": []
   },
   {
@@ -4405,7 +4405,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Ratlings.png",
+    "image": "Kill_Team:_Ratlings.jpg",
     "retailers": []
   },
   {
@@ -4415,7 +4415,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Raveners.png",
+    "image": "Kill_Team:_Raveners.jpg",
     "retailers": []
   },
   {
@@ -4425,7 +4425,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Sanctifiers.png",
+    "image": "Kill_Team:_Sanctifiers.jpg",
     "retailers": []
   },
   {
@@ -4435,7 +4435,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Scout_Squad.png",
+    "image": "Kill_Team:_Scout_Squad.jpg",
     "retailers": []
   },
   {
@@ -4445,7 +4445,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Tempestus_Aquilons.png",
+    "image": "Kill_Team:_Tempestus_Aquilons.jpg",
     "retailers": []
   },
   {
@@ -4455,7 +4455,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Vespid_Stingwings.png",
+    "image": "Kill_Team:_Vespid_Stingwings.jpg",
     "retailers": []
   },
   {
@@ -4465,7 +4465,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kill_Team:_Wrecka_Krew.png",
+    "image": "Kill_Team:_Wrecka_Krew.jpg",
     "retailers": []
   },
   {
@@ -4475,7 +4475,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Killa_Kans.png",
+    "image": "Killa_Kans.jpg",
     "retailers": []
   },
   {
@@ -4485,7 +4485,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Accessories",
     "points": 0,
-    "image": "Killzone_Upgrade:_Compound_Siege.png",
+    "image": "Killzone_Upgrade:_Compound_Siege.jpg",
     "retailers": []
   },
   {
@@ -4495,7 +4495,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Killzone_Upgrade:_Tyranid_Infestation.png",
+    "image": "Killzone_Upgrade:_Tyranid_Infestation.jpg",
     "retailers": []
   },
   {
@@ -4505,7 +4505,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Killzone:_Volkus.png",
+    "image": "Killzone:_Volkus.jpg",
     "retailers": []
   },
   {
@@ -4515,7 +4515,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Knight_Castellan.png",
+    "image": "Knight_Castellan.jpg",
     "retailers": []
   },
   {
@@ -4525,7 +4525,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Knight_Preceptor/Canis_Rex.png",
+    "image": "Knight_Preceptor/Canis_Rex.jpg",
     "retailers": []
   },
   {
@@ -4535,7 +4535,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Knight_Questoris.png",
+    "image": "Knight_Questoris.jpg",
     "retailers": []
   },
   {
@@ -4545,7 +4545,7 @@ export const Products: Product[] = [
     "faction": "Chaos Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Knight_Ruinator.png",
+    "image": "Knight_Ruinator.jpg",
     "retailers": []
   },
   {
@@ -4555,7 +4555,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kommandos.png",
+    "image": "Kommandos.jpg",
     "retailers": []
   },
   {
@@ -4565,7 +4565,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kor'sarro_Khan.png",
+    "image": "Kor'sarro_Khan.jpg",
     "retailers": []
   },
   {
@@ -4575,7 +4575,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Krieg_Combat_Engineers.png",
+    "image": "Krieg_Combat_Engineers.jpg",
     "retailers": []
   },
   {
@@ -4585,7 +4585,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Krieg_Command_Squad.png",
+    "image": "Krieg_Command_Squad.jpg",
     "retailers": []
   },
   {
@@ -4595,7 +4595,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Krieg_Heavy_Weapons_Squad.png",
+    "image": "Krieg_Heavy_Weapons_Squad.jpg",
     "retailers": []
   },
   {
@@ -4605,7 +4605,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kroot_Carnivores.png",
+    "image": "Kroot_Carnivores.jpg",
     "retailers": []
   },
   {
@@ -4615,7 +4615,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kroot_Flesh_Shaper.png",
+    "image": "Kroot_Flesh_Shaper.jpg",
     "retailers": []
   },
   {
@@ -4625,7 +4625,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kroot_Hounds.png",
+    "image": "Kroot_Hounds.jpg",
     "retailers": []
   },
   {
@@ -4635,7 +4635,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kroot_Lone-spear.png",
+    "image": "Kroot_Lone-spear.jpg",
     "retailers": []
   },
   {
@@ -4645,7 +4645,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kroot_Trail_Shaper.png",
+    "image": "Kroot_Trail_Shaper.jpg",
     "retailers": []
   },
   {
@@ -4655,7 +4655,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kroot_War_Shaper.png",
+    "image": "Kroot_War_Shaper.jpg",
     "retailers": []
   },
   {
@@ -4665,7 +4665,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Krootox_Rampagers.png",
+    "image": "Krootox_Rampagers.jpg",
     "retailers": []
   },
   {
@@ -4675,7 +4675,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Krootox_Rider.png",
+    "image": "Krootox_Rider.jpg",
     "retailers": []
   },
   {
@@ -4685,17 +4685,17 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kustom_Boosta-blasta.png",
+    "image": "Kustom_Boosta-blasta.jpg",
     "retailers": []
   },
   {
     "id": "466",
-    "name": "KÃ¢hl",
+    "name": "Kahl",
     "game": "warhammer40k",
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "KÃ¢hl.png",
+    "image": "Kahl.jpg",
     "retailers": []
   },
   {
@@ -4705,7 +4705,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lady_Malys.png",
+    "image": "Lady_Malys.jpg",
     "retailers": []
   },
   {
@@ -4715,7 +4715,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Land_Raider.png",
+    "image": "Land_Raider.jpg",
     "retailers": []
   },
   {
@@ -4725,7 +4725,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Land_Raider_Crusader.png",
+    "image": "Land_Raider_Crusader.jpg",
     "retailers": []
   },
   {
@@ -4735,7 +4735,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Land_Raider_Redeemer.png",
+    "image": "Land_Raider_Redeemer.jpg",
     "retailers": []
   },
   {
@@ -4745,7 +4745,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Land_Speeder_Vengeance.png",
+    "image": "Land_Speeder_Vengeance.jpg",
     "retailers": []
   },
   {
@@ -4755,7 +4755,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Adrasite_Spears.png",
+    "image": "Legio_Custodes_Adrasite_Spears.jpg",
     "retailers": []
   },
   {
@@ -4765,7 +4765,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Aquilon_Terminators.png",
+    "image": "Legio_Custodes_Aquilon_Terminators.jpg",
     "retailers": []
   },
   {
@@ -4775,7 +4775,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Aquilon_Terminators_with_Infernus_Firepikes.png",
+    "image": "Legio_Custodes_Aquilon_Terminators_with_Infernus_Firepikes.jpg",
     "retailers": []
   },
   {
@@ -4785,7 +4785,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Ares_Gunship.png",
+    "image": "Legio_Custodes_Ares_Gunship.jpg",
     "retailers": []
   },
   {
@@ -4795,7 +4795,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Caladius_Grav-Tank.png",
+    "image": "Legio_Custodes_Caladius_Grav-Tank.jpg",
     "retailers": []
   },
   {
@@ -4805,7 +4805,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Caladius_Grav-tank_Annihilator.png",
+    "image": "Legio_Custodes_Caladius_Grav-tank_Annihilator.jpg",
     "retailers": []
   },
   {
@@ -4815,7 +4815,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Contemptor-Achillus_Dreadnought.png",
+    "image": "Legio_Custodes_Contemptor-Achillus_Dreadnought.jpg",
     "retailers": []
   },
   {
@@ -4825,7 +4825,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Contemptor-Galatus_Dreadnought.png",
+    "image": "Legio_Custodes_Contemptor-Galatus_Dreadnought.jpg",
     "retailers": []
   },
   {
@@ -4835,7 +4835,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Coronus_Grav-carrier.png",
+    "image": "Legio_Custodes_Coronus_Grav-carrier.jpg",
     "retailers": []
   },
   {
@@ -4845,7 +4845,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Custodian_Venatari_Squad.png",
+    "image": "Legio_Custodes_Custodian_Venatari_Squad.jpg",
     "retailers": []
   },
   {
@@ -4855,7 +4855,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Gyrfalcon_Pattern_Jetbike.png",
+    "image": "Legio_Custodes_Gyrfalcon_Pattern_Jetbike.jpg",
     "retailers": []
   },
   {
@@ -4865,7 +4865,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Orion_Assault_Dropship.png",
+    "image": "Legio_Custodes_Orion_Assault_Dropship.jpg",
     "retailers": []
   },
   {
@@ -4875,7 +4875,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Pallas_Grav-attack.png",
+    "image": "Legio_Custodes_Pallas_Grav-attack.jpg",
     "retailers": []
   },
   {
@@ -4885,7 +4885,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Pyrithite_Spears.png",
+    "image": "Legio_Custodes_Pyrithite_Spears.jpg",
     "retailers": []
   },
   {
@@ -4895,7 +4895,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Legio_Custodes_Sagittarum_Guard_Upgrade_Set.png",
+    "image": "Legio_Custodes_Sagittarum_Guard_Upgrade_Set.jpg",
     "retailers": []
   },
   {
@@ -4905,7 +4905,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Hero",
     "points": 0,
-    "image": "Legio_Custodes_Shield_Captain.png",
+    "image": "Legio_Custodes_Shield_Captain.jpg",
     "retailers": []
   },
   {
@@ -4915,7 +4915,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Telemon_Arachnus_Storm_Cannon.png",
+    "image": "Legio_Custodes_Telemon_Arachnus_Storm_Cannon.jpg",
     "retailers": []
   },
   {
@@ -4925,7 +4925,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Telemon_Caestus.png",
+    "image": "Legio_Custodes_Telemon_Caestus.jpg",
     "retailers": []
   },
   {
@@ -4935,7 +4935,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Telemon_Dreadnought_Iliastus_Accelerator_Culverin.png",
+    "image": "Legio_Custodes_Telemon_Dreadnought_Iliastus_Accelerator_Culverin.jpg",
     "retailers": []
   },
   {
@@ -4945,7 +4945,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legio_Custodes_Telemon_Heavy_Dreadnought_Body.png",
+    "image": "Legio_Custodes_Telemon_Heavy_Dreadnought_Body.jpg",
     "retailers": []
   },
   {
@@ -4955,7 +4955,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Legion_MKIII_Command_Upgrade_Set.png",
+    "image": "Legion_MKIII_Command_Upgrade_Set.jpg",
     "retailers": []
   },
   {
@@ -4965,7 +4965,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legion_Praetors.png",
+    "image": "Legion_Praetors.jpg",
     "retailers": []
   },
   {
@@ -4975,7 +4975,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legion_Thunderhawk_Gunship.png",
+    "image": "Legion_Thunderhawk_Gunship.jpg",
     "retailers": []
   },
   {
@@ -4985,7 +4985,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Legionaries.png",
+    "image": "Legionaries.jpg",
     "retailers": []
   },
   {
@@ -4995,7 +4995,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lelith_Hesperax.png",
+    "image": "Lelith_Hesperax.jpg",
     "retailers": []
   },
   {
@@ -5005,7 +5005,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Leman_Russ_Battle_Tank.png",
+    "image": "Leman_Russ_Battle_Tank.jpg",
     "retailers": []
   },
   {
@@ -5015,7 +5015,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lemartes.png",
+    "image": "Lemartes.jpg",
     "retailers": []
   },
   {
@@ -5025,7 +5025,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lhykhis.png",
+    "image": "Lhykhis.jpg",
     "retailers": []
   },
   {
@@ -5035,7 +5035,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Librarian_in_Terminator_Armour.png",
+    "image": "Librarian_in_Terminator_Armour.jpg",
     "retailers": []
   },
   {
@@ -5045,7 +5045,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lictor.png",
+    "image": "Lictor.jpg",
     "retailers": []
   },
   {
@@ -5055,7 +5055,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Lieutenant_in_Reiver_Armour.png",
+    "image": "Lieutenant_in_Reiver_Armour.jpg",
     "retailers": []
   },
   {
@@ -5065,7 +5065,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Lieutenant_with_Power_Sword.png",
+    "image": "Lieutenant_with_Power_Sword.jpg",
     "retailers": []
   },
   {
@@ -5075,7 +5075,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Hero",
     "points": 0,
-    "image": "Lieutenant_with_Storm_Shield.png",
+    "image": "Lieutenant_with_Storm_Shield.jpg",
     "retailers": []
   },
   {
@@ -5085,7 +5085,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lion_El'Jonson.png",
+    "image": "Lion_El'Jonson.jpg",
     "retailers": []
   },
   {
@@ -5095,7 +5095,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Locus.png",
+    "image": "Locus.jpg",
     "retailers": []
   },
   {
@@ -5105,7 +5105,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Logan_Grimnar.png",
+    "image": "Logan_Grimnar.jpg",
     "retailers": []
   },
   {
@@ -5115,7 +5115,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lokhust_Destroyer_Squadron.png",
+    "image": "Lokhust_Destroyer_Squadron.jpg",
     "retailers": []
   },
   {
@@ -5125,7 +5125,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lokhust_Heavy_Destroyer.png",
+    "image": "Lokhust_Heavy_Destroyer.jpg",
     "retailers": []
   },
   {
@@ -5135,7 +5135,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_Castellan_Ursula_Creed.png",
+    "image": "Lord_Castellan_Ursula_Creed.jpg",
     "retailers": []
   },
   {
@@ -5145,7 +5145,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_Discordant_on_Helstalker.png",
+    "image": "Lord_Discordant_on_Helstalker.jpg",
     "retailers": []
   },
   {
@@ -5155,7 +5155,7 @@ export const Products: Product[] = [
     "faction": "Emperor's Children",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_Exultant.png",
+    "image": "Lord_Exultant.jpg",
     "retailers": []
   },
   {
@@ -5165,7 +5165,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_Inquisitor_Kyria_Draxus.png",
+    "image": "Lord_Inquisitor_Kyria_Draxus.jpg",
     "retailers": []
   },
   {
@@ -5175,7 +5175,7 @@ export const Products: Product[] = [
     "faction": "Emperor's Children",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_Kakophonist.png",
+    "image": "Lord_Kakophonist.jpg",
     "retailers": []
   },
   {
@@ -5185,7 +5185,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_Marshal_Dreir.png",
+    "image": "Lord_Marshal_Dreir.jpg",
     "retailers": []
   },
   {
@@ -5195,7 +5195,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_Solar_Leontus.png",
+    "image": "Lord_Solar_Leontus.jpg",
     "retailers": []
   },
   {
@@ -5205,7 +5205,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_of_Change.png",
+    "image": "Lord_of_Change.jpg",
     "retailers": []
   },
   {
@@ -5215,7 +5215,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_of_Contagion_with_Blightlord_Terminators.png",
+    "image": "Lord_of_Contagion_with_Blightlord_Terminators.jpg",
     "retailers": []
   },
   {
@@ -5225,7 +5225,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_of_Poxes.png",
+    "image": "Lord_of_Poxes.jpg",
     "retailers": []
   },
   {
@@ -5235,7 +5235,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_of_Virulence.png",
+    "image": "Lord_of_Virulence.jpg",
     "retailers": []
   },
   {
@@ -5245,7 +5245,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_on_Juggernaut.png",
+    "image": "Lord_on_Juggernaut.jpg",
     "retailers": []
   },
   {
@@ -5255,7 +5255,7 @@ export const Products: Product[] = [
     "faction": "Emperor's Children",
     "category": "Named Hero",
     "points": 0,
-    "image": "Lucius_the_Eternal.png",
+    "image": "Lucius_the_Eternal.jpg",
     "retailers": []
   },
   {
@@ -5265,7 +5265,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lychguard.png",
+    "image": "Lychguard.jpg",
     "retailers": []
   },
   {
@@ -5275,7 +5275,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "MKIV_Command_Set.png",
+    "image": "MKIV_Command_Set.jpg",
     "retailers": []
   },
   {
@@ -5285,7 +5285,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Magnus_the_Red,_Daemon_Primarch_of_Tzeentch.png",
+    "image": "Magnus_the_Red,_Daemon_Primarch_of_Tzeentch.jpg",
     "retailers": []
   },
   {
@@ -5295,7 +5295,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Magus.png",
+    "image": "Magus.jpg",
     "retailers": []
   },
   {
@@ -5305,7 +5305,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Malcador_Defender.png",
+    "image": "Malcador_Defender.jpg",
     "retailers": []
   },
   {
@@ -5315,7 +5315,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Maleceptor.png",
+    "image": "Maleceptor.jpg",
     "retailers": []
   },
   {
@@ -5325,7 +5325,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Manticore.png",
+    "image": "Manticore.jpg",
     "retailers": []
   },
   {
@@ -5335,7 +5335,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mars_Pattern_Reaver_Titan_(Body_Only).png",
+    "image": "Mars_Pattern_Reaver_Titan_(Body_Only).jpg",
     "retailers": []
   },
   {
@@ -5345,7 +5345,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mars_Pattern_Warhound_Titan_Body.png",
+    "image": "Mars_Pattern_Warhound_Titan_Body.jpg",
     "retailers": []
   },
   {
@@ -5355,7 +5355,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Hero",
     "points": 0,
-    "image": "Mars_Pattern_Warlord_Titan_Body.png",
+    "image": "Mars_Pattern_Warlord_Titan_Body.jpg",
     "retailers": []
   },
   {
@@ -5365,7 +5365,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Master_Lazarus.png",
+    "image": "Master_Lazarus.jpg",
     "retailers": []
   },
   {
@@ -5375,7 +5375,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Master_of_Executions.png",
+    "image": "Master_of_Executions.jpg",
     "retailers": []
   },
   {
@@ -5385,7 +5385,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Master_of_Possession.png",
+    "image": "Master_of_Possession.jpg",
     "retailers": []
   },
   {
@@ -5395,7 +5395,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Maugan_Ra.png",
+    "image": "Maugan_Ra.jpg",
     "retailers": []
   },
   {
@@ -5405,7 +5405,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mawloc.png",
+    "image": "Mawloc.jpg",
     "retailers": []
   },
   {
@@ -5415,7 +5415,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mechanicum_Cerastus_Knight-Atrapos.png",
+    "image": "Mechanicum_Cerastus_Knight-Atrapos.jpg",
     "retailers": []
   },
   {
@@ -5425,7 +5425,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mechanicum_Knight_Moirax_Conversion_Beam_Cannon.png",
+    "image": "Mechanicum_Knight_Moirax_Conversion_Beam_Cannon.jpg",
     "retailers": []
   },
   {
@@ -5435,7 +5435,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mechanicum_Knight_Moirax_Graviton_Pulsar.png",
+    "image": "Mechanicum_Knight_Moirax_Graviton_Pulsar.jpg",
     "retailers": []
   },
   {
@@ -5445,7 +5445,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mechanicum_Knight_Moirax_with_Lightning_Locks.png",
+    "image": "Mechanicum_Knight_Moirax_with_Lightning_Locks.jpg",
     "retailers": []
   },
   {
@@ -5455,7 +5455,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mechanicum_Knight_Moirax_with_Volkite_Veuglaire_and_Gyges_Siege_Claw.png",
+    "image": "Mechanicum_Knight_Moirax_with_Volkite_Veuglaire_and_Gyges_Siege_Claw.jpg",
     "retailers": []
   },
   {
@@ -5465,7 +5465,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Meganobz.png",
+    "image": "Meganobz.jpg",
     "retailers": []
   },
   {
@@ -5475,7 +5475,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Megatrakk_Scrapjet.png",
+    "image": "Megatrakk_Scrapjet.jpg",
     "retailers": []
   },
   {
@@ -5485,7 +5485,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mek_Gunz:_Kustom_Mega-kannon.png",
+    "image": "Mek_Gunz:_Kustom_Mega-kannon.jpg",
     "retailers": []
   },
   {
@@ -5495,7 +5495,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Memnyr_Strategist.png",
+    "image": "Memnyr_Strategist.jpg",
     "retailers": []
   },
   {
@@ -5505,7 +5505,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Named Hero",
     "points": 0,
-    "image": "Mephiston.png",
+    "image": "Mephiston.jpg",
     "retailers": []
   },
   {
@@ -5515,7 +5515,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Miasmic_Malignifier.png",
+    "image": "Miasmic_Malignifier.jpg",
     "retailers": []
   },
   {
@@ -5525,7 +5525,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Middle-earthâ¢_Strategy_Battle_Game:_The_Best_of_White_Dwarf_Magazine_(ePub).png",
+    "image": "Middle-earthâ¢_Strategy_Battle_Game:_The_Best_of_White_Dwarf_Magazine_(ePub).jpg",
     "retailers": []
   },
   {
@@ -5535,7 +5535,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Hero",
     "points": 0,
-    "image": "Ministorum_Priest.png",
+    "image": "Ministorum_Priest.jpg",
     "retailers": []
   },
   {
@@ -5545,7 +5545,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Hero",
     "points": 0,
-    "image": "Ministorum_Priest_with_Vindictor.png",
+    "image": "Ministorum_Priest_with_Vindictor.jpg",
     "retailers": []
   },
   {
@@ -5555,7 +5555,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Monolith.png",
+    "image": "Monolith.jpg",
     "retailers": []
   },
   {
@@ -5565,7 +5565,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mortarion,_Daemon_Primarch_of_Nurgle.png",
+    "image": "Mortarion,_Daemon_Primarch_of_Nurgle.jpg",
     "retailers": []
   },
   {
@@ -5575,7 +5575,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mortifiers.png",
+    "image": "Mortifiers.jpg",
     "retailers": []
   },
   {
@@ -5585,7 +5585,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Named Hero",
     "points": 0,
-    "image": "Morvenn_Vahl,_Abbess_Sanctorum_of_the_Adepta_Sororitas.png",
+    "image": "Morvenn_Vahl,_Abbess_Sanctorum_of_the_Adepta_Sororitas.jpg",
     "retailers": []
   },
   {
@@ -5595,7 +5595,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mutalith_Vortex_Beast.png",
+    "image": "Mutalith_Vortex_Beast.jpg",
     "retailers": []
   },
   {
@@ -5605,7 +5605,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Myphitic_Blight-hauler.png",
+    "image": "Myphitic_Blight-hauler.jpg",
     "retailers": []
   },
   {
@@ -5615,7 +5615,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Nauseous_Rotbone,_the_Plague_Surgeon.png",
+    "image": "Nauseous_Rotbone,_the_Plague_Surgeon.jpg",
     "retailers": []
   },
   {
@@ -5625,7 +5625,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Navigator.png",
+    "image": "Navigator.jpg",
     "retailers": []
   },
   {
@@ -5635,7 +5635,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Necron_Catacomb_Command_Barge.png",
+    "image": "Necron_Catacomb_Command_Barge.jpg",
     "retailers": []
   },
   {
@@ -5645,7 +5645,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Necron_Warriors.png",
+    "image": "Necron_Warriors.jpg",
     "retailers": []
   },
   {
@@ -5655,7 +5655,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Necrons_Royal_Court.png",
+    "image": "Necrons_Royal_Court.jpg",
     "retailers": []
   },
   {
@@ -5665,7 +5665,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Neophyte_Hybrids.png",
+    "image": "Neophyte_Hybrids.jpg",
     "retailers": []
   },
   {
@@ -5675,7 +5675,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Neurogaunts.png",
+    "image": "Neurogaunts.jpg",
     "retailers": []
   },
   {
@@ -5685,7 +5685,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Neurolictor.png",
+    "image": "Neurolictor.jpg",
     "retailers": []
   },
   {
@@ -5695,7 +5695,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Nexos.png",
+    "image": "Nexos.jpg",
     "retailers": []
   },
   {
@@ -5705,7 +5705,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Night_Scythe.png",
+    "image": "Night_Scythe.jpg",
     "retailers": []
   },
   {
@@ -5715,7 +5715,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Njal_Stormcaller.png",
+    "image": "Njal_Stormcaller.jpg",
     "retailers": []
   },
   {
@@ -5725,7 +5725,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "Noctilith_Crown.png",
+    "image": "Noctilith_Crown.jpg",
     "retailers": []
   },
   {
@@ -5735,7 +5735,7 @@ export const Products: Product[] = [
     "faction": "Emperor's Children",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Noise_Marines.png",
+    "image": "Noise_Marines.jpg",
     "retailers": []
   },
   {
@@ -5745,7 +5745,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Norn_Assimilator.png",
+    "image": "Norn_Assimilator.jpg",
     "retailers": []
   },
   {
@@ -5755,7 +5755,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Norn_Emissary.png",
+    "image": "Norn_Emissary.jpg",
     "retailers": []
   },
   {
@@ -5765,7 +5765,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Nurglings.png",
+    "image": "Nurglings.jpg",
     "retailers": []
   },
   {
@@ -5775,7 +5775,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Obelisk_&_Transcendent_C'tan.png",
+    "image": "Obelisk_&_Transcendent_C'tan.jpg",
     "retailers": []
   },
   {
@@ -5785,7 +5785,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ogryns.png",
+    "image": "Ogryns.jpg",
     "retailers": []
   },
   {
@@ -5795,7 +5795,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ophydian_Destroyers.png",
+    "image": "Ophydian_Destroyers.jpg",
     "retailers": []
   },
   {
@@ -5805,7 +5805,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Orikan_the_Diviner.png",
+    "image": "Orikan_the_Diviner.jpg",
     "retailers": []
   },
   {
@@ -5815,7 +5815,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Beast_Snagga_Boyz.png",
+    "image": "Ork_Beast_Snagga_Boyz.jpg",
     "retailers": []
   },
   {
@@ -5825,7 +5825,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Boyz.png",
+    "image": "Ork_Boyz.jpg",
     "retailers": []
   },
   {
@@ -5835,7 +5835,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Burna_Boyz.png",
+    "image": "Ork_Burna_Boyz.jpg",
     "retailers": []
   },
   {
@@ -5845,7 +5845,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Gargantuan_Squiggoth.png",
+    "image": "Ork_Gargantuan_Squiggoth.jpg",
     "retailers": []
   },
   {
@@ -5855,7 +5855,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Gretchin.png",
+    "image": "Ork_Gretchin.jpg",
     "retailers": []
   },
   {
@@ -5865,7 +5865,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Lootas.png",
+    "image": "Ork_Lootas.jpg",
     "retailers": []
   },
   {
@@ -5875,7 +5875,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Mek.png",
+    "image": "Ork_Mek.jpg",
     "retailers": []
   },
   {
@@ -5885,7 +5885,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Nobz.png",
+    "image": "Ork_Nobz.jpg",
     "retailers": []
   },
   {
@@ -5895,7 +5895,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Painboy.png",
+    "image": "Ork_Painboy.jpg",
     "retailers": []
   },
   {
@@ -5905,7 +5905,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Stormboyz.png",
+    "image": "Ork_Stormboyz.jpg",
     "retailers": []
   },
   {
@@ -5915,7 +5915,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ork_Warbiker_Mob.png",
+    "image": "Ork_Warbiker_Mob.jpg",
     "retailers": []
   },
   {
@@ -5925,7 +5925,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Hero",
     "points": 0,
-    "image": "Ork_Warboss_with_Attack_Squig.png",
+    "image": "Ork_Warboss_with_Attack_Squig.jpg",
     "retailers": []
   },
   {
@@ -5935,7 +5935,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Outriders.png",
+    "image": "Outriders.jpg",
     "retailers": []
   },
   {
@@ -5945,7 +5945,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Hero",
     "points": 0,
-    "image": "Overlord_with_Tachyon_Arrow.png",
+    "image": "Overlord_with_Tachyon_Arrow.jpg",
     "retailers": []
   },
   {
@@ -5955,7 +5955,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Hero",
     "points": 0,
-    "image": "Overlord_with_Translocation_Shroud.png",
+    "image": "Overlord_with_Translocation_Shroud.jpg",
     "retailers": []
   },
   {
@@ -5965,7 +5965,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Painboss.png",
+    "image": "Painboss.jpg",
     "retailers": []
   },
   {
@@ -5975,7 +5975,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Palatine.png",
+    "image": "Palatine.jpg",
     "retailers": []
   },
   {
@@ -5985,7 +5985,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Paragon_Warsuits.png",
+    "image": "Paragon_Warsuits.jpg",
     "retailers": []
   },
   {
@@ -5995,7 +5995,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Parasite_of_Mortrex.png",
+    "image": "Parasite_of_Mortrex.jpg",
     "retailers": []
   },
   {
@@ -6005,7 +6005,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Pathfinder_Team.png",
+    "image": "Pathfinder_Team.jpg",
     "retailers": []
   },
   {
@@ -6015,7 +6015,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Penitent_Engines.png",
+    "image": "Penitent_Engines.jpg",
     "retailers": []
   },
   {
@@ -6025,7 +6025,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Pink_Horrors.png",
+    "image": "Pink_Horrors.jpg",
     "retailers": []
   },
   {
@@ -6035,7 +6035,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Piranha.png",
+    "image": "Piranha.jpg",
     "retailers": []
   },
   {
@@ -6045,7 +6045,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Plague_Drones.png",
+    "image": "Plague_Drones.jpg",
     "retailers": []
   },
   {
@@ -6055,7 +6055,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Plague_Marine_Champion.png",
+    "image": "Plague_Marine_Champion.jpg",
     "retailers": []
   },
   {
@@ -6065,7 +6065,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Plague_Marine_Icon_Bearer.png",
+    "image": "Plague_Marine_Icon_Bearer.jpg",
     "retailers": []
   },
   {
@@ -6075,17 +6075,17 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Plague_Marines.png",
+    "image": "Plague_Marines.jpg",
     "retailers": []
   },
   {
     "id": "605",
     "name": "Plaguebearers",
     "game": "ageofsigmar",
-    "faction": "Slaves to Darkness",
+    "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Plaguebearers.png",
+    "image": "Plaguebearers.jpg",
     "retailers": []
   },
   {
@@ -6095,7 +6095,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Plagueburst_Crawler.png",
+    "image": "Plagueburst_Crawler.jpg",
     "retailers": []
   },
   {
@@ -6105,7 +6105,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Possessed.png",
+    "image": "Possessed.jpg",
     "retailers": []
   },
   {
@@ -6115,7 +6115,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Poxbringer.png",
+    "image": "Poxbringer.jpg",
     "retailers": []
   },
   {
@@ -6125,7 +6125,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Poxwalkers.png",
+    "image": "Poxwalkers.jpg",
     "retailers": []
   },
   {
@@ -6135,7 +6135,7 @@ export const Products: Product[] = [
     "faction": "Death Guard",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Predator_Destructor.png",
+    "image": "Predator_Destructor.jpg",
     "retailers": []
   },
   {
@@ -6145,7 +6145,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Primaris_Crusader_Squad.png",
+    "image": "Primaris_Crusader_Squad.jpg",
     "retailers": []
   },
   {
@@ -6155,7 +6155,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Primaris_Eradicators.png",
+    "image": "Primaris_Eradicators.jpg",
     "retailers": []
   },
   {
@@ -6165,7 +6165,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Primaris_Impulsor.png",
+    "image": "Primaris_Impulsor.jpg",
     "retailers": []
   },
   {
@@ -6175,7 +6175,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Primaris_Invader_ATV.png",
+    "image": "Primaris_Invader_ATV.jpg",
     "retailers": []
   },
   {
@@ -6185,7 +6185,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Primaris_Librarian.png",
+    "image": "Primaris_Librarian.jpg",
     "retailers": []
   },
   {
@@ -6195,7 +6195,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Primaris_Librarian_in_Phobos_Armour.png",
+    "image": "Primaris_Librarian_in_Phobos_Armour.jpg",
     "retailers": []
   },
   {
@@ -6205,7 +6205,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Primaris_Psyker.png",
+    "image": "Primaris_Psyker.jpg",
     "retailers": []
   },
   {
@@ -6215,7 +6215,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Primaris_Redemptor_Dreadnought.png",
+    "image": "Primaris_Redemptor_Dreadnought.jpg",
     "retailers": []
   },
   {
@@ -6225,7 +6225,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Primaris_Repulsor.png",
+    "image": "Primaris_Repulsor.jpg",
     "retailers": []
   },
   {
@@ -6235,7 +6235,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Psychomancer.png",
+    "image": "Psychomancer.jpg",
     "retailers": []
   },
   {
@@ -6245,7 +6245,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Psychophage.png",
+    "image": "Psychophage.jpg",
     "retailers": []
   },
   {
@@ -6255,7 +6255,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Pteraxii_Skystalkers.png",
+    "image": "Pteraxii_Skystalkers.jpg",
     "retailers": []
   },
   {
@@ -6265,7 +6265,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Pyrovore.png",
+    "image": "Pyrovore.jpg",
     "retailers": []
   },
   {
@@ -6275,7 +6275,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Questoris_Knight_Magaera.png",
+    "image": "Questoris_Knight_Magaera.jpg",
     "retailers": []
   },
   {
@@ -6285,7 +6285,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Questoris_Knight_Styrix.png",
+    "image": "Questoris_Knight_Styrix.jpg",
     "retailers": []
   },
   {
@@ -6295,7 +6295,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ragnar_Blackmane.png",
+    "image": "Ragnar_Blackmane.jpg",
     "retailers": []
   },
   {
@@ -6305,7 +6305,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Raider.png",
+    "image": "Raider.jpg",
     "retailers": []
   },
   {
@@ -6315,7 +6315,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Rangers.png",
+    "image": "Rangers.jpg",
     "retailers": []
   },
   {
@@ -6325,7 +6325,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Raptors.png",
+    "image": "Raptors.jpg",
     "retailers": []
   },
   {
@@ -6335,7 +6335,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ravager.png",
+    "image": "Ravager.jpg",
     "retailers": []
   },
   {
@@ -6345,7 +6345,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Raven_Guard_Primaris_Upgrades_and_Transfers.png",
+    "image": "Raven_Guard_Primaris_Upgrades_and_Transfers.jpg",
     "retailers": []
   },
   {
@@ -6355,7 +6355,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ravenwing_Bike_Squadron.png",
+    "image": "Ravenwing_Bike_Squadron.jpg",
     "retailers": []
   },
   {
@@ -6365,7 +6365,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ravenwing_Black_Knights.png",
+    "image": "Ravenwing_Black_Knights.jpg",
     "retailers": []
   },
   {
@@ -6375,7 +6375,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ravenwing_Dark_Talon.png",
+    "image": "Ravenwing_Dark_Talon.jpg",
     "retailers": []
   },
   {
@@ -6385,7 +6385,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Razorwing_Jetfighter.png",
+    "image": "Razorwing_Jetfighter.jpg",
     "retailers": []
   },
   {
@@ -6395,7 +6395,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Reavers.png",
+    "image": "Reavers.jpg",
     "retailers": []
   },
   {
@@ -6405,7 +6405,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Reductus_Saboteur.png",
+    "image": "Reductus_Saboteur.jpg",
     "retailers": []
   },
   {
@@ -6415,7 +6415,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Reiver_Squad.png",
+    "image": "Reiver_Squad.jpg",
     "retailers": []
   },
   {
@@ -6425,7 +6425,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Repentia_Squad.png",
+    "image": "Repentia_Squad.jpg",
     "retailers": []
   },
   {
@@ -6435,7 +6435,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Repulsor_Executioner.png",
+    "image": "Repulsor_Executioner.jpg",
     "retailers": []
   },
   {
@@ -6445,7 +6445,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Retributor_Squad.png",
+    "image": "Retributor_Squad.jpg",
     "retailers": []
   },
   {
@@ -6455,7 +6455,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Rhino.png",
+    "image": "Rhino.jpg",
     "retailers": []
   },
   {
@@ -6465,7 +6465,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Named Hero",
     "points": 0,
-    "image": "Roboute_Guilliman.png",
+    "image": "Roboute_Guilliman.jpg",
     "retailers": []
   },
   {
@@ -6475,7 +6475,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Rogal_Dorn_Battle_Tank.png",
+    "image": "Rogal_Dorn_Battle_Tank.jpg",
     "retailers": []
   },
   {
@@ -6485,7 +6485,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Rogue_Trader_Entourage_and_Voidsmen-at-Arms.png",
+    "image": "Rogue_Trader_Entourage_and_Voidsmen-at-Arms.jpg",
     "retailers": []
   },
   {
@@ -6495,7 +6495,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Royal_Warden.png",
+    "image": "Royal_Warden.jpg",
     "retailers": []
   },
   {
@@ -6505,7 +6505,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Rubric_Marines.png",
+    "image": "Rubric_Marines.jpg",
     "retailers": []
   },
   {
@@ -6515,7 +6515,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Rukkatrukk_Squigbuggy.png",
+    "image": "Rukkatrukk_Squigbuggy.jpg",
     "retailers": []
   },
   {
@@ -6525,7 +6525,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sagitaur.png",
+    "image": "Sagitaur.jpg",
     "retailers": []
   },
   {
@@ -6535,7 +6535,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Salamanders_Primaris_Upgrades_and_Transfers.png",
+    "image": "Salamanders_Primaris_Upgrades_and_Transfers.jpg",
     "retailers": []
   },
   {
@@ -6545,7 +6545,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sammael.png",
+    "image": "Sammael.jpg",
     "retailers": []
   },
   {
@@ -6555,7 +6555,7 @@ export const Products: Product[] = [
     "faction": "Genestealer Cults",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sanctus.png",
+    "image": "Sanctus.jpg",
     "retailers": []
   },
   {
@@ -6565,7 +6565,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sanguinary_Guard.png",
+    "image": "Sanguinary_Guard.jpg",
     "retailers": []
   },
   {
@@ -6575,7 +6575,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Hero",
     "points": 0,
-    "image": "Sanguinary_Priest.png",
+    "image": "Sanguinary_Priest.jpg",
     "retailers": []
   },
   {
@@ -6585,7 +6585,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Scarab_Occult_Terminators.png",
+    "image": "Scarab_Occult_Terminators.jpg",
     "retailers": []
   },
   {
@@ -6595,7 +6595,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Scourges.png",
+    "image": "Scourges.jpg",
     "retailers": []
   },
   {
@@ -6605,7 +6605,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Screamers.png",
+    "image": "Screamers.jpg",
     "retailers": []
   },
   {
@@ -6615,7 +6615,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Scribbus_Wretch,_the_Tallyman.png",
+    "image": "Scribbus_Wretch,_the_Tallyman.jpg",
     "retailers": []
   },
   {
@@ -6625,7 +6625,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Terrain",
     "points": 0,
-    "image": "Sector_Imperialis_Ruins.png",
+    "image": "Sector_Imperialis_Ruins.jpg",
     "retailers": []
   },
   {
@@ -6635,7 +6635,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "Sector_Mechanicus_Sacristan_Forgeshrine.png",
+    "image": "Sector_Mechanicus_Sacristan_Forgeshrine.jpg",
     "retailers": []
   },
   {
@@ -6645,7 +6645,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Seeker_Chariot.png",
+    "image": "Seeker_Chariot.jpg",
     "retailers": []
   },
   {
@@ -6655,7 +6655,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Seekers_of_Slaanesh.png",
+    "image": "Seekers_of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -6665,7 +6665,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sekhetar_Robots.png",
+    "image": "Sekhetar_Robots.jpg",
     "retailers": []
   },
   {
@@ -6675,7 +6675,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Seraphim_Squad.png",
+    "image": "Seraphim_Squad.jpg",
     "retailers": []
   },
   {
@@ -6685,7 +6685,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Seraptek_Heavy_Construct_with_Synaptic_Obliterators.png",
+    "image": "Seraptek_Heavy_Construct_with_Synaptic_Obliterators.jpg",
     "retailers": []
   },
   {
@@ -6695,7 +6695,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Serberys_Raiders.png",
+    "image": "Serberys_Raiders.jpg",
     "retailers": []
   },
   {
@@ -6705,7 +6705,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Shadowseer.png",
+    "image": "Shadowseer.jpg",
     "retailers": []
   },
   {
@@ -6715,7 +6715,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Hero",
     "points": 0,
-    "image": "Shield-Captain.png",
+    "image": "Shield-Captain.jpg",
     "retailers": []
   },
   {
@@ -6725,7 +6725,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Shining_Spears.png",
+    "image": "Shining_Spears.jpg",
     "retailers": []
   },
   {
@@ -6735,7 +6735,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Shokkjump_Dragsta.png",
+    "image": "Shokkjump_Dragsta.jpg",
     "retailers": []
   },
   {
@@ -6745,7 +6745,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Shroud_Runners.png",
+    "image": "Shroud_Runners.jpg",
     "retailers": []
   },
   {
@@ -6755,7 +6755,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sicarian_Infiltrators.png",
+    "image": "Sicarian_Infiltrators.jpg",
     "retailers": []
   },
   {
@@ -6765,7 +6765,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sister_Dogmata.png",
+    "image": "Sister_Dogmata.jpg",
     "retailers": []
   },
   {
@@ -6775,7 +6775,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sister_Superior_Amalia_Novena.png",
+    "image": "Sister_Superior_Amalia_Novena.jpg",
     "retailers": []
   },
   {
@@ -6785,7 +6785,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sisters_Novitiate_Squad.png",
+    "image": "Sisters_Novitiate_Squad.jpg",
     "retailers": []
   },
   {
@@ -6795,7 +6795,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skarbrand.png",
+    "image": "Skarbrand.jpg",
     "retailers": []
   },
   {
@@ -6805,7 +6805,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Hero",
     "points": 0,
-    "image": "Skitarii_Marshal.png",
+    "image": "Skitarii_Marshal.jpg",
     "retailers": []
   },
   {
@@ -6815,7 +6815,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skitarii_Rangers.png",
+    "image": "Skitarii_Rangers.jpg",
     "retailers": []
   },
   {
@@ -6825,7 +6825,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skorpekh_Destroyers.png",
+    "image": "Skorpekh_Destroyers.jpg",
     "retailers": []
   },
   {
@@ -6835,7 +6835,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skorpius_Dunerider.png",
+    "image": "Skorpius_Dunerider.jpg",
     "retailers": []
   },
   {
@@ -6845,7 +6845,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Misc",
     "points": 0,
-    "image": "Skull_Altar.png",
+    "image": "Skull_Altar.jpg",
     "retailers": []
   },
   {
@@ -6855,7 +6855,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Misc",
     "points": 0,
-    "image": "Skull_Cannon.png",
+    "image": "Skull_Cannon.jpg",
     "retailers": []
   },
   {
@@ -6865,7 +6865,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Misc",
     "points": 0,
-    "image": "Skulltaker.png",
+    "image": "Skulltaker.jpg",
     "retailers": []
   },
   {
@@ -6875,7 +6875,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skyweavers.png",
+    "image": "Skyweavers.jpg",
     "retailers": []
   },
   {
@@ -6885,7 +6885,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Slaughterbound.png",
+    "image": "Slaughterbound.jpg",
     "retailers": []
   },
   {
@@ -6895,7 +6895,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sloppity_Bilepiper.png",
+    "image": "Sloppity_Bilepiper.jpg",
     "retailers": []
   },
   {
@@ -6905,7 +6905,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sly_Marbo.png",
+    "image": "Sly_Marbo.jpg",
     "retailers": []
   },
   {
@@ -6915,7 +6915,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Solitaire.png",
+    "image": "Solitaire.jpg",
     "retailers": []
   },
   {
@@ -6925,7 +6925,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Soul_Grinder.png",
+    "image": "Soul_Grinder.jpg",
     "retailers": []
   },
   {
@@ -6935,7 +6935,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Hero",
     "points": 0,
-    "image": "Space_Marine_Captain.png",
+    "image": "Space_Marine_Captain.jpg",
     "retailers": []
   },
   {
@@ -6945,7 +6945,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Space_Marines:_Honoured_of_the_Chapter.png",
+    "image": "HonouredoftheChapter.jpg",
     "retailers": []
   },
   {
@@ -6955,7 +6955,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Paints",
     "points": 0,
-    "image": "Space_Marines:_Infernus_Marines_+_Paints_Set.png",
+    "image": "Space_Marines:_Infernus_Marines_+_Paints_Set.jpg",
     "retailers": []
   },
   {
@@ -6965,7 +6965,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Space_Marines:_Lieutenant.png",
+    "image": "Space_Marines:_Lieutenant.jpg",
     "retailers": []
   },
   {
@@ -6975,7 +6975,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Space_Wolves_Primaris_Upgrades.png",
+    "image": "Space_Wolves_Primaris_Upgrades.jpg",
     "retailers": []
   },
   {
@@ -6985,7 +6985,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Space_Wolves_Venerable_Dreadnought.png",
+    "image": "Space_Wolves_Venerable_Dreadnought.jpg",
     "retailers": []
   },
   {
@@ -6995,7 +6995,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Blades_of_Khorne__Fangs_of_the_Blood_God.png",
+    "image": "Spearhead:_Blades_of_Khorne__Fangs_of_the_Blood_God.jpg",
     "retailers": []
   },
   {
@@ -7005,7 +7005,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Disciples_of_Tzeentch.png",
+    "image": "Spearhead:_Disciples_of_Tzeentch.jpg",
     "retailers": []
   },
   {
@@ -7015,7 +7015,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Maggotkin_of_Nurgle.png",
+    "image": "Spearhead:_Maggotkin_of_Nurgle.jpg",
     "retailers": []
   },
   {
@@ -7025,7 +7025,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Hero",
     "points": 0,
-    "image": "Spiritseer.png",
+    "image": "Spiritseer.jpg",
     "retailers": []
   },
   {
@@ -7035,7 +7035,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Squighog_Boyz.png",
+    "image": "Squighog_Boyz.jpg",
     "retailers": []
   },
   {
@@ -7045,7 +7045,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Starweaver.png",
+    "image": "Starweaver.jpg",
     "retailers": []
   },
   {
@@ -7055,7 +7055,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stealth_Battlesuits.png",
+    "image": "Stealth_Battlesuits.jpg",
     "retailers": []
   },
   {
@@ -7065,7 +7065,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sternguard_Veteran_Squad.png",
+    "image": "Sternguard_Veteran_Squad.jpg",
     "retailers": []
   },
   {
@@ -7075,7 +7075,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stompa.png",
+    "image": "Stompa.jpg",
     "retailers": []
   },
   {
@@ -7085,7 +7085,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Storm_Speeder_Hailstrike.png",
+    "image": "Storm_Speeder_Hailstrike.jpg",
     "retailers": []
   },
   {
@@ -7095,7 +7095,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stormhawk_Interceptor.png",
+    "image": "Stormhawk_Interceptor.jpg",
     "retailers": []
   },
   {
@@ -7105,7 +7105,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stormraven_Gunship.png",
+    "image": "Stormraven_Gunship.jpg",
     "retailers": []
   },
   {
@@ -7115,7 +7115,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Succubus.png",
+    "image": "Succubus.jpg",
     "retailers": []
   },
   {
@@ -7125,7 +7125,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Support_Weapon.png",
+    "image": "Support_Weapon.jpg",
     "retailers": []
   },
   {
@@ -7135,7 +7135,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Swooping_Hawks.png",
+    "image": "Swooping_Hawks.jpg",
     "retailers": []
   },
   {
@@ -7145,7 +7145,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sydonian_Skatros.png",
+    "image": "Sydonian_Skatros.jpg",
     "retailers": []
   },
   {
@@ -7155,7 +7155,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Syll'Esske:_The_Vengeful_Allegiance.png",
+    "image": "Syll'Esske:_The_Vengeful_Allegiance.jpg",
     "retailers": []
   },
   {
@@ -7165,7 +7165,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Szarekh,_The_Silent_King.png",
+    "image": "Szarekh,_The_Silent_King.jpg",
     "retailers": []
   },
   {
@@ -7175,7 +7175,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Hero",
     "points": 0,
-    "image": "T'au_Empire_Commander.png",
+    "image": "T'au_Empire_Commander.jpg",
     "retailers": []
   },
   {
@@ -7185,7 +7185,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tactical_Squad.png",
+    "image": "Tactical_Squad.jpg",
     "retailers": []
   },
   {
@@ -7195,7 +7195,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Talons_of_the_Emperor:_Valerian_and_Aleya.png",
+    "image": "Talons_of_the_Emperor:_Valerian_and_Aleya.jpg",
     "retailers": []
   },
   {
@@ -7205,7 +7205,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Talos.png",
+    "image": "Talos.jpg",
     "retailers": []
   },
   {
@@ -7215,7 +7215,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Taurox.png",
+    "image": "Taurox.jpg",
     "retailers": []
   },
   {
@@ -7225,7 +7225,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Hero",
     "points": 0,
-    "image": "Tech-Priest_Dominus.png",
+    "image": "Tech-Priest_Dominus.jpg",
     "retailers": []
   },
   {
@@ -7235,7 +7235,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Hero",
     "points": 0,
-    "image": "Tech-Priest_Enginseer.png",
+    "image": "Tech-Priest_Enginseer.jpg",
     "retailers": []
   },
   {
@@ -7245,7 +7245,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Hero",
     "points": 0,
-    "image": "Tech-Priest_Manipulus.png",
+    "image": "Tech-Priest_Manipulus.jpg",
     "retailers": []
   },
   {
@@ -7255,7 +7255,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Techmarine.png",
+    "image": "Techmarine.jpg",
     "retailers": []
   },
   {
@@ -7265,7 +7265,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Technoarcheologist.png",
+    "image": "Technoarcheologist.jpg",
     "retailers": []
   },
   {
@@ -7275,7 +7275,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tempestus_Scions.png",
+    "image": "Tempestus_Scions.jpg",
     "retailers": []
   },
   {
@@ -7285,7 +7285,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Termagants.png",
+    "image": "Termagants.jpg",
     "retailers": []
   },
   {
@@ -7295,7 +7295,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Terminator_Assault_Squad.png",
+    "image": "Terminator_Assault_Squad.jpg",
     "retailers": []
   },
   {
@@ -7305,7 +7305,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Terminator_Squad.png",
+    "image": "Terminator_Squad.jpg",
     "retailers": []
   },
   {
@@ -7315,7 +7315,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tervigon.png",
+    "image": "Tervigon.jpg",
     "retailers": []
   },
   {
@@ -7325,7 +7325,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Changeling.png",
+    "image": "The_Changeling.jpg",
     "retailers": []
   },
   {
@@ -7335,7 +7335,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Contorted_Epitome.png",
+    "image": "The_Contorted_Epitome.jpg",
     "retailers": []
   },
   {
@@ -7345,7 +7345,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Masque.png",
+    "image": "The_Masque.jpg",
     "retailers": []
   },
   {
@@ -7355,7 +7355,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Sanguinor.png",
+    "image": "The_Sanguinor.jpg",
     "retailers": []
   },
   {
@@ -7365,7 +7365,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Triumph_of_Saint_Katherine.png",
+    "image": "The_Triumph_of_Saint_Katherine.jpg",
     "retailers": []
   },
   {
@@ -7375,7 +7375,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Visarch.png",
+    "image": "The_Visarch.jpg",
     "retailers": []
   },
   {
@@ -7385,7 +7385,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Yncarne.png",
+    "image": "The_Yncarne.jpg",
     "retailers": []
   },
   {
@@ -7395,7 +7395,7 @@ export const Products: Product[] = [
     "faction": "World Eaters",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Thunderwolf_Cavalry.png",
+    "image": "Thunderwolf_Cavalry.jpg",
     "retailers": []
   },
   {
@@ -7405,7 +7405,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tidewall_Droneport.png",
+    "image": "Tidewall_Droneport.jpg",
     "retailers": []
   },
   {
@@ -7415,7 +7415,7 @@ export const Products: Product[] = [
     "faction": "T'au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tidewall_Shieldline.png",
+    "image": "Tidewall_Shieldline.jpg",
     "retailers": []
   },
   {
@@ -7425,7 +7425,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Mechanicus",
     "category": "Hero",
     "points": 0,
-    "image": "Titan_Tech-Priest_Enginseer.png",
+    "image": "Titan_Tech-Priest_Enginseer.jpg",
     "retailers": []
   },
   {
@@ -7435,7 +7435,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tomb_Blades.png",
+    "image": "Tomb_Blades.jpg",
     "retailers": []
   },
   {
@@ -7445,7 +7445,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tor_Garadon.png",
+    "image": "Tor_Garadon.jpg",
     "retailers": []
   },
   {
@@ -7455,7 +7455,7 @@ export const Products: Product[] = [
     "faction": "Emperor's Children",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tormentors.png",
+    "image": "Tormentors.jpg",
     "retailers": []
   },
   {
@@ -7465,7 +7465,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Trazyn_the_Infinite.png",
+    "image": "Trazyn_the_Infinite.jpg",
     "retailers": []
   },
   {
@@ -7475,7 +7475,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Triarch_Stalker.png",
+    "image": "Triarch_Stalker.jpg",
     "retailers": []
   },
   {
@@ -7485,7 +7485,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Trukk.png",
+    "image": "Trukk.jpg",
     "retailers": []
   },
   {
@@ -7495,7 +7495,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Typhus,_Herald_of_the_Plague_God.png",
+    "image": "Typhus,_Herald_of_the_Plague_God.jpg",
     "retailers": []
   },
   {
@@ -7505,7 +7505,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tyranid_Harpy.png",
+    "image": "Tyranid_Harpy.jpg",
     "retailers": []
   },
   {
@@ -7515,7 +7515,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tyranid_Harridan.png",
+    "image": "Tyranid_Harridan.jpg",
     "retailers": []
   },
   {
@@ -7525,7 +7525,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tyranid_Hierophant_Bio-Titan.png",
+    "image": "Tyranid_Hierophant_Bio-Titan.jpg",
     "retailers": []
   },
   {
@@ -7535,7 +7535,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tyranid_Prime.png",
+    "image": "Tyranid_Prime.jpg",
     "retailers": []
   },
   {
@@ -7545,7 +7545,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tyranid_Warriors.png",
+    "image": "Tyranid_Warriors.jpg",
     "retailers": []
   },
   {
@@ -7555,7 +7555,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Paints",
     "points": 0,
-    "image": "Tyranids:_Termagants_and_Ripper_Swarm_+_Paints_Set.png",
+    "image": "Tyranids:_Termagants_and_Ripper_Swarm_+_Paints_Set.jpg",
     "retailers": []
   },
   {
@@ -7565,7 +7565,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tyrannocyte.png",
+    "image": "Tyrannocyte.jpg",
     "retailers": []
   },
   {
@@ -7575,7 +7575,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tzaangor_Enlightened.png",
+    "image": "Tzaangor_Enlightened.jpg",
     "retailers": []
   },
   {
@@ -7585,7 +7585,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tzaangor_Shaman.png",
+    "image": "Tzaangor_Shaman.jpg",
     "retailers": []
   },
   {
@@ -7595,7 +7595,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Accessories",
     "points": 0,
-    "image": "Tzaangor_Upgrade_Pack.png",
+    "image": "Tzaangor_Upgrade_Pack.jpg",
     "retailers": []
   },
   {
@@ -7605,7 +7605,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tzaangors.png",
+    "image": "Tzaangors.jpg",
     "retailers": []
   },
   {
@@ -7615,7 +7615,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tau_Tiger_Shark_AX-1-0.png",
+    "image": "Tau_Tiger_Shark_AX-1-0.jpg",
     "retailers": []
   },
   {
@@ -7625,7 +7625,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ulrik_the_Slayer.png",
+    "image": "Ulrik_the_Slayer.jpg",
     "retailers": []
   },
   {
@@ -7635,7 +7635,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Valkyrie.png",
+    "image": "Valkyrie.jpg",
     "retailers": []
   },
   {
@@ -7645,7 +7645,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Box Set",
     "points": 0,
-    "image": "Vanguard_Task_Force.png",
+    "image": "Vanguard_Task_Force.jpg",
     "retailers": []
   },
   {
@@ -7655,7 +7655,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Box Set",
     "points": 0,
-    "image": "Vanguard_Veteran_Squad.png",
+    "image": "Vanguard_Veteran_Squad.jpg",
     "retailers": []
   },
   {
@@ -7665,7 +7665,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vashtorr_the_Arkifane.png",
+    "image": "Vashtorr_the_Arkifane.jpg",
     "retailers": []
   },
   {
@@ -7675,7 +7675,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Venerable_Dreadnought.png",
+    "image": "Venerable_Dreadnought.jpg",
     "retailers": []
   },
   {
@@ -7685,7 +7685,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Venom.png",
+    "image": "Venom.jpg",
     "retailers": []
   },
   {
@@ -7695,7 +7695,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Venomcrawler_and_Obliterators.png",
+    "image": "Venomcrawler_and_Obliterators.jpg",
     "retailers": []
   },
   {
@@ -7705,7 +7705,7 @@ export const Products: Product[] = [
     "faction": "Adeptus Custodes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vertus_Praetors.png",
+    "image": "Vertus_Praetors.jpg",
     "retailers": []
   },
   {
@@ -7715,7 +7715,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vindicare_Assassin.png",
+    "image": "Vindicare_Assassin.jpg",
     "retailers": []
   },
   {
@@ -7725,7 +7725,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vindicator.png",
+    "image": "Vindicator.jpg",
     "retailers": []
   },
   {
@@ -7735,7 +7735,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Virtual_Gift_Voucher.png",
+    "image": "Virtual_Gift_Voucher.jpg",
     "retailers": []
   },
   {
@@ -7745,7 +7745,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Voidraven_Bomber.png",
+    "image": "Voidraven_Bomber.jpg",
     "retailers": []
   },
   {
@@ -7755,7 +7755,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Von_Ryan's_Leapers.png",
+    "image": "Von_Ryan's_Leapers.jpg",
     "retailers": []
   },
   {
@@ -7765,7 +7765,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vulkan_He'stan.png",
+    "image": "Vulkan_He'stan.jpg",
     "retailers": []
   },
   {
@@ -7775,7 +7775,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vyper.png",
+    "image": "Vyper.jpg",
     "retailers": []
   },
   {
@@ -7785,7 +7785,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "War_Dog_Brigands.png",
+    "image": "War_Dog_Brigands.jpg",
     "retailers": []
   },
   {
@@ -7795,7 +7795,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "War_Dog_Executioners.png",
+    "image": "War_Dog_Executioners.jpg",
     "retailers": []
   },
   {
@@ -7805,7 +7805,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "War_Dog_Huntsmen.png",
+    "image": "War_Dog_Huntsmen.jpg",
     "retailers": []
   },
   {
@@ -7815,7 +7815,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "War_Walkers.png",
+    "image": "War_Walkers.jpg",
     "retailers": []
   },
   {
@@ -7825,7 +7825,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Hero",
     "points": 0,
-    "image": "Warboss_in_Mega_Armour.png",
+    "image": "Warboss_in_Mega_Armour.jpg",
     "retailers": []
   },
   {
@@ -7835,7 +7835,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Terrain",
     "points": 0,
-    "image": "Warhammer_40,000_Boarding_Actions_Terrain_Set.png",
+    "image": "Warhammer_40,000_Boarding_Actions_Terrain_Set.jpg",
     "retailers": []
   },
   {
@@ -7845,7 +7845,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Starter Set",
     "points": 0,
-    "image": "Warhammer_40,000_Combat_Patrol_Starter_Set.png",
+    "image": "Warhammer_40,000_Combat_Patrol_Starter_Set.jpg",
     "retailers": []
   },
   {
@@ -7855,7 +7855,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer_40,000_Core_Book.png",
+    "image": "Warhammer_40,000_Core_Book.jpg",
     "retailers": []
   },
   {
@@ -7865,7 +7865,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Starter Set",
     "points": 0,
-    "image": "Warhammer_40,000_Introductory_Set.png",
+    "image": "Warhammer_40,000_Introductory_Set.jpg",
     "retailers": []
   },
   {
@@ -7875,7 +7875,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Starter Set",
     "points": 0,
-    "image": "Warhammer_40,000_Starter_Set.png",
+    "image": "Warhammer_40,000_Starter_Set.jpg",
     "retailers": []
   },
   {
@@ -7885,7 +7885,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer_40,000:_Boarding_Actions.png",
+    "image": "Warhammer_40,000:_Boarding_Actions.jpg",
     "retailers": []
   },
   {
@@ -7895,7 +7895,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Paints",
     "points": 0,
-    "image": "Warhammer_40,000:_Paints_+_Tools_Set.png",
+    "image": "Warhammer_40,000:_Paints_+_Tools_Set.jpg",
     "retailers": []
   },
   {
@@ -7905,7 +7905,7 @@ export const Products: Product[] = [
     "faction": "Astra Militarum",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer+_Year_3:_Astra_Militarum_Unbroken.png",
+    "image": "Warhammer+_Year_3:_Astra_Militarum_Unbroken.jpg",
     "retailers": []
   },
   {
@@ -7915,7 +7915,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Hero",
     "points": 0,
-    "image": "Warhammer+_Year_4:_Imperial_Agents_Inquisitor_Ostromandeus.png",
+    "image": "Warhammer_Year_4_Imperial_Agents_Inquisitor_Ostromandeus.jpg",
     "retailers": []
   },
   {
@@ -7925,7 +7925,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer+_Year_5:_Aeldari__Infinity's_Lament.png",
+    "image": "Warhammer+_Year_5:_Aeldari__Infinity's_Lament.jpg",
     "retailers": []
   },
   {
@@ -7935,7 +7935,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warlocks.png",
+    "image": "Warlocks.jpg",
     "retailers": []
   },
   {
@@ -7945,7 +7945,7 @@ export const Products: Product[] = [
     "faction": "Grey Knights",
     "category": "Hero",
     "points": 0,
-    "image": "Warlord_Titan_Mori_Quake_Cannon.png",
+    "image": "Warlord_Titan_Mori_Quake_Cannon.jpg",
     "retailers": []
   },
   {
@@ -7955,7 +7955,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warp_Spiders.png",
+    "image": "Warp_Spiders.jpg",
     "retailers": []
   },
   {
@@ -7965,7 +7965,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warpsmith.png",
+    "image": "Warpsmith.jpg",
     "retailers": []
   },
   {
@@ -7975,7 +7975,7 @@ export const Products: Product[] = [
     "faction": "Imperial Agents",
     "category": "Hero",
     "points": 0,
-    "image": "Watch_Captain_Artemis.png",
+    "image": "Watch_Captain_Artemis.jpg",
     "retailers": []
   },
   {
@@ -7985,7 +7985,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Watch_Master.png",
+    "image": "Watch_Master.jpg",
     "retailers": []
   },
   {
@@ -7995,7 +7995,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wave_Serpent/Falcon.png",
+    "image": "Wave_Serpent/Falcon.jpg",
     "retailers": []
   },
   {
@@ -8005,7 +8005,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Weirdboy.png",
+    "image": "Weirdboy.jpg",
     "retailers": []
   },
   {
@@ -8015,7 +8015,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Whirlwind.png",
+    "image": "Whirlwind.jpg",
     "retailers": []
   },
   {
@@ -8025,7 +8025,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Accessories",
     "points": 0,
-    "image": "White_Scars_Primaris_Upgrades_&_Transfers.png",
+    "image": "White_Scars_Primaris_Upgrades_&_Transfers.jpg",
     "retailers": []
   },
   {
@@ -8035,7 +8035,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Windriders.png",
+    "image": "Windriders.jpg",
     "retailers": []
   },
   {
@@ -8045,7 +8045,7 @@ export const Products: Product[] = [
     "faction": "Adepta Sororitas",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Witchseeker_Squad.png",
+    "image": "Witchseeker_Squad.jpg",
     "retailers": []
   },
   {
@@ -8055,7 +8055,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wolf_Guard_Battle_Leader.png",
+    "image": "Wolf_Guard_Battle_Leader.jpg",
     "retailers": []
   },
   {
@@ -8065,7 +8065,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wolf_Guard_Headtakers.png",
+    "image": "Wolf_Guard_Headtakers.jpg",
     "retailers": []
   },
   {
@@ -8075,7 +8075,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wolf_Guard_Terminators.png",
+    "image": "Wolf_Guard_Terminators.jpg",
     "retailers": []
   },
   {
@@ -8085,7 +8085,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Wolf_Priest.png",
+    "image": "Wolf_Priest.jpg",
     "retailers": []
   },
   {
@@ -8095,7 +8095,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wracks.png",
+    "image": "Wracks.jpg",
     "retailers": []
   },
   {
@@ -8105,7 +8105,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wraithguard.png",
+    "image": "Wraithguard.jpg",
     "retailers": []
   },
   {
@@ -8115,7 +8115,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wraithknight.png",
+    "image": "Wraithknight.jpg",
     "retailers": []
   },
   {
@@ -8125,7 +8125,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Hero",
     "points": 0,
-    "image": "Wraithlord.png",
+    "image": "Wraithlord.jpg",
     "retailers": []
   },
   {
@@ -8135,7 +8135,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wulfen.png",
+    "image": "Wulfen.jpg",
     "retailers": []
   },
   {
@@ -8145,7 +8145,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wyches.png",
+    "image": "Wyches.jpg",
     "retailers": []
   },
   {
@@ -8155,7 +8155,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "XV104_Riptide_Battlesuit.png",
+    "image": "XV104_Riptide_Battlesuit.jpg",
     "retailers": []
   },
   {
@@ -8165,7 +8165,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "XV8_Crisis_Battlesuit_Team.png",
+    "image": "XV8_Crisis_Battlesuit_Team.jpg",
     "retailers": []
   },
   {
@@ -8175,7 +8175,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "XV88_Broadside_Battlesuit.png",
+    "image": "XV88_Broadside_Battlesuit.jpg",
     "retailers": []
   },
   {
@@ -8185,7 +8185,7 @@ export const Products: Product[] = [
     "faction": "T’au Empire",
     "category": "Generic Unit",
     "points": 0,
-    "image": "XV95_Ghostkeel_Battlesuit.png",
+    "image": "XV95_Ghostkeel_Battlesuit.jpg",
     "retailers": []
   },
   {
@@ -8195,7 +8195,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Yvraine.png",
+    "image": "Yvraine.jpg",
     "retailers": []
   },
   {
@@ -8205,7 +8205,7 @@ export const Products: Product[] = [
     "faction": "Aeldari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Zephyrim_Squad.png",
+    "image": "Zephyrim_Squad.jpg",
     "retailers": []
   },
   {
@@ -8215,7 +8215,7 @@ export const Products: Product[] = [
     "faction": "Tyranids",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Zoanthropes.png",
+    "image": "Zoanthropes.jpg",
     "retailers": []
   },
   {
@@ -8225,7 +8225,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Zodgrod_Wortsnagga.png",
+    "image": "Zodgrod_Wortsnagga.jpg",
     "retailers": []
   },
   {
@@ -8235,7 +8235,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Hero",
     "points": 0,
-    "image": "Spearhead:_Soulblight_Gravelords_–_Deathrattle_Tomb_Host.png",
+    "image": "Spearhead:_Soulblight_Gravelords_–_Deathrattle_Tomb_Host.jpg",
     "retailers": []
   },
   {
@@ -8245,7 +8245,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Gloomspite_Gitz_–_Snarlpack_Huntaz.png",
+    "image": "Spearhead:_Gloomspite_Gitz_–_Snarlpack_Huntaz.jpg",
     "retailers": []
   },
   {
@@ -8255,7 +8255,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hell_Pit_Abomination.png",
+    "image": "Hell_Pit_Abomination.jpg",
     "retailers": []
   },
   {
@@ -8265,7 +8265,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warcry:_Royal_Beastflayers.png",
+    "image": "Warcry:_Royal_Beastflayers.jpg",
     "retailers": []
   },
   {
@@ -8275,7 +8275,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Raptadon_Chargers.png",
+    "image": "Raptadon_Chargers.jpg",
     "retailers": []
   },
   {
@@ -8285,7 +8285,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Slann_Starmaster.png",
+    "image": "Slann_Starmaster.jpg",
     "retailers": []
   },
   {
@@ -8295,7 +8295,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Saurus_Astrolith_Bearer.png",
+    "image": "Saurus_Astrolith_Bearer.jpg",
     "retailers": []
   },
   {
@@ -8305,7 +8305,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Aggradon_Lancers.png",
+    "image": "Aggradon_Lancers.jpg",
     "retailers": []
   },
   {
@@ -8315,7 +8315,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spawn_of_Chotec.png",
+    "image": "Spawn_of_Chotec.jpg",
     "retailers": []
   },
   {
@@ -8325,7 +8325,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kroxigor.png",
+    "image": "Kroxigor.jpg",
     "retailers": []
   },
   {
@@ -8335,7 +8335,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Saurus_Scar-Veteran_on_Aggradon.png",
+    "image": "Saurus_Scar-Veteran_on_Aggradon.jpg",
     "retailers": []
   },
   {
@@ -8345,7 +8345,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skink_Starseer.png",
+    "image": "Skink_Starseer.jpg",
     "retailers": []
   },
   {
@@ -8355,7 +8355,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Misc",
     "points": 0,
-    "image": "Ivya_Volga,_the_Outcast.png",
+    "image": "Ivya_Volga,_the_Outcast.jpg",
     "retailers": []
   },
   {
@@ -8365,7 +8365,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mortisan_Ossifector.png",
+    "image": "Mortisan_Ossifector.jpg",
     "retailers": []
   },
   {
@@ -8375,7 +8375,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Codewright.png",
+    "image": "Codewright.jpg",
     "retailers": []
   },
   {
@@ -8385,7 +8385,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_of_Hubris.png",
+    "image": "Lord_of_Hubris.jpg",
     "retailers": []
   },
   {
@@ -8395,7 +8395,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Realmgore_Ritualist.png",
+    "image": "Realmgore_Ritualist.jpg",
     "retailers": []
   },
   {
@@ -8405,7 +8405,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Snarlfang_Riders.png",
+    "image": "Snarlfang_Riders.jpg",
     "retailers": []
   },
   {
@@ -8415,7 +8415,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Squigboss_with_Gnasha-squig.png",
+    "image": "Squigboss_with_Gnasha-squig.jpg",
     "retailers": []
   },
   {
@@ -8425,7 +8425,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Exalted_Hero_of_Chaos.png",
+    "image": "Exalted_Hero_of_Chaos.jpg",
     "retailers": []
   },
   {
@@ -8435,7 +8435,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Warriors.png",
+    "image": "Chaos_Warriors.jpg",
     "retailers": []
   },
   {
@@ -8445,7 +8445,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Hero",
     "points": 0,
-    "image": "Daemon_Prince.png",
+    "image": "Daemon_Prince.jpg",
     "retailers": []
   },
   {
@@ -8455,7 +8455,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ogroid_Theridons.png",
+    "image": "Ogroid_Theridons.jpg",
     "retailers": []
   },
   {
@@ -8465,7 +8465,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Chosen.png",
+    "image": "Chaos_Chosen.jpg",
     "retailers": []
   },
   {
@@ -8475,7 +8475,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Hero",
     "points": 0,
-    "image": "Eternus,_Blade_of_The_First_Prince.png",
+    "image": "Eternus,_Blade_of_The_First_Prince.jpg",
     "retailers": []
   },
   {
@@ -8485,7 +8485,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Knights.png",
+    "image": "Chaos_Knights.jpg",
     "retailers": []
   },
   {
@@ -8495,7 +8495,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Hero",
     "points": 0,
-    "image": "Chaos_Lord_on_Karkadrak.png",
+    "image": "Chaos_Lord_on_Karkadrak.jpg",
     "retailers": []
   },
   {
@@ -8505,7 +8505,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Khainite_Shadowstalkers.png",
+    "image": "Khainite_Shadowstalkers.jpg",
     "retailers": []
   },
   {
@@ -8515,7 +8515,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaotic_Beasts.png",
+    "image": "Chaotic_Beasts.jpg",
     "retailers": []
   },
   {
@@ -8525,7 +8525,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Curseling,_Eye_of_Tzeentch.png",
+    "image": "Curseling,_Eye_of_Tzeentch.jpg",
     "retailers": []
   },
   {
@@ -8535,7 +8535,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Scinari_Enlightener.png",
+    "image": "Scinari_Enlightener.jpg",
     "retailers": []
   },
   {
@@ -8545,7 +8545,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Maneaters.png",
+    "image": "Maneaters.jpg",
     "retailers": []
   },
   {
@@ -8555,7 +8555,7 @@ export const Products: Product[] = [
     "faction": "Sons of Behemat",
     "category": "Generic Unit",
     "points": 0,
-    "image": "King_Brodd.png",
+    "image": "King_Brodd.jpg",
     "retailers": []
   },
   {
@@ -8565,7 +8565,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bloodpelt_Hunter.png",
+    "image": "Bloodpelt_Hunter.jpg",
     "retailers": []
   },
   {
@@ -8575,7 +8575,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Krondspine_Incarnate_of_Ghur.png",
+    "image": "Krondspine_Incarnate_of_Ghur.jpg",
     "retailers": []
   },
   {
@@ -8585,7 +8585,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Drekki_Flynt.png",
+    "image": "Drekki_Flynt.jpg",
     "retailers": []
   },
   {
@@ -8595,7 +8595,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Terrain",
     "points": 0,
-    "image": "The_Lady_of_Vines.png",
+    "image": "The_Lady_of_Vines.jpg",
     "retailers": []
   },
   {
@@ -8605,7 +8605,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Hero",
     "points": 0,
-    "image": "Deathmaster.png",
+    "image": "Deathmaster.jpg",
     "retailers": []
   },
   {
@@ -8615,7 +8615,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Warcry:_Centaurion_Marshal.png",
+    "image": "Warcry:_Centaurion_Marshal.jpg",
     "retailers": []
   },
   {
@@ -8625,7 +8625,7 @@ export const Products: Product[] = [
     "faction": "Chaos Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Warhammer+_Year_2:_Mibyllorr_Darkfang,_Chaos_Sorcerer_Lord.png",
+    "image": "Warhammer+_Year_2:_Mibyllorr_Darkfang,_Chaos_Sorcerer_Lord.jpg",
     "retailers": []
   },
   {
@@ -8635,7 +8635,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Revenant_Seekers.png",
+    "image": "Revenant_Seekers.jpg",
     "retailers": []
   },
   {
@@ -8645,7 +8645,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gossamid_Archers.png",
+    "image": "Gossamid_Archers.jpg",
     "retailers": []
   },
   {
@@ -8655,7 +8655,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Akhelian_Thrallmaster.png",
+    "image": "Akhelian_Thrallmaster.jpg",
     "retailers": []
   },
   {
@@ -8665,7 +8665,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "High_Gladiatrix.png",
+    "image": "High_Gladiatrix.jpg",
     "retailers": []
   },
   {
@@ -8675,7 +8675,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Awlrach_The_Drowner.png",
+    "image": "Awlrach_The_Drowner.jpg",
     "retailers": []
   },
   {
@@ -8685,7 +8685,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Craventhrone_Guard.png",
+    "image": "Craventhrone_Guard.jpg",
     "retailers": []
   },
   {
@@ -8695,7 +8695,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Auric_Runefather_on_Magmadroth.png",
+    "image": "Auric_Runefather_on_Magmadroth.jpg",
     "retailers": []
   },
   {
@@ -8705,7 +8705,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Knight-Draconis.png",
+    "image": "Knight-Draconis.jpg",
     "retailers": []
   },
   {
@@ -8715,7 +8715,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Krondys,_Son_of_Dracothion.png",
+    "image": "Krondys,_Son_of_Dracothion.jpg",
     "retailers": []
   },
   {
@@ -8725,7 +8725,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Praetors.png",
+    "image": "Praetors.jpg",
     "retailers": []
   },
   {
@@ -8735,7 +8735,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vindictors.png",
+    "image": "Vindictors.jpg",
     "retailers": []
   },
   {
@@ -8745,7 +8745,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Annihilators.png",
+    "image": "Annihilators.jpg",
     "retailers": []
   },
   {
@@ -8755,7 +8755,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vanquishers.png",
+    "image": "Vanquishers.jpg",
     "retailers": []
   },
   {
@@ -8765,7 +8765,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vigilors.png",
+    "image": "Vigilors.jpg",
     "retailers": []
   },
   {
@@ -8775,7 +8775,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Hero",
     "points": 0,
-    "image": "Lord-Commander_Bastian_Carthalos.png",
+    "image": "LordCommanderBastianCarthalos.jpg",
     "retailers": []
   },
   {
@@ -8785,7 +8785,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hobgrot_Slittaz.png",
+    "image": "Hobgrot_Slittaz.jpg",
     "retailers": []
   },
   {
@@ -8795,7 +8795,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Knight-Relictor.png",
+    "image": "Knight-Relictor.jpg",
     "retailers": []
   },
   {
@@ -8805,7 +8805,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Killaboss_on_Corpse-rippa_Vulcha.png",
+    "image": "Killaboss_on_Corpse-rippa_Vulcha.jpg",
     "retailers": []
   },
   {
@@ -8815,7 +8815,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gobsprakk,_The_Mouth_of_Mork.png",
+    "image": "Gobsprakk,_The_Mouth_of_Mork.jpg",
     "retailers": []
   },
   {
@@ -8825,7 +8825,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gutrippaz.png",
+    "image": "Gutrippaz.jpg",
     "retailers": []
   },
   {
@@ -8835,7 +8835,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Marshcrawla_Sloggoth.png",
+    "image": "Marshcrawla_Sloggoth.jpg",
     "retailers": []
   },
   {
@@ -8845,7 +8845,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Man-Skewer_Boltboyz.png",
+    "image": "Man-Skewer_Boltboyz.jpg",
     "retailers": []
   },
   {
@@ -8855,7 +8855,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stormstrike_Chariot.png",
+    "image": "Stormstrike_Chariot.jpg",
     "retailers": []
   },
   {
@@ -8865,7 +8865,7 @@ export const Products: Product[] = [
     "faction": "Imperial Knights",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Knight-Judicator_with_Gryph-hounds.png",
+    "image": "Knight-Judicator_with_Gryph-hounds.jpg",
     "retailers": []
   },
   {
@@ -8875,7 +8875,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Breaka-boss_on_Mirebrute_Troggoth.png",
+    "image": "Breaka-boss_on_Mirebrute_Troggoth.jpg",
     "retailers": []
   },
   {
@@ -8885,7 +8885,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Beast-skewer_Killbow.png",
+    "image": "Beast-skewer_Killbow.jpg",
     "retailers": []
   },
   {
@@ -8895,7 +8895,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer_Age_of_Sigmar:_Forbidden_Power.png",
+    "image": "Warhammer_Age_of_Sigmar:_Forbidden_Power.jpg",
     "retailers": []
   },
   {
@@ -8905,7 +8905,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer_Age_of_Sigmar:_Malign_Sorcery.png",
+    "image": "Warhammer_Age_of_Sigmar:_Malign_Sorcery.jpg",
     "retailers": []
   },
   {
@@ -8915,7 +8915,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dexcessa,_the_Talon_of_Slaanesh.png",
+    "image": "Dexcessa,_the_Talon_of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -8925,7 +8925,7 @@ export const Products: Product[] = [
     "faction": "Sons of Behemat",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kragnos,_the_End_of_Empires.png",
+    "image": "Kragnos,_the_End_of_Empires.jpg",
     "retailers": []
   },
   {
@@ -8935,7 +8935,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_Kroak.png",
+    "image": "Lord_Kroak.jpg",
     "retailers": []
   },
   {
@@ -8945,7 +8945,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warsong_Revenant.png",
+    "image": "Warsong_Revenant.jpg",
     "retailers": []
   },
   {
@@ -8955,7 +8955,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Galen_and_Doralia_ven_Denst.png",
+    "image": "Galen_and_Doralia_ven_Denst.jpg",
     "retailers": []
   },
   {
@@ -8965,7 +8965,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lady_Annika,_The_Thirsting_Blade.png",
+    "image": "Lady_Annika,_The_Thirsting_Blade.jpg",
     "retailers": []
   },
   {
@@ -8975,7 +8975,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dire_Wolves.png",
+    "image": "Dire_Wolves.jpg",
     "retailers": []
   },
   {
@@ -8985,7 +8985,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Radukar,_The_Beast.png",
+    "image": "Radukar,_The_Beast.jpg",
     "retailers": []
   },
   {
@@ -8995,7 +8995,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Belladamma_Volga,_First_of_the_Vyrkos.png",
+    "image": "Belladamma_Volga,_First_of_the_Vyrkos.jpg",
     "retailers": []
   },
   {
@@ -9005,7 +9005,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Hero",
     "points": 0,
-    "image": "Kritza,_The_Rat_Prince.png",
+    "image": "Kritza_The_Rat_Prince.jpg",
     "retailers": []
   },
   {
@@ -9015,7 +9015,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blood_Knights.png",
+    "image": "Blood_Knights.jpg",
     "retailers": []
   },
   {
@@ -9025,7 +9025,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fell_Bats.png",
+    "image": "Fell_Bats.jpg",
     "retailers": []
   },
   {
@@ -9035,7 +9035,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lauka_Vai,_Mother_of_Nightmares.png",
+    "image": "Lauka_Vai,_Mother_of_Nightmares.jpg",
     "retailers": []
   },
   {
@@ -9045,7 +9045,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Hero",
     "points": 0,
-    "image": "Vampire_Lord.png",
+    "image": "Vampire_Lord.jpg",
     "retailers": []
   },
   {
@@ -9055,7 +9055,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Named Hero",
     "points": 0,
-    "image": "Be'lakor,_the_Dark_Master.png",
+    "image": "Be'lakor,_the_Dark_Master.jpg",
     "retailers": []
   },
   {
@@ -9065,7 +9065,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Named Hero",
     "points": 0,
-    "image": "Gardus_Steel_Soul.png",
+    "image": "Gardus_Steel_Soul.jpg",
     "retailers": []
   },
   {
@@ -9075,7 +9075,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Krulghast_Cruciator.png",
+    "image": "Krulghast_Cruciator.jpg",
     "retailers": []
   },
   {
@@ -9085,7 +9085,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Daemonettes_of_Slaanesh.png",
+    "image": "Daemonettes_of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -9095,7 +9095,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vanari_Bannerblade.png",
+    "image": "Vanari_Bannerblade.jpg",
     "retailers": []
   },
   {
@@ -9105,7 +9105,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hurakan_Windchargers.png",
+    "image": "Hurakan_Windchargers.jpg",
     "retailers": []
   },
   {
@@ -9115,7 +9115,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Hero",
     "points": 0,
-    "image": "Sevireth,_Lord_of_the_Seventh_Wind.png",
+    "image": "Sevireth,_Lord_of_the_Seventh_Wind.jpg",
     "retailers": []
   },
   {
@@ -9125,7 +9125,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Scinari_Calligrave.png",
+    "image": "Scinari_Calligrave.jpg",
     "retailers": []
   },
   {
@@ -9135,7 +9135,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Hero",
     "points": 0,
-    "image": "Vanari_Bladelords.png",
+    "image": "Vanari_Bladelords.jpg",
     "retailers": []
   },
   {
@@ -9145,7 +9145,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ellania_and_Ellathor,_Eclipsian_Warsages.png",
+    "image": "Ellania_and_Ellathor,_Eclipsian_Warsages.jpg",
     "retailers": []
   },
   {
@@ -9155,7 +9155,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vanari_Starshard_Ballista.png",
+    "image": "Vanari_Starshard_Ballista.jpg",
     "retailers": []
   },
   {
@@ -9165,7 +9165,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Scinari_Loreseeker.png",
+    "image": "Scinari_Loreseeker.jpg",
     "retailers": []
   },
   {
@@ -9175,7 +9175,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blissbarb_Seekers.png",
+    "image": "Blissbarb_Seekers.jpg",
     "retailers": []
   },
   {
@@ -9185,7 +9185,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Daughters_of_Khaine.png",
+    "image": "Endless_Spells:_Daughters_of_Khaine.jpg",
     "retailers": []
   },
   {
@@ -9195,7 +9195,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Hero",
     "points": 0,
-    "image": "Glutos_Orscollion,_Lord_of_Gluttony.png",
+    "image": "Glutos_Orscollion,_Lord_of_Gluttony.jpg",
     "retailers": []
   },
   {
@@ -9205,7 +9205,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blissbarb_Archers.png",
+    "image": "Blissbarb_Archers.jpg",
     "retailers": []
   },
   {
@@ -9215,7 +9215,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Hero",
     "points": 0,
-    "image": "Sigvald,_Prince_of_Slaanesh.png",
+    "image": "Sigvald,_Prince_of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -9225,7 +9225,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Myrmidesh_Painbringers.png",
+    "image": "Myrmidesh_Painbringers.jpg",
     "retailers": []
   },
   {
@@ -9235,7 +9235,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_of_Pain.png",
+    "image": "Lord_of_Pain.jpg",
     "retailers": []
   },
   {
@@ -9245,7 +9245,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Shardspeaker_of_Slaanesh.png",
+    "image": "Shardspeaker_of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -9255,7 +9255,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Alarith_Spirit_of_the_Mountain.png",
+    "image": "Alarith_Spirit_of_the_Mountain.jpg",
     "retailers": []
   },
   {
@@ -9265,7 +9265,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vanari_Dawnriders.png",
+    "image": "Vanari_Dawnriders.jpg",
     "retailers": []
   },
   {
@@ -9275,7 +9275,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Alarith_Stoneguard.png",
+    "image": "Alarith_Stoneguard.jpg",
     "retailers": []
   },
   {
@@ -9285,7 +9285,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vanari_Auralan_Wardens.png",
+    "image": "Vanari_Auralan_Wardens.jpg",
     "retailers": []
   },
   {
@@ -9295,7 +9295,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vanari_Auralan_Sentinels.png",
+    "image": "Vanari_Auralan_Sentinels.jpg",
     "retailers": []
   },
   {
@@ -9305,7 +9305,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Light_of_Eltharion.png",
+    "image": "The_Light_of_Eltharion.jpg",
     "retailers": []
   },
   {
@@ -9315,7 +9315,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Archmage_Teclis_and_Celennar,_Spirit_of_Hysh.png",
+    "image": "Archmage_Teclis_and_Celennar,_Spirit_of_Hysh.jpg",
     "retailers": []
   },
   {
@@ -9325,7 +9325,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Hero",
     "points": 0,
-    "image": "Endless_Spells:_Lumineth_Realm-lords.png",
+    "image": "Endless_Spells:_Lumineth_Realm-lords.jpg",
     "retailers": []
   },
   {
@@ -9335,7 +9335,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Scinari_Cathallar.png",
+    "image": "Scinari_Cathallar.jpg",
     "retailers": []
   },
   {
@@ -9345,7 +9345,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endrinmaster_with_Dirigible_Suit.png",
+    "image": "Endrinmaster_with_Dirigible_Suit.jpg",
     "retailers": []
   },
   {
@@ -9355,7 +9355,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Terrain",
     "points": 0,
-    "image": "Realmshaper_Engine.png",
+    "image": "Realmshaper_Engine.jpg",
     "retailers": []
   },
   {
@@ -9365,7 +9365,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Hero",
     "points": 0,
-    "image": "Tyrant.png",
+    "image": "Tyrant.jpg",
     "retailers": []
   },
   {
@@ -9375,7 +9375,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Loonboss_on_Giant_Cave_Squig.png",
+    "image": "Loonboss_on_Giant_Cave_Squig.jpg",
     "retailers": []
   },
   {
@@ -9385,7 +9385,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arch-Revenant.png",
+    "image": "Arch-Revenant.jpg",
     "retailers": []
   },
   {
@@ -9395,7 +9395,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vokmortian,_Master_of_the_Bone-tithe.png",
+    "image": "Vokmortian,_Master_of_the_Bone-tithe.jpg",
     "retailers": []
   },
   {
@@ -9405,7 +9405,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Abhorrant_Archregent.png",
+    "image": "Abhorrant_Archregent.jpg",
     "retailers": []
   },
   {
@@ -9415,7 +9415,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warlock_Bombardier.png",
+    "image": "Warlock_Bombardier.jpg",
     "retailers": []
   },
   {
@@ -9425,7 +9425,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Disciples_of_Tzeentch.png",
+    "image": "Endless_Spells:_Disciples_of_Tzeentch.jpg",
     "retailers": []
   },
   {
@@ -9435,7 +9435,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Slaves_to_Darkness.png",
+    "image": "Endless_Spells:_Slaves_to_Darkness.jpg",
     "retailers": []
   },
   {
@@ -9445,7 +9445,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mortek_Guard.png",
+    "image": "Mortek_Guard.jpg",
     "retailers": []
   },
   {
@@ -9455,7 +9455,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kavalos_Deathriders.png",
+    "image": "Kavalos_Deathriders.jpg",
     "retailers": []
   },
   {
@@ -9465,7 +9465,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mortisan_Boneshaper.png",
+    "image": "Mortisan_Boneshaper.jpg",
     "retailers": []
   },
   {
@@ -9475,7 +9475,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arch-Kavalos_Zandtos.png",
+    "image": "Arch-Kavalos_Zandtos.jpg",
     "retailers": []
   },
   {
@@ -9485,7 +9485,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Great_Mawpot.png",
+    "image": "Great_Mawpot.jpg",
     "retailers": []
   },
   {
@@ -9495,7 +9495,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "Bone-tithe_Nexus.png",
+    "image": "Bone-tithe_Nexus.jpg",
     "retailers": []
   },
   {
@@ -9505,7 +9505,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Ossiarch_Bonereapers.png",
+    "image": "Endless_Spells:_Ossiarch_Bonereapers.jpg",
     "retailers": []
   },
   {
@@ -9515,7 +9515,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gotrek_Gurnisson.png",
+    "image": "Gotrek_Gurnisson.jpg",
     "retailers": []
   },
   {
@@ -9525,7 +9525,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Awakened_Wyldwood.png",
+    "image": "Awakened_Wyldwood.jpg",
     "retailers": []
   },
   {
@@ -9535,7 +9535,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Terrain",
     "points": 0,
-    "image": "Dominion_of_Sigmar:_Timeworn_Ruins.png",
+    "image": "Dominion_of_Sigmar:_Timeworn_Ruins.jpg",
     "retailers": []
   },
   {
@@ -9545,7 +9545,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Sylvaneth.png",
+    "image": "Endless_Spells:_Sylvaneth.jpg",
     "retailers": []
   },
   {
@@ -9555,7 +9555,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Keeper_of_Secrets.png",
+    "image": "Keeper_of_Secrets.jpg",
     "retailers": []
   },
   {
@@ -9565,7 +9565,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Syll'Esske:_The_Vengeful_Allegiance.png",
+    "image": "Syll'Esske:_The_Vengeful_Allegiance.jpg",
     "retailers": []
   },
   {
@@ -9575,7 +9575,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fane_of_Slaanesh.png",
+    "image": "Fane_of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -9585,7 +9585,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Hedonites_of_Slaanesh.png",
+    "image": "Endless_Spells:_Hedonites_of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -9595,7 +9595,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Masque.png",
+    "image": "The_Masque.jpg",
     "retailers": []
   },
   {
@@ -9605,7 +9605,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Magmic_Battleforge.png",
+    "image": "Magmic_Battleforge.jpg",
     "retailers": []
   },
   {
@@ -9615,7 +9615,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Magmic_Invocations.png",
+    "image": "Magmic_Invocations.jpg",
     "retailers": []
   },
   {
@@ -9625,7 +9625,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Misc",
     "points": 0,
-    "image": "Skulltaker.png",
+    "image": "Skulltaker.jpg",
     "retailers": []
   },
   {
@@ -9635,7 +9635,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Flesh_Hounds.png",
+    "image": "Flesh_Hounds.jpg",
     "retailers": []
   },
   {
@@ -9645,7 +9645,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Misc",
     "points": 0,
-    "image": "Skull_Altar.png",
+    "image": "Skull_Altar.jpg",
     "retailers": []
   },
   {
@@ -9655,7 +9655,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Judgements_of_Khorne.png",
+    "image": "Judgements_of_Khorne.jpg",
     "retailers": []
   },
   {
@@ -9665,7 +9665,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Karanak.png",
+    "image": "Karanak.jpg",
     "retailers": []
   },
   {
@@ -9675,7 +9675,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Hero",
     "points": 0,
-    "image": "Bloodmaster,_Herald_of_Khorne.png",
+    "image": "Bloodmaster,_Herald_of_Khorne.jpg",
     "retailers": []
   },
   {
@@ -9685,7 +9685,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Charnel_Throne.png",
+    "image": "Charnel_Throne.jpg",
     "retailers": []
   },
   {
@@ -9695,7 +9695,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Skaven.png",
+    "image": "Endless_Spells:_Skaven.jpg",
     "retailers": []
   },
   {
@@ -9705,7 +9705,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skaven_Gnawholes.png",
+    "image": "Skaven_Gnawholes.jpg",
     "retailers": []
   },
   {
@@ -9715,7 +9715,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gobbapalooza.png",
+    "image": "Gobbapalooza.jpg",
     "retailers": []
   },
   {
@@ -9725,7 +9725,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dankhold_Troggoth.png",
+    "image": "Dankhold_Troggoth.jpg",
     "retailers": []
   },
   {
@@ -9735,7 +9735,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mangler_Squigs.png",
+    "image": "Mangler_Squigs.jpg",
     "retailers": []
   },
   {
@@ -9745,7 +9745,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Rockgut_Troggoths.png",
+    "image": "Rockgut_Troggoths.jpg",
     "retailers": []
   },
   {
@@ -9755,7 +9755,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sneaky_Snufflers.png",
+    "image": "Sneaky_Snufflers.jpg",
     "retailers": []
   },
   {
@@ -9765,7 +9765,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Loonboss.png",
+    "image": "Loonboss.jpg",
     "retailers": []
   },
   {
@@ -9775,7 +9775,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Squig_Hoppers.png",
+    "image": "Squig_Hoppers.jpg",
     "retailers": []
   },
   {
@@ -9785,7 +9785,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Gloomspite_Gitz.png",
+    "image": "Endless_Spells:_Gloomspite_Gitz.jpg",
     "retailers": []
   },
   {
@@ -9795,7 +9795,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "Bad_Moon_Loonshrine.png",
+    "image": "Bad_Moon_Loonshrine.jpg",
     "retailers": []
   },
   {
@@ -9805,7 +9805,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Loonsmasha_Fanatics.png",
+    "image": "Loonsmasha_Fanatics.jpg",
     "retailers": []
   },
   {
@@ -9815,7 +9815,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skragrott_the_Loonking.png",
+    "image": "Skragrott_the_Loonking.jpg",
     "retailers": []
   },
   {
@@ -9825,7 +9825,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Squig_Herd.png",
+    "image": "Squig_Herd.jpg",
     "retailers": []
   },
   {
@@ -9835,7 +9835,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Moonclan_Stabbas.png",
+    "image": "Moonclan_Stabbas.jpg",
     "retailers": []
   },
   {
@@ -9845,7 +9845,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ironblaster.png",
+    "image": "Ironblaster.jpg",
     "retailers": []
   },
   {
@@ -9855,7 +9855,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bladegheist_Revenants.png",
+    "image": "Bladegheist_Revenants.jpg",
     "retailers": []
   },
   {
@@ -9865,7 +9865,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chainrasp_Hordes.png",
+    "image": "Chainrasp_Hordes.jpg",
     "retailers": []
   },
   {
@@ -9875,7 +9875,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Black_Coach.png",
+    "image": "Black_Coach.jpg",
     "retailers": []
   },
   {
@@ -9885,7 +9885,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_Executioner.png",
+    "image": "Lord_Executioner.jpg",
     "retailers": []
   },
   {
@@ -9895,7 +9895,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dreadblade_Harrows.png",
+    "image": "Dreadblade_Harrows.jpg",
     "retailers": []
   },
   {
@@ -9905,7 +9905,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kurdoss_Valentian,_The_Craven_King.png",
+    "image": "Kurdoss_Valentian,_The_Craven_King.jpg",
     "retailers": []
   },
   {
@@ -9915,7 +9915,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Reikenor_the_Grimhailer.png",
+    "image": "Reikenor_the_Grimhailer.jpg",
     "retailers": []
   },
   {
@@ -9925,7 +9925,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Stormcast_Eternals.png",
+    "image": "Endless_Spells:_Stormcast_Eternals.jpg",
     "retailers": []
   },
   {
@@ -9935,7 +9935,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grimghast_Reapers.png",
+    "image": "Grimghast_Reapers.jpg",
     "retailers": []
   },
   {
@@ -9945,7 +9945,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lady_Olynder,_Mortarch_of_Grief.png",
+    "image": "Lady_Olynder,_Mortarch_of_Grief.jpg",
     "retailers": []
   },
   {
@@ -9955,7 +9955,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Nighthaunt.png",
+    "image": "Endless_Spells:_Nighthaunt.jpg",
     "retailers": []
   },
   {
@@ -9965,7 +9965,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Myrmourn_Banshees.png",
+    "image": "Myrmourn_Banshees.jpg",
     "retailers": []
   },
   {
@@ -9975,7 +9975,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Akhelian_Morrsarr_Guard.png",
+    "image": "Akhelian_Morrsarr_Guard.jpg",
     "retailers": []
   },
   {
@@ -9985,7 +9985,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Akhelian_Allopex.png",
+    "image": "Akhelian_Allopex.jpg",
     "retailers": []
   },
   {
@@ -9995,7 +9995,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Isharann_Tidecaster.png",
+    "image": "Isharann_Tidecaster.jpg",
     "retailers": []
   },
   {
@@ -10005,7 +10005,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Isharann_Soulrender.png",
+    "image": "Isharann_Soulrender.jpg",
     "retailers": []
   },
   {
@@ -10015,7 +10015,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Namarti_Reavers.png",
+    "image": "Namarti_Reavers.jpg",
     "retailers": []
   },
   {
@@ -10025,7 +10025,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Eidolon_of_Mathlann_–_Aspect_of_the_Sea.png",
+    "image": "Eidolon_of_Mathlann_–_Aspect_of_the_Sea.jpg",
     "retailers": []
   },
   {
@@ -10035,7 +10035,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Namarti_Thralls.png",
+    "image": "Namarti_Thralls.jpg",
     "retailers": []
   },
   {
@@ -10045,7 +10045,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blood_Stalkers.png",
+    "image": "Blood_Stalkers.jpg",
     "retailers": []
   },
   {
@@ -10055,7 +10055,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Pink_Horrors.png",
+    "image": "Pink_Horrors.jpg",
     "retailers": []
   },
   {
@@ -10065,7 +10065,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dark_Riders.png",
+    "image": "Dark_Riders.jpg",
     "retailers": []
   },
   {
@@ -10075,7 +10075,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Witch_Aelves.png",
+    "image": "Witch_Aelves.jpg",
     "retailers": []
   },
   {
@@ -10085,7 +10085,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_of_Afflictions.png",
+    "image": "Lord_of_Afflictions.jpg",
     "retailers": []
   },
   {
@@ -10095,7 +10095,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Morghast_Harbingers.png",
+    "image": "Morghast_Harbingers.jpg",
     "retailers": []
   },
   {
@@ -10105,7 +10105,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fungoid_Cave-Shaman.png",
+    "image": "Fungoid_Cave-Shaman.jpg",
     "retailers": []
   },
   {
@@ -10115,7 +10115,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Darkoath_Warqueen.png",
+    "image": "Darkoath_Warqueen.jpg",
     "retailers": []
   },
   {
@@ -10125,7 +10125,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Horticulous_Slimux.png",
+    "image": "Horticulous_Slimux.jpg",
     "retailers": []
   },
   {
@@ -10135,7 +10135,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Great_Unclean_One.png",
+    "image": "Great_Unclean_One.jpg",
     "retailers": []
   },
   {
@@ -10145,7 +10145,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Beast_of_Nurgle.png",
+    "image": "Beast_of_Nurgle.jpg",
     "retailers": []
   },
   {
@@ -10155,7 +10155,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sloppity_Bilepiper.png",
+    "image": "Sloppity_Bilepiper.jpg",
     "retailers": []
   },
   {
@@ -10165,7 +10165,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Poxbringer.png",
+    "image": "Poxbringer.jpg",
     "retailers": []
   },
   {
@@ -10175,7 +10175,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_of_Blights.png",
+    "image": "Lord_of_Blights.jpg",
     "retailers": []
   },
   {
@@ -10185,7 +10185,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wight_King.png",
+    "image": "Wight_King.jpg",
     "retailers": []
   },
   {
@@ -10195,7 +10195,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bloodletters.png",
+    "image": "Bloodletters.jpg",
     "retailers": []
   },
   {
@@ -10205,7 +10205,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Plague_Drones.png",
+    "image": "Plague_Drones.jpg",
     "retailers": []
   },
   {
@@ -10215,7 +10215,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fellwater_Troggoths.png",
+    "image": "Fellwater_Troggoths.jpg",
     "retailers": []
   },
   {
@@ -10225,7 +10225,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Nurglings.png",
+    "image": "Nurglings.jpg",
     "retailers": []
   },
   {
@@ -10235,7 +10235,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arachnarok_Spider_with_Spiderfang_Warparty.png",
+    "image": "Arachnarok_Spider_with_Spiderfang_Warparty.jpg",
     "retailers": []
   },
   {
@@ -10245,7 +10245,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Misc",
     "points": 0,
-    "image": "Citadel_Skulls.png",
+    "image": "Citadel_Skulls.jpg",
     "retailers": []
   },
   {
@@ -10255,7 +10255,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Battlemage.png",
+    "image": "Battlemage.jpg",
     "retailers": []
   },
   {
@@ -10265,7 +10265,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Plaguebearers.png",
+    "image": "Plaguebearers.jpg",
     "retailers": []
   },
   {
@@ -10275,7 +10275,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vandus_Hammerhand.png",
+    "image": "Vandus_Hammerhand.jpg",
     "retailers": []
   },
   {
@@ -10285,7 +10285,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endrinmaster_with_Endrinharness.png",
+    "image": "Endrinmaster_with_Endrinharness.jpg",
     "retailers": []
   },
   {
@@ -10295,7 +10295,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Aether-Khemist.png",
+    "image": "Aether-Khemist.jpg",
     "retailers": []
   },
   {
@@ -10305,7 +10305,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arkanaut_Ironclad.png",
+    "image": "Arkanaut_Ironclad.jpg",
     "retailers": []
   },
   {
@@ -10315,7 +10315,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Hero",
     "points": 0,
-    "image": "Brokk_Grungsson,_Lord-Magnate_of_Barak-Nar.png",
+    "image": "Brokk_Grungsson,_Lord-Magnate_of_Barak-Nar.jpg",
     "retailers": []
   },
   {
@@ -10325,7 +10325,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Aetheric_Navigator.png",
+    "image": "Aetheric_Navigator.jpg",
     "retailers": []
   },
   {
@@ -10335,7 +10335,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grundstok_Thunderers.png",
+    "image": "Grundstok_Thunderers.jpg",
     "retailers": []
   },
   {
@@ -10345,7 +10345,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arkanaut_Company.png",
+    "image": "Arkanaut_Company.jpg",
     "retailers": []
   },
   {
@@ -10355,7 +10355,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arkanaut_Frigate.png",
+    "image": "Arkanaut_Frigate.jpg",
     "retailers": []
   },
   {
@@ -10365,7 +10365,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arkanaut_Admiral.png",
+    "image": "Arkanaut_Admiral.jpg",
     "retailers": []
   },
   {
@@ -10375,7 +10375,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Box Set",
     "points": 0,
-    "image": "Vanguard-Raptors_With_Hurricane_Crossbows_&amp;_Aetherwings.png",
+    "image": "Vanguard-Raptors_With_Hurricane_Crossbows_&amp;_Aetherwings.jpg",
     "retailers": []
   },
   {
@@ -10385,7 +10385,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Box Set",
     "points": 0,
-    "image": "Vanguard-Palladors.png",
+    "image": "Vanguard-Palladors.jpg",
     "retailers": []
   },
   {
@@ -10395,7 +10395,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Hero",
     "points": 0,
-    "image": "Lord-Aquilor.png",
+    "image": "Lord-Aquilor.jpg",
     "retailers": []
   },
   {
@@ -10405,7 +10405,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Box Set",
     "points": 0,
-    "image": "Vanguard-Hunters.png",
+    "image": "Vanguard-Hunters.jpg",
     "retailers": []
   },
   {
@@ -10415,7 +10415,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gryph-hounds.png",
+    "image": "Gryph-hounds.jpg",
     "retailers": []
   },
   {
@@ -10425,7 +10425,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Screamers.png",
+    "image": "Screamers.jpg",
     "retailers": []
   },
   {
@@ -10435,7 +10435,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Flamers.png",
+    "image": "Flamers.jpg",
     "retailers": []
   },
   {
@@ -10445,7 +10445,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blue_Horrors_and_Brimstone_Horrors.png",
+    "image": "Blue_Horrors_and_Brimstone_Horrors.jpg",
     "retailers": []
   },
   {
@@ -10455,7 +10455,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tzaangor_Enlightened.png",
+    "image": "Tzaangor_Enlightened.jpg",
     "retailers": []
   },
   {
@@ -10465,7 +10465,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tzaangor_Shaman.png",
+    "image": "Tzaangor_Shaman.jpg",
     "retailers": []
   },
   {
@@ -10475,7 +10475,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Magister.png",
+    "image": "Magister.jpg",
     "retailers": []
   },
   {
@@ -10485,7 +10485,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ogroid_Thaumaturge.png",
+    "image": "Ogroid_Thaumaturge.jpg",
     "retailers": []
   },
   {
@@ -10495,7 +10495,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tempestors.png",
+    "image": "Tempestors.jpg",
     "retailers": []
   },
   {
@@ -10505,7 +10505,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Knight-Questor.png",
+    "image": "Knight-Questor.jpg",
     "retailers": []
   },
   {
@@ -10515,7 +10515,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Doomseeker.png",
+    "image": "Doomseeker.jpg",
     "retailers": []
   },
   {
@@ -10525,7 +10525,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Darkoath_Chieftain.png",
+    "image": "Darkoath_Chieftain.jpg",
     "retailers": []
   },
   {
@@ -10535,7 +10535,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fateskimmer,_Herald_of_Tzeentch_on_Burning_Chariot.png",
+    "image": "Fateskimmer,_Herald_of_Tzeentch_on_Burning_Chariot.jpg",
     "retailers": []
   },
   {
@@ -10545,7 +10545,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_of_Change.png",
+    "image": "Lord_of_Change.jpg",
     "retailers": []
   },
   {
@@ -10555,7 +10555,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Necromancer.png",
+    "image": "Necromancer.jpg",
     "retailers": []
   },
   {
@@ -10565,7 +10565,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Thundertusk_Beastriders.png",
+    "image": "Thundertusk_Beastriders.jpg",
     "retailers": []
   },
   {
@@ -10575,7 +10575,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Icefall_Yhetees.png",
+    "image": "Icefall_Yhetees.jpg",
     "retailers": []
   },
   {
@@ -10585,7 +10585,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Icebrow_Hunter.png",
+    "image": "Icebrow_Hunter.jpg",
     "retailers": []
   },
   {
@@ -10595,7 +10595,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Frost_Sabres.png",
+    "image": "Frost_Sabres.jpg",
     "retailers": []
   },
   {
@@ -10605,7 +10605,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mournfang_Pack.png",
+    "image": "Mournfang_Pack.jpg",
     "retailers": []
   },
   {
@@ -10615,7 +10615,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Drakesworn_Templar.png",
+    "image": "Drakesworn_Templar.jpg",
     "retailers": []
   },
   {
@@ -10625,7 +10625,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kurnoth_Hunters.png",
+    "image": "Kurnoth_Hunters.jpg",
     "retailers": []
   },
   {
@@ -10635,7 +10635,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tree-Revenants.png",
+    "image": "Tree-Revenants.jpg",
     "retailers": []
   },
   {
@@ -10645,7 +10645,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Abhorrant_Ghoul_King_on_Royal_Terrorgheist.png",
+    "image": "Abhorrant_Ghoul_King_on_Royal_Terrorgheist.jpg",
     "retailers": []
   },
   {
@@ -10655,7 +10655,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Crypt_Ghouls.png",
+    "image": "Crypt_Ghouls.jpg",
     "retailers": []
   },
   {
@@ -10665,7 +10665,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gore-gruntas.png",
+    "image": "Gore-gruntas.jpg",
     "retailers": []
   },
   {
@@ -10675,7 +10675,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Brutes.png",
+    "image": "Brutes.jpg",
     "retailers": []
   },
   {
@@ -10685,7 +10685,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Weirdnob_Shaman.png",
+    "image": "Weirdnob_Shaman.jpg",
     "retailers": []
   },
   {
@@ -10695,7 +10695,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warchanter.png",
+    "image": "Warchanter.jpg",
     "retailers": []
   },
   {
@@ -10705,7 +10705,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Megaboss.png",
+    "image": "Megaboss.jpg",
     "retailers": []
   },
   {
@@ -10715,7 +10715,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Hero",
     "points": 0,
-    "image": "Verminlord_Corruptor.png",
+    "image": "Verminlord_Corruptor.jpg",
     "retailers": []
   },
   {
@@ -10725,7 +10725,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Misc",
     "points": 0,
-    "image": "Skull_Cannon.png",
+    "image": "Skull_Cannon.jpg",
     "retailers": []
   },
   {
@@ -10735,7 +10735,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grimwrath_Berzerker.png",
+    "image": "Grimwrath_Berzerker.jpg",
     "retailers": []
   },
   {
@@ -10745,7 +10745,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Chariot.png",
+    "image": "Chaos_Chariot.jpg",
     "retailers": []
   },
   {
@@ -10755,7 +10755,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Neferata,_Mortarch_of_Blood.png",
+    "image": "Neferata,_Mortarch_of_Blood.jpg",
     "retailers": []
   },
   {
@@ -10765,7 +10765,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spirit_Hosts.png",
+    "image": "Spirit_Hosts.jpg",
     "retailers": []
   },
   {
@@ -10775,7 +10775,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Hero",
     "points": 0,
-    "image": "Nagash,_Supreme_Lord_of_the_Undead.png",
+    "image": "Nagash,_Supreme_Lord_of_the_Undead.jpg",
     "retailers": []
   },
   {
@@ -10785,7 +10785,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vulkite_Berzerkers.png",
+    "image": "Vulkite_Berzerkers.jpg",
     "retailers": []
   },
   {
@@ -10795,7 +10795,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Auric_Runemaster.png",
+    "image": "Auric_Runemaster.jpg",
     "retailers": []
   },
   {
@@ -10805,7 +10805,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Varanguard.png",
+    "image": "Varanguard.jpg",
     "retailers": []
   },
   {
@@ -10815,7 +10815,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Archaon_Everchosen.png",
+    "image": "Archaon_Everchosen.jpg",
     "retailers": []
   },
   {
@@ -10825,7 +10825,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Saurus_Oldblood_on_Carnosaur.png",
+    "image": "Saurus_Oldblood_on_Carnosaur.jpg",
     "retailers": []
   },
   {
@@ -10835,7 +10835,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skinks.png",
+    "image": "Skinks.jpg",
     "retailers": []
   },
   {
@@ -10845,7 +10845,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Hero",
     "points": 0,
-    "image": "Skink_Starpriest.png",
+    "image": "Skink_Starpriest.jpg",
     "retailers": []
   },
   {
@@ -10855,7 +10855,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warp_Lightning_Cannon.png",
+    "image": "Warp_Lightning_Cannon.jpg",
     "retailers": []
   },
   {
@@ -10865,7 +10865,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Celestant-Prime,_Hammer_of_Sigmar.png",
+    "image": "Celestant-Prime,_Hammer_of_Sigmar.jpg",
     "retailers": []
   },
   {
@@ -10875,7 +10875,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Morbidex_Twiceborn.png",
+    "image": "Morbidex_Twiceborn.jpg",
     "retailers": []
   },
   {
@@ -10885,7 +10885,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Hero",
     "points": 0,
-    "image": "Festus_The_Leechlord.png",
+    "image": "Festus_The_Leechlord.jpg",
     "retailers": []
   },
   {
@@ -10895,7 +10895,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Putrid_Blightkings.png",
+    "image": "Putrid_Blightkings.jpg",
     "retailers": []
   },
   {
@@ -10905,7 +10905,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_of_Plagues.png",
+    "image": "Lord_of_Plagues.jpg",
     "retailers": []
   },
   {
@@ -10915,7 +10915,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gutrot_Spume.png",
+    "image": "Gutrot_Spume.jpg",
     "retailers": []
   },
   {
@@ -10925,7 +10925,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Plague_Monks.png",
+    "image": "Plague_Monks.jpg",
     "retailers": []
   },
   {
@@ -10935,7 +10935,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bloodthirster.png",
+    "image": "Bloodthirster.jpg",
     "retailers": []
   },
   {
@@ -10945,7 +10945,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skarbrand.png",
+    "image": "Skarbrand.jpg",
     "retailers": []
   },
   {
@@ -10955,7 +10955,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mighty_Skullcrushers.png",
+    "image": "Mighty_Skullcrushers.jpg",
     "retailers": []
   },
   {
@@ -10965,7 +10965,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wrathmongers.png",
+    "image": "Wrathmongers.jpg",
     "retailers": []
   },
   {
@@ -10975,7 +10975,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bloodreavers.png",
+    "image": "Bloodreavers.jpg",
     "retailers": []
   },
   {
@@ -10985,7 +10985,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blood_Warriors.png",
+    "image": "Blood_Warriors.jpg",
     "retailers": []
   },
   {
@@ -10995,7 +10995,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Hero",
     "points": 0,
-    "image": "Slaughterpriest.png",
+    "image": "Slaughterpriest.jpg",
     "retailers": []
   },
   {
@@ -11005,7 +11005,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Misc",
     "points": 0,
-    "image": "Skullgrinder.png",
+    "image": "Skullgrinder.jpg",
     "retailers": []
   },
   {
@@ -11015,7 +11015,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Hero",
     "points": 0,
-    "image": "Clawlord.png",
+    "image": "Clawlord.jpg",
     "retailers": []
   },
   {
@@ -11025,7 +11025,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Slaughtermaster.png",
+    "image": "Slaughtermaster.jpg",
     "retailers": []
   },
   {
@@ -11035,7 +11035,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stormfiends.png",
+    "image": "Stormfiends.jpg",
     "retailers": []
   },
   {
@@ -11045,7 +11045,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Black_Guard.png",
+    "image": "Black_Guard.jpg",
     "retailers": []
   },
   {
@@ -11055,7 +11055,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Drakespawn_Chariot.png",
+    "image": "Drakespawn_Chariot.jpg",
     "retailers": []
   },
   {
@@ -11065,7 +11065,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "War_Hydra.png",
+    "image": "War_Hydra.jpg",
     "retailers": []
   },
   {
@@ -11075,7 +11075,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Assassin.png",
+    "image": "Assassin.jpg",
     "retailers": []
   },
   {
@@ -11085,7 +11085,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Doomwheel.png",
+    "image": "Doomwheel.jpg",
     "retailers": []
   },
   {
@@ -11095,7 +11095,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Hero",
     "points": 0,
-    "image": "Chaos_Lord.png",
+    "image": "Chaos_Lord.jpg",
     "retailers": []
   },
   {
@@ -11105,7 +11105,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hellstriders.png",
+    "image": "Hellstriders.jpg",
     "retailers": []
   },
   {
@@ -11115,7 +11115,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Drakespawn_Knights.png",
+    "image": "Drakespawn_Knights.jpg",
     "retailers": []
   },
   {
@@ -11125,7 +11125,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Saurus_Oldblood.png",
+    "image": "Saurus_Oldblood.jpg",
     "retailers": []
   },
   {
@@ -11135,7 +11135,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Firebelly.png",
+    "image": "Firebelly.jpg",
     "retailers": []
   },
   {
@@ -11145,7 +11145,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ironguts.png",
+    "image": "Ironguts.jpg",
     "retailers": []
   },
   {
@@ -11155,7 +11155,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Butcher.png",
+    "image": "Butcher.jpg",
     "retailers": []
   },
   {
@@ -11165,7 +11165,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sorceress.png",
+    "image": "Sorceress.jpg",
     "retailers": []
   },
   {
@@ -11175,7 +11175,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Hero",
     "points": 0,
-    "image": "Dreadlord_on_Black_Dragon.png",
+    "image": "Dreadlord_on_Black_Dragon.jpg",
     "retailers": []
   },
   {
@@ -11185,7 +11185,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Corpse_Cart.png",
+    "image": "Corpse_Cart.jpg",
     "retailers": []
   },
   {
@@ -11195,7 +11195,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Night_Runners.png",
+    "image": "Night_Runners.jpg",
     "retailers": []
   },
   {
@@ -11205,7 +11205,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Hero",
     "points": 0,
-    "image": "Warhammer+_Year_5:_Soulblight_Gravelords_–_The_Summons.png",
+    "image": "Warhammer+_Year_5:_Soulblight_Gravelords_–_The_Summons.jpg",
     "retailers": []
   },
   {
@@ -11215,7 +11215,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Regiment_of_Renown:_The_Scarlet_Jury.png",
+    "image": "Regiment_of_Renown:_The_Scarlet_Jury.jpg",
     "retailers": []
   },
   {
@@ -11225,7 +11225,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "High_Falconer_Felgryn.png",
+    "image": "High_Falconer_Felgryn.jpg",
     "retailers": []
   },
   {
@@ -11235,7 +11235,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Flesh-eater_Courts_–_Charnel_Watch.png",
+    "image": "Spearhead:_Flesh-eater_Courts_–_Charnel_Watch.jpg",
     "retailers": []
   },
   {
@@ -11245,7 +11245,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Knight_of_Shrouds.png",
+    "image": "Knight_of_Shrouds.jpg",
     "retailers": []
   },
   {
@@ -11255,7 +11255,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Hero",
     "points": 0,
-    "image": "Lord_Vitriolic.png",
+    "image": "Lord_Vitriolic.jpg",
     "retailers": []
   },
   {
@@ -11265,7 +11265,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Nighthaunt_–_Cursed_Shacklehorde.png",
+    "image": "Spearhead:_Nighthaunt_–_Cursed_Shacklehorde.jpg",
     "retailers": []
   },
   {
@@ -11275,7 +11275,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Wildercorps_Hunters.png",
+    "image": "Wildercorps_Hunters.jpg",
     "retailers": []
   },
   {
@@ -11285,7 +11285,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Questor_Soulsworn.png",
+    "image": "Questor_Soulsworn.jpg",
     "retailers": []
   },
   {
@@ -11295,7 +11295,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hunters_of_Huanchi.png",
+    "image": "Hunters_of_Huanchi.jpg",
     "retailers": []
   },
   {
@@ -11305,7 +11305,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vulkyn_Flameseekers.png",
+    "image": "Vulkyn_Flameseekers.jpg",
     "retailers": []
   },
   {
@@ -11315,7 +11315,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Zontari_Endrin_Dock.png",
+    "image": "Zontari_Endrin_Dock.jpg",
     "retailers": []
   },
   {
@@ -11325,7 +11325,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Null-Khemist.png",
+    "image": "Null-Khemist.jpg",
     "retailers": []
   },
   {
@@ -11335,7 +11335,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Regiment_of_Renown:_Drekki's_Privateers.png",
+    "image": "Regiment_of_Renown:_Drekki's_Privateers.jpg",
     "retailers": []
   },
   {
@@ -11345,7 +11345,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Vongrim_Harpoon_Crew.png",
+    "image": "Vongrim_Harpoon_Crew.jpg",
     "retailers": []
   },
   {
@@ -11355,7 +11355,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Hero",
     "points": 0,
-    "image": "Spearhead:_Kharadron_Overlords_–_Grundstok_Trailblazers.png",
+    "image": "Spearhead:_Kharadron_Overlords_–_Grundstok_Trailblazers.jpg",
     "retailers": []
   },
   {
@@ -11365,7 +11365,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Claws_of_Karanak.png",
+    "image": "Claws_of_Karanak.jpg",
     "retailers": []
   },
   {
@@ -11375,7 +11375,7 @@ export const Products: Product[] = [
     "faction": "Beasts of Chaos",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Goreblade_Warband.png",
+    "image": "Goreblade_Warband.jpg",
     "retailers": []
   },
   {
@@ -11385,7 +11385,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Deathbringer.png",
+    "image": "Deathbringer.jpg",
     "retailers": []
   },
   {
@@ -11395,7 +11395,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Regiment_of_Renown:_The_Red_Revelation.png",
+    "image": "Regiment_of_Renown:_The_Red_Revelation.jpg",
     "retailers": []
   },
   {
@@ -11405,7 +11405,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Blades_of_Khorne_–_Fangs_of_the_Blood_God.png",
+    "image": "Spearhead:_Blades_of_Khorne_–_Fangs_of_the_Blood_God.jpg",
     "retailers": []
   },
   {
@@ -11415,7 +11415,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Idoneth_Deepkin:_Manifestations.png",
+    "image": "Idoneth_Deepkin:_Manifestations.jpg",
     "retailers": []
   },
   {
@@ -11425,7 +11425,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Isharann_Soulscryer.png",
+    "image": "Isharann_Soulscryer.jpg",
     "retailers": []
   },
   {
@@ -11435,7 +11435,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mathaela,_Oracle_of_the_Abyss.png",
+    "image": "Mathaela,_Oracle_of_the_Abyss.jpg",
     "retailers": []
   },
   {
@@ -11445,7 +11445,7 @@ export const Products: Product[] = [
     "faction": "Leagues of Votann",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ikon_of_the_Sea/Storm.png",
+    "image": "Ikon_of_the_Sea/Storm.jpg",
     "retailers": []
   },
   {
@@ -11455,7 +11455,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Idoneth_Deepkin_–_Akhelian_Tide_Guard.png",
+    "image": "Spearhead:_Idoneth_Deepkin_–_Akhelian_Tide_Guard.jpg",
     "retailers": []
   },
   {
@@ -11465,7 +11465,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Seraphon_–_Sunblooded_Prowlers.png",
+    "image": "Spearhead:_Seraphon_–_Sunblooded_Prowlers.jpg",
     "retailers": []
   },
   {
@@ -11475,7 +11475,7 @@ export const Products: Product[] = [
     "faction": "Beasts of Chaos",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Ogor_Mawtribes_–_Scrapglutt.png",
+    "image": "Spearhead:_Ogor_Mawtribes_–_Scrapglutt.jpg",
     "retailers": []
   },
   {
@@ -11485,7 +11485,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Ossiarch_Bonereapers_–_Mortisan_Elite.png",
+    "image": "Spearhead:_Ossiarch_Bonereapers_–_Mortisan_Elite.jpg",
     "retailers": []
   },
   {
@@ -11495,7 +11495,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Cities_of_Sigmar_–_Fusil-Platoon.png",
+    "image": "Spearhead:_Cities_of_Sigmar_–_Fusil-Platoon.jpg",
     "retailers": []
   },
   {
@@ -11505,7 +11505,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Hero",
     "points": 0,
-    "image": "Soulblight_Gravelords:_Manifestations.png",
+    "image": "Soulblight_Gravelords:_Manifestations.jpg",
     "retailers": []
   },
   {
@@ -11515,7 +11515,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "Cursed_Sepulchre/Nexus_of_Grief.png",
+    "image": "Cursed_Sepulchre/Nexus_of_Grief.jpg",
     "retailers": []
   },
   {
@@ -11525,7 +11525,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Deathrattle_Skeletons.png",
+    "image": "Deathrattle_Skeletons.jpg",
     "retailers": []
   },
   {
@@ -11535,7 +11535,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Barrow_Knights.png",
+    "image": "Barrow_Knights.jpg",
     "retailers": []
   },
   {
@@ -11545,7 +11545,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Barrow_Guard.png",
+    "image": "Barrow_Guard.jpg",
     "retailers": []
   },
   {
@@ -11555,7 +11555,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Blades_of_the_Hollow_King.png",
+    "image": "Blades_of_the_Hollow_King.jpg",
     "retailers": []
   },
   {
@@ -11565,7 +11565,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Doom_Diver_Catapult.png",
+    "image": "Doom_Diver_Catapult.jpg",
     "retailers": []
   },
   {
@@ -11575,7 +11575,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sunsteala_Wheelas.png",
+    "image": "Sunsteala_Wheelas.jpg",
     "retailers": []
   },
   {
@@ -11585,7 +11585,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Snarlpack_Cavalry.png",
+    "image": "Snarlpack_Cavalry.jpg",
     "retailers": []
   },
   {
@@ -11595,7 +11595,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Snarlboss_on_War-Wheela.png",
+    "image": "Snarlboss_on_War-Wheela.jpg",
     "retailers": []
   },
   {
@@ -11605,7 +11605,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Snarlboss_and_Wolfgit_Retinue.png",
+    "image": "Snarlboss_and_Wolfgit_Retinue.jpg",
     "retailers": []
   },
   {
@@ -11615,7 +11615,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bossrokk_Tower.png",
+    "image": "Bossrokk_Tower.jpg",
     "retailers": []
   },
   {
@@ -11625,7 +11625,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Orruk_Warclans:_Manifestations.png",
+    "image": "Orruk_Warclans:_Manifestations.jpg",
     "retailers": []
   },
   {
@@ -11635,7 +11635,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hobgrot_Slittaboss.png",
+    "image": "Hobgrot_Slittaboss.jpg",
     "retailers": []
   },
   {
@@ -11645,7 +11645,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Swampcalla_Shaman_with_Pot-grot.png",
+    "image": "Swampcalla_Shaman_with_Pot-grot.jpg",
     "retailers": []
   },
   {
@@ -11655,7 +11655,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Killaboss_with_Stab-grot.png",
+    "image": "Killaboss_with_Stab-grot.jpg",
     "retailers": []
   },
   {
@@ -11665,7 +11665,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Orruk_Warclans_–_Ironjawz_Bigmob.png",
+    "image": "Spearhead:_Orruk_Warclans_–_Ironjawz_Bigmob.jpg",
     "retailers": []
   },
   {
@@ -11675,7 +11675,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Hero",
     "points": 0,
-    "image": "Chaos_Sorcerer_Lord.png",
+    "image": "Chaos_Sorcerer_Lord.jpg",
     "retailers": []
   },
   {
@@ -11685,7 +11685,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Abraxia,_Spear_of_the_Everchosen.png",
+    "image": "Abraxia,_Spear_of_the_Everchosen.jpg",
     "retailers": []
   },
   {
@@ -11695,7 +11695,7 @@ export const Products: Product[] = [
     "faction": "Drukhari",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Slaves_to_Darkness_–_Darkoath_Raiders.png",
+    "image": "Spearhead:_Slaves_to_Darkness_–_Darkoath_Raiders.jpg",
     "retailers": []
   },
   {
@@ -11705,7 +11705,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Luminark_of_Hysh.png",
+    "image": "Luminark_of_Hysh.jpg",
     "retailers": []
   },
   {
@@ -11715,7 +11715,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stormreach_Portal.png",
+    "image": "Stormreach_Portal.jpg",
     "retailers": []
   },
   {
@@ -11725,7 +11725,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stormcoven.png",
+    "image": "Stormcoven.jpg",
     "retailers": []
   },
   {
@@ -11735,7 +11735,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Hero",
     "points": 0,
-    "image": "Lord-Imperatant.png",
+    "image": "Lord-Imperatant.jpg",
     "retailers": []
   },
   {
@@ -11745,7 +11745,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Knight-Arcanum.png",
+    "image": "Knight-Arcanum.jpg",
     "retailers": []
   },
   {
@@ -11755,7 +11755,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Prosecutors.png",
+    "image": "Prosecutors.jpg",
     "retailers": []
   },
   {
@@ -11765,7 +11765,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Liberators.png",
+    "image": "Liberators.jpg",
     "retailers": []
   },
   {
@@ -11775,7 +11775,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Iridan_the_Witness.png",
+    "image": "Iridan_the_Witness.jpg",
     "retailers": []
   },
   {
@@ -11785,7 +11785,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Hero",
     "points": 0,
-    "image": "Lord-Celestant.png",
+    "image": "Lord-Celestant.jpg",
     "retailers": []
   },
   {
@@ -11795,7 +11795,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Reclusians.png",
+    "image": "Reclusians.jpg",
     "retailers": []
   },
   {
@@ -11805,7 +11805,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Hero",
     "points": 0,
-    "image": "Lord-Terminos.png",
+    "image": "Lord-Terminos.jpg",
     "retailers": []
   },
   {
@@ -11815,7 +11815,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Hero",
     "points": 0,
-    "image": "Lord-Relictor.png",
+    "image": "Lord-Relictor.jpg",
     "retailers": []
   },
   {
@@ -11825,7 +11825,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tornus_the_Redeemed.png",
+    "image": "Tornus_the_Redeemed.jpg",
     "retailers": []
   },
   {
@@ -11835,7 +11835,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stormstrike_Palladors.png",
+    "image": "Stormstrike_Palladors.jpg",
     "retailers": []
   },
   {
@@ -11845,7 +11845,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warcry:_Teratic_Cohort.png",
+    "image": "Warcry:_Teratic_Cohort.jpg",
     "retailers": []
   },
   {
@@ -11855,7 +11855,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warcry:_Twistweald.png",
+    "image": "Warcry:_Twistweald.jpg",
     "retailers": []
   },
   {
@@ -11865,7 +11865,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Thanquol_and_Boneripper.png",
+    "image": "Thanquol_and_Boneripper.jpg",
     "retailers": []
   },
   {
@@ -11875,7 +11875,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Clanrats.png",
+    "image": "Clanrats.jpg",
     "retailers": []
   },
   {
@@ -11885,7 +11885,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Hero",
     "points": 0,
-    "image": "Clawlord_on_Gnaw-beast.png",
+    "image": "Clawlord_on_Gnaw-beast.jpg",
     "retailers": []
   },
   {
@@ -11895,7 +11895,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Krittok_Foulblade.png",
+    "image": "Krittok_Foulblade.jpg",
     "retailers": []
   },
   {
@@ -11905,7 +11905,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Rat_Ogors.png",
+    "image": "Rat_Ogors.jpg",
     "retailers": []
   },
   {
@@ -11915,7 +11915,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Arch-Warlock.png",
+    "image": "Arch-Warlock.jpg",
     "retailers": []
   },
   {
@@ -11925,7 +11925,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Black Library",
     "points": 0,
-    "image": "Ratling_Warpblaster.png",
+    "image": "Ratling_Warpblaster.jpg",
     "retailers": []
   },
   {
@@ -11935,7 +11935,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warplock_Jezzails.png",
+    "image": "Warplock_Jezzails.jpg",
     "retailers": []
   },
   {
@@ -11945,7 +11945,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Brood_Terror.png",
+    "image": "Brood_Terror.jpg",
     "retailers": []
   },
   {
@@ -11955,7 +11955,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warlock_Galvaneer.png",
+    "image": "Warlock_Galvaneer.jpg",
     "retailers": []
   },
   {
@@ -11965,7 +11965,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Acolyte_Globadiers.png",
+    "image": "Acolyte_Globadiers.jpg",
     "retailers": []
   },
   {
@@ -11975,7 +11975,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warp-Grinder.png",
+    "image": "Warp-Grinder.jpg",
     "retailers": []
   },
   {
@@ -11985,7 +11985,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warpspark_Weapon_Battery.png",
+    "image": "Warpspark_Weapon_Battery.jpg",
     "retailers": []
   },
   {
@@ -11995,7 +11995,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Doom-Flayers.png",
+    "image": "Doom-Flayers.jpg",
     "retailers": []
   },
   {
@@ -12005,7 +12005,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Master_Moulder.png",
+    "image": "Master_Moulder.jpg",
     "retailers": []
   },
   {
@@ -12015,7 +12015,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stormvermin.png",
+    "image": "Stormvermin.jpg",
     "retailers": []
   },
   {
@@ -12025,7 +12025,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Skaven.png",
+    "image": "Spearhead:_Skaven.jpg",
     "retailers": []
   },
   {
@@ -12035,7 +12035,7 @@ export const Products: Product[] = [
     "faction": "Space Marines",
     "category": "Hero",
     "points": 0,
-    "image": "Warhammer+_Year_4:_Cities_of_Sigmar_–_Marshal_Ashfield_and_Squire_Udo.png",
+    "image": "Warhammer+_Year_4:_Cities_of_Sigmar_–_Marshal_Ashfield_and_Squire_Udo.jpg",
     "retailers": []
   },
   {
@@ -12045,7 +12045,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Starter Set",
     "points": 0,
-    "image": "Warhammer_Age_of_Sigmar:_Spearhead_Starter_Set.png",
+    "image": "Warhammer_Age_of_Sigmar:_Spearhead_Starter_Set.jpg",
     "retailers": []
   },
   {
@@ -12055,7 +12055,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Getting_Started_With_Warhammer_Age_of_Sigmar.png",
+    "image": "Getting_Started_With_Warhammer_Age_of_Sigmar.jpg",
     "retailers": []
   },
   {
@@ -12065,7 +12065,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warcry:_Ydrilan_Riverblades.png",
+    "image": "Warcry:_Ydrilan_Riverblades.jpg",
     "retailers": []
   },
   {
@@ -12075,7 +12075,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warcry:_Pyregheists.png",
+    "image": "Warcry:_Pyregheists.jpg",
     "retailers": []
   },
   {
@@ -12085,7 +12085,7 @@ export const Products: Product[] = [
     "faction": "Sons of Behemat",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Sons_of_Behemat.png",
+    "image": "Spearhead:_Sons_of_Behemat.jpg",
     "retailers": []
   },
   {
@@ -12095,7 +12095,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Daughters_Of_Khaine.png",
+    "image": "Spearhead:_Daughters_Of_Khaine.jpg",
     "retailers": []
   },
   {
@@ -12105,7 +12105,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Hero",
     "points": 0,
-    "image": "Spearhead:_Lumineth_Realm-lords.png",
+    "image": "Spearhead:_Lumineth_Realm-lords.jpg",
     "retailers": []
   },
   {
@@ -12115,7 +12115,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Orruk_Warclans.png",
+    "image": "Spearhead:_Orruk_Warclans.jpg",
     "retailers": []
   },
   {
@@ -12125,7 +12125,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Seraphon.png",
+    "image": "Spearhead:_Seraphon.jpg",
     "retailers": []
   },
   {
@@ -12135,7 +12135,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Fyreslayers.png",
+    "image": "Spearhead:_Fyreslayers.jpg",
     "retailers": []
   },
   {
@@ -12145,7 +12145,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Hedonites_Of_Slaanesh.png",
+    "image": "Spearhead:_Hedonites_Of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -12155,7 +12155,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Slaves_to_Darkness.png",
+    "image": "Spearhead:_Slaves_to_Darkness.jpg",
     "retailers": []
   },
   {
@@ -12165,7 +12165,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Disciples_of_Tzeentch.png",
+    "image": "Spearhead:_Disciples_of_Tzeentch.jpg",
     "retailers": []
   },
   {
@@ -12175,7 +12175,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Sekhar,_Fang_of_Nulahmia.png",
+    "image": "Sekhar,_Fang_of_Nulahmia.jpg",
     "retailers": []
   },
   {
@@ -12185,7 +12185,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Krethusa_the_Croneseer.png",
+    "image": "Krethusa_the_Croneseer.jpg",
     "retailers": []
   },
   {
@@ -12195,7 +12195,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "Nexus_Chaotica.png",
+    "image": "Nexus_Chaotica.jpg",
     "retailers": []
   },
   {
@@ -12205,7 +12205,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Darkoath_Wilderfiend.png",
+    "image": "Darkoath_Wilderfiend.jpg",
     "retailers": []
   },
   {
@@ -12215,7 +12215,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Darkoath_Chieftain_on_Warsteed.png",
+    "image": "Darkoath_Chieftain_on_Warsteed.jpg",
     "retailers": []
   },
   {
@@ -12225,7 +12225,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Darkoath_Fellriders.png",
+    "image": "Darkoath_Fellriders.jpg",
     "retailers": []
   },
   {
@@ -12235,7 +12235,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Darkoath_Marauders.png",
+    "image": "Darkoath_Marauders.jpg",
     "retailers": []
   },
   {
@@ -12245,7 +12245,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Brand's_Oathbound.png",
+    "image": "Brand's_Oathbound.jpg",
     "retailers": []
   },
   {
@@ -12255,7 +12255,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Gloomspite_Gitz.png",
+    "image": "Spearhead:_Gloomspite_Gitz.jpg",
     "retailers": []
   },
   {
@@ -12265,7 +12265,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Ossiarch_Bonereapers.png",
+    "image": "Spearhead:_Ossiarch_Bonereapers.jpg",
     "retailers": []
   },
   {
@@ -12275,7 +12275,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Sylvaneth.png",
+    "image": "Spearhead:_Sylvaneth.jpg",
     "retailers": []
   },
   {
@@ -12285,7 +12285,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Maggotkin_of_Nurgle.png",
+    "image": "Spearhead:_Maggotkin_of_Nurgle.jpg",
     "retailers": []
   },
   {
@@ -12295,7 +12295,7 @@ export const Products: Product[] = [
     "faction": "Beasts of Chaos",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warcry:_Gorger_Mawpack.png",
+    "image": "Warcry:_Gorger_Mawpack.jpg",
     "retailers": []
   },
   {
@@ -12305,7 +12305,7 @@ export const Products: Product[] = [
     "faction": "Necrons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Elder_Gnarloak.png",
+    "image": "Elder_Gnarloak.jpg",
     "retailers": []
   },
   {
@@ -12315,7 +12315,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Idol_of_Motzlpota.png",
+    "image": "Idol_of_Motzlpota.jpg",
     "retailers": []
   },
   {
@@ -12325,7 +12325,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Saviours_of_Cinderfall.png",
+    "image": "Saviours_of_Cinderfall.jpg",
     "retailers": []
   },
   {
@@ -12335,7 +12335,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ionus_Cryptborn,_Warden_of_Lost_Souls.png",
+    "image": "Ionus_Cryptborn,_Warden_of_Lost_Souls.jpg",
     "retailers": []
   },
   {
@@ -12345,7 +12345,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Belthanos,_First_Thorn_of_Kurnoth.png",
+    "image": "Belthanos,_First_Thorn_of_Kurnoth.jpg",
     "retailers": []
   },
   {
@@ -12355,7 +12355,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Trugg_the_Troggoth_King.png",
+    "image": "Trugg_the_Troggoth_King.jpg",
     "retailers": []
   },
   {
@@ -12365,7 +12365,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Varghulf_Courtier.png",
+    "image": "Varghulf_Courtier.jpg",
     "retailers": []
   },
   {
@@ -12375,7 +12375,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Abhorrant_Gorewarden.png",
+    "image": "Abhorrant_Gorewarden.jpg",
     "retailers": []
   },
   {
@@ -12385,7 +12385,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Abhorrant_Cardinal.png",
+    "image": "Abhorrant_Cardinal.jpg",
     "retailers": []
   },
   {
@@ -12395,7 +12395,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grand_Justice_Gormayne.png",
+    "image": "Grand_Justice_Gormayne.jpg",
     "retailers": []
   },
   {
@@ -12405,7 +12405,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Royal_Decapitator.png",
+    "image": "Royal_Decapitator.jpg",
     "retailers": []
   },
   {
@@ -12415,7 +12415,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Morbheg_Knights.png",
+    "image": "Morbheg_Knights.jpg",
     "retailers": []
   },
   {
@@ -12425,7 +12425,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Cryptguard.png",
+    "image": "Cryptguard.jpg",
     "retailers": []
   },
   {
@@ -12435,7 +12435,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ushoran,_Mortarch_of_Delusion.png",
+    "image": "Ushoran,_Mortarch_of_Delusion.jpg",
     "retailers": []
   },
   {
@@ -12445,7 +12445,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mawpit.png",
+    "image": "Mawpit.jpg",
     "retailers": []
   },
   {
@@ -12455,7 +12455,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grimhold_Exile.png",
+    "image": "Grimhold_Exile.jpg",
     "retailers": []
   },
   {
@@ -12465,7 +12465,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Blacktalons.png",
+    "image": "The_Blacktalons.jpg",
     "retailers": []
   },
   {
@@ -12475,7 +12475,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Pontifex_Zenestra,_Matriarch_of_the_Great_Wheel.png",
+    "image": "Pontifex_Zenestra,_Matriarch_of_the_Great_Wheel.jpg",
     "retailers": []
   },
   {
@@ -12485,7 +12485,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tahlia_Vedra,_Lioness_of_the_Parch.png",
+    "image": "Tahlia_Vedra,_Lioness_of_the_Parch.jpg",
     "retailers": []
   },
   {
@@ -12495,7 +12495,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fusil-Major_on_Ogor_Warhulk.png",
+    "image": "Fusil-Major_on_Ogor_Warhulk.jpg",
     "retailers": []
   },
   {
@@ -12505,7 +12505,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Hero",
     "points": 0,
-    "image": "Freeguild_Marshal_and_Relic_Envoy.png",
+    "image": "Freeguild_Marshal_and_Relic_Envoy.jpg",
     "retailers": []
   },
   {
@@ -12515,7 +12515,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Hero",
     "points": 0,
-    "image": "Freeguild_Cavalier-Marshal.png",
+    "image": "Freeguild_Cavalier-Marshal.jpg",
     "retailers": []
   },
   {
@@ -12525,7 +12525,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ironweld_Great_Cannon.png",
+    "image": "Ironweld_Great_Cannon.jpg",
     "retailers": []
   },
   {
@@ -12535,7 +12535,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Freeguild_Steelhelms.png",
+    "image": "Freeguild_Steelhelms.jpg",
     "retailers": []
   },
   {
@@ -12545,7 +12545,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Freeguild_Fusiliers.png",
+    "image": "Freeguild_Fusiliers.jpg",
     "retailers": []
   },
   {
@@ -12555,7 +12555,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Freeguild_Command_Corps.png",
+    "image": "Freeguild_Command_Corps.jpg",
     "retailers": []
   },
   {
@@ -12565,7 +12565,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Freeguild_Cavaliers.png",
+    "image": "Freeguild_Cavaliers.jpg",
     "retailers": []
   },
   {
@@ -12575,7 +12575,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Alchemite_Warforger.png",
+    "image": "Alchemite_Warforger.jpg",
     "retailers": []
   },
   {
@@ -12585,7 +12585,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Brute_Ragerz.png",
+    "image": "Brute_Ragerz.jpg",
     "retailers": []
   },
   {
@@ -12595,7 +12595,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Weirdbrute_Wrekkaz.png",
+    "image": "Weirdbrute_Wrekkaz.jpg",
     "retailers": []
   },
   {
@@ -12605,7 +12605,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Zoggrok_Anvilsmasha.png",
+    "image": "Zoggrok_Anvilsmasha.jpg",
     "retailers": []
   },
   {
@@ -12615,7 +12615,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Maw-grunta_Gouger.png",
+    "image": "Maw-grunta_Gouger.jpg",
     "retailers": []
   },
   {
@@ -12625,7 +12625,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Maw-grunta_with_Hakkin'_Krew.png",
+    "image": "Maw-grunta_with_Hakkin'_Krew.jpg",
     "retailers": []
   },
   {
@@ -12635,7 +12635,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tuskboss_on_Maw-grunta.png",
+    "image": "Tuskboss_on_Maw-grunta.jpg",
     "retailers": []
   },
   {
@@ -12645,7 +12645,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ardboyz.png",
+    "image": "Ardboyz.jpg",
     "retailers": []
   },
   {
@@ -12655,27 +12655,27 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Rabble-Rowza.png",
+    "image": "Rabble-Rowza.jpg",
     "retailers": []
   },
   {
     "id": "1263",
     "name": "Ardboy Big Boss",
     "game": "ageofsigmar",
-    "faction": "No Faction / Misc",
+    "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ardboy_Big_Boss.png",
+    "image": "Ardboy_Big_Boss.jpg",
     "retailers": []
   },
   {
     "id": "1264",
     "name": "Warhammer+ Year 3: Soulblight Gravelords – Karlina von Carstein",
     "game": "ageofsigmar",
-    "faction": "Ironjawz",
+    "faction": "Soulblight Gravelords",
     "category": "Hero",
     "points": 0,
-    "image": "Warhammer+_Year_3:_Soulblight_Gravelords_–_Karlina_von_Carstein.png",
+    "image": "Warhammer+_Year_3:_Soulblight_Gravelords_–_Karlina_von_Carstein.jpg",
     "retailers": []
   },
   {
@@ -12685,7 +12685,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Shattered_Dominion_Large_Base_Detail_Kit.png",
+    "image": "Shattered_Dominion_Large_Base_Detail_Kit.jpg",
     "retailers": []
   },
   {
@@ -12695,7 +12695,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Shattered_Dominion_60_&amp;_90mm_Oval_Bases.png",
+    "image": "Shattered_Dominion_60_&amp;_90mm_Oval_Bases.jpg",
     "retailers": []
   },
   {
@@ -12705,7 +12705,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Shattered_Dominion_40_&amp;_65mm_Round_Bases.png",
+    "image": "Shattered_Dominion_40_&amp;_65mm_Round_Bases.jpg",
     "retailers": []
   },
   {
@@ -12715,7 +12715,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Accessories",
     "points": 0,
-    "image": "Shattered_Dominion_25_&amp;_32mm_Round_Bases.png",
+    "image": "Shattered_Dominion_25_&amp;_32mm_Round_Bases.jpg",
     "retailers": []
   },
   {
@@ -12725,7 +12725,7 @@ export const Products: Product[] = [
     "faction": "Orks",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Games_Workshop_Tape_Measure.png",
+    "image": "Games_Workshop_Tape_Measure.jpg",
     "retailers": []
   },
   {
@@ -12735,7 +12735,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Dice",
     "points": 0,
-    "image": "Flesh-eater_Courts_Dice.png",
+    "image": "Flesh-eater_Courts_Dice.jpg",
     "retailers": []
   },
   {
@@ -12745,7 +12745,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Dice",
     "points": 0,
-    "image": "Nighthaunt_Dice.png",
+    "image": "Nighthaunt_Dice.jpg",
     "retailers": []
   },
   {
@@ -12755,7 +12755,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warscroll_Cards:_Flesh-eater_Courts.png",
+    "image": "Warscroll_Cards:_Flesh-eater_Courts.jpg",
     "retailers": []
   },
   {
@@ -12765,7 +12765,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Death_Battletome:_Flesh-eater_Courts.png",
+    "image": "Death_Battletome:_Flesh-eater_Courts.jpg",
     "retailers": []
   },
   {
@@ -12775,7 +12775,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Death_Battletome:_Flesh-eater_Courts_–_Gamer's_Edition.png",
+    "image": "Death_Battletome:_Flesh-eater_Courts_–_Gamer's_Edition.jpg",
     "retailers": []
   },
   {
@@ -12785,7 +12785,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warscroll_Cards:_Nighthaunt.png",
+    "image": "Warscroll_Cards:_Nighthaunt.jpg",
     "retailers": []
   },
   {
@@ -12795,7 +12795,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Death_Battletome:_Nighthaunt.png",
+    "image": "Death_Battletome:_Nighthaunt.jpg",
     "retailers": []
   },
   {
@@ -12805,7 +12805,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Death_Battletome:_Nighthaunt_–_Gamer's_Edition.png",
+    "image": "Death_Battletome:_Nighthaunt_–_Gamer's_Edition.jpg",
     "retailers": []
   },
   {
@@ -12815,7 +12815,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Dice",
     "points": 0,
-    "image": "Kharadron_Overlords_Dice.png",
+    "image": "Kharadron_Overlords_Dice.jpg",
     "retailers": []
   },
   {
@@ -12825,7 +12825,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Hero",
     "points": 0,
-    "image": "Warscroll_Cards:_Kharadron_Overlords.png",
+    "image": "Warscroll_Cards:_Kharadron_Overlords.jpg",
     "retailers": []
   },
   {
@@ -12835,7 +12835,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Order_Battletome:_Kharadron_Overlords.png",
+    "image": "Order_Battletome:_Kharadron_Overlords.jpg",
     "retailers": []
   },
   {
@@ -12845,7 +12845,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Order_Battletome:_Kharadron_Overlords_-_Gamer's_Edition.png",
+    "image": "Order_Battletome:_Kharadron_Overlords_-_Gamer's_Edition.jpg",
     "retailers": []
   },
   {
@@ -12855,7 +12855,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Dice",
     "points": 0,
-    "image": "Blades_of_Khorne_Dice.png",
+    "image": "Blades_of_Khorne_Dice.jpg",
     "retailers": []
   },
   {
@@ -12865,7 +12865,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warscroll_Cards:_Blades_of_Khorne.png",
+    "image": "Warscroll_Cards:_Blades_of_Khorne.jpg",
     "retailers": []
   },
   {
@@ -12875,7 +12875,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Chaos_Battletome:_Blades_of_Khorne.png",
+    "image": "Chaos_Battletome:_Blades_of_Khorne.jpg",
     "retailers": []
   },
   {
@@ -12885,7 +12885,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Chaos_Battletome:_Blades_of_Khorne_-_Gamer's_Edition.png",
+    "image": "Chaos_Battletome:_Blades_of_Khorne_-_Gamer's_Edition.jpg",
     "retailers": []
   },
   {
@@ -12895,7 +12895,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Dice",
     "points": 0,
-    "image": "Idoneth_Deepkin_Dice.png",
+    "image": "Idoneth_Deepkin_Dice.jpg",
     "retailers": []
   },
   {
@@ -12905,7 +12905,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warscroll_Cards:_Idoneth_Deepkin.png",
+    "image": "Warscroll_Cards:_Idoneth_Deepkin.jpg",
     "retailers": []
   },
   {
@@ -12915,7 +12915,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Order_Battletome:_Idoneth_Deepkin.png",
+    "image": "Order_Battletome:_Idoneth_Deepkin.jpg",
     "retailers": []
   },
   {
@@ -12925,7 +12925,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Order_Battletome:_Idoneth_Deepkin_-_Gamer's_Edition.png",
+    "image": "Order_Battletome:_Idoneth_Deepkin_-_Gamer's_Edition.jpg",
     "retailers": []
   },
   {
@@ -12935,7 +12935,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Sand_&amp;_Bone_Gaming_Pack.png",
+    "image": "Spearhead:_Sand_&amp;_Bone_Gaming_Pack.jpg",
     "retailers": []
   },
   {
@@ -12945,7 +12945,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "General's_Handbook_2025-2026.png",
+    "image": "General's_Handbook_2025-2026.jpg",
     "retailers": []
   },
   {
@@ -12955,7 +12955,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Death_Battletome:_Soulblight_Gravelords.png",
+    "image": "Death_Battletome:_Soulblight_Gravelords.jpg",
     "retailers": []
   },
   {
@@ -12965,7 +12965,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Dice",
     "points": 0,
-    "image": "Gloomspite_Gitz_Dice.png",
+    "image": "Gloomspite_Gitz_Dice.jpg",
     "retailers": []
   },
   {
@@ -12975,7 +12975,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Destruction_Battletome:_Gloomspite_Gitz.png",
+    "image": "Destruction_Battletome:_Gloomspite_Gitz.jpg",
     "retailers": []
   },
   {
@@ -12985,7 +12985,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Path_to_Glory:_Ravaged_Coast.png",
+    "image": "Path_to_Glory:_Ravaged_Coast.jpg",
     "retailers": []
   },
   {
@@ -12995,7 +12995,7 @@ export const Products: Product[] = [
     "faction": "Orruk Warclans",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Destruction_Battletome:_Orruk_Warclans.png",
+    "image": "Destruction_Battletome:_Orruk_Warclans.jpg",
     "retailers": []
   },
   {
@@ -13005,7 +13005,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Dice",
     "points": 0,
-    "image": "Dice_Cube.png",
+    "image": "Dice_Cube.jpg",
     "retailers": []
   },
   {
@@ -13015,7 +13015,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Chaos_Battletome:_Slaves_to_Darkness.png",
+    "image": "Chaos_Battletome:_Slaves_to_Darkness.jpg",
     "retailers": []
   },
   {
@@ -13025,7 +13025,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Order_Battletome:_Stormcast_Eternals.png",
+    "image": "Order_Battletome:_Stormcast_Eternals.jpg",
     "retailers": []
   },
   {
@@ -13035,7 +13035,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Codex/Battletome",
     "points": 0,
-    "image": "Chaos_Battletome:_Skaven.png",
+    "image": "Chaos_Battletome:_Skaven.jpg",
     "retailers": []
   },
   {
@@ -13045,7 +13045,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Paints",
     "points": 0,
-    "image": "Stormcast_Eternals_Paints_Set.png",
+    "image": "Stormcast_Eternals_Paints_Set.jpg",
     "retailers": []
   },
   {
@@ -13055,7 +13055,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Paints",
     "points": 0,
-    "image": "Skaven_Paint_Set.png",
+    "image": "Skaven_Paint_Set.jpg",
     "retailers": []
   },
   {
@@ -13065,7 +13065,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Paints",
     "points": 0,
-    "image": "Warhammer_Age_of_Sigmar:_Paints_+_Tools_Set.png",
+    "image": "Warhammer_Age_of_Sigmar:_Paints_+_Tools_Set.jpg",
     "retailers": []
   },
   {
@@ -13075,7 +13075,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Hedonites_of_Slaanesh.png",
+    "image": "Faction_Pack:_Hedonites_of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -13085,7 +13085,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Maggotkin_of_Nurgle.png",
+    "image": "Faction_Pack:_Maggotkin_of_Nurgle.jpg",
     "retailers": []
   },
   {
@@ -13095,7 +13095,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Disciples_of_Tzeentch.png",
+    "image": "Faction_Pack:_Disciples_of_Tzeentch.jpg",
     "retailers": []
   },
   {
@@ -13105,7 +13105,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Ossiarch_Bonereapers.png",
+    "image": "Faction_Pack:_Ossiarch_Bonereapers.jpg",
     "retailers": []
   },
   {
@@ -13115,7 +13115,7 @@ export const Products: Product[] = [
     "faction": "Sons of Behemat",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Sons_of_Behemat.png",
+    "image": "Faction_Pack:_Sons_of_Behemat.jpg",
     "retailers": []
   },
   {
@@ -13125,7 +13125,7 @@ export const Products: Product[] = [
     "faction": "Beasts of Chaos",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Ogor_Mawtribes.png",
+    "image": "Faction_Pack:_Ogor_Mawtribes.jpg",
     "retailers": []
   },
   {
@@ -13135,7 +13135,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Fyreslayers.png",
+    "image": "Faction_Pack:_Fyreslayers.jpg",
     "retailers": []
   },
   {
@@ -13145,7 +13145,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Sylvaneth.png",
+    "image": "Faction_Pack:_Sylvaneth.jpg",
     "retailers": []
   },
   {
@@ -13155,7 +13155,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Daughters_of_Khaine.png",
+    "image": "Faction_Pack:_Daughters_of_Khaine.jpg",
     "retailers": []
   },
   {
@@ -13165,7 +13165,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Hero",
     "points": 0,
-    "image": "Faction_Pack:_Lumineth_Realm-lords.png",
+    "image": "Faction_Pack:_Lumineth_Realm-lords.jpg",
     "retailers": []
   },
   {
@@ -13175,7 +13175,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Seraphon.png",
+    "image": "Faction_Pack:_Seraphon.jpg",
     "retailers": []
   },
   {
@@ -13185,7 +13185,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Faction_Pack:_Cities_of_Sigmar.png",
+    "image": "Faction_Pack:_Cities_of_Sigmar.jpg",
     "retailers": []
   },
   {
@@ -13195,7 +13195,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer_Age_of_Sigmar_Core_Book.png",
+    "image": "Warhammer_Age_of_Sigmar_Core_Book.jpg",
     "retailers": []
   },
   {
@@ -13205,7 +13205,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer_Age_of_Sigmar_Core_Book_(Limited_Edition).png",
+    "image": "Warhammer_Age_of_Sigmar_Core_Book_(Limited_Edition).jpg",
     "retailers": []
   },
   {
@@ -13215,7 +13215,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Box Set",
     "points": 0,
-    "image": "Helsmiths_of_Hashut_Army_Set.png",
+    "image": "Helsmiths_of_Hashut_Army_Set.jpg",
     "retailers": []
   },
   {
@@ -13225,7 +13225,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spider_Riders.png",
+    "image": "Spider_Riders.jpg",
     "retailers": []
   },
   {
@@ -13235,7 +13235,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Saurus_Warriors.png",
+    "image": "Saurus_Warriors.jpg",
     "retailers": []
   },
   {
@@ -13245,7 +13245,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mindstealer_Sphiranx.png",
+    "image": "Mindstealer_Sphiranx.jpg",
     "retailers": []
   },
   {
@@ -13255,7 +13255,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fomoroid_Crusher.png",
+    "image": "Fomoroid_Crusher.jpg",
     "retailers": []
   },
   {
@@ -13265,7 +13265,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ogroid_Myrmidon.png",
+    "image": "Ogroid_Myrmidon.jpg",
     "retailers": []
   },
   {
@@ -13275,7 +13275,7 @@ export const Products: Product[] = [
     "faction": "Sons of Behemat",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mancrusher_Gargant.png",
+    "image": "Mancrusher_Gargant.jpg",
     "retailers": []
   },
   {
@@ -13285,7 +13285,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Scriptor_Mortis.png",
+    "image": "Scriptor_Mortis.jpg",
     "retailers": []
   },
   {
@@ -13295,7 +13295,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Auric_Flamekeeper.png",
+    "image": "Auric_Flamekeeper.jpg",
     "retailers": []
   },
   {
@@ -13305,7 +13305,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Hero",
     "points": 0,
-    "image": "Ethereal_Court.png",
+    "image": "Ethereal_Court.jpg",
     "retailers": []
   },
   {
@@ -13315,7 +13315,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Hero",
     "points": 0,
-    "image": "Rotbringer_Sorcerer.png",
+    "image": "Rotbringer_Sorcerer.jpg",
     "retailers": []
   },
   {
@@ -13325,7 +13325,7 @@ export const Products: Product[] = [
     "faction": "Kruleboyz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Snatchaboss_on_Sludgeraker_Beast.png",
+    "image": "Snatchaboss_on_Sludgeraker_Beast.jpg",
     "retailers": []
   },
   {
@@ -13335,7 +13335,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Radukar_the_Wolf.png",
+    "image": "Radukar_the_Wolf.jpg",
     "retailers": []
   },
   {
@@ -13345,7 +13345,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Deadwalker_Zombies.png",
+    "image": "Deadwalker_Zombies.jpg",
     "retailers": []
   },
   {
@@ -13355,7 +13355,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hurakan_Windmage.png",
+    "image": "Hurakan_Windmage.jpg",
     "retailers": []
   },
   {
@@ -13365,7 +13365,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Hero",
     "points": 0,
-    "image": "Vanari_Lord_Regent.png",
+    "image": "Vanari_Lord_Regent.jpg",
     "retailers": []
   },
   {
@@ -13375,7 +13375,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Faction Terrain",
     "points": 0,
-    "image": "Shrine_Luminor.png",
+    "image": "Shrine_Luminor.jpg",
     "retailers": []
   },
   {
@@ -13385,7 +13385,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Slaangor_Fiendbloods.png",
+    "image": "Slaangor_Fiendbloods.jpg",
     "retailers": []
   },
   {
@@ -13395,7 +13395,7 @@ export const Products: Product[] = [
     "faction": "Lumineth Realm-lords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Alarith_Stonemage.png",
+    "image": "Alarith_Stonemage.jpg",
     "retailers": []
   },
   {
@@ -13405,7 +13405,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Necropolis_Stalkers.png",
+    "image": "Necropolis_Stalkers.jpg",
     "retailers": []
   },
   {
@@ -13415,7 +13415,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mortisan_Soulmason.png",
+    "image": "Mortisan_Soulmason.jpg",
     "retailers": []
   },
   {
@@ -13425,7 +13425,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mortek_Crawler.png",
+    "image": "Mortek_Crawler.jpg",
     "retailers": []
   },
   {
@@ -13435,7 +13435,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Named Hero",
     "points": 0,
-    "image": "Katakros,_Mortarch_of_the_Necropolis.png",
+    "image": "Katakros,_Mortarch_of_the_Necropolis.jpg",
     "retailers": []
   },
   {
@@ -13445,7 +13445,7 @@ export const Products: Product[] = [
     "faction": "Ossiarch Bonereapers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gothizzar_Harvester.png",
+    "image": "Gothizzar_Harvester.jpg",
     "retailers": []
   },
   {
@@ -13455,7 +13455,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Contorted_Epitome.png",
+    "image": "The_Contorted_Epitome.jpg",
     "retailers": []
   },
   {
@@ -13465,7 +13465,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Infernal_Enrapturess.png",
+    "image": "Infernal_Enrapturess.jpg",
     "retailers": []
   },
   {
@@ -13475,7 +13475,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Fiends.png",
+    "image": "Fiends.jpg",
     "retailers": []
   },
   {
@@ -13485,7 +13485,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Endless_Spells:_Flesh-eater_Courts.png",
+    "image": "Endless_Spells:_Flesh-eater_Courts.jpg",
     "retailers": []
   },
   {
@@ -13495,7 +13495,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ogor_Gluttons.png",
+    "image": "Ogor_Gluttons.jpg",
     "retailers": []
   },
   {
@@ -13505,7 +13505,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dreadscythe_Harridans.png",
+    "image": "Dreadscythe_Harridans.jpg",
     "retailers": []
   },
   {
@@ -13515,7 +13515,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spirit_Torment_and_Chainghasts.png",
+    "image": "Spirit_Torment_and_Chainghasts.jpg",
     "retailers": []
   },
   {
@@ -13525,7 +13525,7 @@ export const Products: Product[] = [
     "faction": "Nighthaunt",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hexwraiths.png",
+    "image": "Hexwraiths.jpg",
     "retailers": []
   },
   {
@@ -13535,7 +13535,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Akhelian_Leviadon.png",
+    "image": "Akhelian_Leviadon.jpg",
     "retailers": []
   },
   {
@@ -13545,7 +13545,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Volturnos,_High_King_of_the_Deep.png",
+    "image": "Volturnos,_High_King_of_the_Deep.jpg",
     "retailers": []
   },
   {
@@ -13555,7 +13555,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gloomtide_Shipwreck.png",
+    "image": "Gloomtide_Shipwreck.jpg",
     "retailers": []
   },
   {
@@ -13565,7 +13565,7 @@ export const Products: Product[] = [
     "faction": "Idoneth Deepkin",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Lotann,_Warden_of_the_Soul_Ledgers.png",
+    "image": "Lotann,_Warden_of_the_Soul_Ledgers.jpg",
     "retailers": []
   },
   {
@@ -13575,7 +13575,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Hag_Queen_on_Cauldron_of_Blood.png",
+    "image": "Hag_Queen_on_Cauldron_of_Blood.jpg",
     "retailers": []
   },
   {
@@ -13585,7 +13585,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Khinerai_Heartrenders.png",
+    "image": "Khinerai_Heartrenders.jpg",
     "retailers": []
   },
   {
@@ -13595,7 +13595,7 @@ export const Products: Product[] = [
     "faction": "Daughters of Khaine",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Morathi-Khaine_and_The_Shadow_Queen.png",
+    "image": "Morathi-Khaine_and_The_Shadow_Queen.jpg",
     "retailers": []
   },
   {
@@ -13605,7 +13605,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Feculent_Gnarlmaw.png",
+    "image": "Feculent_Gnarlmaw.jpg",
     "retailers": []
   },
   {
@@ -13615,7 +13615,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Terrain",
     "points": 0,
-    "image": "Creeping_Vines.png",
+    "image": "Creeping_Vines.jpg",
     "retailers": []
   },
   {
@@ -13625,7 +13625,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Terrain",
     "points": 0,
-    "image": "Barbed_Bracken.png",
+    "image": "Barbed_Bracken.jpg",
     "retailers": []
   },
   {
@@ -13635,7 +13635,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Skywardens.png",
+    "image": "Skywardens.jpg",
     "retailers": []
   },
   {
@@ -13645,7 +13645,7 @@ export const Products: Product[] = [
     "faction": "Kharadron Overlords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Grundstok_Gunhauler.png",
+    "image": "Grundstok_Gunhauler.jpg",
     "retailers": []
   },
   {
@@ -13655,7 +13655,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Changeling.png",
+    "image": "The_Changeling.jpg",
     "retailers": []
   },
   {
@@ -13665,7 +13665,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Tzaangors.png",
+    "image": "Tzaangors.jpg",
     "retailers": []
   },
   {
@@ -13675,7 +13675,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Kairic_Acolytes.png",
+    "image": "Kairic_Acolytes.jpg",
     "retailers": []
   },
   {
@@ -13685,7 +13685,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gaunt_Summoner.png",
+    "image": "Gaunt_Summoner.jpg",
     "retailers": []
   },
   {
@@ -13695,7 +13695,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Drycha_Hamadreth.png",
+    "image": "Drycha_Hamadreth.jpg",
     "retailers": []
   },
   {
@@ -13705,7 +13705,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Alarielle_the_Everqueen.png",
+    "image": "Alarielle_the_Everqueen.jpg",
     "retailers": []
   },
   {
@@ -13715,7 +13715,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Crypt_Horrors.png",
+    "image": "Crypt_Horrors.jpg",
     "retailers": []
   },
   {
@@ -13725,7 +13725,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Megaboss_on_Maw-krusha.png",
+    "image": "Megaboss_on_Maw-krusha.jpg",
     "retailers": []
   },
   {
@@ -13735,7 +13735,7 @@ export const Products: Product[] = [
     "faction": "Ironjawz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Spawn.png",
+    "image": "Chaos_Spawn.jpg",
     "retailers": []
   },
   {
@@ -13745,7 +13745,7 @@ export const Products: Product[] = [
     "faction": "Thousand Sons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mannfred,_Mortarch_of_Night.png",
+    "image": "Mannfred,_Mortarch_of_Night.jpg",
     "retailers": []
   },
   {
@@ -13755,7 +13755,7 @@ export const Products: Product[] = [
     "faction": "Fyreslayers",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Auric_Hearthguard.png",
+    "image": "Auric_Hearthguard.jpg",
     "retailers": []
   },
   {
@@ -13765,7 +13765,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gaunt_Summoner_on_Disc_of_Tzeentch.png",
+    "image": "Gaunt_Summoner_on_Disc_of_Tzeentch.jpg",
     "retailers": []
   },
   {
@@ -13775,7 +13775,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Ripperdactyl_Riders.png",
+    "image": "Ripperdactyl_Riders.jpg",
     "retailers": []
   },
   {
@@ -13785,7 +13785,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Terradon_Riders.png",
+    "image": "Terradon_Riders.jpg",
     "retailers": []
   },
   {
@@ -13795,7 +13795,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Stegadon.png",
+    "image": "Stegadon.jpg",
     "retailers": []
   },
   {
@@ -13805,7 +13805,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Saurus_Guard.png",
+    "image": "Saurus_Guard.jpg",
     "retailers": []
   },
   {
@@ -13815,7 +13815,7 @@ export const Products: Product[] = [
     "faction": "Seraphon",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bastiladon.png",
+    "image": "Bastiladon.jpg",
     "retailers": []
   },
   {
@@ -13825,7 +13825,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Misc",
     "points": 0,
-    "image": "Skullreapers.png",
+    "image": "Skullreapers.jpg",
     "retailers": []
   },
   {
@@ -13835,7 +13835,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "The_Glottkin.png",
+    "image": "The_Glottkin.jpg",
     "retailers": []
   },
   {
@@ -13845,7 +13845,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Screaming_Bell.png",
+    "image": "Screaming_Bell.jpg",
     "retailers": []
   },
   {
@@ -13855,7 +13855,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Hero",
     "points": 0,
-    "image": "Treelord.png",
+    "image": "Treelord.jpg",
     "retailers": []
   },
   {
@@ -13865,7 +13865,7 @@ export const Products: Product[] = [
     "faction": "Sylvaneth",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Dryads.png",
+    "image": "Dryads.jpg",
     "retailers": []
   },
   {
@@ -13875,7 +13875,7 @@ export const Products: Product[] = [
     "faction": "Blades of Khorne",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Bloodcrushers.png",
+    "image": "Bloodcrushers.jpg",
     "retailers": []
   },
   {
@@ -13885,7 +13885,7 @@ export const Products: Product[] = [
     "faction": "Chaos Daemons",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Darkshards.png",
+    "image": "Darkshards.jpg",
     "retailers": []
   },
   {
@@ -13895,7 +13895,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Seekers_of_Slaanesh.png",
+    "image": "Seekers_of_Slaanesh.jpg",
     "retailers": []
   },
   {
@@ -13905,7 +13905,7 @@ export const Products: Product[] = [
     "faction": "Hedonites of Slaanesh",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Seeker_Chariot.png",
+    "image": "Seeker_Chariot.jpg",
     "retailers": []
   },
   {
@@ -13915,7 +13915,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mutalith_Vortex_Beast.png",
+    "image": "Mutalith_Vortex_Beast.jpg",
     "retailers": []
   },
   {
@@ -13925,7 +13925,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Mortis_Engine.png",
+    "image": "Mortis_Engine.jpg",
     "retailers": []
   },
   {
@@ -13935,7 +13935,7 @@ export const Products: Product[] = [
     "faction": "Cities of Sigmar",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Black_Ark_Corsairs.png",
+    "image": "Black_Ark_Corsairs.jpg",
     "retailers": []
   },
   {
@@ -13945,7 +13945,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Coven_Throne.png",
+    "image": "Coven_Throne.jpg",
     "retailers": []
   },
   {
@@ -13955,7 +13955,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Leadbelchers.png",
+    "image": "Leadbelchers.jpg",
     "retailers": []
   },
   {
@@ -13965,7 +13965,7 @@ export const Products: Product[] = [
     "faction": "Ogor Mawtribes",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Gnoblars.png",
+    "image": "Gnoblars.jpg",
     "retailers": []
   },
   {
@@ -13975,7 +13975,7 @@ export const Products: Product[] = [
     "faction": "Disciples of Tzeentch",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Jade_Obelisk.png",
+    "image": "Jade_Obelisk.jpg",
     "retailers": []
   },
   {
@@ -13985,7 +13985,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Rotmire_Creed.png",
+    "image": "Rotmire_Creed.jpg",
     "retailers": []
   },
   {
@@ -13995,7 +13995,7 @@ export const Products: Product[] = [
     "faction": "Slaves to Darkness",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Chaos_Legionnaires.png",
+    "image": "Chaos_Legionnaires.jpg",
     "retailers": []
   },
   {
@@ -14005,7 +14005,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Askurgan_Trueblades.png",
+    "image": "Askurgan_Trueblades.jpg",
     "retailers": []
   },
   {
@@ -14015,7 +14015,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Hero",
     "points": 0,
-    "image": "Wight_King/Lord_on_Skeletal_Steed.png",
+    "image": "Wight_King/Lord_on_Skeletal_Steed.jpg",
     "retailers": []
   },
   {
@@ -14025,7 +14025,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Hero",
     "points": 0,
-    "image": "Vampire_Lord_on_Nightmare_Steed.png",
+    "image": "Vampire_Lord_on_Nightmare_Steed.jpg",
     "retailers": []
   },
   {
@@ -14035,7 +14035,7 @@ export const Products: Product[] = [
     "faction": "Soulblight Gravelords",
     "category": "Hero",
     "points": 0,
-    "image": "Prince_Vhordrai,_Lord_of_the_Crimson_Keep/Revenant_Draconith.png",
+    "image": "Prince_Vhordrai,_Lord_of_the_Crimson_Keep/Revenant_Draconith.jpg",
     "retailers": []
   },
   {
@@ -14045,7 +14045,7 @@ export const Products: Product[] = [
     "faction": "Gloomspite Gitz",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Droggz_da_Sunchompa.png",
+    "image": "Droggz_da_Sunchompa.jpg",
     "retailers": []
   },
   {
@@ -14055,7 +14055,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Plaguepack.png",
+    "image": "Plaguepack.jpg",
     "retailers": []
   },
   {
@@ -14065,7 +14065,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Named Hero",
     "points": 0,
-    "image": "Vizzik_Skour,_Prophet_of_the_Horned_Rat.png",
+    "image": "Vizzik_Skour,_Prophet_of_the_Horned_Rat.jpg",
     "retailers": []
   },
   {
@@ -14075,7 +14075,7 @@ export const Products: Product[] = [
     "faction": "Skaven",
     "category": "Starter Set",
     "points": 0,
-    "image": "Warhammer_Age_of_Sigmar:_Starter_Set.png",
+    "image": "Warhammer_Age_of_Sigmar:_Starter_Set.jpg",
     "retailers": []
   },
   {
@@ -14085,7 +14085,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Starter Set",
     "points": 0,
-    "image": "Warhammer_Age_of_Sigmar:_Introductory_Set.png",
+    "image": "Warhammer_Age_of_Sigmar:_Introductory_Set.jpg",
     "retailers": []
   },
   {
@@ -14095,7 +14095,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Starfire_Pylon.png",
+    "image": "Starfire_Pylon.jpg",
     "retailers": []
   },
   {
@@ -14105,7 +14105,7 @@ export const Products: Product[] = [
     "faction": "Stormcast Eternals",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Spearhead:_Stormcast_Eternals.png",
+    "image": "Spearhead:_Stormcast_Eternals.jpg",
     "retailers": []
   },
   {
@@ -14115,7 +14115,7 @@ export const Products: Product[] = [
     "faction": "Flesh-eater Courts",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Marrowscroll_Herald.png",
+    "image": "Marrowscroll_Herald.jpg",
     "retailers": []
   },
   {
@@ -14125,7 +14125,7 @@ export const Products: Product[] = [
     "faction": "Maggotkin of Nurgle",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Harbinger_of_Decay.png",
+    "image": "Harbinger_of_Decay.jpg",
     "retailers": []
   },
   {
@@ -14135,7 +14135,7 @@ export const Products: Product[] = [
     "faction": "No Faction / Misc",
     "category": "Generic Unit",
     "points": 0,
-    "image": "Warhammer_Quest:_Cursed_City.png",
+    "image": "Warhammer_Quest_Cursed_City.jpg",
     "retailers": []
   }
 ];

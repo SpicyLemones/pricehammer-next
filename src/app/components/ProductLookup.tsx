@@ -40,7 +40,7 @@ function imgSrc(image?: string | null) {
   if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("/")) {
     return val; // absolute or remote
   }
-  return `/images/${val}`; // treat as filename in /public/images
+  return `/images/product/${val}`; // treat as filename in /public/images
 }
 
 
@@ -320,7 +320,7 @@ const groupedFactions = useMemo(() => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-display font-bold">Price Lookup</h1>
+        <h1 className="text-3xl font-display font-bold">Product Lookup</h1>
         <p>Compare prices for Wargaming kits across AU retailers, including Warhammer.</p>
 
         <p className="text-muted-foreground">
