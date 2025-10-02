@@ -52,7 +52,8 @@ function htmlPage(opts: {
       <a class="backBtn" href="/tinder/undo">⬅ Undo Last</a>
     </div>
 
-    <div id="altBox" style="display:block;margin-top:16px;">
+    <!-- Alt-search + manual validate -->
+    <div id="altBox" style="display:${showAltBox ? "block" : "none"};margin-top:16px;">
       <div style="border:1px solid #ddd; border-radius:10px; padding:12px;">
         <h3 style="margin:0 0 6px 0;">No matches? Try an alternate search</h3>
         <form id="altSearchForm" method="POST" action="/tinder" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
@@ -78,7 +79,25 @@ function htmlPage(opts: {
             Force Invalidate
           </a>
         </div>
-        <div style="font-size:12px;color:#666;margin-top:6px;">
+
+        <!-- NEW: Manual validate -->
+        <div style="margin-top:14px;">
+          <h4 style="margin:0 0 6px 0;">Or validate manually</h4>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <input id="manualLink" placeholder="Paste product URL" style="flex:2; min-width:320px; padding:8px; border:1px solid #ccd; border-radius:8px;" />
+            <input id="manualPrice" placeholder="Price (e.g. 94.80)" inputmode="decimal" style="flex:1; min-width:140px; padding:8px; border:1px solid #ccd; border-radius:8px;" />
+            <button type="button" id="manualValidateBtn"
+              style="padding:8px 12px; border-radius:8px; background:#2ecc71; color:#fff; border:none;"
+              onclick="validateManual()">
+              Validate
+            </button>
+          </div>
+          <div style="font-size:12px;color:#666;margin-top:6px;">
+            We’ll save exactly what you enter. Currency symbols and commas are okay (e.g. “$94.80”, “94,80”).
+          </div>
+        </div>
+
+        <div style="font-size:12px;color:#666;margin-top:10px;">
           Tip: “Search” uses your custom text; “Use product name” runs with the product’s DB name.
         </div>
       </div>
@@ -102,7 +121,6 @@ function htmlPage(opts: {
         if (!imgEl) return;
         const v = value || "";
         if (!v) { imgEl.removeAttribute("src"); return; }
-        // If it's already a URL or a data URL, use it as-is; otherwise treat as raw base64
         if (/^https?:\\/\\//i.test(v) || v.startsWith("data:")) imgEl.src = v;
         else imgEl.src = "data:image/jpeg;base64," + v;
       }
@@ -117,6 +135,12 @@ function htmlPage(opts: {
       function showAlt() {
         const altBox = $q("#altBox");
         if (altBox) altBox.style.display = "block";
+      }
+
+      function cleanPrice(p) {
+        const s = String(p || "").replace(/,/g, "");
+        const m = s.match(/-?\\d+(?:\\.\\d+)?/);
+        return m ? m[0] : "";
       }
 
       function render() {
@@ -138,18 +162,18 @@ function htmlPage(opts: {
         showAlt();
         setControls(true);
 
-        // ✅ accept URL/data/base64
         setImage(imgEl, cand.img);
+        if (a) { a.href = cand.link || "#"; a.textContent = cand.link || "#"; }
 
-        a.href = cand.link || "#";
-        a.textContent = cand.link || "#";
-
-        console.log("Raw image value:", cand.img);
-        console.log("Product image src:", imgEl.src || "(none)");
-        console.log("Product link href:", a.href || "(none)");
+        // Prefill manual inputs only if empty (so we don't overwrite what the user typed)
+        const ml = $q("#manualLink");
+        const mp = $q("#manualPrice");
+        if (ml && !ml.value) ml.value = cand.link || "";
+        if (mp && !mp.value && (cand.price !== undefined && cand.price !== null)) mp.value = String(cand.price);
       }
 
       function yuck() { idx++; render(); }
+
       function yum() {
         const cand = products[idx] || { link:"", price:"" };
         const update = $q("#updateTerm")?.checked ? "1" : "";
@@ -161,13 +185,38 @@ function htmlPage(opts: {
         window.location.href = href;
       }
 
-      // expose to inline onclick
+      // NEW: manual validate with entered link & price
+      function validateManual() {
+        const link = ($q("#manualLink")?.value || "").trim();
+        const priceRaw = ($q("#manualPrice")?.value || "").trim();
+        const price = cleanPrice(priceRaw);
+        if (!link || !price) {
+          alert("Please enter both a product link and a price.");
+          return;
+        }
+        const update = $q("#updateTerm")?.checked ? "1" : "";
+        const altTermVal = $q("#altTerm")?.value || "";
+        const href = "/tinder/validate?s=${seller.id}&p=${product.id}" +
+                     "&link=" + encodeURIComponent(link) +
+                     "&price=" + encodeURIComponent(price) +
+                     (update ? ("&updateTerm=1&altTerm=" + encodeURIComponent(altTermVal)) : "");
+        window.location.href = href;
+      }
+
+      // Enter key on manual inputs triggers validate
+      ["#manualLink", "#manualPrice"].forEach(sel => {
+        const el = $q(sel);
+        el && el.addEventListener("keydown", (ev) => {
+          if (ev.key === "Enter") { ev.preventDefault(); validateManual(); }
+        });
+      });
+
       window.yuck = yuck;
       window.yum  = yum;
+      window.validateManual = validateManual;
 
       render();
 
-      // Failsafe: if array empty after 1.5s, show alt box
       setTimeout(() => {
         if (!products || products.length === 0) {
           const loading = $q("#loading");
@@ -208,7 +257,6 @@ export async function GET(req: Request) {
     .map((c: any) => ({
       link: c.link,
       price: c.price ?? "",
-      // ✅ Only encode when it's a Buffer; otherwise pass the URL/data string through.
       img: (typeof Buffer !== "undefined" && Buffer.isBuffer(c.img)) ? c.img.toString("base64") : (c.img || "")
     }));
 
