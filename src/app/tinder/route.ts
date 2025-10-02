@@ -98,6 +98,15 @@ function htmlPage(opts: {
 
       function $q(sel){ return document.querySelector(sel); }
 
+      function setImage(imgEl, value) {
+        if (!imgEl) return;
+        const v = value || "";
+        if (!v) { imgEl.removeAttribute("src"); return; }
+        // If it's already a URL or a data URL, use it as-is; otherwise treat as raw base64
+        if (/^https?:\\/\\//i.test(v) || v.startsWith("data:")) imgEl.src = v;
+        else imgEl.src = "data:image/jpeg;base64," + v;
+      }
+
       function setControls(enabled) {
         const yumBtn  = $q(".yumBtn");
         const yuckBtn = $q(".yuckBtn");
@@ -105,7 +114,7 @@ function htmlPage(opts: {
         if (yuckBtn) yuckBtn.disabled = !enabled;
       }
 
-      function showAlt(show) {
+      function showAlt() {
         const altBox = $q("#altBox");
         if (altBox) altBox.style.display = "block";
       }
@@ -129,12 +138,13 @@ function htmlPage(opts: {
         showAlt();
         setControls(true);
 
-        if (cand.img) imgEl.src = "data:image/jpeg;base64," + cand.img;
-        else imgEl.removeAttribute("src");
+        // ✅ accept URL/data/base64
+        setImage(imgEl, cand.img);
 
         a.href = cand.link || "#";
         a.textContent = cand.link || "#";
 
+        console.log("Raw image value:", cand.img);
         console.log("Product image src:", imgEl.src || "(none)");
         console.log("Product link href:", a.href || "(none)");
       }
@@ -195,9 +205,13 @@ export async function GET(req: Request) {
   const results = await searchSeller(seller, product);
   const usable = (results || [])
     .filter((c: any) => !!c.link)
-    .map((c: any) => ({ link: c.link, price: c.price ?? "", img: c.img ? c.img.toString("base64") : "" }));
+    .map((c: any) => ({
+      link: c.link,
+      price: c.price ?? "",
+      // ✅ Only encode when it's a Buffer; otherwise pass the URL/data string through.
+      img: (typeof Buffer !== "undefined" && Buffer.isBuffer(c.img)) ? c.img.toString("base64") : (c.img || "")
+    }));
 
-  // server-side breadcrumb to spot "nothing appears"
   console.log("[/tinder] usable", usable.length, "store:", seller?.name, "term:", product?.search_term);
 
   const html = htmlPage({
@@ -227,7 +241,11 @@ export async function POST(req: Request) {
   const results = await searchSeller(seller, productForSearch);
   const usable = (results || [])
     .filter((c: any) => !!c.link)
-    .map((c: any) => ({ link: c.link, price: c.price ?? "", img: c.img ? c.img.toString("base64") : "" }));
+    .map((c: any) => ({
+      link: c.link,
+      price: c.price ?? "",
+      img: (typeof Buffer !== "undefined" && Buffer.isBuffer(c.img)) ? c.img.toString("base64") : (c.img || "")
+    }));
 
   console.log("[/tinder POST] usable", usable.length, "term:", productForSearch.search_term);
 
