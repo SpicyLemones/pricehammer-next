@@ -122,16 +122,26 @@ const FACTION_GROUPS: Record<
    POST /api/report-wrong-by-link  { link, reason, context? }
 --------------------------------------------------*/
 async function reportWrong(
-      link?: string | null,
-      sellerName?: string | null,
-      productName?: string | null
-    ) {
-      const cleanLink = (link ?? "").trim();
-      if (!cleanLink) {
-        alert("No link to report for this retailer.");
-        return;
-      }
-  const reason = window.prompt("What's wrong with this link/price? (optional)") || "";
+  link?: string | null,
+  sellerName?: string | null,
+  productName?: string | null
+) {
+  const cleanLink = (link ?? "").trim();
+  if (!cleanLink) {
+    alert("No link to report for this retailer.");
+    return;
+  }
+
+  // Ask for details; if user hits Cancel, abort entirely.
+  const reasonInput = window.prompt("What's wrong with this link/price? (optional)");
+  if (reasonInput === null) {
+    // user pressed Cancel — do nothing
+    return;
+  }
+
+  const reason = reasonInput.trim();
+
+
 
   try {
     const res = await fetch("/api/report-wrong-by-link", {
