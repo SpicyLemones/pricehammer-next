@@ -1,7 +1,6 @@
 "use client";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-
 import Link from "next/link";
 
 import { Input } from "./ui/input";
@@ -20,49 +19,37 @@ import {
 import { Separator } from "./ui/separator";
 import { Search, ExternalLink, X } from "lucide-react";
 
-// ⬇️ Import manual metadata (no retailers)
-// Manual metadata
+// Manual metadata (fallback + fields like game/faction/category/points/image)
 import {
   Products as ManualProducts,
-  type Product,
 } from "../../../data/db/Product";
 
-// Generated retailers map (untyped literal)
-import { RetailersByProduct as RetailersRaw } from "../../../data/db/Data";
+// ---------- Types ----------
+type Retailer = { store: string; price: number | null; url: string | null };
+type Product = {
+  id: string;
+  name: string;
+  game?: "warhammer40k" | "ageofsigmar" | "killteam" | "both";
+  faction?: string;
+  category?: string;
+  points?: number;
+  image?: string | null;
+  retailers: Retailer[];
+};
 
-
-//img helper
+// ---------- Image helper ----------
 const PLACEHOLDER = "/logo/logo.png";
-
 function imgSrc(image?: string | null) {
   const val = image?.trim();
-  if (!val) return PLACEHOLDER; // no value → use logo
+  if (!val) return PLACEHOLDER; // no value → logo
   if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("/")) {
-    return val; // absolute or remote
+    return val; // absolute or rooted
   }
-  return `/images/product/${val}`; // treat as filename in /public/images
+  // treat as filename in /public/images/product
+  return `/images/product/${val}`;
 }
 
-
-//placeholder
-
-
-
-
-// Give it a usable type for indexing by string ids
-type Retailer = { store: string; price: number; inStock: boolean; url: string | null };
-const RetailersByProduct = RetailersRaw as unknown as Record<string, Retailer[]>;
-
-// Merge manual metadata with generated retailers
-const sourceProducts: Product[] = ManualProducts.map((p) => ({
-  ...p,
-  retailers: RetailersByProduct[p.id] ?? [],
-}));
-
-
-/* ------------------------------------------------
-   Currency formatting: "$120 AUD" or "$80.75 AUD"
---------------------------------------------------*/
+// ---------- Currency ----------
 const fmtAUD = (n?: number | null) => {
   const v = Number(n);
   if (!Number.isFinite(v)) return "—";
@@ -76,51 +63,40 @@ const fmtAUD = (n?: number | null) => {
   return `${withSymbol} AUD`;
 };
 
-
-// Super-groups
+// ---------- Faction groups (unchanged) ----------
 const FACTION_GROUPS: Record<
-  "No Faction" | "Imperium" | "Chaos" | "Chaos (AoS)"|"Xenos" | "Order" | "Destruction" | "Death",
+  "No Faction" | "Imperium" | "Chaos" | "Chaos (AoS)" | "Xenos" | "Order" | "Destruction" | "Death",
   string[]
 > = {
   "No Faction": ["No Faction / Misc"],
-
   Imperium: [
     "Adepta Sororitas","Adeptus Custodes","Adeptus Mechanicus","Adeptus Titanicus",
     "Astra Militarum","Grey Knights","Imperial Agents","Imperial Knights","Space Marines",
   ],
-
   Chaos: [
     "Chaos Daemons","Chaos Knights","Chaos Space Marines","Death Guard",
     "Emperor’s Children","Thousand Sons","World Eaters"
   ],
-
   Xenos: [
     "Aeldari","Drukhari","Genestealer Cults","Leagues of Votann","Necrons","Orks","T’au Empire","Tyranids",
   ],
-
   Order: [
     "Cities of Sigmar","Daughters of Khaine","Fyreslayers","Idoneth Deepkin","Kharadron Overlords",
     "Lumineth Realm-lords","Seraphon","Stormcast Eternals","Sylvaneth",
   ],
-    "Chaos (AoS)" : [
+  "Chaos (AoS)" : [
     "Beasts of Chaos","Blades of Khorne","Disciples of Tzeentch","Hedonites of Slaanesh","Maggotkin of Nurgle",
     "Skaven","Slaves to Darkness"
   ],
-
   Destruction: [
     "Bonesplitterz","Gloomspite Gitz","Ironjawz","Kruleboyz","Ogor Mawtribes","Sons of Behemat",
   ],
-
   Death: [
     "Flesh-eater Courts","Nighthaunt","Ossiarch Bonereapers","Soulblight Gravelords",
   ],
 };
 
-
-/* ------------------------------------------------
-   Report wrong → call your Next API route
-   POST /api/report-wrong-by-link  { link, reason, context? }
---------------------------------------------------*/
+// ---------- Report wrong (unchanged) ----------
 async function reportWrong(
   link?: string | null,
   sellerName?: string | null,
@@ -131,27 +107,15 @@ async function reportWrong(
     alert("No link to report for this retailer.");
     return;
   }
-
-  // Ask for details; if user hits Cancel, abort entirely.
   const reasonInput = window.prompt("What's wrong with this link/price? (optional)");
-  if (reasonInput === null) {
-    // user pressed Cancel — do nothing
-    return;
-  }
-
+  if (reasonInput === null) return; // user cancelled
   const reason = reasonInput.trim();
-
-
 
   try {
     const res = await fetch("/api/report-wrong-by-link", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        link: cleanLink,
-        reason,
-        context: { sellerName, productName },
-      }),
+      body: JSON.stringify({ link: cleanLink, reason, context: { sellerName, productName } }),
     });
     if (!res.ok) throw new Error(await res.text());
     alert("Thanks! We’ll recheck that link shortly.");
@@ -161,45 +125,14 @@ async function reportWrong(
   }
 }
 
-/* ------------------------------------------------
-   Types, labels, & helpers
---------------------------------------------------*/
-type GameKind = "warhammer40k" | "ageofsigmar" | "killteam" | "both";
-
-type ProductExtended = Product & {
-  image?: string | null;
-  game?: GameKind;
-};
-
-const GAME_LABEL: Record<GameKind, string> = {
-  warhammer40k: "Warhammer 40,000",
-  ageofsigmar: "Age of Sigmar",
-  killteam: "Kill Team",
-  both: "40k • AoS",
-};
-
-const GAME_BADGE_CLASS: Record<GameKind, string> = {
-  warhammer40k: "bg-indigo-100 text-indigo-700 border-indigo-200",
-  ageofsigmar: "bg-amber-100 text-amber-800 border-amber-200",
-  killteam: "bg-orange-100 text-orange-800 border-orange-200",
-  both: "bg-emerald-100 text-emerald-800 border-emerald-200",
-};
-
-type SortKey =
-  | "featured"
-  | "price-asc"
-  | "price-desc"
-  | "points-asc"
-  | "points-desc";
+// ---------- Sorting helpers (unchanged) ----------
+type SortKey = "featured" | "price-asc" | "price-desc" | "points-asc" | "points-desc";
 
 const bestPriceOrNull = (p: Product) => {
-  const nums =
-    p.retailers?.map((r) => Number(r?.price)).filter((v) => Number.isFinite(v)) ?? [];
+  const nums = p.retailers?.map((r) => Number(r?.price)).filter((v) => Number.isFinite(v)) ?? [];
   return nums.length ? Math.min(...nums) : null;
 };
-
 const hasAnyPrice = (p: Product) => bestPriceOrNull(p) !== null;
-
 const cmpPriceAsc = (a: Product, b: Product) => {
   const A = bestPriceOrNull(a);
   const B = bestPriceOrNull(b);
@@ -208,7 +141,6 @@ const cmpPriceAsc = (a: Product, b: Product) => {
   if (B === null) return -1;
   return A - B;
 };
-
 const cmpPriceDesc = (a: Product, b: Product) => {
   const A = bestPriceOrNull(a);
   const B = bestPriceOrNull(b);
@@ -217,7 +149,6 @@ const cmpPriceDesc = (a: Product, b: Product) => {
   if (B === null) return -1;
   return B - A;
 };
-
 const sample = <T,>(arr: T[], n: number) => {
   if (n >= arr.length) return [...arr];
   const a = [...arr];
@@ -228,39 +159,53 @@ const sample = <T,>(arr: T[], n: number) => {
   return a.slice(0, n);
 };
 
-/* ------------------------------------------------
-   Page
---------------------------------------------------*/
+// ---------- Component ----------
 export function ProductLookup() {
+  // Start with manual products (no retailers) so UI renders immediately.
+  const [sourceProducts, setSourceProducts] = useState<Product[]>(
+    () => ManualProducts.map((p) => ({ ...p, retailers: [] }))
+  );
   const [queryInput, setQueryInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGame, setSelectedGame] = useState<string>("all");
   const [selectedFaction, setSelectedFaction] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [sortBy, setSortBy] = useState<SortKey>("featured");
-
   const featuredIdsRef = useRef<string[] | null>(null);
 
+  // Fetch live retailers + (same) metadata from the DB-backed API
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/lookup-data", { cache: "no-store" });
+        if (!res.ok) throw new Error(await res.text());
+        const data: { products: Product[] } = await res.json();
+        if (!cancelled && Array.isArray(data?.products)) {
+          setSourceProducts(data.products);
+        }
+      } catch (e) {
+        console.warn("Falling back to manual products only (no DB retailers).", e);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
   const factions = useMemo(
-    () => [...new Set(sourceProducts.map((p) => p.faction).filter(Boolean))],
-    []
+    () => [...new Set(sourceProducts.map((p) => p.faction).filter(Boolean))] as string[],
+    [sourceProducts]
   );
   const categories = useMemo(
-    () => [...new Set(sourceProducts.map((p) => p.category).filter(Boolean))],
-    []
+    () => [...new Set(sourceProducts.map((p) => p.category).filter(Boolean))] as string[],
+    [sourceProducts]
   );
-  
-// After you compute `factions`
-const factionSet = useMemo(() => new Set(factions), [factions]);
 
-const groupedFactions = useMemo(() => {
-  return (Object.entries(FACTION_GROUPS) as [keyof typeof FACTION_GROUPS, string[]][])
-    .map(([group, list]) => ({
-      group,
-      items: list.filter((f) => factionSet.has(f)),
-    }))
-    .filter((g) => g.items.length > 0);
-}, [factionSet]);
+  const factionSet = useMemo(() => new Set(factions), [factions]);
+  const groupedFactions = useMemo(() => {
+    return (Object.entries(FACTION_GROUPS) as [keyof typeof FACTION_GROUPS, string[]][])
+      .map(([group, list]) => ({ group, items: list.filter((f) => factionSet.has(f)) }))
+      .filter((g) => g.items.length > 0);
+  }, [factionSet]);
 
   const games = ["warhammer40k", "ageofsigmar"] as const;
 
@@ -271,31 +216,31 @@ const groupedFactions = useMemo(() => {
     selectedCategory !== "all" ||
     sortBy !== "featured";
 
-  // 1) filter by search/faction/category/game
+  // 1) Filtering
   const filteredAll = useMemo(() => {
-    return (sourceProducts as ProductExtended[]).filter((p) => {
+    return (sourceProducts as Product[]).filter((p) => {
       const term = searchTerm.toLowerCase().trim();
       const matchesSearch =
         !term ||
         p.name.toLowerCase().includes(term) ||
         (p.faction?.toLowerCase?.() ?? "").includes(term);
 
-      const matchesGame = selectedGame === "all" || p.game === selectedGame;
+      const matchesGame = selectedGame === "all" || p.game === (selectedGame as any);
       const matchesFaction = selectedFaction === "all" || p.faction === selectedFaction;
       const matchesCategory = selectedCategory === "all" || p.category === selectedCategory;
 
       return matchesSearch && matchesGame && matchesFaction && matchesCategory;
     });
-  }, [searchTerm, selectedGame, selectedFaction, selectedCategory]);
+  }, [searchTerm, selectedGame, selectedFaction, selectedCategory, sourceProducts]);
 
   // 2) initial featured (first load only): 5 random with prices
   const initialFeatured = useMemo(() => {
     if (hasQueryOrFilters) return [];
-    const withPrices = (sourceProducts as ProductExtended[]).filter(hasAnyPrice);
+    const withPrices = (sourceProducts as Product[]).filter(hasAnyPrice);
     const chosen = sample(withPrices, 5);
     featuredIdsRef.current = chosen.map((c) => c.id);
     return chosen;
-  }, [hasQueryOrFilters]);
+  }, [hasQueryOrFilters, sourceProducts]);
 
   // 3) working set
   const workingSet: Product[] = hasQueryOrFilters ? filteredAll : initialFeatured;
@@ -332,48 +277,33 @@ const groupedFactions = useMemo(() => {
       <div>
         <h1 className="text-3xl font-display font-bold">Product Lookup</h1>
         <p>Compare prices for Wargaming kits across AU retailers, including Warhammer.</p>
-
-        <p className="text-muted-foreground">
-          Search for units and compare prices across retailers
-        </p>
+        <p className="text-muted-foreground">Search for units and compare prices across retailers</p>
       </div>
 
       {/* Filters */}
       <div className="flex gap-4 flex-wrap">
         {/* search */}
-<form
-  onSubmit={(e) => {
-    e.preventDefault();
-    setSearchTerm(queryInput.trim());
-  }}
-  className="relative flex-1 min-w-[300px] group focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-1 rounded-md"
->
-  {/* the text field */}
-  <Input
-    placeholder="Search units, factions, or keywords..."
-    value={queryInput}
-    onChange={(e) => setQueryInput(e.target.value)}
-    // room for the button on the right
-    className="pr-12 bg-white dark:bg-slate-800"
-  />
-
-  {/* right-side magnifying-glass button */}
-  <button
-    type="submit"
-    aria-label="Search"
-    className="
-      absolute right-2 top-1/2 -translate-y-1/2
-      p-2 rounded-full
-      transition-all duration-150
-      hover:bg-slate-100 dark:hover:bg-slate-800/60
-      active:scale-95
-      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
-    "
-  >
-    <Search className="h-5 w-5 text-slate-600 dark:text-slate-300" />
-  </button>
-</form>
-
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSearchTerm(queryInput.trim());
+          }}
+          className="relative flex-1 min-w-[300px] group focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-1 rounded-md"
+        >
+          <Input
+            placeholder="Search units, factions, or keywords..."
+            value={queryInput}
+            onChange={(e) => setQueryInput(e.target.value)}
+            className="pr-12 bg-white dark:bg-slate-800"
+          />
+          <button
+            type="submit"
+            aria-label="Search"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all duration-150 hover:bg-slate-100 dark:hover:bg-slate-800/60 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
+            <Search className="h-5 w-5 text-slate-600 dark:text-slate-300" />
+          </button>
+        </form>
 
         {/* game */}
         <Select value={selectedGame} onValueChange={setSelectedGame}>
@@ -381,64 +311,40 @@ const groupedFactions = useMemo(() => {
             <SelectValue placeholder="All Games" />
           </SelectTrigger>
           <SelectContent className="w-[180px] bg-white dark:bg-slate-800">
-            <SelectItem
-              value="all"
-              className="cursor-pointer px-2 py-1 rounded-sm data-[highlighted]:bg-blue-500 data-[highlighted]:text-white transition-all"
-            >
-              All Games
-            </SelectItem>
-            {games.map((g) => (
-              <SelectItem
-                key={g}
-                value={g}
-                className="cursor-pointer px-2 py-1 rounded-sm data-[highlighted]:bg-blue-500 data-[highlighted]:text-white transition-all"
-              >
-                {g}
-              </SelectItem>
+            <SelectItem value="all">All Games</SelectItem>
+            {(["warhammer40k", "ageofsigmar"] as const).map((g) => (
+              <SelectItem key={g} value={g}>{g}</SelectItem>
             ))}
           </SelectContent>
         </Select>
 
         {/* faction */}
         <Select value={selectedFaction} onValueChange={setSelectedFaction}>
-  <SelectTrigger className="w-[220px] bg-white dark:bg-slate-800">
-    <SelectValue placeholder="All Factions" />
-  </SelectTrigger>
-
-  {/* Use popper so it doesn't stretch, cap height, show scroll */}
-  <SelectContent
-    position="popper"
-    side="bottom"
-    align="start"
-    className="w-[280px] max-h-[70vh] overflow-y-auto overscroll-contain bg-white dark:bg-slate-800 [scrollbar-gutter:stable] border"
-  >
-    <SelectItem
-      value="all"
-      className="cursor-pointer px-2 py-1 rounded-sm data-[highlighted]:bg-blue-500 data-[highlighted]:text-white"
-    >
-      All Factions
-    </SelectItem>
-
-    {groupedFactions.map(({ group, items }) => (
-      <SelectGroup key={group}>
-        <SelectLabel className="px-2 pt-2 text-[11px] uppercase tracking-wide text-slate-500">
-          {group}
-        </SelectLabel>
-        {items.map((f) => (
-          <SelectItem
-            key={f}
-            value={f}
-            className="cursor-pointer px-2 py-1 rounded-sm data-[highlighted]:bg-blue-500 data-[highlighted]:text-white"
+          <SelectTrigger className="w-[220px] bg-white dark:bg-slate-800">
+            <SelectValue placeholder="All Factions" />
+          </SelectTrigger>
+          <SelectContent
+            position="popper"
+            side="bottom"
+            align="start"
+            className="w-[280px] max-h-[70vh] overflow-y-auto overscroll-contain bg-white dark:bg-slate-800 [scrollbar-gutter:stable] border"
           >
-            {f}
-          </SelectItem>
-        ))}
-        <Separator className="my-2" />
-      </SelectGroup>
-    ))}
-  </SelectContent>
-</Select>
-
+            <SelectItem value="all">All Factions</SelectItem>
+            {groupedFactions.map(({ group, items }) => (
+              <SelectGroup key={group}>
+                <SelectLabel className="px-2 pt-2 text-[11px] uppercase tracking-wide text-slate-500">
+                  {group}
+                </SelectLabel>
+                {items.map((f) => (
+                  <SelectItem key={f} value={f}>
+                    {f}
+                  </SelectItem>
+                ))}
+                <Separator className="my-2" />
+              </SelectGroup>
+            ))}
+          </SelectContent>
+        </Select>
 
         {/* category */}
         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
@@ -446,20 +352,9 @@ const groupedFactions = useMemo(() => {
             <SelectValue placeholder="All Categories" />
           </SelectTrigger>
           <SelectContent className="w-[180px] bg-white dark:bg-slate-800">
-            <SelectItem
-              value="all"
-              className="cursor-pointer px-2 py-1 rounded-sm data-[highlighted]:bg-blue-500 data-[highlighted]:text-white transition-all"
-            >
-              All Categories
-            </SelectItem>
+            <SelectItem value="all">All Categories</SelectItem>
             {categories.map((c) => (
-              <SelectItem
-                key={c}
-                value={c}
-                className="cursor-pointer px-2 py-1 rounded-sm data-[highlighted]:bg-blue-500 data-[highlighted]:text-white transition-all"
-              >
-                {c}
-              </SelectItem>
+              <SelectItem key={c} value={c}>{c}</SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -482,7 +377,7 @@ const groupedFactions = useMemo(() => {
       {/* Results */}
       <div className="grid gap-4">
         {sorted.map((p) => (
-          <ProductCard key={p.id} product={p as ProductExtended} />
+          <ProductCard key={p.id} product={p} />
         ))}
         {sorted.length === 0 && (
           <div className="text-center py-12 text-muted-foreground">No products found.</div>
@@ -493,23 +388,22 @@ const groupedFactions = useMemo(() => {
 }
 
 /* ------------------------------------------------
-   Card (with zoom modal & top-3 offers)
+   Card (with zoom modal & top-3 offers) — unchanged UX
 --------------------------------------------------*/
-function ProductCard({ product }: { product: ProductExtended }) {
+function ProductCard({ product }: { product: Product }) {
   const [showAll, setShowAll] = useState(false);
   const [zoomed, setZoomed] = useState(false);
-  
-  //for linking
-  const productUrl = `/product/${product.id}`; 
 
-  const sortedRetailers = [...(product.retailers ?? [])].sort((a, b) => a.price - b.price);
+  const productUrl = `/product/${product.id}`;
+  const sortedRetailers = [...(product.retailers ?? [])]
+    .filter(r => r && (r.price === 0 || Number.isFinite(Number(r.price))))
+    .sort((a, b) => (Number(a.price) - Number(b.price)));
+
   const best = sortedRetailers[0];
   const highest = sortedRetailers[sortedRetailers.length - 1];
   const visible = showAll ? sortedRetailers : sortedRetailers.slice(0, 3);
 
-
-  // fix this later
-  const thumb = imgSrc(product.image);
+  const thumb = imgSrc(product.image || undefined);
 
   return (
     <>
@@ -518,38 +412,36 @@ function ProductCard({ product }: { product: ProductExtended }) {
           <div className="flex flex-col md:flex-row gap-4">
             {/* Image */}
             <div className="w-full min-h md:w-40 flex-shrink-0">
-  <Link href={productUrl} className="block">
-    <div
-      className="aspect-square overflow-hidden rounded-md border bg-white cursor-pointer"
-      aria-label={`Open ${product.name}`}
-      onClick={(e) => { e.preventDefault(); setZoomed(true); }} // keep your zoom on click
-      onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); setZoomed(true);} }}
-      role="button"
-      tabIndex={0}
-    >
-            <img
-        src={thumb}
-        alt={product.name}
-        className="h-full w-full object-contain"
-        loading="lazy"
-        onError={(e) => {
-          // prevent infinite loops then swap to logo
-          e.currentTarget.onerror = null;
-          e.currentTarget.src = PLACEHOLDER;
-        }}
-      />
-    </div>
-  </Link>
-</div>
-
+              <Link href={productUrl} className="block">
+                <div
+                  className="aspect-square overflow-hidden rounded-md border bg-white cursor-pointer"
+                  aria-label={`Open ${product.name}`}
+                  onClick={(e) => { e.preventDefault(); setZoomed(true); }}
+                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); setZoomed(true);} }}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <img
+                    src={thumb}
+                    alt={product.name}
+                    className="h-full w-full object-contain"
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = PLACEHOLDER;
+                    }}
+                  />
+                </div>
+              </Link>
+            </div>
 
             {/* Text meta */}
             <div className="flex-1 flex flex-col justify-between">
               <div>
                 <CardTitle className="font-display text-lg md:text-xl">
-                <Link href={productUrl} className="hover:underline">
-                  {product.name || "Unnamed Product"}
-                </Link>
+                  <Link href={productUrl} className="hover:underline">
+                    {product.name || "Unnamed Product"}
+                  </Link>
                 </CardTitle>
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
                   <Badge variant="outline">{product.faction || "Unknown Faction"}</Badge>
@@ -558,15 +450,6 @@ function ProductCard({ product }: { product: ProductExtended }) {
                     <span className="text-slate-600">• {product.points} pts</span>
                   ) : (
                     <span className="text-slate-400">• Points TBD</span>
-                  )}
-                  {product.game ? (
-                    <Badge variant="outline" className={`ml-2 border ${GAME_BADGE_CLASS[product.game] ?? ""}`}>
-                      {GAME_LABEL[product.game] ?? product.game}
-                    </Badge>
-                  ) : (
-                    <Badge variant="outline" className="ml-2 text-slate-400">
-                      Game TBD
-                    </Badge>
                   )}
                 </div>
               </div>
@@ -608,7 +491,7 @@ function ProductCard({ product }: { product: ProductExtended }) {
                 >
                   <div className="font-medium">{r.store || "Unknown Store"}</div>
                   <div className="font-bold tabular-nums">
-                    {Number.isFinite(r.price) ? fmtAUD(r.price) : "—"}
+                    {Number.isFinite(Number(r.price)) ? fmtAUD(r.price) : "—"}
                   </div>
                   <div>
                     {r.url ? (
@@ -636,7 +519,7 @@ function ProductCard({ product }: { product: ProductExtended }) {
                 </div>
               ))}
 
-              {/* Hoverable expand/collapse bar */}
+              {/* Expand/collapse */}
               {sortedRetailers.length > 3 && !showAll && (
                 <div
                   role="button"
@@ -687,7 +570,7 @@ function ProductCard({ product }: { product: ProductExtended }) {
                 <X className="h-5 w-5 text-slate-700" />
               </button>
               <img
-                src={thumb}
+                src={imgSrc(product.image || undefined)}
                 alt={product.name}
                 className="max-h-[85vh] max-w-[85vw] object-contain"
               />

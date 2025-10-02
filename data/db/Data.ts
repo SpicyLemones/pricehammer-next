@@ -724,9 +724,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 7.2,
+      "price": 60.83,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/two-thin-coats-skeleton-legion"
+      "url": "https://thecombatcompany.com/products/raven-guard-aethon-shaan?_pos=1&_sid=4c518b83e&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -1814,9 +1814,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20.5,
+      "price": 58,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/lazarus-enmitys-edge-paperback"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-dark-angels-azrael?_pos=5&_sid=278136b22&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -2512,9 +2512,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 68,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-warhammer-40k-maggotkin-of-nurgle-beast-of-nurgle?_pos=6&_sid=216e5c74c&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -2805,12 +2805,6 @@ export const RetailersByProduct = {
       "price": 43.7,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/big-mek-with-shokk-attack-gun"
-    },
-    {
-      "store": "Gumnut",
-      "price": 20,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/gun-puzzle-wooden-puzzle"
     },
     {
       "store": "Frontline Hobbies",
@@ -3628,9 +3622,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 36,
+      "price": 46,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/scenery-citadel-skulls"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-40k-daemons-of-khorne-bloodletters-of-khorne-boxed?_pos=9&_sid=71add8b98&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -4480,9 +4474,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 43.74,
+      "price": 22.91,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/us-army-m1-57mm-anti-tank-gun-winter"
+      "url": "https://thecombatcompany.com/products/cadre-fireblade?_pos=1&_sid=bd506ca5b&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -4498,9 +4492,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20,
+      "price": 22,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/gun-puzzle-wooden-puzzle"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-empire-cadre-fireblade-blister-1?_pos=7&_sid=434bdac20&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -5154,9 +5148,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Emerald Hobbies",
-      "price": 100,
+      "price": 124,
       "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/legion-imperialis-cerastus-knights-acheron-castigator"
+      "url": "https://www.emeraldhobbies.com.au/products/adepta-sororitas-castigator?_pos=2&_sid=a0d7ac2b9&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -5312,9 +5306,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 201,
+      "price": 78,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-combat-patrol-2024"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-celestian-sacresants?_pos=4&_sid=afb265aab&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -5452,9 +5446,9 @@ export const RetailersByProduct = {
   "135": [
     {
       "store": "War For Less",
-      "price": 94,
+      "price": 262.5,
       "inStock": false,
-      "url": "https://www.warforless.com.au/legion-imperialis-cerastus-knights-acheron-castiga"
+      "url": "https://www.warforless.com.au/horus-heresy-cerastus-knight-acheron"
     },
     {
       "store": "Warhammer Official",
@@ -5464,9 +5458,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 98.75,
+      "price": 276.5,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/li-cerastus-knights-acheron-castigator-pre-order-29-6-24"
+      "url": "https://thecombatcompany.com/products/horus-heresy-cerastus-knight-acheron-pre-order-30-9-23?_pos=1&_sid=950a9d788&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -5476,9 +5470,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Emerald Hobbies",
-      "price": 100,
+      "price": 280,
       "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/legion-imperialis-cerastus-knights-acheron-castigator"
+      "url": "https://www.emeraldhobbies.com.au/products/horus-heresy-cerastus-knight-acheron?_pos=2&_sid=7d6166b5f&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -5508,9 +5502,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 98.75,
+      "price": 276.5,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/li-cerastus-knights-acheron-castigator-pre-order-29-6-24"
+      "url": "https://thecombatcompany.com/products/horus-heresy-cerastus-knight-castigator-pre-order-30-9-23?_pos=1&_sid=b0a8db97a&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -5520,9 +5514,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Emerald Hobbies",
-      "price": 100,
+      "price": 280,
       "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/legion-imperialis-cerastus-knights-acheron-castigator"
+      "url": "https://www.emeraldhobbies.com.au/products/horus-heresy-cerastus-knight-castigator?_pos=2&_sid=1dc03cda4&_ss=r"
     },
     {
       "store": "Gumnut",
@@ -5851,12 +5845,6 @@ export const RetailersByProduct = {
       "price": 179.96,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/warcrow-battle-pack-the-song-of-the-dormant-pre-order-29-8-25"
-    },
-    {
-      "store": "Gumnut",
-      "price": 172,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/conquest-spires-siege-breaker-behemoth"
     }
   ],
   "145": [
@@ -6570,7 +6558,7 @@ export const RetailersByProduct = {
       "store": "Gumnut",
       "price": 36,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/scenery-citadel-skulls"
+      "url": "https://www.gumnut.com.au/products/scenery-citadel-skulls?_pos=1&_sid=d891c947e&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -6958,9 +6946,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 74,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-datasheet-cards"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-aeldari-codex-10th-ed?_pos=14&_sid=19914aeae&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -7838,7 +7826,7 @@ export const RetailersByProduct = {
       "store": "Gumnut",
       "price": 201,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-combat-patrol-2024"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-combat-patrol-2024?_pos=1&_sid=af0c588b1&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -8410,7 +8398,7 @@ export const RetailersByProduct = {
       "store": "Gumnut",
       "price": 201,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-combat-patrol-2024"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-combat-patrol-2024?_pos=1&_sid=b3a67fb0f&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -9000,9 +8988,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Warhammer Official",
-      "price": 17,
+      "price": 280,
       "inStock": false,
-      "url": "https://www.warhammer.com/en-AU/shop/white-dwarf-513-june-2025-eng?queryID=23ec021783edfd6e56f92c5e8582fc2d"
+      "url": "https://www.warhammer.com/en-AU/shop/combat-patrol-world-eaters-2025"
     },
     {
       "store": "The Combat Company",
@@ -14142,9 +14130,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20,
+      "price": 73,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/gun-puzzle-wooden-puzzle"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-tau-empire-hammerhead-gunship-2022?_pos=6&_sid=5fd12f7af&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -15636,9 +15624,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 26,
+      "price": 73,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/bolt-action-german-veteran-infantry-medium-mortar-team"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-inceptors?_pos=20&_sid=2b2c358bb&_ss=r"
     }
   ],
   "380": [
@@ -16342,9 +16330,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 201,
+      "price": 56,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-combat-patrol-2024"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-jackal-alphus-2022?_pos=3&_sid=ad0d92ea8&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -17142,9 +17130,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 14.22,
+      "price": 52.93,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/horus-heresy-betrayer-pb"
+      "url": "https://thecombatcompany.com/products/world-eaters-kharn-the-betrayer?_pos=1&_sid=7a02f40b7&_ss=r"
     },
     {
       "store": "Emerald Hobbies",
@@ -18376,9 +18364,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 41,
+      "price": 165,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/kill-team-approved-ops-card-pack-2024"
+      "url": "https://www.gumnut.com.au/products/kill-team-killzone-volkus?_pos=11&_sid=71b2c213f&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -18528,9 +18516,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 9.5,
+      "price": 184,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/dungeon-dwellers-rictus-the-undying-dark-heaven-blister"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-knights-knight-ruinator?_pos=9&_sid=bbe94b93d&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -18660,9 +18648,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 26,
+      "price": 58,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/bolt-action-german-veteran-infantry-medium-mortar-team"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-astra-militarum-krieg-combat-engineers?_pos=11&_sid=5e04e30bf&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -18868,9 +18856,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gap Games",
-      "price": 28.5,
+      "price": 58.46,
       "inStock": false,
-      "url": "https://www.gapgames.com.au/products/tau-empire-kroot-hounds"
+      "url": "https://www.gapgames.com.au/products/tau-empire-kroot-hounds-pre-order"
     },
     {
       "store": "Emerald Hobbies",
@@ -19457,12 +19445,6 @@ export const RetailersByProduct = {
       "price": 115.99,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/warhammer-collectibles-1-18-scale-legio-custodes-aquilon-terminator-squad-aquilon-w-firepike"
-    },
-    {
-      "store": "Gumnut",
-      "price": 27,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/necromunda-bastions-of-law-tactics-cards"
     }
   ],
   "474": [
@@ -19491,12 +19473,6 @@ export const RetailersByProduct = {
       "price": 62.7,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/warhammer-the-horus-heresy-aeronautica-imperialis-rulebook-pre-order"
-    },
-    {
-      "store": "Gumnut",
-      "price": 27,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/necromunda-bastions-of-law-tactics-cards"
     }
   ],
   "476": [
@@ -19673,12 +19649,6 @@ export const RetailersByProduct = {
       "price": 67.99,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/knight-of-montesa-red-fury"
-    },
-    {
-      "store": "Gumnut",
-      "price": 26,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/bolt-action-german-veteran-infantry-medium-mortar-team"
     }
   ],
   "483": [
@@ -20248,9 +20218,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 14,
+      "price": 65,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/white-dwarf-497-february"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-tyranids-lictor?_pos=6&_sid=adeef9c06&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -20336,9 +20306,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 9.5,
+      "price": 47,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/dungeon-dwellers-rictus-the-undying-dark-heaven-blister"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-primaris-lieutenant-with-power-sword-blister?_pos=4&_sid=817cd245e&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -20394,9 +20364,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 7.2,
+      "price": 94.8,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/two-thin-coats-skeleton-legion"
+      "url": "https://thecombatcompany.com/products/dark-angels-lion-eljohnson?_pos=2&_sid=57ad84519&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -21098,9 +21068,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 33,
+      "price": 83,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/conquest-sorcerer-kings-sorcerer"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-world-eaters-lord-invocatus?_pos=5&_sid=31c370a46&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -21505,12 +21475,6 @@ export const RetailersByProduct = {
       "url": "https://www.gapgames.com.au/products/dark-angels-master-lazarus"
     },
     {
-      "store": "Gumnut",
-      "price": 20.5,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/lazarus-enmitys-edge-paperback"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 73.15,
       "inStock": false,
@@ -21757,12 +21721,6 @@ export const RetailersByProduct = {
       "price": 26.15,
       "inStock": false,
       "url": "https://thecombatcompany.com/products/pipe-works-ellipse-120mm"
-    },
-    {
-      "store": "Gumnut",
-      "price": 9.5,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/dungeon-dwellers-rictus-the-undying-dark-heaven-blister"
     }
   ],
   "541": [
@@ -22150,7 +22108,7 @@ export const RetailersByProduct = {
       "store": "Gumnut",
       "price": 42,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-ministorum-priest-with-vindictor"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-ministorum-priest-with-vindictor?_pos=1&_sid=df10e0ad6&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -23690,9 +23648,9 @@ export const RetailersByProduct = {
   "590": [
     {
       "store": "War For Less",
-      "price": 64.5,
+      "price": 78.8,
       "inStock": false,
-      "url": "https://www.warforless.com.au/necromunda-orlock-outrider-quads"
+      "url": "https://www.warforless.com.au/space-marines-outriders"
     },
     {
       "store": "Warhammer Official",
@@ -24566,13 +24524,13 @@ export const RetailersByProduct = {
       "store": "The Combat Company",
       "price": 75.05,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/predator-annihilator-destructor"
+      "url": "https://thecombatcompany.com/products/predator-annihilator-destructor?_pos=1&_sid=01cca647c&_ss=r"
     },
     {
       "store": "Gap Games",
-      "price": 27.25,
+      "price": 75.05,
       "inStock": false,
-      "url": "https://www.gapgames.com.au/products/index-cards-world-eaters-pre-order"
+      "url": "https://www.gapgames.com.au/products/space-marines-predator"
     },
     {
       "store": "Gumnut",
@@ -25868,9 +25826,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 26,
+      "price": 78,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/bolt-action-german-veteran-infantry-medium-mortar-team"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-retributor-squad-2021-boxed?_pos=10&_sid=a84e9c71f&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -26512,27 +26470,15 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gap Games",
-      "price": 5.06,
+      "price": 59.85,
       "inStock": false,
-      "url": "https://www.gapgames.com.au/products/citadel-base-screaming-bell"
-    },
-    {
-      "store": "Emerald Hobbies",
-      "price": 5.12,
-      "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/citadel-base-screamer-pink-12ml"
-    },
-    {
-      "store": "Gumnut",
-      "price": 5,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/paint-citadel-base-screamer-pink-1"
+      "url": "https://www.gapgames.com.au/products/disciples-of-tzeentch-screamers-of-tzeentch"
     },
     {
       "store": "Frontline Hobbies",
-      "price": 49.99,
+      "price": 59.85,
       "inStock": false,
-      "url": "https://www.frontlinehobbies.com.au/a-song-of-ice-and-fire-targaryen-dothraki-screamer"
+      "url": "https://www.frontlinehobbies.com.au/warhammer-age-of-sigmar-daemons-of-tzeentch-scream"
     }
   ],
   "658": [
@@ -28586,9 +28532,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 43.74,
+      "price": 114.55,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/us-army-m1-57mm-anti-tank-gun-winter"
+      "url": "https://thecombatcompany.com/products/stormraven-gunship?_pos=21&_sid=e2d0655ba&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -28604,9 +28550,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 20,
+      "price": 109,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/gun-puzzle-wooden-puzzle"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-space-marines-stormraven-gunship?_pos=12&_sid=c00f49d1c&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -30510,9 +30456,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 22.32,
+      "price": 65.57,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/tzaangor-upgrade-pack"
+      "url": "https://thecombatcompany.com/products/tzaangor-enlightened-skyfires?_pos=2&_sid=df6d1971e&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -30600,7 +30546,7 @@ export const RetailersByProduct = {
       "store": "The Combat Company",
       "price": 22.32,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/tzaangor-upgrade-pack"
+      "url": "https://thecombatcompany.com/products/tzaangor-upgrade-pack?_pos=1&_sid=a69cc11a6&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -30636,9 +30582,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 22.32,
+      "price": 71.1,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/tzaangor-upgrade-pack"
+      "url": "https://thecombatcompany.com/products/tzaangors?_pos=9&_sid=cb6fbb0e6&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -30882,15 +30828,15 @@ export const RetailersByProduct = {
     },
     {
       "store": "Emerald Hobbies",
-      "price": 78.4,
+      "price": 172.5,
       "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/arks-of-omen-vashtorr"
+      "url": "https://www.emeraldhobbies.com.au/products/chaos-space-marine-vashtorr-the-arkifane?_pos=2&_sid=b7a3d0b96&_ss=r"
     },
     {
       "store": "Gumnut",
-      "price": 14,
+      "price": 129,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/white-dwarf-497-february"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-chaos-space-marines-vashtorr-the-arkifane?_pos=9&_sid=de24351cc&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -30952,9 +30898,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Warhammer Official",
-      "price": 134,
+      "price": 63,
       "inStock": false,
-      "url": "https://www.warhammer.com/en-AU/shop/chaos-space-marines-warpforged-venomcrawler-and-obliterators-2022?queryID=148781dc46d1190be625b7f032622281"
+      "url": "https://www.warhammer.com/en-AU/shop/Dark-Eldar-Venom-2017?queryID=9d5fdb6147bc017f34610201f00ad389"
     },
     {
       "store": "The Combat Company",
@@ -30982,9 +30928,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Frontline Hobbies",
-      "price": 2.49,
+      "price": 55.13,
       "inStock": false,
-      "url": "https://www.frontlinehobbies.com.au/the-army-painter-warpaints-venom-wyrm-18ml-acrylic"
+      "url": "https://www.frontlinehobbies.com.au/warhammer-40k-drukhari-venom"
     }
   ],
   "766": [
@@ -31632,9 +31578,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 201,
+      "price": 121,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/warhammer-40k-genestealer-cults-combat-patrol-2024"
+      "url": "https://www.gumnut.com.au/products/warhammer-40k-10th-ed-starter-set?_pos=8&_sid=5390e5082&_ss=r"
     }
   ],
   "782": [
@@ -31860,9 +31806,9 @@ export const RetailersByProduct = {
   "787": [
     {
       "store": "Warhammer Official",
-      "price": 280,
+      "price": 74,
       "inStock": false,
-      "url": "https://www.warhammer.com/en-AU/shop/combat-patrol-astra-militarum-2025?queryID=4bb3b9026d375393490aed77ed00459a"
+      "url": "https://www.warhammer.com/en-AU/shop/warhammer-plus-astra-militarum-unbroken-year3-2023?queryID=0e809e3d11c3c56149746cd492fc384d"
     }
   ],
   "788": [
@@ -33261,12 +33207,6 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/epic-encounters-barrow-of-the-corpse-crawler"
     },
     {
-      "store": "Gumnut",
-      "price": 42,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/the-well-roleplaying-game"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 90.25,
       "inStock": false,
@@ -34586,9 +34526,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 18,
+      "price": 65,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-krondspine-incarnate-of-ghur?_pos=10&_sid=8ea0d00ab&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -35129,12 +35069,6 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/stormcast-eternals-krondys-son-of-dracothian"
     },
     {
-      "store": "Gumnut",
-      "price": 8.5,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/paint-citadel-contrast-kroxigor-scales"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 245,
       "inStock": false,
@@ -35218,9 +35152,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 42,
+      "price": 73,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/warhammer-40k-adepta-sororitas-ministorum-priest-with-vindictor"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-vindictors?_pos=3&_sid=3cd8d4f26&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -35232,9 +35166,9 @@ export const RetailersByProduct = {
   "871": [
     {
       "store": "War For Less",
-      "price": 65,
+      "price": 72.8,
       "inStock": false,
-      "url": "https://www.warforless.com.au/legion-imperialis-leman-russ-exterminator-annihila"
+      "url": "https://www.warforless.com.au/stormcast-eternals-annihilators"
     },
     {
       "store": "Warhammer Official",
@@ -35244,9 +35178,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 75.05,
+      "price": 76.63,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/predator-annihilator-destructor"
+      "url": "https://thecombatcompany.com/products/annihilators?_pos=42&_sid=eee22a861&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -35262,15 +35196,15 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 65,
+      "price": 73,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/legions-imperialis-solar-auxilia-leman-russ-exterminator-and-annihilator-squadron"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-annihilators-boxed?_pos=11&_sid=17a2f2a61&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
-      "price": 75.25,
+      "price": 84.88,
       "inStock": false,
-      "url": "https://www.frontlinehobbies.com.au/legions-imperialis-leman-russ-exterminator-annihil"
+      "url": "https://www.frontlinehobbies.com.au/warhammer-age-of-sigmar-stormcast-eternals-annihil"
     }
   ],
   "872": [
@@ -35306,9 +35240,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 40.5,
+      "price": 83,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/command-of-nature-card-game"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-vanquishers-boxed?_pos=18&_sid=da849136c&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -35350,9 +35284,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 47,
+      "price": 83,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/infinity-reinforcements-nomads-nomads-pack-beta"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-vigilors-boxed?_pos=2&_sid=f9db5494a&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -35482,9 +35416,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 9.5,
+      "price": 47,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/dungeon-dwellers-rictus-the-undying-dark-heaven-blister"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-stormcast-eternals-knight-relictor-blister?_pos=11&_sid=9e54efb6f&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -35897,12 +35831,6 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/age-of-sigmar-core-rule-book-4th-edition"
     },
     {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 77.9,
       "inStock": false,
@@ -35939,12 +35867,6 @@ export const RetailersByProduct = {
       "price": 96,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/age-of-sigmar-core-rule-book-4th-edition"
-    },
-    {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
     }
   ],
   "888": [
@@ -36627,12 +36549,6 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/soulblight-gravelords-vampire-lord-on-nightmare-steed"
     },
     {
-      "store": "Gumnut",
-      "price": 32.5,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/art-soul-8-750pc-ravensburger"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 63.65,
       "inStock": false,
@@ -36833,12 +36749,6 @@ export const RetailersByProduct = {
       "price": 104,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/lumineth-realm-lords-sevireth"
-    },
-    {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
     },
     {
       "store": "Frontline Hobbies",
@@ -37087,12 +36997,6 @@ export const RetailersByProduct = {
       "price": 83.2,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/daughters-of-khaine-khinerai"
-    },
-    {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
     },
     {
       "store": "Frontline Hobbies",
@@ -37712,7 +37616,7 @@ export const RetailersByProduct = {
       "store": "The Combat Company",
       "price": 63.65,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/endrinmaster-with-dirigible-suit"
+      "url": "https://thecombatcompany.com/products/endrinmaster-with-dirigible-suit?_pos=1&_sid=0ad7c6899&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -37724,13 +37628,7 @@ export const RetailersByProduct = {
       "store": "Emerald Hobbies",
       "price": 50.4,
       "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/kharadron-endrinmaster-in-dirigible-suit"
-    },
-    {
-      "store": "Gumnut",
-      "price": 180,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-spearhead-grundstok-trailblazers"
+      "url": "https://www.emeraldhobbies.com.au/products/kharadron-endrinmaster-in-dirigible-suit?_pos=1&_sid=de1eff630&_ss=r"
     }
   ],
   "932": [
@@ -38055,12 +37953,6 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/disciples-of-tzeentch-vanguard-set"
     },
     {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 73.15,
       "inStock": false,
@@ -38097,12 +37989,6 @@ export const RetailersByProduct = {
       "price": 116,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/slaves-to-darkness-daemon-prince"
-    },
-    {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
     },
     {
       "store": "Frontline Hobbies",
@@ -38395,12 +38281,6 @@ export const RetailersByProduct = {
       "url": "https://www.gapgames.com.au/products/endless-spells-ossiarch-bonereapers"
     },
     {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 73.15,
       "inStock": false,
@@ -38551,12 +38431,6 @@ export const RetailersByProduct = {
       "price": 47.96,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/d-d-explorers-guide-to-wildemount"
-    },
-    {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
     },
     {
       "store": "Frontline Hobbies",
@@ -39159,12 +39033,6 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/slaves-to-darkness-battletome"
     },
     {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 67.45,
       "inStock": false,
@@ -39180,9 +39048,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Warhammer Official",
-      "price": 104,
+      "price": 215,
       "inStock": false,
-      "url": "https://www.warhammer.com/en-AU/shop/Skaven-Gnawhole-2019?srsltid=AfmBOopZPtTD2z5UxXtVY7ES90hN419cuGO5ZwoT_QMrZ1uFlYtsROPr"
+      "url": "https://www.warhammer.com/en-AU/shop/spearhead-skaven-2024?queryID=f580ad075761fcb45b49af2de08bb577"
     },
     {
       "store": "The Combat Company",
@@ -39535,12 +39403,6 @@ export const RetailersByProduct = {
       "price": 78.4,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/gloomspite-gitz-battletome"
-    },
-    {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
     },
     {
       "store": "Frontline Hobbies",
@@ -39927,12 +39789,6 @@ export const RetailersByProduct = {
       "price": 37.05,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/space-marines-lord-executioner"
-    },
-    {
-      "store": "Gumnut",
-      "price": 9.5,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/dungeon-dwellers-rictus-the-undying-dark-heaven-blister"
     }
   ],
   "986": [
@@ -40099,12 +39955,6 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/stormcast-eternals-battletome-1"
     },
     {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 67.45,
       "inStock": false,
@@ -40229,12 +40079,6 @@ export const RetailersByProduct = {
       "price": 78.4,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/nighthaunt-battletome-1"
-    },
-    {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
     },
     {
       "store": "Frontline Hobbies",
@@ -41001,12 +40845,6 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/chaos-daemons-beast-of-nurgle"
     },
     {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 78.75,
       "inStock": false,
@@ -41222,9 +41060,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 36,
+      "price": 46,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/scenery-citadel-skulls"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-40k-daemons-of-khorne-bloodletters-of-khorne-boxed?_pos=9&_sid=71add8b98&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -41408,7 +41246,7 @@ export const RetailersByProduct = {
       "store": "Gumnut",
       "price": 36,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/scenery-citadel-skulls"
+      "url": "https://www.gumnut.com.au/products/scenery-citadel-skulls?_pos=1&_sid=d891c947e&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -41545,28 +41383,10 @@ export const RetailersByProduct = {
       "url": "https://www.warhammer.com/en-AU/shop/Kharadron-Overlords-Endrinmaster-2017?queryID=841b5762de18b4eaf2e17cc6a4b1eb4d"
     },
     {
-      "store": "The Combat Company",
-      "price": 63.65,
-      "inStock": false,
-      "url": "https://thecombatcompany.com/products/endrinmaster-with-dirigible-suit"
-    },
-    {
       "store": "Gap Games",
       "price": 38,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/kharadron-overlords-endrinmaster"
-    },
-    {
-      "store": "Emerald Hobbies",
-      "price": 50.4,
-      "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/kharadron-endrinmaster-in-dirigible-suit"
-    },
-    {
-      "store": "Gumnut",
-      "price": 180,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-spearhead-grundstok-trailblazers"
     }
   ],
   "1026": [
@@ -41721,12 +41541,6 @@ export const RetailersByProduct = {
       "price": 72,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/kharadron-overlords-grundstok-thunderers"
-    },
-    {
-      "store": "Gumnut",
-      "price": 180,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-spearhead-grundstok-trailblazers"
     },
     {
       "store": "Frontline Hobbies",
@@ -41925,12 +41739,6 @@ export const RetailersByProduct = {
       "price": 73.15,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/stormcast-eternal-lord-aquilor"
-    },
-    {
-      "store": "Gumnut",
-      "price": 33,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/conquest-sorcerer-kings-sorcerer"
     }
   ],
   "1037": [
@@ -42042,27 +41850,15 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gap Games",
-      "price": 5.06,
+      "price": 59.85,
       "inStock": false,
-      "url": "https://www.gapgames.com.au/products/citadel-base-screaming-bell"
-    },
-    {
-      "store": "Emerald Hobbies",
-      "price": 5.12,
-      "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/citadel-base-screamer-pink-12ml"
-    },
-    {
-      "store": "Gumnut",
-      "price": 5,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/paint-citadel-base-screamer-pink-1"
+      "url": "https://www.gapgames.com.au/products/disciples-of-tzeentch-screamers-of-tzeentch"
     },
     {
       "store": "Frontline Hobbies",
-      "price": 49.99,
+      "price": 59.85,
       "inStock": false,
-      "url": "https://www.frontlinehobbies.com.au/a-song-of-ice-and-fire-targaryen-dothraki-screamer"
+      "url": "https://www.frontlinehobbies.com.au/warhammer-age-of-sigmar-daemons-of-tzeentch-scream"
     }
   ],
   "1040": [
@@ -42162,9 +41958,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 22.32,
+      "price": 65.57,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/tzaangor-upgrade-pack"
+      "url": "https://thecombatcompany.com/products/tzaangor-enlightened-skyfires?_pos=2&_sid=4d3a047d0&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -42940,9 +42736,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 50,
+      "price": 58,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/blood-bowl-necromantic-horror-team-the-wolfenburg-crypt-stealers-boxed"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-flesh-eater-courts-crypt-ghouls?_pos=10&_sid=ee1bd525b&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -44473,24 +44269,6 @@ export const RetailersByProduct = {
       "price": 72.2,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/cities-of-sigmar-black-guard-executioners"
-    },
-    {
-      "store": "Emerald Hobbies",
-      "price": 6.3,
-      "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/ultimate-guard-100-card-deck-box-black"
-    },
-    {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/deck-box-ultimate-guard-boulder-holds-100-cards-solid-black"
-    },
-    {
-      "store": "Frontline Hobbies",
-      "price": 16.95,
-      "inStock": false,
-      "url": "https://www.frontlinehobbies.com.au/reaper-bones-black-stone-giant-guard-unpainted-min"
     }
   ],
   "1102": [
@@ -45680,7 +45458,7 @@ export const RetailersByProduct = {
       "store": "Gumnut",
       "price": 180,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-spearhead-grundstok-trailblazers"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-spearhead-grundstok-trailblazers?_pos=1&_sid=602230f8e&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -51254,9 +51032,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 8,
+      "price": 36.5,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/gsw-mdf-bases-round-130mm-2"
+      "url": "https://www.gumnut.com.au/products/basing-aos-shattered-dominion-25-32mm-round-bases-boxed?_pos=10&_sid=d8723eb1f&_ss=r"
     }
   ],
   "1269": [
@@ -51852,7 +51630,7 @@ export const RetailersByProduct = {
       "store": "The Combat Company",
       "price": 77.42,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/battletome-blades-of-khorne-2025"
+      "url": "https://thecombatcompany.com/products/battletome-blades-of-khorne-2025?_pos=1&_sid=fc06bd007&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -51864,39 +51642,21 @@ export const RetailersByProduct = {
       "store": "Emerald Hobbies",
       "price": 78.4,
       "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/blades-of-khorne-battletome-1"
+      "url": "https://www.emeraldhobbies.com.au/products/blades-of-khorne-battletome-1?_pos=1&_sid=e9a6897cb&_ss=r"
     },
     {
       "store": "Gumnut",
       "price": 73,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-battletome-4th-ed"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-battletome-4th-ed?_pos=1&_sid=73d8992e7&_ss=r"
     }
   ],
   "1285": [
     {
       "store": "Warhammer Official",
-      "price": 240,
+      "price": 140,
       "inStock": false,
-      "url": "https://www.warhammer.com/en-AU/shop/spearhead-blades-of-khorne-fangs-of-the-blood-god-2025?queryID=0cc1710b453f6d01f74ff8fdc3df174c"
-    },
-    {
-      "store": "The Combat Company",
-      "price": 77.42,
-      "inStock": false,
-      "url": "https://thecombatcompany.com/products/battletome-blades-of-khorne-2025"
-    },
-    {
-      "store": "Emerald Hobbies",
-      "price": 78.4,
-      "inStock": false,
-      "url": "https://www.emeraldhobbies.com.au/products/blades-of-khorne-battletome-1"
-    },
-    {
-      "store": "Gumnut",
-      "price": 73,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-blades-of-khorne-battletome-4th-ed"
+      "url": "https://www.warhammer.com/en-AU/shop/battletome-blades-of-khorne-gamers-edition-eng-2025"
     }
   ],
   "1286": [
@@ -52854,9 +52614,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gumnut",
-      "price": 27,
+      "price": 23,
       "inStock": false,
-      "url": "https://www.gumnut.com.au/products/necromunda-bastions-of-law-tactics-cards"
+      "url": "https://www.gumnut.com.au/products/age-of-sigmar-ogor-mawtribes-faction-pack?_pos=10&_sid=466498751&_ss=r"
     },
     {
       "store": "Frontline Hobbies",
@@ -53856,21 +53616,15 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 30.5,
+      "price": 71.25,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/winter-shale-elipse-120mm"
+      "url": "https://thecombatcompany.com/products/alarith-stonemage?_pos=9&_sid=aac36925c&_ss=r"
     },
     {
       "store": "Gap Games",
       "price": 66.5,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/lumineth-realm-lords-alarith-stonemage"
-    },
-    {
-      "store": "Gumnut",
-      "price": 20.5,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/paint-vallejo-diorama-effects-black-lava-asphalt"
     },
     {
       "store": "Frontline Hobbies",
@@ -54245,12 +53999,6 @@ export const RetailersByProduct = {
       "url": "https://www.emeraldhobbies.com.au/products/flesh-eater-courts-battletome-1"
     },
     {
-      "store": "Gumnut",
-      "price": 18,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-general-s-handbook-pitched-battles-2022-23-season-1"
-    },
-    {
       "store": "Frontline Hobbies",
       "price": 67.45,
       "inStock": false,
@@ -54442,21 +54190,15 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 7.2,
+      "price": 218.5,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/two-thin-coats-skeleton-legion"
+      "url": "https://thecombatcompany.com/products/akhelian-leviadon?_pos=21&_sid=43cb18a11&_ss=r"
     },
     {
       "store": "Gap Games",
       "price": 170.64,
       "inStock": false,
       "url": "https://www.gapgames.com.au/products/idoneth-deepkin-akhelian-leviadon"
-    },
-    {
-      "store": "Gumnut",
-      "price": 20.5,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/leviathan-paperback"
     },
     {
       "store": "Frontline Hobbies",
@@ -54843,12 +54585,6 @@ export const RetailersByProduct = {
       "price": 72,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/kharadron-overlords-skyriggers"
-    },
-    {
-      "store": "Gumnut",
-      "price": 180,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-spearhead-grundstok-trailblazers"
     }
   ],
   "1361": [
@@ -54881,12 +54617,6 @@ export const RetailersByProduct = {
       "price": 192,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/kharadron-overlords-spearhead-grundstock-trailblazers"
-    },
-    {
-      "store": "Gumnut",
-      "price": 180,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/age-of-sigmar-kharadron-overlords-spearhead-grundstok-trailblazers"
     },
     {
       "store": "Frontline Hobbies",
@@ -54954,9 +54684,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "The Combat Company",
-      "price": 22.32,
+      "price": 71.1,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/tzaangor-upgrade-pack"
+      "url": "https://thecombatcompany.com/products/tzaangors?_pos=9&_sid=cb6fbb0e6&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -55165,12 +54895,6 @@ export const RetailersByProduct = {
       "price": 53.6,
       "inStock": false,
       "url": "https://www.emeraldhobbies.com.au/products/blood-bowl-necromantic-horror-team"
-    },
-    {
-      "store": "Gumnut",
-      "price": 50,
-      "inStock": false,
-      "url": "https://www.gumnut.com.au/products/blood-bowl-necromantic-horror-team-the-wolfenburg-crypt-stealers-boxed"
     }
   ],
   "1369": [
@@ -55480,15 +55204,15 @@ export const RetailersByProduct = {
     },
     {
       "store": "Warhammer Official",
-      "price": 70,
+      "price": 105,
       "inStock": false,
-      "url": "https://www.warhammer.com/en-AU/shop/warhammer-underworlds-the-jaws-of-itzl-2024?queryID=fb33936da84391d25d2898931d48fde3"
+      "url": "https://www.warhammer.com/en-AU/shop/Seraphon-Saurus-Guard"
     },
     {
       "store": "The Combat Company",
-      "price": 34.02,
+      "price": 82.95,
       "inStock": false,
-      "url": "https://thecombatcompany.com/products/german-specialist-medic-special-order"
+      "url": "https://thecombatcompany.com/products/saurus-guard?_pos=22&_sid=584d6f396&_ss=r"
     },
     {
       "store": "Gap Games",
@@ -55650,9 +55374,9 @@ export const RetailersByProduct = {
     },
     {
       "store": "Gap Games",
-      "price": 5.06,
+      "price": 103.55,
       "inStock": false,
-      "url": "https://www.gapgames.com.au/products/citadel-base-screaming-bell"
+      "url": "https://www.gapgames.com.au/products/skaven-pestilens-screaming-bell"
     },
     {
       "store": "Emerald Hobbies",
