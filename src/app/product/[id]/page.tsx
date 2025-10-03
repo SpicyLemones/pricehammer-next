@@ -1,8 +1,18 @@
 // src/app/product/[id]/page.tsx
-import { query } from "@/lib/sql";
 import fs from "fs";
 import path from "path";
 import Script from "next/script";
+
+import { isAdminRequest } from "@/lib/auth";
+import { loadManualProduct } from "@/lib/manual-products";
+import { query } from "@/lib/sql";
+import { ProductEditor } from "./ProductEditor";
+
+const GAME_LABELS: Record<string, string> = {
+  warhammer40k: "Warhammer 40,000 (40K)",
+  ageofsigmar: "Age of Sigmar",
+  universal: "Universal",
+};
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -50,13 +60,13 @@ export default async function ProductPage({
 
   const prices = (await query("all", "select/display_prices", [product.id])) as PriceRow[];
 
-  // Hand-edited metadata
-  let manual: any = null;
+  let manual: Awaited<ReturnType<typeof loadManualProduct>> | null = null;
   try {
-    const mod: any = await import("../../../../data/db/Product");
-    const list: any[] = mod?.Products ?? mod?.default ?? [];
-    manual = Array.isArray(list) ? list.find((p) => p.id === String(product.id)) : null;
-  } catch {}
+    manual = await loadManualProduct(product.id);
+  } catch (error) {
+    console.error("Failed to load manual product metadata", error);
+  }
+  const isAdmin = isAdminRequest();
 
   // Image fallback (use public/images/product/<filename> from Product.tsx)
   const PLACEHOLDER = "/logo/logo.png";
@@ -71,10 +81,17 @@ export default async function ProductPage({
     }
   }
 
-  const faction = manual?.faction ?? "—";
-  const game = manual?.game ?? "—";
-  const category = manual?.category ?? "—";
+  const faction = manual?.faction?.trim?.() || "—";
+  const category = manual?.category?.trim?.() || "—";
   const points = typeof manual?.points === "number" ? manual.points : null;
+  const name = manual?.name?.trim?.() || product.name;
+
+  const gameValue = typeof manual?.game === "string" ? manual.game : undefined;
+  const gameLabel = gameValue ? GAME_LABELS[gameValue] ?? manual?.game : "—";
+  const editorGame =
+    gameValue && gameValue in GAME_LABELS
+      ? (gameValue as keyof typeof GAME_LABELS)
+      : ("warhammer40k" as keyof typeof GAME_LABELS);
   const description =
     typeof manual?.description === "string" && manual.description.trim()
       ? manual.description.trim()
@@ -119,24 +136,38 @@ export default async function ProductPage({
 
             <div className="flex-1">
               <div className="flex items-start justify-between gap-3">
-                <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">{product.name}</h1>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">{name}</h1>
 
-                {/* Share / Copy */}
-                <button
-                  id="share-btn"
-                  className="inline-flex items-center rounded-md border border-slate-300
-                             px-3 py-1.5 text-sm font-medium
-                             bg-white hover:bg-slate-50
-                             dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700
-                             text-slate-800 dark:text-slate-100"
-                  data-title={product.name}
-                >
-                  Share
-                </button>
+                <div className="flex items-center gap-2">
+                  {/* Share / Copy */}
+                  <button
+                    id="share-btn"
+                    className="inline-flex items-center rounded-md border border-slate-300
+                               px-3 py-1.5 text-sm font-medium
+                               bg-white hover:bg-slate-50
+                               dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700
+                               text-slate-800 dark:text-slate-100"
+                    data-title={name}
+                  >
+                    Share
+                  </button>
+                  {isAdmin && (
+                    <ProductEditor
+                      productId={String(product.id)}
+                      initialData={{
+                        name,
+                        game: editorGame,
+                        faction: manual?.faction ?? "",
+                        category: manual?.category ?? "",
+                        points,
+                      }}
+                    />
+                  )}
+                </div>
               </div>
 
               <div className="text-slate-700 dark:text-slate-200 mt-2 space-y-0.5">
-                <div><span className="font-semibold">Game:</span> {game}</div>
+                <div><span className="font-semibold">Game:</span> {gameLabel}</div>
                 <div><span className="font-semibold">Faction:</span> {faction}</div>
                 <div><span className="font-semibold">Category:</span> {category}</div>
                 <div><span className="font-semibold">Points:</span> {points ?? "—"}</div>
