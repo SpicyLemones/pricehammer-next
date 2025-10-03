@@ -1,7 +1,6 @@
 {
   "name": "Pricehammer",
   "short_name": "Pricehammer",
-  "description": "Get the best Warhammer prices in Australia.",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -16,7 +15,5 @@
   ],
   "theme_color": "#0b1220",
   "background_color": "#0b1220",
-  "start_url": "/",
-  "scope": "/",
   "display": "standalone"
 }
