@@ -37,21 +37,21 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b bg-white/90 backdrop-blur">
       <div className="max-w-screen-xl mx-auto px-3 sm:px-6 lg:px-8 h-12 sm:h-14 flex items-center justify-between gap-2">
         {/* Brand */}
-        <Link href="/" className="inline-flex items-center gap-2 font-semibold text-slate-900">
+        <Link href="/warhammer-prices" className="inline-flex items-center gap-2 font-semibold text-slate-900">
           {/* you can swap to next/image later if you want */}
           <img
             className="rounded-md"
             src="/logo/logo.png"
             width={50}
             height={50}
-            alt="Logo"
+            alt="PriceHammer logo"
           />
           <span className="text-base sm:text-lg">PriceHammer</span>
         </Link>
 
         {/* Nav (scrolls horizontally on mobile if needed) */}
         <nav className="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-2 px-2">
-          <NavItem href="/" exact>
+          <NavItem href="/warhammer-prices" exact>
             🔎 Product Lookup
           </NavItem>
 
