@@ -1,14 +1,14 @@
 {
   "name": "Pricehammer",
   "short_name": "Pricehammer",
-  "description": "Get the best Warhammer prices in Australia.",
+  "description": "Compare Warhammer 40,000 and Age of Sigmar prices across Australian retailers with live updates from PriceHammer.",
   "icons": [
     { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
   ],
   "theme_color": "#0b1220",
   "background_color": "#0b1220",
-  "start_url": "/",
+  "start_url": "/warhammer-prices",
   "scope": "/",
   "display": "standalone"
 }

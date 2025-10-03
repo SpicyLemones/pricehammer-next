@@ -1,5 +1,6 @@
 // app/layout.tsx
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -14,9 +15,28 @@ const sans = Inter({
   variable: "--font-sans",
 });
 
+const metadataBase = new URL("https://pricehammer.xyz");
+
+const primaryDescription =
+  "Compare Australian Warhammer 40,000 and Age of Sigmar prices with PriceHammer. We track local stock, highlight savings, and help you stay ahead of Games Workshop price rises across trusted Australian hobby stores.";
+
 export const metadata: Metadata = {
-  title: "Pricehammer",
-  description: "Get the best Warhammer prices in Australia.",
+  metadataBase,
+  title: {
+    default: "Warhammer Price Tracker for Australia",
+    template: "%s | PriceHammer",
+  },
+  description: primaryDescription,
+  keywords: [
+    "Warhammer prices",
+    "Games Workshop deals",
+    "Warhammer 40K Australia",
+    "Age of Sigmar discounts",
+    "miniature wargaming price comparison",
+  ],
+  authors: [{ name: "PriceHammer" }],
+  creator: "PriceHammer",
+  publisher: "PriceHammer",
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -29,6 +49,35 @@ export const metadata: Metadata = {
     shortcut: ["/favicon.ico"],
   },
   manifest: "/site.webmanifest",
+  alternates: {
+    canonical: "/warhammer-prices",
+  },
+  openGraph: {
+    type: "website",
+    url: "/warhammer-prices",
+    title: "Warhammer Price Tracker for Australia | PriceHammer",
+    description: primaryDescription,
+    siteName: "PriceHammer",
+    locale: "en_AU",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Warhammer Price Tracker for Australia | PriceHammer",
+    description: primaryDescription,
+    creator: "@pricehammer",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  category: "shopping",
 };
 
 export const viewport: Viewport = {
@@ -41,6 +90,26 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
+      <head>
+        <Script id="ld-json-website" type="application/ld+json" strategy="beforeInteractive">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "PriceHammer",
+            url: `${metadataBase.origin}/warhammer-prices`,
+            description: primaryDescription,
+            inLanguage: "en-AU",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: {
+                "@type": "EntryPoint",
+                urlTemplate: `${metadataBase.origin}/warhammer-prices?search={search_term_string}`,
+              },
+              "query-input": "required name=search_term_string",
+            },
+          })}
+        </Script>
+      </head>
       <body className="min-h-dvh bg-scroll md:bg-fixed bg-cover bg-center app-bg">
         <div className="min-h-dvh flex flex-col bg-white/60 dark:bg-black/70 backdrop-blur-sm">
           <Header />
