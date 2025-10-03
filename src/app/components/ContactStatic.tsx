@@ -3,7 +3,8 @@ export function ContactStatic() {
     <div className="max-w-2xl mx-auto space-y-4">
       <h1 className="text-3xl font-display font-bold">Contact</h1>
       <p className="text-slate-700 dark:text-slate-300">
-        Found a bug or missing product? Email me:
+        Have a Warhammer retailer you would like tracked or spotted a price mismatch? Reach out so we can keep the Australian
+        comparison tool accurate:
       </p>
       <p>
         <a

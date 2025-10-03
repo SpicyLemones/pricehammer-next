@@ -6,8 +6,11 @@ export function Footer() {
   return (
     <footer className="border-t bg-white/40 backdrop-blur dark:bg-slate-900/80">
       <div className="max-w-screen-xl mx-auto px-3 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="text-sm text-slate-500">
-          © {new Date().getFullYear()} PriceHammer
+        <div className="text-sm text-slate-500 space-y-1">
+          <p>© {new Date().getFullYear()} PriceHammer</p>
+          <p className="max-w-xs text-left">
+            Australian Warhammer price comparison tool for Games Workshop miniatures.
+          </p>
         </div>
 
         {/* Middle: nav */}
