@@ -19,33 +19,23 @@ export const metadata: Metadata = {
   description: "Get the best Warhammer prices in Australia.",
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
-      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
       { url: "/favicon.ico" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/android-chrome-192x192.png", type: "image/png", sizes: "192x192" },
+      { url: "/android-chrome-512x512.png", type: "image/png", sizes: "512x512" },
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     shortcut: ["/favicon.ico"],
   },
   manifest: "/site.webmanifest",
-  // ❌ themeColor must not be here
 };
 
-// ✅ move themeColor into a separate viewport export
 export const viewport: Viewport = {
-  // single color:
-  // themeColor: "#0ea5e9",
-
-  // or media-aware colors:
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)",  color: "#0b1220" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b1220" },
   ],
-  // (optional) other viewport bits if you want:
-  // width: "device-width",
-  // initialScale: 1,
-  // colorScheme: "light dark",
-  // viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
