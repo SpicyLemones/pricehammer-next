@@ -3,11 +3,10 @@ export function About() {
     <div className="max-w-2xl mx-auto space-y-4">
       <h1 className="text-3xl font-display font-bold">About</h1>
       <p className="text-slate-700 dark:text-slate-300">
-        We built PriceHammer to help Australian Warhammer fans compare Games Workshop product prices across local retailers.
-        We curate the listings by hand and refresh them regularly so you can see the latest deals before limited stock
-        disappears.
+        I built this because I spend a lot of time min-maxxing my expenses on warhammer products, and it was hard (and expensive) to get friends into the hobby. 
       </p>
-      <p>
+      <p className="text-slate-700 dark:text-slate-300">Prices vary a lot across stores and names aren’t consistent, so this pulls multiple retailers into one place and links you to the retailers which addresses that complication of maintaining a spreadsheet. </p>
+      <p className="text-slate-700 dark:text-slate-300">
         Our coverage focuses on Australia and New Zealand for now while we line up data feeds for other regions.
       </p>
       <p className="text-slate-700 dark:text-slate-300">
