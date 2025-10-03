@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import { query } from "@/lib/sql";
 
 // Pull manual metadata (names, faction, image, etc.)
-import { loadManualProducts } from "@/lib/manual-products";
+import { Products as ManualProducts } from "../../../../data/db/Product";
 
 // Types to keep things clear
 type DBPriceRow = { seller_name: string; price: number | null; link: string | null };
@@ -26,9 +26,7 @@ export async function GET() {
   // consider a single SQL that pre-aggregates best prices or a paginated API.
   const products: APIProduct[] = [];
 
-  const manualProducts = await loadManualProducts();
-
-  for (const p of manualProducts) {
+  for (const p of ManualProducts) {
     const idNum = Number(p.id);
     if (!Number.isFinite(idNum)) continue;
 
@@ -41,12 +39,7 @@ export async function GET() {
       game: p.game as any,
       faction: p.faction,
       category: p.category,
-      points:
-        typeof p.points === "number"
-          ? p.points
-          : p.points === null
-            ? null
-            : undefined,
+      points: typeof p.points === "number" ? p.points : undefined,
       image: p.image ?? null,
       retailers: (prices ?? []).map((r) => ({
         store: r.seller_name,

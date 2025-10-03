@@ -5,7 +5,7 @@ export interface Product {
   game: string;
   faction: string;
   category: string;
-  points: number | null;
+  points: number;
   image: string;
   retailers: {
     store: string;

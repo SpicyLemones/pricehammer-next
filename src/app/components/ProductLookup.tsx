@@ -29,24 +29,13 @@ type Retailer = { store: string; price: number | null; url: string | null };
 type Product = {
   id: string;
   name: string;
-  game?: "warhammer40k" | "ageofsigmar" | "universal" | string;
+  game?: "warhammer40k" | "ageofsigmar" | "killteam" | "both";
   faction?: string;
   category?: string;
-  points?: number | null;
+  points?: number;
   image?: string | null;
   retailers: Retailer[];
 };
-
-const GAME_LABELS = {
-  warhammer40k: "Warhammer 40,000 (40K)",
-  ageofsigmar: "Age of Sigmar",
-  universal: "Universal",
-} as const;
-
-type GameKey = keyof typeof GAME_LABELS;
-type GameFilter = "all" | GameKey;
-
-const games = Object.keys(GAME_LABELS) as GameKey[];
 
 // ---------- Image helper ----------
 const PLACEHOLDER = "/logo/logo.png";
@@ -209,7 +198,7 @@ export function ProductLookup() {
   );
   const [queryInput, setQueryInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedGame, setSelectedGame] = useState<GameFilter>("all");
+  const [selectedGame, setSelectedGame] = useState<string>("all");
   const [selectedFaction, setSelectedFaction] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [sortBy, setSortBy] = useState<SortKey>("featured");
@@ -249,6 +238,8 @@ export function ProductLookup() {
       .filter((g) => g.items.length > 0);
   }, [factionSet]);
 
+  const games = ["warhammer40k", "ageofsigmar"] as const;
+
   const hasQueryOrFilters =
     searchTerm.trim().length > 0 ||
     selectedGame !== "all" ||
@@ -265,11 +256,7 @@ export function ProductLookup() {
         p.name.toLowerCase().includes(term) ||
         (p.faction?.toLowerCase?.() ?? "").includes(term);
 
-      const matchesGame =
-        selectedGame === "all" ||
-        p.game === selectedGame ||
-        (p.game === "universal" &&
-          (selectedGame === "warhammer40k" || selectedGame === "ageofsigmar"));
+      const matchesGame = selectedGame === "all" || p.game === (selectedGame as any);
       const matchesFaction = selectedFaction === "all" || p.faction === selectedFaction;
       const matchesCategory = selectedCategory === "all" || p.category === selectedCategory;
 
@@ -356,14 +343,14 @@ export function ProductLookup() {
         </form>
 
         {/* game */}
-        <Select value={selectedGame} onValueChange={(value) => setSelectedGame(value as GameFilter)}>
+        <Select value={selectedGame} onValueChange={setSelectedGame}>
           <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800 ">
             <SelectValue placeholder="All Games" />
           </SelectTrigger>
           <SelectContent className="w-[180px] bg-white dark:bg-slate-800">
             <SelectItem value="all">All Games</SelectItem>
-            {games.map((g) => (
-              <SelectItem key={g} value={g}>{GAME_LABELS[g]}</SelectItem>
+            {(["warhammer40k", "ageofsigmar"] as const).map((g) => (
+              <SelectItem key={g} value={g}>{g}</SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -496,11 +483,6 @@ function ProductCard({ product }: { product: Product }) {
                   </Link>
                 </CardTitle>
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
-                  {product.game && (
-                    <Badge variant="secondary">
-                      {GAME_LABELS[product.game as keyof typeof GAME_LABELS] ?? product.game}
-                    </Badge>
-                  )}
                   <Badge variant="outline">{product.faction || "Unknown Faction"}</Badge>
                   <span className="text-slate-600">{product.category || "Uncategorized"}</span>
                   {typeof product.points === "number" && product.points > 0 ? (
