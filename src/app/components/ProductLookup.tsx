@@ -126,7 +126,14 @@ async function reportWrong(
 }
 
 // ---------- Sorting helpers (unchanged) ----------
-type SortKey = "featured" | "price-asc" | "price-desc" | "points-asc" | "points-desc";
+type SortKey =
+  | "featured"
+  | "price-asc"
+  | "price-desc"
+  | "points-asc"
+  | "points-desc"
+  | "best-deal-desc"
+  | "best-deal-asc";
 
 const bestPriceOrNull = (p: Product) => {
   const nums = p.retailers?.map((r) => Number(r?.price)).filter((v) => Number.isFinite(v)) ?? [];
@@ -148,6 +155,30 @@ const cmpPriceDesc = (a: Product, b: Product) => {
   if (A === null) return 1;
   if (B === null) return -1;
   return B - A;
+};
+const bestDealGap = (p: Product) => {
+  const nums =
+    p.retailers?.map((r) => Number(r?.price)).filter((v) => Number.isFinite(v)) ?? [];
+  if (nums.length < 2) return null;
+  const min = Math.min(...nums);
+  const max = Math.max(...nums);
+  return max - min;
+};
+const cmpBestDealDesc = (a: Product, b: Product) => {
+  const A = bestDealGap(a);
+  const B = bestDealGap(b);
+  if (A === null && B === null) return 0;
+  if (A === null) return 1;
+  if (B === null) return -1;
+  return B - A;
+};
+const cmpBestDealAsc = (a: Product, b: Product) => {
+  const A = bestDealGap(a);
+  const B = bestDealGap(b);
+  if (A === null && B === null) return 0;
+  if (A === null) return 1;
+  if (B === null) return -1;
+  return A - B;
 };
 const sample = <T,>(arr: T[], n: number) => {
   if (n >= arr.length) return [...arr];
@@ -254,6 +285,12 @@ export function ProductLookup() {
         break;
       case "price-desc":
         arr.sort(cmpPriceDesc);
+        break;
+      case "best-deal-desc":
+        arr.sort(cmpBestDealDesc);
+        break;
+      case "best-deal-asc":
+        arr.sort(cmpBestDealAsc);
         break;
       case "points-asc":
         arr.sort((a, b) => (a.points ?? Infinity) - (b.points ?? Infinity));
@@ -368,6 +405,8 @@ export function ProductLookup() {
             <SelectItem value="featured">Featured</SelectItem>
             <SelectItem value="price-asc">Price (low → high)</SelectItem>
             <SelectItem value="price-desc">Price (high → low)</SelectItem>
+            <SelectItem value="best-deal-desc">Best deals (largest savings)</SelectItem>
+            <SelectItem value="best-deal-asc">Best deals (smallest savings)</SelectItem>
             <SelectItem value="points-asc">Points (low → high)</SelectItem>
             <SelectItem value="points-desc">Points (high → low)</SelectItem>
           </SelectContent>
