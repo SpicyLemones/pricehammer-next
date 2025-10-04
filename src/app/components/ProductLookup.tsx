@@ -344,13 +344,13 @@ export function ProductLookup() {
           </button>
         </form>
 
-        {/* game */}
+        {/* universe */}
         <Select value={selectedGame} onValueChange={setSelectedGame}>
           <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800 ">
-            <SelectValue placeholder="All Games" />
+            <SelectValue placeholder="All Universes" />
           </SelectTrigger>
           <SelectContent className="w-[180px] bg-white dark:bg-slate-800">
-            <SelectItem value="all">All Games</SelectItem>
+            <SelectItem value="all">All Universes</SelectItem>
             {(["warhammer40k", "ageofsigmar"] as const).map((g) => (
               <SelectItem key={g} value={g}>{g}</SelectItem>
             ))}

@@ -212,7 +212,7 @@ export default async function ProductPage({
               </div>
 
               <div className="text-slate-700 dark:text-slate-200 mt-2 space-y-0.5">
-                <div><span className="font-semibold">Game:</span> {game}</div>
+                <div><span className="font-semibold">Universe:</span> {game}</div>
                 <div><span className="font-semibold">Faction:</span> {faction}</div>
                 <div><span className="font-semibold">Category:</span> {category}</div>
                 <div><span className="font-semibold">Points:</span> {points ?? "—"}</div>

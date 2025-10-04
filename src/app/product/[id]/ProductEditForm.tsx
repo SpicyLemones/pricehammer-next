@@ -221,7 +221,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
 
         <div className="grid gap-1">
           <label htmlFor={`game-${productId}`} className="text-sm font-medium text-slate-700 dark:text-slate-200">
-            Game
+            Universe
           </label>
           <input
             id={`game-${productId}`}
