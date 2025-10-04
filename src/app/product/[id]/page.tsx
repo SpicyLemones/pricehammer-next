@@ -27,6 +27,7 @@ type ManualProduct = {
   points?: number | string | null;
   description?: string | null;
   image?: string | null;
+  hidden?: boolean | null;
   [key: string]: unknown;
 };
 
@@ -119,6 +120,7 @@ export default async function ProductPage({
       : typeof rawPoints === "string" && rawPoints.trim() && Number.isFinite(Number(rawPoints.trim()))
       ? Number(rawPoints.trim())
       : null;
+  const manualHidden = manual?.hidden === true;
   const displayName = manualName || product.name;
   const faction = manualFaction || "—";
   const game = manualGame || "—";
@@ -133,6 +135,17 @@ export default async function ProductPage({
   const adminAuthHeader = headerList.get("authorization");
   const isAdmin = isAuthorizedAdmin(adminAuthHeader);
   const gameCategoriesForClient = manualGameCategories;
+
+  if (manualHidden && !isAdmin) {
+    return (
+      <div className="max-w-3xl mx-auto p-6">
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Product hidden</h1>
+        <p className="mt-2 text-slate-700 dark:text-slate-300">
+          This product is not currently visible on PriceHammer. Please check back later or ask an admin to unhide it.
+        </p>
+      </div>
+    );
+  }
 
   // Initial sort on the server; JS will handle button toggles without reload
   const initiallySorted = (prices ?? []).slice().sort((a, b) => {
@@ -155,6 +168,15 @@ export default async function ProductPage({
         <div className="space-y-6 rounded-xl border border-slate-200 shadow-lg
                         bg-white/95 dark:bg-slate-900/95
                         supports-[backdrop-filter]:backdrop-blur-sm p-6">
+
+          {manualHidden && isAdmin && (
+            <div className="rounded-lg border border-amber-500/50 bg-amber-50/80 p-4 text-amber-800 shadow-sm dark:border-amber-400/40 dark:bg-amber-500/10 dark:text-amber-100">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.32em] text-amber-700 dark:text-amber-200">Hidden product</h2>
+              <p className="mt-2 text-sm text-amber-700/90 dark:text-amber-100/90">
+                This product is hidden from public listings. Use the toggle in the edit panel to make it visible again.
+              </p>
+            </div>
+          )}
 
           <div className="flex gap-6 items-start">
             {/* Clickable image (opens modal) */}
@@ -206,6 +228,7 @@ export default async function ProductPage({
                       faction: manualFaction,
                       category: manualCategory,
                       points: manualPoints,
+                      hidden: manualHidden,
                     }}
                     gameCategories={gameCategoriesForClient}
                   />

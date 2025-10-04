@@ -16,6 +16,7 @@ type Body = {
   faction?: string | null;
   category?: string | null;
   points?: number | string | null;
+  hidden?: boolean | null;
 };
 
 const PRODUCTS_MARKER = "export const Products: Product[] =";
@@ -84,6 +85,26 @@ function applyPointsField(target: ProductRecord, body: Body) {
   target.points = value;
 }
 
+function applyHiddenField(target: ProductRecord, body: Body) {
+  if (!Object.prototype.hasOwnProperty.call(body, "hidden")) return;
+  const raw = body.hidden;
+
+  if (raw === null || raw === undefined) {
+    delete target.hidden;
+    return;
+  }
+
+  if (typeof raw !== "boolean") {
+    throw new Error("invalid-hidden");
+  }
+
+  if (raw) {
+    target.hidden = true;
+  } else {
+    delete target.hidden;
+  }
+}
+
 function buildUpdatedProduct(existing: ProductRecord, body: Body) {
   const updated: ProductRecord = { ...existing };
 
@@ -92,6 +113,7 @@ function buildUpdatedProduct(existing: ProductRecord, body: Body) {
   applyStringField(updated, body, "faction");
   applyStringField(updated, body, "category");
   applyPointsField(updated, body);
+  applyHiddenField(updated, body);
 
   return updated;
 }
@@ -161,6 +183,8 @@ export async function PUT(req: NextRequest, { params }: Params) {
         ? "Points must be a non-negative number"
         : code === "invalid-name"
         ? "Name must be provided"
+        : code === "invalid-hidden"
+        ? "Hidden must be true or false"
         : "Invalid input received";
     return NextResponse.json({ error: message }, { status: 400 });
   }

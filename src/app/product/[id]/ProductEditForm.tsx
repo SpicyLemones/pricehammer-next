@@ -11,6 +11,7 @@ interface ProductEditFormProps {
     faction: string;
     category: string;
     points: number | null;
+    hidden?: boolean | null;
   };
   gameCategories: Record<string, string[]>;
 }
@@ -21,6 +22,7 @@ type NormalizedValues = {
   faction: string;
   category: string;
   points: string;
+  hidden: boolean;
 };
 
 type StatusState =
@@ -38,6 +40,7 @@ const normalizeInitialValues = (values: ProductEditFormProps["initialValues"]): 
     values.points !== null && values.points !== undefined && Number.isFinite(values.points)
       ? String(values.points)
       : "",
+  hidden: values.hidden === true,
 });
 
 export default function ProductEditForm({ productId, initialValues, gameCategories }: ProductEditFormProps) {
@@ -50,6 +53,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
   const [faction, setFaction] = useState(normalizedInitial.faction);
   const [category, setCategory] = useState(normalizedInitial.category);
   const [points, setPoints] = useState(normalizedInitial.points);
+  const [hidden, setHidden] = useState(normalizedInitial.hidden);
   const [status, setStatus] = useState<StatusState>({ type: "idle" });
 
   useEffect(() => {
@@ -59,6 +63,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
     setFaction(normalizedInitial.faction);
     setCategory(normalizedInitial.category);
     setPoints(normalizedInitial.points);
+    setHidden(normalizedInitial.hidden);
   }, [normalizedInitial]);
 
   const gameOptions = useMemo(
@@ -77,7 +82,8 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
     game !== baseValues.game ||
     faction !== baseValues.faction ||
     category !== baseValues.category ||
-    points !== baseValues.points;
+    points !== baseValues.points ||
+    hidden !== baseValues.hidden;
 
   const gameDatalistId = `game-options-${productId}`;
   const categoryDatalistId = `category-options-${productId}`;
@@ -100,6 +106,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
       faction,
       category,
       points,
+      hidden,
     };
 
     try {
@@ -134,6 +141,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
               typeof data.product.points === "number" && Number.isFinite(data.product.points)
                 ? data.product.points
                 : null,
+            hidden: data.product.hidden === true,
           });
           updated = next;
         }
@@ -145,6 +153,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
       setFaction(updated.faction);
       setCategory(updated.category);
       setPoints(updated.points);
+      setHidden(updated.hidden);
       setStatus({ type: "success", message: "Saved changes." });
       router.refresh();
     } catch (error: unknown) {
@@ -160,6 +169,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
     setFaction(baseValues.faction);
     setCategory(baseValues.category);
     setPoints(baseValues.points);
+    setHidden(baseValues.hidden);
     setStatus({ type: "idle" });
   }
 
@@ -182,6 +192,16 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
       <p className="mb-3 text-xs text-slate-500 dark:text-slate-400">
         Leave a field blank to clear it. Suggestions are provided where available.
       </p>
+      <div
+        className={`mb-4 rounded-md border px-3 py-2 text-[0.7rem] font-semibold tracking-[0.28em]
+          ${hidden
+            ? "border-amber-500/60 bg-amber-100/80 text-amber-700 dark:border-amber-400/50 dark:bg-amber-500/10 dark:text-amber-200"
+            : "border-emerald-500/50 bg-emerald-100/80 text-emerald-700 dark:border-emerald-400/40 dark:bg-emerald-500/10 dark:text-emerald-200"}`}
+        role="status"
+        aria-live="polite"
+      >
+        {hidden ? "Hidden from public pages" : "Visible to everyone"}
+      </div>
       <form onSubmit={handleSubmit} className="grid gap-3">
         <div className="grid gap-1">
           <label htmlFor={`name-${productId}`} className="text-sm font-medium text-slate-700 dark:text-slate-200">
@@ -271,6 +291,22 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
             value={points}
             onChange={(event) => setPoints(event.target.value)}
           />
+        </div>
+
+        <div className="rounded-md border border-slate-200/80 bg-white/90 p-3 text-sm text-slate-700 shadow-sm transition dark:border-slate-700/70 dark:bg-slate-900/70 dark:text-slate-100">
+          <label className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              className="mt-1 h-4 w-4 rounded border-slate-400 text-slate-900 focus:ring-slate-500 dark:border-slate-600 dark:bg-slate-800"
+              checked={hidden}
+              onChange={(event) => setHidden(event.target.checked)}
+              disabled={isSaving}
+            />
+            <span className="flex-1 leading-relaxed">
+              Hide this product from public search and comparison pages. Hidden products remain accessible to admins with the
+              direct link so you can unhide them later.
+            </span>
+          </label>
         </div>
 
         <div className="flex items-center gap-2" aria-live="polite">

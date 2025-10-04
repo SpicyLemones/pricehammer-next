@@ -6,6 +6,7 @@ export interface Product {
   faction?: string | null;
   category?: string | null;
   points?: number | null;
+  hidden?: boolean;
   image: string;
   retailers: {
     store: string;
