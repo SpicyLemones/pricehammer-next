@@ -6,7 +6,7 @@ import { isAuthorizedAdmin } from "@/app/lib/auth";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type Params = { params: { id: string } };
+type Params = { params: Promise<{ id: string }> };
 
 type ProductRecord = Record<string, unknown>;
 
@@ -83,7 +83,7 @@ async function readProductsFile() {
     throw new Error("Unable to locate Products array in Product.ts");
   }
 
-  const arrayStart = source.indexOf("[", markerIndex);
+  const arrayStart = source.indexOf("[", markerIndex + PRODUCTS_MARKER.length);
   const arrayEnd = source.indexOf("];", arrayStart);
   if (arrayStart === -1 || arrayEnd === -1) {
     throw new Error("Unable to parse Products array");
@@ -107,7 +107,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const id = params.id;
+  const { id } = await params;
   let body: Body;
   try {
     body = (await req.json()) as Body;
