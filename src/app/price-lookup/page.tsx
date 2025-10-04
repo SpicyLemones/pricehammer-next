@@ -8,12 +8,12 @@ export const metadata: Metadata = {
   title: "Warhammer Price Comparison Tool",
   description: pageDescription,
   alternates: {
-    canonical: "/warhammer-prices",
+    canonical: "/price-lookup",
   },
   openGraph: {
     title: "Warhammer Price Comparison Tool | PriceHammer",
     description: pageDescription,
-    url: "/warhammer-prices",
+    url: "/price-lookup",
   },
   twitter: {
     title: "Warhammer Price Comparison Tool | PriceHammer",
@@ -29,7 +29,7 @@ export default function WarhammerPricesPage() {
           This Warhammer price tracker is currently only available for Australian 🇦🇺 Retailers! 
         </p>
         <h1 className="text-4xl font-display font-bold text-slate-900 dark:text-white">
-          Find the best Warhammer deals in Australia!
+          Find the best prices for warhammer and wargaming kits across multiple retailers!
         </h1>
         
         <p className="mx-auto max-w-3xl text-lg text-slate-700 dark:text-slate-300 flex items-start gap-2 rounded-lg border border-slate-200 bg-white/80 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">

@@ -50,11 +50,11 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   alternates: {
-    canonical: "/warhammer-prices",
+    canonical: "/price-lookup",
   },
   openGraph: {
     type: "website",
-    url: "/warhammer-prices",
+    url: "/price-lookup",
     title: "Warhammer Price Tracker for Australia | PriceHammer",
     description: primaryDescription,
     siteName: "PriceHammer",
@@ -96,14 +96,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             "@context": "https://schema.org",
             "@type": "WebSite",
             name: "PriceHammer",
-            url: `${metadataBase.origin}/warhammer-prices`,
+            url: `${metadataBase.origin}/price-lookup`,
             description: primaryDescription,
             inLanguage: "en-AU",
             potentialAction: {
               "@type": "SearchAction",
               target: {
                 "@type": "EntryPoint",
-                urlTemplate: `${metadataBase.origin}/warhammer-prices?search={search_term_string}`,
+                urlTemplate: `${metadataBase.origin}/price-lookup?search={search_term_string}`,
               },
               "query-input": "required name=search_term_string",
             },
