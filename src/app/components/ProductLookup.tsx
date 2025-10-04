@@ -20,10 +20,6 @@ import { Separator } from "./ui/separator";
 import { Search, ExternalLink, X } from "lucide-react";
 
 // Manual metadata (fallback + fields like game/faction/category/points/image)
-import {
-  Products as ManualProducts,
-} from "../../../data/db/Product";
-
 // ---------- Types ----------
 type Retailer = { store: string; price: number | null; url: string | null };
 type Product = {
@@ -193,10 +189,7 @@ const sample = <T,>(arr: T[], n: number) => {
 
 // ---------- Component ----------
 export function ProductLookup() {
-  // Start with manual products (no retailers) so UI renders immediately.
-  const [sourceProducts, setSourceProducts] = useState<Product[]>(
-    () => ManualProducts.filter((p) => p.hidden !== true).map((p) => ({ ...p, retailers: [] }))
-  );
+  const [sourceProducts, setSourceProducts] = useState<Product[]>([]);
   const [queryInput, setQueryInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGame, setSelectedGame] = useState<string>("all");

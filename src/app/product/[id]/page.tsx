@@ -6,6 +6,7 @@ import Script from "next/script";
 import { headers } from "next/headers";
 import { isAuthorizedAdmin } from "@/app/lib/auth";
 import ProductEditForm from "./ProductEditForm";
+import { fetchProductMetadata } from "@/app/lib/product-metadata";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,22 +19,7 @@ type PriceRow = {
   link: string | null;
 };
 
-type ManualProduct = {
-  id: string;
-  name?: string;
-  game?: string | null;
-  faction?: string | null;
-  category?: string | null;
-  points?: number | string | null;
-  description?: string | null;
-  image?: string | null;
-  hidden?: boolean | null;
-  [key: string]: unknown;
-};
-
-type ManualModule = {
-  Products?: ManualProduct[];
-  default?: ManualProduct[];
+type GameCategoriesModule = {
   gameCategories?: Record<string, unknown>;
 };
 
@@ -72,19 +58,13 @@ export default async function ProductPage({
 
   const prices = (await query("all", "select/display_prices", [product.id])) as PriceRow[];
 
-  // Hand-edited metadata
-  let manual: ManualProduct | null = null;
-  let manualGameCategories: Record<string, string[]> = {};
+  const metadata = await fetchProductMetadata(product.id);
+
+  let gameCategoriesForClient: Record<string, string[]> = {};
   try {
-    const mod = (await import("../../../../data/db/Product")) as ManualModule;
-    const products: ManualProduct[] = Array.isArray(mod?.Products)
-      ? mod.Products
-      : Array.isArray(mod?.default)
-      ? mod.default
-      : [];
-    manual = products.find((p) => p.id === String(product.id)) ?? null;
+    const mod = (await import("../../../../data/db/Product")) as GameCategoriesModule;
     if (mod?.gameCategories && typeof mod.gameCategories === "object") {
-      manualGameCategories = Object.fromEntries(
+      gameCategoriesForClient = Object.fromEntries(
         Object.entries(mod.gameCategories).map(([gameKey, categories]) => [
           gameKey,
           Array.isArray(categories) ? categories.map((entry) => String(entry)) : [],
@@ -92,51 +72,39 @@ export default async function ProductPage({
       );
     }
   } catch {
-    manual = null;
-    manualGameCategories = {};
+    gameCategoriesForClient = {};
   }
 
-  // Image fallback (use public/images/product/<filename> from Product.tsx)
   const PLACEHOLDER = "/logo/logo.png";
   const publicDir = path.join(process.cwd(), "public");
   let imgSrc = PLACEHOLDER;
 
-  if (manual?.image && typeof manual.image === "string" && manual.image.trim()) {
-    const relative = path.join("images", "product", manual.image.trim());
+  const metadataImage = metadata?.image ?? null;
+  if (metadataImage && metadataImage.trim()) {
+    const relative = path.join("images", "product", metadataImage.trim());
     const absolute = path.join(publicDir, relative);
     if (fs.existsSync(absolute)) {
       imgSrc = "/" + relative.replace(/\\/g, "/");
     }
   }
 
-  const manualGame = typeof manual?.game === "string" ? manual.game.trim() : "";
-  const manualFaction = typeof manual?.faction === "string" ? manual.faction.trim() : "";
-  const manualCategory = typeof manual?.category === "string" ? manual.category.trim() : "";
-  const manualName = typeof manual?.name === "string" ? manual.name.trim() : "";
-  const rawPoints = manual?.points;
-  const manualPoints =
-    typeof rawPoints === "number" && Number.isFinite(rawPoints)
-      ? rawPoints
-      : typeof rawPoints === "string" && rawPoints.trim() && Number.isFinite(Number(rawPoints.trim()))
-      ? Number(rawPoints.trim())
-      : null;
-  const manualHidden = manual?.hidden === true;
-  const displayName = manualName || product.name;
-  const faction = manualFaction || "—";
-  const game = manualGame || "—";
-  const category = manualCategory || "—";
-  const points = manualPoints;
-  const description =
-    typeof manual?.description === "string" && manual.description.trim()
-      ? manual.description.trim()
-      : null;
+  const metadataGame = metadata?.game?.trim() ?? "";
+  const metadataFaction = metadata?.faction?.trim() ?? "";
+  const metadataCategory = metadata?.category?.trim() ?? "";
+  const storedName = metadata?.metadataName?.trim() ?? product.name;
+  const points = metadata?.points ?? null;
+  const hidden = metadata?.hidden ?? false;
+  const faction = metadataFaction || "—";
+  const game = metadataGame || "—";
+  const category = metadataCategory || "—";
+  const displayName = metadata?.displayName?.trim() ?? storedName;
+  const description = null;
 
   const headerList = await headers();
   const adminAuthHeader = headerList.get("authorization");
   const isAdmin = isAuthorizedAdmin(adminAuthHeader);
-  const gameCategoriesForClient = manualGameCategories;
 
-  if (manualHidden && !isAdmin) {
+  if (hidden && !isAdmin) {
     return (
       <div className="max-w-3xl mx-auto p-6">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Product hidden</h1>
@@ -169,7 +137,7 @@ export default async function ProductPage({
                         bg-white/95 dark:bg-slate-900/95
                         supports-[backdrop-filter]:backdrop-blur-sm p-6">
 
-          {manualHidden && isAdmin && (
+          {hidden && isAdmin && (
             <div className="rounded-lg border border-amber-500/50 bg-amber-50/80 p-4 text-amber-800 shadow-sm dark:border-amber-400/40 dark:bg-amber-500/10 dark:text-amber-100">
               <h2 className="text-sm font-semibold uppercase tracking-[0.32em] text-amber-700 dark:text-amber-200">Hidden product</h2>
               <p className="mt-2 text-sm text-amber-700/90 dark:text-amber-100/90">
@@ -223,12 +191,12 @@ export default async function ProductPage({
                   <ProductEditForm
                     productId={String(product.id)}
                     initialValues={{
-                      name: displayName,
-                      game: manualGame,
-                      faction: manualFaction,
-                      category: manualCategory,
-                      points: manualPoints,
-                      hidden: manualHidden,
+                      name: storedName,
+                      game: metadataGame,
+                      faction: metadataFaction,
+                      category: metadataCategory,
+                      points,
+                      hidden,
                     }}
                     gameCategories={gameCategoriesForClient}
                   />

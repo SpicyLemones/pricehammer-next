@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
-import fs from "fs/promises";
 import { isAuthorizedAdmin } from "@/app/lib/auth";
+import {
+  fetchProductMetadata,
+  upsertProductMetadata,
+  ProductMetadataInput,
+} from "@/app/lib/product-metadata";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type Params = { params: Promise<{ id: string }> };
-
-type ProductRecord = Record<string, unknown>;
 
 type Body = {
   name?: string | null;
@@ -17,16 +18,20 @@ type Body = {
   category?: string | null;
   points?: number | string | null;
   hidden?: boolean | null;
+  image?: string | null;
 };
 
-const PRODUCTS_MARKER = "export const Products: Product[] =";
+type MutableMetadata = {
+  name: string;
+  game: string | null;
+  faction: string | null;
+  category: string | null;
+  points: number | null;
+  hidden: boolean;
+  image: string | null;
+};
 
-function formatProductsArray(products: ProductRecord[]) {
-  const json = JSON.stringify(products, null, 2);
-  return json.replace(/\n\]$/, "\n];");
-}
-
-function applyNameField(target: ProductRecord, body: Body) {
+function applyNameField(target: MutableMetadata, body: Body) {
   if (!Object.prototype.hasOwnProperty.call(body, "name")) return;
   const raw = body.name;
 
@@ -46,12 +51,12 @@ function applyNameField(target: ProductRecord, body: Body) {
   target.name = trimmed;
 }
 
-function applyStringField(target: ProductRecord, body: Body, key: "game" | "faction" | "category") {
+function applyStringField(target: MutableMetadata, body: Body, key: "game" | "faction" | "category") {
   if (!Object.prototype.hasOwnProperty.call(body, key)) return;
   const raw = body[key];
 
   if (raw === null || raw === undefined) {
-    delete target[key];
+    target[key] = null;
     return;
   }
 
@@ -60,20 +65,15 @@ function applyStringField(target: ProductRecord, body: Body, key: "game" | "fact
   }
 
   const trimmed = raw.trim();
-  if (!trimmed) {
-    delete target[key];
-    return;
-  }
-
-  target[key] = trimmed;
+  target[key] = trimmed ? trimmed : null;
 }
 
-function applyPointsField(target: ProductRecord, body: Body) {
+function applyPointsField(target: MutableMetadata, body: Body) {
   if (!Object.prototype.hasOwnProperty.call(body, "points")) return;
   const raw = body.points;
 
   if (raw === null || raw === undefined || raw === "") {
-    delete target.points;
+    target.points = null;
     return;
   }
 
@@ -85,12 +85,12 @@ function applyPointsField(target: ProductRecord, body: Body) {
   target.points = value;
 }
 
-function applyHiddenField(target: ProductRecord, body: Body) {
+function applyHiddenField(target: MutableMetadata, body: Body) {
   if (!Object.prototype.hasOwnProperty.call(body, "hidden")) return;
   const raw = body.hidden;
 
   if (raw === null || raw === undefined) {
-    delete target.hidden;
+    target.hidden = false;
     return;
   }
 
@@ -98,15 +98,28 @@ function applyHiddenField(target: ProductRecord, body: Body) {
     throw new Error("invalid-hidden");
   }
 
-  if (raw) {
-    target.hidden = true;
-  } else {
-    delete target.hidden;
-  }
+  target.hidden = raw;
 }
 
-function buildUpdatedProduct(existing: ProductRecord, body: Body) {
-  const updated: ProductRecord = { ...existing };
+function applyImageField(target: MutableMetadata, body: Body) {
+  if (!Object.prototype.hasOwnProperty.call(body, "image")) return;
+  const raw = body.image;
+
+  if (raw === null || raw === undefined) {
+    target.image = null;
+    return;
+  }
+
+  if (typeof raw !== "string") {
+    throw new Error("invalid-image");
+  }
+
+  const trimmed = raw.trim();
+  target.image = trimmed ? trimmed : null;
+}
+
+function buildUpdatedMetadata(existing: MutableMetadata, body: Body): MutableMetadata {
+  const updated: MutableMetadata = { ...existing };
 
   applyNameField(updated, body);
   applyStringField(updated, body, "game");
@@ -114,35 +127,9 @@ function buildUpdatedProduct(existing: ProductRecord, body: Body) {
   applyStringField(updated, body, "category");
   applyPointsField(updated, body);
   applyHiddenField(updated, body);
+  applyImageField(updated, body);
 
   return updated;
-}
-
-async function readProductsFile() {
-  const filePath = path.join(process.cwd(), "data/db/Product.ts");
-  const source = await fs.readFile(filePath, "utf8");
-
-  const markerIndex = source.indexOf(PRODUCTS_MARKER);
-  if (markerIndex === -1) {
-    throw new Error("Unable to locate Products array in Product.ts");
-  }
-
-  const arrayStart = source.indexOf("[", markerIndex + PRODUCTS_MARKER.length);
-  const arrayEnd = source.indexOf("];", arrayStart);
-  if (arrayStart === -1 || arrayEnd === -1) {
-    throw new Error("Unable to parse Products array");
-  }
-
-  const before = source.slice(0, arrayStart);
-  const after = source.slice(arrayEnd + 2);
-  const arrayContent = source.slice(arrayStart, arrayEnd + 1);
-  const parsed = JSON.parse(arrayContent) as unknown;
-  if (!Array.isArray(parsed)) {
-    throw new Error("Manual products data is not an array");
-  }
-  const products = parsed as ProductRecord[];
-
-  return { filePath, before, after, products };
 }
 
 export async function PUT(req: NextRequest, { params }: Params) {
@@ -152,6 +139,11 @@ export async function PUT(req: NextRequest, { params }: Params) {
   }
 
   const { id } = await params;
+  const productId = Number(id);
+  if (!Number.isFinite(productId)) {
+    return NextResponse.json({ error: "Product not found" }, { status: 404 });
+  }
+
   let body: Body;
   try {
     body = (await req.json()) as Body;
@@ -159,23 +151,24 @@ export async function PUT(req: NextRequest, { params }: Params) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  let data: Awaited<ReturnType<typeof readProductsFile>>;
-  try {
-    data = await readProductsFile();
-  } catch (error) {
-    console.error("[product-metadata] Failed to read Product.ts", error);
-    return NextResponse.json({ error: "Unable to load products" }, { status: 500 });
-  }
-
-  const { filePath, before, after, products } = data;
-  const index = products.findIndex((p) => String(p.id) === String(id));
-  if (index === -1) {
+  const existing = await fetchProductMetadata(productId);
+  if (!existing) {
     return NextResponse.json({ error: "Product not found" }, { status: 404 });
   }
 
-  let updatedProduct: ProductRecord;
+  const base: MutableMetadata = {
+    name: existing.metadataName ?? existing.baseName,
+    game: existing.game,
+    faction: existing.faction,
+    category: existing.category,
+    points: existing.points,
+    hidden: existing.hidden,
+    image: existing.image,
+  };
+
+  let updated: MutableMetadata;
   try {
-    updatedProduct = buildUpdatedProduct(products[index], body);
+    updated = buildUpdatedMetadata(base, body);
   } catch (error: unknown) {
     const code = error instanceof Error && typeof error.message === "string" ? error.message : "invalid-input";
     const message =
@@ -185,21 +178,45 @@ export async function PUT(req: NextRequest, { params }: Params) {
         ? "Name must be provided"
         : code === "invalid-hidden"
         ? "Hidden must be true or false"
+        : code === "invalid-game" || code === "invalid-faction" || code === "invalid-category"
+        ? "Text fields must be strings"
+        : code === "invalid-image"
+        ? "Image must be a string"
         : "Invalid input received";
     return NextResponse.json({ error: message }, { status: 400 });
   }
 
-  products[index] = updatedProduct;
-
-  const formatted = formatProductsArray(products);
-  const nextSource = `${before}${formatted}${after}`;
+  const input: ProductMetadataInput = {
+    name: updated.name,
+    game: updated.game,
+    faction: updated.faction,
+    category: updated.category,
+    points: updated.points,
+    hidden: updated.hidden,
+    image: updated.image,
+  };
 
   try {
-    await fs.writeFile(filePath, nextSource, "utf8");
-  } catch (error) {
-    console.error("[product-metadata] Failed to write Product.ts", error);
+    const saved = await upsertProductMetadata(productId, input);
+    return NextResponse.json({
+      ok: true,
+      product: {
+        id: String(saved.productId),
+        name: saved.metadataName ?? saved.displayName,
+        game: saved.game,
+        faction: saved.faction,
+        category: saved.category,
+        points: saved.points,
+        hidden: saved.hidden,
+        image: saved.image,
+      },
+    });
+  } catch (error: unknown) {
+    const code = error instanceof Error && typeof error.message === "string" ? error.message : "unknown";
+    if (code === "name-required" || code === "invalid-product-id") {
+      return NextResponse.json({ error: "Invalid product metadata" }, { status: 400 });
+    }
+    console.error("[product-metadata] Failed to persist changes", error);
     return NextResponse.json({ error: "Failed to persist changes" }, { status: 500 });
   }
-
-  return NextResponse.json({ ok: true, product: updatedProduct });
 }

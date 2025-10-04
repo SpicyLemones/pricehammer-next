@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { query } from "@/lib/sql";
+import { ensureProductMetadataSeeded } from "@/app/lib/product-metadata";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -68,7 +69,10 @@ export async function POST() {
       }
     }
 
-    // 6) Report how many unchecked we’ve got
+    // 6) Ensure manual metadata seeds exist for new products
+    await ensureProductMetadataSeeded();
+
+    // 7) Report how many unchecked we’ve got
     const unchecked = await query<any[]>("all", "select/count_unsorted");
     return NextResponse.json({
       ok: true,
