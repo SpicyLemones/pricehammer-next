@@ -3,6 +3,7 @@ import path from "path";
 import pLimit from "p-limit";
 import { NextResponse } from "next/server";
 import { query } from "@/lib/sql";
+import { fetchAllProductMetadata } from "@/app/lib/product-metadata";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -211,16 +212,15 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: false, error: "No validated pairs for this seller." }, { status: 404 });
   }
 
-  // 3) load manual product metadata (to get desired image filenames)
-  let manual: { Products: Array<{ id: string; name?: string; image?: string }> };
-  try {
-    // adjust path if your file lives elsewhere
-    manual = (await import("../../../../data/db/Product")) as any;
-  } catch {
-    manual = { Products: [] };
-  }
-  const byId = new Map<string, { image?: string; name?: string }>();
-  manual.Products.forEach((p) => byId.set(String(p.id), { image: p.image, name: p.name }));
+  // 3) load product metadata from the database (image filenames, display names)
+  const metadataRows = await fetchAllProductMetadata();
+  const byId = new Map<string, { image?: string | null; name?: string }>();
+  metadataRows.forEach((row) => {
+    byId.set(String(row.productId), {
+      image: row.image,
+      name: row.displayName,
+    });
+  });
 
   // 4) download with concurrency
   const limit = pLimit(3);
@@ -240,11 +240,8 @@ export async function GET(req: Request) {
         }
 
         // filename from manual image (fallback: product name)
-        let base = safeJpgBase(
-          byId.get(String(row.product_id))?.image ||
-            byId.get(String(row.product_id))?.name ||
-            `product-${row.product_id}`
-        );
+        const meta = byId.get(String(row.product_id));
+        let base = safeJpgBase(meta?.image || meta?.name || `product-${row.product_id}`);
         const outPath = path.join(OUT_DIR, base);
 
         if (!force && fs.existsSync(outPath)) {
