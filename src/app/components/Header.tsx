@@ -36,7 +36,7 @@ function NavItem({
 export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
-      <div className="max-w-screen-xl mx-auto flex h-12 items-center gap-3 px-3 sm:h-14 sm:px-6 lg:px-8">        
+      <div className="max-w-screen-xl mx-auto flex h-12 items-center gap-3 px-3 sm:h-14 sm:px-6 lg:px-8">  
         {/* Brand */}
         <Link
           href="/price-lookup"
@@ -60,8 +60,8 @@ export function Header() {
         </Link>
 
         {/* Nav + actions */}
-        <div className="flex items-center gap-3">
-          <nav className="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-2 px-2">
+        <div className="flex min-w-0 flex-1 items-center justify-end gap-3">
+          <nav className="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar -mx-2 px-2">
             <NavItem href="/price-lookup" exact>
               🔎 Product Lookup
             </NavItem>
