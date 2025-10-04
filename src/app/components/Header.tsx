@@ -36,12 +36,11 @@ function NavItem({
 export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
-      <div className="max-w-screen-xl mx-auto flex h-12 items-center justify-between gap-3 px-3 sm:h-14 sm:px-6 lg:px-8">
+      <div className="max-w-screen-xl mx-auto flex h-12 items-center gap-3 px-3 sm:h-14 sm:px-6 lg:px-8">        
         {/* Brand */}
         <Link
           href="/price-lookup"
-          className="inline-flex items-center gap-2 font-semibold text-slate-900 transition-colors hover:text-emerald-600 dark:text-white"
-        >
+          className="inline-flex flex-shrink-0 items-center gap-2 font-semibold text-slate-900 transition-colors hover:text-emerald-600 dark:text-white"        >
           {/* you can swap to next/image later if you want */}
           <img
             className="rounded-md dark:hidden"
