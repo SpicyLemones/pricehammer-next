@@ -26,6 +26,7 @@ export async function POST() {
     await query("run", "create/products");
     await query("run", "create/prices");
     await query("run", "create/sellers");
+    await query("run", "create/manual_product_overrides");
     try { await query("run", "create/bug_reports"); } catch {}
 
     // 2) Load JSON seed files

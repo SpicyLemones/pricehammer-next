@@ -3,9 +3,8 @@ export const revalidate = 0;
 
 import { NextResponse } from "next/server";
 import { query } from "@/lib/sql";
-
-// Pull manual metadata (names, faction, image, etc.)
-import { Products as ManualProducts } from "../../../../data/db/Product";
+import { loadManualProductsSnapshot } from "@/app/lib/manual-products";
+import type { ManualProductRecord } from "@/app/lib/manual-products";
 
 // Types to keep things clear
 type DBPriceRow = { seller_name: string; price: number | null; link: string | null };
@@ -26,7 +25,21 @@ export async function GET() {
   // consider a single SQL that pre-aggregates best prices or a paginated API.
   const products: APIProduct[] = [];
 
-  for (const p of ManualProducts) {
+  type ManualProduct = ManualProductRecord & {
+    id?: string | number;
+    name?: string;
+    game?: string | null;
+    faction?: string | null;
+    category?: string | null;
+    points?: number | null;
+    image?: string | null;
+    hidden?: boolean | null;
+  };
+
+  const { products: manualProducts } = await loadManualProductsSnapshot();
+
+  for (const p of manualProducts as ManualProduct[]) {
+    if (p.hidden === true) continue;
     const idNum = Number(p.id);
     if (!Number.isFinite(idNum)) continue;
 
@@ -35,10 +48,10 @@ export async function GET() {
 
     products.push({
       id: String(p.id),
-      name: p.name,
-      game: p.game as any,
-      faction: p.faction,
-      category: p.category,
+      name: String(p.name ?? ""),
+      game: p.game ?? undefined,
+      faction: p.faction ?? undefined,
+      category: p.category ?? undefined,
       points: typeof p.points === "number" ? p.points : undefined,
       image: p.image ?? null,
       retailers: (prices ?? []).map((r) => ({
