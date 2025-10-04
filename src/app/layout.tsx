@@ -98,7 +98,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${serif.variable} ${ui.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${display.variable} ${serif.variable} ${ui.variable}`}
+    >
       <head>
         <Script id="theme-initializer" strategy="beforeInteractive">
           {`
