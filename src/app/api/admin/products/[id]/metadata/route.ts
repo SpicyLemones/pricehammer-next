@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import fs from "fs/promises";
 import { isAuthorizedAdmin } from "@/app/lib/auth";
-import {
-  ManualProductRecord,
-  loadManualProductById,
-  saveManualProductOverride,
-} from "@/app/lib/manual-products";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type Params = { params: Promise<{ id: string }> };
+
+type ProductRecord = Record<string, unknown>;
 
 type Body = {
   name?: string | null;
@@ -20,7 +19,14 @@ type Body = {
   hidden?: boolean | null;
 };
 
-function applyNameField(target: ManualProductRecord, body: Body) {
+const PRODUCTS_MARKER = "export const Products: Product[] =";
+
+function formatProductsArray(products: ProductRecord[]) {
+  const json = JSON.stringify(products, null, 2);
+  return json.replace(/\n\]$/, "\n];");
+}
+
+function applyNameField(target: ProductRecord, body: Body) {
   if (!Object.prototype.hasOwnProperty.call(body, "name")) return;
   const raw = body.name;
 
@@ -40,11 +46,7 @@ function applyNameField(target: ManualProductRecord, body: Body) {
   target.name = trimmed;
 }
 
-function applyStringField(
-  target: ManualProductRecord,
-  body: Body,
-  key: "game" | "faction" | "category",
-) {
+function applyStringField(target: ProductRecord, body: Body, key: "game" | "faction" | "category") {
   if (!Object.prototype.hasOwnProperty.call(body, key)) return;
   const raw = body[key];
 
@@ -66,7 +68,7 @@ function applyStringField(
   target[key] = trimmed;
 }
 
-function applyPointsField(target: ManualProductRecord, body: Body) {
+function applyPointsField(target: ProductRecord, body: Body) {
   if (!Object.prototype.hasOwnProperty.call(body, "points")) return;
   const raw = body.points;
 
@@ -83,7 +85,7 @@ function applyPointsField(target: ManualProductRecord, body: Body) {
   target.points = value;
 }
 
-function applyHiddenField(target: ManualProductRecord, body: Body) {
+function applyHiddenField(target: ProductRecord, body: Body) {
   if (!Object.prototype.hasOwnProperty.call(body, "hidden")) return;
   const raw = body.hidden;
 
@@ -96,11 +98,15 @@ function applyHiddenField(target: ManualProductRecord, body: Body) {
     throw new Error("invalid-hidden");
   }
 
-  target.hidden = raw;
+  if (raw) {
+    target.hidden = true;
+  } else {
+    delete target.hidden;
+  }
 }
 
-function buildUpdatedProduct(existing: ManualProductRecord, body: Body) {
-  const updated: ManualProductRecord = { ...existing };
+function buildUpdatedProduct(existing: ProductRecord, body: Body) {
+  const updated: ProductRecord = { ...existing };
 
   applyNameField(updated, body);
   applyStringField(updated, body, "game");
@@ -110,6 +116,33 @@ function buildUpdatedProduct(existing: ManualProductRecord, body: Body) {
   applyHiddenField(updated, body);
 
   return updated;
+}
+
+async function readProductsFile() {
+  const filePath = path.join(process.cwd(), "data/db/Product.ts");
+  const source = await fs.readFile(filePath, "utf8");
+
+  const markerIndex = source.indexOf(PRODUCTS_MARKER);
+  if (markerIndex === -1) {
+    throw new Error("Unable to locate Products array in Product.ts");
+  }
+
+  const arrayStart = source.indexOf("[", markerIndex + PRODUCTS_MARKER.length);
+  const arrayEnd = source.indexOf("];", arrayStart);
+  if (arrayStart === -1 || arrayEnd === -1) {
+    throw new Error("Unable to parse Products array");
+  }
+
+  const before = source.slice(0, arrayStart);
+  const after = source.slice(arrayEnd + 2);
+  const arrayContent = source.slice(arrayStart, arrayEnd + 1);
+  const parsed = JSON.parse(arrayContent) as unknown;
+  if (!Array.isArray(parsed)) {
+    throw new Error("Manual products data is not an array");
+  }
+  const products = parsed as ProductRecord[];
+
+  return { filePath, before, after, products };
 }
 
 export async function PUT(req: NextRequest, { params }: Params) {
@@ -126,14 +159,23 @@ export async function PUT(req: NextRequest, { params }: Params) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const existing = await loadManualProductById(id);
-  if (!existing) {
+  let data: Awaited<ReturnType<typeof readProductsFile>>;
+  try {
+    data = await readProductsFile();
+  } catch (error) {
+    console.error("[product-metadata] Failed to read Product.ts", error);
+    return NextResponse.json({ error: "Unable to load products" }, { status: 500 });
+  }
+
+  const { filePath, before, after, products } = data;
+  const index = products.findIndex((p) => String(p.id) === String(id));
+  if (index === -1) {
     return NextResponse.json({ error: "Product not found" }, { status: 404 });
   }
 
-  let updatedProduct: ManualProductRecord;
+  let updatedProduct: ProductRecord;
   try {
-    updatedProduct = buildUpdatedProduct(existing, body);
+    updatedProduct = buildUpdatedProduct(products[index], body);
   } catch (error: unknown) {
     const code = error instanceof Error && typeof error.message === "string" ? error.message : "invalid-input";
     const message =
@@ -147,15 +189,17 @@ export async function PUT(req: NextRequest, { params }: Params) {
     return NextResponse.json({ error: message }, { status: 400 });
   }
 
+  products[index] = updatedProduct;
+
+  const formatted = formatProductsArray(products);
+  const nextSource = `${before}${formatted}${after}`;
+
   try {
-    const stored = await saveManualProductOverride(id, updatedProduct);
-    return NextResponse.json({ ok: true, product: stored ?? updatedProduct });
+    await fs.writeFile(filePath, nextSource, "utf8");
   } catch (error) {
-    const code = error instanceof Error && error.message ? error.message : "persist-failed";
-    if (code === "invalid-name") {
-      return NextResponse.json({ error: "Name must be provided" }, { status: 400 });
-    }
-    console.error("[product-metadata] Failed to persist override", error);
+    console.error("[product-metadata] Failed to write Product.ts", error);
     return NextResponse.json({ error: "Failed to persist changes" }, { status: 500 });
   }
+
+  return NextResponse.json({ ok: true, product: updatedProduct });
 }

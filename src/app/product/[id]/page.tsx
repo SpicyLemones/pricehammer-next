@@ -5,7 +5,6 @@ import path from "path";
 import Script from "next/script";
 import { headers } from "next/headers";
 import { isAuthorizedAdmin } from "@/app/lib/auth";
-import { loadManualProductsSnapshot } from "@/app/lib/manual-products";
 import ProductEditForm from "./ProductEditForm";
 
 export const runtime = "nodejs";
@@ -30,6 +29,12 @@ type ManualProduct = {
   image?: string | null;
   hidden?: boolean | null;
   [key: string]: unknown;
+};
+
+type ManualModule = {
+  Products?: ManualProduct[];
+  default?: ManualProduct[];
+  gameCategories?: Record<string, unknown>;
 };
 
 // Format like "$100 AUD"
@@ -71,10 +76,21 @@ export default async function ProductPage({
   let manual: ManualProduct | null = null;
   let manualGameCategories: Record<string, string[]> = {};
   try {
-    const { products, gameCategories } = await loadManualProductsSnapshot();
-    const entry = products.find((p) => String(p.id) === String(product.id)) ?? null;
-    manual = (entry ?? null) as ManualProduct | null;
-    manualGameCategories = gameCategories;
+    const mod = (await import("../../../../data/db/Product")) as ManualModule;
+    const products: ManualProduct[] = Array.isArray(mod?.Products)
+      ? mod.Products
+      : Array.isArray(mod?.default)
+      ? mod.default
+      : [];
+    manual = products.find((p) => p.id === String(product.id)) ?? null;
+    if (mod?.gameCategories && typeof mod.gameCategories === "object") {
+      manualGameCategories = Object.fromEntries(
+        Object.entries(mod.gameCategories).map(([gameKey, categories]) => [
+          gameKey,
+          Array.isArray(categories) ? categories.map((entry) => String(entry)) : [],
+        ]),
+      );
+    }
   } catch {
     manual = null;
     manualGameCategories = {};

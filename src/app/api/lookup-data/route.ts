@@ -25,20 +25,7 @@ export async function GET() {
   // consider a single SQL that pre-aggregates best prices or a paginated API.
   const products: APIProduct[] = [];
 
-  type ManualProduct = ManualProductRecord & {
-    id?: string | number;
-    name?: string;
-    game?: string | null;
-    faction?: string | null;
-    category?: string | null;
-    points?: number | null;
-    image?: string | null;
-    hidden?: boolean | null;
-  };
-
-  const { products: manualProducts } = await loadManualProductsSnapshot();
-
-  for (const p of manualProducts as ManualProduct[]) {
+  for (const p of ManualProducts) {
     if (p.hidden === true) continue;
     const idNum = Number(p.id);
     if (!Number.isFinite(idNum)) continue;
