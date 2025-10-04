@@ -65,7 +65,6 @@ export function Header() {
             <NavItem href="/price-lookup" exact>
               🔎 Product Lookup
             </NavItem>
-
             <NavItem href="/about">About</NavItem>
             <NavItem href="/contact">Contact</NavItem>
 
