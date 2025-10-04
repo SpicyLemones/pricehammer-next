@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">PriceHammer dark mode logo</title>
+  <desc id="desc">White hammer and price tag icon inside a square frame on a dark background.</desc>
+  <rect width="512" height="512" rx="56" fill="#080b12"/>
+  <rect x="40" y="40" width="432" height="432" rx="40" fill="none" stroke="#ffffff" stroke-width="28"/>
+  <g fill="#ffffff">
+    <rect x="150" y="168" width="188" height="68" rx="20"/>
+    <rect x="210" y="208" width="68" height="60" rx="18"/>
+    <rect x="248" y="248" width="44" height="196" rx="20" transform="rotate(-45 270 346)"/>
+  </g>
+  <path d="M316 244h102l60 60-140 140-60-60V284z" fill="#ffffff"/>
+  <circle cx="356" cy="276" r="12" fill="#080b12"/>
+  <text x="362" y="360" fill="#080b12" font-family="'Montserrat', 'Arial', sans-serif" font-size="86" font-weight="700" text-anchor="middle">$</text>
+</svg>

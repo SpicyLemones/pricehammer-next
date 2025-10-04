@@ -100,6 +100,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${display.variable} ${serif.variable} ${ui.variable}`}>
       <head>
+        <Script id="theme-initializer" strategy="beforeInteractive">
+          {`
+            try {
+              const storedTheme = localStorage.getItem('theme');
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+              } else {
+                document.documentElement.classList.remove('dark');
+              }
+            } catch (error) {
+              document.documentElement.classList.remove('dark');
+            }
+          `}
+        </Script>
         <Script id="ld-json-website" type="application/ld+json" strategy="beforeInteractive">
           {JSON.stringify({
             "@context": "https://schema.org",
