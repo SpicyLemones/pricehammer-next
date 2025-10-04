@@ -2,10 +2,10 @@
 export interface Product {
   id: string;
   name: string;
-  game: string;
-  faction: string;
-  category: string;
-  points: number;
+  game?: string | null;
+  faction?: string | null;
+  category?: string | null;
+  points?: number | null;
   image: string;
   retailers: {
     store: string;

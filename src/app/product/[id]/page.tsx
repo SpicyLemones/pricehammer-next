@@ -3,6 +3,9 @@ import { query } from "@/lib/sql";
 import fs from "fs";
 import path from "path";
 import Script from "next/script";
+import { headers } from "next/headers";
+import { isAuthorizedAdmin } from "@/app/lib/auth";
+import ProductEditForm from "./ProductEditForm";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -13,6 +16,24 @@ type PriceRow = {
   seller_name: string;
   price: number | null;
   link: string | null;
+};
+
+type ManualProduct = {
+  id: string;
+  name?: string;
+  game?: string | null;
+  faction?: string | null;
+  category?: string | null;
+  points?: number | string | null;
+  description?: string | null;
+  image?: string | null;
+  [key: string]: unknown;
+};
+
+type ManualModule = {
+  Products?: ManualProduct[];
+  default?: ManualProduct[];
+  gameCategories?: Record<string, unknown>;
 };
 
 // Format like "$100 AUD"
@@ -51,12 +72,28 @@ export default async function ProductPage({
   const prices = (await query("all", "select/display_prices", [product.id])) as PriceRow[];
 
   // Hand-edited metadata
-  let manual: any = null;
+  let manual: ManualProduct | null = null;
+  let manualGameCategories: Record<string, string[]> = {};
   try {
-    const mod: any = await import("../../../../data/db/Product");
-    const list: any[] = mod?.Products ?? mod?.default ?? [];
-    manual = Array.isArray(list) ? list.find((p) => p.id === String(product.id)) : null;
-  } catch {}
+    const mod = (await import("../../../../data/db/Product")) as ManualModule;
+    const products: ManualProduct[] = Array.isArray(mod?.Products)
+      ? mod.Products
+      : Array.isArray(mod?.default)
+      ? mod.default
+      : [];
+    manual = products.find((p) => p.id === String(product.id)) ?? null;
+    if (mod?.gameCategories && typeof mod.gameCategories === "object") {
+      manualGameCategories = Object.fromEntries(
+        Object.entries(mod.gameCategories).map(([gameKey, categories]) => [
+          gameKey,
+          Array.isArray(categories) ? categories.map((entry) => String(entry)) : [],
+        ]),
+      );
+    }
+  } catch {
+    manual = null;
+    manualGameCategories = {};
+  }
 
   // Image fallback (use public/images/product/<filename> from Product.tsx)
   const PLACEHOLDER = "/logo/logo.png";
@@ -71,14 +108,29 @@ export default async function ProductPage({
     }
   }
 
-  const faction = manual?.faction ?? "—";
-  const game = manual?.game ?? "—";
-  const category = manual?.category ?? "—";
-  const points = typeof manual?.points === "number" ? manual.points : null;
+  const manualGame = typeof manual?.game === "string" ? manual.game.trim() : "";
+  const manualFaction = typeof manual?.faction === "string" ? manual.faction.trim() : "";
+  const manualCategory = typeof manual?.category === "string" ? manual.category.trim() : "";
+  const rawPoints = manual?.points;
+  const manualPoints =
+    typeof rawPoints === "number" && Number.isFinite(rawPoints)
+      ? rawPoints
+      : typeof rawPoints === "string" && rawPoints.trim() && Number.isFinite(Number(rawPoints.trim()))
+      ? Number(rawPoints.trim())
+      : null;
+  const faction = manualFaction || "—";
+  const game = manualGame || "—";
+  const category = manualCategory || "—";
+  const points = manualPoints;
   const description =
     typeof manual?.description === "string" && manual.description.trim()
       ? manual.description.trim()
       : null;
+
+  const headerList = await headers();
+  const adminAuthHeader = headerList.get("authorization");
+  const isAdmin = isAuthorizedAdmin(adminAuthHeader);
+  const gameCategoriesForClient = manualGameCategories;
 
   // Initial sort on the server; JS will handle button toggles without reload
   const initiallySorted = (prices ?? []).slice().sort((a, b) => {
@@ -141,6 +193,21 @@ export default async function ProductPage({
                 <div><span className="font-semibold">Category:</span> {category}</div>
                 <div><span className="font-semibold">Points:</span> {points ?? "—"}</div>
               </div>
+
+              {isAdmin && (
+                <div className="mt-4">
+                  <ProductEditForm
+                    productId={String(product.id)}
+                    initialValues={{
+                      game: manualGame,
+                      faction: manualFaction,
+                      category: manualCategory,
+                      points: manualPoints,
+                    }}
+                    gameCategories={gameCategoriesForClient}
+                  />
+                </div>
+              )}
 
               {description && (
                 <p className="mt-4 text-slate-700 dark:text-slate-200 leading-relaxed">
