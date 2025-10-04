@@ -3,6 +3,9 @@ import { query } from "@/lib/sql";
 import fs from "fs";
 import path from "path";
 import Script from "next/script";
+import { headers } from "next/headers";
+import { isAuthorizedAdmin } from "@/app/lib/auth";
+import ProductEditForm from "./ProductEditForm";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -13,6 +16,25 @@ type PriceRow = {
   seller_name: string;
   price: number | null;
   link: string | null;
+};
+
+type ManualProduct = {
+  id: string;
+  name?: string;
+  game?: string | null;
+  faction?: string | null;
+  category?: string | null;
+  points?: number | string | null;
+  description?: string | null;
+  image?: string | null;
+  hidden?: boolean | null;
+  [key: string]: unknown;
+};
+
+type ManualModule = {
+  Products?: ManualProduct[];
+  default?: ManualProduct[];
+  gameCategories?: Record<string, unknown>;
 };
 
 // Format like "$100 AUD"
@@ -51,12 +73,28 @@ export default async function ProductPage({
   const prices = (await query("all", "select/display_prices", [product.id])) as PriceRow[];
 
   // Hand-edited metadata
-  let manual: any = null;
+  let manual: ManualProduct | null = null;
+  let manualGameCategories: Record<string, string[]> = {};
   try {
-    const mod: any = await import("../../../../data/db/Product");
-    const list: any[] = mod?.Products ?? mod?.default ?? [];
-    manual = Array.isArray(list) ? list.find((p) => p.id === String(product.id)) : null;
-  } catch {}
+    const mod = (await import("../../../../data/db/Product")) as ManualModule;
+    const products: ManualProduct[] = Array.isArray(mod?.Products)
+      ? mod.Products
+      : Array.isArray(mod?.default)
+      ? mod.default
+      : [];
+    manual = products.find((p) => p.id === String(product.id)) ?? null;
+    if (mod?.gameCategories && typeof mod.gameCategories === "object") {
+      manualGameCategories = Object.fromEntries(
+        Object.entries(mod.gameCategories).map(([gameKey, categories]) => [
+          gameKey,
+          Array.isArray(categories) ? categories.map((entry) => String(entry)) : [],
+        ]),
+      );
+    }
+  } catch {
+    manual = null;
+    manualGameCategories = {};
+  }
 
   // Image fallback (use public/images/product/<filename> from Product.tsx)
   const PLACEHOLDER = "/logo/logo.png";
@@ -71,14 +109,43 @@ export default async function ProductPage({
     }
   }
 
-  const faction = manual?.faction ?? "—";
-  const game = manual?.game ?? "—";
-  const category = manual?.category ?? "—";
-  const points = typeof manual?.points === "number" ? manual.points : null;
+  const manualGame = typeof manual?.game === "string" ? manual.game.trim() : "";
+  const manualFaction = typeof manual?.faction === "string" ? manual.faction.trim() : "";
+  const manualCategory = typeof manual?.category === "string" ? manual.category.trim() : "";
+  const manualName = typeof manual?.name === "string" ? manual.name.trim() : "";
+  const rawPoints = manual?.points;
+  const manualPoints =
+    typeof rawPoints === "number" && Number.isFinite(rawPoints)
+      ? rawPoints
+      : typeof rawPoints === "string" && rawPoints.trim() && Number.isFinite(Number(rawPoints.trim()))
+      ? Number(rawPoints.trim())
+      : null;
+  const manualHidden = manual?.hidden === true;
+  const displayName = manualName || product.name;
+  const faction = manualFaction || "—";
+  const game = manualGame || "—";
+  const category = manualCategory || "—";
+  const points = manualPoints;
   const description =
     typeof manual?.description === "string" && manual.description.trim()
       ? manual.description.trim()
       : null;
+
+  const headerList = await headers();
+  const adminAuthHeader = headerList.get("authorization");
+  const isAdmin = isAuthorizedAdmin(adminAuthHeader);
+  const gameCategoriesForClient = manualGameCategories;
+
+  if (manualHidden && !isAdmin) {
+    return (
+      <div className="max-w-3xl mx-auto p-6">
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Product hidden</h1>
+        <p className="mt-2 text-slate-700 dark:text-slate-300">
+          This product is not currently visible on PriceHammer. Please check back later or ask an admin to unhide it.
+        </p>
+      </div>
+    );
+  }
 
   // Initial sort on the server; JS will handle button toggles without reload
   const initiallySorted = (prices ?? []).slice().sort((a, b) => {
@@ -102,6 +169,15 @@ export default async function ProductPage({
                         bg-white/95 dark:bg-slate-900/95
                         supports-[backdrop-filter]:backdrop-blur-sm p-6">
 
+          {manualHidden && isAdmin && (
+            <div className="rounded-lg border border-amber-500/50 bg-amber-50/80 p-4 text-amber-800 shadow-sm dark:border-amber-400/40 dark:bg-amber-500/10 dark:text-amber-100">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.32em] text-amber-700 dark:text-amber-200">Hidden product</h2>
+              <p className="mt-2 text-sm text-amber-700/90 dark:text-amber-100/90">
+                This product is hidden from public listings. Use the toggle in the edit panel to make it visible again.
+              </p>
+            </div>
+          )}
+
           <div className="flex gap-6 items-start">
             {/* Clickable image (opens modal) */}
             <button
@@ -114,12 +190,12 @@ export default async function ProductPage({
                          focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imgSrc} alt={product.name} className="object-contain w-full h-full" />
+              <img src={imgSrc} alt={displayName} className="object-contain w-full h-full" />
             </button>
 
             <div className="flex-1">
               <div className="flex items-start justify-between gap-3">
-                <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">{product.name}</h1>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">{displayName}</h1>
 
                 {/* Share / Copy */}
                 <button
@@ -129,18 +205,35 @@ export default async function ProductPage({
                              bg-white hover:bg-slate-50
                              dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700
                              text-slate-800 dark:text-slate-100"
-                  data-title={product.name}
+                  data-title={displayName}
                 >
                   Share
                 </button>
               </div>
 
               <div className="text-slate-700 dark:text-slate-200 mt-2 space-y-0.5">
-                <div><span className="font-semibold">Game:</span> {game}</div>
+                <div><span className="font-semibold">Universe:</span> {game}</div>
                 <div><span className="font-semibold">Faction:</span> {faction}</div>
                 <div><span className="font-semibold">Category:</span> {category}</div>
                 <div><span className="font-semibold">Points:</span> {points ?? "—"}</div>
               </div>
+
+              {isAdmin && (
+                <div className="mt-4">
+                  <ProductEditForm
+                    productId={String(product.id)}
+                    initialValues={{
+                      name: displayName,
+                      game: manualGame,
+                      faction: manualFaction,
+                      category: manualCategory,
+                      points: manualPoints,
+                      hidden: manualHidden,
+                    }}
+                    gameCategories={gameCategoriesForClient}
+                  />
+                </div>
+              )}
 
               {description && (
                 <p className="mt-4 text-slate-700 dark:text-slate-200 leading-relaxed">
@@ -238,7 +331,7 @@ export default async function ProductPage({
                           title="Report an incorrect price or broken link"
                           data-link={r.link ?? ""}
                           data-seller={r.seller_name}
-                          data-product={product.name}
+                          data-product={displayName}
                           disabled={!r.link}
                         >
                           Report
@@ -285,7 +378,7 @@ export default async function ProductPage({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imgSrc}
-              alt={product.name}
+              alt={displayName}
               className="w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-2xl bg-white dark:bg-slate-900"
             />
           </div>

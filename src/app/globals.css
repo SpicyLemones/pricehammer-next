@@ -1,7 +1,4 @@
-/* Fonts (safe to keep here; swap to self-hosted if you prefer) */
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Merriweather:wght@300;400;700&family=Montserrat:wght@600;700&display=swap");
 @import "tailwindcss";
-/* Fonts (safe to keep here; swap to self-hosted if you prefer) */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -11,11 +8,6 @@
 /* ---- Design tokens ---- */
 @theme {
   --radius: 0.625rem; /* slightly larger default */
-
-  /* Font vars (global) */
-  --font-display: "Bebas Neue";
-  --font-serif: "Merriweather";
-  --font-ui: "Montserrat";
 
   /* Brand accent (Warhammer button yellow) */
   --brand-yellow: oklch(0.89 0.19 98);
@@ -168,24 +160,52 @@
   /* Serif body for that GW vibe; keep UI sans for controls */
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    font-family: var(--font-serif), "Merriweather", Georgia, "Times New Roman", serif;
     font-feature-settings: "liga","kern";
     text-rendering: optimizeLegibility;
+    letter-spacing: 0.005em;
+    line-height: 1.65;
+    font-size: clamp(1rem, 0.97rem + 0.25vw, 1.12rem);
   }
 
   /* Headings use display font */
   h1, h2, h3, .display {
-    font-family: var(--font-display), Impact, system-ui, sans-serif;
-    letter-spacing: 0.02em;
-    line-height: 0.95;
+    font-family: var(--font-display), "Bebas Neue", Impact, system-ui, sans-serif;
+    letter-spacing: 0.08em;
+    line-height: 0.9;
     text-transform: uppercase;
+    text-rendering: optimizeLegibility;
+    text-shadow: 0 2px 6px color-mix(in oklch, black 25%, transparent);
+  }
+
+  h4, h5, h6 {
+    font-family: var(--font-ui), "Montserrat", system-ui, sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  p, li {
+    max-width: 70ch;
+  }
+
+  strong {
+    font-weight: 700;
   }
 }
 
 /* ---- Utilities ---- */
 @layer utilities {
-  .font-display { font-family: var(--font-display), Impact, system-ui, sans-serif !important; }
-  .font-ui { font-family: var(--font-ui), system-ui, sans-serif !important; }
+  .font-display {
+    font-family: var(--font-display), "Bebas Neue", Impact, system-ui, sans-serif !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .font-ui {
+    font-family: var(--font-ui), "Montserrat", system-ui, sans-serif !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
 
   /* CTA pill like the screenshot */
   .btn-primary {
