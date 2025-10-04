@@ -111,6 +111,7 @@ export default async function ProductPage({
   const manualGame = typeof manual?.game === "string" ? manual.game.trim() : "";
   const manualFaction = typeof manual?.faction === "string" ? manual.faction.trim() : "";
   const manualCategory = typeof manual?.category === "string" ? manual.category.trim() : "";
+  const manualName = typeof manual?.name === "string" ? manual.name.trim() : "";
   const rawPoints = manual?.points;
   const manualPoints =
     typeof rawPoints === "number" && Number.isFinite(rawPoints)
@@ -118,6 +119,7 @@ export default async function ProductPage({
       : typeof rawPoints === "string" && rawPoints.trim() && Number.isFinite(Number(rawPoints.trim()))
       ? Number(rawPoints.trim())
       : null;
+  const displayName = manualName || product.name;
   const faction = manualFaction || "—";
   const game = manualGame || "—";
   const category = manualCategory || "—";
@@ -166,12 +168,12 @@ export default async function ProductPage({
                          focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imgSrc} alt={product.name} className="object-contain w-full h-full" />
+              <img src={imgSrc} alt={displayName} className="object-contain w-full h-full" />
             </button>
 
             <div className="flex-1">
               <div className="flex items-start justify-between gap-3">
-                <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">{product.name}</h1>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">{displayName}</h1>
 
                 {/* Share / Copy */}
                 <button
@@ -181,7 +183,7 @@ export default async function ProductPage({
                              bg-white hover:bg-slate-50
                              dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700
                              text-slate-800 dark:text-slate-100"
-                  data-title={product.name}
+                  data-title={displayName}
                 >
                   Share
                 </button>
@@ -199,6 +201,7 @@ export default async function ProductPage({
                   <ProductEditForm
                     productId={String(product.id)}
                     initialValues={{
+                      name: displayName,
                       game: manualGame,
                       faction: manualFaction,
                       category: manualCategory,
@@ -305,7 +308,7 @@ export default async function ProductPage({
                           title="Report an incorrect price or broken link"
                           data-link={r.link ?? ""}
                           data-seller={r.seller_name}
-                          data-product={product.name}
+                          data-product={displayName}
                           disabled={!r.link}
                         >
                           Report
@@ -352,7 +355,7 @@ export default async function ProductPage({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imgSrc}
-              alt={product.name}
+              alt={displayName}
               className="w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-2xl bg-white dark:bg-slate-900"
             />
           </div>

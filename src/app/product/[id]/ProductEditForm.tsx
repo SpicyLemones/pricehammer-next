@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 interface ProductEditFormProps {
   productId: string;
   initialValues: {
+    name?: string | null;
     game: string;
     faction: string;
     category: string;
@@ -14,13 +15,22 @@ interface ProductEditFormProps {
   gameCategories: Record<string, string[]>;
 }
 
+type NormalizedValues = {
+  name: string;
+  game: string;
+  faction: string;
+  category: string;
+  points: string;
+};
+
 type StatusState =
   | { type: "idle" }
   | { type: "saving" }
   | { type: "success"; message: string }
   | { type: "error"; message: string };
 
-const normalizeInitialValues = (values: ProductEditFormProps["initialValues"]) => ({
+const normalizeInitialValues = (values: ProductEditFormProps["initialValues"]): NormalizedValues => ({
+  name: typeof values.name === "string" ? values.name.trim() : "",
   game: values.game ?? "",
   faction: values.faction ?? "",
   category: values.category ?? "",
@@ -34,7 +44,8 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
   const router = useRouter();
   const normalizedInitial = useMemo(() => normalizeInitialValues(initialValues), [initialValues]);
 
-  const [baseValues, setBaseValues] = useState(normalizedInitial);
+  const [baseValues, setBaseValues] = useState<NormalizedValues>(normalizedInitial);
+  const [name, setName] = useState(normalizedInitial.name);
   const [game, setGame] = useState(normalizedInitial.game);
   const [faction, setFaction] = useState(normalizedInitial.faction);
   const [category, setCategory] = useState(normalizedInitial.category);
@@ -43,6 +54,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
 
   useEffect(() => {
     setBaseValues(normalizedInitial);
+    setName(normalizedInitial.name);
     setGame(normalizedInitial.game);
     setFaction(normalizedInitial.faction);
     setCategory(normalizedInitial.category);
@@ -61,6 +73,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
   }, [game, gameCategories]);
 
   const isDirty =
+    name !== baseValues.name ||
     game !== baseValues.game ||
     faction !== baseValues.faction ||
     category !== baseValues.category ||
@@ -73,9 +86,16 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
     event.preventDefault();
     if (status.type === "saving") return;
 
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      setStatus({ type: "error", message: "Name is required." });
+      return;
+    }
+
     setStatus({ type: "saving" });
 
     const payload = {
+      name: trimmedName,
       game,
       faction,
       category,
@@ -106,6 +126,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
         const data = await res.json();
         if (data?.product) {
           const next = normalizeInitialValues({
+            name: typeof data.product.name === "string" ? data.product.name : normalizedInitial.name,
             game: typeof data.product.game === "string" ? data.product.game : "",
             faction: typeof data.product.faction === "string" ? data.product.faction : "",
             category: typeof data.product.category === "string" ? data.product.category : "",
@@ -119,6 +140,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
       } catch {}
 
       setBaseValues(updated);
+      setName(updated.name);
       setGame(updated.game);
       setFaction(updated.faction);
       setCategory(updated.category);
@@ -133,6 +155,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
   }
 
   function handleReset() {
+    setName(baseValues.name);
     setGame(baseValues.game);
     setFaction(baseValues.faction);
     setCategory(baseValues.category);
@@ -141,6 +164,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
   }
 
   const isSaving = status.type === "saving";
+  const isNameValid = Boolean(name.trim());
 
   return (
     <div className="rounded-lg border border-slate-200 bg-slate-50/80 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/60">
@@ -159,6 +183,22 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
         Leave a field blank to clear it. Suggestions are provided where available.
       </p>
       <form onSubmit={handleSubmit} className="grid gap-3">
+        <div className="grid gap-1">
+          <label htmlFor={`name-${productId}`} className="text-sm font-medium text-slate-700 dark:text-slate-200">
+            Name
+          </label>
+          <input
+            id={`name-${productId}`}
+            name="name"
+            placeholder="Enter product name"
+            className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            autoComplete="off"
+            required
+          />
+        </div>
+
         <div className="grid gap-1">
           <label htmlFor={`game-${productId}`} className="text-sm font-medium text-slate-700 dark:text-slate-200">
             Game
@@ -237,7 +277,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
           <button
             type="submit"
             className="inline-flex items-center justify-center rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-70"
-            disabled={isSaving}
+            disabled={isSaving || !isNameValid}
           >
             {isSaving ? "Saving…" : "Save changes"}
           </button>

@@ -11,6 +11,7 @@ type Params = { params: Promise<{ id: string }> };
 type ProductRecord = Record<string, unknown>;
 
 type Body = {
+  name?: string | null;
   game?: string | null;
   faction?: string | null;
   category?: string | null;
@@ -22,6 +23,26 @@ const PRODUCTS_MARKER = "export const Products: Product[] =";
 function formatProductsArray(products: ProductRecord[]) {
   const json = JSON.stringify(products, null, 2);
   return json.replace(/\n\]$/, "\n];");
+}
+
+function applyNameField(target: ProductRecord, body: Body) {
+  if (!Object.prototype.hasOwnProperty.call(body, "name")) return;
+  const raw = body.name;
+
+  if (raw === null || raw === undefined) {
+    throw new Error("invalid-name");
+  }
+
+  if (typeof raw !== "string") {
+    throw new Error("invalid-name");
+  }
+
+  const trimmed = raw.trim();
+  if (!trimmed) {
+    throw new Error("invalid-name");
+  }
+
+  target.name = trimmed;
 }
 
 function applyStringField(target: ProductRecord, body: Body, key: "game" | "faction" | "category") {
@@ -66,6 +87,7 @@ function applyPointsField(target: ProductRecord, body: Body) {
 function buildUpdatedProduct(existing: ProductRecord, body: Body) {
   const updated: ProductRecord = { ...existing };
 
+  applyNameField(updated, body);
   applyStringField(updated, body, "game");
   applyStringField(updated, body, "faction");
   applyStringField(updated, body, "category");
@@ -137,6 +159,8 @@ export async function PUT(req: NextRequest, { params }: Params) {
     const message =
       code === "invalid-points"
         ? "Points must be a non-negative number"
+        : code === "invalid-name"
+        ? "Name must be provided"
         : "Invalid input received";
     return NextResponse.json({ error: message }, { status: 400 });
   }
