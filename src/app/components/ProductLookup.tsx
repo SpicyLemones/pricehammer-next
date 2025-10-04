@@ -441,14 +441,14 @@ function ProductCard({ product }: { product: Product }) {
 
   return (
     <>
-      <Card className="overflow-hidden bg-white shadow-md border border-slate-200">
+      <Card className="overflow-hidden border border-slate-200/80 bg-white/95 shadow-md dark:border-white/10 dark:bg-slate-900/70">
         <CardHeader className="pb-0">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Image */}
             <div className="w-full min-h md:w-40 flex-shrink-0">
               <Link href={productUrl} className="block">
                 <div
-                  className="aspect-square overflow-hidden rounded-md border bg-white cursor-pointer"
+                  className="aspect-square cursor-pointer overflow-hidden rounded-md border border-slate-200/70 bg-white/80 transition-colors dark:border-white/10 dark:bg-slate-900/60"
                   aria-label={`Open ${product.name}`}
                   onClick={(e) => { e.preventDefault(); setZoomed(true); }}
                   onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); setZoomed(true);} }}
@@ -479,11 +479,11 @@ function ProductCard({ product }: { product: Product }) {
                 </CardTitle>
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
                   <Badge variant="outline">{product.faction || "Unknown Faction"}</Badge>
-                  <span className="text-slate-600">{product.category || "Uncategorized"}</span>
+                  <span className="text-slate-600 dark:text-slate-300">{product.category || "Uncategorized"}</span>
                   {typeof product.points === "number" && product.points > 0 ? (
-                    <span className="text-slate-600">• {product.points} pts</span>
+                    <span className="text-slate-600 dark:text-slate-300">• {product.points} pts</span>
                   ) : (
-                    <span className="text-slate-400">• Points TBD</span>
+                    <span className="text-slate-400 dark:text-slate-500">• Points TBD</span>
                   )}
                 </div>
               </div>
@@ -491,7 +491,7 @@ function ProductCard({ product }: { product: Product }) {
 
             {/* Best price with “highest” slashed if different (AUD) */}
             <div className="text-right md:self-start">
-              <div className="text-xs text-slate-500">Best Price</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400">Best Price</div>
               {best ? (
                 <div className="leading-tight">
                   {highest && highest.price !== best.price && (
@@ -499,25 +499,25 @@ function ProductCard({ product }: { product: Product }) {
                       {fmtAUD(highest.price)}
                     </div>
                   )}
-                  <div className="text-4xl md:text-5xl font-extrabold text-green-600">
+                  <div className="text-4xl md:text-5xl font-extrabold text-green-600 dark:text-emerald-300">
                     {fmtAUD(best.price)}
                   </div>
                 </div>
               ) : (
-                <div className="text-slate-400">No prices</div>
+                <div className="text-slate-400 dark:text-slate-500">No prices</div>
               )}
             </div>
           </div>
         </CardHeader>
 
-        <Separator className="my-4" />
+        <Separator className="my-4 opacity-70 dark:opacity-60" />
 
         {/* Prices */}
         <CardContent className="pt-0">
           <div className="mb-3 font-medium">Available at:</div>
 
           {visible.length > 0 ? (
-            <div className="rounded-md border divide-y">
+            <div className="divide-y rounded-md border border-slate-200/80 bg-slate-50/60 backdrop-blur-sm dark:divide-white/10 dark:border-white/10 dark:bg-slate-950/40">
               {visible.map((r, idx) => (
                 <div
                   key={`${r.store}-${idx}`}
@@ -560,7 +560,7 @@ function ProductCard({ product }: { product: Product }) {
                   tabIndex={0}
                   onClick={() => setShowAll(true)}
                   onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setShowAll(true)}
-                  className="px-3 py-2 text-center text-blue-700 hover:bg-blue-50 cursor-pointer select-none"
+                  className="select-none px-3 py-2 text-center text-blue-700 transition-colors hover:bg-blue-50/70 dark:text-emerald-300 dark:hover:bg-emerald-500/10"
                   title={`Show all ${sortedRetailers.length} offers`}
                 >
                   Show all {sortedRetailers.length} offers
@@ -572,7 +572,7 @@ function ProductCard({ product }: { product: Product }) {
                   tabIndex={0}
                   onClick={() => setShowAll(false)}
                   onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setShowAll(false)}
-                  className="px-3 py-2 text-center text-slate-700 hover:bg-slate-50 cursor-pointer select-none"
+                  className="select-none px-3 py-2 text-center text-slate-700 transition-colors hover:bg-slate-50/70 dark:text-slate-200 dark:hover:bg-slate-800/60"
                   title="Show Less"
                 >
                   Show Less
@@ -580,7 +580,7 @@ function ProductCard({ product }: { product: Product }) {
               )}
             </div>
           ) : (
-            <div className="text-slate-400">No retailers yet.</div>
+            <div className="text-slate-400 dark:text-slate-500">No retailers yet.</div>
           )}
         </CardContent>
       </Card>
@@ -589,19 +589,19 @@ function ProductCard({ product }: { product: Product }) {
       {zoomed &&
         createPortal(
           <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm"
             onClick={() => setZoomed(false)}
           >
             <div
-              className="relative bg-white rounded-lg shadow-lg p-4 flex items-center justify-center max-w-[90vw] max-h-[90vh]"
+              className="relative flex max-h-[90vh] max-w-[90vw] items-center justify-center rounded-lg border border-slate-200/60 bg-white/95 p-4 shadow-lg dark:border-white/10 dark:bg-slate-900/90"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setZoomed(false)}
-                className="absolute top-3 right-3 bg-white rounded-full p-1 shadow hover:bg-slate-100"
+                className="absolute right-3 top-3 rounded-full border border-slate-200/60 bg-white/90 p-1 shadow transition-colors hover:bg-slate-100/90 dark:border-white/10 dark:bg-slate-800/80 dark:hover:bg-slate-700/70"
                 aria-label="Close image preview"
               >
-                <X className="h-5 w-5 text-slate-700" />
+                <X className="h-5 w-5 text-slate-700 dark:text-slate-200" />
               </button>
               <img
                 src={imgSrc(product.image || undefined)}
