@@ -34,6 +34,7 @@ type Product = {
   category?: string;
   points?: number;
   image?: string | null;
+  hidden?: boolean;
   retailers: Retailer[];
 };
 
@@ -194,7 +195,7 @@ const sample = <T,>(arr: T[], n: number) => {
 export function ProductLookup() {
   // Start with manual products (no retailers) so UI renders immediately.
   const [sourceProducts, setSourceProducts] = useState<Product[]>(
-    () => ManualProducts.map((p) => ({ ...p, retailers: [] }))
+    () => ManualProducts.filter((p) => p.hidden !== true).map((p) => ({ ...p, retailers: [] }))
   );
   const [queryInput, setQueryInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -213,7 +214,8 @@ export function ProductLookup() {
         if (!res.ok) throw new Error(await res.text());
         const data: { products: Product[] } = await res.json();
         if (!cancelled && Array.isArray(data?.products)) {
-          setSourceProducts(data.products);
+          const visible = data.products.filter((product) => product.hidden !== true);
+          setSourceProducts(visible);
         }
       } catch (e) {
         console.warn("Falling back to manual products only (no DB retailers).", e);
@@ -342,13 +344,13 @@ export function ProductLookup() {
           </button>
         </form>
 
-        {/* game */}
+        {/* universe */}
         <Select value={selectedGame} onValueChange={setSelectedGame}>
           <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800 ">
-            <SelectValue placeholder="All Games" />
+            <SelectValue placeholder="All Universes" />
           </SelectTrigger>
           <SelectContent className="w-[180px] bg-white dark:bg-slate-800">
-            <SelectItem value="all">All Games</SelectItem>
+            <SelectItem value="all">All Universes</SelectItem>
             {(["warhammer40k", "ageofsigmar"] as const).map((g) => (
               <SelectItem key={g} value={g}>{g}</SelectItem>
             ))}

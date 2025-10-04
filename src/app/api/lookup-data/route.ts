@@ -27,6 +27,7 @@ export async function GET() {
   const products: APIProduct[] = [];
 
   for (const p of ManualProducts) {
+    if (p.hidden === true) continue;
     const idNum = Number(p.id);
     if (!Number.isFinite(idNum)) continue;
 

@@ -4,15 +4,24 @@ import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { EB_Garamond, Inter } from "next/font/google";
+import { Bebas_Neue, Merriweather, Montserrat } from "next/font/google";
 
-const display = EB_Garamond({
+const display = Bebas_Neue({
   subsets: ["latin"],
+  weight: "400",
   variable: "--font-display",
 });
-const sans = Inter({
+
+const serif = Merriweather({
   subsets: ["latin"],
-  variable: "--font-sans",
+  weight: ["300", "400", "700"],
+  variable: "--font-serif",
+});
+
+const ui = Montserrat({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-ui",
 });
 
 const metadataBase = new URL("https://pricehammer.xyz");
@@ -89,7 +98,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable}`}>
+    <html lang="en" className={`${display.variable} ${serif.variable} ${ui.variable}`}>
       <head>
         <Script id="ld-json-website" type="application/ld+json" strategy="beforeInteractive">
           {JSON.stringify({
