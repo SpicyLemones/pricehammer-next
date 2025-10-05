@@ -30,3 +30,13 @@ export function isAuthorizedAdmin(authHeader?: string | null): boolean {
   const { user, pass } = decodeBasicAuth(authHeader);
   return user === expectedUser && pass === expectedPass;
 }
+
+export function extractAdminIdentity(authHeader?: string | null): { user: string | null } {
+  if (!authHeader || !authHeader.startsWith(BASIC_PREFIX)) {
+    return { user: null };
+  }
+
+  const { user } = decodeBasicAuth(authHeader);
+  const trimmed = typeof user === "string" ? user.trim() : "";
+  return { user: trimmed || null };
+}

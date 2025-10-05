@@ -31,6 +31,11 @@ type StatusState =
   | { type: "success"; message: string }
   | { type: "error"; message: string };
 
+type DeleteStatusState =
+  | { type: "idle" }
+  | { type: "working" }
+  | { type: "error"; message: string };
+
 const normalizeInitialValues = (values: ProductEditFormProps["initialValues"]): NormalizedValues => ({
   name: typeof values.name === "string" ? values.name.trim() : "",
   game: values.game ?? "",
@@ -55,6 +60,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
   const [points, setPoints] = useState(normalizedInitial.points);
   const [hidden, setHidden] = useState(normalizedInitial.hidden);
   const [status, setStatus] = useState<StatusState>({ type: "idle" });
+  const [deleteStatus, setDeleteStatus] = useState<DeleteStatusState>({ type: "idle" });
 
   useEffect(() => {
     setBaseValues(normalizedInitial);
@@ -175,6 +181,47 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
 
   const isSaving = status.type === "saving";
   const isNameValid = Boolean(name.trim());
+
+  async function handleDelete() {
+    if (deleteStatus.type === "working") return;
+
+    const confirmed = window.confirm(
+      "This will permanently remove the product, its metadata, and all recorded prices. Are you sure you want to continue?",
+    );
+    if (!confirmed) return;
+
+    setDeleteStatus({ type: "working" });
+
+    try {
+      const res = await fetch(`/api/admin/products/${productId}`, { method: "DELETE" });
+
+      if (!res.ok) {
+        let message = "Failed to delete product.";
+        try {
+          const data = await res.json();
+          if (typeof data?.error === "string" && data.error.trim()) {
+            message = data.error.trim();
+          }
+        } catch {}
+        setDeleteStatus({ type: "error", message });
+        return;
+      }
+
+      let redirectTarget = "/admin";
+      try {
+        const data = await res.json();
+        if (data && typeof data.redirect === "string" && data.redirect.trim()) {
+          redirectTarget = data.redirect.trim();
+        }
+      } catch {}
+
+      router.replace(redirectTarget);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error && error.message ? error.message : "Failed to delete product.";
+      setDeleteStatus({ type: "error", message });
+    }
+  }
 
   return (
     <div className="rounded-lg border border-slate-200 bg-slate-50/80 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/60">
@@ -325,6 +372,26 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
           )}
         </div>
       </form>
+
+      <div className="mt-6 rounded-lg border border-red-300 bg-red-50/80 p-4 shadow-sm dark:border-red-800 dark:bg-red-950/40">
+        <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-red-700 dark:text-red-300">Danger zone</h3>
+        <p className="mt-2 text-xs text-red-700/90 dark:text-red-200/80">
+          Permanently remove this product from PriceHammer, including all prices and metadata. This action cannot be undone.
+        </p>
+        <button
+          type="button"
+          onClick={handleDelete}
+          disabled={deleteStatus.type === "working"}
+          className="mt-4 inline-flex items-center justify-center rounded-md border border-red-400 bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 disabled:opacity-60"
+        >
+          {deleteStatus.type === "working" ? "Deleting…" : "Delete product"}
+        </button>
+        {deleteStatus.type === "error" && (
+          <p className="mt-2 text-xs font-medium text-red-700 dark:text-red-300" role="alert">
+            {deleteStatus.message}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
