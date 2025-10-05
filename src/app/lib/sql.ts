@@ -110,9 +110,20 @@ export function each<T = any>(sqlOrName: string, params: any[] = []) {
 
 /** Small utility: decide if a string is raw SQL or a query file name */
 function looksLikeSql(s: string) {
+  const trimmed = s.trim();
+  if (!trimmed) return false;
+
+  const transactionKeywords = new Set(["BEGIN", "COMMIT", "ROLLBACK"]);
+  if (transactionKeywords.has(trimmed.toUpperCase())) {
+    return true;
+  }
+
   // Only treat it as raw SQL when it has whitespace (e.g. "SELECT ... FROM ...")
   // File names like "select/all_products" have no spaces.
-  return /\s/.test(s) && /\b(select|insert|update|delete|pragma|with|create|drop)\b/i.test(s);
+  return (
+    /\s/.test(s) &&
+    /\b(select|insert|update|delete|pragma|with|create|drop)\b/i.test(s)
+  );
 }
 
 /** ---- Convenience helpers you were using ---- */
