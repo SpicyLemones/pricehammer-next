@@ -5,6 +5,7 @@ import {
   normalizeShopifySku,
   type ShopifyFeedResult,
 } from "@/app/lib/shopify";
+import { matchShopifyProductsAgainstCatalogue } from "@/app/lib/shopify-catalogue";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,6 +13,7 @@ export const dynamic = "force-dynamic";
 type RequestBody = {
   baseUrl?: string;
   maxPages?: number;
+  includeMatches?: boolean;
 };
 
 function parsePositiveInt(value: string | null): number | null {
@@ -46,9 +48,18 @@ function buildFallbackResponse(result: Extract<ShopifyFeedResult, { ok: false }>
   );
 }
 
-function respondWithResult(result: ShopifyFeedResult) {
+function respondWithResult(
+  result: ShopifyFeedResult,
+  extras?: Record<string, unknown>,
+) {
   if (result.ok) {
-    return NextResponse.json(result, { headers: { "Cache-Control": "no-store" } });
+    return NextResponse.json(
+      {
+        ...result,
+        ...(extras ?? {}),
+      },
+      { headers: { "Cache-Control": "no-store" } },
+    );
   }
 
   return buildFallbackResponse(result);
@@ -58,6 +69,8 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const baseUrl = url.searchParams.get("baseUrl");
   const maxPagesParam = url.searchParams.get("maxPages");
+  const includeMatchesParam =
+    url.searchParams.get("includeMatches") ?? url.searchParams.get("match");
 
   if (!baseUrl) {
     return NextResponse.json(
@@ -90,7 +103,23 @@ export async function GET(req: Request) {
     maxPages: maxPages ?? undefined,
   });
 
-  return respondWithResult(result);
+  if (!result.ok) {
+    return respondWithResult(result);
+  }
+
+  const includeMatches =
+    typeof includeMatchesParam === "string" &&
+    ["1", "true", "yes", "on"].includes(includeMatchesParam.toLowerCase());
+
+  const extras = includeMatches
+    ? {
+        matchSummary: matchShopifyProductsAgainstCatalogue(result.products, {
+          baseUrl,
+        }),
+      }
+    : undefined;
+
+  return respondWithResult(result, extras);
 }
 
 export async function POST(req: Request) {
@@ -118,5 +147,18 @@ export async function POST(req: Request) {
     maxPages: body.maxPages,
   });
 
-  return respondWithResult(result);
+  if (!result.ok) {
+    return respondWithResult(result);
+  }
+
+  const includeMatches = Boolean(body?.includeMatches);
+  const extras = includeMatches
+    ? {
+        matchSummary: matchShopifyProductsAgainstCatalogue(result.products, {
+          baseUrl: body.baseUrl,
+        }),
+      }
+    : undefined;
+
+  return respondWithResult(result, extras);
 }

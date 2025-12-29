@@ -44,7 +44,10 @@ when a storefront search page returns loosely related items.
   you to fall back to SKU verification on the HTML page. For quick manual
   testing in a browser, append the retailer URL as a query string (e.g.
   `/api/shopify-feed?baseUrl=https://thecombatcompany.com`) to issue the same
-  request via GET. Include `&maxPages=3` to cap pagination when debugging.
+  request via GET. Include `&maxPages=3` to cap pagination when debugging. Add
+  `&includeMatches=1` (or set `{ "includeMatches": true }` in the POST body)
+  to receive a `matchSummary` payload that links each Shopify product back to
+  the Pricehammer catalogue using SKU or fuzzy-name heuristics.
 * **WooCommerce REST API** – for WordPress shops, `/wp-json/wc/store/products`
   exposes structured JSON including IDs, SKUs, and price fields. If a merchant
   disables the public endpoints, fall back to `/wp-json/wc/v3/products` with an
@@ -67,6 +70,26 @@ when a storefront search page returns loosely related items.
   for edge cases, but persist any manually confirmed SKU so the knowledge is
   never lost. Each manual entry should short-circuit future searches for that
   seller/product pair.
+
+## 4a. Incorporate Shopify feeds directly into the database
+* **Seed the canonical SKU index** – populate `data/db/product-skus.ts` with the
+  Games Workshop SKU (and any retailer aliases) for each product ID in
+  `data/db/Product.ts`. The matcher will normalise the trailing manufacturer
+  code so entries like `prod4780167-99120218061` collapse to
+  `99120218061` automatically.
+* **Let the matcher align feed products** – when `matchSummary` is returned the
+  `stats` object gives you an overview (`matchedBySku`, `matchedByName`,
+  `unmatched`). Each `products[n].bestCandidate` entry includes the canonical
+  product ID, the reason (`sku` or `fuzzy-name`), and a confidence score. Use
+  `reason === "sku"` rows to auto-link immediately, and surface `fuzzy-name`
+  matches above a confidence threshold (e.g. ≥0.75) for review.
+* **Persist verified matches** – once you accept a candidate, store the Shopify
+  product URL (`bestCandidate.productUrl`) and the retailer SKU so future price
+  refreshes can go straight to `/products/<handle>.js` without re-running the
+  matcher.
+* **Audit misses** – anything left in `unmatchedSkus` needs either a new entry
+  in `product-skus.ts` or a bespoke alias for that retailer. Feeding those
+  fixes back into the catalogue steadily reduces manual effort over time.
 
 ## 4. Add a second validation pass before persisting
 * **Resolve the product page** – after picking the most likely listing, load the
