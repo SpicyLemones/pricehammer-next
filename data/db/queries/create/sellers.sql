@@ -8,5 +8,6 @@ CREATE TABLE sellers (
   link_selector TEXT NOT NULL,
   price_selector TEXT NOT NULL,
   sale_selector TEXT NOT NULL,
-  image_selector TEXT NOT NULL
+  image_selector TEXT NOT NULL,
+  storefront TEXT
 );

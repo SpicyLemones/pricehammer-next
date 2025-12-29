@@ -8,7 +8,10 @@
     "link_selector": ".card-title a",
     "price_selector": ".price span",
     "sale_selector": ".badge--sale span",
-    "image_selector": ".product-image"
+    "image_selector": ".product-image",
+    "storefront": {
+      "platform": "misc"
+    }
   },
   {
     "name": "Warhammer Official",
@@ -19,7 +22,11 @@
     "link_selector": "a.product-card-image",
     "price_selector": "[data-testid=\"product-card-current-price\"]",
     "sale_selector": ".NOSALESBITCH",
-    "image_selector": ".product-image"
+    "image_selector": ".product-image",
+    "storefront": {
+      "platform": "misc",
+      "note": "Custom Games Workshop storefront"
+    }
   },
   {
     "name": "The Combat Company",
@@ -30,7 +37,11 @@
     "link_selector": ".full-unstyled-link",
     "price_selector": ".price-item--regular",
     "sale_selector": ".price-item--sale",
-    "image_selector": ".product-image"
+    "image_selector": ".product-image",
+    "storefront": {
+      "platform": "shopify",
+      "matchStrategy": "name"
+    }
   },
   {
     "name": "Gap Games",
@@ -41,7 +52,11 @@
     "link_selector": ".product__image-wrapper",
     "price_selector": "[data-testid=\"product-card-current-price\"]",
     "sale_selector": ".product__price--on-sale",
-    "image_selector": ".product-image"
+    "image_selector": ".product-image",
+    "storefront": {
+      "platform": "shopify",
+      "matchStrategy": "name"
+    }
   },
   {
     "name": "Emerald Hobbies",
@@ -52,37 +67,39 @@
     "link_selector": "h4 > a",
     "price_selector": ".compare-price",
     "sale_selector": ".price span",
-    "image_selector": ".product-image"
+    "image_selector": ".product-image",
+    "storefront": {
+      "platform": "shopify",
+      "matchStrategy": "name"
+    }
   },
- {
-  "name": "Gumnut",
-  "base_url": "https://www.gumnut.com.au/",
-  "search_url": "search?type=product&q=*",
-
-  "product_selector": ".search-infinite-wrapper .element",
-
-  "name_selector": ".desc h5 a",
-  "link_selector": ".desc h5 a",
-
-  "price_selector": ".desc .compare-price",
-  "sale_selector": ".desc .price",
-
-  "image_selector": ".product-image img"
-}
-,
-   {
-  "name": "Frontline Hobbies",
-  "base_url": "https://www.frontlinehobbies.com.au/",
-  "search_url": "/search/?query=*",
-
-  "product_selector": ".card.thumbnail.card-body",
-
-  "name_selector": ".m_caption .card-title a",
-  "link_selector": ".m_caption .card-title a",
-
-  "price_selector": ".m_caption .price [itemprop='price']",
-  "sale_selector": "",
-
-  "image_selector": "a.thumbnail-image img.product-image"
-}
+  {
+    "name": "Gumnut",
+    "base_url": "https://www.gumnut.com.au/",
+    "search_url": "search?type=product&q=*",
+    "product_selector": ".search-infinite-wrapper .element",
+    "name_selector": ".desc h5 a",
+    "link_selector": ".desc h5 a",
+    "price_selector": ".desc .compare-price",
+    "sale_selector": ".desc .price",
+    "image_selector": ".product-image img",
+    "storefront": {
+      "platform": "shopify",
+      "matchStrategy": "name"
+    }
+  },
+  {
+    "name": "Frontline Hobbies",
+    "base_url": "https://www.frontlinehobbies.com.au/",
+    "search_url": "/search/?query=*",
+    "product_selector": ".card.thumbnail.card-body",
+    "name_selector": ".m_caption .card-title a",
+    "link_selector": ".m_caption .card-title a",
+    "price_selector": ".m_caption .price [itemprop='price']",
+    "sale_selector": "",
+    "image_selector": "a.thumbnail-image img.product-image",
+    "storefront": {
+      "platform": "misc"
+    }
+  }
 ]

@@ -198,6 +198,31 @@ export function normalizeString(value: unknown): string | null {
   return toNullableString(value);
 }
 
+export async function ensureProductImage(
+  productId: number,
+  imageUrl: string | null,
+): Promise<void> {
+  if (!imageUrl) return;
+  const trimmed = imageUrl.trim();
+  if (!trimmed) return;
+
+  await ensureProductMetadataSeeded();
+  const metadata = await fetchProductMetadata(productId);
+  if (!metadata) return;
+  if (metadata.image && metadata.image.trim()) return;
+
+  await query("run", "update/product_metadata", [
+    productId,
+    metadata.displayName,
+    metadata.game,
+    metadata.faction,
+    metadata.category,
+    metadata.points,
+    metadata.hidden ? 1 : 0,
+    trimmed,
+  ]);
+}
+
 export function normalizeNumber(value: unknown): number | null {
   return toNullableNumber(value);
 }

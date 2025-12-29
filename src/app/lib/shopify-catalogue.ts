@@ -39,6 +39,8 @@ export type ShopifyMatchResult = {
   bestCandidate: ShopifyMatchCandidate | null;
   candidates: ShopifyMatchCandidate[];
   unmatchedSkus: string[];
+  image?: string | null;
+  productUrl?: string | null;
 };
 
 export type ShopifyMatchSummary = {
@@ -155,7 +157,10 @@ for (const entry of CANONICAL_ENTRIES) {
   }
 }
 
-function buildProductUrl(baseUrl: string | null, handle: string): string | undefined {
+export function buildShopifyProductUrl(
+  baseUrl: string | null,
+  handle: string,
+): string | undefined {
   if (!baseUrl) return undefined;
   try {
     const url = new URL(baseUrl);
@@ -257,7 +262,7 @@ export function matchShopifyProductsAgainstCatalogue(
         reason: "sku",
         confidence: 1,
         matchedSku: variant.normalized,
-        productUrl: buildProductUrl(baseUrl, product.handle),
+        productUrl: buildShopifyProductUrl(baseUrl, product.handle),
         image: canonical.image ?? null,
       });
     }
@@ -282,7 +287,7 @@ export function matchShopifyProductsAgainstCatalogue(
           reason: "fuzzy-name",
           confidence: Math.min(0.95, Math.max(0.6, score)),
           nameScore: score,
-          productUrl: buildProductUrl(baseUrl, product.handle),
+          productUrl: buildShopifyProductUrl(baseUrl, product.handle),
           image: entry.image ?? null,
         });
       }
@@ -302,6 +307,8 @@ export function matchShopifyProductsAgainstCatalogue(
       bestCandidate,
       candidates: deduped,
       unmatchedSkus,
+      image: product.image ?? null,
+      productUrl: buildShopifyProductUrl(baseUrl, product.handle) ?? undefined,
     });
   }
 

@@ -20,6 +20,7 @@ export async function POST() {
     await query("run", "insert/seller", [
       s.name, s.base_url, s.search_url, s.product_selector,
       s.name_selector, s.link_selector, s.price_selector, s.sale_selector, s.image_selector,
+      s.storefront ? JSON.stringify(s.storefront) : null,
     ]);
 
     const row = await query("get", "select/seller_by_name_base", [s.name, s.base_url]);

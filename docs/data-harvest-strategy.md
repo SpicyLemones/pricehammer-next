@@ -91,6 +91,31 @@ when a storefront search page returns loosely related items.
   in `product-skus.ts` or a bespoke alias for that retailer. Feeding those
   fixes back into the catalogue steadily reduces manual effort over time.
 
+## 4b. Configure storefront adapters for automated refreshes
+* **Annotate sellers with their ecommerce platform** – each record in
+  `data/db/json/sellers.json` now accepts a `storefront` object where
+  `platform` can be `"shopify"`, `"woocommerce"`, or `"misc"`. Shopify stores
+  default to a name-based matcher (`matchStrategy: "name"`), while other
+  platforms continue to rely on the legacy scraper until a dedicated adapter is
+  implemented. 【F:data/db/json/sellers.json†L1-L75】
+* **Let the refresh job pick the right source** – `/api/refresh-prices` loads
+  the configured storefront adapters once per seller, prefers feed prices when
+  available, and only falls back to Puppeteer scraping when the feed cannot be
+  matched or the seller is still marked as `misc`. Feed-derived prices update
+  the canonical link and reuse the existing history pipeline so reports stay in
+  sync. 【F:src/app/api/refresh-prices/route.ts†L42-L186】
+* **Keep images in sync automatically** – when a storefront feed supplies a
+  product image, the refresh task backfills `product_metadata.image` only if no
+  artwork has been curated yet. This keeps the catalogue populated without
+  overwriting manual picks. 【F:src/app/lib/product-metadata.ts†L150-L180】
+* **Opt-in to SKU verification when needed** – if a Shopify retailer hides SKUs
+  from the public feed, set `matchStrategy: "sku-from-page"`. The adapter will
+  crawl the product HTML, read the JSON-LD `sku`, and re-run the matcher with a
+  reliable manufacturer code before updating prices. The default `name`
+  strategy avoids the extra network cost when feeds already have distinctive
+  titles, but the SKU mode is available whenever you prefer deterministic
+  matching. 【F:src/app/lib/storefronts.ts†L44-L330】
+
 ## 4. Add a second validation pass before persisting
 * **Resolve the product page** – after picking the most likely listing, load the
   product detail page and verify that the canonical name contains the search

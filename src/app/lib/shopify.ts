@@ -22,6 +22,9 @@ export type ShopifyFeedProduct = {
   tags?: string[];
   updatedAt?: string;
   variants: ShopifyFeedVariant[];
+  image: string | null;
+  imageAlt?: string | null;
+  productUrl?: string | null;
 };
 
 export type ShopifyFeedSuccess = {
@@ -71,6 +74,33 @@ export function normalizeShopifySku(raw: string | null | undefined): string | nu
   }
 
   return trimmed;
+}
+
+function pickImage(record: Record<string, unknown>): {
+  src: string | null;
+  alt: string | null;
+} {
+  const direct = isRecord(record.image) ? (record.image as Record<string, unknown>) : null;
+  if (direct) {
+    const src = typeof direct.src === "string" ? direct.src : null;
+    const alt = typeof direct.alt === "string" ? direct.alt : null;
+    if (src) return { src, alt };
+  }
+
+  if (Array.isArray(record.images)) {
+    for (const entry of record.images as unknown[]) {
+      if (!isRecord(entry)) continue;
+      const src = typeof entry.src === "string" ? entry.src : null;
+      if (src) {
+        return {
+          src,
+          alt: typeof entry.alt === "string" ? (entry.alt as string) : null,
+        };
+      }
+    }
+  }
+
+  return { src: null, alt: null };
 }
 
 export async function fetchShopifyProductFeed(
@@ -148,6 +178,7 @@ export async function fetchShopifyProductFeed(
     }
 
     for (const prod of feedProducts) {
+      const { src: imageSrc, alt: imageAlt } = pickImage(prod);
       const rawVariants = isRecord(prod) && Array.isArray(prod.variants)
         ? (prod.variants as unknown[]).filter(isRecord)
         : [];
@@ -204,6 +235,8 @@ export async function fetchShopifyProductFeed(
             ? (prod["updated_at"] as string)
             : undefined,
         variants,
+        image: imageSrc,
+        imageAlt: imageAlt ?? undefined,
       });
 
       const idNum = coerceNumber(prod.id);

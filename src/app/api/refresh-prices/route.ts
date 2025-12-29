@@ -3,6 +3,11 @@ import { NextResponse } from "next/server";
 import pLimit from "p-limit";
 import { query } from "@/lib/sql";
 import { fetchPriceFromLinkWithSellerSelectors } from "@/lib/scraper";
+import {
+  buildStorefrontIndex,
+  type StorefrontIndexReady,
+} from "@/app/lib/storefronts";
+import { ensureProductImage } from "@/app/lib/product-metadata";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -45,23 +50,47 @@ export async function POST(req: Request) {
   const sById: Record<number, any> = {};
   (sellers as any[])?.forEach((s) => s && (sById[s.id] = s));
 
+  const storefrontIndexes = new Map<number, StorefrontIndexReady>();
+  const storefrontLimit = pLimit(2);
+  await Promise.allSettled(
+    (sellers as any[]).map((sellerRow) =>
+      storefrontLimit(async () => {
+        if (!sellerRow) return;
+        const sellerId = Number(sellerRow.id);
+        if (!Number.isFinite(sellerId)) return;
+        const index = await buildStorefrontIndex(sellerRow);
+        if (!index) return;
+        const label = `${sellerRow.name ?? "Seller"}#${sellerId}`;
+        if (index.status === "ready") {
+          storefrontIndexes.set(sellerId, index);
+          index.diagnostics.forEach((msg) =>
+            console.log(`[refresh-prices] STORE INFO ${label}: ${msg}`),
+          );
+        } else {
+          index.diagnostics.forEach((msg) =>
+            console.log(`[refresh-prices] STORE WARN ${label}: ${msg}`),
+          );
+          if (index.fallbackOption) {
+            console.log(
+              `[refresh-prices] STORE Fallback ${label}: ${index.fallbackOption.message}`,
+            );
+          }
+        }
+      }),
+    ),
+  );
+
   const limit = pLimit(3); // <= at most 3 pages in-flight
 
   let updated = 0;
   let skipped = 0;
   let failed = 0;
 
+  const productImageEnsures = new Map<number, Promise<void>>();
+
   await Promise.allSettled(
     (pairs as any[]).map(({ seller_id, product_id, link }) =>
       limit(async () => {
-        if (!link) {
-          skipped++;
-          console.log(
-            `[refresh-prices] SKIP p=${product_id} s=${seller_id} (no link)`
-          );
-          return;
-        }
-
         const s =
           sById[seller_id] ||
           (await query("get", "select/seller_id", [seller_id]));
@@ -73,21 +102,63 @@ export async function POST(req: Request) {
           return;
         }
 
+        const existingLink =
+          typeof link === "string" && link.trim() !== "" ? link : null;
         console.log(
-          `[refresh-prices] FETCH  p=${product_id} s=${seller_id} -> ${link}`
+          `[refresh-prices] FETCH  p=${product_id} s=${seller_id} -> ${existingLink ?? "(no link)"}`
         );
 
+        let priceSource: "api" | "scrape" | null = null;
         let price: number | null = null;
-        try {
-          price = await fetchPriceFromLinkWithSellerSelectors(s, link);
-        } catch (e: any) {
-          failed++;
-          console.log(
-            `[refresh-prices] ERROR p=${product_id} s=${seller_id}: ${
-              e?.message || e
-            }`
-          );
-          return;
+        let linkForUpdate: string | null = existingLink;
+
+        const storefrontIndex = storefrontIndexes.get(Number(seller_id));
+        if (storefrontIndex) {
+          const match = storefrontIndex.matches.get(Number(product_id));
+          if (match) {
+            if (match.price != null) {
+              price = match.price;
+              priceSource = "api";
+              if (match.url) {
+                linkForUpdate = match.url;
+              }
+              if (match.image) {
+                const pid = Number(product_id);
+                if (!productImageEnsures.has(pid)) {
+                  productImageEnsures.set(
+                    pid,
+                    ensureProductImage(pid, match.image).catch(() => undefined),
+                  );
+                }
+              }
+            } else {
+              console.log(
+                `[refresh-prices] STORE SKIP p=${product_id} s=${seller_id} (no price in feed, reason=${match.reason})`
+              );
+            }
+          }
+        }
+
+        if (priceSource !== "api") {
+          if (!existingLink) {
+            skipped++;
+            console.log(
+              `[refresh-prices] SKIP p=${product_id} s=${seller_id} (no link and no feed price)`
+            );
+            return;
+          }
+          try {
+            price = await fetchPriceFromLinkWithSellerSelectors(s, existingLink);
+            priceSource = "scrape";
+          } catch (e: any) {
+            failed++;
+            console.log(
+              `[refresh-prices] ERROR p=${product_id} s=${seller_id}: ${
+                e?.message || e
+              }`
+            );
+            return;
+          }
         }
 
         if (price == null) {
@@ -103,7 +174,7 @@ export async function POST(req: Request) {
             seller_id,
             product_id,
             price,
-            link,
+            linkForUpdate,
           ]);
         } catch {
           // ignore duplicates/history failure
@@ -111,17 +182,19 @@ export async function POST(req: Request) {
 
         await query("run", "update/price_only_validated", [
           price,
-          link,
+          linkForUpdate,
           seller_id,
           product_id,
         ]);
         updated++;
         console.log(
-          `[refresh-prices] UPDATED p=${product_id} s=${seller_id} price=${price}`
+          `[refresh-prices] UPDATED p=${product_id} s=${seller_id} price=${price} via=${priceSource ?? "unknown"}`
         );
       })
     )
   );
+
+  await Promise.allSettled(productImageEnsures.values());
 
   const ms = Date.now() - t0;
   console.log(
