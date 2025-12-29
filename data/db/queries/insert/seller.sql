@@ -8,7 +8,8 @@ INSERT INTO
     link_selector,
     price_selector,
     sale_selector,
-    image_selector
+    image_selector,
+    storefront
   )
 VALUES
-  (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)

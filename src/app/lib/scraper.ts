@@ -15,6 +15,7 @@ export type Seller = {
   price_selector?: string;
   sale_selector?: string;
   image_selector?: string;
+  storefront?: unknown;
 
   // Optional product page selectors:
   product_price_selector?: string;

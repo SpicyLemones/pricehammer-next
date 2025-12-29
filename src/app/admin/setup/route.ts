@@ -17,6 +17,7 @@ type Seller = {
   price_selector?: string;
   sale_selector?: string;
   image_selector?: string;
+  storefront?: unknown;
 };
 
 type Product = { name: string; search_term: string };
@@ -44,7 +45,8 @@ export async function POST() {
       await query("run", "insert/seller", [
         s.name, s.base_url, s.search_url, s.product_selector,
         s.name_selector ?? null, s.link_selector ?? null, s.price_selector ?? null,
-        s.sale_selector ?? null, s.image_selector ?? null
+        s.sale_selector ?? null, s.image_selector ?? null,
+        s.storefront ? JSON.stringify(s.storefront) : null
       ]);
     }
 
