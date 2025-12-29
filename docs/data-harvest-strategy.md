@@ -41,7 +41,10 @@ when a storefront search page returns loosely related items.
   `products.json` feed. The endpoint normalises `variant.sku` values (e.g.
   converting `prod4780167-99120218061` to `99120218061`) and reports how many
   pages were fetched. If the feed is disabled or errors, the response prompts
-  you to fall back to SKU verification on the HTML page.
+  you to fall back to SKU verification on the HTML page. For quick manual
+  testing in a browser, append the retailer URL as a query string (e.g.
+  `/api/shopify-feed?baseUrl=https://thecombatcompany.com`) to issue the same
+  request via GET. Include `&maxPages=3` to cap pagination when debugging.
 * **WooCommerce REST API** – for WordPress shops, `/wp-json/wc/store/products`
   exposes structured JSON including IDs, SKUs, and price fields. If a merchant
   disables the public endpoints, fall back to `/wp-json/wc/v3/products` with an
