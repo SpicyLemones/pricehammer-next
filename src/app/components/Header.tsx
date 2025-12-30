@@ -40,8 +40,8 @@ export function Header() {
         {/* Brand */}
         <Link
           href="/price-lookup"
-          className="inline-flex flex-shrink-0 items-center gap-2 font-semibold text-slate-900 transition-colors hover:text-emerald-600 dark:text-white"        >
-          {/* you can swap to next/image later if you want */}
+          className="inline-flex flex-shrink-0 items-center gap-2 font-semibold text-slate-900 transition-colors hover:text-emerald-600 dark:text-white"
+        >
           <img
             className="rounded-md dark:hidden"
             src="/logo/logo.png"
