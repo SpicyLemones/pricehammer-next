@@ -2,8 +2,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { ShellFrame } from "@/components/ShellFrame";
 import { Bebas_Neue, Merriweather, Montserrat } from "next/font/google";
 
 const display = Bebas_Neue({
@@ -24,24 +23,27 @@ const ui = Montserrat({
   variable: "--font-ui",
 });
 
-const metadataBase = new URL("https://pricehammer.xyz");
+const metadataBase = new URL("https://spyce.fun");
 
 const primaryDescription =
-  "Compare Australian Warhammer 40,000 and Age of Sigmar prices with PriceHammer. We track local stock, highlight savings, and help you stay ahead of Games Workshop price rises across trusted Australian hobby stores.";
+  "Spyce.fun is the hub for PriceHammer and future interactive experiments. Explore live tools, track Warhammer prices, and follow along as new playful projects launch.";
 
 export const metadata: Metadata = {
   metadataBase,
   title: {
-    default: "Warhammer Price Tracker for Australia",
-    template: "%s | PriceHammer",
+    default: "Spyce.fun | Project hub by PriceHammer",
+    template: "%s | Spyce.fun",
   },
   description: primaryDescription,
   keywords: [
+    "Spyce.fun",
+    "PriceHammer",
     "Warhammer prices",
     "Games Workshop deals",
     "Warhammer 40K Australia",
     "Age of Sigmar discounts",
     "miniature wargaming price comparison",
+    "indie web experiments",
   ],
   authors: [{ name: "PriceHammer" }],
   creator: "PriceHammer",
@@ -59,19 +61,19 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   alternates: {
-    canonical: "/price-lookup",
+    canonical: "/",
   },
   openGraph: {
     type: "website",
-    url: "/price-lookup",
-    title: "Warhammer Price Tracker for Australia | PriceHammer",
+    url: "/",
+    title: "Spyce.fun | Project hub by PriceHammer",
     description: primaryDescription,
-    siteName: "PriceHammer",
+    siteName: "Spyce.fun",
     locale: "en_AU",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Warhammer Price Tracker for Australia | PriceHammer",
+    title: "Spyce.fun | Project hub by PriceHammer",
     description: primaryDescription,
     creator: "@pricehammer",
   },
@@ -123,8 +125,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
-            name: "PriceHammer",
-            url: `${metadataBase.origin}/price-lookup`,
+            name: "Spyce.fun",
+            url: `${metadataBase.origin}/`,
             description: primaryDescription,
             inLanguage: "en-AU",
             potentialAction: {
@@ -139,13 +141,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
       </head>
       <body className="min-h-dvh bg-scroll md:bg-fixed bg-cover bg-center app-bg">
-        <div className="min-h-dvh flex flex-col bg-white/60 dark:bg-black/70 backdrop-blur-sm">
-          <Header />
-          <main className="flex-1 w-full max-w-screen-xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
-            {children}
-          </main>
-          <Footer />
-        </div>
+        <ShellFrame>{children}</ShellFrame>
       </body>
     </html>
   );
