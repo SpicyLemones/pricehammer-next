@@ -39,32 +39,22 @@ export function Header() {
       <div className="max-w-screen-xl mx-auto flex h-12 items-center gap-3 px-3 sm:h-14 sm:px-6 lg:px-8">  
         {/* Brand */}
         <Link
-          href="/price-lookup"
-          className="inline-flex flex-shrink-0 items-center gap-2 font-semibold text-slate-900 transition-colors hover:text-emerald-600 dark:text-white"        >
-          {/* you can swap to next/image later if you want */}
-          <img
-            className="rounded-md dark:hidden"
-            src="/logo/logo.png"
-            width={50}
-            height={50}
-            alt="PriceHammer logo"
-          />
-          <img
-            className="hidden rounded-md dark:block"
-            src="/logo/logo-dark.svg"
-            width={50}
-            height={50}
-            alt="PriceHammer logo"
-          />
-          <span className="text-base sm:text-lg">PriceHammer</span>
+          href="/"
+          className="inline-flex flex-shrink-0 items-center gap-2 font-semibold text-slate-900 transition-colors hover:text-emerald-600 dark:text-white"
+        >
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-white text-sm font-bold dark:bg-white dark:text-slate-900">
+            SF
+          </span>
+          <span className="text-base sm:text-lg tracking-tight">Spyce.fun</span>
         </Link>
 
         {/* Nav + actions */}
         <div className="flex min-w-0 flex-1 items-center justify-end gap-3">
           <nav className="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar -mx-2 px-2">
-            <NavItem href="/price-lookup" exact>
-              🔎 Product Lookup
+            <NavItem href="/" exact>
+              🛰️ Home
             </NavItem>
+            <NavItem href="/price-lookup">🔎 PriceHammer</NavItem>
             <NavItem href="/about">About</NavItem>
             <NavItem href="/contact">Contact</NavItem>
 
