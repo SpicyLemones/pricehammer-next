@@ -23,20 +23,20 @@ const ui = Montserrat({
   variable: "--font-ui",
 });
 
-const metadataBase = new URL("https://spyce.fun");
+const metadataBase = new URL("https://spycy.fun");
 
 const primaryDescription =
-  "Spyce.fun is the hub for PriceHammer and future interactive experiments. Explore live tools, track Warhammer prices, and follow along as new playful projects launch.";
+  "Spycy.fun is the hub for PriceHammer and future interactive experiments. Explore live tools, track Warhammer prices, and follow along as new playful projects launch.";
 
 export const metadata: Metadata = {
   metadataBase,
   title: {
-    default: "Spyce.fun | Project hub by PriceHammer",
-    template: "%s | Spyce.fun",
+    default: "Spycy.fun ",
+    template: "%s | Spycy.fun",
   },
   description: primaryDescription,
   keywords: [
-    "Spyce.fun",
+    "Spycy.fun",
     "PriceHammer",
     "Warhammer prices",
     "Games Workshop deals",
@@ -66,16 +66,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/",
-    title: "Spyce.fun | Project hub by PriceHammer",
+    title: "Spycy.fun",
     description: primaryDescription,
-    siteName: "Spyce.fun",
+    siteName: "Spycy.fun",
     locale: "en_AU",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Spyce.fun | Project hub by PriceHammer",
+    title: "Spycy.fun ",
     description: primaryDescription,
-    creator: "@pricehammer",
+    creator: "Spycy",
   },
   robots: {
     index: true,
@@ -125,7 +125,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
-            name: "Spyce.fun",
+            name: "Spycy.fun",
             url: `${metadataBase.origin}/`,
             description: primaryDescription,
             inLanguage: "en-AU",

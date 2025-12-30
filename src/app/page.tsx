@@ -1,4 +1,7 @@
 // src/app/page.tsx
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
 const tiles = [
   {
     title: "PriceHammer",
@@ -11,11 +14,17 @@ const tiles = [
   { title: "Placeholder B", subtitle: "Coming soon", href: "#", external: false },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const headerList = await headers();
+  const host = headerList.get("host") || "";
+  if (host.includes("pricehammer.xyz")) {
+    redirect("/price-lookup");
+  }
+
   return (
     <div className="flex flex-col items-center gap-10">
       <header className="mt-6 text-center space-y-2">
-        <h1 className="text-5xl font-semibold tracking-tight text-slate-900 dark:text-white">Spyce.fun</h1>
+        <h1 className="text-5xl font-semibold tracking-tight text-slate-900 dark:text-white">Spycy.fun</h1>
         <p className="text-lg text-slate-500 dark:text-slate-300">:)</p>
       </header>
 
