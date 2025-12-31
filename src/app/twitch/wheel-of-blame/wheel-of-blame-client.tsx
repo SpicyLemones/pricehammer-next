@@ -226,14 +226,16 @@ export default function WheelOfBlameClient() {
                       />
                       {label && (
                         <div
-                          className="absolute left-1/2 top-1/2 origin-center -translate-x-1/2 -translate-y-1/2 truncate text-center text-[14px] font-semibold uppercase tracking-[0.12em] text-white drop-shadow"
+                          className="absolute left-1/2 top-1/2 origin-center -translate-x-1/2 -translate-y-1/2 text-center text-[15px] font-semibold uppercase tracking-[0.08em] text-white drop-shadow"
                           style={{
-                            transform: `rotate(${segmentAngle / 2}deg) translateY(-46%) rotate(-${segmentAngle / 2}deg)`,
-                            width: "64%",
-                            lineHeight: "1.05",
+                            transform: `rotate(${segmentAngle / 2}deg) translateY(-62%) rotate(-${segmentAngle / 2}deg)`,
+                            width: "78%",
+                            lineHeight: "1.1",
                           }}
                         >
-                          {label}
+                          <span className="block max-w-full truncate drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
+                            {label}
+                          </span>
                         </div>
                       )}
                     </div>
