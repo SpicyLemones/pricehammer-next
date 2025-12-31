@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 type ChattersState =
   | { status: "idle" | "loading" }
   | { status: "unauthenticated" }
+  | { status: "misconfigured"; missing: string[] }
   | { status: "offline"; displayName?: string }
   | { status: "ready"; displayName?: string; chatters: string[] };
 
@@ -14,6 +15,20 @@ function useChatters() {
   const [state, setState] = useState<ChattersState>({ status: "idle" });
 
   async function load() {
+    // First check configuration so we can show a helpful message instead of a hard error.
+    try {
+      const configRes = await fetch("/api/twitch/status");
+      const config = (await configRes.json()) as { configured?: boolean; missing?: string[] };
+      if (!config.configured) {
+        setState({ status: "misconfigured", missing: config.missing ?? [] });
+        return;
+      }
+    } catch (error) {
+      console.error("Failed to check Twitch configuration", error);
+      setState({ status: "misconfigured", missing: [] });
+      return;
+    }
+
     setState({ status: "loading" });
     try {
       const res = await fetch("/api/twitch/chatters");
@@ -109,6 +124,35 @@ export default function WheelOfBlameClient() {
               className="rounded-full border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
             >
               Retry
+            </button>
+          </div>
+        </div>
+      )}
+
+      {state.status === "misconfigured" && (
+        <div className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-rose-900 shadow-sm dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-100">
+          <h2 className="text-xl font-semibold">Twitch config missing</h2>
+          <p className="text-sm mt-2">
+            Add the required environment variables, restart the app, then retry:
+          </p>
+          <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
+            <li>TWITCH_CLIENT_ID</li>
+            <li>TWITCH_CLIENT_SECRET</li>
+            <li>TWITCH_REDIRECT_URI</li>
+            <li>TWITCH_STATE_SECRET</li>
+          </ul>
+          {state.missing.length > 0 && (
+            <p className="mt-3 text-xs text-rose-700 dark:text-rose-200">
+              Detected missing: {state.missing.join(", ")}
+            </p>
+          )}
+          <div className="mt-4 flex gap-3">
+            <button
+              type="button"
+              onClick={reload}
+              className="rounded-full border border-rose-200 bg-white px-4 py-2 text-sm font-semibold text-rose-800 transition hover:border-rose-300 hover:bg-rose-100 dark:border-rose-800 dark:bg-transparent dark:text-rose-100 dark:hover:border-rose-700 dark:hover:bg-rose-900/40"
+            >
+              Recheck
             </button>
           </div>
         </div>

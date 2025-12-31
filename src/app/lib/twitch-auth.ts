@@ -10,20 +10,40 @@ type StoredTwitchSession = {
   displayName: string;
 };
 
+export type TwitchConfig = {
+  clientId: string;
+  clientSecret: string;
+  redirectUri: string;
+  stateSecret: string;
+};
+
 const COOKIE_NAME = "twitch_auth";
 
 const TWITCH_AUTHORIZE_URL = "https://id.twitch.tv/oauth2/authorize";
 const TWITCH_TOKEN_URL = "https://id.twitch.tv/oauth2/token";
 const TWITCH_API_BASE = "https://api.twitch.tv/helix";
 
-export function buildTwitchAuthUrl() {
-  const clientId = process.env.TWITCH_CLIENT_ID;
-  const redirectUri = process.env.TWITCH_REDIRECT_URI;
-  const stateSecret = process.env.TWITCH_STATE_SECRET;
+export function getTwitchConfig(): TwitchConfig {
+  const missing: string[] = [];
+  if (!process.env.TWITCH_CLIENT_ID) missing.push("TWITCH_CLIENT_ID");
+  if (!process.env.TWITCH_CLIENT_SECRET) missing.push("TWITCH_CLIENT_SECRET");
+  if (!process.env.TWITCH_REDIRECT_URI) missing.push("TWITCH_REDIRECT_URI");
+  if (!process.env.TWITCH_STATE_SECRET) missing.push("TWITCH_STATE_SECRET");
 
-  if (!clientId || !redirectUri || !stateSecret) {
-    throw new Error("Missing Twitch OAuth environment variables");
+  if (missing.length) {
+    throw new Error(`Missing Twitch OAuth environment variables: ${missing.join(", ")}`);
   }
+
+  return {
+    clientId: process.env.TWITCH_CLIENT_ID as string,
+    clientSecret: process.env.TWITCH_CLIENT_SECRET as string,
+    redirectUri: process.env.TWITCH_REDIRECT_URI as string,
+    stateSecret: process.env.TWITCH_STATE_SECRET as string,
+  };
+}
+
+export function buildTwitchAuthUrl() {
+  const { clientId, redirectUri, stateSecret } = getTwitchConfig();
 
   const nonce = crypto.randomBytes(16).toString("hex");
   const state = `${nonce}.${signState(nonce, stateSecret)}`;
@@ -87,13 +107,7 @@ export function clearSession() {
 }
 
 export async function exchangeCodeForTokens(code: string) {
-  const clientId = process.env.TWITCH_CLIENT_ID;
-  const clientSecret = process.env.TWITCH_CLIENT_SECRET;
-  const redirectUri = process.env.TWITCH_REDIRECT_URI;
-
-  if (!clientId || !clientSecret || !redirectUri) {
-    throw new Error("Missing Twitch OAuth environment variables");
-  }
+  const { clientId, clientSecret, redirectUri } = getTwitchConfig();
 
   const tokenParams = new URLSearchParams({
     client_id: clientId,
@@ -131,12 +145,7 @@ export async function exchangeCodeForTokens(code: string) {
 }
 
 export async function refreshTokens(session: StoredTwitchSession) {
-  const clientId = process.env.TWITCH_CLIENT_ID;
-  const clientSecret = process.env.TWITCH_CLIENT_SECRET;
-
-  if (!clientId || !clientSecret) {
-    throw new Error("Missing Twitch OAuth environment variables");
-  }
+  const { clientId, clientSecret } = getTwitchConfig();
 
   const params = new URLSearchParams({
     client_id: clientId,
@@ -208,8 +217,7 @@ export async function twitchApi<T>(
   session: StoredTwitchSession,
   init?: RequestInit
 ): Promise<T> {
-  const clientId = process.env.TWITCH_CLIENT_ID;
-  if (!clientId) throw new Error("Missing TWITCH_CLIENT_ID");
+  const { clientId } = getTwitchConfig();
 
   const response = await fetch(`${TWITCH_API_BASE}${path}`, {
     ...init,
@@ -259,4 +267,3 @@ export async function fetchChatters(session: StoredTwitchSession): Promise<Twitc
     chatters: chatters.data?.map((c) => c.user_login) ?? [],
   };
 }
-
