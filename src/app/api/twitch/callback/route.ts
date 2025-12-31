@@ -1,0 +1,31 @@
+import { NextResponse } from "next/server";
+
+import { clearSession, exchangeCodeForTokens, verifyState, writeSession } from "@/lib/twitch-auth";
+
+export const dynamic = "force-dynamic";
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const code = searchParams.get("code");
+  const state = searchParams.get("state");
+  const error = searchParams.get("error");
+
+  if (error) {
+    return NextResponse.redirect(`/twitch/wheel-of-blame?error=${encodeURIComponent(error)}`);
+  }
+
+  if (!code || !state || !verifyState(state)) {
+    return NextResponse.redirect("/twitch/wheel-of-blame?error=invalid_state");
+  }
+
+  try {
+    const session = await exchangeCodeForTokens(code);
+    writeSession(session);
+    return NextResponse.redirect("/twitch/wheel-of-blame?connected=1");
+  } catch (err) {
+    console.error("Failed to exchange Twitch code", err);
+    clearSession();
+    return NextResponse.redirect("/twitch/wheel-of-blame?error=oauth_failed");
+  }
+}
+
