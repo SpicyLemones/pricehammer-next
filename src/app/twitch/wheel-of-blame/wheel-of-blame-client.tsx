@@ -1,50 +1,61 @@
-"use client";
+\"use client\";
 
-import { useEffect, useMemo, useState } from "react";
+import Image from \"next/image\";
+import { useEffect, useMemo, useRef, useState } from \"react\";
 
 type ChattersState =
-  | { status: "idle" | "loading" }
-  | { status: "unauthenticated" }
-  | { status: "misconfigured"; missing: string[] }
-  | { status: "offline"; displayName?: string }
-  | { status: "ready"; displayName?: string; chatters: string[] };
+  | { status: \"idle\" | \"loading\" }
+  | { status: \"unauthenticated\" }
+  | { status: \"misconfigured\"; missing: string[] }
+  | { status: \"offline\"; displayName?: string }
+  | { status: \"ready\"; displayName?: string; chatters: string[] };
 
 type SpinResult = { winner: string; angle: number };
 
+const fallbackColors = [
+  \"#FFD166\",
+  \"#EF476F\",
+  \"#06D6A0\",
+  \"#118AB2\",
+  \"#A556F6\",
+  \"#F78C6B\",
+  \"#4CC9F0\",
+  \"#BDE0FE\",
+];
+
 function useChatters() {
-  const [state, setState] = useState<ChattersState>({ status: "idle" });
+  const [state, setState] = useState<ChattersState>({ status: \"idle\" });
 
   async function load() {
-    // First check configuration so we can show a helpful message instead of a hard error.
     try {
-      const configRes = await fetch("/api/twitch/status");
+      const configRes = await fetch(\"/api/twitch/status\");
       const config = (await configRes.json()) as { configured?: boolean; missing?: string[] };
       if (!config.configured) {
-        setState({ status: "misconfigured", missing: config.missing ?? [] });
+        setState({ status: \"misconfigured\", missing: config.missing ?? [] });
         return;
       }
     } catch (error) {
-      console.error("Failed to check Twitch configuration", error);
-      setState({ status: "misconfigured", missing: [] });
+      console.error(\"Failed to check Twitch configuration\", error);
+      setState({ status: \"misconfigured\", missing: [] });
       return;
     }
 
-    setState({ status: "loading" });
+    setState({ status: \"loading\" });
     try {
-      const res = await fetch("/api/twitch/chatters");
+      const res = await fetch(\"/api/twitch/chatters\");
       if (res.status === 401) {
-        setState({ status: "unauthenticated" });
+        setState({ status: \"unauthenticated\" });
         return;
       }
       const data = (await res.json()) as { live: boolean; chatters?: string[]; displayName?: string };
       if (!data.live) {
-        setState({ status: "offline", displayName: data.displayName });
+        setState({ status: \"offline\", displayName: data.displayName });
         return;
       }
-      setState({ status: "ready", displayName: data.displayName, chatters: data.chatters ?? [] });
+      setState({ status: \"ready\", displayName: data.displayName, chatters: data.chatters ?? [] });
     } catch (error) {
-      console.error("Failed to load chatters", error);
-      setState({ status: "unauthenticated" });
+      console.error(\"Failed to load chatters\", error);
+      setState({ status: \"unauthenticated\" });
     }
   }
 
@@ -62,18 +73,24 @@ export default function WheelOfBlameClient() {
   const [spinAngle, setSpinAngle] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<SpinResult | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const chatters = useMemo(() => (state.status === "ready" ? state.chatters : []), [state]);
+  useEffect(() => {
+    audioRef.current = new Audio(\"/audio/spin.mp3\");
+    audioRef.current.preload = \"auto\";
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  const chatters = useMemo(() => (state.status === \"ready\" ? state.chatters : []), [state]);
   const segments = Math.max(chatters.length, 1);
   const segmentAngle = 360 / segments;
 
-  const colors = useMemo(
-    () =>
-      chatters.map((_, idx) =>
-        idx % 2 === 0 ? "from-amber-200 to-amber-300" : "from-indigo-200 to-indigo-300"
-      ),
-    [chatters]
-  );
+  const colors = useMemo(() => chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]), [chatters]);
 
   function spin() {
     if (!chatters.length || spinning) return;
@@ -82,25 +99,43 @@ export default function WheelOfBlameClient() {
     const target = spins * 360 + winnerIndex * segmentAngle + segmentAngle / 2;
     setSpinning(true);
     setSpinAngle((prev) => prev + target);
+    if (audioRef.current) {
+      try {
+        audioRef.current.currentTime = 0;
+        void audioRef.current.play();
+      } catch (err) {
+        console.warn(\"Spin audio failed to play\", err);
+      }
+    }
 
     setTimeout(() => {
       setSpinning(false);
       setResult({ winner: chatters[winnerIndex], angle: target });
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
     }, 4200);
   }
 
-  const pointer = (
-    <div className="absolute top-3 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-orange-500">
-      <span className="h-3 w-3 rotate-180 border-l-8 border-r-8 border-b-[14px] border-l-transparent border-r-transparent border-b-orange-500" />
-    </div>
-  );
-
   return (
-    <div className="space-y-6">
-      <header className="space-y-2">
-        <h1 className="text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">Wheel of Blame</h1>
-        <p className="text-slate-600 dark:text-slate-300">
-          Connect Twitch, pull your live chatters, and spin to pick the next brave soul.
+    <div className=\"space-y-8\">
+      <style jsx global>{`
+        @font-face {
+          font-family: \"Red Devil\";
+          src: url(\"/fonts/Red_Devil.otf\") format(\"opentype\");
+          font-display: swap;
+        }
+        .font-red-devil {
+          font-family: \"Red Devil\", var(--font-sans, \"Inter\"), system-ui, -apple-system, sans-serif;
+        }
+      `}</style>
+      <header className=\"space-y-2 text-center\">
+        <h1 className=\"font-red-devil text-5xl font-black uppercase tracking-tight text-slate-900 dark:text-white\">
+          Wheel of Blame
+        </h1>
+        <p className=\"text-base text-slate-600 dark:text-slate-300\">
+          Blame a loyal chatter for whatever went wrong this time, and punish or redeem them.
         </p>
       </header>
 
@@ -174,104 +209,105 @@ export default function WheelOfBlameClient() {
       )}
 
       {state.status === "ready" && (
-        <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-6 shadow-lg dark:border-slate-800 dark:from-slate-900 dark:to-slate-950">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Live</p>
-                <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">
-                  {state.displayName ?? "Your channel"}
-                </h2>
+        <div className="space-y-8">
+          <div className="relative mx-auto flex h-[480px] w-full max-w-3xl items-center justify-center">
+            <div className="relative h-[360px] w-[360px] rounded-full bg-slate-900/70 shadow-2xl ring-8 ring-slate-900/60">
+              <div className="absolute left-[-70px] top-1/2 z-30 -translate-y-1/2">
+                <div className="relative h-32 w-32">
+                  <Image src="/images/wheel-pointer.png" alt="Pointer" fill className="object-contain" priority />
+                </div>
               </div>
-              <button
-                type="button"
-                onClick={reload}
-                className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
-              >
-                Refresh chatters
-              </button>
-            </div>
 
-            <div className="relative mt-8 flex h-[360px] items-center justify-center">
-              {pointer}
               <div
-                className="relative flex h-72 w-72 items-center justify-center rounded-full border-[10px] border-white bg-gradient-to-b from-slate-100 to-slate-200 shadow-2xl dark:border-slate-900 dark:from-slate-800 dark:to-slate-900"
+                className="absolute inset-0 rounded-full transition-transform duration-[4200ms] ease-[cubic-bezier(0.25,0.1,0.2,1)]"
                 style={{
                   transform: `rotate(${spinAngle}deg)`,
-                  transition: spinning ? "transform 4s cubic-bezier(0.25, 0.1, 0.2, 1)" : "none",
                 }}
               >
                 {Array.from({ length: segments }).map((_, idx) => {
                   const rotate = idx * segmentAngle;
-                  const label = chatters[idx] ?? "Spin me";
+                  const label = chatters[idx] ?? "";
+                  const color = colors[idx % colors.length];
                   return (
-                    <div
-                      key={idx}
-                      className="absolute inset-0 origin-center"
-                      style={{ transform: `rotate(${rotate}deg)` }}
-                    >
+                    <div key={idx} className="absolute inset-0 origin-center" style={{ transform: `rotate(${rotate}deg)` }}>
                       <div
-                        className={`absolute left-1/2 top-0 h-1/2 w-1/2 -translate-x-1/2 rounded-bl-full rounded-br-full bg-gradient-to-br ${colors[idx % colors.length] ?? "from-slate-200 to-slate-300"} opacity-90`}
-                        style={{ transform: `rotate(${segmentAngle / 2}deg)` }}
+                        className="absolute inset-0"
+                        style={{
+                          background: `conic-gradient(${color} ${segmentAngle - 0.5}deg, transparent ${segmentAngle}deg)`,
+                          maskImage:
+                            "radial-gradient(circle at center, transparent 36%, black 36%, black 100%)",
+                        }}
                       />
-                      <div
-                        className="absolute left-1/2 top-[22%] w-1/2 -translate-x-1/2 origin-top -rotate-90 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-700 dark:text-slate-100"
-                        style={{ transform: `rotate(${segmentAngle / 2}deg)` }}
-                      >
-                        {label}
-                      </div>
+                      {label && (
+                        <div
+                          className="absolute left-1/2 top-1/2 origin-center -translate-x-1/2 -translate-y-1/2 text-center text-[13px] font-semibold uppercase tracking-[0.16em] text-white drop-shadow"
+                          style={{
+                            transform: `rotate(${segmentAngle / 2}deg) translateY(-38%) rotate(-${segmentAngle / 2}deg)`,
+                            width: "60%",
+                            lineHeight: "1.2",
+                          }}
+                        >
+                          {label}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
-                <div className="absolute h-16 w-16 rounded-full bg-white shadow-inner dark:bg-slate-950" />
               </div>
-            </div>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
               <button
                 type="button"
                 onClick={spin}
                 disabled={spinning || !chatters.length}
-                className="rounded-full bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-indigo-300 dark:disabled:bg-indigo-500/60"
+                className="font-red-devil absolute left-1/2 top-1/2 z-20 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-b from-rose-500 to-rose-600 text-xl font-black uppercase tracking-[0.2em] text-white shadow-[0_12px_30px_rgba(0,0,0,0.35)] transition hover:scale-105 active:scale-100 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {spinning ? "Spinning..." : "Spin the wheel"}
+                Blame
               </button>
-              <span className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                {chatters.length} chatters loaded
-              </span>
             </div>
           </div>
 
-          <aside className="space-y-4 rounded-3xl border border-slate-200 bg-white/80 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-            <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Roll log</p>
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Recent winner</h3>
-              {result ? (
-                <div className="mt-3 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-green-800 shadow-sm dark:border-green-900/60 dark:bg-green-950/30 dark:text-green-100">
-                  🎉 {result.winner}
-                </div>
-              ) : (
-                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">No spins yet.</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Chatters</p>
-              <div className="max-h-64 overflow-auto rounded-2xl border border-slate-200 bg-white/60 p-3 text-sm shadow-inner dark:border-slate-800 dark:bg-slate-900/50">
-                {chatters.length ? (
-                  <ul className="space-y-1 text-slate-700 dark:text-slate-200">
-                    {chatters.map((name) => (
-                      <li key={name} className="rounded bg-slate-100 px-2 py-1 text-xs font-semibold dark:bg-slate-800">
-                        {name}
-                      </li>
-                    ))}
-                  </ul>
+          <div className="mx-auto flex max-w-3xl flex-col gap-4 text-center">
+            <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">
+              {chatters.length} chatters loaded
+            </p>
+            <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center">
+              <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Roll log</p>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Recent winner</h3>
+                {result ? (
+                  <div className="mt-3 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-green-800 shadow-sm dark:border-green-900/60 dark:bg-green-950/30 dark:text-green-100">
+                    🎉 {result.winner}
+                  </div>
                 ) : (
-                  <p className="text-slate-500 dark:text-slate-400">No chatters pulled yet.</p>
+                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">No spins yet.</p>
                 )}
               </div>
+              <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Chatters</p>
+                <div className="max-h-64 overflow-auto rounded-2xl border border-slate-200 bg-white/60 p-3 text-sm shadow-inner dark:border-slate-800 dark:bg-slate-900/50">
+                  {chatters.length ? (
+                    <ul className="space-y-1 text-slate-700 dark:text-slate-200">
+                      {chatters.map((name) => (
+                        <li key={name} className="rounded bg-slate-100 px-2 py-1 text-xs font-semibold dark:bg-slate-800">
+                          {name}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-slate-500 dark:text-slate-400">No chatters pulled yet.</p>
+                  )}
+                </div>
+              </div>
             </div>
-          </aside>
+
+            <button
+              type="button"
+              onClick={reload}
+              className="mx-auto mt-2 w-fit rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
+            >
+              Refresh chatters
+            </button>
+          </div>
         </div>
       )}
     </div>
