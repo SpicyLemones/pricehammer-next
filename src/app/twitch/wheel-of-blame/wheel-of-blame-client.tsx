@@ -110,16 +110,16 @@ export default function WheelOfBlameClient() {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-slate-800/40 bg-slate-900/60 p-6 shadow-2xl backdrop-blur-md">
+    <div className="relative min-h-screen overflow-hidden bg-slate-950">
       <video
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover blur-sm"
+        className="pointer-events-none fixed inset-0 h-full w-full object-cover blur-md"
         src="/videos/wheelofblame.mp4"
         autoPlay
         loop
         playsInline
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/55 to-black/70" aria-hidden />
-      <div className="relative space-y-8">
+      <div className="fixed inset-0 bg-gradient-to-b from-black/70 via-black/65 to-black/80" aria-hidden />
+      <div className="relative mx-auto flex max-w-6xl flex-col gap-8 p-6">
       <style jsx global>{`
         @font-face {
           font-family: "Red Devil";
@@ -237,14 +237,12 @@ export default function WheelOfBlameClient() {
                         <div
                           className="absolute left-1/2 top-1/2 origin-center -translate-x-1/2 -translate-y-1/2 text-center text-[15px] font-semibold uppercase tracking-[0.08em] text-white drop-shadow"
                           style={{
-                            transform: `rotate(${segmentAngle / 2}deg) translateY(-62%) rotate(-${segmentAngle / 2}deg)`,
-                            width: "78%",
-                            lineHeight: "1.1",
+                            transform: `rotate(${segmentAngle / 2}deg) translateY(-115%) rotate(-${segmentAngle / 2}deg)`,
+                            width: "96%",
+                            lineHeight: "1.05",
                           }}
                         >
-                          <span className="block max-w-full truncate drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
-                            {label}
-                          </span>
+                          <span className="block max-w-full truncate drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">{label}</span>
                         </div>
                       )}
                     </div>
