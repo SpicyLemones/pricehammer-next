@@ -1,4 +1,4 @@
-// src/app/twitch-fun/page.tsx
+// src/app/twitch/page.tsx
 import Link from "next/link";
 
 const modules = [
@@ -35,7 +35,7 @@ function ModuleButton({ title, description }: { title: string; description: stri
   );
 }
 
-export default function TwitchFunPage() {
+export default function TwitchPage() {
   return (
     <div className="w-full max-w-3xl space-y-6">
       <Link
@@ -46,9 +46,7 @@ export default function TwitchFunPage() {
       </Link>
 
       <header className="space-y-2 text-center">
-        <h1 className="text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">
-          Twitch fun
-        </h1>
+        <h1 className="text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">Twitch fun</h1>
         <p className="text-slate-600 dark:text-slate-300">
           Choose a module to play with during your stream. Everything here is simple and tactile.
         </p>
