@@ -62,9 +62,10 @@ export function Header() {
         {/* Nav + actions */}
         <div className="flex min-w-0 flex-1 items-center justify-end gap-3">
           <nav className="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar -mx-2 px-2">
-            <NavItem href="/price-lookup" exact>
-              🔎 Product Lookup
+            <NavItem href="/" exact>
+              🛰️ Home
             </NavItem>
+            <NavItem href="/price-lookup">🔎 PriceHammer</NavItem>
             <NavItem href="/about">About</NavItem>
             <NavItem href="/contact">Contact</NavItem>
 

@@ -31,7 +31,7 @@ const primaryDescription =
 export const metadata: Metadata = {
   metadataBase,
   title: {
-    default: "Spycy.fun | Project hub by PriceHammer",
+    default: "Spycy.fun ",
     template: "%s | Spycy.fun",
   },
   description: primaryDescription,
@@ -66,16 +66,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/",
-    title: "Spycy.fun | Project hub by PriceHammer",
+    title: "Spycy.fun",
     description: primaryDescription,
     siteName: "Spycy.fun",
     locale: "en_AU",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Spycy.fun | Project hub by PriceHammer",
+    title: "Spycy.fun ",
     description: primaryDescription,
-    creator: "@pricehammer",
+    creator: "Spycy",
   },
   robots: {
     index: true,
