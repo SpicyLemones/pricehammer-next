@@ -4,7 +4,11 @@ import Link from "next/link";
 const modules = [
   { title: "Pre-Stream Checklist", description: "Quick rundown before you go live." },
   { title: "Stream Quest", description: "Mini missions to keep chat engaged." },
-  { title: "Wheel of Blame", description: "Spin to assign the next oops." },
+  {
+    title: "Wheel of Blame",
+    description: "Spin to assign the next oops with live chatters.",
+    href: "/twitch/wheel-of-blame",
+  },
   { title: "Toadcoin", description: "A silly stream currency idea." },
 ];
 
@@ -13,10 +17,10 @@ export const metadata = {
   description: "Pick a playful module to use during streams.",
 };
 
-function ModuleButton({ title, description }: { title: string; description: string }) {
+function ModuleButton({ title, description, href }: { title: string; description: string; href?: string }) {
   return (
-    <button
-      type="button"
+    <Link
+      href={href ?? "#"}
       className="group flex w-full flex-col gap-2 rounded-2xl border border-slate-200 bg-white/90 p-5 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl active:translate-y-[1px] active:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 dark:border-slate-800 dark:bg-slate-900/70"
     >
       <div className="flex items-center justify-between gap-3">
@@ -32,7 +36,7 @@ function ModuleButton({ title, description }: { title: string; description: stri
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(74,222,128,0.25)]" />
         Interactive
       </div>
-    </button>
+    </Link>
   );
 }
 
