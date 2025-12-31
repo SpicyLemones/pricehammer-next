@@ -110,7 +110,16 @@ export default function WheelOfBlameClient() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="relative overflow-hidden rounded-3xl border border-slate-800/40 bg-slate-900/60 p-6 shadow-2xl backdrop-blur-md">
+      <video
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover blur-sm"
+        src="/videos/wheelofblame.mp4"
+        autoPlay
+        loop
+        playsInline
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/55 to-black/70" aria-hidden />
+      <div className="relative space-y-8">
       <style jsx global>{`
         @font-face {
           font-family: "Red Devil";
@@ -298,6 +307,7 @@ export default function WheelOfBlameClient() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }
