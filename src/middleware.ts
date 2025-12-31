@@ -8,6 +8,7 @@ import { NextResponse } from "next/server";
  */
 export const config = {
   matcher: [
+    "/",
     "/admin",
     "/admin/:path*",
     "/tinder",
@@ -24,6 +25,18 @@ export const config = {
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const host = req.headers.get("host") || "";
+
+  if (host.includes("pricehammer.xyz") && pathname === "/") {
+    const redirectUrl = req.nextUrl.clone();
+    redirectUrl.pathname = "/price-lookup";
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  // Root page stays public
+  if (pathname === "/") {
+    return NextResponse.next();
+  }
 
   // Publicly accessible endpoint(s): allow without auth.
   if (
