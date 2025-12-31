@@ -11,21 +11,24 @@ export async function GET(request: Request) {
   const error = searchParams.get("error");
 
   if (error) {
-    return NextResponse.redirect(`/twitch/wheel-of-blame?error=${encodeURIComponent(error)}`);
+    const redirectUrl = new URL(`/twitch/wheel-of-blame?error=${encodeURIComponent(error)}`, request.url);
+    return NextResponse.redirect(redirectUrl);
   }
 
   if (!code || !state || !verifyState(state)) {
-    return NextResponse.redirect("/twitch/wheel-of-blame?error=invalid_state");
+    const redirectUrl = new URL("/twitch/wheel-of-blame?error=invalid_state", request.url);
+    return NextResponse.redirect(redirectUrl);
   }
 
   try {
     const session = await exchangeCodeForTokens(code);
     writeSession(session);
-    return NextResponse.redirect("/twitch/wheel-of-blame?connected=1");
+    const redirectUrl = new URL("/twitch/wheel-of-blame?connected=1", request.url);
+    return NextResponse.redirect(redirectUrl);
   } catch (err) {
     console.error("Failed to exchange Twitch code", err);
     clearSession();
-    return NextResponse.redirect("/twitch/wheel-of-blame?error=oauth_failed");
+    const redirectUrl = new URL("/twitch/wheel-of-blame?error=oauth_failed", request.url);
+    return NextResponse.redirect(redirectUrl);
   }
 }
-
