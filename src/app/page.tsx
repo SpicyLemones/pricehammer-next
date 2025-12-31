@@ -1,6 +1,4 @@
 // src/app/page.tsx
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 const tiles = [
   {
@@ -9,18 +7,12 @@ const tiles = [
     href: "https://pricehammer.xyz",
     external: true,
   },
-  { title: "Twitch", subtitle: "Stream shenanigans", href: "/twitch", external: false },
+  { title: "Twitch fun", subtitle: "Stream-side experiments", href: "/twitch", external: false },
   { title: "Placeholder A", subtitle: "Coming soon", href: "#", external: false },
   { title: "Placeholder B", subtitle: "Coming soon", href: "#", external: false },
 ];
 
-export default async function HomePage() {
-  const headerList = await headers();
-  const host = headerList.get("host") || "";
-  if (host.includes("pricehammer.xyz")) {
-    redirect("/price-lookup");
-  }
-
+export default function HomePage() {
   return (
     <div className="flex flex-col items-center gap-10">
       <header className="mt-6 text-center space-y-2">
