@@ -106,7 +106,7 @@ export default function WheelOfBlameClient() {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
       }
-    }, 4200);
+    }, 5200); // keep audio in sync (~5s)
   }
 
   return (
@@ -197,16 +197,16 @@ export default function WheelOfBlameClient() {
 
       {state.status === "ready" && (
         <div className="space-y-8">
-          <div className="relative mx-auto flex h-[480px] w-full max-w-3xl items-center justify-center">
-            <div className="relative h-[360px] w-[360px] rounded-full bg-slate-900/70 shadow-2xl ring-8 ring-slate-900/60">
-              <div className="absolute left-[-70px] top-1/2 z-30 -translate-y-1/2">
-                <div className="relative h-32 w-32">
+          <div className="relative mx-auto flex h-[620px] w-full max-w-5xl items-center justify-center">
+            <div className="relative h-[480px] w-[480px] rounded-full bg-slate-950/70 shadow-[0_20px_70px_rgba(0,0,0,0.55)] ring-[14px] ring-slate-900/70">
+              <div className="absolute right-[-130px] top-1/2 z-30 -translate-y-1/2 rotate-6">
+                <div className="relative h-48 w-48">
                   <Image src="/images/wheel-pointer.png" alt="Pointer" fill className="object-contain" priority />
                 </div>
               </div>
 
               <div
-                className="absolute inset-0 rounded-full transition-transform duration-[4200ms] ease-[cubic-bezier(0.25,0.1,0.2,1)]"
+                className="absolute inset-5 rounded-full bg-slate-950/80 transition-transform duration-[5000ms] ease-[cubic-bezier(0.25,0.1,0.2,1)] ring-8 ring-slate-800/70"
                 style={{
                   transform: `rotate(${spinAngle}deg)`,
                 }}
@@ -218,19 +218,19 @@ export default function WheelOfBlameClient() {
                   return (
                     <div key={idx} className="absolute inset-0 origin-center" style={{ transform: `rotate(${rotate}deg)` }}>
                       <div
-                        className="absolute inset-0"
+                        className="absolute inset-0 rounded-full"
                         style={{
-                          background: `conic-gradient(${color} ${segmentAngle - 0.5}deg, transparent ${segmentAngle}deg)`,
-                          maskImage: "radial-gradient(circle at center, transparent 36%, black 36%, black 100%)",
+                          background: `conic-gradient(${color} ${segmentAngle - 0.6}deg, transparent ${segmentAngle}deg)`,
+                          maskImage: "radial-gradient(circle at center, transparent 30%, black 30%, black 100%)",
                         }}
                       />
                       {label && (
                         <div
-                          className="absolute left-1/2 top-1/2 origin-center -translate-x-1/2 -translate-y-1/2 text-center text-[13px] font-semibold uppercase tracking-[0.16em] text-white drop-shadow"
+                          className="absolute left-1/2 top-1/2 origin-center -translate-x-1/2 -translate-y-1/2 truncate text-center text-[14px] font-semibold uppercase tracking-[0.12em] text-white drop-shadow"
                           style={{
-                            transform: `rotate(${segmentAngle / 2}deg) translateY(-38%) rotate(-${segmentAngle / 2}deg)`,
-                            width: "60%",
-                            lineHeight: "1.2",
+                            transform: `rotate(${segmentAngle / 2}deg) translateY(-46%) rotate(-${segmentAngle / 2}deg)`,
+                            width: "64%",
+                            lineHeight: "1.05",
                           }}
                         >
                           {label}
@@ -245,7 +245,7 @@ export default function WheelOfBlameClient() {
                 type="button"
                 onClick={spin}
                 disabled={spinning || !chatters.length}
-                className="font-red-devil absolute left-1/2 top-1/2 z-20 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-b from-rose-500 to-rose-600 text-xl font-black uppercase tracking-[0.2em] text-white shadow-[0_12px_30px_rgba(0,0,0,0.35)] transition hover:scale-105 active:scale-100 disabled:cursor-not-allowed disabled:opacity-60"
+                className="font-red-devil absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-b from-rose-500 to-rose-600 text-2xl font-black uppercase tracking-[0.2em] text-white shadow-[0_16px_40px_rgba(0,0,0,0.45)] transition hover:scale-105 active:scale-100 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Blame
               </button>
