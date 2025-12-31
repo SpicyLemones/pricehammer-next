@@ -9,7 +9,7 @@ const tiles = [
     href: "https://pricehammer.xyz",
     external: true,
   },
-  { title: "Twitch fun", subtitle: "Stream-side experiments", href: "#", external: false },
+  { title: "Twitch fun", subtitle: "Stream experimental", href: "/twitch-fun", external: false },
   { title: "Placeholder A", subtitle: "Coming soon", href: "#", external: false },
   { title: "Placeholder B", subtitle: "Coming soon", href: "#", external: false },
 ];
