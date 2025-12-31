@@ -1,61 +1,52 @@
-\"use client\";
+"use client";
 
-import Image from \"next/image\";
-import { useEffect, useMemo, useRef, useState } from \"react\";
+import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type ChattersState =
-  | { status: \"idle\" | \"loading\" }
-  | { status: \"unauthenticated\" }
-  | { status: \"misconfigured\"; missing: string[] }
-  | { status: \"offline\"; displayName?: string }
-  | { status: \"ready\"; displayName?: string; chatters: string[] };
+  | { status: "idle" | "loading" }
+  | { status: "unauthenticated" }
+  | { status: "misconfigured"; missing: string[] }
+  | { status: "offline"; displayName?: string }
+  | { status: "ready"; displayName?: string; chatters: string[] };
 
 type SpinResult = { winner: string; angle: number };
 
-const fallbackColors = [
-  \"#FFD166\",
-  \"#EF476F\",
-  \"#06D6A0\",
-  \"#118AB2\",
-  \"#A556F6\",
-  \"#F78C6B\",
-  \"#4CC9F0\",
-  \"#BDE0FE\",
-];
+const fallbackColors = ["#FFD166", "#EF476F", "#06D6A0", "#118AB2", "#A556F6", "#F78C6B", "#4CC9F0", "#BDE0FE"];
 
 function useChatters() {
-  const [state, setState] = useState<ChattersState>({ status: \"idle\" });
+  const [state, setState] = useState<ChattersState>({ status: "idle" });
 
   async function load() {
     try {
-      const configRes = await fetch(\"/api/twitch/status\");
+      const configRes = await fetch("/api/twitch/status");
       const config = (await configRes.json()) as { configured?: boolean; missing?: string[] };
       if (!config.configured) {
-        setState({ status: \"misconfigured\", missing: config.missing ?? [] });
+        setState({ status: "misconfigured", missing: config.missing ?? [] });
         return;
       }
     } catch (error) {
-      console.error(\"Failed to check Twitch configuration\", error);
-      setState({ status: \"misconfigured\", missing: [] });
+      console.error("Failed to check Twitch configuration", error);
+      setState({ status: "misconfigured", missing: [] });
       return;
     }
 
-    setState({ status: \"loading\" });
+    setState({ status: "loading" });
     try {
-      const res = await fetch(\"/api/twitch/chatters\");
+      const res = await fetch("/api/twitch/chatters");
       if (res.status === 401) {
-        setState({ status: \"unauthenticated\" });
+        setState({ status: "unauthenticated" });
         return;
       }
       const data = (await res.json()) as { live: boolean; chatters?: string[]; displayName?: string };
       if (!data.live) {
-        setState({ status: \"offline\", displayName: data.displayName });
+        setState({ status: "offline", displayName: data.displayName });
         return;
       }
-      setState({ status: \"ready\", displayName: data.displayName, chatters: data.chatters ?? [] });
+      setState({ status: "ready", displayName: data.displayName, chatters: data.chatters ?? [] });
     } catch (error) {
-      console.error(\"Failed to load chatters\", error);
-      setState({ status: \"unauthenticated\" });
+      console.error("Failed to load chatters", error);
+      setState({ status: "unauthenticated" });
     }
   }
 
@@ -76,8 +67,8 @@ export default function WheelOfBlameClient() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio(\"/audio/spin.mp3\");
-    audioRef.current.preload = \"auto\";
+    audioRef.current = new Audio("/audio/spin.mp3");
+    audioRef.current.preload = "auto";
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -86,7 +77,7 @@ export default function WheelOfBlameClient() {
     };
   }, []);
 
-  const chatters = useMemo(() => (state.status === \"ready\" ? state.chatters : []), [state]);
+  const chatters = useMemo(() => (state.status === "ready" ? state.chatters : []), [state]);
   const segments = Math.max(chatters.length, 1);
   const segmentAngle = 360 / segments;
 
@@ -104,7 +95,7 @@ export default function WheelOfBlameClient() {
         audioRef.current.currentTime = 0;
         void audioRef.current.play();
       } catch (err) {
-        console.warn(\"Spin audio failed to play\", err);
+        console.warn("Spin audio failed to play", err);
       }
     }
 
@@ -119,22 +110,22 @@ export default function WheelOfBlameClient() {
   }
 
   return (
-    <div className=\"space-y-8\">
+    <div className="space-y-8">
       <style jsx global>{`
         @font-face {
-          font-family: \"Red Devil\";
-          src: url(\"/fonts/Red_Devil.otf\") format(\"opentype\");
+          font-family: "Red Devil";
+          src: url("/fonts/Red_Devil.otf") format("opentype");
           font-display: swap;
         }
         .font-red-devil {
-          font-family: \"Red Devil\", var(--font-sans, \"Inter\"), system-ui, -apple-system, sans-serif;
+          font-family: "Red Devil", var(--font-sans, "Inter"), system-ui, -apple-system, sans-serif;
         }
       `}</style>
-      <header className=\"space-y-2 text-center\">
-        <h1 className=\"font-red-devil text-5xl font-black uppercase tracking-tight text-slate-900 dark:text-white\">
+      <header className="space-y-2 text-center">
+        <h1 className="font-red-devil text-5xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
           Wheel of Blame
         </h1>
-        <p className=\"text-base text-slate-600 dark:text-slate-300\">
+        <p className="text-base text-slate-600 dark:text-slate-300">
           Blame a loyal chatter for whatever went wrong this time, and punish or redeem them.
         </p>
       </header>
@@ -167,9 +158,7 @@ export default function WheelOfBlameClient() {
       {state.status === "misconfigured" && (
         <div className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-rose-900 shadow-sm dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-100">
           <h2 className="text-xl font-semibold">Twitch config missing</h2>
-          <p className="text-sm mt-2">
-            Add the required environment variables, restart the app, then retry:
-          </p>
+          <p className="text-sm mt-2">Add the required environment variables, restart the app, then retry:</p>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
             <li>TWITCH_CLIENT_ID</li>
             <li>TWITCH_CLIENT_SECRET</li>
@@ -177,9 +166,7 @@ export default function WheelOfBlameClient() {
             <li>TWITCH_STATE_SECRET</li>
           </ul>
           {state.missing.length > 0 && (
-            <p className="mt-3 text-xs text-rose-700 dark:text-rose-200">
-              Detected missing: {state.missing.join(", ")}
-            </p>
+            <p className="mt-3 text-xs text-rose-700 dark:text-rose-200">Detected missing: {state.missing.join(", ")}</p>
           )}
           <div className="mt-4 flex gap-3">
             <button
@@ -234,8 +221,7 @@ export default function WheelOfBlameClient() {
                         className="absolute inset-0"
                         style={{
                           background: `conic-gradient(${color} ${segmentAngle - 0.5}deg, transparent ${segmentAngle}deg)`,
-                          maskImage:
-                            "radial-gradient(circle at center, transparent 36%, black 36%, black 100%)",
+                          maskImage: "radial-gradient(circle at center, transparent 36%, black 36%, black 100%)",
                         }}
                       />
                       {label && (
