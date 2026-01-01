@@ -259,6 +259,7 @@ export function StreamQuestClient() {
           backgroundImage: tavernBoardBg,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.25),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.4),transparent_40%)]" />
@@ -376,13 +377,14 @@ function QuestTile({
       className={clsx(
         "group relative h-full overflow-hidden rounded-2xl border bg-white/85 text-left shadow-[0_12px_30px_rgba(0,0,0,0.18)] transition duration-200 dark:border-amber-900/80 dark:bg-slate-950/80",
         isCompleted
-          ? "cursor-not-allowed border-red-200/80 text-slate-500 grayscale dark:border-red-900/60 dark:text-slate-400"
+          ? "cursor-not-allowed border-slate-300/80 text-slate-600 grayscale dark:border-slate-800/70 dark:text-slate-300"
           : "border-amber-200/70 hover:-translate-y-[6px] hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] active:translate-y-[1px]"
       )}
       style={{
         backgroundImage: tavernBoardBg,
         backgroundSize: "cover",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <div
@@ -403,8 +405,8 @@ function QuestTile({
 
       {!isCompleted && isActive ? (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <span className="rounded-lg border-4 border-emerald-500/70 bg-emerald-900/30 px-5 py-3 text-lg font-black uppercase tracking-[0.35em] text-emerald-100 opacity-0 shadow-lg transition duration-300 group-hover:opacity-100">
-            COMPLETE QUEST
+          <span className="rotate-[-10deg] text-3xl font-black uppercase tracking-[0.35em] text-emerald-400 opacity-0 drop-shadow-[0_0_16px_rgba(16,185,129,0.35)] transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.03] group-hover:opacity-100">
+            COMPLETE
           </span>
         </div>
       ) : null}
@@ -446,7 +448,7 @@ function QuestTile({
 
         {isCompleted ? (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <span className="rotate-[-6deg] rounded-lg border-4 border-red-800/80 bg-red-900/80 px-5 py-3 text-lg font-black uppercase tracking-[0.35em] text-red-50 shadow-lg drop-shadow-lg">
+            <span className="rotate-[-12deg] text-3xl font-black uppercase tracking-[0.35em] text-emerald-400 drop-shadow-[0_0_16px_rgba(74,222,128,0.45)]">
               QUEST COMPLETE
             </span>
           </div>
