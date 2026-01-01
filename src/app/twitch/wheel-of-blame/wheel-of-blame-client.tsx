@@ -228,8 +228,8 @@ export default function WheelOfBlameClient() {
     if (actionsTimerRef.current) {
       clearTimeout(actionsTimerRef.current);
     }
+    playWilhelm();
     revealTimerRef.current = setTimeout(() => {
-      playWilhelm();
       setRevealStage("winner");
   
     }, 1200);
@@ -412,7 +412,7 @@ export default function WheelOfBlameClient() {
       const delay = 120 + (isSlowingDown ? slowdownProgress * 260 : 0);
 
       doubleDownLoopTimerRef.current = setTimeout(() => {
-        currentIndex += 1;
+        currentIndex = normalizeDoubleDownIndex(currentIndex + 1);
         setDoubleDownActiveIndex(currentIndex);
         setDoubleDownOffset(getDoubleDownOffset(currentIndex));
 
