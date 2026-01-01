@@ -17,6 +17,7 @@ const WHEEL_SIZE = 620;
 const WHEEL_INSET = 14;
 const INNER_HOLE_RATIO = 0.23;
 const POINTER_OFFSET = -150;
+const DEFAULT_SEGMENT_COLOR = "#CBD5E1";
 
 function useChatters() {
   const [state, setState] = useState<ChattersState>({ status: "idle" });
@@ -88,12 +89,23 @@ export default function WheelOfBlameClient() {
   const segmentAngle = 360 / segments;
 
   const colors = useMemo(() => chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]), [chatters]);
+  const gradient = useMemo(() => {
+    if (!chatters.length) return `${DEFAULT_SEGMENT_COLOR} -90deg 270deg`;
+    return chatters
+      .map((_, idx) => {
+        const start = -90 + idx * segmentAngle;
+        const end = start + segmentAngle;
+        const color = colors[idx % colors.length];
+        return `${color} ${start}deg ${end}deg`;
+      })
+      .join(", ");
+  }, [chatters, colors, segmentAngle]);
 
   const wheelDiameter = WHEEL_SIZE - WHEEL_INSET * 2;
   const wheelRadius = wheelDiameter / 2;
   const innerHoleRadius = wheelRadius * INNER_HOLE_RATIO;
-  const labelRadius = innerHoleRadius + (wheelRadius - innerHoleRadius) * 0.62;
-  const labelSpan = wheelRadius - innerHoleRadius - 26;
+  const labelRadius = innerHoleRadius + (wheelRadius - innerHoleRadius) * 0.75;
+  const labelSpan = wheelRadius - innerHoleRadius - 30;
 
   const fontSizeForLabel = (label: string) => {
     const arcLength = Math.PI * labelRadius * (segmentAngle / 180);
@@ -244,57 +256,50 @@ export default function WheelOfBlameClient() {
                   className="absolute rounded-full bg-slate-950/80 transition-transform duration-[5000ms] ease-[cubic-bezier(0.15,0,0.15,1)] ring-8 ring-slate-800/70"
                   style={{ transform: `rotate(${spinAngle}deg)`, inset: WHEEL_INSET }}
                 >
-                  {Array.from({ length: segments }).map((_, idx) => {
-                    const rotate = idx * segmentAngle;
-                    const label = chatters[idx] ?? "";
-                    const color = colors[idx % colors.length];
-                    const fontSize = fontSizeForLabel(label);
-                    const labelRotation = segmentAngle / 2;
-                    return (
-                      <div
-                        key={idx}
-                        className="absolute inset-0 origin-center"
-                        style={{ transform: `rotate(${rotate}deg)` }}
-                      >
-                        {/* Slice Color */}
+                  <div
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: `conic-gradient(${gradient})`,
+                      maskImage: `radial-gradient(circle at center, transparent ${INNER_HOLE_RATIO * 100}%, black ${INNER_HOLE_RATIO * 100}%, black 100%)`,
+                      WebkitMaskImage: `radial-gradient(circle at center, transparent ${INNER_HOLE_RATIO * 100}%, black ${INNER_HOLE_RATIO * 100}%, black 100%)`,
+                    }}
+                  />
+
+                  {/* Labels */}
+                  <div className="pointer-events-none absolute inset-0">
+                    {Array.from({ length: segments }).map((_, idx) => {
+                      const rotate = idx * segmentAngle;
+                      const label = chatters[idx] ?? "";
+                      const fontSize = fontSizeForLabel(label);
+                      const labelRotation = rotate + segmentAngle / 2;
+                      if (!label) return null;
+                      return (
                         <div
-                          className="absolute inset-0 rounded-full"
+                          key={idx}
+                          className="absolute left-1/2 top-1/2 z-20 flex items-center justify-center"
                           style={{
-                            background: `conic-gradient(from -90deg, ${color} ${segmentAngle - 0.4}deg, transparent ${segmentAngle}deg)`,
-                            maskImage: `radial-gradient(circle at center, transparent ${INNER_HOLE_RATIO * 100}%, black ${INNER_HOLE_RATIO * 100}%, black 100%)`,
-                            WebkitMaskImage: `radial-gradient(circle at center, transparent ${INNER_HOLE_RATIO * 100}%, black ${INNER_HOLE_RATIO * 100}%, black 100%)`,
-                            boxSizing: "border-box",
+                            transform: `rotate(${labelRotation}deg) translateX(${labelRadius}px) rotate(${-labelRotation}deg)`,
+                            transformOrigin: "center",
+                            width: `${labelSpan}px`,
+                            maxWidth: `${labelSpan}px`,
                           }}
-                        />
-                        
-                        {/* Label - Fixed alignment and visibility */}
-                        {label && (
-                          <div
-                            className="absolute left-1/2 top-1/2 z-10 flex items-center justify-center"
+                        >
+                          <span
+                            className="block w-full truncate text-center font-bold uppercase text-white"
                             style={{
-                              transform: `rotate(${labelRotation}deg) translateX(${labelRadius}px) rotate(-90deg)`,
-                              transformOrigin: "center",
-                              width: `${labelSpan}px`,
+                              fontSize: `${fontSize}px`,
+                              letterSpacing: segments > 10 ? "0.015em" : "0.04em",
+                              textShadow: "0 3px 10px rgba(0,0,0,0.65)",
+                              whiteSpace: "nowrap",
                               maxWidth: `${labelSpan}px`,
                             }}
                           >
-                            <span 
-                              className="block text-center font-bold uppercase text-white"
-                              style={{ 
-                                fontSize: `${fontSize}px`,
-                                letterSpacing: segments > 10 ? "0.015em" : "0.04em",
-                                textShadow: "0 3px 10px rgba(0,0,0,0.65)",
-                                whiteSpace: "nowrap",
-                                maxWidth: `${labelSpan}px`,
-                              }}
-                            >
-                              {label}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                            {label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
                 
                 {/* Center Button */}
