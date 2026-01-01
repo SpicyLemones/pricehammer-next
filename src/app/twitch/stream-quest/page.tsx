@@ -11,7 +11,7 @@ export default function StreamQuestPage() {
   return (
     <div className="relative w-full">
       <video
-        className="pointer-events-none fixed inset-0 h-full w-full object-cover opacity-70"
+        className="pointer-events-none fixed inset-0 h-full w-full object-cover opacity-60 blur-[2px]"
         autoPlay
         loop
         muted

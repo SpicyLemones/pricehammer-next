@@ -109,15 +109,21 @@ export function StreamQuestClient() {
   const [completingId, setCompletingId] = useState<string | null>(null);
   const [celebratingId, setCelebratingId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [authState, setAuthState] = useState<"checking" | "unauthenticated" | "ready">("checking");
 
   const loadData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
       const res = await fetch("/api/twitch/stream-quests");
+      if (res.status === 401) {
+        setAuthState("unauthenticated");
+        return;
+      }
       if (!res.ok) throw new Error("Failed to load daily quests");
       const json = (await res.json()) as QuestResponse;
       setData(json);
+      setAuthState("ready");
       if (json.regenerated) {
         setToast("Rolled fresh daily quests for today.");
       }
@@ -216,12 +222,34 @@ export function StreamQuestClient() {
     );
   }
 
+  const isLive = !!data.audience.live;
+  const isAuthed = data.audience.source === "twitch";
+  const isActive = isLive && isAuthed;
+  const showAuthBanner = authState === "unauthenticated" || (!isAuthed && !isLive);
+
   return (
     <div className="space-y-6">
       {toast ? (
         <div className="flex items-center gap-3 rounded-2xl border border-amber-200/80 bg-amber-50 px-4 py-3 text-amber-900 shadow-sm dark:border-amber-500/40 dark:bg-amber-950/30 dark:text-amber-100">
           <Sparkles className="h-5 w-5 text-amber-600 dark:text-amber-300" />
           <span className="font-semibold tracking-wide">{toast}</span>
+        </div>
+      ) : null}
+
+      {showAuthBanner ? (
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-200/70 bg-amber-50/80 px-4 py-3 text-amber-900 shadow-sm dark:border-amber-800/70 dark:bg-amber-950/40 dark:text-amber-50">
+          <div className="space-y-1">
+            <p className="text-sm font-semibold">Connect Twitch to enable quests</p>
+            <p className="text-xs opacity-80">
+              You need to authorize and be live for Stream Quest to activate. Otherwise quests stay locked.
+            </p>
+          </div>
+          <a
+            href="/api/twitch/login"
+            className="rounded-full border border-amber-300/80 bg-amber-900/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-50 shadow-sm transition hover:scale-[1.02] active:scale-100"
+          >
+            Authorize Twitch
+          </a>
         </div>
       ) : null}
 
@@ -233,7 +261,7 @@ export function StreamQuestClient() {
           backgroundPosition: "center",
         }}
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.15),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.35),transparent_40%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.25),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.4),transparent_40%)]" />
         <div className="relative flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-100/80 drop-shadow">
@@ -244,7 +272,7 @@ export function StreamQuestClient() {
             </h1>
             <p className="mt-2 max-w-2xl text-sm text-amber-50/80 drop-shadow">
               Click COMPLETE once you finish a dare on stream. Each completion drops coins to the current
-              chatter list or to playful placeholders if you&apos;re offline.
+              chatter list when you&apos;re live and connected.
             </p>
           </div>
           <div className="flex flex-col items-end gap-2 text-right">
@@ -256,6 +284,13 @@ export function StreamQuestClient() {
           </div>
         </div>
 
+        {!isActive ? (
+          <div className="mt-4 rounded-2xl border border-amber-900/40 bg-amber-950/40 px-4 py-3 text-sm text-amber-50 shadow-inner">
+            Quests unlock when you are live and authorized with Twitch. Connect above and go live to start
+            stamping.
+          </div>
+        ) : null}
+
         <div className="relative mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {data.quests.map((quest) => (
             <QuestTile
@@ -264,6 +299,7 @@ export function StreamQuestClient() {
               onComplete={() => completeQuest(quest.id)}
               completing={completingId === quest.id}
               celebrating={celebratingId === quest.id}
+              isActive={isActive}
             />
           ))}
         </div>
@@ -320,11 +356,13 @@ function QuestTile({
   onComplete,
   completing,
   celebrating,
+  isActive,
 }: {
   quest: StreamQuest;
   onComplete: () => void;
   completing: boolean;
   celebrating: boolean;
+  isActive: boolean;
 }) {
   const meta = categoryMeta[quest.category];
   const Icon = meta.icon;
@@ -334,7 +372,7 @@ function QuestTile({
     <button
       type="button"
       onClick={quest.completed ? undefined : onComplete}
-      disabled={quest.completed || completing}
+      disabled={!isActive || quest.completed || completing}
       className={clsx(
         "group relative h-full overflow-hidden rounded-2xl border bg-white/85 text-left shadow-[0_12px_30px_rgba(0,0,0,0.18)] transition duration-200 dark:border-amber-900/80 dark:bg-slate-950/80",
         isCompleted
@@ -363,7 +401,7 @@ function QuestTile({
 
       {celebrating ? <CelebrationBurst /> : null}
 
-      {!isCompleted ? (
+      {!isCompleted && isActive ? (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <span className="rounded-lg border-4 border-emerald-500/70 bg-emerald-900/30 px-5 py-3 text-lg font-black uppercase tracking-[0.35em] text-emerald-100 opacity-0 shadow-lg transition duration-300 group-hover:opacity-100">
             COMPLETE QUEST
