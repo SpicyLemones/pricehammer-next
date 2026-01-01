@@ -64,6 +64,8 @@ export default function WheelOfBlameClient() {
   const [spinAngle, setSpinAngle] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<SpinResult | null>(null);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -81,7 +83,15 @@ export default function WheelOfBlameClient() {
   const segments = Math.max(chatters.length, 1);
   const segmentAngle = 360 / segments;
 
-  const colors = useMemo(() => chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]), [chatters]);
+  const wheelSize = 500;
+  const outerRadius = wheelSize / 2 - 10;
+  const innerRadius = 80;
+  const center = wheelSize / 2;
+
+  const colors = useMemo(
+    () => (chatters.length ? chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]) : fallbackColors),
+    [chatters]
+  );
 
   function spin() {
     if (!chatters.length || spinning) return;
@@ -112,199 +122,263 @@ export default function WheelOfBlameClient() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950">
       <video
+        ref={videoRef}
         className="pointer-events-none fixed inset-0 h-full w-full object-cover blur-md"
         src="/videos/wheelofblame.mp4"
         autoPlay
         loop
+        muted={!soundEnabled}
         playsInline
+        onCanPlay={() => {
+          const el = videoRef.current;
+          if (!el) return;
+          const playPromise = el.play();
+          if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(() => {
+              // Autoplay with audio can be blocked; keep muted until user enables.
+              el.muted = true;
+              setSoundEnabled(false);
+            });
+          }
+        }}
       />
       <div className="fixed inset-0 bg-gradient-to-b from-black/70 via-black/65 to-black/80" aria-hidden />
       <div className="relative mx-auto flex max-w-6xl flex-col gap-8 p-6">
-      <style jsx global>{`
-        @font-face {
-          font-family: "Red Devil";
-          src: url("/fonts/Red_Devil.otf") format("opentype");
-          font-display: swap;
-        }
-        .font-red-devil {
-          font-family: "Red Devil", var(--font-sans, "Inter"), system-ui, -apple-system, sans-serif;
-        }
-      `}</style>
-      <header className="space-y-2 text-center">
-        <h1 className="font-red-devil text-5xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
-          Wheel of Blame
-        </h1>
-        <p className="text-base text-slate-600 dark:text-slate-300">
-          Blame a loyal chatter for whatever went wrong this time, and punish or redeem them.
-        </p>
-      </header>
-
-      {state.status === "unauthenticated" && (
-        <div className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Connect Twitch</h2>
-          <p className="text-sm text-slate-600 dark:text-slate-300">
-            We&apos;ll ask Twitch for permission to read your chatters (chat:read + moderator:read:chatters). We
-            never store your client secret in the browser.
+        <a
+          href="/twitch"
+          className="fixed left-4 top-4 z-50 rounded-full bg-slate-900/80 px-4 py-2 text-sm font-semibold text-white shadow-lg backdrop-blur transition hover:bg-slate-800/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          ← Back to spycy.fun/twitch
+        </a>
+        <button
+          type="button"
+          onClick={() => {
+            const next = !soundEnabled;
+            setSoundEnabled(next);
+            if (videoRef.current) {
+              videoRef.current.muted = !next;
+              if (next) {
+                const playPromise = videoRef.current.play();
+                if (playPromise && typeof playPromise.catch === "function") {
+                  playPromise.catch(() => {
+                    // If autoplay still blocked, leave muted and reset toggle.
+                    videoRef.current?.pause();
+                    videoRef.current.muted = true;
+                    setSoundEnabled(false);
+                  });
+                }
+              }
+            }
+          }}
+          className="fixed left-4 top-16 z-50 rounded-full bg-rose-600/80 px-4 py-2 text-sm font-semibold text-white shadow-lg backdrop-blur transition hover:bg-rose-500/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          {soundEnabled ? "Mute flames" : "Enable flames audio"}
+        </button>
+        <style jsx global>{`
+          @font-face {
+            font-family: "Red Devil";
+            src: url("/fonts/Red_Devil.otf") format("opentype");
+            font-display: swap;
+          }
+          .font-red-devil {
+            font-family: "Red Devil", var(--font-sans, "Inter"), system-ui, -apple-system, sans-serif;
+          }
+        `}</style>
+        <header className="space-y-2 text-center">
+          <h1 className="font-red-devil text-5xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
+            Wheel of Blame
+          </h1>
+          <p className="text-base text-slate-600 dark:text-slate-300">
+            Blame a loyal chatter for whatever went wrong this time, and punish or redeem them.
           </p>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <a
-              href="/api/twitch/login"
-              className="rounded-full bg-purple-600 px-5 py-3 text-sm font-semibold text-white shadow transition hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-500"
-            >
-              Connect Twitch
-            </a>
-            <button
-              type="button"
-              onClick={reload}
-              className="rounded-full border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
-            >
-              Retry
-            </button>
-          </div>
-        </div>
-      )}
+        </header>
 
-      {state.status === "misconfigured" && (
-        <div className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-rose-900 shadow-sm dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-100">
-          <h2 className="text-xl font-semibold">Twitch config missing</h2>
-          <p className="text-sm mt-2">Add the required environment variables, restart the app, then retry:</p>
-          <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
-            <li>TWITCH_CLIENT_ID</li>
-            <li>TWITCH_CLIENT_SECRET</li>
-            <li>TWITCH_REDIRECT_URI</li>
-            <li>TWITCH_STATE_SECRET</li>
-          </ul>
-          {state.missing.length > 0 && (
-            <p className="mt-3 text-xs text-rose-700 dark:text-rose-200">Detected missing: {state.missing.join(", ")}</p>
-          )}
-          <div className="mt-4 flex gap-3">
-            <button
-              type="button"
-              onClick={reload}
-              className="rounded-full border border-rose-200 bg-white px-4 py-2 text-sm font-semibold text-rose-800 transition hover:border-rose-300 hover:bg-rose-100 dark:border-rose-800 dark:bg-transparent dark:text-rose-100 dark:hover:border-rose-700 dark:hover:bg-rose-900/40"
-            >
-              Recheck
-            </button>
-          </div>
-        </div>
-      )}
-
-      {state.status === "offline" && (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-amber-800 shadow-sm dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-100">
-          <p className="font-semibold">
-            {state.displayName ? `${state.displayName} is currently offline.` : "Stream is offline."}
-          </p>
-          <p className="text-sm">Go live to load chatters, then refresh.</p>
-        </div>
-      )}
-
-      {state.status === "loading" && (
-        <div className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-          <p className="text-sm text-slate-600 dark:text-slate-300">Loading chatters...</p>
-        </div>
-      )}
-
-      {state.status === "ready" && (
-        <div className="space-y-8">
-          <div className="relative mx-auto flex h-[620px] w-full max-w-5xl items-center justify-center">
-            <div className="relative h-[480px] w-[480px] rounded-full bg-slate-950/70 shadow-[0_20px_70px_rgba(0,0,0,0.55)] ring-[14px] ring-slate-900/70">
-              <div className="absolute right-[-130px] top-1/2 z-30 -translate-y-1/2 rotate-6">
-                <div className="relative h-48 w-48">
-                  <Image src="/images/wheel-pointer.png" alt="Pointer" fill className="object-contain" priority />
-                </div>
-              </div>
-
-              <div
-                className="absolute inset-5 rounded-full bg-slate-950/80 transition-transform duration-[5000ms] ease-[cubic-bezier(0.25,0.1,0.2,1)] ring-8 ring-slate-800/70"
-                style={{
-                  transform: `rotate(${spinAngle}deg)`,
-                }}
+        {state.status === "unauthenticated" && (
+          <div className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Connect Twitch</h2>
+            <p className="text-sm text-slate-600 dark:text-slate-300">
+              We&apos;ll ask Twitch for permission to read your chatters (chat:read + moderator:read:chatters). We
+              never store your client secret in the browser.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a
+                href="/api/twitch/login"
+                className="rounded-full bg-purple-600 px-5 py-3 text-sm font-semibold text-white shadow transition hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-500"
               >
-                {Array.from({ length: segments }).map((_, idx) => {
-                  const rotate = idx * segmentAngle;
-                  const label = chatters[idx] ?? "";
-                  const color = colors[idx % colors.length];
-                  return (
-                    <div key={idx} className="absolute inset-0 origin-center" style={{ transform: `rotate(${rotate}deg)` }}>
-                      <div
-                        className="absolute inset-0 rounded-full"
-                        style={{
-                          background: `conic-gradient(${color} ${segmentAngle - 0.6}deg, transparent ${segmentAngle}deg)`,
-                          maskImage: "radial-gradient(circle at center, transparent 30%, black 30%, black 100%)",
-                        }}
-                      />
-                      {label && (
-                        <div
-                          className="absolute left-1/2 top-1/2 origin-center -translate-x-1/2 -translate-y-1/2 text-center text-[15px] font-semibold uppercase tracking-[0.08em] text-white drop-shadow"
-                          style={{
-                            transform: `rotate(${segmentAngle / 2}deg) translateY(-115%) rotate(-${segmentAngle / 2}deg)`,
-                            width: "96%",
-                            lineHeight: "1.05",
-                          }}
-                        >
-                          <span className="block max-w-full truncate drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">{label}</span>
-                        </div>
-                      )}
+                Connect Twitch
+              </a>
+              <button
+                type="button"
+                onClick={reload}
+                className="rounded-full border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
+              >
+                Retry
+              </button>
+            </div>
+          </div>
+        )}
+
+        {state.status === "misconfigured" && (
+          <div className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-rose-900 shadow-sm dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-100">
+            <h2 className="text-xl font-semibold">Twitch config missing</h2>
+            <p className="text-sm mt-2">Add the required environment variables, restart the app, then retry:</p>
+            <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
+              <li>TWITCH_CLIENT_ID</li>
+              <li>TWITCH_CLIENT_SECRET</li>
+              <li>TWITCH_REDIRECT_URI</li>
+              <li>TWITCH_STATE_SECRET</li>
+            </ul>
+            {state.missing.length > 0 && (
+              <p className="mt-3 text-xs text-rose-700 dark:text-rose-200">Detected missing: {state.missing.join(", ")}</p>
+            )}
+            <div className="mt-4 flex gap-3">
+              <button
+                type="button"
+                onClick={reload}
+                className="rounded-full border border-rose-200 bg-white px-4 py-2 text-sm font-semibold text-rose-800 transition hover:border-rose-300 hover:bg-rose-100 dark:border-rose-800 dark:bg-transparent dark:text-rose-100 dark:hover:border-rose-700 dark:hover:bg-rose-900/40"
+              >
+                Recheck
+              </button>
+            </div>
+          </div>
+        )}
+
+        {state.status === "offline" && (
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-amber-800 shadow-sm dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-100">
+            <p className="font-semibold">
+              {state.displayName ? `${state.displayName} is currently offline.` : "Stream is offline."}
+            </p>
+            <p className="text-sm">Go live to load chatters, then refresh.</p>
+          </div>
+        )}
+
+        {state.status === "loading" && (
+          <div className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+            <p className="text-sm text-slate-600 dark:text-slate-300">Loading chatters...</p>
+          </div>
+        )}
+
+        {state.status === "ready" && (
+          <div className="space-y-8">
+            <div className="relative mx-auto flex h-[620px] w-full max-w-5xl items-center justify-center">
+              <div className="relative h-[520px] w-[520px] rounded-full bg-slate-950/70 shadow-[0_20px_70px_rgba(0,0,0,0.55)] ring-[14px] ring-slate-900/70">
+                <div className="absolute right-[-130px] top-1/2 z-30 -translate-y-1/2 rotate-6">
+                  <div className="relative h-48 w-48">
+                    <Image src="/images/wheel-pointer.png" alt="Pointer" fill className="object-contain" priority />
+                  </div>
+                </div>
+
+                <div className="absolute inset-4 transition-transform duration-[5000ms] ease-[cubic-bezier(0.25,0.1,0.2,1)]" style={{ transform: `rotate(${spinAngle}deg)` }}>
+                  <svg viewBox={`0 0 ${wheelSize} ${wheelSize}`} className="h-full w-full drop-shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
+                    <circle cx={center} cy={center} r={outerRadius + 4} fill="rgba(15,23,42,0.75)" />
+                    {Array.from({ length: segments }).map((_, idx) => {
+                      const startAngle = (idx * segmentAngle * Math.PI) / 180;
+                      const endAngle = ((idx + 1) * segmentAngle * Math.PI) / 180;
+                      const largeArc = endAngle - startAngle > Math.PI ? 1 : 0;
+
+                      const sx = center + outerRadius * Math.cos(startAngle);
+                      const sy = center + outerRadius * Math.sin(startAngle);
+                      const ex = center + outerRadius * Math.cos(endAngle);
+                      const ey = center + outerRadius * Math.sin(endAngle);
+
+                      const six = center + innerRadius * Math.cos(endAngle);
+                      const siy = center + innerRadius * Math.sin(endAngle);
+                      const sdx = center + innerRadius * Math.cos(startAngle);
+                      const sdy = center + innerRadius * Math.sin(startAngle);
+
+                      const path = [
+                        `M ${sx} ${sy}`,
+                        `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${ex} ${ey}`,
+                        `L ${six} ${siy}`,
+                        `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${sdx} ${sdy}`,
+                        "Z",
+                      ].join(" ");
+
+                      const midAngle = startAngle + (endAngle - startAngle) / 2;
+                      const labelRadius = innerRadius + (outerRadius - innerRadius) * 0.62;
+                      const lx = center + labelRadius * Math.cos(midAngle);
+                      const ly = center + labelRadius * Math.sin(midAngle);
+                      const labelRotation = (midAngle * 180) / Math.PI;
+                      const label = chatters[idx] ?? "";
+
+                      return (
+                        <g key={idx}>
+                          <path d={path} fill={colors[idx % colors.length]} />
+                          {label && (
+                            <text
+                              x={lx}
+                              y={ly}
+                              fill="white"
+                              fontSize="15"
+                              fontWeight="700"
+                              textAnchor="middle"
+                              transform={`rotate(${labelRotation - 90}, ${lx}, ${ly})`}
+                              style={{ letterSpacing: "0.04em", paintOrder: "stroke", stroke: "rgba(0,0,0,0.45)", strokeWidth: 1 }}
+                            >
+                              {label}
+                            </text>
+                          )}
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={spin}
+                  disabled={spinning || !chatters.length}
+                  className="font-red-devil absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-b from-rose-500 to-rose-600 text-2xl font-black uppercase tracking-[0.2em] text-white shadow-[0_16px_40px_rgba(0,0,0,0.45)] transition hover:scale-105 active:scale-100 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  Blame
+                </button>
+              </div>
+            </div>
+
+            <div className="mx-auto flex max-w-3xl flex-col gap-4 text-center">
+              <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">
+                {chatters.length} chatters loaded
+              </p>
+              <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center">
+                <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Roll log</p>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Recent winner</h3>
+                  {result ? (
+                    <div className="mt-3 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-green-800 shadow-sm dark:border-green-900/60 dark:bg-green-950/30 dark:text-green-100">
+                      🎉 {result.winner}
                     </div>
-                  );
-                })}
+                  ) : (
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">No spins yet.</p>
+                  )}
+                </div>
+                <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Chatters</p>
+                  <div className="max-h-64 overflow-auto rounded-2xl border border-slate-200 bg-white/60 p-3 text-sm shadow-inner dark:border-slate-800 dark:bg-slate-900/50">
+                    {chatters.length ? (
+                      <ul className="space-y-1 text-slate-700 dark:text-slate-200">
+                        {chatters.map((name) => (
+                          <li key={name} className="rounded bg-slate-100 px-2 py-1 text-xs font-semibold dark:bg-slate-800">
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-slate-500 dark:text-slate-400">No chatters pulled yet.</p>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <button
                 type="button"
-                onClick={spin}
-                disabled={spinning || !chatters.length}
-                className="font-red-devil absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-b from-rose-500 to-rose-600 text-2xl font-black uppercase tracking-[0.2em] text-white shadow-[0_16px_40px_rgba(0,0,0,0.45)] transition hover:scale-105 active:scale-100 disabled:cursor-not-allowed disabled:opacity-60"
+                onClick={reload}
+                className="mx-auto mt-2 w-fit rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
               >
-                Blame
+                Refresh chatters
               </button>
             </div>
           </div>
-
-          <div className="mx-auto flex max-w-3xl flex-col gap-4 text-center">
-            <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">
-              {chatters.length} chatters loaded
-            </p>
-            <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center">
-              <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Roll log</p>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Recent winner</h3>
-                {result ? (
-                  <div className="mt-3 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-green-800 shadow-sm dark:border-green-900/60 dark:bg-green-950/30 dark:text-green-100">
-                    🎉 {result.winner}
-                  </div>
-                ) : (
-                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">No spins yet.</p>
-                )}
-              </div>
-              <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Chatters</p>
-                <div className="max-h-64 overflow-auto rounded-2xl border border-slate-200 bg-white/60 p-3 text-sm shadow-inner dark:border-slate-800 dark:bg-slate-900/50">
-                  {chatters.length ? (
-                    <ul className="space-y-1 text-slate-700 dark:text-slate-200">
-                      {chatters.map((name) => (
-                        <li key={name} className="rounded bg-slate-100 px-2 py-1 text-xs font-semibold dark:bg-slate-800">
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-slate-500 dark:text-slate-400">No chatters pulled yet.</p>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={reload}
-              className="mx-auto mt-2 w-fit rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
-            >
-              Refresh chatters
-            </button>
-          </div>
-        </div>
-      )}
+        )}
       </div>
     </div>
   );
