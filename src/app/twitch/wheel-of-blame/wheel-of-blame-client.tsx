@@ -93,6 +93,7 @@ export default function WheelOfBlameClient() {
   const [doubleDownReady, setDoubleDownReady] = useState(false);
   const [doubleDownLoading, setDoubleDownLoading] = useState(false);
   const [doubleDownOffset, setDoubleDownOffset] = useState(0);
+  const [doubleDownActiveIndex, setDoubleDownActiveIndex] = useState(0);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const demonOverlayRef = useRef<HTMLVideoElement | null>(null);
@@ -151,6 +152,9 @@ export default function WheelOfBlameClient() {
     () => [...doubleDownOptions, ...doubleDownOptions, ...doubleDownOptions],
     [doubleDownOptions]
   );
+  const doubleDownMiddleIndex = doubleDownOptions.length;
+  const getDoubleDownOffset = (index: number) =>
+    -(index * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
 
   const colors = useMemo(
     () => (chatters.length ? chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]) : fallbackColors),
@@ -158,11 +162,10 @@ export default function WheelOfBlameClient() {
   );
 
   useEffect(() => {
-    const middleIndex = doubleDownOptions.length; // center copy
-    const target =
-      -(middleIndex * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
+    const target = getDoubleDownOffset(doubleDownMiddleIndex);
     setDoubleDownOffset(target);
-  }, [doubleDownOptions, doubleDownItemHeight, doubleDownWindow]);
+    setDoubleDownActiveIndex(doubleDownMiddleIndex);
+  }, [doubleDownMiddleIndex]);
 
   useEffect(() => {
     const overlay = demonOverlayRef.current;
@@ -200,20 +203,10 @@ export default function WheelOfBlameClient() {
         clearTimeout(actionsTimerRef.current);
       }
       if (doubleDownLoopTimerRef.current) {
-        clearInterval(doubleDownLoopTimerRef.current);
+        clearTimeout(doubleDownLoopTimerRef.current);
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (revealStage === "winner") {
-      const wilhelm = wilhelmAudioRef.current;
-      if (wilhelm) {
-        wilhelm.currentTime = 0;
-        wilhelm.play().catch(() => {});
-      }
-    }
-  }, [revealStage]);
 
   useEffect(() => {
     if (!result) return;
@@ -232,11 +225,20 @@ export default function WheelOfBlameClient() {
     }
     revealTimerRef.current = setTimeout(() => {
       setRevealStage("winner");
+      playWilhelm();
     }, 1200);
     actionsTimerRef.current = setTimeout(() => {
       setActionsVisible(true);
     }, 2000);
   }, [result]);
+
+  function playWilhelm() {
+    const wilhelm = wilhelmAudioRef.current;
+    if (wilhelm) {
+      wilhelm.currentTime = 0;
+      wilhelm.play().catch(() => {});
+    }
+  }
 
   function playSound(tone: PunishmentTone) {
     const targetAudio = tone === "saved" ? savedAudioRef.current : punishAudioRef.current;
@@ -271,6 +273,9 @@ export default function WheelOfBlameClient() {
     }
     if (actionsTimerRef.current) {
       clearTimeout(actionsTimerRef.current);
+    }
+    if (doubleDownLoopTimerRef.current) {
+      clearTimeout(doubleDownLoopTimerRef.current);
     }
   }
 
@@ -354,15 +359,21 @@ export default function WheelOfBlameClient() {
   function spinDoubleDown() {
     if (!doubleDownOptions.length || doubleDownSpinning) return;
     if (doubleDownLoopTimerRef.current) {
-      clearInterval(doubleDownLoopTimerRef.current);
+      clearTimeout(doubleDownLoopTimerRef.current);
     }
     const winnerIndex = Math.floor(Math.random() * doubleDownOptions.length);
-    const baseIndex = doubleDownOptions.length; // center copy
-    const targetIndex = baseIndex + winnerIndex;
-    const targetOffset =
-      -(targetIndex * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
+    const baseIndex = doubleDownMiddleIndex;
+    const maxExtraSpins = Math.max(0, doubleDownOptions.length - 1 - winnerIndex);
+    const desiredExtraSpins = Math.max(4, Math.floor(doubleDownOptions.length / 2));
+    const extraSpins = Math.min(desiredExtraSpins, maxExtraSpins);
+    const totalSteps = doubleDownOptions.length + extraSpins + winnerIndex;
+
+    let currentIndex = baseIndex;
 
     setDoubleDownSpinning(true);
+    setDoubleDownActiveIndex(currentIndex);
+    setDoubleDownOffset(getDoubleDownOffset(currentIndex));
+
     const spinAudio = audioRef.current;
     const previousVolume = spinAudio?.volume ?? 1;
     if (spinAudio) {
@@ -370,28 +381,37 @@ export default function WheelOfBlameClient() {
       spinAudio.currentTime = 0;
       spinAudio.play().catch(() => {});
     }
-    const pulse = () => {
-      const randomIdx = baseIndex + Math.floor(Math.random() * doubleDownOptions.length);
-      const offset =
-        -(randomIdx * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
-      setDoubleDownOffset(offset);
-    };
-    pulse();
-    doubleDownLoopTimerRef.current = setInterval(pulse, 480);
 
-    setTimeout(() => {
-      if (doubleDownLoopTimerRef.current) {
-        clearInterval(doubleDownLoopTimerRef.current);
-      }
-      setDoubleDownOffset(targetOffset);
+    const finalizeSpin = () => {
       setDoubleDownSpinning(false);
-      const choice = doubleDownOptions[winnerIndex];
+      const normalizedIndex = (currentIndex - baseIndex) % doubleDownOptions.length;
+      const choice = doubleDownOptions[(normalizedIndex + doubleDownOptions.length) % doubleDownOptions.length];
       const tone: PunishmentTone = choice.toLowerCase().includes("save") ? "saved" : "punish";
       startPunishmentSequence(choice, tone);
       if (spinAudio) {
         spinAudio.volume = previousVolume;
       }
-    }, 6000);
+      doubleDownLoopTimerRef.current = null;
+    };
+
+    const stepThroughList = (stepsLeft: number) => {
+      const progress = 1 - stepsLeft / totalSteps;
+      const delay = 90 + progress * 220;
+
+      doubleDownLoopTimerRef.current = setTimeout(() => {
+        currentIndex += 1;
+        setDoubleDownActiveIndex(currentIndex);
+        setDoubleDownOffset(getDoubleDownOffset(currentIndex));
+
+        if (stepsLeft > 1) {
+          stepThroughList(stepsLeft - 1);
+        } else {
+          finalizeSpin();
+        }
+      }, delay);
+    };
+
+    stepThroughList(totalSteps);
   }
 
   return (
@@ -806,7 +826,11 @@ export default function WheelOfBlameClient() {
                       {doubleDownRepeated.map((option, idx) => (
                         <div
                           key={`${option}-${idx}`}
-                          className="flex h-[56px] items-center justify-center text-center text-base font-semibold text-slate-100"
+                          className={`flex h-[56px] items-center justify-center text-center text-base font-semibold transition-all duration-200 ${
+                            idx === doubleDownActiveIndex
+                              ? "rounded-xl bg-rose-500/20 text-white ring-2 ring-rose-400/60 shadow-lg shadow-rose-500/10"
+                              : "text-slate-100/80"
+                          }`}
                         >
                           {option}
                         </div>
