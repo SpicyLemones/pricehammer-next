@@ -104,14 +104,17 @@ export default function WheelOfBlameClient() {
   const punishmentTimerRef = useRef<NodeJS.Timeout | null>(null);
   const revealTimerRef = useRef<NodeJS.Timeout | null>(null);
   const actionsTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const doubleDownLoopTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     audioRef.current = new Audio("/audio/spin.mp3");
     audioRef.current.preload = "auto";
     punishAudioRef.current = new Audio("/audio/punish.mp3");
     punishAudioRef.current.preload = "auto";
+    if (punishAudioRef.current) punishAudioRef.current.volume = 0.3;
     savedAudioRef.current = new Audio("/audio/saved.mp3");
     savedAudioRef.current.preload = "auto";
+    if (savedAudioRef.current) savedAudioRef.current.volume = 0.3;
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -189,6 +192,9 @@ export default function WheelOfBlameClient() {
       }
       if (actionsTimerRef.current) {
         clearTimeout(actionsTimerRef.current);
+      }
+      if (doubleDownLoopTimerRef.current) {
+        clearInterval(doubleDownLoopTimerRef.current);
       }
     };
   }, []);
@@ -305,6 +311,76 @@ export default function WheelOfBlameClient() {
       startPunishmentSequence("Forgiven", "saved");
       return;
     }
+
+    if (action === "timeout") {
+      startPunishmentSequence("10 minute time out", "punish");
+      return;
+    }
+
+    startPunishmentSequence("Banished from chat", "punish");
+  }
+
+  async function loadDoubleDownOptions() {
+    try {
+      setDoubleDownLoading(true);
+      const res = await fetch("/api/twitch/doubledown");
+      const data = (await res.json()) as { options?: string[]; error?: string };
+      setDoubleDownOptions(data.options?.filter(Boolean) ?? defaultDoubleDownOptions);
+      setDoubleDownError(res.ok ? null : "Using fallback double down list.");
+      setDoubleDownReady(true);
+    } catch (error) {
+      console.error("Failed to load double down options", error);
+      setDoubleDownOptions(defaultDoubleDownOptions);
+      setDoubleDownError("Using fallback double down list.");
+      setDoubleDownReady(true);
+    } finally {
+      setDoubleDownLoading(false);
+    }
+  }
+
+  function spinDoubleDown() {
+    if (!doubleDownOptions.length || doubleDownSpinning) return;
+    if (doubleDownLoopTimerRef.current) {
+      clearInterval(doubleDownLoopTimerRef.current);
+    }
+    const winnerIndex = Math.floor(Math.random() * doubleDownOptions.length);
+    const baseIndex = doubleDownOptions.length; // center copy
+    const targetIndex = baseIndex + winnerIndex;
+    const targetOffset =
+      -(targetIndex * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
+
+    setDoubleDownSpinning(true);
+    const spinAudio = audioRef.current;
+    const previousVolume = spinAudio?.volume ?? 1;
+    if (spinAudio) {
+      spinAudio.volume = 0.5;
+      spinAudio.currentTime = 0;
+      spinAudio.play().catch(() => {});
+    }
+    const pulse = () => {
+      const randomIdx = baseIndex + Math.floor(Math.random() * doubleDownOptions.length);
+      const offset =
+        -(randomIdx * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
+      setDoubleDownOffset(offset);
+    };
+    pulse();
+    doubleDownLoopTimerRef.current = setInterval(pulse, 480);
+
+    setTimeout(() => {
+      if (doubleDownLoopTimerRef.current) {
+        clearInterval(doubleDownLoopTimerRef.current);
+      }
+      setDoubleDownOffset(targetOffset);
+      setDoubleDownSpinning(false);
+      const choice = doubleDownOptions[winnerIndex];
+      setDoubleDownResult(choice);
+      const tone: PunishmentTone = choice.toLowerCase().includes("save") ? "saved" : "punish";
+      startPunishmentSequence(choice, tone);
+      if (spinAudio) {
+        spinAudio.volume = previousVolume;
+      }
+    }, 6000);
+  }
 
     if (action === "timeout") {
       startPunishmentSequence("10 minute time out", "punish");
@@ -762,7 +838,7 @@ export default function WheelOfBlameClient() {
                     style={{ height: `${doubleDownWindow}px` }}
                   >
                     <div
-                      className="flex flex-col transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]"
+                      className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)]"
                       style={{ transform: `translateY(${doubleDownOffset}px)` }}
                     >
                       {doubleDownRepeated.map((option, idx) => (
