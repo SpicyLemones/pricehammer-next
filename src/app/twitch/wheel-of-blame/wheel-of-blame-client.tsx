@@ -395,6 +395,15 @@ export default function WheelOfBlameClient() {
     }, 6000);
   }
 
+    setTimeout(() => {
+      setDoubleDownSpinning(false);
+      const choice = doubleDownOptions[winnerIndex];
+      setDoubleDownResult(choice);
+      const tone: PunishmentTone = choice.toLowerCase().includes("save") ? "saved" : "punish";
+      startPunishmentSequence(choice, tone);
+    }, 5200);
+  }
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950">
       <video
