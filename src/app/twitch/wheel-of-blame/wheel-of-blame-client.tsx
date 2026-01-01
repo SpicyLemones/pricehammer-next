@@ -92,7 +92,6 @@ export default function WheelOfBlameClient() {
   const [doubleDownSpinning, setDoubleDownSpinning] = useState(false);
   const [doubleDownReady, setDoubleDownReady] = useState(false);
   const [doubleDownLoading, setDoubleDownLoading] = useState(false);
-  const [doubleDownOffset, setDoubleDownOffset] = useState(0);
   const [doubleDownActiveIndex, setDoubleDownActiveIndex] = useState(0);
   const [showDoubleDownHighlight, setShowDoubleDownHighlight] = useState(false);
 
@@ -147,18 +146,7 @@ export default function WheelOfBlameClient() {
   const outerRadius = wheelSize / 2 - 10;
   const innerRadius = 80;
   const center = wheelSize / 2;
-  const doubleDownItemHeight = 56;
-  const doubleDownWindow = doubleDownItemHeight * 7;
-  const doubleDownRepeatCount = 50;
-  const getDoubleDownOffset = useCallback(
-    (index: number) => -(index * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2,
-    [doubleDownItemHeight, doubleDownWindow]
-  );
-  const doubleDownRepeated = useMemo(() => {
-    const totalItems = doubleDownOptions.length * doubleDownRepeatCount;
-    return Array.from({ length: totalItems }, (_, idx) => doubleDownOptions[idx % doubleDownOptions.length]);
-  }, [doubleDownOptions, doubleDownRepeatCount]);
-  const doubleDownMiddleIndex = doubleDownOptions.length * Math.floor(doubleDownRepeatCount / 2);
+  const doubleDownMiddleIndex = 0;
 
   const colors = useMemo(
     () => (chatters.length ? chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]) : fallbackColors),
@@ -166,11 +154,9 @@ export default function WheelOfBlameClient() {
   );
 
   useEffect(() => {
-    const target = getDoubleDownOffset(doubleDownMiddleIndex);
-    setDoubleDownOffset(target);
     setDoubleDownActiveIndex(doubleDownMiddleIndex);
     setShowDoubleDownHighlight(false);
-  }, [doubleDownMiddleIndex, getDoubleDownOffset]);
+  }, [doubleDownMiddleIndex]);
 
   useEffect(() => {
     const overlay = demonOverlayRef.current;
@@ -370,19 +356,13 @@ export default function WheelOfBlameClient() {
       clearTimeout(doubleDownLoopTimerRef.current);
     }
     const winnerIndex = Math.floor(Math.random() * doubleDownOptions.length);
-    const baseIndex = doubleDownMiddleIndex;
-    const steadyLoops = doubleDownOptions.length * 3;
-    const slowdownSteps = Math.max(10, Math.floor(doubleDownOptions.length * 0.8));
-    const plannedSteps = steadyLoops + slowdownSteps;
-    const alignmentAdjustment = (winnerIndex - (plannedSteps % doubleDownOptions.length) + doubleDownOptions.length) % doubleDownOptions.length;
-    const totalSteps = plannedSteps + alignmentAdjustment;
-
-    let currentIndex = baseIndex;
+    const totalSteps = 24 + Math.floor(Math.random() * 10);
+    const maxDelay = 420;
+    const minDelay = 80;
 
     setDoubleDownSpinning(true);
-    setShowDoubleDownHighlight(false);
-    setDoubleDownActiveIndex(currentIndex);
-    setDoubleDownOffset(getDoubleDownOffset(currentIndex));
+    setShowDoubleDownHighlight(true);
+    setDoubleDownActiveIndex(Math.floor(Math.random() * doubleDownOptions.length));
 
     const spinAudio = audioRef.current;
     const previousVolume = spinAudio?.volume ?? 1;
@@ -394,8 +374,7 @@ export default function WheelOfBlameClient() {
 
     const finalizeSpin = () => {
       setDoubleDownSpinning(false);
-      const normalizedIndex = ((currentIndex % doubleDownOptions.length) + doubleDownOptions.length) % doubleDownOptions.length;
-      const choice = doubleDownOptions[normalizedIndex];
+      const choice = doubleDownOptions[winnerIndex];
       const tone: PunishmentTone = choice.toLowerCase().includes("save") ? "saved" : "punish";
       setShowDoubleDownHighlight(true);
       startPunishmentSequence(choice, tone);
@@ -406,17 +385,15 @@ export default function WheelOfBlameClient() {
     };
 
     const stepThroughList = (step: number) => {
-      const stepsLeft = totalSteps - step;
-      const isSlowingDown = stepsLeft <= slowdownSteps;
-      const slowdownProgress = isSlowingDown ? (slowdownSteps - stepsLeft) / slowdownSteps : 0;
-      const delay = 120 + (isSlowingDown ? slowdownProgress * 260 : 0);
+      const progress = step / totalSteps;
+      const delay = minDelay + Math.pow(progress, 2) * (maxDelay - minDelay);
+      const isLast = step === totalSteps;
+      const nextIndex = isLast ? winnerIndex : Math.floor(Math.random() * doubleDownOptions.length);
 
       doubleDownLoopTimerRef.current = setTimeout(() => {
-        currentIndex = normalizeDoubleDownIndex(currentIndex + 1);
-        setDoubleDownActiveIndex(currentIndex);
-        setDoubleDownOffset(getDoubleDownOffset(currentIndex));
+        setDoubleDownActiveIndex(nextIndex);
 
-        if (step < totalSteps) {
+        if (!isLast) {
           stepThroughList(step + 1);
         } else {
           finalizeSpin();
@@ -824,33 +801,19 @@ export default function WheelOfBlameClient() {
                   </button>
                 </div>
                 <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-3">
-                  {showDoubleDownHighlight && (
-                    <div
-                      className="pointer-events-none absolute left-3 right-3 top-1/2 z-10 h-14 -translate-y-1/2 rounded-xl border border-rose-400/60 bg-rose-500/15 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]"
-                      aria-hidden
-                    />
-                  )}
-                  <div
-                    className="relative"
-                    style={{ height: `${doubleDownWindow}px` }}
-                  >
-                    <div
-                      className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)]"
-                      style={{ transform: `translateY(${doubleDownOffset}px)` }}
-                    >
-                      {doubleDownRepeated.map((option, idx) => (
-                        <div
-                          key={`${option}-${idx}`}
-                          className={`flex h-[56px] items-center justify-center text-center text-base font-semibold transition-all duration-200 ${
-                            idx === doubleDownActiveIndex && showDoubleDownHighlight
-                              ? "rounded-xl bg-rose-500/20 text-white ring-2 ring-rose-400/60 shadow-lg shadow-rose-500/10"
-                              : "text-slate-100/80"
-                          }`}
-                        >
-                          {option}
-                        </div>
-                      ))}
-                    </div>
+                  <div className="flex max-h-80 flex-col gap-2 overflow-auto px-1 py-1">
+                    {doubleDownOptions.map((option, idx) => (
+                      <div
+                        key={`${option}-${idx}`}
+                        className={`flex h-[56px] items-center justify-center text-center text-base font-semibold transition-all duration-200 ${
+                          idx === doubleDownActiveIndex && showDoubleDownHighlight
+                            ? "rounded-xl bg-rose-500/20 text-white ring-2 ring-rose-400/60 shadow-lg shadow-rose-500/10"
+                            : "text-slate-100/80"
+                        }`}
+                      >
+                        {option}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
