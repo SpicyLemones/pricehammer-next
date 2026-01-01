@@ -223,8 +223,8 @@ export default function WheelOfBlameClient() {
     if (actionsTimerRef.current) {
       clearTimeout(actionsTimerRef.current);
     }
+    playWilhelm();
     revealTimerRef.current = setTimeout(() => {
-      playWilhelm();
       setRevealStage("winner");
   
     }, 1200);
