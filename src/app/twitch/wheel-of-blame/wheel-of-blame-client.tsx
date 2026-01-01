@@ -238,23 +238,27 @@ export default function WheelOfBlameClient() {
                           }}
                         />
                         
-                        {/* Label - Pointing towards the edge, strictly bounded */}
+                        {/* Label - Fixed alignment and visibility */}
                         {label && (
                           <div
-                            className="absolute left-1/2 top-1/2 flex items-center justify-end"
+                            className="absolute left-1/2 top-1/2 z-10 flex items-center justify-end"
                             style={{
-                              // Adjusting the text rotation to center in wedge
-                              // We subtract 90 because our conic-gradient starts at -90
-                              transform: `rotate(${(segmentAngle / 2) - 90}deg)`,
-                              width: "215px", // Length from center to rim
+                              // The center of the slice is segmentAngle / 2
+                              // We don't need the -90 here because the parent div is already rotated
+                              transform: `rotate(${segmentAngle / 2}deg)`,
+                              width: "210px", // Length from center to rim
                               transformOrigin: "left center",
-                              height: "0px",
-                              paddingRight: "15px" // Internal margin to keep text off the very edge
+                              height: "20px", // Give it some height for better centering
+                              marginTop: "-10px", // Offset by half the height to center vertically
                             }}
                           >
                             <span 
-                              className="block truncate font-bold uppercase text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
-                              style={{ fontSize: `${fontSize}px` }}
+                              className="block truncate font-bold uppercase text-white"
+                              style={{ 
+                                fontSize: `${fontSize}px`,
+                                textShadow: "2px 2px 4px rgba(0,0,0,0.9)", // Makes text pop
+                                paddingRight: "15px" // Space from the edge
+                              }}
                             >
                               {label}
                             </span>
@@ -264,7 +268,7 @@ export default function WheelOfBlameClient() {
                     );
                   })}
                 </div>
-
+                
                 {/* Center Button */}
                 <button
                   type="button"
