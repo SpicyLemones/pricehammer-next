@@ -42,11 +42,14 @@ export function getTwitchConfig(): TwitchConfig {
   };
 }
 
-export function buildTwitchAuthUrl() {
+export function buildTwitchAuthUrl(redirect?: string) {
   const { clientId, redirectUri, stateSecret } = getTwitchConfig();
 
   const nonce = crypto.randomBytes(16).toString("hex");
-  const state = `${nonce}.${signState(nonce, stateSecret)}`;
+  const cleanedRedirect = redirect && redirect.startsWith("/") ? redirect : "";
+  const state = cleanedRedirect
+    ? `${nonce}.${signState(nonce, stateSecret)}.${encodeURIComponent(cleanedRedirect)}`
+    : `${nonce}.${signState(nonce, stateSecret)}`;
 
   const params = new URLSearchParams({
     client_id: clientId,
@@ -61,13 +64,16 @@ export function buildTwitchAuthUrl() {
 
 export function verifyState(state: string) {
   const stateSecret = process.env.TWITCH_STATE_SECRET;
-  if (!stateSecret) return false;
+  if (!stateSecret) return { valid: false };
 
-  const [nonce, signature] = state.split(".");
-  if (!nonce || !signature) return false;
+  const [nonce, signature, redirectPart] = state.split(".");
+  if (!nonce || !signature) return { valid: false };
 
   const expected = signState(nonce, stateSecret);
-  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+  const valid = crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+  const redirect = redirectPart ? decodeURIComponent(redirectPart) : undefined;
+
+  return { valid, redirect };
 }
 
 function signState(value: string, secret: string) {

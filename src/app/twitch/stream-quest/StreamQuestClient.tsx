@@ -245,7 +245,7 @@ export function StreamQuestClient() {
             </p>
           </div>
           <a
-            href="/api/twitch/login"
+            href="/api/twitch/login?redirect=%2Ftwitch%2Fstream-quest"
             className="rounded-full border border-amber-300/80 bg-amber-900/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-50 shadow-sm transition hover:scale-[1.02] active:scale-100"
           >
             Authorize Twitch
