@@ -107,7 +107,7 @@ export default function WheelOfBlameClient() {
       
       // SYNC MATH:
       // 1. Where is the winner starting?
-      const winnerStartAngle = (winnerIndex * segmentAngle) + (segmentAngle / 2 - 100);
+      const winnerStartAngle = (winnerIndex * segmentAngle) + (segmentAngle / 2 + 100);
       
       // 2. Adjust for the 90 degree (Right Side) offset.
       // In CSS, 0deg is Top. To make winnerStartAngle land at 90deg, 
@@ -323,11 +323,12 @@ export default function WheelOfBlameClient() {
                             <text
                               x={lx}
                               y={ly}
-                              fill="white"
+                              fill="black"
                               fontSize="15"
                               fontWeight="700"
                               textAnchor="middle"
-                              transform={`rotate(${labelRotation - 90}, ${lx}, ${ly})`}
+                              transform={`rotate(${labelRotation}, ${lx}, ${ly})`}
+                              dominantBaseline="middle"
                               style={{ letterSpacing: "0.04em", paintOrder: "stroke", stroke: "rgba(0,0,0,0.45)", strokeWidth: 1 }}
                             >
                               {label}
