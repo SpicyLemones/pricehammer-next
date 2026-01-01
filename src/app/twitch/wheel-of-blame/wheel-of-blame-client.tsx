@@ -52,7 +52,7 @@ function useChatters() {
 
   useEffect(() => {
     load();
-    const id = setInterval(load, 45_000);
+    const id = setInterval(load, 350_000);
     return () => clearInterval(id);
   }, []);
 
@@ -85,56 +85,44 @@ export default function WheelOfBlameClient() {
 
   const colors = useMemo(() => chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]), [chatters]);
 
-  // SCALING: Calculate font size based on number of segments.
-  // Fewer segments = larger font (max 28px). More segments = smaller font (min 10px).
-  const fontSize = Math.max(10, 28 - segments * 1.5);
+  // SCALING: Font size based on chatter count (fewer people = bigger text)
+  const fontSize = Math.max(12, 28 - segments * 0.8);
 
   function spin() {
-    if (!chatters.length || spinning) return;
+      if (!chatters.length || spinning) return;
 
-    const winnerIndex = Math.floor(Math.random() * chatters.length);
-    const spins = 6 + Math.floor(Math.random() * 3);
-    
-    // SYNC MATH:
-    // 1. Calculate the angle where the winner starts (relative to 0/top)
-    const winnerStartAngle = winnerIndex * segmentAngle + segmentAngle / 2;
-    
-    // 2. We want the winner to end up at 90 degrees (Right side).
-    //    Current physical position of winner = (spinAngle + winnerStartAngle) % 360
-    //    We need to add 'delta' such that: (current + delta) lands on 90.
-    const currentTotalAngle = spinAngle + winnerStartAngle;
-    const currentMod = currentTotalAngle % 360;
-    
-    // Calculate how far we are from 90 degrees
-    let distanceToPointer = 90 - currentMod;
-    if (distanceToPointer < 0) {
-        distanceToPointer += 360;
-    }
-    
-    // 3. Target = Add full spins + the specific distance needed to align
-    const target = spinAngle + (spins * 360) + distanceToPointer;
+      // Pick the winner
+      const winnerIndex = Math.floor(Math.random() * chatters.length);
+      const spins = 8 + Math.floor(Math.random() * 4); // Extra spins for drama
+      
+      // SYNC MATH:
+      // 1. Where is the winner starting?
+      const winnerStartAngle = (winnerIndex * segmentAngle) + (segmentAngle / 2);
+      
+      // 2. Adjust for the 90 degree (Right Side) offset.
+      // In CSS, 0deg is Top. To make winnerStartAngle land at 90deg, 
+      // we need to rotate the wheel by (90 - winnerStartAngle).
+      const currentMod = spinAngle % 360;
+      let adjustment = (90 - winnerStartAngle) - currentMod;
+      
+      // Ensure we always spin forward
+      if (adjustment <= 0) adjustment += 360;
+      
+      const target = spinAngle + (spins * 360) + adjustment;
 
-    setSpinning(true);
-    setSpinAngle(target);
+      setSpinning(true);
+      setSpinAngle(target);
 
-    if (audioRef.current) {
-      try {
-        audioRef.current.currentTime = 0;
-        void audioRef.current.play();
-      } catch (err) {
-        console.warn("Spin audio failed to play", err);
-      }
-    }
-
-    setTimeout(() => {
-      setSpinning(false);
-      setResult({ winner: chatters[winnerIndex], angle: target });
       if (audioRef.current) {
-        audioRef.current.pause();
         audioRef.current.currentTime = 0;
+        audioRef.current.play().catch(() => {});
       }
-    }, 5200);
-  }
+
+      setTimeout(() => {
+        setSpinning(false);
+        setResult({ winner: chatters[winnerIndex], angle: target });
+      }, 5200);
+    }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950">
@@ -210,7 +198,6 @@ export default function WheelOfBlameClient() {
 
         {state.status === "unauthenticated" && (
             <div className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-                {/* Auth UI omitted for brevity, same as before */}
                 <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Connect Twitch</h2>
                 <div className="mt-4">
                      <a href="/api/twitch/login" className="rounded-full bg-purple-600 px-5 py-3 text-sm font-semibold text-white">Connect</a>
@@ -233,10 +220,8 @@ export default function WheelOfBlameClient() {
 
                 {/* The Rotating Wheel */}
                 <div
-                  className="absolute inset-5 rounded-full bg-slate-950/80 transition-transform duration-[5000ms] ease-[cubic-bezier(0.25,0.1,0.2,1)] ring-8 ring-slate-800/70"
-                  style={{
-                    transform: `rotate(${spinAngle}deg)`,
-                  }}
+                  className="absolute inset-5 rounded-full bg-slate-950/80 transition-transform duration-[5000ms] ease-[cubic-bezier(0.15,0,0.15,1)] ring-8 ring-slate-800/70"
+                  style={{ transform: `rotate(${spinAngle}deg)` }}
                 >
                   {Array.from({ length: segments }).map((_, idx) => {
                     const rotate = idx * segmentAngle;
@@ -244,33 +229,34 @@ export default function WheelOfBlameClient() {
                     const color = colors[idx % colors.length];
                     return (
                       <div key={idx} className="absolute inset-0 origin-center" style={{ transform: `rotate(${rotate}deg)` }}>
-                        {/* The Color Slice */}
+                        {/* Slice Color */}
                         <div
                           className="absolute inset-0 rounded-full"
                           style={{
-                            background: `conic-gradient(${color} ${segmentAngle - 0.6}deg, transparent ${segmentAngle}deg)`,
+                            background: `conic-gradient(from -90deg, ${color} ${segmentAngle - 0.4}deg, transparent ${segmentAngle}deg)`,
                             maskImage: "radial-gradient(circle at center, transparent 30%, black 30%, black 100%)",
                           }}
                         />
                         
-                        {/* The Text Label - Fixed Alignment */}
+                        {/* Label - Pointing towards the edge, strictly bounded */}
                         {label && (
                           <div
                             className="absolute left-1/2 top-1/2 flex items-center justify-end"
                             style={{
-                              // 1. Point towards the wedge center
-                              // 2. Move out to the middle of the radius (approx 120px)
-                              transform: `rotate(${segmentAngle / 2}deg) translate(120px) `,
-                              width: "220px", // Limit width to prevent overflow
-                              transformOrigin: "left center", // Rotate from the center of the wheel
-                              height: "0px", // Collapse height so it centers perfectly
+                              // Adjusting the text rotation to center in wedge
+                              // We subtract 90 because our conic-gradient starts at -90
+                              transform: `rotate(${(segmentAngle / 2) - 90}deg)`,
+                              width: "215px", // Length from center to rim
+                              transformOrigin: "left center",
+                              height: "0px",
+                              paddingRight: "15px" // Internal margin to keep text off the very edge
                             }}
                           >
                             <span 
-                                className="block truncate font-bold uppercase text-white drop-shadow-md"
-                                style={{ fontSize: `${fontSize}px` }}
+                              className="block truncate font-bold uppercase text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
+                              style={{ fontSize: `${fontSize}px` }}
                             >
-                                {label}
+                              {label}
                             </span>
                           </div>
                         )}
@@ -291,18 +277,44 @@ export default function WheelOfBlameClient() {
               </div>
             </div>
 
-            {/* Results UI */}
+            {/* Results & Chatter List (RESTORED) */}
             <div className="mx-auto flex max-w-3xl flex-col gap-4 text-center">
-              <div className="w-full rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+              <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center">
+                
+                {/* Roll Log */}
+                <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Roll log</p>
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Recent winner</h3>
                   {result ? (
-                    <div className="mt-3 text-2xl font-bold text-rose-500">
+                    <div className="mt-3 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-green-800 shadow-sm dark:border-green-900/60 dark:bg-green-950/30 dark:text-green-100">
                       🎉 {result.winner}
                     </div>
                   ) : (
                     <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">No spins yet.</p>
                   )}
+                </div>
+
+                {/* Chatter List */}
+                <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                    {chatters.length} Chatters
+                  </p>
+                  <div className="max-h-64 overflow-auto rounded-2xl border border-slate-200 bg-white/60 p-3 text-sm shadow-inner dark:border-slate-800 dark:bg-slate-900/50">
+                    {chatters.length ? (
+                      <ul className="space-y-1 text-slate-700 dark:text-slate-200">
+                        {chatters.map((name) => (
+                          <li key={name} className="rounded bg-slate-100 px-2 py-1 text-xs font-semibold dark:bg-slate-800">
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-slate-500 dark:text-slate-400">No chatters pulled yet.</p>
+                    )}
+                  </div>
+                </div>
               </div>
+
               <button
                 type="button"
                 onClick={reload}
