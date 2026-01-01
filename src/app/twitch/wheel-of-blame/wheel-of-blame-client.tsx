@@ -382,6 +382,56 @@ export default function WheelOfBlameClient() {
     }, 6000);
   }
 
+    if (action === "timeout") {
+      startPunishmentSequence("10 minute time out", "punish");
+      return;
+    }
+
+    startPunishmentSequence("Banished from chat", "punish");
+  }
+
+  async function loadDoubleDownOptions() {
+    try {
+      setDoubleDownLoading(true);
+      const res = await fetch("/api/twitch/doubledown");
+      const data = (await res.json()) as { options?: string[]; error?: string };
+      setDoubleDownOptions(data.options?.filter(Boolean) ?? defaultDoubleDownOptions);
+      setDoubleDownError(res.ok ? null : "Using fallback double down list.");
+      setDoubleDownReady(true);
+    } catch (error) {
+      console.error("Failed to load double down options", error);
+      setDoubleDownOptions(defaultDoubleDownOptions);
+      setDoubleDownError("Using fallback double down list.");
+      setDoubleDownReady(true);
+    } finally {
+      setDoubleDownLoading(false);
+    }
+  }
+
+  function spinDoubleDown() {
+    if (!doubleDownOptions.length || doubleDownSpinning) return;
+    const winnerIndex = Math.floor(Math.random() * doubleDownOptions.length);
+    const baseIndex = doubleDownOptions.length; // center copy
+    const targetIndex = baseIndex + winnerIndex;
+    const targetOffset =
+      -(targetIndex * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
+
+    setDoubleDownSpinning(true);
+    setDoubleDownOffset(targetOffset);
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
+    }
+
+    setTimeout(() => {
+      setDoubleDownSpinning(false);
+      const choice = doubleDownOptions[winnerIndex];
+      setDoubleDownResult(choice);
+      const tone: PunishmentTone = choice.toLowerCase().includes("save") ? "saved" : "punish";
+      startPunishmentSequence(choice, tone);
+    }, 5200);
+  }
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950">
       <video
