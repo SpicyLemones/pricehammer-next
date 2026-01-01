@@ -13,6 +13,10 @@ type ChattersState =
 type SpinResult = { winner: string; angle: number };
 
 const fallbackColors = ["#FFD166", "#EF476F", "#06D6A0", "#118AB2", "#A556F6", "#F78C6B", "#4CC9F0", "#BDE0FE"];
+const WHEEL_SIZE = 620;
+const WHEEL_INSET = 14;
+const INNER_HOLE_RATIO = 0.23;
+const POINTER_OFFSET = -150;
 
 function useChatters() {
   const [state, setState] = useState<ChattersState>({ status: "idle" });
@@ -85,8 +89,19 @@ export default function WheelOfBlameClient() {
 
   const colors = useMemo(() => chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]), [chatters]);
 
-  // SCALING: Font size based on chatter count (fewer people = bigger text)
-  const fontSize = Math.max(12, 28 - segments * 0.8);
+  const wheelDiameter = WHEEL_SIZE - WHEEL_INSET * 2;
+  const wheelRadius = wheelDiameter / 2;
+  const innerHoleRadius = wheelRadius * INNER_HOLE_RATIO;
+  const labelRadius = innerHoleRadius + (wheelRadius - innerHoleRadius) * 0.62;
+  const labelSpan = wheelRadius - innerHoleRadius - 26;
+
+  const fontSizeForLabel = (label: string) => {
+    const arcLength = Math.PI * labelRadius * (segmentAngle / 180);
+    const textFit = Math.min(labelSpan, arcLength);
+    const base = Math.min(38, Math.max(12, (textFit / Math.max(label.length, 4)) * 1.4));
+    if (segments <= 2) return Math.min(44, base * 1.25);
+    return base;
+  };
 
   function spin() {
       if (!chatters.length || spinning) return;
@@ -209,10 +224,16 @@ export default function WheelOfBlameClient() {
           <div className="space-y-8">
             <div className="relative mx-auto flex h-[620px] w-full max-w-5xl items-center justify-center">
               {/* Wheel Container */}
-              <div className="relative h-[480px] w-[480px] rounded-full bg-slate-950/70 shadow-[0_20px_70px_rgba(0,0,0,0.55)] ring-[14px] ring-slate-900/70">
+              <div
+                className="relative rounded-full bg-slate-950/70 shadow-[0_20px_70px_rgba(0,0,0,0.55)] ring-[14px] ring-slate-900/70"
+                style={{ width: WHEEL_SIZE, height: WHEEL_SIZE, boxSizing: "content-box" }}
+              >
                 
                 {/* Pointer (Demon) */}
-                <div className="absolute right-[-130px] top-1/2 z-30 -translate-y-1/2 rotate-6">
+                <div
+                  className="absolute top-1/2 z-30 -translate-y-1/2 rotate-6"
+                  style={{ right: `${POINTER_OFFSET}px` }}
+                >
                   <div className="relative h-48 w-48">
                     <Image src="/images/wheel-pointer.png" alt="Pointer" fill className="object-contain" priority />
                   </div>
@@ -220,44 +241,51 @@ export default function WheelOfBlameClient() {
 
                 {/* The Rotating Wheel */}
                 <div
-                  className="absolute inset-5 rounded-full bg-slate-950/80 transition-transform duration-[5000ms] ease-[cubic-bezier(0.15,0,0.15,1)] ring-8 ring-slate-800/70"
-                  style={{ transform: `rotate(${spinAngle}deg)` }}
+                  className="absolute rounded-full bg-slate-950/80 transition-transform duration-[5000ms] ease-[cubic-bezier(0.15,0,0.15,1)] ring-8 ring-slate-800/70"
+                  style={{ transform: `rotate(${spinAngle}deg)`, inset: WHEEL_INSET }}
                 >
                   {Array.from({ length: segments }).map((_, idx) => {
                     const rotate = idx * segmentAngle;
                     const label = chatters[idx] ?? "";
                     const color = colors[idx % colors.length];
+                    const fontSize = fontSizeForLabel(label);
+                    const labelRotation = segmentAngle / 2;
                     return (
-                      <div key={idx} className="absolute inset-0 origin-center" style={{ transform: `rotate(${rotate}deg)` }}>
+                      <div
+                        key={idx}
+                        className="absolute inset-0 origin-center"
+                        style={{ transform: `rotate(${rotate}deg)` }}
+                      >
                         {/* Slice Color */}
                         <div
                           className="absolute inset-0 rounded-full"
                           style={{
                             background: `conic-gradient(from -90deg, ${color} ${segmentAngle - 0.4}deg, transparent ${segmentAngle}deg)`,
-                            maskImage: "radial-gradient(circle at center, transparent 30%, black 30%, black 100%)",
+                            maskImage: `radial-gradient(circle at center, transparent ${INNER_HOLE_RATIO * 100}%, black ${INNER_HOLE_RATIO * 100}%, black 100%)`,
+                            WebkitMaskImage: `radial-gradient(circle at center, transparent ${INNER_HOLE_RATIO * 100}%, black ${INNER_HOLE_RATIO * 100}%, black 100%)`,
+                            boxSizing: "border-box",
                           }}
                         />
                         
                         {/* Label - Fixed alignment and visibility */}
                         {label && (
                           <div
-                            className="absolute left-1/2 top-1/2 z-10 flex items-center justify-end"
+                            className="absolute left-1/2 top-1/2 z-10 flex items-center justify-center"
                             style={{
-                              // The center of the slice is segmentAngle / 2
-                              // We don't need the -90 here because the parent div is already rotated
-                              transform: `rotate(${segmentAngle / 2}deg)`,
-                              width: "210px", // Length from center to rim
-                              transformOrigin: "left center",
-                              height: "20px", // Give it some height for better centering
-                              marginTop: "-10px", // Offset by half the height to center vertically
+                              transform: `rotate(${labelRotation}deg) translateX(${labelRadius}px) rotate(-90deg)`,
+                              transformOrigin: "center",
+                              width: `${labelSpan}px`,
+                              maxWidth: `${labelSpan}px`,
                             }}
                           >
                             <span 
-                              className="block truncate font-bold uppercase text-white"
+                              className="block text-center font-bold uppercase text-white"
                               style={{ 
                                 fontSize: `${fontSize}px`,
-                                textShadow: "2px 2px 4px rgba(0,0,0,0.9)", // Makes text pop
-                                paddingRight: "15px" // Space from the edge
+                                letterSpacing: segments > 10 ? "0.015em" : "0.04em",
+                                textShadow: "0 3px 10px rgba(0,0,0,0.65)",
+                                whiteSpace: "nowrap",
+                                maxWidth: `${labelSpan}px`,
                               }}
                             >
                               {label}
