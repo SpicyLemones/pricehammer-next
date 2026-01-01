@@ -3,7 +3,11 @@ import Link from "next/link";
 
 const modules = [
   { title: "Pre-Stream Checklist", description: "Quick rundown before you go live." },
-  { title: "Stream Quest", description: "Mini missions to keep chat engaged." },
+  {
+    title: "Stream Quest",
+    description: "Mini missions to keep chat engaged.",
+    href: "/twitch/stream-quest",
+  },
   {
     title: "Wheel of Blame",
     description: "Spin to assign the next oops with live chatters.",
