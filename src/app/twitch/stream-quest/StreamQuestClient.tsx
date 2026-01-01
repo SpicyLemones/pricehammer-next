@@ -47,7 +47,7 @@ type QuestResponse = {
   ledger: Record<string, number>;
   audience: AudienceSnapshot;
 };
-const tavernBoardBg = `url("/images/quest.png")`;
+const tavernBoardBg = `url("/images/questboard.png")`;
 
 const categoryMeta: Record<
   QuestCategory,
