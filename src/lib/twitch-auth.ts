@@ -16,7 +16,7 @@ const TWITCH_AUTHORIZE_URL = "https://id.twitch.tv/oauth2/authorize";
 const TWITCH_TOKEN_URL = "https://id.twitch.tv/oauth2/token";
 const TWITCH_API_BASE = "https://api.twitch.tv/helix";
 
-export function buildTwitchAuthUrl() {
+export function buildTwitchAuthUrl(redirect?: string) {
   const clientId = process.env.TWITCH_CLIENT_ID;
   const redirectUri = process.env.TWITCH_REDIRECT_URI;
   const stateSecret = process.env.TWITCH_STATE_SECRET;
@@ -26,7 +26,10 @@ export function buildTwitchAuthUrl() {
   }
 
   const nonce = crypto.randomBytes(16).toString("hex");
-  const state = `${nonce}.${signState(nonce, stateSecret)}`;
+  const cleanedRedirect = redirect && redirect.startsWith("/") ? redirect : "";
+  const state = cleanedRedirect
+    ? `${nonce}.${signState(nonce, stateSecret)}.${encodeURIComponent(cleanedRedirect)}`
+    : `${nonce}.${signState(nonce, stateSecret)}`;
 
   const params = new URLSearchParams({
     client_id: clientId,
@@ -41,21 +44,24 @@ export function buildTwitchAuthUrl() {
 
 export function verifyState(state: string) {
   const stateSecret = process.env.TWITCH_STATE_SECRET;
-  if (!stateSecret) return false;
+  if (!stateSecret) return { valid: false };
 
-  const [nonce, signature] = state.split(".");
-  if (!nonce || !signature) return false;
+  const [nonce, signature, redirectPart] = state.split(".");
+  if (!nonce || !signature) return { valid: false };
 
   const expected = signState(nonce, stateSecret);
-  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+  const valid = crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+  const redirect = redirectPart ? decodeURIComponent(redirectPart) : undefined;
+
+  return { valid, redirect };
 }
 
 function signState(value: string, secret: string) {
   return crypto.createHmac("sha256", secret).update(value).digest("hex");
 }
 
-export function readSession(): StoredTwitchSession | null {
-  const cookieStore = cookies();
+export async function readSession(): Promise<StoredTwitchSession | null> {
+  const cookieStore = await cookies();
   const raw = cookieStore.get(COOKIE_NAME)?.value;
   if (!raw) return null;
 
@@ -69,8 +75,8 @@ export function readSession(): StoredTwitchSession | null {
   }
 }
 
-export function writeSession(session: StoredTwitchSession) {
-  const cookieStore = cookies();
+export async function writeSession(session: StoredTwitchSession) {
+  const cookieStore = await cookies();
   const encoded = Buffer.from(JSON.stringify(session), "utf8").toString("base64url");
   cookieStore.set(COOKIE_NAME, encoded, {
     httpOnly: true,
@@ -81,8 +87,8 @@ export function writeSession(session: StoredTwitchSession) {
   });
 }
 
-export function clearSession() {
-  const cookieStore = cookies();
+export async function clearSession() {
+  const cookieStore = await cookies();
   cookieStore.delete(COOKIE_NAME);
 }
 
@@ -163,7 +169,7 @@ export async function refreshTokens(session: StoredTwitchSession) {
     expiresAt: Date.now() + data.expires_in * 1000,
   };
 
-  writeSession(updated);
+  await writeSession(updated);
   return updated;
 }
 
@@ -190,7 +196,7 @@ async function fetchUser(accessToken: string) {
 }
 
 export async function getValidSession() {
-  const session = readSession();
+  const session = await readSession();
   if (!session) return null;
   if (Date.now() < session.expiresAt - 60_000) return session;
 
@@ -198,7 +204,7 @@ export async function getValidSession() {
     return await refreshTokens(session);
   } catch (error) {
     console.error("Failed to refresh Twitch tokens", error);
-    clearSession();
+    await clearSession();
     return null;
   }
 }
@@ -259,4 +265,3 @@ export async function fetchChatters(session: StoredTwitchSession): Promise<Twitc
     chatters: chatters.data?.map((c) => c.user_login) ?? [],
   };
 }
-
