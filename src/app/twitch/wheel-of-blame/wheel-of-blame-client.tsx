@@ -224,8 +224,9 @@ export default function WheelOfBlameClient() {
       clearTimeout(actionsTimerRef.current);
     }
     revealTimerRef.current = setTimeout(() => {
-      setRevealStage("winner");
       playWilhelm();
+      setRevealStage("winner");
+  
     }, 1200);
     actionsTimerRef.current = setTimeout(() => {
       setActionsVisible(true);
