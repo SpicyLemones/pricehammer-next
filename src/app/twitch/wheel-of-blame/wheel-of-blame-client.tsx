@@ -90,7 +90,6 @@ export default function WheelOfBlameClient() {
   const [doubleDownOptions, setDoubleDownOptions] = useState<string[]>(defaultDoubleDownOptions);
   const [doubleDownError, setDoubleDownError] = useState<string | null>(null);
   const [doubleDownSpinning, setDoubleDownSpinning] = useState(false);
-  const [doubleDownResult, setDoubleDownResult] = useState<string | null>(null);
   const [doubleDownReady, setDoubleDownReady] = useState(false);
   const [doubleDownLoading, setDoubleDownLoading] = useState(false);
   const [doubleDownOffset, setDoubleDownOffset] = useState(0);
@@ -101,6 +100,7 @@ export default function WheelOfBlameClient() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const punishAudioRef = useRef<HTMLAudioElement | null>(null);
   const savedAudioRef = useRef<HTMLAudioElement | null>(null);
+  const wilhelmAudioRef = useRef<HTMLAudioElement | null>(null);
   const punishmentTimerRef = useRef<NodeJS.Timeout | null>(null);
   const revealTimerRef = useRef<NodeJS.Timeout | null>(null);
   const actionsTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -115,6 +115,8 @@ export default function WheelOfBlameClient() {
     savedAudioRef.current = new Audio("/audio/saved.mp3");
     savedAudioRef.current.preload = "auto";
     if (savedAudioRef.current) savedAudioRef.current.volume = 0.3;
+    wilhelmAudioRef.current = new Audio("/audio/wilhelm.mp3");
+    wilhelmAudioRef.current.preload = "auto";
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -127,6 +129,10 @@ export default function WheelOfBlameClient() {
       if (savedAudioRef.current) {
         savedAudioRef.current.pause();
         savedAudioRef.current = null;
+      }
+      if (wilhelmAudioRef.current) {
+        wilhelmAudioRef.current.pause();
+        wilhelmAudioRef.current = null;
       }
     };
   }, []);
@@ -200,6 +206,16 @@ export default function WheelOfBlameClient() {
   }, []);
 
   useEffect(() => {
+    if (revealStage === "winner") {
+      const wilhelm = wilhelmAudioRef.current;
+      if (wilhelm) {
+        wilhelm.currentTime = 0;
+        wilhelm.play().catch(() => {});
+      }
+    }
+  }, [revealStage]);
+
+  useEffect(() => {
     if (!result) return;
     setShowActionSheet(true);
     setActiveAction(null);
@@ -207,7 +223,6 @@ export default function WheelOfBlameClient() {
     setActionsVisible(false);
     setPunishmentPhase("idle");
     setPunishmentText(null);
-    setDoubleDownResult(null);
     setWinnerAnimationKey((key) => key + 1);
     if (revealTimerRef.current) {
       clearTimeout(revealTimerRef.current);
@@ -250,7 +265,6 @@ export default function WheelOfBlameClient() {
     setActionsVisible(false);
     setPunishmentPhase("idle");
     setPunishmentText(null);
-    setDoubleDownResult(null);
     setDoubleDownSpinning(false);
     if (revealTimerRef.current) {
       clearTimeout(revealTimerRef.current);
@@ -373,7 +387,6 @@ export default function WheelOfBlameClient() {
       setDoubleDownOffset(targetOffset);
       setDoubleDownSpinning(false);
       const choice = doubleDownOptions[winnerIndex];
-      setDoubleDownResult(choice);
       const tone: PunishmentTone = choice.toLowerCase().includes("save") ? "saved" : "punish";
       startPunishmentSequence(choice, tone);
       if (spinAudio) {
@@ -381,47 +394,6 @@ export default function WheelOfBlameClient() {
       }
     }, 6000);
   }
-
-    if (action === "timeout") {
-      startPunishmentSequence("10 minute time out", "punish");
-      return;
-    }
-
-    startPunishmentSequence("Banished from chat", "punish");
-  }
-
-  async function loadDoubleDownOptions() {
-    try {
-      setDoubleDownLoading(true);
-      const res = await fetch("/api/twitch/doubledown");
-      const data = (await res.json()) as { options?: string[]; error?: string };
-      setDoubleDownOptions(data.options?.filter(Boolean) ?? defaultDoubleDownOptions);
-      setDoubleDownError(res.ok ? null : "Using fallback double down list.");
-      setDoubleDownReady(true);
-    } catch (error) {
-      console.error("Failed to load double down options", error);
-      setDoubleDownOptions(defaultDoubleDownOptions);
-      setDoubleDownError("Using fallback double down list.");
-      setDoubleDownReady(true);
-    } finally {
-      setDoubleDownLoading(false);
-    }
-  }
-
-  function spinDoubleDown() {
-    if (!doubleDownOptions.length || doubleDownSpinning) return;
-    const winnerIndex = Math.floor(Math.random() * doubleDownOptions.length);
-    const baseIndex = doubleDownOptions.length; // center copy
-    const targetIndex = baseIndex + winnerIndex;
-    const targetOffset =
-      -(targetIndex * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
-
-    setDoubleDownSpinning(true);
-    setDoubleDownOffset(targetOffset);
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(() => {});
-    }
 
     setTimeout(() => {
       setDoubleDownSpinning(false);
@@ -852,11 +824,6 @@ export default function WheelOfBlameClient() {
                     </div>
                   </div>
                 </div>
-                {doubleDownResult && (
-                  <div className="rounded-2xl border border-rose-400/60 bg-rose-600/20 px-4 py-3 text-rose-100">
-                    Double down landed on: <span className="font-semibold">{doubleDownResult}</span>
-                  </div>
-                )}
               </div>
             )}
 
