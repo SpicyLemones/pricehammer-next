@@ -89,31 +89,15 @@ export default function WheelOfBlameClient() {
   const segmentAngle = 360 / segments;
 
   const colors = useMemo(() => chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]), [chatters]);
-  const gradient = useMemo(() => {
-    if (!chatters.length) return `${DEFAULT_SEGMENT_COLOR} -90deg 270deg`;
-    return chatters
-      .map((_, idx) => {
-        const start = -90 + idx * segmentAngle;
-        const end = start + segmentAngle;
-        const color = colors[idx % colors.length];
-        return `${color} ${start}deg ${end}deg`;
-      })
-      .join(", ");
-  }, [chatters, colors, segmentAngle]);
-
-  const wheelDiameter = WHEEL_SIZE - WHEEL_INSET * 2;
-  const wheelRadius = wheelDiameter / 2;
-  const innerHoleRadius = wheelRadius * INNER_HOLE_RATIO;
-  const labelRadius = innerHoleRadius + (wheelRadius - innerHoleRadius) * 0.75;
-  const labelSpan = wheelRadius - innerHoleRadius - 30;
-
-  const fontSizeForLabel = (label: string) => {
-    const arcLength = Math.PI * labelRadius * (segmentAngle / 180);
-    const textFit = Math.min(labelSpan, arcLength);
-    const base = Math.min(38, Math.max(12, (textFit / Math.max(label.length, 4)) * 1.4));
-    if (segments <= 2) return Math.min(44, base * 1.25);
-    return base;
-  };
+  const wheelGradient = useMemo(() => {
+    if (!chatters.length) return "conic-gradient(#ef476f 0deg 120deg, #ffd166 120deg 240deg, #06d6a0 240deg 360deg)";
+    const stops = colors.map((color, idx) => {
+      const start = idx * segmentAngle;
+      const end = (idx + 1) * segmentAngle;
+      return `${color} ${start}deg ${end}deg`;
+    });
+    return `conic-gradient(${stops.join(", ")})`;
+  }, [chatters.length, colors, segmentAngle]);
 
   function spin() {
       if (!chatters.length || spinning) return;
@@ -167,6 +151,7 @@ export default function WheelOfBlameClient() {
           const playPromise = el.play();
           if (playPromise && typeof playPromise.catch === "function") {
             playPromise.catch(() => {
+              // Autoplay with audio can be blocked; keep muted until user enables.
               el.muted = true;
               setSoundEnabled(false);
             });
@@ -192,8 +177,9 @@ export default function WheelOfBlameClient() {
                 const playPromise = videoRef.current.play();
                 if (playPromise && typeof playPromise.catch === "function") {
                   playPromise.catch(() => {
+                    // If autoplay still blocked, leave muted and reset toggle.
                     videoRef.current?.pause();
-                    videoRef.current!.muted = true;
+                    videoRef.current.muted = true;
                     setSoundEnabled(false);
                   });
                 }
@@ -224,85 +210,113 @@ export default function WheelOfBlameClient() {
         </header>
 
         {state.status === "unauthenticated" && (
-            <div className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-                <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Connect Twitch</h2>
-                <div className="mt-4">
-                     <a href="/api/twitch/login" className="rounded-full bg-purple-600 px-5 py-3 text-sm font-semibold text-white">Connect</a>
-                </div>
+          <div className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Connect Twitch</h2>
+            <p className="text-sm text-slate-600 dark:text-slate-300">
+              We&apos;ll ask Twitch for permission to read your chatters (chat:read + moderator:read:chatters). We
+              never store your client secret in the browser.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a
+                href="/api/twitch/login"
+                className="rounded-full bg-purple-600 px-5 py-3 text-sm font-semibold text-white shadow transition hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-500"
+              >
+                Connect Twitch
+              </a>
+              <button
+                type="button"
+                onClick={reload}
+                className="rounded-full border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
+              >
+                Retry
+              </button>
             </div>
+          </div>
+        )}
+
+        {state.status === "misconfigured" && (
+          <div className="rounded-2xl border border-rose-200 bg-rose-50 p-6 text-rose-900 shadow-sm dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-100">
+            <h2 className="text-xl font-semibold">Twitch config missing</h2>
+            <p className="text-sm mt-2">Add the required environment variables, restart the app, then retry:</p>
+            <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
+              <li>TWITCH_CLIENT_ID</li>
+              <li>TWITCH_CLIENT_SECRET</li>
+              <li>TWITCH_REDIRECT_URI</li>
+              <li>TWITCH_STATE_SECRET</li>
+            </ul>
+            {state.missing.length > 0 && (
+              <p className="mt-3 text-xs text-rose-700 dark:text-rose-200">Detected missing: {state.missing.join(", ")}</p>
+            )}
+            <div className="mt-4 flex gap-3">
+              <button
+                type="button"
+                onClick={reload}
+                className="rounded-full border border-rose-200 bg-white px-4 py-2 text-sm font-semibold text-rose-800 transition hover:border-rose-300 hover:bg-rose-100 dark:border-rose-800 dark:bg-transparent dark:text-rose-100 dark:hover:border-rose-700 dark:hover:bg-rose-900/40"
+              >
+                Recheck
+              </button>
+            </div>
+          </div>
+        )}
+
+        {state.status === "offline" && (
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-amber-800 shadow-sm dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-100">
+            <p className="font-semibold">
+              {state.displayName ? `${state.displayName} is currently offline.` : "Stream is offline."}
+            </p>
+            <p className="text-sm">Go live to load chatters, then refresh.</p>
+          </div>
+        )}
+
+        {state.status === "loading" && (
+          <div className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+            <p className="text-sm text-slate-600 dark:text-slate-300">Loading chatters...</p>
+          </div>
         )}
 
         {state.status === "ready" && (
           <div className="space-y-8">
             <div className="relative mx-auto flex h-[620px] w-full max-w-5xl items-center justify-center">
-              {/* Wheel Container */}
-              <div
-                className="relative rounded-full bg-slate-950/70 shadow-[0_20px_70px_rgba(0,0,0,0.55)] ring-[14px] ring-slate-900/70"
-                style={{ width: WHEEL_SIZE, height: WHEEL_SIZE, boxSizing: "content-box" }}
-              >
-                
-                {/* Pointer (Demon) */}
-                <div
-                  className="absolute top-1/2 z-30 -translate-y-1/2 rotate-6"
-                  style={{ right: `${POINTER_OFFSET}px` }}
-                >
+              <div className="relative h-[480px] w-[480px] rounded-full bg-slate-950/70 shadow-[0_20px_70px_rgba(0,0,0,0.55)] ring-[14px] ring-slate-900/70">
+                <div className="absolute right-[-130px] top-1/2 z-30 -translate-y-1/2 rotate-6">
                   <div className="relative h-48 w-48">
                     <Image src="/images/wheel-pointer.png" alt="Pointer" fill className="object-contain" priority />
                   </div>
                 </div>
 
-                {/* The Rotating Wheel */}
                 <div
-                  className="absolute rounded-full bg-slate-950/80 transition-transform duration-[5000ms] ease-[cubic-bezier(0.15,0,0.15,1)] ring-8 ring-slate-800/70"
-                  style={{ transform: `rotate(${spinAngle}deg)`, inset: WHEEL_INSET }}
+                  className="absolute inset-5 rounded-full transition-transform duration-[5000ms] ease-[cubic-bezier(0.25,0.1,0.2,1)] ring-8 ring-slate-800/70"
+                  style={{
+                    transform: `rotate(${spinAngle}deg)`,
+                    background: wheelGradient,
+                    maskImage: "radial-gradient(circle at center, transparent 0%, transparent 26%, black 27%, black 100%)",
+                    WebkitMaskImage: "radial-gradient(circle at center, transparent 0%, transparent 26%, black 27%, black 100%)",
+                  }}
                 >
-                  <div
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      background: `conic-gradient(${gradient})`,
-                      maskImage: `radial-gradient(circle at center, transparent ${INNER_HOLE_RATIO * 100}%, black ${INNER_HOLE_RATIO * 100}%, black 100%)`,
-                      WebkitMaskImage: `radial-gradient(circle at center, transparent ${INNER_HOLE_RATIO * 100}%, black ${INNER_HOLE_RATIO * 100}%, black 100%)`,
-                    }}
-                  />
-
-                  {/* Labels */}
-                  <div className="pointer-events-none absolute inset-0">
-                    {Array.from({ length: segments }).map((_, idx) => {
-                      const rotate = idx * segmentAngle;
-                      const label = chatters[idx] ?? "";
-                      const fontSize = fontSizeForLabel(label);
-                      const labelRotation = rotate + segmentAngle / 2;
-                      if (!label) return null;
-                      return (
-                        <div
-                          key={idx}
-                          className="absolute left-1/2 top-1/2 z-20 flex items-center justify-center"
-                          style={{
-                            transform: `rotate(${labelRotation}deg) translateX(${labelRadius}px) rotate(${-labelRotation}deg)`,
-                            transformOrigin: "center",
-                            width: `${labelSpan}px`,
-                            maxWidth: `${labelSpan}px`,
-                          }}
-                        >
-                          <span
-                            className="block w-full truncate text-center font-bold uppercase text-white"
+                  {Array.from({ length: segments }).map((_, idx) => {
+                    const rotate = idx * segmentAngle;
+                    const label = chatters[idx] ?? "";
+                    return (
+                      <div key={idx} className="absolute inset-0 origin-center">
+                        {label && (
+                          <div
+                            className="absolute left-1/2 top-1/2 origin-center text-center text-base font-semibold uppercase tracking-[0.06em] text-white drop-shadow"
                             style={{
-                              fontSize: `${fontSize}px`,
-                              letterSpacing: segments > 10 ? "0.015em" : "0.04em",
-                              textShadow: "0 3px 10px rgba(0,0,0,0.65)",
-                              whiteSpace: "nowrap",
-                              maxWidth: `${labelSpan}px`,
+                              transform: `translate(-50%, -50%) rotate(${rotate + segmentAngle / 2}deg) translateY(-62%) rotate(-${rotate + segmentAngle / 2}deg)`,
+                              width: "52%",
+                              lineHeight: "1.25",
                             }}
                           >
-                            {label}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
+                            <span className="block break-words whitespace-normal drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">
+                              {label}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
-                
-                {/* Center Button */}
+
                 <button
                   type="button"
                   onClick={spin}
@@ -314,11 +328,11 @@ export default function WheelOfBlameClient() {
               </div>
             </div>
 
-            {/* Results & Chatter List (RESTORED) */}
             <div className="mx-auto flex max-w-3xl flex-col gap-4 text-center">
+              <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">
+                {chatters.length} chatters loaded
+              </p>
               <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center">
-                
-                {/* Roll Log */}
                 <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Roll log</p>
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Recent winner</h3>
@@ -330,12 +344,8 @@ export default function WheelOfBlameClient() {
                     <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">No spins yet.</p>
                   )}
                 </div>
-
-                {/* Chatter List */}
                 <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                    {chatters.length} Chatters
-                  </p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Chatters</p>
                   <div className="max-h-64 overflow-auto rounded-2xl border border-slate-200 bg-white/60 p-3 text-sm shadow-inner dark:border-slate-800 dark:bg-slate-900/50">
                     {chatters.length ? (
                       <ul className="space-y-1 text-slate-700 dark:text-slate-200">
