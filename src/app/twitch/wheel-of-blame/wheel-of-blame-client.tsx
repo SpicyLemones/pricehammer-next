@@ -281,9 +281,9 @@ export default function WheelOfBlameClient() {
                         />
                         {label && (
                           <div
-                            className="absolute left-1/2 top-1/2 origin-center text-center text-[15px] font-semibold uppercase tracking-[0.08em] text-white drop-shadow"
+                            className="absolute left-1/2 top-0 -translate-x-1/2 pt-4 origin-top text-center text-[15px] font-semibold uppercase tracking-[0.08em] text-white drop-shadow"
                             style={{
-                              transform: `translate(-50%, -50%) rotate(${rotate + segmentAngle / 2}deg) translateY(-70%) rotate(-${rotate + segmentAngle / 2}deg)`,
+                              transform: `rotate(${rotate + segmentAngle / 2}deg)`,
                               width: "76%",
                               lineHeight: "1.2",
                             }}
