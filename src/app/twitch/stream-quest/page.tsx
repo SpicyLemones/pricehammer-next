@@ -18,7 +18,7 @@ export default function StreamQuestPage() {
         playsInline
         preload="auto"
         aria-hidden
-        src="/video/dailyquest.mp4"
+        src="/videos/dailyquest.mp4"
       />
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.55),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.65),transparent_40%)]" />
 

@@ -328,6 +328,7 @@ function QuestTile({
 }) {
   const meta = categoryMeta[quest.category];
   const Icon = meta.icon;
+  const isCompleted = quest.completed;
 
   return (
     <button
@@ -336,7 +337,7 @@ function QuestTile({
       disabled={quest.completed || completing}
       className={clsx(
         "group relative h-full overflow-hidden rounded-2xl border bg-white/85 text-left shadow-[0_12px_30px_rgba(0,0,0,0.18)] transition duration-200 dark:border-amber-900/80 dark:bg-slate-950/80",
-        quest.completed
+        isCompleted
           ? "cursor-not-allowed border-red-200/80 text-slate-500 grayscale dark:border-red-900/60 dark:text-slate-400"
           : "border-amber-200/70 hover:-translate-y-[6px] hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] active:translate-y-[1px]"
       )}
@@ -353,11 +354,24 @@ function QuestTile({
           quest.completed ? "brightness-75" : "group-hover:opacity-100 group-hover:brightness-110"
         )}
       />
-      <div className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-40" />
+      <div
+        className={clsx(
+          "absolute inset-0 bg-black/40 transition duration-300 opacity-0 group-hover:opacity-20",
+          isCompleted && "opacity-50"
+        )}
+      />
 
       {celebrating ? <CelebrationBurst /> : null}
 
-      <div className="relative flex h-full flex-col gap-3 p-5">
+      {!isCompleted ? (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <span className="rounded-lg border-4 border-emerald-500/70 bg-emerald-900/30 px-5 py-3 text-lg font-black uppercase tracking-[0.35em] text-emerald-100 opacity-0 shadow-lg transition duration-300 group-hover:opacity-100">
+            COMPLETE QUEST
+          </span>
+        </div>
+      ) : null}
+
+      <div className={clsx("relative flex h-full flex-col gap-3 p-5", isCompleted && "opacity-80")}>
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-2 rounded-full border border-amber-300/70 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900 shadow-sm dark:border-amber-800/70 dark:bg-amber-950/60 dark:text-amber-50">
             <Sparkles className="h-4 w-4" />
@@ -392,18 +406,10 @@ function QuestTile({
           </div>
         </div>
 
-        <div className="relative mt-1 flex items-center justify-center rounded-xl border border-amber-200/60 bg-white/60 px-3 py-10 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900 shadow-inner backdrop-blur-sm dark:border-amber-900/60 dark:bg-amber-950/50 dark:text-amber-100">
-          {!quest.completed ? (
-            <span className="pointer-events-none absolute inset-0 flex items-center justify-center text-lg font-black tracking-[0.35em] text-emerald-600/80 opacity-0 transition group-hover:opacity-100">
-              COMPLETE QUEST
-            </span>
-          ) : null}
-        </div>
-
-        {quest.completed ? (
+        {isCompleted ? (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <span className="rotate-[-10deg] rounded-xl border-4 border-red-900/70 bg-red-800/80 px-5 py-3 text-lg font-black uppercase tracking-[0.25em] text-red-100 shadow-lg drop-shadow-lg">
-              [ QUEST COMPLETE ]
+            <span className="rotate-[-6deg] rounded-lg border-4 border-red-800/80 bg-red-900/80 px-5 py-3 text-lg font-black uppercase tracking-[0.35em] text-red-50 shadow-lg drop-shadow-lg">
+              QUEST COMPLETE
             </span>
           </div>
         ) : null}

@@ -1,6 +1,8 @@
 // src/app/twitch/page.tsx
 import Link from "next/link";
 
+import { TwitchAuthRedirect } from "./TwitchAuthRedirect";
+
 const modules = [
   { title: "Pre-Stream Checklist", description: "Quick rundown before you go live." },
   {
@@ -59,6 +61,8 @@ export default function TwitchPage() {
           Choose a module to play with during your stream. Everything here is simple and tactile.
         </p>
       </header>
+
+      <TwitchAuthRedirect />
 
       <section className="space-y-3">
         {modules.map((module) => (
