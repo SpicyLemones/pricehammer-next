@@ -107,7 +107,7 @@ export default function WheelOfBlameClient() {
       
       // SYNC MATH:
       // 1. Where is the winner starting?
-      const winnerStartAngle = (winnerIndex * segmentAngle) + (segmentAngle / 2);
+      const winnerStartAngle = (winnerIndex * segmentAngle) + (segmentAngle / 2 - 100);
       
       // 2. Adjust for the 90 degree (Right Side) offset.
       // In CSS, 0deg is Top. To make winnerStartAngle land at 90deg, 
