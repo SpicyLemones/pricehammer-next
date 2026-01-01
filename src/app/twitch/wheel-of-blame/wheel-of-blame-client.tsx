@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type ChattersState =
   | { status: "idle" | "loading" }
@@ -214,8 +214,8 @@ export default function WheelOfBlameClient() {
     if (actionsTimerRef.current) {
       clearTimeout(actionsTimerRef.current);
     }
+    playWilhelm();
     revealTimerRef.current = setTimeout(() => {
-      playWilhelm();
       setRevealStage("winner");
   
     }, 1200);
@@ -376,6 +376,7 @@ export default function WheelOfBlameClient() {
       setDoubleDownSpinning(false);
       const choice = doubleDownOptions[winnerIndex];
       const tone: PunishmentTone = choice.toLowerCase().includes("save") ? "saved" : "punish";
+      setShowDoubleDownHighlight(true);
       startPunishmentSequence(choice, tone);
       if (spinAudio) {
         spinAudio.volume = previousVolume;
