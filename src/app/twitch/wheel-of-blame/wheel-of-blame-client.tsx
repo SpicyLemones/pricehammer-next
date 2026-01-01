@@ -11,13 +11,21 @@ type ChattersState =
   | { status: "ready"; displayName?: string; chatters: string[] };
 
 type SpinResult = { winner: string; angle: number };
+type ActionChoice = "timeout" | "ban" | "forgive" | "doubleDown";
+type PunishmentTone = "punish" | "saved";
 
 const fallbackColors = ["#FFD166", "#EF476F", "#06D6A0", "#118AB2", "#A556F6", "#F78C6B", "#4CC9F0", "#BDE0FE"];
-const WHEEL_SIZE = 620;
-const WHEEL_INSET = 14;
-const INNER_HOLE_RATIO = 0.23;
-const POINTER_OFFSET = -150;
-const DEFAULT_SEGMENT_COLOR = "#CBD5E1";
+const defaultDoubleDownOptions = [
+  "8 hour time out",
+  "8 billion seconds time out",
+  "Write an apology paragraph in chat",
+  "3 year discord ban",
+  "Donate 1 sub",
+  "Donate 10 gifted sub",
+  "Lose half your toadcoins",
+  "Lose all your toadcoins",
+  "SAVED",
+];
 
 function useChatters() {
   const [state, setState] = useState<ChattersState>({ status: "idle" });
@@ -71,18 +79,54 @@ export default function WheelOfBlameClient() {
   const [result, setResult] = useState<SpinResult | null>(null);
   const [buttonHovered, setButtonHovered] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [showActionSheet, setShowActionSheet] = useState(false);
+  const [activeAction, setActiveAction] = useState<ActionChoice | null>(null);
+  const [revealStage, setRevealStage] = useState<"idle" | "prelude" | "winner">("idle");
+  const [actionsVisible, setActionsVisible] = useState(false);
+  const [punishmentPhase, setPunishmentPhase] = useState<"idle" | "intro" | "reveal">("idle");
+  const [punishmentText, setPunishmentText] = useState<string | null>(null);
+  const [punishmentTone, setPunishmentTone] = useState<PunishmentTone>("punish");
+  const [winnerAnimationKey, setWinnerAnimationKey] = useState(0);
+  const [doubleDownOptions, setDoubleDownOptions] = useState<string[]>(defaultDoubleDownOptions);
+  const [doubleDownError, setDoubleDownError] = useState<string | null>(null);
+  const [doubleDownSpinning, setDoubleDownSpinning] = useState(false);
+  const [doubleDownResult, setDoubleDownResult] = useState<string | null>(null);
+  const [doubleDownReady, setDoubleDownReady] = useState(false);
+  const [doubleDownLoading, setDoubleDownLoading] = useState(false);
+  const [doubleDownOffset, setDoubleDownOffset] = useState(0);
+
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const demonOverlayRef = useRef<HTMLVideoElement | null>(null);
   const demonButtonRef = useRef<HTMLVideoElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const punishAudioRef = useRef<HTMLAudioElement | null>(null);
+  const savedAudioRef = useRef<HTMLAudioElement | null>(null);
+  const punishmentTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const revealTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const actionsTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const doubleDownLoopTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     audioRef.current = new Audio("/audio/spin.mp3");
     audioRef.current.preload = "auto";
+    punishAudioRef.current = new Audio("/audio/punish.mp3");
+    punishAudioRef.current.preload = "auto";
+    if (punishAudioRef.current) punishAudioRef.current.volume = 0.3;
+    savedAudioRef.current = new Audio("/audio/saved.mp3");
+    savedAudioRef.current.preload = "auto";
+    if (savedAudioRef.current) savedAudioRef.current.volume = 0.3;
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
+      }
+      if (punishAudioRef.current) {
+        punishAudioRef.current.pause();
+        punishAudioRef.current = null;
+      }
+      if (savedAudioRef.current) {
+        savedAudioRef.current.pause();
+        savedAudioRef.current = null;
       }
     };
   }, []);
@@ -95,11 +139,24 @@ export default function WheelOfBlameClient() {
   const outerRadius = wheelSize / 2 - 10;
   const innerRadius = 80;
   const center = wheelSize / 2;
+  const doubleDownItemHeight = 56;
+  const doubleDownWindow = doubleDownItemHeight * 7;
+  const doubleDownRepeated = useMemo(
+    () => [...doubleDownOptions, ...doubleDownOptions, ...doubleDownOptions],
+    [doubleDownOptions]
+  );
 
   const colors = useMemo(
     () => (chatters.length ? chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]) : fallbackColors),
     [chatters]
   );
+
+  useEffect(() => {
+    const middleIndex = doubleDownOptions.length; // center copy
+    const target =
+      -(middleIndex * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
+    setDoubleDownOffset(target);
+  }, [doubleDownOptions, doubleDownItemHeight, doubleDownWindow]);
 
   useEffect(() => {
     const overlay = demonOverlayRef.current;
@@ -125,41 +182,205 @@ export default function WheelOfBlameClient() {
     }
   }, [buttonHovered, spinning]);
 
-  function spin() {
-      if (!chatters.length || spinning) return;
-
-      // Pick the winner
-      const winnerIndex = Math.floor(Math.random() * chatters.length);
-      const spins = 8 + Math.floor(Math.random() * 4); // Extra spins for drama
-      
-      // SYNC MATH:
-      // 1. Where is the winner starting?
-      const winnerStartAngle = (winnerIndex * segmentAngle) + (segmentAngle / 2 + 100);
-      
-      // 2. Adjust for the 90 degree (Right Side) offset.
-      // In CSS, 0deg is Top. To make winnerStartAngle land at 90deg, 
-      // we need to rotate the wheel by (90 - winnerStartAngle).
-      const currentMod = spinAngle % 360;
-      let adjustment = (90 - winnerStartAngle) - currentMod;
-      
-      // Ensure we always spin forward
-      if (adjustment <= 0) adjustment += 360;
-      
-      const target = spinAngle + (spins * 360) + adjustment;
-
-      setSpinning(true);
-      setSpinAngle(target);
-
-      if (audioRef.current) {
-        audioRef.current.currentTime = 0;
-        audioRef.current.play().catch(() => {});
+  useEffect(() => {
+    return () => {
+      if (punishmentTimerRef.current) {
+        clearTimeout(punishmentTimerRef.current);
       }
+      if (revealTimerRef.current) {
+        clearTimeout(revealTimerRef.current);
+      }
+      if (actionsTimerRef.current) {
+        clearTimeout(actionsTimerRef.current);
+      }
+      if (doubleDownLoopTimerRef.current) {
+        clearInterval(doubleDownLoopTimerRef.current);
+      }
+    };
+  }, []);
 
-      setTimeout(() => {
-        setSpinning(false);
-        setResult({ winner: chatters[winnerIndex], angle: target });
-      }, 5200);
+  useEffect(() => {
+    if (!result) return;
+    setShowActionSheet(true);
+    setActiveAction(null);
+    setRevealStage("prelude");
+    setActionsVisible(false);
+    setPunishmentPhase("idle");
+    setPunishmentText(null);
+    setDoubleDownResult(null);
+    setWinnerAnimationKey((key) => key + 1);
+    if (revealTimerRef.current) {
+      clearTimeout(revealTimerRef.current);
     }
+    if (actionsTimerRef.current) {
+      clearTimeout(actionsTimerRef.current);
+    }
+    revealTimerRef.current = setTimeout(() => {
+      setRevealStage("winner");
+    }, 1200);
+    actionsTimerRef.current = setTimeout(() => {
+      setActionsVisible(true);
+    }, 2000);
+  }, [result]);
+
+  function playSound(tone: PunishmentTone) {
+    const targetAudio = tone === "saved" ? savedAudioRef.current : punishAudioRef.current;
+    if (!targetAudio) return;
+    targetAudio.currentTime = 0;
+    targetAudio.play().catch(() => {});
+  }
+
+  function startPunishmentSequence(text: string, tone: PunishmentTone) {
+    if (punishmentTimerRef.current) {
+      clearTimeout(punishmentTimerRef.current);
+    }
+    setPunishmentTone(tone);
+    setPunishmentText(text);
+    setPunishmentPhase("intro");
+    punishmentTimerRef.current = setTimeout(() => {
+      setPunishmentPhase("reveal");
+      playSound(tone);
+    }, 1500);
+  }
+
+  function resetOverlay() {
+    setShowActionSheet(false);
+    setActiveAction(null);
+    setRevealStage("idle");
+    setActionsVisible(false);
+    setPunishmentPhase("idle");
+    setPunishmentText(null);
+    setDoubleDownResult(null);
+    setDoubleDownSpinning(false);
+    if (revealTimerRef.current) {
+      clearTimeout(revealTimerRef.current);
+    }
+    if (actionsTimerRef.current) {
+      clearTimeout(actionsTimerRef.current);
+    }
+  }
+
+  function spin() {
+    if (!chatters.length || spinning) return;
+
+    resetOverlay();
+    setResult(null);
+    setDoubleDownReady(false);
+    setDoubleDownError(null);
+
+    const winnerIndex = Math.floor(Math.random() * chatters.length);
+    const spins = 8 + Math.floor(Math.random() * 4);
+
+    const winnerStartAngle = winnerIndex * segmentAngle + (segmentAngle / 2 + 100);
+    const currentMod = spinAngle % 360;
+    let adjustment = 90 - winnerStartAngle - currentMod;
+
+    if (adjustment <= 0) adjustment += 360;
+
+    const target = spinAngle + spins * 360 + adjustment;
+
+    setSpinning(true);
+    setSpinAngle(target);
+
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
+    }
+
+    setTimeout(() => {
+      setSpinning(false);
+      setResult({ winner: chatters[winnerIndex], angle: target });
+    }, 5200);
+  }
+
+  function handleAction(action: ActionChoice) {
+    setActiveAction(action);
+    setDoubleDownResult(null);
+    setPunishmentPhase("idle");
+    setPunishmentText(null);
+
+    if (action === "doubleDown") {
+      setDoubleDownReady(false);
+      if (!doubleDownLoading) {
+        loadDoubleDownOptions();
+      }
+      return;
+    }
+
+    if (action === "forgive") {
+      startPunishmentSequence("Forgiven", "saved");
+      return;
+    }
+
+    if (action === "timeout") {
+      startPunishmentSequence("10 minute time out", "punish");
+      return;
+    }
+
+    startPunishmentSequence("Banished from chat", "punish");
+  }
+
+  async function loadDoubleDownOptions() {
+    try {
+      setDoubleDownLoading(true);
+      const res = await fetch("/api/twitch/doubledown");
+      const data = (await res.json()) as { options?: string[]; error?: string };
+      setDoubleDownOptions(data.options?.filter(Boolean) ?? defaultDoubleDownOptions);
+      setDoubleDownError(res.ok ? null : "Using fallback double down list.");
+      setDoubleDownReady(true);
+    } catch (error) {
+      console.error("Failed to load double down options", error);
+      setDoubleDownOptions(defaultDoubleDownOptions);
+      setDoubleDownError("Using fallback double down list.");
+      setDoubleDownReady(true);
+    } finally {
+      setDoubleDownLoading(false);
+    }
+  }
+
+  function spinDoubleDown() {
+    if (!doubleDownOptions.length || doubleDownSpinning) return;
+    if (doubleDownLoopTimerRef.current) {
+      clearInterval(doubleDownLoopTimerRef.current);
+    }
+    const winnerIndex = Math.floor(Math.random() * doubleDownOptions.length);
+    const baseIndex = doubleDownOptions.length; // center copy
+    const targetIndex = baseIndex + winnerIndex;
+    const targetOffset =
+      -(targetIndex * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
+
+    setDoubleDownSpinning(true);
+    const spinAudio = audioRef.current;
+    const previousVolume = spinAudio?.volume ?? 1;
+    if (spinAudio) {
+      spinAudio.volume = 0.5;
+      spinAudio.currentTime = 0;
+      spinAudio.play().catch(() => {});
+    }
+    const pulse = () => {
+      const randomIdx = baseIndex + Math.floor(Math.random() * doubleDownOptions.length);
+      const offset =
+        -(randomIdx * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
+      setDoubleDownOffset(offset);
+    };
+    pulse();
+    doubleDownLoopTimerRef.current = setInterval(pulse, 480);
+
+    setTimeout(() => {
+      if (doubleDownLoopTimerRef.current) {
+        clearInterval(doubleDownLoopTimerRef.current);
+      }
+      setDoubleDownOffset(targetOffset);
+      setDoubleDownSpinning(false);
+      const choice = doubleDownOptions[winnerIndex];
+      setDoubleDownResult(choice);
+      const tone: PunishmentTone = choice.toLowerCase().includes("save") ? "saved" : "punish";
+      startPunishmentSequence(choice, tone);
+      if (spinAudio) {
+        spinAudio.volume = previousVolume;
+      }
+    }, 6000);
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950">
@@ -177,7 +398,6 @@ export default function WheelOfBlameClient() {
           const playPromise = el.play();
           if (playPromise && typeof playPromise.catch === "function") {
             playPromise.catch(() => {
-              // Autoplay with audio can be blocked; keep muted until user enables.
               el.muted = true;
               setSoundEnabled(false);
             });
@@ -212,7 +432,6 @@ export default function WheelOfBlameClient() {
                 const playPromise = videoRef.current.play();
                 if (playPromise && typeof playPromise.catch === "function") {
                   playPromise.catch(() => {
-                    // If autoplay still blocked, leave muted and reset toggle.
                     videoRef.current?.pause();
                     videoRef.current.muted = true;
                     setSoundEnabled(false);
@@ -233,6 +452,36 @@ export default function WheelOfBlameClient() {
           }
           .font-red-devil {
             font-family: "Red Devil", var(--font-sans, "Inter"), system-ui, -apple-system, sans-serif;
+          }
+          @keyframes winner-pop {
+            0% {
+              transform: scale(0.85);
+              opacity: 0;
+            }
+            50% {
+              transform: scale(1.05);
+              opacity: 1;
+            }
+            100% {
+              transform: scale(1);
+              opacity: 1;
+            }
+          }
+          .animate-winner-pop {
+            animation: winner-pop 900ms ease-out forwards;
+          }
+          @keyframes punishment-reveal {
+            0% {
+              opacity: 0;
+              transform: translateY(10px) scale(0.98);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+          }
+          .animate-punishment-reveal {
+            animation: punishment-reveal 700ms ease-out forwards;
           }
         `}</style>
         <header className="space-y-2 text-center">
@@ -443,6 +692,156 @@ export default function WheelOfBlameClient() {
           </div>
         )}
       </div>
+      {showActionSheet && result && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-black/75 backdrop-blur-sm transition-opacity duration-700" />
+          <div className="relative z-10 flex w-full max-w-5xl flex-col items-center gap-6 text-center">
+            <div className="flex flex-col items-center gap-3">
+              <p
+                className={`font-red-devil text-3xl font-black uppercase tracking-[0.24em] text-rose-100 transition-all duration-600 ${
+                  revealStage === "prelude" ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"
+                }`}
+              >
+                The BLAME goes to....
+              </p>
+              <p
+                key={winnerAnimationKey}
+                className={`font-red-devil text-4xl font-black uppercase tracking-wide text-rose-200 transition-all duration-600 ${
+                  revealStage === "winner" ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+                }`}
+              >
+                {result.winner}
+              </p>
+            </div>
+
+            {actionsVisible && (
+              <div className="flex flex-wrap justify-center gap-3 text-left transition-opacity duration-700">
+                <button
+                  type="button"
+                  onClick={() => handleAction("timeout")}
+                  className={`rounded-full border px-5 py-3 text-sm font-semibold text-white shadow-lg backdrop-blur ${
+                    activeAction === "timeout"
+                      ? "border-rose-400 bg-rose-600/80"
+                      : "border-white/10 bg-white/10 hover:bg-white/15"
+                  }`}
+                >
+                  10 minute time out
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleAction("ban")}
+                  className={`rounded-full border px-5 py-3 text-sm font-semibold text-white shadow-lg backdrop-blur ${
+                    activeAction === "ban" ? "border-rose-400 bg-rose-600/80" : "border-white/10 bg-white/10 hover:bg-white/15"
+                  }`}
+                >
+                  Ban them
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleAction("forgive")}
+                  className={`rounded-full border px-5 py-3 text-sm font-semibold text-white shadow-lg backdrop-blur ${
+                    activeAction === "forgive"
+                      ? "border-emerald-300 bg-emerald-500/70"
+                      : "border-white/10 bg-white/10 hover:bg-white/15"
+                  }`}
+                >
+                  Forgive
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleAction("doubleDown")}
+                  className={`rounded-full border px-5 py-3 text-sm font-semibold text-white shadow-lg backdrop-blur ${
+                    activeAction === "doubleDown"
+                      ? "border-rose-400 bg-rose-600/80"
+                      : "border-white/10 bg-white/10 hover:bg-white/15"
+                  }`}
+                >
+                  <span className="font-red-devil text-lg uppercase text-rose-100">Double Down</span>
+                </button>
+              </div>
+            )}
+
+            {activeAction === "doubleDown" && (
+              <div className="w-full max-w-3xl space-y-4 rounded-3xl border border-white/10 bg-black/30 p-5 text-left shadow-2xl backdrop-blur-md">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="space-y-1">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Double down</p>
+                    <h4 className="font-red-devil text-2xl font-black uppercase text-rose-100">Risk it all</h4>
+                    {doubleDownError && <p className="text-xs text-amber-300">{doubleDownError}</p>}
+                  </div>
+                  <button
+                    type="button"
+                    disabled={doubleDownSpinning || doubleDownLoading || !doubleDownReady}
+                    onClick={spinDoubleDown}
+                    className="font-red-devil inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-rose-600 px-4 py-2 text-base font-black uppercase tracking-[0.2em] text-white shadow-lg transition hover:from-rose-400 hover:to-rose-600 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {doubleDownSpinning ? "Spinning..." : doubleDownLoading ? "Loading..." : "Spin"}
+                  </button>
+                </div>
+                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-3">
+                  <div
+                    className="absolute left-3 right-3 top-1/2 z-10 h-14 -translate-y-1/2 rounded-xl border border-rose-400/60 bg-rose-500/15 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] pointer-events-none"
+                    aria-hidden
+                  />
+                  <div
+                    className="relative"
+                    style={{ height: `${doubleDownWindow}px` }}
+                  >
+                    <div
+                      className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)]"
+                      style={{ transform: `translateY(${doubleDownOffset}px)` }}
+                    >
+                      {doubleDownRepeated.map((option, idx) => (
+                        <div
+                          key={`${option}-${idx}`}
+                          className="flex h-[56px] items-center justify-center text-center text-base font-semibold text-slate-100"
+                        >
+                          {option}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                {doubleDownResult && (
+                  <div className="rounded-2xl border border-rose-400/60 bg-rose-600/20 px-4 py-3 text-rose-100">
+                    Double down landed on: <span className="font-semibold">{doubleDownResult}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {punishmentPhase !== "idle" && punishmentText && (
+              <div className="w-full max-w-3xl space-y-3 rounded-3xl border border-white/10 bg-black/30 p-4 text-center shadow-2xl backdrop-blur">
+                <p className="text-base uppercase tracking-[0.28em] text-slate-200 transition-opacity duration-700">
+                  The punishment is.....
+                </p>
+                {punishmentPhase === "reveal" ? (
+                  <p
+                    className={`animate-punishment-reveal text-3xl font-black ${punishmentTone === "saved" ? "text-emerald-300" : "text-rose-300"} ${
+                      punishmentTone === "saved" ? "font-sans" : "font-red-devil"
+                    }`}
+                  >
+                    {punishmentText}
+                  </p>
+                ) : (
+                  <p className="text-xl text-slate-200 opacity-60">...</p>
+                )}
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={() => {
+                resetOverlay();
+                setResult(null);
+              }}
+              className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-lg backdrop-blur transition hover:bg-white/15"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
