@@ -88,16 +88,15 @@ export default function WheelOfBlameClient() {
   const segments = Math.max(chatters.length, 1);
   const segmentAngle = 360 / segments;
 
-  const colors = useMemo(() => chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]), [chatters]);
-  const wheelGradient = useMemo(() => {
-    if (!chatters.length) return "conic-gradient(#ef476f 0deg 120deg, #ffd166 120deg 240deg, #06d6a0 240deg 360deg)";
-    const stops = colors.map((color, idx) => {
-      const start = idx * segmentAngle;
-      const end = (idx + 1) * segmentAngle;
-      return `${color} ${start}deg ${end}deg`;
-    });
-    return `conic-gradient(${stops.join(", ")})`;
-  }, [chatters.length, colors, segmentAngle]);
+  const wheelSize = 500;
+  const outerRadius = wheelSize / 2 - 10;
+  const innerRadius = 80;
+  const center = wheelSize / 2;
+
+  const colors = useMemo(
+    () => (chatters.length ? chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]) : fallbackColors),
+    [chatters]
+  );
 
   function spin() {
       if (!chatters.length || spinning) return;
@@ -277,44 +276,67 @@ export default function WheelOfBlameClient() {
         {state.status === "ready" && (
           <div className="space-y-8">
             <div className="relative mx-auto flex h-[620px] w-full max-w-5xl items-center justify-center">
-              <div className="relative h-[480px] w-[480px] rounded-full bg-slate-950/70 shadow-[0_20px_70px_rgba(0,0,0,0.55)] ring-[14px] ring-slate-900/70">
+              <div className="relative h-[520px] w-[520px] rounded-full bg-slate-950/70 shadow-[0_20px_70px_rgba(0,0,0,0.55)] ring-[14px] ring-slate-900/70">
                 <div className="absolute right-[-130px] top-1/2 z-30 -translate-y-1/2 rotate-6">
                   <div className="relative h-48 w-48">
                     <Image src="/images/wheel-pointer.png" alt="Pointer" fill className="object-contain" priority />
                   </div>
                 </div>
 
-                <div
-                  className="absolute inset-5 rounded-full transition-transform duration-[5000ms] ease-[cubic-bezier(0.25,0.1,0.2,1)] ring-8 ring-slate-800/70"
-                  style={{
-                    transform: `rotate(${spinAngle}deg)`,
-                    background: wheelGradient,
-                    maskImage: "radial-gradient(circle at center, transparent 0%, transparent 26%, black 27%, black 100%)",
-                    WebkitMaskImage: "radial-gradient(circle at center, transparent 0%, transparent 26%, black 27%, black 100%)",
-                  }}
-                >
-                  {Array.from({ length: segments }).map((_, idx) => {
-                    const rotate = idx * segmentAngle;
-                    const label = chatters[idx] ?? "";
-                    return (
-                      <div key={idx} className="absolute inset-0 origin-center">
-                        {label && (
-                          <div
-                            className="absolute left-1/2 top-1/2 origin-center text-center text-base font-semibold uppercase tracking-[0.06em] text-white drop-shadow"
-                            style={{
-                              transform: `translate(-50%, -50%) rotate(${rotate + segmentAngle / 2}deg) translateY(-62%) rotate(-${rotate + segmentAngle / 2}deg)`,
-                              width: "52%",
-                              lineHeight: "1.25",
-                            }}
-                          >
-                            <span className="block break-words whitespace-normal drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">
+                <div className="absolute inset-4 transition-transform duration-[5000ms] ease-[cubic-bezier(0.25,0.1,0.2,1)]" style={{ transform: `rotate(${spinAngle}deg)` }}>
+                  <svg viewBox={`0 0 ${wheelSize} ${wheelSize}`} className="h-full w-full drop-shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
+                    <circle cx={center} cy={center} r={outerRadius + 4} fill="rgba(15,23,42,0.75)" />
+                    {Array.from({ length: segments }).map((_, idx) => {
+                      const startAngle = (idx * segmentAngle * Math.PI) / 180;
+                      const endAngle = ((idx + 1) * segmentAngle * Math.PI) / 180;
+                      const largeArc = endAngle - startAngle > Math.PI ? 1 : 0;
+
+                      const sx = center + outerRadius * Math.cos(startAngle);
+                      const sy = center + outerRadius * Math.sin(startAngle);
+                      const ex = center + outerRadius * Math.cos(endAngle);
+                      const ey = center + outerRadius * Math.sin(endAngle);
+
+                      const six = center + innerRadius * Math.cos(endAngle);
+                      const siy = center + innerRadius * Math.sin(endAngle);
+                      const sdx = center + innerRadius * Math.cos(startAngle);
+                      const sdy = center + innerRadius * Math.sin(startAngle);
+
+                      const path = [
+                        `M ${sx} ${sy}`,
+                        `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${ex} ${ey}`,
+                        `L ${six} ${siy}`,
+                        `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${sdx} ${sdy}`,
+                        "Z",
+                      ].join(" ");
+
+                      const midAngle = startAngle + (endAngle - startAngle) / 2;
+                      const labelRadius = innerRadius + (outerRadius - innerRadius) * 0.62;
+                      const lx = center + labelRadius * Math.cos(midAngle);
+                      const ly = center + labelRadius * Math.sin(midAngle);
+                      const labelRotation = (midAngle * 180) / Math.PI;
+                      const label = chatters[idx] ?? "";
+
+                      return (
+                        <g key={idx}>
+                          <path d={path} fill={colors[idx % colors.length]} />
+                          {label && (
+                            <text
+                              x={lx}
+                              y={ly}
+                              fill="white"
+                              fontSize="15"
+                              fontWeight="700"
+                              textAnchor="middle"
+                              transform={`rotate(${labelRotation - 90}, ${lx}, ${ly})`}
+                              style={{ letterSpacing: "0.04em", paintOrder: "stroke", stroke: "rgba(0,0,0,0.45)", strokeWidth: 1 }}
+                            >
                               {label}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                            </text>
+                          )}
+                        </g>
+                      );
+                    })}
+                  </svg>
                 </div>
 
                 <button
