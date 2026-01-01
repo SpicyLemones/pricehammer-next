@@ -22,12 +22,12 @@ export async function GET(request: Request) {
 
   try {
     const session = await exchangeCodeForTokens(code);
-    writeSession(session);
+    await writeSession(session);
     const redirectUrl = new URL("/twitch/wheel-of-blame?connected=1", request.url);
     return NextResponse.redirect(redirectUrl);
   } catch (err) {
     console.error("Failed to exchange Twitch code", err);
-    clearSession();
+    await clearSession();
     const redirectUrl = new URL("/twitch/wheel-of-blame?error=oauth_failed", request.url);
     return NextResponse.redirect(redirectUrl);
   }
