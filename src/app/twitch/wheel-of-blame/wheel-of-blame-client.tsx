@@ -309,7 +309,6 @@ export default function WheelOfBlameClient() {
 
   function handleAction(action: ActionChoice) {
     setActiveAction(action);
-    setDoubleDownResult(null);
     setPunishmentPhase("idle");
     setPunishmentText(null);
 
@@ -393,15 +392,6 @@ export default function WheelOfBlameClient() {
         spinAudio.volume = previousVolume;
       }
     }, 6000);
-  }
-
-    setTimeout(() => {
-      setDoubleDownSpinning(false);
-      const choice = doubleDownOptions[winnerIndex];
-      setDoubleDownResult(choice);
-      const tone: PunishmentTone = choice.toLowerCase().includes("save") ? "saved" : "punish";
-      startPunishmentSequence(choice, tone);
-    }, 5200);
   }
 
   return (
