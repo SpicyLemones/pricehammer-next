@@ -149,7 +149,7 @@ export default function WheelOfBlameClient() {
   const center = wheelSize / 2;
   const doubleDownItemHeight = 56;
   const doubleDownWindow = doubleDownItemHeight * 7;
-  const doubleDownRepeatCount = 5;
+  const doubleDownRepeatCount = 50;
   const getDoubleDownOffset = useCallback(
     (index: number) => -(index * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2,
     [doubleDownItemHeight, doubleDownWindow]
@@ -159,12 +159,6 @@ export default function WheelOfBlameClient() {
     return Array.from({ length: totalItems }, (_, idx) => doubleDownOptions[idx % doubleDownOptions.length]);
   }, [doubleDownOptions, doubleDownRepeatCount]);
   const doubleDownMiddleIndex = doubleDownOptions.length * Math.floor(doubleDownRepeatCount / 2);
-  const doubleDownTotalItems = doubleDownOptions.length * doubleDownRepeatCount;
-  const normalizeDoubleDownIndex = (index: number) => {
-    if (index < doubleDownOptions.length) return index + doubleDownOptions.length;
-    if (index >= doubleDownTotalItems - doubleDownOptions.length) return index - doubleDownOptions.length;
-    return index;
-  };
 
   const colors = useMemo(
     () => (chatters.length ? chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]) : fallbackColors),
