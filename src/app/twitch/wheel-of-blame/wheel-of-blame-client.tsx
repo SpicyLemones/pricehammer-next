@@ -69,8 +69,11 @@ export default function WheelOfBlameClient() {
   const [spinAngle, setSpinAngle] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<SpinResult | null>(null);
+  const [buttonHovered, setButtonHovered] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const demonOverlayRef = useRef<HTMLVideoElement | null>(null);
+  const demonButtonRef = useRef<HTMLVideoElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -97,6 +100,30 @@ export default function WheelOfBlameClient() {
     () => (chatters.length ? chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]) : fallbackColors),
     [chatters]
   );
+
+  useEffect(() => {
+    const overlay = demonOverlayRef.current;
+    if (!overlay) return;
+    if (spinning) {
+      overlay.currentTime = 0;
+      overlay.play().catch(() => {});
+    } else {
+      overlay.pause();
+      overlay.currentTime = 0;
+    }
+  }, [spinning]);
+
+  useEffect(() => {
+    const buttonVideo = demonButtonRef.current;
+    const active = spinning || buttonHovered;
+    if (!buttonVideo) return;
+    if (active) {
+      buttonVideo.play().catch(() => {});
+    } else {
+      buttonVideo.pause();
+      buttonVideo.currentTime = 0;
+    }
+  }, [buttonHovered, spinning]);
 
   function spin() {
       if (!chatters.length || spinning) return;
@@ -158,6 +185,15 @@ export default function WheelOfBlameClient() {
         }}
       />
       <div className="fixed inset-0 bg-gradient-to-b from-black/70 via-black/65 to-black/80" aria-hidden />
+      <video
+        ref={demonOverlayRef}
+        className={`pointer-events-none fixed inset-0 z-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out ${spinning ? "opacity-50" : ""}`}
+        src="/videos/demontys.mp4"
+        loop
+        muted
+        playsInline
+        preload="auto"
+      />
       <div className="relative mx-auto flex max-w-6xl flex-col gap-8 p-6">
         <a
           href="/twitch"
@@ -344,8 +380,19 @@ export default function WheelOfBlameClient() {
                   type="button"
                   onClick={spin}
                   disabled={spinning || !chatters.length}
-                  className="font-red-devil absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-b from-rose-500 to-rose-600 text-2xl font-black uppercase tracking-[0.2em] text-white shadow-[0_16px_40px_rgba(0,0,0,0.45)] transition hover:scale-105 active:scale-100 disabled:cursor-not-allowed disabled:opacity-60"
+                  onMouseEnter={() => setButtonHovered(true)}
+                  onMouseLeave={() => setButtonHovered(false)}
+                  className="font-red-devil absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-full bg-gradient-to-b from-rose-500 to-rose-600 text-2xl font-black uppercase tracking-[0.2em] text-white shadow-[0_16px_40px_rgba(0,0,0,0.45)] transition hover:scale-105 active:scale-100 disabled:cursor-not-allowed disabled:opacity-60"
                 >
+                  <video
+                    ref={demonButtonRef}
+                    className={`pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 ${spinning || buttonHovered ? "opacity-60" : ""}`}
+                    src="/videos/demontys.mp4"
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                  />
                   Blame
                 </button>
               </div>
