@@ -43,14 +43,21 @@ type StreamQuestState = {
   lastAudience: AudienceSnapshot;
 };
 
-type QuestTemplate = {
+type QuestVariable =
+  | { key: string; type: "range"; min: number; max: number }
+  | { key: string; type: "chatter" };
+
+type QuestTemplateConfig = {
   id: string;
   category: QuestCategory;
   title: string;
-  build: (context: { audience: AudienceSnapshot }) => Omit<StreamQuest, "id" | "completed" | "completedAt">;
+  prompt: string;
+  reward?: number;
+  variables?: QuestVariable[];
 };
 
 const DATA_PATH = path.join(process.cwd(), "data", "stream-quests.json");
+const TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "quest-library.json");
 
 const FALLBACK_CHATTERS = [
   "toadette",
@@ -62,99 +69,63 @@ const FALLBACK_CHATTERS = [
   "ribbitriot",
 ];
 
-const QUEST_LIBRARY: QuestTemplate[] = [
+const DEFAULT_TEMPLATE_LIBRARY: QuestTemplateConfig[] = [
   {
     id: "prime-beggar",
     category: "prime",
     title: "Prime Beggar",
-    build: () => {
-      const count = randomBetween(1, 3);
-      return {
-        title: "Prime Beggar",
-        prompt: `Successfully beg for ${count} Twitch Prime sub${count === 1 ? "" : "s"}.`,
-        reward: 500,
-        category: "prime",
-      };
-    },
+    prompt: "Successfully beg for {{count}} Twitch Prime sub{{plural:count:s}}.",
+    reward: 500,
+    variables: [{ key: "count", type: "range", min: 1, max: 3 }],
   },
   {
     id: "ban-random",
     category: "ban",
     title: "See You Later",
-    build: ({ audience }) => {
-      const chatter = pickChatter(audience.names);
-      return {
-        title: "See You Later",
-        prompt: `Ban ${chatter} from your chat (they'll forgive you… probably).`,
-        reward: 500,
-        category: "ban",
-      };
-    },
+    prompt: "Ban {{chatter}} from your chat (they'll forgive you… probably).",
+    reward: 500,
+    variables: [{ key: "chatter", type: "chatter" }],
   },
   {
     id: "timeout-random",
     category: "timeout",
     title: "Naughty Step",
-    build: ({ audience }) => {
-      const chatter = pickChatter(audience.names);
-      const minutes = randomBetween(1, 20);
-      return {
-        title: "Naughty Step",
-        prompt: `Time out ${chatter} for ${minutes} minute${minutes === 1 ? "" : "s"}.`,
-        reward: 500,
-        category: "timeout",
-      };
-    },
+    prompt: "Time out {{chatter}} for {{minutes}} minute{{plural:minutes:s}}.",
+    reward: 500,
+    variables: [
+      { key: "chatter", type: "chatter" },
+      { key: "minutes", type: "range", min: 1, max: 20 },
+    ],
   },
   {
     id: "stream-hours",
     category: "stream-time",
     title: "Stay Live",
-    build: () => {
-      const hours = randomBetween(1, 5);
-      return {
-        title: "Stay Live",
-        prompt: `Stream for more than ${hours} hour${hours === 1 ? "" : "s"}.`,
-        reward: 500,
-        category: "stream-time",
-      };
-    },
+    prompt: "Stream for more than {{hours}} hour{{plural:hours:s}}.",
+    reward: 500,
+    variables: [{ key: "hours", type: "range", min: 1, max: 5 }],
   },
   {
     id: "insult-random",
     category: "insult",
     title: "Roast Duty",
-    build: ({ audience }) => {
-      const chatter = pickChatter(audience.names);
-      return {
-        title: "Roast Duty",
-        prompt: `Drop a playful insult on ${chatter} in chat.`,
-        reward: 500,
-        category: "insult",
-      };
-    },
+    prompt: "Drop a playful insult on {{chatter}} in chat.",
+    reward: 500,
+    variables: [{ key: "chatter", type: "chatter" }],
   },
   {
     id: "wordle",
     category: "wordle",
     title: "Wordle Warrior",
-    build: () => ({
-      title: "Wordle Warrior",
-      prompt: "Complete today’s Wordle on stream.",
-      reward: 500,
-      category: "wordle",
-    }),
+    prompt: "Complete today’s Wordle on stream.",
+    reward: 500,
   },
   {
     id: "bandle",
     category: "bandle",
     title: "Bandle Bard",
-    build: () => ({
-      title: "Bandle Bard",
-      prompt: "Complete today’s Bandle on stream.",
-      reward: 500,
-      category: "bandle",
-    }),
+    prompt: "Complete today’s Bandle on stream.",
+    reward: 500,
   },
 ];
 
@@ -219,12 +190,13 @@ export async function POST(request: Request) {
 async function ensureState(audience: AudienceSnapshot) {
   const today = currentDateKey();
   const existing = await loadState();
+  const questTemplates = await loadQuestTemplates();
 
   if (existing && existing.date === today) {
     return { state: existing, regenerated: false };
   }
 
-  const quests = buildQuests(audience);
+  const quests = buildQuests(audience, questTemplates);
   const state: StreamQuestState = {
     date: today,
     generatedAt: new Date().toISOString(),
@@ -282,16 +254,91 @@ function pickChatter(chatters: string[]) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-function buildQuests(audience: AudienceSnapshot): StreamQuest[] {
-  const shuffled = [...QUEST_LIBRARY].sort(() => Math.random() - 0.5);
+async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
+  try {
+    const raw = await fs.readFile(TEMPLATE_LIBRARY_PATH, "utf8");
+    const parsed = JSON.parse(raw) as QuestTemplateConfig[] | { templates?: QuestTemplateConfig[] };
+    const templates = Array.isArray(parsed) ? parsed : parsed.templates;
+    const sanitized = (templates ?? []).map(sanitizeTemplateConfig).filter(Boolean) as QuestTemplateConfig[];
+    if (sanitized.length >= 5) return sanitized;
+    if (sanitized.length > 0) {
+      console.warn("Stream quest: not enough templates in quest-library.json, falling back to defaults.");
+    }
+  } catch (error) {
+    console.warn("Stream quest: failed to load quest-library.json, using defaults.", error);
+  }
+  return DEFAULT_TEMPLATE_LIBRARY;
+}
+
+function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[]): StreamQuest[] {
+  if (library.length < 5) {
+    throw new Error("At least 5 quest templates are required to build a daily set.");
+  }
+  const shuffled = [...library].sort(() => Math.random() - 0.5);
   const selected = shuffled.slice(0, 5);
 
-  return selected.map((template) => ({
-    id: `${template.id}-${crypto.randomUUID()}`,
-    completed: false,
-    completedAt: undefined,
-    ...template.build({ audience }),
-  }));
+  return selected.map((template) => {
+    const variables = resolveVariables(template.variables ?? [], audience);
+    const prompt = renderPrompt(template.prompt, variables);
+    const reward = template.reward ?? 500;
+
+    return {
+      id: `${template.id}-${crypto.randomUUID()}`,
+      title: template.title,
+      prompt,
+      reward,
+      category: template.category,
+      completed: false,
+      completedAt: undefined,
+    };
+  });
+}
+
+function renderPrompt(prompt: string, values: Record<string, string | number>) {
+  const withPlural = prompt.replace(/\{\{plural:([^:}]+):([^}]+)\}\}/g, (match, key, suffix) => {
+    const value = values[key];
+    if (typeof value === "number" && value === 1) return "";
+    return typeof value !== "undefined" ? suffix : match;
+  });
+
+  return withPlural.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
+    const value = values[key];
+    return typeof value !== "undefined" ? String(value) : match;
+  });
+}
+
+function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot) {
+  const values: Record<string, string | number> = {};
+
+  variables.forEach((variable) => {
+    if (variable.type === "range") {
+      const min = Number.isFinite(variable.min) ? variable.min : 1;
+      const max = Number.isFinite(variable.max) ? variable.max : min;
+      values[variable.key] = randomBetween(min, max);
+    }
+    if (variable.type === "chatter") {
+      values[variable.key] = pickChatter(audience.names);
+    }
+  });
+
+  return values;
+}
+
+function sanitizeTemplateConfig(config: QuestTemplateConfig) {
+  if (!config?.id || !config.title || !config.prompt) return null;
+  if (!["prime", "ban", "timeout", "stream-time", "insult", "wordle", "bandle"].includes(config.category)) {
+    return null;
+  }
+  return {
+    ...config,
+    variables: (config.variables ?? []).filter((variable) => {
+      if (variable.type === "chatter") return !!variable.key;
+      if (variable.type === "range") {
+        return !!variable.key && Number.isFinite(variable.min) && Number.isFinite(variable.max);
+      }
+      return false;
+    }),
+  };
 }
 
 async function loadAudience(): Promise<AudienceSnapshot> {

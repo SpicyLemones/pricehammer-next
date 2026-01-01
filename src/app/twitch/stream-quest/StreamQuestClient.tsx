@@ -47,7 +47,7 @@ type QuestResponse = {
   ledger: Record<string, number>;
   audience: AudienceSnapshot;
 };
-const tavernBoardBg = `url("/images/quest.png")`;
+const tavernBoardBg = `url("/images/questboard.png")`;
 
 const categoryMeta: Record<
   QuestCategory,
@@ -225,7 +225,8 @@ export function StreamQuestClient() {
   const isLive = !!data.audience.live;
   const isAuthed = data.audience.source === "twitch";
   const isActive = isLive && isAuthed;
-  const showAuthBanner = authState === "unauthenticated" || (!isAuthed && !isLive);
+  const showAuthBanner = authState === "unauthenticated";
+  const streamerName = data.audience.displayName;
 
   return (
     <div className="space-y-6">
@@ -253,55 +254,63 @@ export function StreamQuestClient() {
         </div>
       ) : null}
 
-      <div
-        className="relative overflow-hidden rounded-3xl border border-amber-900/50 bg-[#1a0f06]/70 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.25)] backdrop-blur-sm"
-        style={{
-          backgroundImage: tavernBoardBg,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.25),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.4),transparent_40%)]" />
-        <div className="relative flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-100/80 drop-shadow">
-              Daily Stream Quest
-            </p>
-            <h1 className="text-4xl font-semibold leading-none text-amber-50 drop-shadow">
-              Five quests. 500 Toadcoins each.
-            </h1>
-            <p className="mt-2 max-w-2xl text-sm text-amber-50/80 drop-shadow">
-              Click COMPLETE once you finish a dare on stream. Each completion drops coins to the current
-              chatter list when you&apos;re live and connected.
-            </p>
-          </div>
-          <div className="flex flex-col items-end gap-2 text-right">
-            <div className="flex items-center gap-2 rounded-full border border-amber-200/60 bg-amber-900/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100 shadow-sm backdrop-blur">
-              <Clock3 className="h-4 w-4" />
-              Resets daily
+      <div className="relative overflow-hidden rounded-[32px] shadow-[0_26px_60px_rgba(0,0,0,0.28)]">
+        <div
+          className="relative h-full w-full bg-cover bg-center bg-no-repeat p-6 md:p-8"
+          style={{
+            backgroundImage: tavernBoardBg,
+          }}
+        >
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.2),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.35),transparent_40%)]" />
+          <div className="relative flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-100/80 drop-shadow">
+                Daily Stream Quest
+              </p>
+              <h1 className="text-4xl font-semibold leading-none text-amber-50 drop-shadow">
+                Five quests. 500 Toadcoins each.
+              </h1>
+              <p className="mt-2 max-w-2xl text-sm text-amber-50/80 drop-shadow">
+                Click COMPLETE once you finish a dare on stream. Each completion drops coins to the current
+                chatter list when you&apos;re live and connected.
+              </p>
             </div>
-            <AudienceBadge audience={data.audience} />
+            <div className="flex flex-col items-end gap-2 text-right">
+              <div className="flex items-center gap-2 rounded-full border border-amber-200/60 bg-amber-900/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100 shadow-sm backdrop-blur">
+                <Clock3 className="h-4 w-4" />
+                Resets daily
+              </div>
+              <AudienceBadge audience={data.audience} />
+            </div>
           </div>
-        </div>
 
-        {!isActive ? (
-          <div className="mt-4 rounded-2xl border border-amber-900/40 bg-amber-950/40 px-4 py-3 text-sm text-amber-50 shadow-inner">
-            Quests unlock when you are live and authorized with Twitch. Connect above and go live to start
-            stamping.
+          {!isLive ? (
+            <div className="mt-4 rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-amber-900 shadow-inner backdrop-blur-sm dark:border-amber-900/70 dark:bg-amber-950/60 dark:text-amber-100">
+              <p className="text-sm font-semibold">
+                {streamerName ? `${streamerName} is not live right now.` : "Streamer is not live right now."}
+              </p>
+              <p className="text-xs opacity-80">Go live to unlock quests and start minting rewards.</p>
+            </div>
+          ) : null}
+
+          {isLive && !isAuthed ? (
+            <div className="mt-4 rounded-2xl border border-amber-900/40 bg-amber-950/40 px-4 py-3 text-sm text-amber-50 shadow-inner">
+              Connect Twitch above to unlock quests for chatters while you&apos;re live.
+            </div>
+          ) : null}
+
+          <div className="relative mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {data.quests.map((quest) => (
+              <QuestTile
+                key={quest.id}
+                quest={quest}
+                onComplete={() => completeQuest(quest.id)}
+                completing={completingId === quest.id}
+                celebrating={celebratingId === quest.id}
+                isActive={isActive}
+              />
+            ))}
           </div>
-        ) : null}
-
-        <div className="relative mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {data.quests.map((quest) => (
-            <QuestTile
-              key={quest.id}
-              quest={quest}
-              onComplete={() => completeQuest(quest.id)}
-              completing={completingId === quest.id}
-              celebrating={celebratingId === quest.id}
-              isActive={isActive}
-            />
-          ))}
         </div>
       </div>
 
@@ -374,16 +383,11 @@ function QuestTile({
       onClick={quest.completed ? undefined : onComplete}
       disabled={!isActive || quest.completed || completing}
       className={clsx(
-        "group relative h-full overflow-hidden rounded-2xl border bg-white/85 text-left shadow-[0_12px_30px_rgba(0,0,0,0.18)] transition duration-200 dark:border-amber-900/80 dark:bg-slate-950/80",
+        "group relative h-full overflow-hidden rounded-2xl border bg-white/90 text-left shadow-[0_12px_30px_rgba(0,0,0,0.18)] transition duration-200 dark:border-amber-900/80 dark:bg-slate-950/80",
         isCompleted
-          ? "cursor-not-allowed border-red-200/80 text-slate-500 grayscale dark:border-red-900/60 dark:text-slate-400"
+          ? "cursor-not-allowed border-slate-300/80 text-slate-600 grayscale dark:border-slate-800/70 dark:text-slate-300"
           : "border-amber-200/70 hover:-translate-y-[6px] hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] active:translate-y-[1px]"
       )}
-      style={{
-        backgroundImage: tavernBoardBg,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
     >
       <div
         className={clsx(
@@ -403,8 +407,8 @@ function QuestTile({
 
       {!isCompleted && isActive ? (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <span className="rounded-lg border-4 border-emerald-500/70 bg-emerald-900/30 px-5 py-3 text-lg font-black uppercase tracking-[0.35em] text-emerald-100 opacity-0 shadow-lg transition duration-300 group-hover:opacity-100">
-            COMPLETE QUEST
+          <span className="rotate-[-10deg] text-3xl font-black uppercase tracking-[0.35em] text-emerald-400 opacity-0 drop-shadow-[0_0_16px_rgba(16,185,129,0.35)] transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.03] group-hover:opacity-100">
+            COMPLETE
           </span>
         </div>
       ) : null}
@@ -446,7 +450,7 @@ function QuestTile({
 
         {isCompleted ? (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <span className="rotate-[-6deg] rounded-lg border-4 border-red-800/80 bg-red-900/80 px-5 py-3 text-lg font-black uppercase tracking-[0.35em] text-red-50 shadow-lg drop-shadow-lg">
+            <span className="rotate-[-12deg] text-3xl font-black uppercase tracking-[0.35em] text-emerald-400 drop-shadow-[0_0_16px_rgba(74,222,128,0.45)]">
               QUEST COMPLETE
             </span>
           </div>
