@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type ChattersState =
   | { status: "idle" | "loading" }
@@ -94,6 +94,7 @@ export default function WheelOfBlameClient() {
   const [doubleDownLoading, setDoubleDownLoading] = useState(false);
   const [doubleDownOffset, setDoubleDownOffset] = useState(0);
   const [doubleDownActiveIndex, setDoubleDownActiveIndex] = useState(0);
+  const [showDoubleDownHighlight, setShowDoubleDownHighlight] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const demonOverlayRef = useRef<HTMLVideoElement | null>(null);
@@ -148,13 +149,22 @@ export default function WheelOfBlameClient() {
   const center = wheelSize / 2;
   const doubleDownItemHeight = 56;
   const doubleDownWindow = doubleDownItemHeight * 7;
-  const doubleDownRepeated = useMemo(
-    () => [...doubleDownOptions, ...doubleDownOptions, ...doubleDownOptions],
-    [doubleDownOptions]
+  const doubleDownRepeatCount = 5;
+  const getDoubleDownOffset = useCallback(
+    (index: number) => -(index * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2,
+    [doubleDownItemHeight, doubleDownWindow]
   );
-  const doubleDownMiddleIndex = doubleDownOptions.length;
-  const getDoubleDownOffset = (index: number) =>
-    -(index * doubleDownItemHeight) + doubleDownWindow / 2 - doubleDownItemHeight / 2;
+  const doubleDownRepeated = useMemo(() => {
+    const totalItems = doubleDownOptions.length * doubleDownRepeatCount;
+    return Array.from({ length: totalItems }, (_, idx) => doubleDownOptions[idx % doubleDownOptions.length]);
+  }, [doubleDownOptions, doubleDownRepeatCount]);
+  const doubleDownMiddleIndex = doubleDownOptions.length * Math.floor(doubleDownRepeatCount / 2);
+  const doubleDownTotalItems = doubleDownOptions.length * doubleDownRepeatCount;
+  const normalizeDoubleDownIndex = (index: number) => {
+    if (index < doubleDownOptions.length) return index + doubleDownOptions.length;
+    if (index >= doubleDownTotalItems - doubleDownOptions.length) return index - doubleDownOptions.length;
+    return index;
+  };
 
   const colors = useMemo(
     () => (chatters.length ? chatters.map((_, idx) => fallbackColors[idx % fallbackColors.length]) : fallbackColors),
@@ -165,7 +175,8 @@ export default function WheelOfBlameClient() {
     const target = getDoubleDownOffset(doubleDownMiddleIndex);
     setDoubleDownOffset(target);
     setDoubleDownActiveIndex(doubleDownMiddleIndex);
-  }, [doubleDownMiddleIndex]);
+    setShowDoubleDownHighlight(false);
+  }, [doubleDownMiddleIndex, getDoubleDownOffset]);
 
   useEffect(() => {
     const overlay = demonOverlayRef.current;
@@ -269,6 +280,7 @@ export default function WheelOfBlameClient() {
     setPunishmentPhase("idle");
     setPunishmentText(null);
     setDoubleDownSpinning(false);
+    setShowDoubleDownHighlight(false);
     if (revealTimerRef.current) {
       clearTimeout(revealTimerRef.current);
     }
@@ -317,6 +329,7 @@ export default function WheelOfBlameClient() {
     setActiveAction(action);
     setPunishmentPhase("idle");
     setPunishmentText(null);
+    setShowDoubleDownHighlight(false);
 
     if (action === "doubleDown") {
       setDoubleDownReady(false);
@@ -364,14 +377,16 @@ export default function WheelOfBlameClient() {
     }
     const winnerIndex = Math.floor(Math.random() * doubleDownOptions.length);
     const baseIndex = doubleDownMiddleIndex;
-    const maxExtraSpins = Math.max(0, doubleDownOptions.length - 1 - winnerIndex);
-    const desiredExtraSpins = Math.max(4, Math.floor(doubleDownOptions.length / 2));
-    const extraSpins = Math.min(desiredExtraSpins, maxExtraSpins);
-    const totalSteps = doubleDownOptions.length + extraSpins + winnerIndex;
+    const steadyLoops = doubleDownOptions.length * 3;
+    const slowdownSteps = Math.max(10, Math.floor(doubleDownOptions.length * 0.8));
+    const plannedSteps = steadyLoops + slowdownSteps;
+    const alignmentAdjustment = (winnerIndex - (plannedSteps % doubleDownOptions.length) + doubleDownOptions.length) % doubleDownOptions.length;
+    const totalSteps = plannedSteps + alignmentAdjustment;
 
     let currentIndex = baseIndex;
 
     setDoubleDownSpinning(true);
+    setShowDoubleDownHighlight(false);
     setDoubleDownActiveIndex(currentIndex);
     setDoubleDownOffset(getDoubleDownOffset(currentIndex));
 
@@ -385,9 +400,10 @@ export default function WheelOfBlameClient() {
 
     const finalizeSpin = () => {
       setDoubleDownSpinning(false);
-      const normalizedIndex = (currentIndex - baseIndex) % doubleDownOptions.length;
-      const choice = doubleDownOptions[(normalizedIndex + doubleDownOptions.length) % doubleDownOptions.length];
+      const normalizedIndex = ((currentIndex % doubleDownOptions.length) + doubleDownOptions.length) % doubleDownOptions.length;
+      const choice = doubleDownOptions[normalizedIndex];
       const tone: PunishmentTone = choice.toLowerCase().includes("save") ? "saved" : "punish";
+      setShowDoubleDownHighlight(true);
       startPunishmentSequence(choice, tone);
       if (spinAudio) {
         spinAudio.volume = previousVolume;
@@ -395,24 +411,26 @@ export default function WheelOfBlameClient() {
       doubleDownLoopTimerRef.current = null;
     };
 
-    const stepThroughList = (stepsLeft: number) => {
-      const progress = 1 - stepsLeft / totalSteps;
-      const delay = 90 + progress * 220;
+    const stepThroughList = (step: number) => {
+      const stepsLeft = totalSteps - step;
+      const isSlowingDown = stepsLeft <= slowdownSteps;
+      const slowdownProgress = isSlowingDown ? (slowdownSteps - stepsLeft) / slowdownSteps : 0;
+      const delay = 120 + (isSlowingDown ? slowdownProgress * 260 : 0);
 
       doubleDownLoopTimerRef.current = setTimeout(() => {
-        currentIndex += 1;
+        currentIndex = normalizeDoubleDownIndex(currentIndex + 1);
         setDoubleDownActiveIndex(currentIndex);
         setDoubleDownOffset(getDoubleDownOffset(currentIndex));
 
-        if (stepsLeft > 1) {
-          stepThroughList(stepsLeft - 1);
+        if (step < totalSteps) {
+          stepThroughList(step + 1);
         } else {
           finalizeSpin();
         }
       }, delay);
     };
 
-    stepThroughList(totalSteps);
+    stepThroughList(1);
   }
 
   return (
@@ -812,10 +830,12 @@ export default function WheelOfBlameClient() {
                   </button>
                 </div>
                 <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-3">
-                  <div
-                    className="absolute left-3 right-3 top-1/2 z-10 h-14 -translate-y-1/2 rounded-xl border border-rose-400/60 bg-rose-500/15 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] pointer-events-none"
-                    aria-hidden
-                  />
+                  {showDoubleDownHighlight && (
+                    <div
+                      className="pointer-events-none absolute left-3 right-3 top-1/2 z-10 h-14 -translate-y-1/2 rounded-xl border border-rose-400/60 bg-rose-500/15 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]"
+                      aria-hidden
+                    />
+                  )}
                   <div
                     className="relative"
                     style={{ height: `${doubleDownWindow}px` }}
@@ -828,7 +848,7 @@ export default function WheelOfBlameClient() {
                         <div
                           key={`${option}-${idx}`}
                           className={`flex h-[56px] items-center justify-center text-center text-base font-semibold transition-all duration-200 ${
-                            idx === doubleDownActiveIndex
+                            idx === doubleDownActiveIndex && showDoubleDownHighlight
                               ? "rounded-xl bg-rose-500/20 text-white ring-2 ring-rose-400/60 shadow-lg shadow-rose-500/10"
                               : "text-slate-100/80"
                           }`}
