@@ -13,6 +13,11 @@ type ChattersState =
 type SpinResult = { winner: string; angle: number };
 
 const fallbackColors = ["#FFD166", "#EF476F", "#06D6A0", "#118AB2", "#A556F6", "#F78C6B", "#4CC9F0", "#BDE0FE"];
+const WHEEL_SIZE = 620;
+const WHEEL_INSET = 14;
+const INNER_HOLE_RATIO = 0.23;
+const POINTER_OFFSET = -150;
+const DEFAULT_SEGMENT_COLOR = "#CBD5E1";
 
 function useChatters() {
   const [state, setState] = useState<ChattersState>({ status: "idle" });
@@ -52,7 +57,7 @@ function useChatters() {
 
   useEffect(() => {
     load();
-    const id = setInterval(load, 45_000);
+    const id = setInterval(load, 350_000);
     return () => clearInterval(id);
   }, []);
 
@@ -95,30 +100,40 @@ export default function WheelOfBlameClient() {
   }, [chatters.length, colors, segmentAngle]);
 
   function spin() {
-    if (!chatters.length || spinning) return;
-    const winnerIndex = Math.floor(Math.random() * chatters.length);
-    const spins = 6 + Math.floor(Math.random() * 3);
-    const target = spins * 360 + winnerIndex * segmentAngle + segmentAngle / 2;
-    setSpinning(true);
-    setSpinAngle((prev) => prev + target);
-    if (audioRef.current) {
-      try {
-        audioRef.current.currentTime = 0;
-        void audioRef.current.play();
-      } catch (err) {
-        console.warn("Spin audio failed to play", err);
-      }
-    }
+      if (!chatters.length || spinning) return;
 
-    setTimeout(() => {
-      setSpinning(false);
-      setResult({ winner: chatters[winnerIndex], angle: target });
+      // Pick the winner
+      const winnerIndex = Math.floor(Math.random() * chatters.length);
+      const spins = 8 + Math.floor(Math.random() * 4); // Extra spins for drama
+      
+      // SYNC MATH:
+      // 1. Where is the winner starting?
+      const winnerStartAngle = (winnerIndex * segmentAngle) + (segmentAngle / 2);
+      
+      // 2. Adjust for the 90 degree (Right Side) offset.
+      // In CSS, 0deg is Top. To make winnerStartAngle land at 90deg, 
+      // we need to rotate the wheel by (90 - winnerStartAngle).
+      const currentMod = spinAngle % 360;
+      let adjustment = (90 - winnerStartAngle) - currentMod;
+      
+      // Ensure we always spin forward
+      if (adjustment <= 0) adjustment += 360;
+      
+      const target = spinAngle + (spins * 360) + adjustment;
+
+      setSpinning(true);
+      setSpinAngle(target);
+
       if (audioRef.current) {
-        audioRef.current.pause();
         audioRef.current.currentTime = 0;
+        audioRef.current.play().catch(() => {});
       }
-    }, 5200); // keep audio in sync (~5s)
-  }
+
+      setTimeout(() => {
+        setSpinning(false);
+        setResult({ winner: chatters[winnerIndex], angle: target });
+      }, 5200);
+    }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950">
