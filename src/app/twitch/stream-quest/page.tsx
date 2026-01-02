@@ -29,7 +29,7 @@ export default function StreamQuestPage() {
         ← Back to spycy.fun/twitch
       </Link>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pb-16 pt-20 md:px-6">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 pb-16 pt-20 md:px-6">
         <StreamQuestClient />
       </div>
     </div>
