@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 import { clearSession, exchangeCodeForTokens, verifyState, writeSession } from "@/lib/twitch-auth";
 
+
+
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
@@ -9,6 +11,16 @@ export async function GET(request: Request) {
   const code = searchParams.get("code");
   const state = searchParams.get("state");
   const error = searchParams.get("error");
+
+  console.log("callback", {
+  requestUrl: request.url,
+  host: request.headers.get("host"),
+  xfh: request.headers.get("x-forwarded-host"),
+  xfp: request.headers.get("x-forwarded-proto"),
+  code,
+  state,
+  });
+  
 
   if (error) {
     const redirectUrl = new URL(`/twitch?error=${encodeURIComponent(error)}`, request.url);
