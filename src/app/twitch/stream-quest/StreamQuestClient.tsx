@@ -285,12 +285,7 @@ export function StreamQuestClient() {
           </div>
         ) : null}
 
-        <div
-          className={clsx(
-            "relative mt-8 grid grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 lg:grid-cols-3",
-            data.quests.length === 5 && "lg:[&>*:nth-child(n+4)]:col-start-2"
-          )}
-        >
+        <div className="relative mt-8 grid justify-items-center gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {data.quests.map((quest) => (
             <QuestTile
               key={quest.id}
@@ -356,21 +351,19 @@ function QuestTile({
       onClick={!isCompleted && isActive ? onComplete : undefined}
       disabled={!isActive || isCompleted || completing}
       className={clsx(
-        "group relative isolate flex h-full w-full max-w-[420px] flex-col rounded-[32px] transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200",
-        !isCompleted && isActive
+        "group relative isolate w-full max-w-[420px] rounded-[32px] transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200",        !isCompleted && isActive
           ? "hover:-translate-y-1 active:translate-y-0"
           : "cursor-not-allowed opacity-90"
       )}
     >
       <div className="absolute top-2 left-4 z-10 flex items-center gap-3">
-        <span className="rounded-full bg-[#8c5430] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-50 shadow-[0_8px_18px_rgba(0,0,0,0.45)]">
-          Daily
+        <span className="rounded-full bg-[#8c5430] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-50 shadow-[0_8px_18px_rgba(0,0,0,0.45)]">          Daily
         </span>
       </div>
 
       <div
         className={clsx(
-          "relative flex h-full min-h-[320px] flex-col overflow-hidden rounded-[26px] border-2 border-[#b26c3c] bg-gradient-to-b from-[#3f2a1c] to-[#2f1f15] px-5 pb-5 pt-7 shadow-[0_18px_36px_rgba(0,0,0,0.35)]",
+          "relative overflow-hidden rounded-[26px] border-2 border-[#b26c3c] bg-gradient-to-b from-[#3f2a1c] to-[#2f1f15] px-5 pb-5 pt-10 shadow-[0_18px_36px_rgba(0,0,0,0.35)]",
           "before:absolute before:-inset-2 before:-z-10 before:rounded-[30px] before:bg-[radial-gradient(circle_at_center,rgba(219,94,64,0.35),transparent_55%)] before:opacity-70 before:blur-xl before:transition-all before:duration-300",
           !isCompleted && isActive ? "hover:before:opacity-100 hover:shadow-[0_22px_40px_rgba(0,0,0,0.42)]" : "before:opacity-40"
         )}
@@ -383,7 +376,7 @@ function QuestTile({
 
             <div className="min-w-0 space-y-1">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="break-words text-lg font-semibold leading-snug text-amber-50 drop-shadow-sm">
+                <span className="text-lg font-semibold leading-snug text-amber-50 drop-shadow-sm break-words">
                   {quest.title}
                 </span>
                 <span
@@ -402,10 +395,9 @@ function QuestTile({
             </div>
           </div>
 
-          <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-100/90">
-            <div className="flex items-center gap-2">
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-100/90">            <div className="flex items-center gap-2">
               <Coins className="h-4 w-4 text-amber-200" />
-              <span>{quest.reward ?? 500} coins</span>
+              <span>{quest.reward ?? 500} Toadcoins</span>
             </div>
 
             {completing ? (
