@@ -486,7 +486,7 @@ function QuestTile({
             <div className="absolute inset-2 rounded-[22px] border-2 border-emerald-300/50" />
             <div className="relative flex h-full items-center justify-center gap-3 text-emerald-100 drop-shadow">
               <BadgeCheck className="h-5 w-5" />
-              <span className="text-sm font-black uppercase tracking-[0.28em]">Claimed</span>
+              <span className="text-sm font-black uppercase tracking-[0.28em]">QUEST COMPLETE</span>
             </div>
           </div>
         ) : null}
