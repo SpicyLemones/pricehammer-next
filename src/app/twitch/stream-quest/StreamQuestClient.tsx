@@ -204,13 +204,13 @@ export function StreamQuestClient() {
 
   async function completeQuest(id: string) {
     if (!data) return;
-    setCompletingId(id);
-    setError(null);
+      setCompletingId(id);
+      setError(null);
 
-    try {
-      const res = await fetch("/api/twitch/stream-quests", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      try {
+        const res = await fetch("/api/twitch/stream-quests", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
       });
 
@@ -244,15 +244,14 @@ export function StreamQuestClient() {
       setTimeout(() => setCelebratingId(null), 1200);
     } catch (err) {
       console.error(err);
-      setError("Could not mark the quest as completed.");
-    } finally {
-      setCompletingId(null);
+        setError("Could not mark the quest as completed.");
+      } finally {
+        setCompletingId(null);
+      }
     }
-  }
 
   const isLive = !!data?.audience.live;
   const isAuthed = data?.audience.source === "twitch";
-  const isActive = !!isLive && !!isAuthed;
   const streamerName = data?.audience.displayName ?? ("displayName" in access ? access.displayName : undefined);
   const canShowQuests = access.status === "ready" || access.status === "offline";
 
@@ -347,13 +346,13 @@ export function StreamQuestClient() {
                   className="relative h-full w-full bg-center bg-no-repeat p-4 md:p-8 lg:p-10"
                   style={{
                     backgroundImage: tavernBoardBg,
-                    backgroundSize: "115% auto",
+                    backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
                 >
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.2),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.35),transparent_40%)]" />
-                  <div className="relative flex flex-wrap items-center justify-between gap-3">
-                    <div>
+                  <div className="relative flex flex-wrap items-start gap-4 lg:items-center">
+                    <div className="max-w-3xl space-y-2">
                       <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-100/80 drop-shadow">
                         Daily Stream Quest
                       </p>
@@ -365,12 +364,14 @@ export function StreamQuestClient() {
                         chatter list when you&apos;re live and connected.
                       </p>
                     </div>
-                    <div className="flex flex-col items-end gap-2 text-right">
-                      <div className="flex items-center gap-2 rounded-full border border-amber-200/60 bg-amber-900/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100 shadow-sm backdrop-blur">
+                    <div className="ml-auto flex flex-col items-end gap-2 text-right sm:flex-row sm:items-center sm:gap-3">
+                      <div className="flex items-center gap-2 rounded-full border border-amber-200/60 bg-amber-900/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100 shadow-sm backdrop-blur sm:order-2">
                         <Clock3 className="h-4 w-4" />
                         Resets daily
                       </div>
-                      <AudienceBadge audience={data.audience} />
+                      <div className="sm:order-1">
+                        <AudienceBadge audience={data.audience} />
+                      </div>
                     </div>
                   </div>
 
@@ -397,7 +398,7 @@ export function StreamQuestClient() {
                         onComplete={() => completeQuest(quest.id)}
                         completing={completingId === quest.id}
                         celebrating={celebratingId === quest.id}
-                        isActive={isActive}
+                        inactive={!isLive || !isAuthed}
                       />
                     ))}
                   </div>
@@ -459,55 +460,57 @@ function QuestTile({
   onComplete,
   completing,
   celebrating,
-  isActive,
+  inactive,
 }: {
   quest: StreamQuest;
   onComplete: () => void;
   completing: boolean;
   celebrating: boolean;
-  isActive: boolean;
+  inactive: boolean;
 }) {
   const meta = categoryMeta[quest.category];
   const Icon = meta.icon;
   const isCompleted = quest.completed;
+  const isDisabled = quest.completed || completing;
 
   return (
     <button
       type="button"
-      onClick={quest.completed ? undefined : onComplete}
-      disabled={!isActive || quest.completed || completing}
+      onClick={isDisabled ? undefined : onComplete}
+      disabled={isDisabled}
       className={clsx(
         "group relative h-full overflow-hidden rounded-2xl border bg-white/90 text-left shadow-[0_12px_30px_rgba(0,0,0,0.18)] transition duration-200 dark:border-amber-900/80 dark:bg-slate-950/80",
         isCompleted
-          ? "cursor-not-allowed border-slate-300/80 text-slate-600 grayscale dark:border-slate-800/70 dark:text-slate-300"
-          : "border-amber-200/70 hover:-translate-y-[6px] hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] active:translate-y-[1px]"
+          ? "cursor-not-allowed border-slate-300/80 text-slate-600 opacity-85 dark:border-slate-800/70 dark:text-slate-300"
+          : "border-amber-200/70 hover:-translate-y-[6px] hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] active:translate-y-[1px]",
+        !isCompleted && inactive && "opacity-95 saturate-90"
       )}
     >
       <div
         className={clsx(
-          "absolute inset-0 bg-gradient-to-br opacity-70 transition duration-300",
+          "absolute inset-0 z-0 bg-gradient-to-br opacity-70 transition duration-300",
           meta.accent,
           quest.completed ? "brightness-75" : "group-hover:opacity-100 group-hover:brightness-110"
         )}
       />
       <div
         className={clsx(
-          "absolute inset-0 bg-black/40 transition duration-300 opacity-0 group-hover:opacity-20",
+          "absolute inset-0 z-0 bg-black/40 transition duration-300 opacity-0 group-hover:opacity-20",
           isCompleted && "opacity-50"
         )}
       />
 
       {celebrating ? <CelebrationBurst /> : null}
 
-      {!isCompleted && isActive ? (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <span className="rotate-[-10deg] text-3xl font-black uppercase tracking-[0.35em] text-emerald-400 opacity-0 drop-shadow-[0_0_16px_rgba(16,185,129,0.35)] transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.03] group-hover:opacity-100">
+      {!isCompleted ? (
+        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+          <span className="rotate-[-10deg] text-3xl font-black uppercase tracking-[0.35em] text-rose-500 opacity-0 drop-shadow-[0_0_16px_rgba(225,29,72,0.35)] transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.03] group-hover:opacity-100">
             COMPLETE
           </span>
         </div>
       ) : null}
 
-      <div className={clsx("relative flex h-full flex-col gap-3 p-5", isCompleted && "opacity-80")}>
+      <div className={clsx("relative z-10 flex h-full flex-col gap-3 p-5", isCompleted && "opacity-80")}>
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-2 rounded-full border border-amber-300/70 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900 shadow-sm dark:border-amber-800/70 dark:bg-amber-950/60 dark:text-amber-50">
             <Sparkles className="h-4 w-4" />
@@ -543,7 +546,7 @@ function QuestTile({
         </div>
 
         {isCompleted ? (
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center">
             <span className="rotate-[-12deg] text-3xl font-black uppercase tracking-[0.35em] text-emerald-400 drop-shadow-[0_0_16px_rgba(74,222,128,0.45)]">
               QUEST COMPLETE
             </span>
