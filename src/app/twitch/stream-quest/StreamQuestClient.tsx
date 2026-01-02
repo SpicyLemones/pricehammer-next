@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import type { ComponentType } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -110,6 +111,18 @@ const categoryMeta: Record<
     chip: "border-[#c48652]/70 bg-[#2b3952] text-amber-100",
   },
 };
+
+const WIZARD_COOLDOWN_KEY = "stream-quest-wizard-cooldown";
+const WIZARD_SILENCE_MS = 5 * 60 * 60 * 1000;
+const WIZARD_SOUNDS = ["/audio/wizard1.mp3", "/audio/wizard2.mp3", "/audio/wizard3.mp3", "/audio/wizard4.mp3"];
+
+function randomBetween(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
 
 export function StreamQuestClient() {
   const [data, setData] = useState<QuestResponse | null>(null);
@@ -284,6 +297,8 @@ export function StreamQuestClient() {
       <audio ref={questFinAudioRef} src="/audio/questfin.mp3" preload="auto" aria-hidden className="hidden" />
       <audio ref={moneyAudioRef} src="/audio/money.mp3" preload="auto" aria-hidden className="hidden" />
 
+      <MysticWizard />
+
       {toast ? (
         <div className="flex items-center gap-3 rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-amber-900 shadow-sm backdrop-blur dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-100">
           <Sparkles className="h-5 w-5 text-amber-600 dark:text-amber-300" />
@@ -355,6 +370,208 @@ export function StreamQuestClient() {
           <span className="text-amber-100/70">Quests grey out after completion until the next reset.</span>
         </div>
       </section>
+    </div>
+  );
+}
+
+function MysticWizard() {
+  const [visible, setVisible] = useState(false);
+  const [opacity, setOpacity] = useState(0);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [tilt, setTilt] = useState(0);
+  const [fading, setFading] = useState(false);
+  const [caught, setCaught] = useState(false);
+  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const spawnTimeout = useRef<NodeJS.Timeout | null>(null);
+  const fadeTimeout = useRef<NodeJS.Timeout | null>(null);
+  const movementInterval = useRef<NodeJS.Timeout | null>(null);
+  const cooldownTimer = useRef<NodeJS.Timeout | null>(null);
+  const soundRefs = useRef<HTMLAudioElement[]>([]);
+
+  const cooldownActive = useMemo(() => (cooldownUntil ? cooldownUntil > Date.now() : false), [cooldownUntil]);
+  const interactive = visible && !fading && !caught && !cooldownActive && opacity > 0.5;
+  const shouldRender = visible || fading || caught;
+
+  useEffect(() => {
+    setMounted(true);
+    if (typeof window !== "undefined") {
+      const stored = Number(localStorage.getItem(WIZARD_COOLDOWN_KEY));
+      if (Number.isFinite(stored) && stored > Date.now()) {
+        setCooldownUntil(stored);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!cooldownActive) return undefined;
+    const remaining = Math.max(1000, (cooldownUntil ?? 0) - Date.now());
+    cooldownTimer.current = setTimeout(() => setCooldownUntil(null), remaining);
+    return () => {
+      if (cooldownTimer.current) clearTimeout(cooldownTimer.current);
+    };
+  }, [cooldownActive, cooldownUntil]);
+
+  useEffect(() => {
+    if (!mounted || cooldownActive || visible || fading || caught) return undefined;
+    spawnTimeout.current = setTimeout(() => spawnWizard(), randomBetween(20000, 65000));
+    return () => {
+      if (spawnTimeout.current) clearTimeout(spawnTimeout.current);
+    };
+  }, [mounted, cooldownActive, visible, fading, caught, spawnWizard]);
+
+  useEffect(() => {
+    if (!visible) return undefined;
+    movementInterval.current = setInterval(() => {
+      setTilt(randomBetween(-6, 6));
+      setPosition((prev) => {
+        const bounds = containerRef.current?.getBoundingClientRect();
+        const width = bounds?.width ?? (typeof window !== "undefined" ? window.innerWidth : 800);
+        const height = bounds?.height ?? (typeof window !== "undefined" ? window.innerHeight : 600);
+        const margin = 110;
+        const nextX = clamp(prev.x + randomBetween(-60, 60), margin, Math.max(margin, width - margin));
+        const nextY = clamp(prev.y + randomBetween(-45, 55), margin, Math.max(margin, height - margin));
+        return { x: nextX, y: nextY };
+      });
+    }, randomBetween(3500, 5200));
+
+    return () => {
+      if (movementInterval.current) clearInterval(movementInterval.current);
+    };
+  }, [visible]);
+
+  useEffect(() => {
+    return () => {
+      if (spawnTimeout.current) clearTimeout(spawnTimeout.current);
+      if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
+      if (movementInterval.current) clearInterval(movementInterval.current);
+      if (cooldownTimer.current) clearTimeout(cooldownTimer.current);
+    };
+  }, []);
+
+  const beginFadeOut = useCallback(() => {
+    setFading(true);
+    setOpacity(0);
+    if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
+    fadeTimeout.current = setTimeout(() => {
+      setVisible(false);
+      setFading(false);
+    }, 900);
+  }, []);
+
+  const spawnWizard = useCallback(() => {
+    if (!mounted || cooldownActive) return;
+    const bounds = containerRef.current?.getBoundingClientRect();
+    const width = bounds?.width ?? (typeof window !== "undefined" ? window.innerWidth : 800);
+    const height = bounds?.height ?? (typeof window !== "undefined" ? window.innerHeight : 600);
+    const margin = 120;
+
+    const x = randomBetween(margin, Math.max(margin, Math.floor(width - margin)));
+    const y = randomBetween(margin, Math.max(margin, Math.floor(height - margin)));
+
+    setPosition({ x, y });
+    setTilt(randomBetween(-8, 8));
+    setCaught(false);
+    setFading(false);
+    setOpacity(0);
+    setVisible(true);
+
+    requestAnimationFrame(() => setOpacity(1));
+
+    if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
+    fadeTimeout.current = setTimeout(() => beginFadeOut(), randomBetween(16000, 26000));
+  }, [beginFadeOut, cooldownActive, mounted]);
+
+  const handleCapture = () => {
+    if (!interactive) return;
+    setCaught(true);
+    playRandomSound();
+    const until = Date.now() + WIZARD_SILENCE_MS;
+    if (typeof window !== "undefined") {
+      localStorage.setItem(WIZARD_COOLDOWN_KEY, String(until));
+    }
+    setCooldownUntil(until);
+    setOpacity(0);
+    if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
+    fadeTimeout.current = setTimeout(() => {
+      setVisible(false);
+      setFading(false);
+      setCaught(false);
+    }, 650);
+  };
+
+  const playRandomSound = () => {
+    const available = soundRefs.current.filter(Boolean);
+    if (!available.length) return;
+    const pick = available[randomBetween(0, available.length - 1)];
+    if (!pick) return;
+    pick.currentTime = 0;
+    pick.volume = 0.6;
+    pick.play().catch((err) => {
+      console.warn("Wizard sound failed to play", err);
+    });
+  };
+
+  const scale = caught ? 0.82 : 0.9;
+
+  return (
+    <div ref={containerRef} className="pointer-events-none fixed inset-0 z-30">
+      {shouldRender ? (
+        <div
+          style={{
+            left: position.x,
+            top: position.y,
+            opacity,
+            transform: `translate(-50%, -50%) scale(${scale}) rotate(${tilt}deg)`,
+            transition: "opacity 0.8s ease, transform 0.9s ease",
+          }}
+          className="absolute"
+        >
+          <button
+            type="button"
+            aria-label="Catch the wandering wizard"
+            onClick={handleCapture}
+            className={clsx(
+              "group relative block rounded-full bg-transparent",
+              interactive ? "pointer-events-auto" : "pointer-events-none"
+            )}
+          >
+            <div
+              className={clsx(
+                "relative rounded-full transition-all duration-500 wizard-floating",
+                interactive ? "wizard-shake" : "",
+                caught ? "wizard-squish" : ""
+              )}
+            >
+              <div className="absolute inset-2 rounded-full bg-amber-200/10 blur-2xl" aria-hidden />
+              <Image
+                src="/wizard.png"
+                alt="Tiny quest wizard sprite"
+                width={200}
+                height={200}
+                className="relative z-10 h-auto w-24 select-none drop-shadow-[0_12px_26px_rgba(0,0,0,0.4)] md:w-28"
+                draggable={false}
+                priority={false}
+              />
+            </div>
+          </button>
+        </div>
+      ) : null}
+
+      {WIZARD_SOUNDS.map((src, index) => (
+        <audio
+          key={src}
+          ref={(el) => {
+            if (el) soundRefs.current[index] = el;
+          }}
+          src={src}
+          preload="auto"
+          aria-hidden
+          className="hidden"
+        />
+      ))}
     </div>
   );
 }
