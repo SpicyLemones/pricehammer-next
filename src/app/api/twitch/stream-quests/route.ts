@@ -40,6 +40,7 @@ type StreamQuestState = {
   generatedAt: string;
   quests: StreamQuest[];
   ledger: Record<string, number>;
+  lastAudienceHour: number;
   lastAudience: AudienceSnapshot;
 };
 
@@ -191,9 +192,37 @@ async function ensureState(audience: AudienceSnapshot) {
   const today = currentDateKey();
   const existing = await loadState();
   const questTemplates = await loadQuestTemplates();
+  const currentHour = seedFromCurrentHour();
 
   if (existing && existing.date === today) {
-    return { state: existing, regenerated: false };
+    const hasAudienceChanged =
+      JSON.stringify(audience) !== JSON.stringify(existing.lastAudience) ||
+      existing.lastAudienceHour !== currentHour;
+    const upgradedToTwitch =
+      audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
+    const shouldRegenerate = upgradedToTwitch || (audience.source === "twitch" && hasAudienceChanged);
+
+    if (shouldRegenerate) {
+      const quests = buildQuests(audience, questTemplates);
+      const regeneratedState: StreamQuestState = {
+        ...existing,
+        quests,
+        generatedAt: new Date().toISOString(),
+        lastAudience: audience,
+        lastAudienceHour: currentHour,
+      };
+      await saveState(regeneratedState);
+      return { state: regeneratedState, regenerated: true };
+    }
+
+    const updated = { ...existing, lastAudience: audience, lastAudienceHour: currentHour };
+    const shouldPersist =
+      JSON.stringify(updated.lastAudience) !== JSON.stringify(existing.lastAudience) ||
+      updated.lastAudienceHour !== existing.lastAudienceHour;
+    if (shouldPersist) {
+      await saveState(updated);
+    }
+    return { state: updated, regenerated: false };
   }
 
   const quests = buildQuests(audience, questTemplates);
@@ -202,6 +231,7 @@ async function ensureState(audience: AudienceSnapshot) {
     generatedAt: new Date().toISOString(),
     quests,
     ledger: existing?.ledger ?? {},
+    lastAudienceHour: currentHour,
     lastAudience: audience,
   };
 
@@ -219,6 +249,7 @@ async function loadState(): Promise<StreamQuestState | null> {
     }
     return {
       ...parsed,
+      lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
       lastAudience: parsed.lastAudience ?? { names: FALLBACK_CHATTERS, source: "fallback" },
     };
   } catch {
@@ -249,9 +280,28 @@ function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function pickChatter(chatters: string[]) {
-  const pool = chatters.length ? chatters : FALLBACK_CHATTERS;
+function pickChatter(chatters: string[], fallback: string[] = FALLBACK_CHATTERS) {
+  const pool = chatters.length ? chatters : fallback;
+  if (!pool.length) return "a viewer";
   return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function seedFromCurrentHour() {
+  return Math.floor(Date.now() / 3_600_000);
+}
+
+function shuffleWithSeed(values: string[], seed: number) {
+  const result = [...values];
+  let rng = seed % 2147483647;
+  if (rng <= 0) rng += 2147483646;
+
+  for (let i = result.length - 1; i > 0; i -= 1) {
+    rng = (rng * 16807) % 2147483647;
+    const j = rng % (i + 1);
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
 }
 
 async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
@@ -317,7 +367,11 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
       values[variable.key] = randomBetween(min, max);
     }
     if (variable.type === "chatter") {
-      values[variable.key] = pickChatter(audience.names);
+      const fallbackNames =
+        audience.source === "twitch"
+          ? [audience.displayName].filter(Boolean) as string[]
+          : FALLBACK_CHATTERS;
+      values[variable.key] = pickChatter(audience.names, fallbackNames);
     }
   });
 
@@ -342,8 +396,9 @@ function sanitizeTemplateConfig(config: QuestTemplateConfig) {
 }
 
 async function loadAudience(): Promise<AudienceSnapshot> {
+  let session: Awaited<ReturnType<typeof getValidSession>> = null;
   try {
-    const session = await getValidSession();
+    session = await getValidSession();
     if (!session) {
       return {
         names: FALLBACK_CHATTERS,
@@ -355,24 +410,34 @@ async function loadAudience(): Promise<AudienceSnapshot> {
     const chatters = await fetchChatters(session);
     if (!chatters.live) {
       return {
-        names: [session.displayName, ...FALLBACK_CHATTERS].filter(Boolean) as string[],
+        names: [session.displayName].filter(Boolean) as string[],
         source: "offline",
         displayName: chatters.displayName,
         live: false,
-        note: "Stream is offline; using host name plus placeholders.",
+        note: "Stream is offline.",
       };
     }
 
-    const names = chatters.chatters && chatters.chatters.length > 0 ? chatters.chatters : FALLBACK_CHATTERS;
+    const names = chatters.chatters ?? [];
+    const shuffled = shuffleWithSeed(names, seedFromCurrentHour());
     return {
-      names,
+      names: shuffled,
       source: "twitch",
       displayName: chatters.displayName,
       live: true,
-      note: names === chatters.chatters ? undefined : "No chatters returned, using playful stand-ins.",
+      note: names.length === 0 ? "No chatters returned for this hour." : undefined,
     };
   } catch (error) {
     console.error("Stream quest: failed to load chatters", error);
+    if (session) {
+      return {
+        names: [],
+        source: "error",
+        displayName: session.displayName,
+        live: false,
+        note: "Twitch error while loading chatters.",
+      };
+    }
     return {
       names: FALLBACK_CHATTERS,
       source: "fallback",
