@@ -14,7 +14,7 @@
       "id": "ban-random",
       "category": "ban",
       "title": "See You Later Bozo",
-      "prompt": "Ban {{chatter}} from your chat (they'll forgive you… probably).",
+      "prompt": "Ban {{chatter}} from your chat (get fucked lmao).",
       "reward": 500,
       "variables": [
         { "key": "chatter", "type": "chatter" }

@@ -57,8 +57,6 @@ type QuestResponse = {
   audience: AudienceSnapshot;
 };
 
-
-
 const categoryMeta: Record<
   QuestCategory,
   {
@@ -130,12 +128,28 @@ export function StreamQuestClient() {
   const [error, setError] = useState<string | null>(null);
   const [completingId, setCompletingId] = useState<string | null>(null);
   const [celebratingId, setCelebratingId] = useState<string | null>(null);
+  
+  // Animation states for the Toast
   const [toast, setToast] = useState<string | null>(null);
+  const [isToastVisible, setIsToastVisible] = useState(false);
+  
   const [authState, setAuthState] = useState<
     "checking" | "unauthenticated" | "ready"
   >("checking");
   const questFinAudioRef = useRef<HTMLAudioElement | null>(null);
   const moneyAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const triggerToast = useCallback((message: string) => {
+    setToast(message);
+    // Tiny delay to ensure the DOM has rendered the element before starting animation
+    setTimeout(() => setIsToastVisible(true), 10);
+    
+    // Slide out and remove
+    setTimeout(() => {
+      setIsToastVisible(false);
+      setTimeout(() => setToast(null), 500); // Wait for transition to end before unmounting
+    }, 4000);
+  }, []);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -151,7 +165,7 @@ export function StreamQuestClient() {
       setData(json);
       setAuthState("ready");
       if (json.regenerated) {
-        setToast("Rolled fresh daily quests for today.");
+        triggerToast("Rolled fresh daily quests for today.");
       }
     } catch (err) {
       console.error(err);
@@ -159,17 +173,11 @@ export function StreamQuestClient() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [triggerToast]);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
-
-  useEffect(() => {
-    if (!toast) return;
-    const id = setTimeout(() => setToast(null), 4000);
-    return () => clearTimeout(id);
-  }, [toast]);
 
   const totalMinted = useMemo(() => {
     if (!data) return 0;
@@ -182,43 +190,18 @@ export function StreamQuestClient() {
 
     if (!questFin || !money) return;
 
-    const startedAt = Date.now();
-    const waitForQuestFin = new Promise<void>((resolve) => {
-      const finalize = () => {
-        const elapsed = Date.now() - startedAt;
-        if (elapsed >= 5000) {
-          resolve();
-        } else {
-          setTimeout(resolve, 5000 - elapsed);
-        }
-      };
-
-      const fallback = setTimeout(() => {
-        questFin.removeEventListener("ended", handleComplete);
-        questFin.removeEventListener("error", handleComplete);
-        finalize();
-      }, 20000);
-
-      const handleComplete = () => {
-        clearTimeout(fallback);
-        finalize();
-      };
-
-      questFin.addEventListener("ended", handleComplete, { once: true });
-      questFin.addEventListener("error", handleComplete, { once: true });
-    });
-
+    // Start Quest Fin audio
     questFin.currentTime = 0;
-    questFin.play().catch((err) => {
-      console.warn("Unable to play quest completion audio", err);
-    });
+    questFin.play().catch(() => {});
 
-    await waitForQuestFin;
-
-    money.currentTime = 0;
-    money.play().catch((err) => {
-      console.warn("Unable to play reward audio", err);
-    });
+    // Per user request: Money plays 2 seconds before questfin ends.
+    // Assuming questfin is ~5 seconds, we trigger money at 3 seconds.
+    setTimeout(() => {
+      money.currentTime = 0;
+      money.play().catch((err) => {
+        console.warn("Unable to play reward audio", err);
+      });
+    }, 3000); 
   }, []);
 
   async function completeQuest(id: string) {
@@ -258,7 +241,7 @@ export function StreamQuestClient() {
             } chatter${json.recipients.length === 1 ? "" : "s"}.`
           : "Marked as complete.";
 
-      setToast(recipientText);
+      triggerToast(recipientText);
       setCelebratingId(id);
       setTimeout(() => setCelebratingId(null), 1200);
       void playQuestCompletionAudio();
@@ -272,7 +255,7 @@ export function StreamQuestClient() {
 
   if (loading) {
     return (
-      <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-white/70 px-4 py-3 text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200">
+      <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-white/70 px-4 py-3 text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200 animate-pulse">
         <Loader2 className="h-5 w-5 animate-spin text-amber-600" />
         Loading Stream Quest…
       </div>
@@ -299,15 +282,22 @@ export function StreamQuestClient() {
 
       <MysticWizard />
 
+      {/* --- ANIMATED TOAST --- */}
       {toast ? (
-        <div className="flex items-center gap-3 rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-amber-900 shadow-sm backdrop-blur dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-100">
+        <div 
+          className={clsx(
+            "flex items-center gap-3 rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-amber-900 shadow-lg backdrop-blur transition-all duration-500 ease-out dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-100",
+            isToastVisible ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
+          )}
+        >
           <Sparkles className="h-5 w-5 text-amber-600 dark:text-amber-300" />
           <span className="font-semibold tracking-wide">{toast}</span>
         </div>
       ) : null}
 
+      {/* --- ANIMATED AUTH BANNER --- */}
       {showAuthBanner ? (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-200/70 bg-amber-50/85 px-4 py-3 text-amber-900 shadow-sm backdrop-blur dark:border-amber-800/70 dark:bg-amber-950/50 dark:text-amber-50">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-200/70 bg-amber-50/85 px-4 py-3 text-amber-900 shadow-sm backdrop-blur dark:border-amber-800/70 dark:bg-amber-950/50 dark:text-amber-50 animate-in fade-in slide-in-from-top-2 duration-700">
           <div className="space-y-1">
             <p className="text-sm font-semibold">Connect Twitch to enable quests</p>
             <p className="text-xs opacity-80">
@@ -346,7 +336,7 @@ export function StreamQuestClient() {
         </div>
 
         {!isActive ? (
-          <div className="relative mt-4 rounded-2xl border border-amber-900/40 bg-amber-950/60 px-4 py-3 text-sm text-amber-50 shadow-inner">
+          <div className="relative mt-4 rounded-2xl border border-amber-900/40 bg-amber-950/60 px-4 py-3 text-sm text-amber-50 shadow-inner animate-in fade-in duration-1000">
             Quests unlock when you are live and authorized with Twitch. Connect above and go live to start stamping.
           </div>
         ) : null}
@@ -555,7 +545,6 @@ function MysticWizard() {
                 caught ? "wizard-squish" : ""
               )}
             >
-              {/* Glow effect that gets brighter and larger on hover */}
               <div 
                 className="absolute inset-4 rounded-full bg-amber-200/20 blur-3xl transition-all duration-300 group-hover:bg-amber-300/40 group-hover:scale-125" 
                 aria-hidden 
@@ -575,7 +564,6 @@ function MysticWizard() {
                 unoptimized
               />
 
-              {/* Hover Indicator */}
               {interactive && (
                 <div className="absolute -right-4 -top-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <Sparkles className="h-8 w-8 animate-pulse text-amber-300" />
@@ -656,16 +644,12 @@ function QuestTile({
       </div>
 
       <div
-  className={clsx(
-    // 1. Core Styles: bg-cover ensures the image stretches to fill the space
-    "relative flex h-full overflow-hidden rounded-[26px]  bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-5 pb-14 pt-15 shadow-[0_18px_36px_rgba(0,0,0,0.35)]",
-    
-    // 2. The Glow (Optional): I kept 'before' in case you still want the outer glow. 
-    // If you want that gone too, delete the next two lines.
-    "before:absolute before:-inset-2 before:-z-10 before:rounded-[30px] before:bg-[radial-gradient(circle_at_center,rgba(222, 174, 161, 0.35),transparent_55%)] before:opacity-70 before:blur-xl before:transition-all before:duration-300",
-    !isCompleted && isActive ? "hover:before:opacity-100 hover:shadow-[0_22px_40px_rgba(0,0,0,0.42)]" : "before:opacity-40"
-  )}
->
+        className={clsx(
+          "relative flex aspect-[1.5/1] min-h-[220px] w-full overflow-hidden rounded-[26px] bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-5 pb-14 pt-15 shadow-[0_18px_36px_rgba(0,0,0,0.35)]",
+          "before:absolute before:-inset-2 before:-z-10 before:rounded-[30px] before:bg-[radial-gradient(circle_at_center,rgba(222, 174, 161, 0.35),transparent_55%)] before:opacity-70 before:blur-xl before:transition-all before:duration-300",
+          !isCompleted && isActive ? "hover:before:opacity-100 hover:shadow-[0_22px_40px_rgba(0,0,0,0.42)]" : "before:opacity-40"
+        )}
+      >
         <div className="relative z-10 flex flex-1 flex-col gap-3 rounded-2xl border-2 border-[#c48652] bg-[#23354c] px-4 py-4 shadow-inner">
           <div className="flex items-start gap-3">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#c48652]/60 bg-[#0f1b2b] text-amber-50 shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
@@ -723,7 +707,7 @@ function QuestTile({
         {celebrating ? <CelebrationBurst /> : null}
 
         {isCompleted ? (
-          <div className="pointer-events-none absolute inset-0 z-20 rounded-[26px] bg-[#0f1b2b]/70 backdrop-blur-[1px]">
+          <div className="pointer-events-none absolute inset-0 z-20 rounded-[26px] bg-[#0f1b2b]/70 backdrop-blur-[1px] animate-in fade-in duration-500">
             <div className="absolute inset-2 rounded-[22px] border-2 border-emerald-300/50" />
             <div className="relative flex h-full items-center justify-center gap-3 text-emerald-100 drop-shadow">
               <BadgeCheck className="h-5 w-5" />
