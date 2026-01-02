@@ -135,6 +135,11 @@ export function StreamQuestClient() {
         setAccess({ status: "unauthenticated" });
         return;
       }
+      if (!chattersRes.ok) {
+        setAccess({ status: "error" });
+        return;
+      }
+
       const chatters = (await chattersRes.json()) as { live: boolean; displayName?: string };
       if (!chatters.live) {
         setAccess({ status: "offline", displayName: chatters.displayName });
@@ -337,12 +342,13 @@ export function StreamQuestClient() {
 
           {data ? (
             <>
-              <div className="relative overflow-hidden rounded-[36px] border border-amber-200/50 shadow-[0_26px_60px_rgba(0,0,0,0.28)]">
+              <div className="relative overflow-hidden rounded-[36px] shadow-[0_26px_60px_rgba(0,0,0,0.28)]">
                 <div
-                  className="relative h-full w-full bg-center bg-no-repeat p-6 md:p-8 lg:p-10"
+                  className="relative h-full w-full bg-center bg-no-repeat p-4 md:p-8 lg:p-10"
                   style={{
                     backgroundImage: tavernBoardBg,
-                    backgroundSize: "100% 100%",
+                    backgroundSize: "115% auto",
+                    backgroundPosition: "center",
                   }}
                 >
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.2),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.35),transparent_40%)]" />

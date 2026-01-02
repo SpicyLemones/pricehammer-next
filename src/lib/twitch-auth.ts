@@ -58,6 +58,7 @@ export function buildTwitchAuthUrl(redirect?: string, request?: Request) {
     redirect_uri: redirectUri,
     response_type: "code",
     scope: "chat:read moderator:read:chatters",
+    force_verify: "true",
     state,
   });
 
