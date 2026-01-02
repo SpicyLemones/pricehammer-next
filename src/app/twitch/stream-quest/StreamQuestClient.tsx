@@ -343,13 +343,14 @@ export function StreamQuestClient() {
             <>
               <div className="relative overflow-hidden rounded-[36px] shadow-[0_26px_60px_rgba(0,0,0,0.28)]">
                 <div
-                  className="relative h-full w-full bg-center bg-no-repeat p-4 md:p-8 lg:p-10"
-                  style={{
-                    backgroundImage: tavernBoardBg,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
+  className="relative h-full w-full bg-center bg-no-repeat p-4 md:p-8 lg:p-12"
+  style={{
+    backgroundImage: tavernBoardBg,
+    backgroundSize: "contain", // Changed from "cover" to "contain"
+    backgroundPosition: "center top", // Aligns it to the top so headers stay inside
+    minHeight: "800px" // Ensures there is enough vertical space for the board
+  }}
+>
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.2),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.35),transparent_40%)]" />
                   <div className="relative flex flex-wrap items-start gap-4 lg:items-center">
                     <div className="max-w-3xl space-y-2">
@@ -390,18 +391,19 @@ export function StreamQuestClient() {
                     </div>
                   ) : null}
 
-                  <div className="relative mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    {data.quests.map((quest) => (
+                  <div className="relative mt-6 flex flex-wrap justify-center gap-4">
+                  {data.quests.map((quest) => (
+                    <div key={quest.id} className="w-full md:w-[calc(33.333%-1rem)] lg:max-w-[350px]">
                       <QuestTile
-                        key={quest.id}
                         quest={quest}
                         onComplete={() => completeQuest(quest.id)}
                         completing={completingId === quest.id}
                         celebrating={celebratingId === quest.id}
                         inactive={!isLive || !isAuthed}
                       />
-                    ))}
-                  </div>
+                    </div>
+                  ))}
+                </div>
                 </div>
               </div>
 
