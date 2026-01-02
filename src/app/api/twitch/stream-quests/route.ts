@@ -40,6 +40,7 @@ type StreamQuestState = {
   generatedAt: string;
   quests: StreamQuest[];
   ledger: Record<string, number>;
+  lastAudienceHour: number;
   lastAudience: AudienceSnapshot;
 };
 
@@ -191,12 +192,34 @@ async function ensureState(audience: AudienceSnapshot) {
   const today = currentDateKey();
   const existing = await loadState();
   const questTemplates = await loadQuestTemplates();
+  const currentHour = seedFromCurrentHour();
 
   if (existing && existing.date === today) {
-    const updated = { ...existing, lastAudience: audience };
     const hasAudienceChanged =
-      JSON.stringify(updated.lastAudience) !== JSON.stringify(existing.lastAudience);
-    if (hasAudienceChanged) {
+      JSON.stringify(audience) !== JSON.stringify(existing.lastAudience) ||
+      existing.lastAudienceHour !== currentHour;
+    const upgradedToTwitch =
+      audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
+    const shouldRegenerate = upgradedToTwitch || (audience.source === "twitch" && hasAudienceChanged);
+
+    if (shouldRegenerate) {
+      const quests = buildQuests(audience, questTemplates);
+      const regeneratedState: StreamQuestState = {
+        ...existing,
+        quests,
+        generatedAt: new Date().toISOString(),
+        lastAudience: audience,
+        lastAudienceHour: currentHour,
+      };
+      await saveState(regeneratedState);
+      return { state: regeneratedState, regenerated: true };
+    }
+
+    const updated = { ...existing, lastAudience: audience, lastAudienceHour: currentHour };
+    const shouldPersist =
+      JSON.stringify(updated.lastAudience) !== JSON.stringify(existing.lastAudience) ||
+      updated.lastAudienceHour !== existing.lastAudienceHour;
+    if (shouldPersist) {
       await saveState(updated);
     }
     return { state: updated, regenerated: false };
@@ -208,6 +231,7 @@ async function ensureState(audience: AudienceSnapshot) {
     generatedAt: new Date().toISOString(),
     quests,
     ledger: existing?.ledger ?? {},
+    lastAudienceHour: currentHour,
     lastAudience: audience,
   };
 
@@ -225,6 +249,7 @@ async function loadState(): Promise<StreamQuestState | null> {
     }
     return {
       ...parsed,
+      lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
       lastAudience: parsed.lastAudience ?? { names: FALLBACK_CHATTERS, source: "fallback" },
     };
   } catch {
@@ -255,8 +280,9 @@ function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function pickChatter(chatters: string[]) {
-  const pool = chatters.length ? chatters : FALLBACK_CHATTERS;
+function pickChatter(chatters: string[], fallback: string[] = FALLBACK_CHATTERS) {
+  const pool = chatters.length ? chatters : fallback;
+  if (!pool.length) return "a viewer";
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
@@ -341,7 +367,11 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
       values[variable.key] = randomBetween(min, max);
     }
     if (variable.type === "chatter") {
-      values[variable.key] = pickChatter(audience.names);
+      const fallbackNames =
+        audience.source === "twitch"
+          ? [audience.displayName].filter(Boolean) as string[]
+          : FALLBACK_CHATTERS;
+      values[variable.key] = pickChatter(audience.names, fallbackNames);
     }
   });
 
@@ -366,8 +396,9 @@ function sanitizeTemplateConfig(config: QuestTemplateConfig) {
 }
 
 async function loadAudience(): Promise<AudienceSnapshot> {
+  let session: Awaited<ReturnType<typeof getValidSession>> = null;
   try {
-    const session = await getValidSession();
+    session = await getValidSession();
     if (!session) {
       return {
         names: FALLBACK_CHATTERS,
@@ -398,6 +429,15 @@ async function loadAudience(): Promise<AudienceSnapshot> {
     };
   } catch (error) {
     console.error("Stream quest: failed to load chatters", error);
+    if (session) {
+      return {
+        names: [],
+        source: "error",
+        displayName: session.displayName,
+        live: false,
+        note: "Twitch error while loading chatters.",
+      };
+    }
     return {
       names: FALLBACK_CHATTERS,
       source: "fallback",
