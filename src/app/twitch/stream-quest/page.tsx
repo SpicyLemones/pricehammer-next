@@ -9,18 +9,8 @@ export const metadata = {
 
 export default function StreamQuestPage() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950">
-      <video
-        className="pointer-events-none fixed inset-0 h-full w-full object-cover opacity-60 blur-[2px]"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        aria-hidden
-        src="/videos/dailyquest.mp4"
-      />
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.65),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.7),transparent_40%)]" />
+    <div className="relative min-h-screen overflow-hidden app-bg">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.65),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.7),transparent_45%)]" />
 
       <Link
         href="/twitch"
@@ -29,7 +19,7 @@ export default function StreamQuestPage() {
         ← Back to spycy.fun/twitch
       </Link>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 pb-16 pt-20 md:px-6">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pb-16 pt-20 md:px-6">
         <StreamQuestClient />
       </div>
     </div>
