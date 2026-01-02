@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { BardToggle } from "./BardToggle";
 import { StreamQuestClient } from "./StreamQuestClient";
 
 export const metadata = {
@@ -9,7 +10,7 @@ export const metadata = {
 
 export default function StreamQuestPage() {
   return (
-<div className="relative min-h-screen overflow-hidden bg-slate-950 " >
+    <div className="relative min-h-screen overflow-hidden bg-slate-950">
       <video
         className="pointer-events-none fixed inset-0 h-full w-full object-cover opacity-60 blur-[2px]"
         autoPlay
@@ -27,6 +28,7 @@ export default function StreamQuestPage() {
       >
         ← Back to spycy.fun/twitch
       </Link>
+      <BardToggle />
 
       <div className="relative z-10 top-5 mx-auto flex w-full max-w-[1920px] flex-col gap-6 px-4 pb-16 pt-20 md:px-6">
         <StreamQuestClient />
