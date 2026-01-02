@@ -395,61 +395,7 @@ function MysticWizard() {
   const interactive = visible && !fading && !caught && !cooldownActive && opacity > 0.5;
   const shouldRender = visible || fading || caught;
 
-  useEffect(() => {
-    setMounted(true);
-    if (typeof window !== "undefined") {
-      const stored = Number(localStorage.getItem(WIZARD_COOLDOWN_KEY));
-      if (Number.isFinite(stored) && stored > Date.now()) {
-        setCooldownUntil(stored);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!cooldownActive) return undefined;
-    const remaining = Math.max(1000, (cooldownUntil ?? 0) - Date.now());
-    cooldownTimer.current = setTimeout(() => setCooldownUntil(null), remaining);
-    return () => {
-      if (cooldownTimer.current) clearTimeout(cooldownTimer.current);
-    };
-  }, [cooldownActive, cooldownUntil]);
-
-  useEffect(() => {
-    if (!mounted || cooldownActive || visible || fading || caught) return undefined;
-    spawnTimeout.current = setTimeout(() => spawnWizard(), randomBetween(20000, 65000));
-    return () => {
-      if (spawnTimeout.current) clearTimeout(spawnTimeout.current);
-    };
-  }, [mounted, cooldownActive, visible, fading, caught, spawnWizard]);
-
-  useEffect(() => {
-    if (!visible) return undefined;
-    movementInterval.current = setInterval(() => {
-      setTilt(randomBetween(-6, 6));
-      setPosition((prev) => {
-        const bounds = containerRef.current?.getBoundingClientRect();
-        const width = bounds?.width ?? (typeof window !== "undefined" ? window.innerWidth : 800);
-        const height = bounds?.height ?? (typeof window !== "undefined" ? window.innerHeight : 600);
-        const margin = 110;
-        const nextX = clamp(prev.x + randomBetween(-60, 60), margin, Math.max(margin, width - margin));
-        const nextY = clamp(prev.y + randomBetween(-45, 55), margin, Math.max(margin, height - margin));
-        return { x: nextX, y: nextY };
-      });
-    }, randomBetween(3500, 5200));
-
-    return () => {
-      if (movementInterval.current) clearInterval(movementInterval.current);
-    };
-  }, [visible]);
-
-  useEffect(() => {
-    return () => {
-      if (spawnTimeout.current) clearTimeout(spawnTimeout.current);
-      if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
-      if (movementInterval.current) clearInterval(movementInterval.current);
-      if (cooldownTimer.current) clearTimeout(cooldownTimer.current);
-    };
-  }, []);
+  // --- Logic Functions ---
 
   const beginFadeOut = useCallback(() => {
     setFading(true);
@@ -466,7 +412,7 @@ function MysticWizard() {
     const bounds = containerRef.current?.getBoundingClientRect();
     const width = bounds?.width ?? (typeof window !== "undefined" ? window.innerWidth : 800);
     const height = bounds?.height ?? (typeof window !== "undefined" ? window.innerHeight : 600);
-    const margin = 120;
+    const margin = 140;
 
     const x = randomBetween(margin, Math.max(margin, Math.floor(width - margin)));
     const y = randomBetween(margin, Math.max(margin, Math.floor(height - margin)));
@@ -483,6 +429,18 @@ function MysticWizard() {
     if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
     fadeTimeout.current = setTimeout(() => beginFadeOut(), randomBetween(16000, 26000));
   }, [beginFadeOut, cooldownActive, mounted]);
+
+  const playRandomSound = useCallback(() => {
+    const available = soundRefs.current.filter(Boolean);
+    if (!available.length) return;
+    const pick = available[randomBetween(0, available.length - 1)];
+    if (!pick) return;
+    pick.currentTime = 0;
+    pick.volume = 0.6;
+    pick.play().catch((err) => {
+      console.warn("Wizard sound failed to play", err);
+    });
+  }, []);
 
   const handleCapture = () => {
     if (!interactive) return;
@@ -502,19 +460,71 @@ function MysticWizard() {
     }, 650);
   };
 
-  const playRandomSound = () => {
-    const available = soundRefs.current.filter(Boolean);
-    if (!available.length) return;
-    const pick = available[randomBetween(0, available.length - 1)];
-    if (!pick) return;
-    pick.currentTime = 0;
-    pick.volume = 0.6;
-    pick.play().catch((err) => {
-      console.warn("Wizard sound failed to play", err);
-    });
-  };
+  // --- Effects ---
 
-  const scale = caught ? 0.82 : 0.9;
+  useEffect(() => {
+    setMounted(true);
+    if (typeof window !== "undefined") {
+      const stored = Number(localStorage.getItem(WIZARD_COOLDOWN_KEY));
+      if (Number.isFinite(stored) && stored > Date.now()) {
+        setCooldownUntil(stored);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      (window as any).forceWizard = () => {
+        setCooldownUntil(null);
+        localStorage.removeItem(WIZARD_COOLDOWN_KEY);
+        spawnWizard();
+      };
+    }
+    return () => { delete (window as any).forceWizard; };
+  }, [spawnWizard]);
+
+  useEffect(() => {
+    if (!cooldownActive) return undefined;
+    const remaining = Math.max(1000, (cooldownUntil ?? 0) - Date.now());
+    cooldownTimer.current = setTimeout(() => setCooldownUntil(null), remaining);
+    return () => { if (cooldownTimer.current) clearTimeout(cooldownTimer.current); };
+  }, [cooldownActive, cooldownUntil]);
+
+  useEffect(() => {
+    if (!mounted || cooldownActive || visible || fading || caught) return undefined;
+    spawnTimeout.current = setTimeout(() => spawnWizard(), randomBetween(20000, 65000));
+    return () => { if (spawnTimeout.current) clearTimeout(spawnTimeout.current); };
+  }, [mounted, cooldownActive, visible, fading, caught, spawnWizard]);
+
+  // Smooth Gliding Movement Logic
+  useEffect(() => {
+    if (!visible) return undefined;
+    movementInterval.current = setInterval(() => {
+      setTilt(randomBetween(-12, 12));
+      setPosition((prev) => {
+        const bounds = containerRef.current?.getBoundingClientRect();
+        const width = bounds?.width ?? (typeof window !== "undefined" ? window.innerWidth : 800);
+        const height = bounds?.height ?? (typeof window !== "undefined" ? window.innerHeight : 600);
+        const margin = 140;
+        const nextX = clamp(prev.x + randomBetween(-250, 250), margin, Math.max(margin, width - margin));
+        const nextY = clamp(prev.y + randomBetween(-180, 180), margin, Math.max(margin, height - margin));
+        return { x: nextX, y: nextY };
+      });
+    }, 3000); 
+
+    return () => { if (movementInterval.current) clearInterval(movementInterval.current); };
+  }, [visible]);
+
+  useEffect(() => {
+    return () => {
+      if (spawnTimeout.current) clearTimeout(spawnTimeout.current);
+      if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
+      if (movementInterval.current) clearInterval(movementInterval.current);
+      if (cooldownTimer.current) clearTimeout(cooldownTimer.current);
+    };
+  }, []);
+
+  const scale = caught ? 0.82 : 1.0;
 
   return (
     <div ref={containerRef} className="pointer-events-none fixed inset-0 z-30">
@@ -525,7 +535,7 @@ function MysticWizard() {
             top: position.y,
             opacity,
             transform: `translate(-50%, -50%) scale(${scale}) rotate(${tilt}deg)`,
-            transition: "opacity 0.8s ease, transform 0.9s ease",
+            transition: "opacity 0.8s ease, transform 2.8s cubic-bezier(0.45, 0, 0.55, 1), left 2.8s cubic-bezier(0.45, 0, 0.55, 1), top 2.8s cubic-bezier(0.45, 0, 0.55, 1)",
           }}
           className="absolute"
         >
@@ -534,8 +544,8 @@ function MysticWizard() {
             aria-label="Catch the wandering wizard"
             onClick={handleCapture}
             className={clsx(
-              "group relative block rounded-full bg-transparent",
-              interactive ? "pointer-events-auto" : "pointer-events-none"
+              "group relative block rounded-full bg-transparent transition-transform duration-300",
+              interactive ? "pointer-events-auto hover:scale-110" : "pointer-events-none"
             )}
           >
             <div
@@ -545,16 +555,32 @@ function MysticWizard() {
                 caught ? "wizard-squish" : ""
               )}
             >
-              <div className="absolute inset-2 rounded-full bg-amber-200/10 blur-2xl" aria-hidden />
+              {/* Glow effect that gets brighter and larger on hover */}
+              <div 
+                className="absolute inset-4 rounded-full bg-amber-200/20 blur-3xl transition-all duration-300 group-hover:bg-amber-300/40 group-hover:scale-125" 
+                aria-hidden 
+              />
+              
               <Image
-                src="/wizard.png"
+                src="/images/wizard.png"
                 alt="Tiny quest wizard sprite"
                 width={200}
                 height={200}
-                className="relative z-10 h-auto w-24 select-none drop-shadow-[0_12px_26px_rgba(0,0,0,0.4)] md:w-28"
+                className={clsx(
+                  "relative z-10 h-auto w-48 select-none drop-shadow-[0_15px_35px_rgba(0,0,0,0.5)] md:w-56",
+                  "transition-all duration-300 group-hover:rotate-12 group-hover:brightness-110"
+                )}
                 draggable={false}
-                priority={false}
+                priority={true}
+                unoptimized
               />
+
+              {/* Hover Indicator */}
+              {interactive && (
+                <div className="absolute -right-4 -top-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <Sparkles className="h-8 w-8 animate-pulse text-amber-300" />
+                </div>
+              )}
             </div>
           </button>
         </div>
@@ -563,9 +589,7 @@ function MysticWizard() {
       {WIZARD_SOUNDS.map((src, index) => (
         <audio
           key={src}
-          ref={(el) => {
-            if (el) soundRefs.current[index] = el;
-          }}
+          ref={(el) => { if (el) soundRefs.current[index] = el; }}
           src={src}
           preload="auto"
           aria-hidden
