@@ -121,7 +121,6 @@ export function StreamQuestClient() {
   const [authState, setAuthState] = useState<
     "checking" | "unauthenticated" | "ready"
   >("checking");
-  const tavernAudioRef = useRef<HTMLAudioElement | null>(null);
   const questFinAudioRef = useRef<HTMLAudioElement | null>(null);
   const moneyAudioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -158,20 +157,6 @@ export function StreamQuestClient() {
     const id = setTimeout(() => setToast(null), 4000);
     return () => clearTimeout(id);
   }, [toast]);
-
-  useEffect(() => {
-    const audio = tavernAudioRef.current;
-    if (!audio) return;
-
-    audio.loop = true;
-    audio.currentTime = 0;
-
-    audio
-      .play()
-      .catch((err) => {
-        console.warn("Unable to autoplay tavern ambience", err);
-      });
-  }, []);
 
   const totalMinted = useMemo(() => {
     if (!data) return 0;
@@ -296,7 +281,6 @@ export function StreamQuestClient() {
 
   return (
     <div className="space-y-6">
-      <audio ref={tavernAudioRef} src="/audio/tavern.mp3" preload="auto" loop aria-hidden className="hidden" />
       <audio ref={questFinAudioRef} src="/audio/questfin.mp3" preload="auto" aria-hidden className="hidden" />
       <audio ref={moneyAudioRef} src="/audio/money.mp3" preload="auto" aria-hidden className="hidden" />
 
@@ -498,7 +482,7 @@ function QuestTile({
         {celebrating ? <CelebrationBurst /> : null}
 
         {isCompleted ? (
-          <div className="pointer-events-none absolute inset-0 rounded-[26px] bg-[#0f1b2b]/70 backdrop-blur-[1px]">
+          <div className="pointer-events-none absolute inset-0 z-20 rounded-[26px] bg-[#0f1b2b]/70 backdrop-blur-[1px]">
             <div className="absolute inset-2 rounded-[22px] border-2 border-emerald-300/50" />
             <div className="relative flex h-full items-center justify-center gap-3 text-emerald-100 drop-shadow">
               <BadgeCheck className="h-5 w-5" />
