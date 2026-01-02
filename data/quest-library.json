@@ -13,7 +13,7 @@
     {
       "id": "ban-random",
       "category": "ban",
-      "title": "See You Later",
+      "title": "See You Later Bozo",
       "prompt": "Ban {{chatter}} from your chat (they'll forgive you… probably).",
       "reward": 500,
       "variables": [
@@ -23,7 +23,7 @@
     {
       "id": "timeout-random",
       "category": "timeout",
-      "title": "Naughty Step",
+      "title": "Collateral Damage",
       "prompt": "Time out {{chatter}} for {{minutes}} minute{{plural:minutes:s}}.",
       "reward": 500,
       "variables": [
@@ -44,8 +44,8 @@
     {
       "id": "insult-random",
       "category": "insult",
-      "title": "Roast Duty",
-      "prompt": "Drop a playful insult on {{chatter}} in chat.",
+      "title": "Insult",
+      "prompt": "Insult {{chatter}} in chat.",
       "reward": 500,
       "variables": [
         { "key": "chatter", "type": "chatter" }
@@ -63,6 +63,13 @@
       "category": "bandle",
       "title": "Bandle Bard",
       "prompt": "Complete today’s Bandle on stream.",
+      "reward": 500
+    },
+    {
+      "id": "react",
+      "category": "stream-time",
+      "title": "React Andy",
+      "prompt": "React to a full youtube video",
       "reward": 500
     }
   ]

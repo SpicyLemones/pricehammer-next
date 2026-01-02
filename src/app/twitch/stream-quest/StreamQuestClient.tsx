@@ -411,7 +411,7 @@ function QuestTile({
             ) : isCompleted ? (
               <div className="flex items-center gap-2 text-emerald-200">
                 <BadgeCheck className="h-3.5 w-3.5" />
-                Claimed
+                QUEST COMPLETE
               </div>
             ) : isActive ? (
               <div className="text-amber-50/80">Click to complete</div>
