@@ -25,7 +25,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const session = await exchangeCodeForTokens(code);
+    const session = await exchangeCodeForTokens(code, request);
     await writeSession(session);
     const redirectUrl = new URL(fallbackRedirect, request.url);
     redirectUrl.searchParams.set("connected", "1");
