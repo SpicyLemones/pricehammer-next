@@ -29,13 +29,6 @@ function resolveRedirectUri(request?: Request) {
 
   try {
     const envUrl = new URL(redirectUri);
-    const requestUrl = new URL(request.url);
-
-    if (envUrl.host !== requestUrl.host) {
-      envUrl.host = requestUrl.host;
-      envUrl.protocol = requestUrl.protocol;
-    }
-
     return envUrl.toString();
   } catch (error) {
     console.error("Failed to align Twitch redirect URI", error);
