@@ -193,7 +193,13 @@ async function ensureState(audience: AudienceSnapshot) {
   const questTemplates = await loadQuestTemplates();
 
   if (existing && existing.date === today) {
-    return { state: existing, regenerated: false };
+    const updated = { ...existing, lastAudience: audience };
+    const hasAudienceChanged =
+      JSON.stringify(updated.lastAudience) !== JSON.stringify(existing.lastAudience);
+    if (hasAudienceChanged) {
+      await saveState(updated);
+    }
+    return { state: updated, regenerated: false };
   }
 
   const quests = buildQuests(audience, questTemplates);
