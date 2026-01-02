@@ -9,7 +9,7 @@ export function GET(request: Request) {
   const redirect = searchParams.get("redirect") ?? undefined;
   const safeRedirect = redirect && redirect.startsWith("/") ? redirect : undefined;
   try {
-    const url = buildTwitchAuthUrl(safeRedirect);
+    const url = buildTwitchAuthUrl(safeRedirect, request);
     return NextResponse.redirect(url);
   } catch (error) {
     console.error("Failed to create Twitch auth URL", error);

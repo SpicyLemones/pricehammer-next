@@ -23,6 +23,26 @@ const TWITCH_AUTHORIZE_URL = "https://id.twitch.tv/oauth2/authorize";
 const TWITCH_TOKEN_URL = "https://id.twitch.tv/oauth2/token";
 const TWITCH_API_BASE = "https://api.twitch.tv/helix";
 
+function resolveRedirectUri(request?: Request) {
+  const { redirectUri } = getTwitchConfig();
+  if (!request) return redirectUri;
+
+  try {
+    const envUrl = new URL(redirectUri);
+    const requestUrl = new URL(request.url);
+
+    if (envUrl.host !== requestUrl.host) {
+      envUrl.host = requestUrl.host;
+      envUrl.protocol = requestUrl.protocol;
+    }
+
+    return envUrl.toString();
+  } catch (error) {
+    console.error("Failed to align Twitch redirect URI", error);
+    return redirectUri;
+  }
+}
+
 export function getTwitchConfig(): TwitchConfig {
   const missing: string[] = [];
   if (!process.env.TWITCH_CLIENT_ID) missing.push("TWITCH_CLIENT_ID");
@@ -42,8 +62,9 @@ export function getTwitchConfig(): TwitchConfig {
   };
 }
 
-export function buildTwitchAuthUrl(redirect?: string) {
-  const { clientId, redirectUri, stateSecret } = getTwitchConfig();
+export function buildTwitchAuthUrl(redirect?: string, request?: Request) {
+  const { clientId, stateSecret } = getTwitchConfig();
+  const redirectUri = resolveRedirectUri(request);
 
   const nonce = crypto.randomBytes(16).toString("hex");
   const cleanedRedirect = redirect && redirect.startsWith("/") ? redirect : "";
@@ -112,8 +133,9 @@ export async function clearSession() {
   cookieStore.delete(COOKIE_NAME);
 }
 
-export async function exchangeCodeForTokens(code: string) {
-  const { clientId, clientSecret, redirectUri } = getTwitchConfig();
+export async function exchangeCodeForTokens(code: string, request?: Request) {
+  const { clientId, clientSecret } = getTwitchConfig();
+  const redirectUri = resolveRedirectUri(request);
 
   const tokenParams = new URLSearchParams({
     client_id: clientId,

@@ -16,15 +16,37 @@ const TWITCH_AUTHORIZE_URL = "https://id.twitch.tv/oauth2/authorize";
 const TWITCH_TOKEN_URL = "https://id.twitch.tv/oauth2/token";
 const TWITCH_API_BASE = "https://api.twitch.tv/helix";
 
-export function buildTwitchAuthUrl(redirect?: string) {
-  const clientId = process.env.TWITCH_CLIENT_ID;
+function resolveRedirectUri(request?: Request) {
   const redirectUri = process.env.TWITCH_REDIRECT_URI;
+  if (!redirectUri) throw new Error("Missing TWITCH_REDIRECT_URI");
+
+  if (!request) return redirectUri;
+
+  try {
+    const envUrl = new URL(redirectUri);
+    const requestUrl = new URL(request.url);
+
+    if (envUrl.host !== requestUrl.host) {
+      envUrl.host = requestUrl.host;
+      envUrl.protocol = requestUrl.protocol;
+    }
+
+    return envUrl.toString();
+  } catch (error) {
+    console.error("Failed to align Twitch redirect URI", error);
+    return redirectUri;
+  }
+}
+
+export function buildTwitchAuthUrl(redirect?: string, request?: Request) {
+  const clientId = process.env.TWITCH_CLIENT_ID;
   const stateSecret = process.env.TWITCH_STATE_SECRET;
 
-  if (!clientId || !redirectUri || !stateSecret) {
+  if (!clientId || !stateSecret) {
     throw new Error("Missing Twitch OAuth environment variables");
   }
 
+  const redirectUri = resolveRedirectUri(request);
   const nonce = crypto.randomBytes(16).toString("hex");
   const cleanedRedirect = redirect && redirect.startsWith("/") ? redirect : "";
   const state = cleanedRedirect
@@ -36,6 +58,7 @@ export function buildTwitchAuthUrl(redirect?: string) {
     redirect_uri: redirectUri,
     response_type: "code",
     scope: "chat:read moderator:read:chatters",
+    force_verify: "true",
     state,
   });
 
@@ -92,15 +115,15 @@ export async function clearSession() {
   cookieStore.delete(COOKIE_NAME);
 }
 
-export async function exchangeCodeForTokens(code: string) {
+export async function exchangeCodeForTokens(code: string, request?: Request) {
   const clientId = process.env.TWITCH_CLIENT_ID;
   const clientSecret = process.env.TWITCH_CLIENT_SECRET;
-  const redirectUri = process.env.TWITCH_REDIRECT_URI;
 
-  if (!clientId || !clientSecret || !redirectUri) {
+  if (!clientId || !clientSecret) {
     throw new Error("Missing Twitch OAuth environment variables");
   }
 
+  const redirectUri = resolveRedirectUri(request);
   const tokenParams = new URLSearchParams({
     client_id: clientId,
     client_secret: clientSecret,
