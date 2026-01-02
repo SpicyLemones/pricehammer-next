@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function StreamQuestPage() {
   return (
-    <div className="relative w-full">
+    <div className="relative min-h-screen overflow-hidden bg-slate-950">
       <video
         className="pointer-events-none fixed inset-0 h-full w-full object-cover opacity-60 blur-[2px]"
         autoPlay
@@ -20,26 +20,16 @@ export default function StreamQuestPage() {
         aria-hidden
         src="/videos/dailyquest.mp4"
       />
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.55),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.65),transparent_40%)]" />
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.65),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.7),transparent_40%)]" />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 pb-12">
-        <Link
-          href="/twitch"
-          className="text-sm font-medium text-amber-100 transition hover:text-amber-200"
-        >
-          ← Back to Twitch fun
-        </Link>
+      <Link
+        href="/twitch"
+        className="fixed left-4 top-4 z-50 rounded-full bg-amber-900/80 px-4 py-2 text-sm font-semibold text-amber-50 shadow-lg backdrop-blur transition hover:bg-amber-800/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-50"
+      >
+        ← Back to spycy.fun/twitch
+      </Link>
 
-        <div className="flex flex-col gap-3">
-          <h1 className="text-5xl font-semibold leading-tight text-amber-50 drop-shadow-lg">
-            Stream Quest
-          </h1>
-          <p className="max-w-3xl text-lg text-amber-100/90 drop-shadow">
-            Five daily quests over a tavern quest board. Each one pays out 500 Toadcoins to every chatter
-            when you click COMPLETE.
-          </p>
-        </div>
-
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pb-16 pt-20 md:px-6">
         <StreamQuestClient />
       </div>
     </div>

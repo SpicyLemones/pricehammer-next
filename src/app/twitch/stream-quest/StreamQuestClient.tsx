@@ -47,6 +47,14 @@ type QuestResponse = {
   ledger: Record<string, number>;
   audience: AudienceSnapshot;
 };
+
+type AccessState =
+  | { status: "checking" }
+  | { status: "unauthenticated" }
+  | { status: "misconfigured"; missing?: string[] }
+  | { status: "offline"; displayName?: string }
+  | { status: "ready"; displayName?: string }
+  | { status: "error" };
 const tavernBoardBg = `url("/images/questboard.png")`;
 
 const categoryMeta: Record<
@@ -104,26 +112,52 @@ const categoryMeta: Record<
 
 export function StreamQuestClient() {
   const [data, setData] = useState<QuestResponse | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [completingId, setCompletingId] = useState<string | null>(null);
   const [celebratingId, setCelebratingId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
-  const [authState, setAuthState] = useState<"checking" | "unauthenticated" | "ready">("checking");
+  const [access, setAccess] = useState<AccessState>({ status: "checking" });
+
+  const loadAccess = useCallback(async () => {
+    setAccess({ status: "checking" });
+    setData(null);
+    try {
+      const statusRes = await fetch("/api/twitch/status");
+      const status = (await statusRes.json()) as { configured?: boolean; missing?: string[] };
+      if (!status?.configured) {
+        setAccess({ status: "misconfigured", missing: status.missing ?? [] });
+        return;
+      }
+
+      const chattersRes = await fetch("/api/twitch/chatters");
+      if (chattersRes.status === 401) {
+        setAccess({ status: "unauthenticated" });
+        return;
+      }
+      const chatters = (await chattersRes.json()) as { live: boolean; displayName?: string };
+      if (!chatters.live) {
+        setAccess({ status: "offline", displayName: chatters.displayName });
+        return;
+      }
+      setAccess({ status: "ready", displayName: chatters.displayName });
+    } catch (err) {
+      console.error(err);
+      setAccess({ status: "error" });
+    }
+  }, []);
 
   const loadData = useCallback(async () => {
+    if (!(access.status === "ready" || access.status === "offline")) {
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
       const res = await fetch("/api/twitch/stream-quests");
-      if (res.status === 401) {
-        setAuthState("unauthenticated");
-        return;
-      }
       if (!res.ok) throw new Error("Failed to load daily quests");
       const json = (await res.json()) as QuestResponse;
       setData(json);
-      setAuthState("ready");
       if (json.regenerated) {
         setToast("Rolled fresh daily quests for today.");
       }
@@ -133,11 +167,17 @@ export function StreamQuestClient() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [access.status]);
 
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    loadAccess();
+  }, [loadAccess]);
+
+  useEffect(() => {
+    if (access.status === "ready" || access.status === "offline") {
+      loadData();
+    }
+  }, [access.status, loadData]);
 
   useEffect(() => {
     if (!toast) return;
@@ -205,31 +245,25 @@ export function StreamQuestClient() {
     }
   }
 
-  if (loading) {
-    return (
-      <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-white/70 px-4 py-3 text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200">
-        <Loader2 className="h-5 w-5 animate-spin text-amber-600" />
-        Loading Stream Quest…
-      </div>
-    );
-  }
-
-  if (error || !data) {
-    return (
-      <div className="rounded-2xl border border-rose-200/70 bg-rose-50 px-4 py-3 text-rose-900 shadow-sm dark:border-rose-800/50 dark:bg-rose-950/30 dark:text-rose-100">
-        {error ?? "Something went wrong."}
-      </div>
-    );
-  }
-
-  const isLive = !!data.audience.live;
-  const isAuthed = data.audience.source === "twitch";
-  const isActive = isLive && isAuthed;
-  const showAuthBanner = authState === "unauthenticated";
-  const streamerName = data.audience.displayName;
+  const isLive = !!data?.audience.live;
+  const isAuthed = data?.audience.source === "twitch";
+  const isActive = !!isLive && !!isAuthed;
+  const streamerName = data?.audience.displayName ?? ("displayName" in access ? access.displayName : undefined);
+  const canShowQuests = access.status === "ready" || access.status === "offline";
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-amber-50 drop-shadow">
+      <div className="space-y-2">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-100/80">
+          Daily Stream Quest
+        </p>
+        <h1 className="text-5xl font-semibold leading-tight text-amber-50">Stream Quest</h1>
+        <p className="max-w-3xl text-lg text-amber-100/90">
+          Five daily quests on a tavern board. Each one pays out 500 Toadcoins to every chatter when you click
+          COMPLETE.
+        </p>
+      </div>
+
       {toast ? (
         <div className="flex items-center gap-3 rounded-2xl border border-amber-200/80 bg-amber-50 px-4 py-3 text-amber-900 shadow-sm dark:border-amber-500/40 dark:bg-amber-950/30 dark:text-amber-100">
           <Sparkles className="h-5 w-5 text-amber-600 dark:text-amber-300" />
@@ -237,105 +271,159 @@ export function StreamQuestClient() {
         </div>
       ) : null}
 
-      {showAuthBanner ? (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-200/70 bg-amber-50/80 px-4 py-3 text-amber-900 shadow-sm dark:border-amber-800/70 dark:bg-amber-950/40 dark:text-amber-50">
-          <div className="space-y-1">
-            <p className="text-sm font-semibold">Connect Twitch to enable quests</p>
-            <p className="text-xs opacity-80">
-              You need to authorize and be live for Stream Quest to activate. Otherwise quests stay locked.
-            </p>
-          </div>
-          <a
-            href="/api/twitch/login?redirect=%2Ftwitch%2Fstream-quest"
-            className="rounded-full border border-amber-300/80 bg-amber-900/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-50 shadow-sm transition hover:scale-[1.02] active:scale-100"
-          >
-            Authorize Twitch
-          </a>
+      {access.status === "checking" ? (
+        <div className="flex items-center gap-3 rounded-2xl border border-amber-200/70 bg-amber-50/80 px-4 py-3 text-amber-900 shadow-sm backdrop-blur dark:border-amber-800/70 dark:bg-amber-950/40 dark:text-amber-50">
+          <Loader2 className="h-5 w-5 animate-spin text-amber-700 dark:text-amber-200" />
+          Checking Twitch connection…
         </div>
       ) : null}
 
-      <div className="relative overflow-hidden rounded-[32px] shadow-[0_26px_60px_rgba(0,0,0,0.28)]">
-        <div
-          className="relative h-full w-full bg-cover bg-center bg-no-repeat p-6 md:p-8"
-          style={{
-            backgroundImage: tavernBoardBg,
-          }}
-        >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.2),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.35),transparent_40%)]" />
-          <div className="relative flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-100/80 drop-shadow">
-                Daily Stream Quest
-              </p>
-              <h1 className="text-4xl font-semibold leading-none text-amber-50 drop-shadow">
-                Five quests. 500 Toadcoins each.
-              </h1>
-              <p className="mt-2 max-w-2xl text-sm text-amber-50/80 drop-shadow">
-                Click COMPLETE once you finish a dare on stream. Each completion drops coins to the current
-                chatter list when you&apos;re live and connected.
-              </p>
+      {access.status === "misconfigured" ? (
+        <div className="rounded-2xl border border-rose-300/70 bg-rose-50/80 px-4 py-3 text-rose-900 shadow-sm backdrop-blur dark:border-rose-900/70 dark:bg-rose-950/40 dark:text-rose-50">
+          Twitch auth is not configured. Add TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, TWITCH_REDIRECT_URI, and
+          TWITCH_STATE_SECRET then reload.{" "}
+          {access.missing?.length ? (
+            <span className="text-xs opacity-80">Missing: {access.missing.join(", ")}</span>
+          ) : null}
+        </div>
+      ) : null}
+
+      {access.status === "error" ? (
+        <div className="rounded-2xl border border-rose-300/70 bg-rose-50/80 px-4 py-3 text-rose-900 shadow-sm backdrop-blur dark:border-rose-900/70 dark:bg-rose-950/40 dark:text-rose-50">
+          Could not verify Twitch access. Try again in a moment.
+        </div>
+      ) : null}
+
+      {access.status === "unauthenticated" ? (
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-amber-200/70 bg-amber-50/85 px-5 py-4 text-amber-900 shadow-sm backdrop-blur dark:border-amber-800/70 dark:bg-amber-950/50 dark:text-amber-50">
+          <div className="space-y-1">
+            <p className="text-sm font-semibold">Authenticate with Twitch</p>
+            <p className="text-xs opacity-80">
+              We need permission to read your chatters before quests unlock. This matches the Wheel of Blame flow.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="/api/twitch/login?redirect=%2Ftwitch%2Fstream-quest"
+              className="rounded-full bg-amber-900/80 px-5 py-2 text-sm font-semibold text-amber-50 shadow-lg transition hover:bg-amber-800/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-100"
+            >
+              Authenticate with Twitch
+            </a>
+            <button
+              type="button"
+              onClick={loadAccess}
+              className="rounded-full border border-amber-200/80 bg-white/70 px-4 py-2 text-sm font-semibold text-amber-900 shadow-sm transition hover:border-amber-300 hover:bg-amber-50 dark:border-amber-800/70 dark:bg-transparent dark:text-amber-50 dark:hover:border-amber-700 dark:hover:bg-amber-900/30"
+            >
+              Recheck
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      {canShowQuests ? (
+        <>
+          {loading ? (
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-white/70 px-4 py-3 text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200">
+              <Loader2 className="h-5 w-5 animate-spin text-amber-600" />
+              Loading Stream Quest…
             </div>
-            <div className="flex flex-col items-end gap-2 text-right">
-              <div className="flex items-center gap-2 rounded-full border border-amber-200/60 bg-amber-900/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100 shadow-sm backdrop-blur">
-                <Clock3 className="h-4 w-4" />
-                Resets daily
+          ) : null}
+
+          {error ? (
+            <div className="rounded-2xl border border-rose-200/70 bg-rose-50 px-4 py-3 text-rose-900 shadow-sm dark:border-rose-800/50 dark:bg-rose-950/30 dark:text-rose-100">
+              {error}
+            </div>
+          ) : null}
+
+          {data ? (
+            <>
+              <div className="relative overflow-hidden rounded-[36px] border border-amber-200/50 shadow-[0_26px_60px_rgba(0,0,0,0.28)]">
+                <div
+                  className="relative h-full w-full bg-center bg-no-repeat p-6 md:p-8 lg:p-10"
+                  style={{
+                    backgroundImage: tavernBoardBg,
+                    backgroundSize: "100% 100%",
+                  }}
+                >
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.2),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.35),transparent_40%)]" />
+                  <div className="relative flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-100/80 drop-shadow">
+                        Daily Stream Quest
+                      </p>
+                      <h2 className="text-4xl font-semibold leading-none text-amber-50 drop-shadow">
+                        Five quests. 500 Toadcoins each.
+                      </h2>
+                      <p className="mt-2 max-w-2xl text-sm text-amber-50/80 drop-shadow">
+                        Click COMPLETE once you finish a dare on stream. Each completion drops coins to the current
+                        chatter list when you&apos;re live and connected.
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-end gap-2 text-right">
+                      <div className="flex items-center gap-2 rounded-full border border-amber-200/60 bg-amber-900/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100 shadow-sm backdrop-blur">
+                        <Clock3 className="h-4 w-4" />
+                        Resets daily
+                      </div>
+                      <AudienceBadge audience={data.audience} />
+                    </div>
+                  </div>
+
+                  {!isLive ? (
+                    <div className="mt-4 rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-amber-900 shadow-inner backdrop-blur-sm dark:border-amber-900/70 dark:bg-amber-950/60 dark:text-amber-100">
+                      <p className="text-sm font-semibold">
+                        {streamerName ? `${streamerName} is not live right now.` : "Streamer is not live right now."}
+                      </p>
+                      <p className="text-xs opacity-80">Go live to unlock quests and start minting rewards.</p>
+                    </div>
+                  ) : null}
+
+                  {isLive && !isAuthed ? (
+                    <div className="mt-4 rounded-2xl border border-amber-900/40 bg-amber-950/40 px-4 py-3 text-sm text-amber-50 shadow-inner">
+                      Connect Twitch above to unlock quests for chatters while you&apos;re live.
+                    </div>
+                  ) : null}
+
+                  <div className="relative mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    {data.quests.map((quest) => (
+                      <QuestTile
+                        key={quest.id}
+                        quest={quest}
+                        onComplete={() => completeQuest(quest.id)}
+                        completing={completingId === quest.id}
+                        celebrating={celebratingId === quest.id}
+                        isActive={isActive}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
-              <AudienceBadge audience={data.audience} />
-            </div>
-          </div>
 
-          {!isLive ? (
-            <div className="mt-4 rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-amber-900 shadow-inner backdrop-blur-sm dark:border-amber-900/70 dark:bg-amber-950/60 dark:text-amber-100">
-              <p className="text-sm font-semibold">
-                {streamerName ? `${streamerName} is not live right now.` : "Streamer is not live right now."}
-              </p>
-              <p className="text-xs opacity-80">Go live to unlock quests and start minting rewards.</p>
-            </div>
+              <div className="grid gap-4 lg:grid-cols-3">
+                <div className="lg:col-span-2">
+                  <LedgerCard totalMinted={totalMinted} topHolders={topHolders} audience={data.audience} />
+                </div>
+                <div className="rounded-2xl border border-amber-200/70 bg-white/80 p-4 text-amber-900 shadow-sm dark:border-amber-900/70 dark:bg-slate-900/60 dark:text-amber-50">
+                  <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-amber-800 dark:text-amber-100">
+                    <Sparkles className="h-4 w-4" />
+                    Rewards
+                  </div>
+                  <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">
+                    Each quest drops <strong>500 Toadcoins</strong> to everyone watching in chat (or to the
+                    standby roster when you&apos;re offline). Quests grey out after completion until the next
+                    reset.
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 rounded-xl border border-amber-100 bg-amber-50 px-3 py-2 text-amber-900 shadow-inner dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-100">
+                    <Coins className="h-5 w-5" />
+                    <span className="text-sm font-semibold">
+                      {totalMinted.toLocaleString()} toadcoins minted across chat.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </>
           ) : null}
-
-          {isLive && !isAuthed ? (
-            <div className="mt-4 rounded-2xl border border-amber-900/40 bg-amber-950/40 px-4 py-3 text-sm text-amber-50 shadow-inner">
-              Connect Twitch above to unlock quests for chatters while you&apos;re live.
-            </div>
-          ) : null}
-
-          <div className="relative mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {data.quests.map((quest) => (
-              <QuestTile
-                key={quest.id}
-                quest={quest}
-                onComplete={() => completeQuest(quest.id)}
-                completing={completingId === quest.id}
-                celebrating={celebratingId === quest.id}
-                isActive={isActive}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="grid gap-4 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <LedgerCard totalMinted={totalMinted} topHolders={topHolders} audience={data.audience} />
-        </div>
-        <div className="rounded-2xl border border-amber-200/70 bg-white/80 p-4 shadow-sm dark:border-amber-900/70 dark:bg-slate-900/60">
-          <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-amber-800 dark:text-amber-100">
-            <Sparkles className="h-4 w-4" />
-            Rewards
-          </div>
-          <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">
-            Each quest drops <strong>500 Toadcoins</strong> to everyone watching in chat (or to the
-            standby roster when you&apos;re offline). Quests grey out after completion until the next
-            reset.
-          </p>
-          <div className="mt-4 flex items-center gap-2 rounded-xl border border-amber-100 bg-amber-50 px-3 py-2 text-amber-900 shadow-inner dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-100">
-            <Coins className="h-5 w-5" />
-            <span className="text-sm font-semibold">
-              {totalMinted.toLocaleString()} toadcoins minted across chat.
-            </span>
-          </div>
-        </div>
-      </div>
+        </>
+      ) : null}
     </div>
   );
 }
