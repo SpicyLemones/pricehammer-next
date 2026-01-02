@@ -1,10 +1,60 @@
 {
-  "date": "",
-  "generatedAt": "",
-  "quests": [],
+  "date": "2026-01-02",
+  "generatedAt": "2026-01-02T06:22:32.856Z",
+  "quests": [
+    {
+      "id": "stream-hours-fc0e409c-c195-4ecd-afb4-8264f48ed887",
+      "title": "Stay Live",
+      "prompt": "Stream for more than 1 hour.",
+      "reward": 500,
+      "category": "stream-time",
+      "completed": false
+    },
+    {
+      "id": "wordle-9479e5c8-f3e7-4481-8225-45accd5d3b97",
+      "title": "Wordle Warrior",
+      "prompt": "Complete today’s Wordle on stream.",
+      "reward": 500,
+      "category": "wordle",
+      "completed": false
+    },
+    {
+      "id": "timeout-random-e0458092-80fd-4d00-a26e-dac76f33b2ce",
+      "title": "Naughty Step",
+      "prompt": "Time out chat_goblin for 1 minute.",
+      "reward": 500,
+      "category": "timeout",
+      "completed": false
+    },
+    {
+      "id": "insult-random-915e31fb-4f72-4e54-8f66-e69a3073c1d9",
+      "title": "Roast Duty",
+      "prompt": "Drop a playful insult on modbot9000 in chat.",
+      "reward": 500,
+      "category": "insult",
+      "completed": false
+    },
+    {
+      "id": "ban-random-5c20704b-54d6-4e05-b509-96e4d4b19a40",
+      "title": "See You Later",
+      "prompt": "Ban hammerfan from your chat (they'll forgive you… probably).",
+      "reward": 500,
+      "category": "ban",
+      "completed": false
+    }
+  ],
   "ledger": {},
   "lastAudience": {
-    "names": [],
-    "source": "fallback"
+    "names": [
+      "toadette",
+      "chat_goblin",
+      "ban_me_please",
+      "lilypadlurker",
+      "hammerfan",
+      "modbot9000",
+      "ribbitriot"
+    ],
+    "source": "unauthenticated",
+    "note": "Link Twitch to pull live chatters. Using placeholders for now."
   }
 }

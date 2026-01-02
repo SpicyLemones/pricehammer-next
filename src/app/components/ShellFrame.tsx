@@ -36,7 +36,7 @@ export function ShellFrame({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-dvh bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
-      <main className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col items-center px-4 py-12 sm:px-6 lg:px-8">
+      <main className="mx-auto flex   flex-col items-center  ">
         {children}
       </main>
     </div>

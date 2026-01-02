@@ -262,14 +262,11 @@ export function StreamQuestClient() {
 
         <div className="relative flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-amber-100/80 drop-shadow">
+            <p className="text-4xl font-bold uppercase tracking-[0.32em] text-amber-100/80 drop-shadow">
               Daily Stream Quest
             </p>
-            <h1 className="text-4xl font-semibold leading-tight text-amber-50 drop-shadow">
-              Five quests. 500 Toadcoins each.
-            </h1>
             <p className="max-w-2xl text-sm text-amber-50/80 drop-shadow">
-              Click complete once you finish a dare on stream. Each completion drops coins to the current chatter list when you&apos;re live and connected.
+              Do your dailies, streamer.
             </p>
           </div>
 
@@ -360,14 +357,7 @@ function QuestTile({
           : "cursor-not-allowed opacity-90"
       )}
     >
-      <div className="absolute -top-7 left-4 z-10 flex items-center gap-2">
-        <Image
-          src="/images/quest.png"
-          alt=""
-          width={64}
-          height={64}
-          className="select-none drop-shadow-[0_10px_24px_rgba(0,0,0,0.4)]"
-        />
+      <div className="absolute top-2 left-4 z-10 flex items-center gap-3">
         <span className="rounded-full bg-[#8c5430] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-50 shadow-[0_8px_18px_rgba(0,0,0,0.45)]">
           Daily
         </span>
