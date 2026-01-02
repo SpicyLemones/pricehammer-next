@@ -198,13 +198,13 @@ async function ensureState(audience: AudienceSnapshot) {
     const hasAudienceChanged =
       JSON.stringify(audience) !== JSON.stringify(existing.lastAudience) ||
       existing.lastAudienceHour !== currentHour;
-    const upgradedToTwitch =
-      audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
+    const upgradedToTwitch = audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
     const insufficientQuests = existing.quests.length < 6;
-    const shouldRegenerate = upgradedToTwitch || insufficientQuests || (audience.source === "twitch" && hasAudienceChanged);
+    const audienceRegenerated = audience.source === "twitch" && hasAudienceChanged;
+    const shouldRegenerate = upgradedToTwitch || insufficientQuests || audienceRegenerated;
 
     if (shouldRegenerate) {
-      const quests = buildQuests(audience, questTemplates);
+      const quests = regenerateQuestsPreservingCompletions(existing.quests, audience, questTemplates);
       const regeneratedState: StreamQuestState = {
         ...existing,
         quests,
@@ -343,6 +343,17 @@ function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[])
       completedAt: undefined,
     };
   });
+}
+
+function regenerateQuestsPreservingCompletions(
+  existingQuests: StreamQuest[],
+  audience: AudienceSnapshot,
+  library: QuestTemplateConfig[]
+) {
+  const completed = existingQuests.filter((quest) => quest.completed);
+  const needed = Math.max(0, 6 - completed.length);
+  const replacements = buildQuests(audience, library).slice(0, needed);
+  return [...completed, ...replacements];
 }
 
 function renderPrompt(prompt: string, values: Record<string, string | number>) {
