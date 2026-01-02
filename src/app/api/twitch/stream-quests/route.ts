@@ -193,7 +193,13 @@ async function ensureState(audience: AudienceSnapshot) {
   const questTemplates = await loadQuestTemplates();
 
   if (existing && existing.date === today) {
-    return { state: existing, regenerated: false };
+    const updated = { ...existing, lastAudience: audience };
+    const hasAudienceChanged =
+      JSON.stringify(updated.lastAudience) !== JSON.stringify(existing.lastAudience);
+    if (hasAudienceChanged) {
+      await saveState(updated);
+    }
+    return { state: updated, regenerated: false };
   }
 
   const quests = buildQuests(audience, questTemplates);
@@ -252,6 +258,24 @@ function randomBetween(min: number, max: number) {
 function pickChatter(chatters: string[]) {
   const pool = chatters.length ? chatters : FALLBACK_CHATTERS;
   return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function seedFromCurrentHour() {
+  return Math.floor(Date.now() / 3_600_000);
+}
+
+function shuffleWithSeed(values: string[], seed: number) {
+  const result = [...values];
+  let rng = seed % 2147483647;
+  if (rng <= 0) rng += 2147483646;
+
+  for (let i = result.length - 1; i > 0; i -= 1) {
+    rng = (rng * 16807) % 2147483647;
+    const j = rng % (i + 1);
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
 }
 
 async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
@@ -355,21 +379,22 @@ async function loadAudience(): Promise<AudienceSnapshot> {
     const chatters = await fetchChatters(session);
     if (!chatters.live) {
       return {
-        names: [session.displayName, ...FALLBACK_CHATTERS].filter(Boolean) as string[],
+        names: [session.displayName].filter(Boolean) as string[],
         source: "offline",
         displayName: chatters.displayName,
         live: false,
-        note: "Stream is offline; using host name plus placeholders.",
+        note: "Stream is offline.",
       };
     }
 
-    const names = chatters.chatters && chatters.chatters.length > 0 ? chatters.chatters : FALLBACK_CHATTERS;
+    const names = chatters.chatters ?? [];
+    const shuffled = shuffleWithSeed(names, seedFromCurrentHour());
     return {
-      names,
+      names: shuffled,
       source: "twitch",
       displayName: chatters.displayName,
       live: true,
-      note: names === chatters.chatters ? undefined : "No chatters returned, using playful stand-ins.",
+      note: names.length === 0 ? "No chatters returned for this hour." : undefined,
     };
   } catch (error) {
     console.error("Stream quest: failed to load chatters", error);
