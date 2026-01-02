@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS product_deletion_log (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  product_id INTEGER NOT NULL,
+  product_name TEXT NOT NULL,
+  admin_user TEXT,
+  deleted_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);

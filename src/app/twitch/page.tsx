@@ -1,0 +1,70 @@
+// src/app/twitch/page.tsx
+import Link from "next/link";
+
+import { TwitchAuthRedirect } from "./TwitchAuthRedirect";
+
+const modules = [
+  { title: "Pre-Stream Checklist", description: "Quick rundown before you go live." },
+  {
+    title: "Stream Quest",
+    description: "Mini missions to keep chat engaged.",
+    href: "/twitch/stream-quest",
+  },
+  {
+    title: "Wheel of Blame",
+    description: "Spin to assign the next oops with live chatters.",
+    href: "/twitch/wheel-of-blame",
+  },
+  { title: "Toadcoin", description: "A silly stream currency idea." },
+];
+
+export const metadata = {
+  title: "Twitch fun modules",
+  description: "Pick a playful module to use during streams.",
+};
+
+function ModuleButton({ title, description, href }: { title: string; description: string; href?: string }) {
+  return (
+    <Link
+      href={href ?? "#"}
+      className="group relative flex w-full flex-col gap-2 overflow-hidden rounded-2xl border border-slate-200 bg-white/90 p-5 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl active:translate-y-[1px] active:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 dark:border-slate-800 dark:bg-slate-900/70"
+    >
+      <span
+        className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 transition duration-300 group-hover:translate-x-full group-hover:opacity-100"
+        aria-hidden
+      />
+      <div>
+        <h2 className="text-xl font-semibold text-slate-900 dark:text-white">{title}</h2>
+        <p className="text-sm text-slate-600 dark:text-slate-300">{description}</p>
+      </div>
+    </Link>
+  );
+}
+
+export default function TwitchPage() {
+  return (
+    <div className="w-full max-w-3xl space-y-6">
+      <Link
+        href="/"
+        className="text-sm font-medium text-blue-600 transition hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-200"
+      >
+        ← Back to Spycy.fun
+      </Link>
+
+      <header className="space-y-2 text-center">
+        <h1 className="text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">Twitch fun</h1>
+        <p className="text-slate-600 dark:text-slate-300">
+          Choose a module to play with during your stream. Everything here is simple and tactile.
+        </p>
+      </header>
+
+      <TwitchAuthRedirect />
+
+      <section className="space-y-3">
+        {modules.map((module) => (
+          <ModuleButton key={module.title} {...module} />
+        ))}
+      </section>
+    </div>
+  );
+}

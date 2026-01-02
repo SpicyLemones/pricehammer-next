@@ -1,0 +1,76 @@
+{
+  "templates": [
+    {
+      "id": "prime-beggar",
+      "category": "prime",
+      "title": "Prime Beggar",
+      "prompt": "Successfully beg for {{count}} Twitch Prime sub{{plural:count:s}}.",
+      "reward": 500,
+      "variables": [
+        { "key": "count", "type": "range", "min": 1, "max": 3 }
+      ]
+    },
+    {
+      "id": "ban-random",
+      "category": "ban",
+      "title": "See You Later Bozo",
+      "prompt": "Ban {{chatter}} from your chat (they'll forgive you… probably).",
+      "reward": 500,
+      "variables": [
+        { "key": "chatter", "type": "chatter" }
+      ]
+    },
+    {
+      "id": "timeout-random",
+      "category": "timeout",
+      "title": "Collateral Damage",
+      "prompt": "Time out {{chatter}} for {{minutes}} minute{{plural:minutes:s}}.",
+      "reward": 500,
+      "variables": [
+        { "key": "chatter", "type": "chatter" },
+        { "key": "minutes", "type": "range", "min": 1, "max": 20 }
+      ]
+    },
+    {
+      "id": "stream-hours",
+      "category": "stream-time",
+      "title": "Stay Live",
+      "prompt": "Stream for more than {{hours}} hour{{plural:hours:s}}.",
+      "reward": 500,
+      "variables": [
+        { "key": "hours", "type": "range", "min": 1, "max": 5 }
+      ]
+    },
+    {
+      "id": "insult-random",
+      "category": "insult",
+      "title": "Insult",
+      "prompt": "Insult {{chatter}} in chat.",
+      "reward": 500,
+      "variables": [
+        { "key": "chatter", "type": "chatter" }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "wordle",
+      "title": "Wordle Warrior",
+      "prompt": "Complete today’s Wordle on stream.",
+      "reward": 500
+    },
+    {
+      "id": "bandle",
+      "category": "bandle",
+      "title": "Bandle Bard",
+      "prompt": "Complete today’s Bandle on stream.",
+      "reward": 500
+    },
+    {
+      "id": "react",
+      "category": "stream-time",
+      "title": "React Andy",
+      "prompt": "React to a full youtube video",
+      "reward": 500
+    }
+  ]
+}
