@@ -200,7 +200,8 @@ async function ensureState(audience: AudienceSnapshot) {
       existing.lastAudienceHour !== currentHour;
     const upgradedToTwitch =
       audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
-    const shouldRegenerate = upgradedToTwitch || (audience.source === "twitch" && hasAudienceChanged);
+    const insufficientQuests = existing.quests.length < 6;
+    const shouldRegenerate = upgradedToTwitch || insufficientQuests || (audience.source === "twitch" && hasAudienceChanged);
 
     if (shouldRegenerate) {
       const quests = buildQuests(audience, questTemplates);
@@ -310,9 +311,9 @@ async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
     const parsed = JSON.parse(raw) as QuestTemplateConfig[] | { templates?: QuestTemplateConfig[] };
     const templates = Array.isArray(parsed) ? parsed : parsed.templates;
     const sanitized = (templates ?? []).map(sanitizeTemplateConfig).filter(Boolean) as QuestTemplateConfig[];
-    if (sanitized.length >= 5) return sanitized;
+    if (sanitized.length >= 6) return sanitized;
     if (sanitized.length > 0) {
-      console.warn("Stream quest: not enough templates in quest-library.json, falling back to defaults.");
+      console.warn("Stream quest: not enough templates in quest-library.json (need 6+), falling back to defaults.");
     }
   } catch (error) {
     console.warn("Stream quest: failed to load quest-library.json, using defaults.", error);
@@ -321,11 +322,11 @@ async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
 }
 
 function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[]): StreamQuest[] {
-  if (library.length < 5) {
-    throw new Error("At least 5 quest templates are required to build a daily set.");
+  if (library.length < 6) {
+    throw new Error("At least 6 quest templates are required to build a daily set.");
   }
   const shuffled = [...library].sort(() => Math.random() - 0.5);
-  const selected = shuffled.slice(0, 5);
+  const selected = shuffled.slice(0, 6);
 
   return selected.map((template) => {
     const variables = resolveVariables(template.variables ?? [], audience);

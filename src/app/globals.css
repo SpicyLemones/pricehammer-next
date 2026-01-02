@@ -240,6 +240,42 @@
   }
 }
 
+/* ---- Stream Quest wizard sprite ---- */
+.wizard-floating {
+  animation: wizardFloat 10s ease-in-out infinite;
+  will-change: transform;
+}
+
+.wizard-shake {
+  animation: wizardShake 0.55s linear infinite, wizardFloat 9s ease-in-out infinite;
+}
+
+.wizard-squish {
+  animation: wizardSquish 0.5s ease forwards;
+}
+
+@keyframes wizardFloat {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6px, -10px, 0) scale(1.02); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes wizardShake {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  20% { transform: translate3d(2px, -1px, 0) rotate(-4deg) scale(1.02, 0.98); }
+  40% { transform: translate3d(-2px, 2px, 0) rotate(3deg) scale(0.98, 1.02); }
+  60% { transform: translate3d(3px, 1px, 0) rotate(-2deg) scale(1.02, 0.98); }
+  80% { transform: translate3d(-1px, -2px, 0) rotate(2deg) scale(0.99, 1.02); }
+  100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+}
+
+@keyframes wizardSquish {
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  40% { transform: translate3d(0, 0, 0) scale(1.06, 0.9); opacity: 1; }
+  70% { transform: translate3d(0, 6px, 0) scale(0.7, 1.12); opacity: 0.65; }
+  100% { transform: translate3d(0, 12px, 0) scale(0.38, 0.72); opacity: 0; }
+}
+
 /* ---- Scroll lock overrides (fixed nesting) ---- */
 :root {
    
