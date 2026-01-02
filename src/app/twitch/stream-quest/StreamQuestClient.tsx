@@ -1,8 +1,6 @@
 "use client";
-
-import Image from "next/image";
 import type { ComponentType } from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   BadgeCheck,
@@ -121,6 +119,9 @@ export function StreamQuestClient() {
   const [authState, setAuthState] = useState<
     "checking" | "unauthenticated" | "ready"
   >("checking");
+  const tavernAudioRef = useRef<HTMLAudioElement | null>(null);
+  const questFinAudioRef = useRef<HTMLAudioElement | null>(null);
+  const moneyAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -156,10 +157,69 @@ export function StreamQuestClient() {
     return () => clearTimeout(id);
   }, [toast]);
 
+  useEffect(() => {
+    const audio = tavernAudioRef.current;
+    if (!audio) return;
+
+    audio.loop = true;
+    audio.currentTime = 0;
+
+    audio
+      .play()
+      .catch((err) => {
+        console.warn("Unable to autoplay tavern ambience", err);
+      });
+  }, []);
+
   const totalMinted = useMemo(() => {
     if (!data) return 0;
     return Object.values(data.ledger).reduce((sum, value) => sum + value, 0);
   }, [data]);
+
+  const playQuestCompletionAudio = useCallback(async () => {
+    const questFin = questFinAudioRef.current;
+    const money = moneyAudioRef.current;
+
+    if (!questFin || !money) return;
+
+    const startedAt = Date.now();
+    const waitForQuestFin = new Promise<void>((resolve) => {
+      const finalize = () => {
+        const elapsed = Date.now() - startedAt;
+        if (elapsed >= 5000) {
+          resolve();
+        } else {
+          setTimeout(resolve, 5000 - elapsed);
+        }
+      };
+
+      const fallback = setTimeout(() => {
+        questFin.removeEventListener("ended", handleComplete);
+        questFin.removeEventListener("error", handleComplete);
+        finalize();
+      }, 20000);
+
+      const handleComplete = () => {
+        clearTimeout(fallback);
+        finalize();
+      };
+
+      questFin.addEventListener("ended", handleComplete, { once: true });
+      questFin.addEventListener("error", handleComplete, { once: true });
+    });
+
+    questFin.currentTime = 0;
+    questFin.play().catch((err) => {
+      console.warn("Unable to play quest completion audio", err);
+    });
+
+    await waitForQuestFin;
+
+    money.currentTime = 0;
+    money.play().catch((err) => {
+      console.warn("Unable to play reward audio", err);
+    });
+  }, []);
 
   async function completeQuest(id: string) {
     if (!data) return;
@@ -201,6 +261,7 @@ export function StreamQuestClient() {
       setToast(recipientText);
       setCelebratingId(id);
       setTimeout(() => setCelebratingId(null), 1200);
+      void playQuestCompletionAudio();
     } catch (err) {
       console.error(err);
       setError("Could not mark the quest as completed.");
@@ -233,6 +294,10 @@ export function StreamQuestClient() {
 
   return (
     <div className="space-y-6">
+      <audio ref={tavernAudioRef} src="/audio/tavern.mp3" preload="auto" loop aria-hidden className="hidden" />
+      <audio ref={questFinAudioRef} src="/audio/questfin.mp3" preload="auto" aria-hidden className="hidden" />
+      <audio ref={moneyAudioRef} src="/audio/money.mp3" preload="auto" aria-hidden className="hidden" />
+
       {toast ? (
         <div className="flex items-center gap-3 rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-amber-900 shadow-sm backdrop-blur dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-100">
           <Sparkles className="h-5 w-5 text-amber-600 dark:text-amber-300" />
@@ -365,12 +430,13 @@ function QuestTile({
 
       <div
         className={clsx(
-          "relative flex h-full flex-col overflow-hidden rounded-[26px] border-2 border-[#b26c3c] bg-gradient-to-b from-[#3f2a1c] to-[#2f1f15] px-5 pb-5 pt-10 shadow-[0_18px_36px_rgba(0,0,0,0.35)]",
+          "relative flex h-full flex-col overflow-hidden rounded-[26px] border-2 border-[#b26c3c] bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-5 pb-5 pt-10 shadow-[0_18px_36px_rgba(0,0,0,0.35)]",
+          "after:pointer-events-none after:absolute after:inset-0 after:z-0 after:rounded-[26px] after:bg-gradient-to-b after:from-[#3f2a1c]/92 after:to-[#2f1f15]/95 after:opacity-95 after:transition-all after:duration-300",
           "before:absolute before:-inset-2 before:-z-10 before:rounded-[30px] before:bg-[radial-gradient(circle_at_center,rgba(219,94,64,0.35),transparent_55%)] before:opacity-70 before:blur-xl before:transition-all before:duration-300",
           !isCompleted && isActive ? "hover:before:opacity-100 hover:shadow-[0_22px_40px_rgba(0,0,0,0.42)]" : "before:opacity-40"
         )}
       >
-        <div className="relative flex flex-1 flex-col gap-3 rounded-2xl border-2 border-[#c48652] bg-[#23354c] px-4 py-4 shadow-inner">
+        <div className="relative z-10 flex flex-1 flex-col gap-3 rounded-2xl border-2 border-[#c48652] bg-[#23354c] px-4 py-4 shadow-inner">
           <div className="flex items-start gap-3">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#c48652]/60 bg-[#0f1b2b] text-amber-50 shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
               <Icon className={clsx("h-6 w-6", meta.iconTint)} />
