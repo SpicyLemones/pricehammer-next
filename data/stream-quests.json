@@ -28,8 +28,8 @@
     },
     {
       "id": "insult-random-915e31fb-4f72-4e54-8f66-e69a3073c1d9",
-      "title": "Roast Duty",
-      "prompt": "Drop a playful insult on modbot9000 in chat.",
+      "title": "Insult",
+      "prompt": "Insult modbot9000 in chat.",
       "reward": 500,
       "category": "insult",
       "completed": false
