@@ -56,6 +56,8 @@ type QuestResponse = {
   audience: AudienceSnapshot;
 };
 
+
+
 const categoryMeta: Record<
   QuestCategory,
   {
@@ -422,20 +424,23 @@ function QuestTile({
           : "cursor-not-allowed opacity-90"
       )}
     >
-      <div className="absolute top-2 left-4 z-10 flex items-center gap-3">
-        <span className="rounded-full bg-[#8c5430] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-50 shadow-[0_8px_18px_rgba(0,0,0,0.45)]">
+      <div className="absolute top-6 left-4 z-10 flex items-center gap-3">
+        <span className="rounded-full bg-[#b58200] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-50 shadow-[0_8px_18px_rgba(0,0,0,0.45)]">
           Daily
         </span>
       </div>
 
       <div
-        className={clsx(
-          "relative flex h-full flex-col overflow-hidden rounded-[26px] border-2 border-[#b26c3c] bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-5 pb-5 pt-10 shadow-[0_18px_36px_rgba(0,0,0,0.35)]",
-          "after:pointer-events-none after:absolute after:inset-0 after:z-0 after:rounded-[26px] after:bg-gradient-to-b after:from-[#3f2a1c]/92 after:to-[#2f1f15]/95 after:opacity-95 after:transition-all after:duration-300",
-          "before:absolute before:-inset-2 before:-z-10 before:rounded-[30px] before:bg-[radial-gradient(circle_at_center,rgba(219,94,64,0.35),transparent_55%)] before:opacity-70 before:blur-xl before:transition-all before:duration-300",
-          !isCompleted && isActive ? "hover:before:opacity-100 hover:shadow-[0_22px_40px_rgba(0,0,0,0.42)]" : "before:opacity-40"
-        )}
-      >
+  className={clsx(
+    // 1. Core Styles: bg-cover ensures the image stretches to fill the space
+    "relative flex h-full overflow-hidden rounded-[26px]  bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-5 pb-14 pt-15 shadow-[0_18px_36px_rgba(0,0,0,0.35)]",
+    
+    // 2. The Glow (Optional): I kept 'before' in case you still want the outer glow. 
+    // If you want that gone too, delete the next two lines.
+    "before:absolute before:-inset-2 before:-z-10 before:rounded-[30px] before:bg-[radial-gradient(circle_at_center,rgba(222, 174, 161, 0.35),transparent_55%)] before:opacity-70 before:blur-xl before:transition-all before:duration-300",
+    !isCompleted && isActive ? "hover:before:opacity-100 hover:shadow-[0_22px_40px_rgba(0,0,0,0.42)]" : "before:opacity-40"
+  )}
+>
         <div className="relative z-10 flex flex-1 flex-col gap-3 rounded-2xl border-2 border-[#c48652] bg-[#23354c] px-4 py-4 shadow-inner">
           <div className="flex items-start gap-3">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#c48652]/60 bg-[#0f1b2b] text-amber-50 shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
