@@ -70,43 +70,43 @@ const categoryMeta: Record<
     label: "Subs",
     icon: Crown,
     accent: "from-amber-50 via-yellow-100 to-amber-50",
-    chip: "text-amber-900 bg-amber-100 border-amber-200",
+    chip: "text-amber-50 bg-amber-900/70 border-amber-200/40",
   },
   ban: {
     label: "Ban",
     icon: Ban,
     accent: "from-rose-50 via-orange-50 to-amber-50",
-    chip: "text-rose-900 bg-rose-100 border-rose-200",
+    chip: "text-rose-50 bg-rose-900/60 border-rose-200/30",
   },
   timeout: {
     label: "Timeout",
     icon: Timer,
     accent: "from-blue-50 via-sky-50 to-emerald-50",
-    chip: "text-blue-900 bg-blue-100 border-blue-200",
+    chip: "text-blue-50 bg-blue-900/60 border-blue-200/30",
   },
   "stream-time": {
     label: "On Air",
     icon: Clock3,
     accent: "from-emerald-50 via-lime-50 to-amber-50",
-    chip: "text-emerald-900 bg-emerald-100 border-emerald-200",
+    chip: "text-emerald-50 bg-emerald-900/60 border-emerald-200/30",
   },
   insult: {
     label: "Roast",
     icon: Laugh,
     accent: "from-purple-50 via-indigo-50 to-amber-50",
-    chip: "text-purple-900 bg-purple-100 border-purple-200",
+    chip: "text-purple-50 bg-purple-900/60 border-purple-200/30",
   },
   wordle: {
     label: "Wordle",
     icon: Puzzle,
     accent: "from-slate-50 via-emerald-50 to-amber-50",
-    chip: "text-emerald-900 bg-emerald-100 border-emerald-200",
+    chip: "text-emerald-50 bg-emerald-900/60 border-emerald-200/30",
   },
   bandle: {
     label: "Bandle",
     icon: Music2,
     accent: "from-sky-50 via-indigo-50 to-amber-50",
-    chip: "text-sky-900 bg-sky-100 border-sky-200",
+    chip: "text-sky-50 bg-sky-900/60 border-sky-200/30",
   },
 };
 
@@ -204,13 +204,13 @@ export function StreamQuestClient() {
 
   async function completeQuest(id: string) {
     if (!data) return;
-      setCompletingId(id);
-      setError(null);
+    setCompletingId(id);
+    setError(null);
 
-      try {
-        const res = await fetch("/api/twitch/stream-quests", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+    try {
+      const res = await fetch("/api/twitch/stream-quests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
       });
 
@@ -244,11 +244,11 @@ export function StreamQuestClient() {
       setTimeout(() => setCelebratingId(null), 1200);
     } catch (err) {
       console.error(err);
-        setError("Could not mark the quest as completed.");
-      } finally {
-        setCompletingId(null);
-      }
+      setError("Could not mark the quest as completed.");
+    } finally {
+      setCompletingId(null);
     }
+  }
 
   const isLive = !!data?.audience.live;
   const isAuthed = data?.audience.source === "twitch";
@@ -343,14 +343,14 @@ export function StreamQuestClient() {
             <>
               <div className="relative overflow-hidden rounded-[36px] shadow-[0_26px_60px_rgba(0,0,0,0.28)]">
                 <div
-  className="relative h-full w-full bg-center bg-no-repeat p-4 md:p-8 lg:p-12"
-  style={{
-    backgroundImage: tavernBoardBg,
-    backgroundSize: "contain", // Changed from "cover" to "contain"
-    backgroundPosition: "center top", // Aligns it to the top so headers stay inside
-    minHeight: "800px" // Ensures there is enough vertical space for the board
-  }}
->
+                  className="relative h-full w-full bg-center bg-no-repeat p-6 sm:p-8 lg:p-12"
+                  style={{
+                    backgroundImage: tavernBoardBg,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    minHeight: "900px",
+                  }}
+                >
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,0,0,0.2),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,0,0,0.35),transparent_40%)]" />
                   <div className="relative flex flex-wrap items-start gap-4 lg:items-center">
                     <div className="max-w-3xl space-y-2">
@@ -391,19 +391,18 @@ export function StreamQuestClient() {
                     </div>
                   ) : null}
 
-                  <div className="relative mt-6 flex flex-wrap justify-center gap-4">
-                  {data.quests.map((quest) => (
-                    <div key={quest.id} className="w-full md:w-[calc(33.333%-1rem)] lg:max-w-[350px]">
+                  <div className="relative mt-8 grid w-full grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                    {data.quests.map((quest) => (
                       <QuestTile
+                        key={quest.id}
                         quest={quest}
                         onComplete={() => completeQuest(quest.id)}
                         completing={completingId === quest.id}
                         celebrating={celebratingId === quest.id}
                         inactive={!isLive || !isAuthed}
                       />
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -481,24 +480,26 @@ function QuestTile({
       onClick={isDisabled ? undefined : onComplete}
       disabled={isDisabled}
       className={clsx(
-        "group relative h-full overflow-hidden rounded-2xl border bg-white/90 text-left shadow-[0_12px_30px_rgba(0,0,0,0.18)] transition duration-200 dark:border-amber-900/80 dark:bg-slate-950/80",
+        "group relative isolate w-full max-w-[360px] min-h-[230px] overflow-hidden rounded-[28px] border-4 border-amber-900/50 bg-[url('/images/quest.png')] bg-cover bg-center text-left shadow-[0_18px_42px_rgba(0,0,0,0.32)] transition duration-200",
         isCompleted
-          ? "cursor-not-allowed border-slate-300/80 text-slate-600 opacity-85 dark:border-slate-800/70 dark:text-slate-300"
-          : "border-amber-200/70 hover:-translate-y-[6px] hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] active:translate-y-[1px]",
-        !isCompleted && inactive && "opacity-95 saturate-90"
+          ? "cursor-not-allowed border-slate-400/80 text-slate-500 opacity-90 dark:border-slate-800/70 dark:text-slate-300"
+          : "hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(0,0,0,0.38)] active:translate-y-[2px]",
+        !isCompleted && inactive && "opacity-95 saturate-90",
+        "before:absolute before:inset-2 before:rounded-[22px] before:border before:border-amber-900/40 before:bg-slate-950/60 before:shadow-[inset_0_12px_28px_rgba(0,0,0,0.35)] before:backdrop-blur-sm before:content-['']",
+        "after:pointer-events-none after:absolute after:inset-0 after:rounded-[30px] after:bg-[radial-gradient(circle_at_center,rgba(248,113,113,0.2),transparent_62%)] after:opacity-0 after:transition after:duration-300 group-hover:after:opacity-80"
       )}
     >
       <div
         className={clsx(
-          "absolute inset-0 z-0 bg-gradient-to-br opacity-70 transition duration-300",
+          "absolute inset-3 z-0 rounded-[20px] bg-gradient-to-br opacity-80 transition duration-300",
           meta.accent,
           quest.completed ? "brightness-75" : "group-hover:opacity-100 group-hover:brightness-110"
         )}
       />
       <div
         className={clsx(
-          "absolute inset-0 z-0 bg-black/40 transition duration-300 opacity-0 group-hover:opacity-20",
-          isCompleted && "opacity-50"
+          "absolute inset-3 z-0 rounded-[20px] bg-slate-950/75 transition duration-300",
+          isCompleted ? "opacity-70" : "group-hover:bg-slate-950/65"
         )}
       />
 
@@ -512,38 +513,38 @@ function QuestTile({
         </div>
       ) : null}
 
-      <div className={clsx("relative z-10 flex h-full flex-col gap-3 p-5", isCompleted && "opacity-80")}>
+      <div className={clsx("relative z-20 flex h-full flex-col gap-4 p-6", isCompleted && "opacity-80")}>
         <div className="flex items-start justify-between gap-2">
-          <div className="flex items-center gap-2 rounded-full border border-amber-300/70 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900 shadow-sm dark:border-amber-800/70 dark:bg-amber-950/60 dark:text-amber-50">
+          <div className="flex items-center gap-2 rounded-full border border-amber-600/50 bg-amber-900/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-50 shadow-sm">
             <Sparkles className="h-4 w-4" />
             Daily
           </div>
-          <div className="flex items-center gap-2 rounded-lg border border-amber-300/70 bg-white/80 px-3 py-1 text-sm font-semibold text-amber-900 shadow-sm dark:border-amber-800/70 dark:bg-amber-950/60 dark:text-amber-50">
+          <div className="flex items-center gap-2 rounded-lg border border-amber-200/80 bg-amber-50/90 px-3 py-1 text-sm font-semibold text-amber-900 shadow-sm dark:border-amber-800/70 dark:bg-amber-900/60 dark:text-amber-50">
             <Coins className="h-4 w-4" />
             500
           </div>
         </div>
 
-        <div className="flex items-center gap-3 rounded-xl border border-white/50 bg-white/80 px-3 py-2 shadow-inner backdrop-blur-sm dark:border-slate-800/70 dark:bg-slate-900/70">
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-amber-200/70 bg-gradient-to-br from-white to-amber-50 shadow-sm dark:border-amber-900/60 dark:from-slate-900 dark:to-amber-950/50">
-            <Icon className="h-6 w-6 text-amber-800 dark:text-amber-200" />
+        <div className="flex items-center gap-3 rounded-xl border border-amber-900/40 bg-amber-950/40 px-3 py-3 shadow-inner backdrop-blur-sm">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-amber-500/50 bg-amber-900/80 shadow-sm">
+            <Icon className="h-6 w-6 text-amber-200" />
           </div>
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-lg font-semibold text-amber-900 drop-shadow-sm dark:text-amber-50">
+              <span className="text-lg font-semibold text-amber-50 drop-shadow-sm">
                 {quest.title}
               </span>
               <span
                 className={clsx(
-                  "rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em]",
+                  "rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-50",
                   meta.chip,
-                  "dark:border-white/10 dark:bg-white/5 dark:text-white/80"
+                  "border-white/10 bg-white/10"
                 )}
               >
                 {meta.label}
               </span>
             </div>
-            <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200">{quest.prompt}</p>
+            <p className="text-sm leading-relaxed text-amber-50/90">{quest.prompt}</p>
           </div>
         </div>
 
