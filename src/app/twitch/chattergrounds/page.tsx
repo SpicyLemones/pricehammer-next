@@ -97,9 +97,12 @@ export default function ChattergroundsPage() {
       try {
         const res = await fetch("/api/chattergrounds", { cache: "no-store" });
         const json = await res.json();
-        const raw = json.data.chatters || [];
+        
+        // Use a safe fallback for nested or flat data structures
+        const rawData = json.data || json; 
+        const rawChatters = rawData.chatters || [];
 
-        const formatted: ChatterProfile[] = raw.map((c: any) => ({
+        const formatted: ChatterProfile[] = rawChatters.map((c: any) => ({
           id: c.chatter_id || c.id,
           name: c.name || "Unknown",
           flair: c.messages_sent > 100 ? "regular" : "new",
@@ -118,14 +121,15 @@ export default function ChattergroundsPage() {
         }));
 
         setData({
-          updatedAt: json.data.updatedAt || new Date().toISOString(),
-          origin: json.data.origin || "offline",
+          updatedAt: rawData.updatedAt || new Date().toISOString(),
+          origin: rawData.origin || "offline",
           chatters: formatted,
-          messageSeries: json.data.messageSeries || { today: [], week: [], month: [], all: [] },
-          owner: json.data.owner
+          messageSeries: rawData.messageSeries || { today: [], week: [], month: [], all: [] },
+          // Try to find the owner in the nested data OR the root JSON
+          owner: rawData.owner || json.owner 
         });
       } catch (e) {
-        console.error(e);
+        console.error("Chattergrounds Load Error:", e);
       } finally {
         setLoading(false);
       }
@@ -134,7 +138,14 @@ export default function ChattergroundsPage() {
   }, []);
 
   const series = useMemo(() => data?.messageSeries[range] ?? [], [data, range]);
-  const isTwitchScoped = Boolean(data?.owner?.userId);
+
+  // IMPROVED AUTHORIZATION CHECK:
+  // We trust the "origin" field from the API. If the API says 'twitch', 
+  // then the server definitely found your session.
+  const isTwitchScoped = useMemo(() => {
+    if (!data) return false;
+    return data.origin === "twitch" || Boolean(data.owner?.userId || data.owner?.login);
+  }, [data]);
 
   const leaderboards = useMemo(() => {
     const base = [...(data?.chatters ?? [])];
@@ -161,35 +172,36 @@ export default function ChattergroundsPage() {
     <div className="min-h-screen bg-slate-950 text-slate-50 p-6 lg:p-10 font-sans selection:bg-emerald-500 selection:text-slate-950">
       
       {/* HEADER */}
-      <header className="mb-8 flex flex-wrap justify-between items-end gap-6">
+      <header className="mb-8 flex flex-wrap justify-between items-end gap-6 pt-16">
         <div>
-        
-          <h1 className="text-6xl font-black tracking-widen mb-2">CHATTERGROUNDS</h1>
+          <h1 className="text-6xl font-black tracking-tight mb-2">CHATTERGROUNDS</h1>
           <div className="flex items-center gap-4 text-slate-500 text-xs font-mono uppercase">
              <span className="flex items-center gap-1.5"><Sparkles size={12} className="text-amber-400"/> Updated {data ? formatTimeAgo(data.updatedAt) : "just now"}</span>
-             <span className={clsx("px-2 py-0.5 rounded border", data?.origin === 'twitch' ? "border-emerald-500/50 text-emerald-400" : "border-slate-800 text-slate-500")}>
-               Source: {data?.origin || 'Offline'}
+             <span className={clsx("px-2 py-0.5 rounded border transition-colors", isTwitchScoped ? "border-emerald-500/50 text-emerald-400" : "border-slate-800 text-slate-500")}>
+               Status: {isTwitchScoped ? 'Live Sync' : 'Offline Mode'}
              </span>
           </div>
         </div>
+
         <Link 
-  href="/twitch" 
-  className="fixed left-6 top-6 z-50 flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/80 px-5 py-2 text-xs font-bold text-slate-200 shadow-xl backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-emerald-500/50 hover:bg-slate-800 hover:text-emerald-400"
->
-  <span className="text-lg">←</span> BACK TO TOYBOX
-</Link>
+          href="/twitch" 
+          className="fixed left-6 top-6 z-50 flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/80 px-5 py-2 text-xs font-bold text-slate-200 shadow-xl backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-emerald-500/50 hover:bg-slate-800 hover:text-emerald-400"
+        >
+          <span className="text-lg">←</span> BACK TO TOYBOX
+        </Link>
       </header>
 
-      {/* AUTH BANNER */}
+      {/* AUTH BANNER - Only shows if we are truly in offline/fallback mode */}
       {!isTwitchScoped && (
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-amber-500/30 bg-amber-500/5 px-6 py-4 backdrop-blur-sm">
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-amber-500/30 bg-amber-500/5 px-6 py-4 backdrop-blur-sm animate-in fade-in slide-in-from-top-4">
           <div className="flex items-center gap-3">
             <BadgeInfo className="text-amber-400" size={20} />
             <p className="text-sm text-amber-100/90">
-              <span className="font-bold">Offline Mode:</span> Connect Twitch to track your actual chatters and save data.
+              <span className="font-bold uppercase tracking-wider text-[10px] bg-amber-500/20 px-2 py-0.5 rounded mr-2">Authorization Required</span>
+              Connect Twitch to sync your actual chat data and unlock full tracking.
             </p>
           </div>
-          <a href="/api/twitch/login?redirect=%2Ftwitch%2Fchattergrounds" className="rounded-full bg-amber-400 px-5 py-2 text-xs font-black text-slate-950 hover:bg-amber-300 transition uppercase tracking-wider">
+          <a href="/api/twitch/login?redirect=%2Ftwitch%2Fchattergrounds" className="rounded-full bg-amber-400 px-5 py-2 text-xs font-black text-slate-950 hover:bg-amber-300 transition uppercase tracking-wider shadow-lg shadow-amber-500/10">
             Authorize Twitch
           </a>
         </div>
@@ -240,7 +252,7 @@ export default function ChattergroundsPage() {
 
         {/* FULL WIDTH LEADERBOARDS */}
         <WideBoard title="Top Chatters" icon={MessageSquare} items={leaderboards.chatters} stat="messagesSent" unit="msgs" color="border-emerald-500/10" />
-        <WideBoard title="Ban leaderboard" icon={Trophy} items={leaderboards.bans} stat="timesBanned" unit="bans" color="border-red-500/10" />
+        <WideBoard title="Ban Leaderboard" icon={Trophy} items={leaderboards.bans} stat="timesBanned" unit="bans" color="border-red-500/10" />
         <WideBoard title="Timeout Leaderboard" icon={Medal} items={leaderboards.timeouts} stat="timesTimedOut" unit="timeouts" color="border-amber-500/10" />
 
         {/* ROSTER */}
