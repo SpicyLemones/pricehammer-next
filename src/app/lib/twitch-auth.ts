@@ -23,13 +23,27 @@ const TWITCH_AUTHORIZE_URL = "https://id.twitch.tv/oauth2/authorize";
 const TWITCH_TOKEN_URL = "https://id.twitch.tv/oauth2/token";
 const TWITCH_API_BASE = "https://api.twitch.tv/helix";
 
+/**
+ * FIX: Dynamically aligns the Redirect URI with the production host.
+ * This prevents the "localhost:10000" mismatch during the token exchange.
+ */
 function resolveRedirectUri(request?: Request) {
   const { redirectUri } = getTwitchConfig();
   if (!request) return redirectUri;
 
   try {
-    const envUrl = new URL(redirectUri);
-    return envUrl.toString();
+    // Get the real public host (e.g., www.spycy.fun)
+    const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+    const proto = request.headers.get("x-forwarded-proto") || "https";
+    
+    if (host) {
+      const origin = `${proto}://${host}`;
+      const url = new URL(redirectUri);
+      // Replace the origin of your env var with the actual origin of the request
+      return `${origin}${url.pathname}`;
+    }
+    
+    return redirectUri;
   } catch (error) {
     console.error("Failed to align Twitch redirect URI", error);
     return redirectUri;
@@ -96,7 +110,7 @@ function signState(value: string, secret: string) {
 
 export async function readSession(): Promise<StoredTwitchSession | null> {
   const cookieStore = await cookies();
-  const raw = cookieStore.get(COOKIE_NAME)?.value;
+  const raw = (await cookieStore).get(COOKIE_NAME)?.value;
   if (!raw) return null;
 
   try {
@@ -112,9 +126,9 @@ export async function readSession(): Promise<StoredTwitchSession | null> {
 export async function writeSession(session: StoredTwitchSession) {
   const cookieStore = await cookies();
   const encoded = Buffer.from(JSON.stringify(session), "utf8").toString("base64url");
-  cookieStore.set(COOKIE_NAME, encoded, {
+  (await cookieStore).set(COOKIE_NAME, encoded, {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -123,7 +137,7 @@ export async function writeSession(session: StoredTwitchSession) {
 
 export async function clearSession() {
   const cookieStore = await cookies();
-  cookieStore.delete(COOKIE_NAME);
+  (await cookieStore).delete(COOKIE_NAME);
 }
 
 export async function exchangeCodeForTokens(code: string, request?: Request) {
@@ -267,7 +281,6 @@ export type TwitchChattersResponse = {
 };
 
 export async function fetchChatters(session: StoredTwitchSession): Promise<TwitchChattersResponse> {
-  // Check if stream is live
   const streams = await twitchApi<{ data: Array<{ id: string }> }>(
     `/streams?user_id=${session.userId}`,
     session
