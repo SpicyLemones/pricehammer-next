@@ -99,13 +99,14 @@ export async function getData(userId?: string) {
   const broadcasterId = userId || "system";
   
   try {
-    // 1. MANUALLY LOAD AND RUN INIT.SQL
-    // This bypasses any pathing issues with your 'run' helper
-    const sqlPath = path.join(process.cwd(), "app/lib/sql/chattergrounds/init.sql");
+    // 1. Correct the path to match your structure (data/db/queries/...)
+    const sqlPath = path.join(process.cwd(), "data", "db", "queries", "chattergrounds", "init.sql");
     const initSql = await fs.readFile(sqlPath, "utf8");
+    
+    // Run the initialization script
     await run(initSql); 
 
-    // 2. NOW RUN THE QUERY
+    // 2. Perform the actual query
     const chatters = await all(
       "SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? ORDER BY messages_sent DESC",
       [broadcasterId]
@@ -118,13 +119,15 @@ export async function getData(userId?: string) {
     };
   } catch (err: any) {
     console.error("Chattergrounds DB Failure:", err);
+    // Return exact error to browser for one last check
     return { 
       chatters: [], 
       error: err.message,
-      path_attempted: path.join(process.cwd(), "app/lib/sql/chattergrounds/init.sql")
+      attemptedPath: path.join(process.cwd(), "data", "db", "queries", "chattergrounds", "init.sql")
     };
   }
 }
+
 export async function GET() {
   const session = await getValidSession();
   const data = await getData(session?.userId);
