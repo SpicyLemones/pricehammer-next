@@ -1,6 +1,9 @@
 import crypto from "node:crypto";
 import { NextResponse } from "next/server";
-import { applyChattergroundsAction, getData, type PersistAction } from "@/app/api/twitch/chattergrounds/route";
+import {
+  applyChattergroundsAction,
+  type PersistAction,
+} from "@/app/api/twitch/chattergrounds/route";
 
 type EventSubEnvelope = {
   challenge?: string;
@@ -8,17 +11,11 @@ type EventSubEnvelope = {
   event?: Record<string, any>;
 };
 
-function verifyTwitchSignature({
-  body,
-  headers,
-}: {
-  body: string;
-  headers: Headers;
-}) {
+function verifyTwitchSignature({ body, headers }: { body: string; headers: Headers }) {
   const secret = process.env.CHATTERGROUNDS_INGEST_SECRET;
   if (!secret) {
     console.warn("⚠️ CHATTERGROUNDS_INGEST_SECRET is missing. Skipping signature check.");
-    return true; 
+    return true;
   }
 
   const messageId = headers.get("twitch-eventsub-message-id") ?? "";
@@ -38,33 +35,72 @@ function verifyTwitchSignature({
   }
 }
 
+function pickBestChatterName(login?: string | null, displayName?: string | null, id?: string | null) {
+  // I recommend storing login in your `name` field (stable + nice for URLs)
+  // and optionally storing display name separately if you have a column.
+  return login || displayName || id || "Unknown";
+}
+
 async function handleNotification(subscriptionType: string, envelope: EventSubEnvelope) {
   const event = envelope.event ?? {};
-  const broadcasterId = event.broadcaster_user_id || event.broadcaster_id;
-  
-  if (!broadcasterId) return NextResponse.json({ error: "No broadcaster ID" }, { status: 400 });
+
+  // Broadcaster ID can vary per event type
+  const broadcasterId =
+    event.broadcaster_user_id ||
+    event.broadcaster_id ||
+    event.broadcaster?.user_id;
+
+  if (!broadcasterId) {
+    return NextResponse.json({ error: "No broadcaster ID" }, { status: 400 });
+  }
 
   const actions: PersistAction[] = [];
 
-  // --- LOGIC FOR CHAT MESSAGES ---
+  // --- CHAT MESSAGES ---
   if (subscriptionType === "channel.chat.message") {
-    const chatterId = event.chatter_user_id; 
-    const text = event.message?.text; // Correctly accessing the .text property
-    
+    const chatterId = event.chatter_user_id as string | undefined;
+    const chatterLogin = event.chatter_user_login as string | undefined; // lowercase login
+    const chatterDisplayName = event.chatter_user_name as string | undefined; // display name (caps)
+
+    const text = event.message?.text as string | undefined;
+
     if (chatterId && text) {
-      actions.push({ action: "record-message", chatterId, message: text });
+      actions.push({
+        action: "record-message",
+        chatterId,
+        message: text,
+        chatterLogin,
+        chatterDisplayName,
+        // if you ever want it:
+        // messageId: event.message_id,
+      });
     }
-  } 
-  // --- LOGIC FOR BANS ---
+  }
+
+  // --- BANS / TIMEOUTS ---
   else if (subscriptionType === "channel.ban") {
-    const chatterId = event.user_id;
+    // channel.ban event commonly uses: user_id, user_login, user_name
+    const chatterId = event.user_id as string | undefined;
+    const chatterLogin = event.user_login as string | undefined;
+    const chatterDisplayName = event.user_name as string | undefined;
+
     if (chatterId) {
-      actions.push({ action: event.is_permanent ? "ban" : "timeout", chatterId });
+      actions.push({
+        action: event.is_permanent ? "ban" : "timeout",
+        chatterId,
+        chatterLogin,
+        chatterDisplayName,
+      });
     }
   }
 
   // Execute Database Actions
   for (const action of actions) {
+    // Optional: ensure a name exists even if Twitch didn’t send it for some reason
+    if (action.chatterId && !action.chatterLogin && !action.chatterDisplayName) {
+      // no-op; keep as-is
+    }
+
     await applyChattergroundsAction(action, {
       sessionUserId: broadcasterId,
       origin: "twitch",
@@ -78,7 +114,7 @@ export async function POST(request: Request) {
   const rawBody = await request.text();
   const headers = request.headers;
 
-  // 1. Security Check (Required for both Challenge and Notifications)
+  // 1) Verify signature (applies to challenge + notifications)
   if (!verifyTwitchSignature({ body: rawBody, headers })) {
     console.error("❌ Invalid Twitch Signature");
     return new Response("Unauthorized", { status: 401 });
@@ -92,20 +128,29 @@ export async function POST(request: Request) {
   }
 
   const messageType = headers.get("twitch-eventsub-message-type");
-  const subscriptionType = headers.get("twitch-eventsub-subscription-type") ?? body.subscription?.type ?? "";
+  const subscriptionType =
+    headers.get("twitch-eventsub-subscription-type") ??
+    body.subscription?.type ??
+    "";
 
-  // 2. Handle Verification Handshake
+  // 2) Verification handshake
   if (messageType === "webhook_callback_verification") {
     console.log("✅ Responding to Twitch Verification Challenge");
-    return new Response(body.challenge, { 
-      status: 200, 
-      headers: { "Content-Type": "text/plain" } 
+    return new Response(body.challenge ?? "", {
+      status: 200,
+      headers: { "Content-Type": "text/plain" },
     });
   }
 
-  // 3. Handle Actual Data
+  // 3) Data notification
   if (messageType === "notification") {
     return handleNotification(subscriptionType, body);
+  }
+
+  // Nice to handle these explicitly (optional)
+  if (messageType === "revocation") {
+    console.warn("⚠️ Twitch subscription revoked:", subscriptionType);
+    return NextResponse.json({ ok: true, revoked: true });
   }
 
   return new Response("OK", { status: 200 });

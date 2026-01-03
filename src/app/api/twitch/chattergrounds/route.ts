@@ -6,13 +6,24 @@ import path from "node:path";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * IMPORTANT:
+ * Your ingest now (should) pass chatterLogin + chatterDisplayName from EventSub.
+ * We store a human-friendly "name" (login preferred) instead of the numeric chatterId.
+ */
+type ChatterIdentity = {
+  chatterId: string;
+  chatterLogin?: string; // e.g. "spicylemones"
+  chatterDisplayName?: string; // e.g. "SpicyLemones"
+};
+
 export type PersistAction =
-  | { action: "mint"; chatterId: string; amount: number }
-  | { action: "record-message"; chatterId: string; message?: string }
-  | { action: "ban"; chatterId: string }
-  | { action: "timeout"; chatterId: string }
-  | { action: "quest-completed"; chatterId: string; amount?: number }
-  | { action: "sub-months"; chatterId: string; months: number };
+  | (ChatterIdentity & { action: "mint"; amount: number })
+  | (ChatterIdentity & { action: "record-message"; message?: string })
+  | (ChatterIdentity & { action: "ban" })
+  | (ChatterIdentity & { action: "timeout" })
+  | (ChatterIdentity & { action: "quest-completed"; amount?: number })
+  | (ChatterIdentity & { action: "sub-months"; months: number });
 
 type ApplyContext = {
   sessionUserId?: string;
@@ -21,7 +32,14 @@ type ApplyContext = {
 };
 
 async function readSql(filename: string) {
-  const sqlPath = path.join(process.cwd(), "data", "db", "queries", "chattergrounds", filename);
+  const sqlPath = path.join(
+    process.cwd(),
+    "data",
+    "db",
+    "queries",
+    "chattergrounds",
+    filename
+  );
   return await fs.readFile(sqlPath, "utf8");
 }
 
@@ -37,13 +55,16 @@ async function ensureChattergroundsSchema() {
       "ALTER TABLE chattergrounds_stats ADD COLUMN estimated_age INTEGER DEFAULT 0",
       "ALTER TABLE chattergrounds_stats ADD COLUMN favorite_word TEXT",
       "ALTER TABLE chattergrounds_stats ADD COLUMN favorite_emote TEXT",
+      // If you *already* have these columns, duplicate errors will be ignored.
+      // If you want display name stored separately, add this + update your SQL:
+      // "ALTER TABLE chattergrounds_stats ADD COLUMN display_name TEXT",
+      // "ALTER TABLE chattergrounds_stats ADD COLUMN login TEXT",
     ];
 
     for (const sql of alterStatements) {
       try {
         await run(sql);
       } catch (err: any) {
-        // Ignore duplicate column errors so we can run this on existing DBs
         if (!String(err?.message ?? "").includes("duplicate column name")) {
           throw err;
         }
@@ -59,15 +80,20 @@ async function getRandomJokeTrait() {
     const configPath = path.join(process.cwd(), "data", "chattergrounds_config.json");
     const file = await fs.readFile(configPath, "utf8");
     const { jokeWords, jokeEmotes } = JSON.parse(file);
-    
+
     return {
       word: jokeWords[Math.floor(Math.random() * jokeWords.length)],
       emote: jokeEmotes[Math.floor(Math.random() * jokeEmotes.length)],
-      age: Math.floor(Math.random() * (80 - 12 + 1)) + 12
+      age: Math.floor(Math.random() * (80 - 12 + 1)) + 12,
     };
-  } catch (e) {
+  } catch {
     return { word: "Toad", emote: "Kappa", age: 25 };
   }
+}
+
+function resolveStoredName(payload: PersistAction) {
+  // Prefer login (stable + lowercase), then display name (pretty), then id (fallback)
+  return payload.chatterLogin || payload.chatterDisplayName || payload.chatterId;
 }
 
 export async function applyChattergroundsAction(
@@ -75,7 +101,14 @@ export async function applyChattergroundsAction(
   context: ApplyContext = {}
 ) {
   const broadcasterId = context.sessionUserId || "system";
-  let msgs = 0, bans = 0, timeouts = 0, subs = 0, quests = 0, mint = 0, msgText = null;
+
+  let msgs = 0,
+    bans = 0,
+    timeouts = 0,
+    subs = 0,
+    quests = 0,
+    mint = 0,
+    msgText: string | null = null;
 
   if (payload.action === "record-message") {
     msgs = 1;
@@ -92,15 +125,23 @@ export async function applyChattergroundsAction(
     mint = payload.amount;
   }
 
+  const storedName = resolveStoredName(payload);
+
+  // NOTE: This currently generates new "traits" every update.
+  // If you want traits to be "set once", change upsert_stats.sql to only set them on INSERT,
+  // or do a SELECT first and only generate when the row doesn't exist.
   const traits = await getRandomJokeTrait();
 
   try {
     await ensureChattergroundsSchema();
     const upsertSql = await readSql("upsert_stats.sql");
+
+    // Your current param order is:
+    // broadcaster_id, chatter_id, name, msgs, bans, timeouts, subs, quests, mint, last_message, estimated_age, favorite_word, favorite_emote
     await run(upsertSql, [
       broadcasterId,
       payload.chatterId,
-      payload.chatterId, 
+      storedName, // ✅ FIX: store human name/login instead of numeric id
       msgs,
       bans,
       timeouts,
@@ -110,7 +151,7 @@ export async function applyChattergroundsAction(
       msgText,
       traits.age,
       traits.word,
-      traits.emote
+      traits.emote,
     ]);
 
     return await get(
@@ -136,7 +177,7 @@ export async function getData(userId?: string) {
     return {
       updatedAt: new Date().toISOString(),
       chatters: chatters || [],
-      origin: userId ? "twitch" : "offline"
+      origin: userId ? "twitch" : "offline",
     };
   } catch (err: any) {
     console.error("Chattergrounds GET Data Failure:", err);
@@ -149,13 +190,18 @@ export async function GET() {
   const owner = session
     ? { userId: session.userId, login: session.login, displayName: session.displayName }
     : undefined;
+
   const data = await getData(session?.userId);
 
+  // "Live fallback" if DB is empty: returns current chatters (logins) for UI only.
+  // This does NOT persist to DB.
   if (session && data.chatters.length === 0) {
     try {
       const chatters = await fetchChatters(session);
       if (chatters.chatters?.length) {
         const liveChatters = chatters.chatters.map((login) => ({
+          // NOTE: This is just UI fallback. It uses login as id.
+          // Your real DB rows will use numeric chatter_id from EventSub, with name=login.
           chatter_id: login,
           name: login,
           messages_sent: 0,
