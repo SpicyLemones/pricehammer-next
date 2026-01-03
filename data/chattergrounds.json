@@ -1,0 +1,959 @@
+{
+  "updatedAt": "2026-01-03T07:02:10.329Z",
+  "origin": "offline",
+  "chatters": [
+    {
+      "id": "chatter-1",
+      "name": "SpycyToast",
+      "flair": "day-one",
+      "lastMessage": "!doubledown let's go",
+      "stats": {
+        "toadcoins": 912,
+        "toadcoinsMinted": 3741,
+        "timesBanned": 11,
+        "timesTimedOut": 14,
+        "questsCompleted": 6,
+        "messagesSent": 1596,
+        "estimatedAge": 26,
+        "monthsSubbed": 12,
+        "donosGifted": 14,
+        "favoriteWord": "toadcoin",
+        "favoriteEmote": "OMEGALUL"
+      }
+    },
+    {
+      "id": "chatter-2",
+      "name": "FrogOfTheNorth",
+      "flair": "regular",
+      "lastMessage": "brb grabbing snacks",
+      "stats": {
+        "toadcoins": 988,
+        "toadcoinsMinted": 3619,
+        "timesBanned": 11,
+        "timesTimedOut": 30,
+        "questsCompleted": 31,
+        "messagesSent": 1493,
+        "estimatedAge": 53,
+        "monthsSubbed": 7,
+        "donosGifted": 63,
+        "favoriteWord": "bruh",
+        "favoriteEmote": "FeelsStrongMan"
+      }
+    },
+    {
+      "id": "chatter-3",
+      "name": "ModMatrix",
+      "flair": "vip",
+      "lastMessage": "copium stock is UP",
+      "stats": {
+        "toadcoins": 239,
+        "toadcoinsMinted": 3065,
+        "timesBanned": 2,
+        "timesTimedOut": 10,
+        "questsCompleted": 2,
+        "messagesSent": 4867,
+        "estimatedAge": 62,
+        "monthsSubbed": 21,
+        "donosGifted": 43,
+        "favoriteWord": "gaming",
+        "favoriteEmote": "FeelsStrongMan"
+      }
+    },
+    {
+      "id": "chatter-4",
+      "name": "LaggyMage",
+      "flair": "day-one",
+      "lastMessage": "this quest is impossible",
+      "stats": {
+        "toadcoins": 657,
+        "toadcoinsMinted": 3188,
+        "timesBanned": 10,
+        "timesTimedOut": 10,
+        "questsCompleted": 2,
+        "messagesSent": 2504,
+        "estimatedAge": 21,
+        "monthsSubbed": 14,
+        "donosGifted": 16,
+        "favoriteWord": "tilt",
+        "favoriteEmote": "PepeLaugh"
+      }
+    },
+    {
+      "id": "chatter-5",
+      "name": "PixelPanda",
+      "flair": "vip",
+      "lastMessage": "mod check??",
+      "stats": {
+        "toadcoins": 260,
+        "toadcoinsMinted": 617,
+        "timesBanned": 6,
+        "timesTimedOut": 12,
+        "questsCompleted": 29,
+        "messagesSent": 3242,
+        "estimatedAge": 77,
+        "monthsSubbed": 1,
+        "donosGifted": 32,
+        "favoriteWord": "tilt",
+        "favoriteEmote": "CatJAM"
+      }
+    },
+    {
+      "id": "chatter-6",
+      "name": "NyaaCoder",
+      "flair": "regular",
+      "lastMessage": "kekw",
+      "stats": {
+        "toadcoins": 571,
+        "toadcoinsMinted": 2752,
+        "timesBanned": 2,
+        "timesTimedOut": 18,
+        "questsCompleted": 6,
+        "messagesSent": 2973,
+        "estimatedAge": 55,
+        "monthsSubbed": 30,
+        "donosGifted": 21,
+        "favoriteWord": "toadcoin",
+        "favoriteEmote": "ResidentSleeper"
+      }
+    },
+    {
+      "id": "chatter-7",
+      "name": "BanHammered",
+      "flair": "day-one",
+      "lastMessage": "pog toadcoin pump",
+      "stats": {
+        "toadcoins": 233,
+        "toadcoinsMinted": 2340,
+        "timesBanned": 11,
+        "timesTimedOut": 13,
+        "questsCompleted": 14,
+        "messagesSent": 2415,
+        "estimatedAge": 66,
+        "monthsSubbed": 22,
+        "donosGifted": 1,
+        "favoriteWord": "tilt",
+        "favoriteEmote": "CatJAM"
+      }
+    },
+    {
+      "id": "chatter-8",
+      "name": "QuestGoblin",
+      "flair": "regular",
+      "lastMessage": "hydrate or diedrate",
+      "stats": {
+        "toadcoins": 278,
+        "toadcoinsMinted": 3432,
+        "timesBanned": 6,
+        "timesTimedOut": 23,
+        "questsCompleted": 26,
+        "messagesSent": 1535,
+        "estimatedAge": 73,
+        "monthsSubbed": 31,
+        "donosGifted": 67,
+        "favoriteWord": "gaming",
+        "favoriteEmote": "PepeLaugh"
+      }
+    },
+    {
+      "id": "chatter-9",
+      "name": "HoverTank",
+      "flair": "vip",
+      "lastMessage": "who banned me last time??",
+      "stats": {
+        "toadcoins": 1168,
+        "toadcoinsMinted": 1621,
+        "timesBanned": 11,
+        "timesTimedOut": 13,
+        "questsCompleted": 19,
+        "messagesSent": 2359,
+        "estimatedAge": 31,
+        "monthsSubbed": 35,
+        "donosGifted": 70,
+        "favoriteWord": "greed",
+        "favoriteEmote": "peepoHappy"
+      }
+    },
+    {
+      "id": "chatter-10",
+      "name": "ChonkKnight",
+      "flair": "day-one",
+      "lastMessage": "gachiHYPER",
+      "stats": {
+        "toadcoins": 1094,
+        "toadcoinsMinted": 3114,
+        "timesBanned": 5,
+        "timesTimedOut": 19,
+        "questsCompleted": 25,
+        "messagesSent": 2495,
+        "estimatedAge": 29,
+        "monthsSubbed": 17,
+        "donosGifted": 51,
+        "favoriteWord": "gaming",
+        "favoriteEmote": "Kappa"
+      }
+    },
+    {
+      "id": "chatter-11",
+      "name": "MidnightMoth",
+      "flair": "vip",
+      "lastMessage": "do a barrel roll",
+      "stats": {
+        "toadcoins": 242,
+        "toadcoinsMinted": 4147,
+        "timesBanned": 1,
+        "timesTimedOut": 13,
+        "questsCompleted": 9,
+        "messagesSent": 4958,
+        "estimatedAge": 44,
+        "monthsSubbed": 22,
+        "donosGifted": 75,
+        "favoriteWord": "toadcoin",
+        "favoriteEmote": "LUL"
+      }
+    },
+    {
+      "id": "chatter-12",
+      "name": "DataDruid",
+      "flair": "regular",
+      "lastMessage": "ayo that drop was clean",
+      "stats": {
+        "toadcoins": 946,
+        "toadcoinsMinted": 2415,
+        "timesBanned": 7,
+        "timesTimedOut": 20,
+        "questsCompleted": 20,
+        "messagesSent": 1684,
+        "estimatedAge": 31,
+        "monthsSubbed": 24,
+        "donosGifted": 71,
+        "favoriteWord": "greed",
+        "favoriteEmote": "LUL"
+      }
+    }
+  ],
+  "messageSeries": {
+    "today": [
+      {
+        "timestamp": "2026-01-02T15:02:10.329Z",
+        "messages": 21
+      },
+      {
+        "timestamp": "2026-01-02T15:32:10.329Z",
+        "messages": 25
+      },
+      {
+        "timestamp": "2026-01-02T16:02:10.329Z",
+        "messages": 20
+      },
+      {
+        "timestamp": "2026-01-02T16:32:10.329Z",
+        "messages": 20
+      },
+      {
+        "timestamp": "2026-01-02T17:02:10.329Z",
+        "messages": 25
+      },
+      {
+        "timestamp": "2026-01-02T17:32:10.329Z",
+        "messages": 24
+      },
+      {
+        "timestamp": "2026-01-02T18:02:10.329Z",
+        "messages": 31
+      },
+      {
+        "timestamp": "2026-01-02T18:32:10.329Z",
+        "messages": 24
+      },
+      {
+        "timestamp": "2026-01-02T19:02:10.329Z",
+        "messages": 27
+      },
+      {
+        "timestamp": "2026-01-02T19:32:10.329Z",
+        "messages": 24
+      },
+      {
+        "timestamp": "2026-01-02T20:02:10.329Z",
+        "messages": 21
+      },
+      {
+        "timestamp": "2026-01-02T20:32:10.329Z",
+        "messages": 20
+      },
+      {
+        "timestamp": "2026-01-02T21:02:10.329Z",
+        "messages": 25
+      },
+      {
+        "timestamp": "2026-01-02T21:32:10.329Z",
+        "messages": 24
+      },
+      {
+        "timestamp": "2026-01-02T22:02:10.329Z",
+        "messages": 24
+      },
+      {
+        "timestamp": "2026-01-02T22:32:10.329Z",
+        "messages": 20
+      },
+      {
+        "timestamp": "2026-01-02T23:02:10.329Z",
+        "messages": 22
+      },
+      {
+        "timestamp": "2026-01-02T23:32:10.329Z",
+        "messages": 21
+      },
+      {
+        "timestamp": "2026-01-03T00:02:10.329Z",
+        "messages": 25
+      },
+      {
+        "timestamp": "2026-01-03T00:32:10.329Z",
+        "messages": 32
+      },
+      {
+        "timestamp": "2026-01-03T01:02:10.329Z",
+        "messages": 27
+      },
+      {
+        "timestamp": "2026-01-03T01:32:10.329Z",
+        "messages": 30
+      },
+      {
+        "timestamp": "2026-01-03T02:02:10.329Z",
+        "messages": 36
+      },
+      {
+        "timestamp": "2026-01-03T02:32:10.329Z",
+        "messages": 35
+      },
+      {
+        "timestamp": "2026-01-03T03:02:10.329Z",
+        "messages": 33
+      },
+      {
+        "timestamp": "2026-01-03T03:32:10.329Z",
+        "messages": 37
+      },
+      {
+        "timestamp": "2026-01-03T04:02:10.329Z",
+        "messages": 39
+      },
+      {
+        "timestamp": "2026-01-03T04:32:10.329Z",
+        "messages": 36
+      },
+      {
+        "timestamp": "2026-01-03T05:02:10.329Z",
+        "messages": 32
+      },
+      {
+        "timestamp": "2026-01-03T05:32:10.329Z",
+        "messages": 30
+      },
+      {
+        "timestamp": "2026-01-03T06:02:10.329Z",
+        "messages": 35
+      },
+      {
+        "timestamp": "2026-01-03T06:32:10.329Z",
+        "messages": 35
+      }
+    ],
+    "week": [
+      {
+        "timestamp": "2025-12-27T07:02:10.329Z",
+        "messages": 40
+      },
+      {
+        "timestamp": "2025-12-27T11:02:10.329Z",
+        "messages": 39
+      },
+      {
+        "timestamp": "2025-12-27T15:02:10.329Z",
+        "messages": 37
+      },
+      {
+        "timestamp": "2025-12-27T19:02:10.329Z",
+        "messages": 43
+      },
+      {
+        "timestamp": "2025-12-27T23:02:10.329Z",
+        "messages": 44
+      },
+      {
+        "timestamp": "2025-12-28T03:02:10.329Z",
+        "messages": 38
+      },
+      {
+        "timestamp": "2025-12-28T07:02:10.329Z",
+        "messages": 41
+      },
+      {
+        "timestamp": "2025-12-28T11:02:10.329Z",
+        "messages": 39
+      },
+      {
+        "timestamp": "2025-12-28T15:02:10.329Z",
+        "messages": 47
+      },
+      {
+        "timestamp": "2025-12-28T19:02:10.329Z",
+        "messages": 38
+      },
+      {
+        "timestamp": "2025-12-28T23:02:10.329Z",
+        "messages": 41
+      },
+      {
+        "timestamp": "2025-12-29T03:02:10.329Z",
+        "messages": 35
+      },
+      {
+        "timestamp": "2025-12-29T07:02:10.329Z",
+        "messages": 38
+      },
+      {
+        "timestamp": "2025-12-29T11:02:10.329Z",
+        "messages": 42
+      },
+      {
+        "timestamp": "2025-12-29T15:02:10.329Z",
+        "messages": 38
+      },
+      {
+        "timestamp": "2025-12-29T19:02:10.329Z",
+        "messages": 43
+      },
+      {
+        "timestamp": "2025-12-29T23:02:10.329Z",
+        "messages": 46
+      },
+      {
+        "timestamp": "2025-12-30T03:02:10.329Z",
+        "messages": 38
+      },
+      {
+        "timestamp": "2025-12-30T07:02:10.329Z",
+        "messages": 43
+      },
+      {
+        "timestamp": "2025-12-30T11:02:10.329Z",
+        "messages": 45
+      },
+      {
+        "timestamp": "2025-12-30T15:02:10.329Z",
+        "messages": 48
+      },
+      {
+        "timestamp": "2025-12-30T19:02:10.329Z",
+        "messages": 47
+      },
+      {
+        "timestamp": "2025-12-30T23:02:10.329Z",
+        "messages": 53
+      },
+      {
+        "timestamp": "2025-12-31T03:02:10.329Z",
+        "messages": 49
+      },
+      {
+        "timestamp": "2025-12-31T07:02:10.329Z",
+        "messages": 49
+      },
+      {
+        "timestamp": "2025-12-31T11:02:10.329Z",
+        "messages": 53
+      },
+      {
+        "timestamp": "2025-12-31T15:02:10.329Z",
+        "messages": 49
+      },
+      {
+        "timestamp": "2025-12-31T19:02:10.329Z",
+        "messages": 55
+      },
+      {
+        "timestamp": "2025-12-31T23:02:10.329Z",
+        "messages": 55
+      },
+      {
+        "timestamp": "2026-01-01T03:02:10.329Z",
+        "messages": 49
+      },
+      {
+        "timestamp": "2026-01-01T07:02:10.329Z",
+        "messages": 52
+      },
+      {
+        "timestamp": "2026-01-01T11:02:10.329Z",
+        "messages": 48
+      },
+      {
+        "timestamp": "2026-01-01T15:02:10.329Z",
+        "messages": 48
+      },
+      {
+        "timestamp": "2026-01-01T19:02:10.329Z",
+        "messages": 54
+      },
+      {
+        "timestamp": "2026-01-01T23:02:10.329Z",
+        "messages": 54
+      },
+      {
+        "timestamp": "2026-01-02T03:02:10.329Z",
+        "messages": 48
+      },
+      {
+        "timestamp": "2026-01-02T07:02:10.329Z",
+        "messages": 57
+      },
+      {
+        "timestamp": "2026-01-02T11:02:10.329Z",
+        "messages": 54
+      },
+      {
+        "timestamp": "2026-01-02T15:02:10.329Z",
+        "messages": 54
+      },
+      {
+        "timestamp": "2026-01-02T19:02:10.329Z",
+        "messages": 53
+      },
+      {
+        "timestamp": "2026-01-02T23:02:10.329Z",
+        "messages": 57
+      },
+      {
+        "timestamp": "2026-01-03T03:02:10.329Z",
+        "messages": 59
+      }
+    ],
+    "month": [
+      {
+        "timestamp": "2025-12-10T07:02:10.329Z",
+        "messages": 39
+      },
+      {
+        "timestamp": "2025-12-10T19:02:10.329Z",
+        "messages": 43
+      },
+      {
+        "timestamp": "2025-12-11T07:02:10.329Z",
+        "messages": 46
+      },
+      {
+        "timestamp": "2025-12-11T19:02:10.329Z",
+        "messages": 48
+      },
+      {
+        "timestamp": "2025-12-12T07:02:10.329Z",
+        "messages": 49
+      },
+      {
+        "timestamp": "2025-12-12T19:02:10.329Z",
+        "messages": 48
+      },
+      {
+        "timestamp": "2025-12-13T07:02:10.329Z",
+        "messages": 50
+      },
+      {
+        "timestamp": "2025-12-13T19:02:10.329Z",
+        "messages": 46
+      },
+      {
+        "timestamp": "2025-12-14T07:02:10.329Z",
+        "messages": 49
+      },
+      {
+        "timestamp": "2025-12-14T19:02:10.329Z",
+        "messages": 44
+      },
+      {
+        "timestamp": "2025-12-15T07:02:10.329Z",
+        "messages": 50
+      },
+      {
+        "timestamp": "2025-12-15T19:02:10.329Z",
+        "messages": 46
+      },
+      {
+        "timestamp": "2025-12-16T07:02:10.329Z",
+        "messages": 42
+      },
+      {
+        "timestamp": "2025-12-16T19:02:10.329Z",
+        "messages": 51
+      },
+      {
+        "timestamp": "2025-12-17T07:02:10.329Z",
+        "messages": 45
+      },
+      {
+        "timestamp": "2025-12-17T19:02:10.329Z",
+        "messages": 43
+      },
+      {
+        "timestamp": "2025-12-18T07:02:10.329Z",
+        "messages": 44
+      },
+      {
+        "timestamp": "2025-12-18T19:02:10.329Z",
+        "messages": 46
+      },
+      {
+        "timestamp": "2025-12-19T07:02:10.329Z",
+        "messages": 51
+      },
+      {
+        "timestamp": "2025-12-19T19:02:10.329Z",
+        "messages": 54
+      },
+      {
+        "timestamp": "2025-12-20T07:02:10.329Z",
+        "messages": 55
+      },
+      {
+        "timestamp": "2025-12-20T19:02:10.329Z",
+        "messages": 56
+      },
+      {
+        "timestamp": "2025-12-21T07:02:10.329Z",
+        "messages": 55
+      },
+      {
+        "timestamp": "2025-12-21T19:02:10.329Z",
+        "messages": 60
+      },
+      {
+        "timestamp": "2025-12-22T07:02:10.329Z",
+        "messages": 64
+      },
+      {
+        "timestamp": "2025-12-22T19:02:10.329Z",
+        "messages": 60
+      },
+      {
+        "timestamp": "2025-12-23T07:02:10.329Z",
+        "messages": 63
+      },
+      {
+        "timestamp": "2025-12-23T19:02:10.329Z",
+        "messages": 62
+      },
+      {
+        "timestamp": "2025-12-24T07:02:10.329Z",
+        "messages": 58
+      },
+      {
+        "timestamp": "2025-12-24T19:02:10.329Z",
+        "messages": 54
+      },
+      {
+        "timestamp": "2025-12-25T07:02:10.329Z",
+        "messages": 55
+      },
+      {
+        "timestamp": "2025-12-25T19:02:10.329Z",
+        "messages": 60
+      },
+      {
+        "timestamp": "2025-12-26T07:02:10.329Z",
+        "messages": 54
+      },
+      {
+        "timestamp": "2025-12-26T19:02:10.329Z",
+        "messages": 56
+      },
+      {
+        "timestamp": "2025-12-27T07:02:10.329Z",
+        "messages": 55
+      },
+      {
+        "timestamp": "2025-12-27T19:02:10.329Z",
+        "messages": 62
+      },
+      {
+        "timestamp": "2025-12-28T07:02:10.329Z",
+        "messages": 63
+      },
+      {
+        "timestamp": "2025-12-28T19:02:10.329Z",
+        "messages": 58
+      },
+      {
+        "timestamp": "2025-12-29T07:02:10.329Z",
+        "messages": 64
+      },
+      {
+        "timestamp": "2025-12-29T19:02:10.329Z",
+        "messages": 61
+      },
+      {
+        "timestamp": "2025-12-30T07:02:10.329Z",
+        "messages": 68
+      },
+      {
+        "timestamp": "2025-12-30T19:02:10.329Z",
+        "messages": 69
+      },
+      {
+        "timestamp": "2025-12-31T07:02:10.329Z",
+        "messages": 64
+      },
+      {
+        "timestamp": "2025-12-31T19:02:10.329Z",
+        "messages": 71
+      },
+      {
+        "timestamp": "2026-01-01T07:02:10.329Z",
+        "messages": 69
+      },
+      {
+        "timestamp": "2026-01-01T19:02:10.329Z",
+        "messages": 71
+      },
+      {
+        "timestamp": "2026-01-02T07:02:10.329Z",
+        "messages": 70
+      },
+      {
+        "timestamp": "2026-01-02T19:02:10.329Z",
+        "messages": 64
+      }
+    ],
+    "all": [
+      {
+        "timestamp": "2025-11-12T07:02:10.329Z",
+        "messages": 22
+      },
+      {
+        "timestamp": "2025-11-13T07:02:10.329Z",
+        "messages": 26
+      },
+      {
+        "timestamp": "2025-11-14T07:02:10.329Z",
+        "messages": 24
+      },
+      {
+        "timestamp": "2025-11-15T07:02:10.329Z",
+        "messages": 28
+      },
+      {
+        "timestamp": "2025-11-16T07:02:10.329Z",
+        "messages": 25
+      },
+      {
+        "timestamp": "2025-11-17T07:02:10.329Z",
+        "messages": 32
+      },
+      {
+        "timestamp": "2025-11-18T07:02:10.329Z",
+        "messages": 32
+      },
+      {
+        "timestamp": "2025-11-19T07:02:10.329Z",
+        "messages": 31
+      },
+      {
+        "timestamp": "2025-11-20T07:02:10.329Z",
+        "messages": 29
+      },
+      {
+        "timestamp": "2025-11-21T07:02:10.329Z",
+        "messages": 31
+      },
+      {
+        "timestamp": "2025-11-22T07:02:10.329Z",
+        "messages": 24
+      },
+      {
+        "timestamp": "2025-11-23T07:02:10.329Z",
+        "messages": 20
+      },
+      {
+        "timestamp": "2025-11-24T07:02:10.329Z",
+        "messages": 28
+      },
+      {
+        "timestamp": "2025-11-25T07:02:10.329Z",
+        "messages": 22
+      },
+      {
+        "timestamp": "2025-11-26T07:02:10.329Z",
+        "messages": 22
+      },
+      {
+        "timestamp": "2025-11-27T07:02:10.329Z",
+        "messages": 28
+      },
+      {
+        "timestamp": "2025-11-28T07:02:10.329Z",
+        "messages": 29
+      },
+      {
+        "timestamp": "2025-11-29T07:02:10.329Z",
+        "messages": 28
+      },
+      {
+        "timestamp": "2025-11-30T07:02:10.329Z",
+        "messages": 30
+      },
+      {
+        "timestamp": "2025-12-01T07:02:10.329Z",
+        "messages": 27
+      },
+      {
+        "timestamp": "2025-12-02T07:02:10.329Z",
+        "messages": 30
+      },
+      {
+        "timestamp": "2025-12-03T07:02:10.329Z",
+        "messages": 31
+      },
+      {
+        "timestamp": "2025-12-04T07:02:10.329Z",
+        "messages": 37
+      },
+      {
+        "timestamp": "2025-12-05T07:02:10.329Z",
+        "messages": 37
+      },
+      {
+        "timestamp": "2025-12-06T07:02:10.329Z",
+        "messages": 37
+      },
+      {
+        "timestamp": "2025-12-07T07:02:10.329Z",
+        "messages": 39
+      },
+      {
+        "timestamp": "2025-12-08T07:02:10.329Z",
+        "messages": 39
+      },
+      {
+        "timestamp": "2025-12-09T07:02:10.329Z",
+        "messages": 39
+      },
+      {
+        "timestamp": "2025-12-10T07:02:10.329Z",
+        "messages": 31
+      },
+      {
+        "timestamp": "2025-12-11T07:02:10.329Z",
+        "messages": 31
+      },
+      {
+        "timestamp": "2025-12-12T07:02:10.329Z",
+        "messages": 34
+      },
+      {
+        "timestamp": "2025-12-13T07:02:10.329Z",
+        "messages": 33
+      },
+      {
+        "timestamp": "2025-12-14T07:02:10.329Z",
+        "messages": 33
+      },
+      {
+        "timestamp": "2025-12-15T07:02:10.329Z",
+        "messages": 32
+      },
+      {
+        "timestamp": "2025-12-16T07:02:10.329Z",
+        "messages": 38
+      },
+      {
+        "timestamp": "2025-12-17T07:02:10.329Z",
+        "messages": 31
+      },
+      {
+        "timestamp": "2025-12-18T07:02:10.329Z",
+        "messages": 33
+      },
+      {
+        "timestamp": "2025-12-19T07:02:10.329Z",
+        "messages": 43
+      },
+      {
+        "timestamp": "2025-12-20T07:02:10.329Z",
+        "messages": 39
+      },
+      {
+        "timestamp": "2025-12-21T07:02:10.329Z",
+        "messages": 38
+      },
+      {
+        "timestamp": "2025-12-22T07:02:10.329Z",
+        "messages": 47
+      },
+      {
+        "timestamp": "2025-12-23T07:02:10.329Z",
+        "messages": 42
+      },
+      {
+        "timestamp": "2025-12-24T07:02:10.329Z",
+        "messages": 42
+      },
+      {
+        "timestamp": "2025-12-25T07:02:10.329Z",
+        "messages": 50
+      },
+      {
+        "timestamp": "2025-12-26T07:02:10.329Z",
+        "messages": 43
+      },
+      {
+        "timestamp": "2025-12-27T07:02:10.329Z",
+        "messages": 47
+      },
+      {
+        "timestamp": "2025-12-28T07:02:10.329Z",
+        "messages": 43
+      },
+      {
+        "timestamp": "2025-12-29T07:02:10.329Z",
+        "messages": 45
+      },
+      {
+        "timestamp": "2025-12-30T07:02:10.329Z",
+        "messages": 41
+      },
+      {
+        "timestamp": "2025-12-31T07:02:10.329Z",
+        "messages": 48
+      },
+      {
+        "timestamp": "2026-01-01T07:02:10.329Z",
+        "messages": 39
+      },
+      {
+        "timestamp": "2026-01-02T07:02:10.329Z",
+        "messages": 42
+      }
+    ]
+  },
+  "toadcoin": {
+    "totalMinted": 34051,
+    "circulating": 27922,
+    "vault": 6129,
+    "ledger": {
+      "chatter-1": 3741,
+      "chatter-2": 3619,
+      "chatter-3": 3065,
+      "chatter-4": 3188,
+      "chatter-5": 617,
+      "chatter-6": 2752,
+      "chatter-7": 2340,
+      "chatter-8": 3432,
+      "chatter-9": 1621,
+      "chatter-10": 3114,
+      "chatter-11": 4147,
+      "chatter-12": 2415
+    }
+  }
+}
