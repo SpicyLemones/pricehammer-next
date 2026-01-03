@@ -102,6 +102,7 @@ export default function ChattergroundsPage() {
         const rawData = json.data || json; 
         const rawChatters = rawData.chatters || [];
 
+
         const formatted: ChatterProfile[] = rawChatters.map((c: any) => ({
           id: c.chatter_id || c.id,
           name: c.name || "Unknown",
@@ -121,13 +122,14 @@ export default function ChattergroundsPage() {
         }));
 
         setData({
-          updatedAt: rawData.updatedAt || new Date().toISOString(),
-          origin: rawData.origin || "offline",
-          chatters: formatted,
-          messageSeries: rawData.messageSeries || { today: [], week: [], month: [], all: [] },
-          // Try to find the owner in the nested data OR the root JSON
-          owner: rawData.owner || json.owner 
-        });
+        // Use the origin from the server, but if we got chatters, 
+        // we can safely assume it's NOT offline fallback data.
+        origin: rawData.origin || (rawChatters.length > 0 ? "twitch" : "offline"), 
+        updatedAt: rawData.updatedAt || new Date().toISOString(),
+        chatters: formatted,
+        messageSeries: rawData.messageSeries || { today: [], week: [], month: [], all: [] },
+        owner: rawData.owner || json.owner 
+      });
       } catch (e) {
         console.error("Chattergrounds Load Error:", e);
       } finally {
@@ -139,12 +141,14 @@ export default function ChattergroundsPage() {
 
   const series = useMemo(() => data?.messageSeries[range] ?? [], [data, range]);
 
-  // IMPROVED AUTHORIZATION CHECK:
-  // We trust the "origin" field from the API. If the API says 'twitch', 
-  // then the server definitely found your session.
+    // IMPROVED AUTHORIZATION CHECK:
+    // We trust the "origin" field from the API. If the API says 'twitch', 
+    // then the server definitely found your session.
   const isTwitchScoped = useMemo(() => {
     if (!data) return false;
-    return data.origin === "twitch" || Boolean(data.owner?.userId || data.owner?.login);
+    // If we have chatters and the origin isn't explicitly 'offline' or 'fallback'
+    return data.origin === "twitch" || 
+          Boolean(data.owner?.userId || data.owner?.login || data.chatters.length > 0);
   }, [data]);
 
   const leaderboards = useMemo(() => {
