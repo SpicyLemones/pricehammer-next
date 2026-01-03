@@ -52,7 +52,7 @@ type ChattergroundsData = {
   };
 };
 
-type PersistAction =
+export type PersistAction =
   | {
       action: "mint";
       chatterId: string;
@@ -62,6 +62,24 @@ type PersistAction =
       action: "record-message";
       chatterId: string;
       message?: string;
+    }
+  | {
+      action: "ban";
+      chatterId: string;
+    }
+  | {
+      action: "timeout";
+      chatterId: string;
+    }
+  | {
+      action: "quest-completed";
+      chatterId: string;
+      amount?: number;
+    }
+  | {
+      action: "sub-months";
+      chatterId: string;
+      months: number;
     };
 
 const DATA_PATH = path.join(process.cwd(), "data", "chattergrounds.json");
@@ -185,7 +203,7 @@ function normalizeData(data: ChattergroundsData): ChattergroundsData {
   return normalized;
 }
 
-async function getData(options?: {
+export async function getData(options?: {
   userId?: string;
   owner?: ChattergroundsData["owner"];
   seedNames?: string[];
@@ -263,6 +281,84 @@ function findOrCreateChatter(data: ChattergroundsData, chatterId: string): Chatt
   return placeholder;
 }
 
+type ApplyContext = {
+  sessionUserId?: string;
+  owner?: ChattergroundsData["owner"];
+  origin?: ChattergroundsData["origin"];
+};
+
+function incrementNullable(value: number | null | undefined, amount = 1) {
+  return (value ?? 0) + amount;
+}
+
+export async function applyChattergroundsAction(
+  payload: PersistAction,
+  context: ApplyContext = {}
+): Promise<ChattergroundsData | { error: string }> {
+  const data = await getData({
+    userId: context.sessionUserId,
+    owner: context.owner,
+    origin: context.origin,
+  });
+  const nowIso = new Date().toISOString();
+
+  if (payload.action === "mint") {
+    const { chatterId, amount } = payload;
+    if (!chatterId || typeof amount !== "number" || Number.isNaN(amount)) {
+      return { error: "Invalid mint payload" };
+    }
+
+    const safeAmount = Math.max(-1000000, Math.min(1000000, Math.round(amount)));
+    const chatter = findOrCreateChatter(data, chatterId);
+
+    chatter.stats.toadcoins += safeAmount;
+    chatter.stats.toadcoinsMinted += safeAmount;
+    data.toadcoin.totalMinted += safeAmount;
+    data.toadcoin.circulating = Math.max(0, data.toadcoin.circulating + safeAmount * 0.92);
+    data.toadcoin.vault = Math.max(0, data.toadcoin.totalMinted - data.toadcoin.circulating);
+    data.toadcoin.ledger[chatterId] = (data.toadcoin.ledger[chatterId] ?? 0) + safeAmount;
+  } else if (payload.action === "record-message") {
+    const { chatterId, message } = payload;
+    if (!chatterId) {
+      return { error: "Missing chatterId" };
+    }
+
+    const chatter = findOrCreateChatter(data, chatterId);
+    chatter.lastMessage = message?.slice(0, 240) || chatter.lastMessage || null;
+    chatter.stats.messagesSent += 1;
+    touchMessageSeries(data.messageSeries, 1);
+  } else if (payload.action === "ban") {
+    const { chatterId } = payload;
+    if (!chatterId) return { error: "Missing chatterId" };
+    const chatter = findOrCreateChatter(data, chatterId);
+    chatter.stats.timesBanned = incrementNullable(chatter.stats.timesBanned);
+  } else if (payload.action === "timeout") {
+    const { chatterId } = payload;
+    if (!chatterId) return { error: "Missing chatterId" };
+    const chatter = findOrCreateChatter(data, chatterId);
+    chatter.stats.timesTimedOut = incrementNullable(chatter.stats.timesTimedOut);
+  } else if (payload.action === "quest-completed") {
+    const { chatterId, amount } = payload;
+    if (!chatterId) return { error: "Missing chatterId" };
+    const chatter = findOrCreateChatter(data, chatterId);
+    chatter.stats.questsCompleted = incrementNullable(chatter.stats.questsCompleted, amount ?? 1);
+  } else if (payload.action === "sub-months") {
+    const { chatterId, months } = payload;
+    if (!chatterId || typeof months !== "number" || Number.isNaN(months)) {
+      return { error: "Invalid subscription payload" };
+    }
+    const chatter = findOrCreateChatter(data, chatterId);
+    chatter.stats.monthsSubbed = Math.max(chatter.stats.monthsSubbed ?? 0, Math.max(0, Math.round(months)));
+  } else {
+    return { error: "Unsupported action" };
+  }
+
+  data.updatedAt = nowIso;
+  await persistData(normalizeData(data), context.sessionUserId);
+
+  return data;
+}
+
 export async function GET() {
   const session = await getValidSession();
   const owner = session
@@ -311,46 +407,18 @@ export async function POST(request: Request) {
   }
 
   const session = await getValidSession();
-  const data = await getData({
-    userId: session?.userId,
-    owner: session
-      ? { userId: session.userId, login: session.login, displayName: session.displayName }
-      : undefined,
+  const owner = session
+    ? { userId: session.userId, login: session.login, displayName: session.displayName }
+    : undefined;
+  const result = await applyChattergroundsAction(payload, {
+    sessionUserId: session?.userId,
+    owner,
     origin: session ? "twitch" : "offline",
   });
-  const nowIso = new Date().toISOString();
 
-  if (payload.action === "mint") {
-    const { chatterId, amount } = payload;
-    if (!chatterId || typeof amount !== "number" || Number.isNaN(amount)) {
-      return NextResponse.json({ error: "Invalid mint payload" }, { status: 400 });
-    }
-
-    const safeAmount = Math.max(-1000000, Math.min(1000000, Math.round(amount)));
-    const chatter = findOrCreateChatter(data, chatterId);
-
-    chatter.stats.toadcoins += safeAmount;
-    chatter.stats.toadcoinsMinted += safeAmount;
-    data.toadcoin.totalMinted += safeAmount;
-    data.toadcoin.circulating = Math.max(0, data.toadcoin.circulating + safeAmount * 0.92);
-    data.toadcoin.vault = Math.max(0, data.toadcoin.totalMinted - data.toadcoin.circulating);
-    data.toadcoin.ledger[chatterId] = (data.toadcoin.ledger[chatterId] ?? 0) + safeAmount;
-  } else if (payload.action === "record-message") {
-    const { chatterId, message } = payload;
-    if (!chatterId) {
-      return NextResponse.json({ error: "Missing chatterId" }, { status: 400 });
-    }
-
-    const chatter = findOrCreateChatter(data, chatterId);
-    chatter.lastMessage = message?.slice(0, 240) || chatter.lastMessage || "Sent a message";
-    chatter.stats.messagesSent += 1;
-    touchMessageSeries(data.messageSeries, 1);
-  } else {
-    return NextResponse.json({ error: "Unsupported action" }, { status: 400 });
+  if ("error" in result) {
+    return NextResponse.json(result, { status: 400 });
   }
 
-  data.updatedAt = nowIso;
-  await persistData(normalizeData(data), session?.userId);
-
-  return NextResponse.json({ ok: true, data });
+  return NextResponse.json({ ok: true, data: result });
 }
