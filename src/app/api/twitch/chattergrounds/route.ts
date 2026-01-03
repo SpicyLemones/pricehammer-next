@@ -15,22 +15,22 @@ type MessagePoint = {
 type ChatterStats = {
   toadcoins: number;
   toadcoinsMinted: number;
-  timesBanned: number;
-  timesTimedOut: number;
-  questsCompleted: number;
+  timesBanned: number | null;
+  timesTimedOut: number | null;
+  questsCompleted: number | null;
   messagesSent: number;
   estimatedAge: number;
-  monthsSubbed: number;
-  donosGifted: number;
-  favoriteWord: string;
-  favoriteEmote: string;
+  monthsSubbed: number | null;
+  donosGifted: number | null;
+  favoriteWord: string | null;
+  favoriteEmote: string | null;
 };
 
 type ChatterProfile = {
   id: string;
   name: string;
   flair: string;
-  lastMessage: string;
+  lastMessage: string | null;
   stats: ChatterStats;
 };
 
@@ -74,98 +74,28 @@ function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function sample<T>(items: T[]): T {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
-function minutesAgo(minutes: number) {
-  return new Date(Date.now() - minutes * 60 * 1000);
-}
-
-function buildSeries(pointCount: number, stepMinutes: number, base: number): MessagePoint[] {
-  return Array.from({ length: pointCount }).map((_, idx) => {
-    const timestamp = minutesAgo((pointCount - idx) * stepMinutes);
-    const drift = Math.sin(idx / 3) * 4;
-    const variance = randomBetween(-3, 6);
-    const messages = Math.max(0, Math.round(base + drift + variance + idx * 0.5));
-    return { timestamp: timestamp.toISOString(), messages };
-  });
-}
-
 function buildChatters(sourceNames?: string[]): ChatterProfile[] {
-  const names =
-    sourceNames && sourceNames.length
-      ? sourceNames
-      : [
-          "SpycyToast",
-          "FrogOfTheNorth",
-          "ModMatrix",
-          "LaggyMage",
-          "PixelPanda",
-          "NyaaCoder",
-          "BanHammered",
-          "QuestGoblin",
-          "HoverTank",
-          "ChonkKnight",
-          "MidnightMoth",
-          "DataDruid",
-        ];
+  const names = sourceNames ?? [];
 
-  const lastMessages = [
-    "!doubledown let's go",
-    "brb grabbing snacks",
-    "copium stock is UP",
-    "this quest is impossible",
-    "mod check??",
-    "kekw",
-    "pog toadcoin pump",
-    "hydrate or diedrate",
-    "who banned me last time??",
-    "gachiHYPER",
-    "do a barrel roll",
-    "ayo that drop was clean",
-  ];
-
-  const words = ["copium", "pog", "toadcoin", "wizard", "bruh", "gaming", "greed", "tilt", "vibe", "gg"];
-  const emotes = [
-    "Kappa",
-    "PogChamp",
-    "FeelsStrongMan",
-    "peepoHappy",
-    "CatJAM",
-    "LUL",
-    "BibleThump",
-    "OMEGALUL",
-    "PepeLaugh",
-    "ResidentSleeper",
-  ];
-
-  return names.map((name, idx) => {
-    const baseMessages = randomBetween(1400, 5200);
-    const timesBanned = randomBetween(0, 12);
-    const timesTimedOut = randomBetween(timesBanned, timesBanned + 20);
-    const minted = randomBetween(500, 4200);
-
-    return {
-      id: `chatter-${idx + 1}`,
-      name,
-      flair: idx % 3 === 0 ? "day-one" : idx % 2 === 0 ? "vip" : "regular",
-      lastMessage: lastMessages[idx] ?? "No messages yet",
-      stats: {
-        toadcoins: randomBetween(200, 1200),
-        toadcoinsMinted: minted,
-        timesBanned,
-        timesTimedOut,
-        questsCompleted: randomBetween(2, 35),
-        messagesSent: baseMessages,
-        estimatedAge: randomBetween(12, 80),
-        monthsSubbed: randomBetween(0, 36),
-        donosGifted: randomBetween(0, 75),
-        favoriteWord: sample(words),
-        favoriteEmote: sample(emotes),
-      },
-    } satisfies ChatterProfile;
-  });
+  return names.map((name, idx) => ({
+    id: `chatter-${idx + 1}`,
+    name,
+    flair: "regular",
+    lastMessage: null,
+    stats: {
+      toadcoins: 0,
+      toadcoinsMinted: 0,
+      timesBanned: null,
+      timesTimedOut: null,
+      questsCompleted: null,
+      messagesSent: 0,
+      estimatedAge: randomBetween(12, 80),
+      monthsSubbed: null,
+      donosGifted: null,
+      favoriteWord: null,
+      favoriteEmote: null,
+    },
+  }));
 }
 
 function createSeedData(options?: {
@@ -177,10 +107,10 @@ function createSeedData(options?: {
   const totalMinted = chatters.reduce((sum, chatter) => sum + chatter.stats.toadcoinsMinted, 0);
 
   const messageSeries: Record<RangeKey, MessagePoint[]> = {
-    today: buildSeries(32, 30, 18),
-    week: buildSeries(42, 240, 35),
-    month: buildSeries(48, 720, 42),
-    all: buildSeries(52, 1440, 20),
+    today: [],
+    week: [],
+    month: [],
+    all: [],
   };
 
   return {
@@ -190,8 +120,8 @@ function createSeedData(options?: {
     messageSeries,
     toadcoin: {
       totalMinted,
-      circulating: Math.round(totalMinted * 0.82),
-      vault: Math.round(totalMinted * 0.18),
+      circulating: 0,
+      vault: 0,
       ledger: Object.fromEntries(chatters.map((chatter) => [chatter.id, chatter.stats.toadcoinsMinted])),
     },
     owner: options?.owner,
@@ -313,19 +243,19 @@ function findOrCreateChatter(data: ChattergroundsData, chatterId: string): Chatt
     id: chatterId,
     name: chatterId.replace(/[-_]/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()) || "New Chatter",
     flair: "new",
-    lastMessage: "Freshly arrived in chat",
+    lastMessage: null,
     stats: {
       toadcoins: 0,
       toadcoinsMinted: 0,
-      timesBanned: 0,
-      timesTimedOut: 0,
-      questsCompleted: 0,
+      timesBanned: null,
+      timesTimedOut: null,
+      questsCompleted: null,
       messagesSent: 0,
       estimatedAge: randomBetween(12, 80),
-      monthsSubbed: 0,
-      donosGifted: 0,
-      favoriteWord: "hello",
-      favoriteEmote: "Kappa",
+      monthsSubbed: null,
+      donosGifted: null,
+      favoriteWord: null,
+      favoriteEmote: null,
     },
   };
 

@@ -30,28 +30,28 @@ type MessagePoint = {
 type ChatterStats = {
   toadcoins: number;
   toadcoinsMinted: number;
-  timesBanned: number;
-  timesTimedOut: number;
-  questsCompleted: number;
+  timesBanned: number | null;
+  timesTimedOut: number | null;
+  questsCompleted: number | null;
   messagesSent: number;
   estimatedAge: number;
-  monthsSubbed: number;
-  donosGifted: number;
-  favoriteWord: string;
-  favoriteEmote: string;
+  monthsSubbed: number | null;
+  donosGifted: number | null;
+  favoriteWord: string | null;
+  favoriteEmote: string | null;
 };
 
 type ChatterProfile = {
   id: string;
   name: string;
   flair: string;
-  lastMessage: string;
+  lastMessage: string | null;
   stats: ChatterStats;
 };
 
 type ChattergroundsData = {
   updatedAt: string;
-  origin: "twitch" | "offline" | "seed";
+  origin: "twitch" | "offline" | "seed" | "fallback";
   chatters: ChatterProfile[];
   messageSeries: Record<RangeKey, MessagePoint[]>;
   toadcoin: {
@@ -59,6 +59,11 @@ type ChattergroundsData = {
     circulating: number;
     vault: number;
     ledger: Record<string, number>;
+  };
+  owner?: {
+    userId?: string;
+    login?: string;
+    displayName?: string;
   };
 };
 
@@ -81,7 +86,8 @@ const flairStyles: Record<string, string> = {
   new: "bg-emerald-600 text-white shadow-lg shadow-emerald-500/30",
 };
 
-function formatNumber(value: number) {
+function formatNumber(value: number | null | undefined) {
+  if (value === null || value === undefined) return "Not available";
   return value.toLocaleString("en-US");
 }
 
@@ -196,11 +202,21 @@ export default function ChattergroundsPage() {
 
   const series = useMemo(() => data?.messageSeries[range] ?? [], [data, range]);
   const banned = useMemo(
-    () => (data?.chatters ?? []).slice().sort((a, b) => b.stats.timesBanned - a.stats.timesBanned).slice(0, 10),
+    () =>
+      (data?.chatters ?? [])
+        .filter((c) => c.stats.timesBanned !== null)
+        .slice()
+        .sort((a, b) => (b.stats.timesBanned ?? 0) - (a.stats.timesBanned ?? 0))
+        .slice(0, 10),
     [data],
   );
   const timeouts = useMemo(
-    () => (data?.chatters ?? []).slice().sort((a, b) => b.stats.timesTimedOut - a.stats.timesTimedOut).slice(0, 10),
+    () =>
+      (data?.chatters ?? [])
+        .filter((c) => c.stats.timesTimedOut !== null)
+        .slice()
+        .sort((a, b) => (b.stats.timesTimedOut ?? 0) - (a.stats.timesTimedOut ?? 0))
+        .slice(0, 10),
     [data],
   );
   const messages = useMemo(
@@ -240,8 +256,8 @@ export default function ChattergroundsPage() {
               Live Chatter Intelligence
             </h1>
             <p className="max-w-2xl text-base text-slate-300">
-              Watch the yap graph pulse in real time, peek at ban legends, and drill into your favorite weirdos. All stats
-              are seeded locally until Twitch tokens are wired up.
+              Watch the yap graph pulse in real time, peek at ban legends, and drill into your favorite weirdos. Live data
+              shows up when Twitch is connected—otherwise you&apos;ll see empty placeholders.
             </p>
           </div>
 
@@ -342,11 +358,19 @@ export default function ChattergroundsPage() {
                       strokeLinecap="round"
                     />
                   </svg>
+                  {!series.length && (
+                    <div className="mt-3 rounded-xl border border-slate-800/60 bg-slate-900/60 px-3 py-2 text-xs text-slate-300">
+                      No message activity yet. Send messages or connect Twitch to hydrate real-time data.
+                    </div>
+                  )}
                   <div className="mt-2 flex items-center justify-between text-xs text-slate-400">
-                    <span>Today is rendered locally until the Twitch firehose is connected.</span>
+                    <span>
+                      Data stays empty until you connect Twitch or record chat activity. Estimated age is the only playful
+                      random stat.
+                    </span>
                     <div className="flex items-center gap-2 rounded-full bg-slate-800/60 px-2 py-1 text-[11px] uppercase tracking-wide text-slate-200">
                       <BadgeInfo className="h-3 w-3 text-emerald-300" />
-                      <span>Simulated</span>
+                      <span>{data?.origin === "twitch" || data?.origin === "seed" ? "Live/Scoped" : "Offline"}</span>
                     </div>
                   </div>
                 </div>
@@ -397,7 +421,7 @@ export default function ChattergroundsPage() {
                     <span>Quests completed</span>
                     <span className="font-semibold text-white">
                       {formatNumber(
-                        (data?.chatters ?? []).reduce((sum, c) => sum + c.stats.questsCompleted, 0),
+                        (data?.chatters ?? []).reduce((sum, c) => sum + (c.stats.questsCompleted ?? 0), 0),
                       )}
                     </span>
                   </div>
@@ -438,7 +462,7 @@ export default function ChattergroundsPage() {
                     <div className="relative z-10 flex items-center justify-between">
                       <div>
                         <p className="text-sm font-semibold text-white">{chatter.name}</p>
-                        <p className="text-xs text-slate-300">Last: {chatter.lastMessage}</p>
+                        <p className="text-xs text-slate-300">Last: {chatter.lastMessage ?? "Not available"}</p>
                       </div>
                       <span
                         className={clsx(
@@ -470,13 +494,17 @@ export default function ChattergroundsPage() {
                 title="Top Bans"
                 icon={Trophy}
                 accent="text-amber-300"
-                items={banned.map((c) => ({ name: c.name, score: c.stats.timesBanned, flair: c.flair }))}
+                items={banned
+                  .filter((c) => c.stats.timesBanned !== null)
+                  .map((c) => ({ name: c.name, score: c.stats.timesBanned ?? 0, flair: c.flair }))}
               />
               <Leaderboard
                 title="Top Timeouts"
                 icon={Medal}
                 accent="text-indigo-300"
-                items={timeouts.map((c) => ({ name: c.name, score: c.stats.timesTimedOut, flair: c.flair }))}
+                items={timeouts
+                  .filter((c) => c.stats.timesTimedOut !== null)
+                  .map((c) => ({ name: c.name, score: c.stats.timesTimedOut ?? 0, flair: c.flair }))}
               />
               <Leaderboard
                 title="Top Chatters"
@@ -528,7 +556,9 @@ export default function ChattergroundsPage() {
               </div>
               <div className="flex flex-col">
                 <h2 className="text-2xl font-bold text-white">{selectedChatter.name}</h2>
-                <p className="text-sm text-slate-300">Last message: {selectedChatter.lastMessage}</p>
+                <p className="text-sm text-slate-300">
+                  Last message: {selectedChatter.lastMessage ?? "Not available"}
+                </p>
               </div>
               <span
                 className={clsx(
@@ -567,7 +597,15 @@ export default function ChattergroundsPage() {
                   <StatTile label="Donos gifted" value={selectedChatter.stats.donosGifted} />
                   <StatTile label="Favourite word" value={selectedChatter.stats.favoriteWord} />
                   <StatTile label="Favourite emote" value={selectedChatter.stats.favoriteEmote} />
-                  <StatTile label="Energy" value={Math.max(1, (selectedChatter.stats.messagesSent % 10) + 1) * 10} suffix="%" />
+                  <StatTile
+                    label="Energy"
+                    value={
+                      selectedChatter.stats.messagesSent > 0
+                        ? Math.max(1, (selectedChatter.stats.messagesSent % 10) + 1) * 10
+                        : null
+                    }
+                    suffix={selectedChatter.stats.messagesSent > 0 ? "%" : undefined}
+                  />
                 </div>
               </div>
             </div>
@@ -578,13 +616,13 @@ export default function ChattergroundsPage() {
   );
 }
 
-function StatTile({ label, value, suffix }: { label: string; value: number | string; suffix?: string }) {
+function StatTile({ label, value, suffix }: { label: string; value: number | string | null; suffix?: string }) {
   return (
     <div className="rounded-xl bg-slate-800/70 px-3 py-2 text-left shadow-inner shadow-black/30">
       <p className="text-[11px] uppercase tracking-wide text-slate-400">{label}</p>
       <p className="text-lg font-semibold text-white">
-        {typeof value === "number" ? formatNumber(value) : value}
-        {suffix}
+        {value === null ? "Not available" : typeof value === "number" ? formatNumber(value) : value}
+        {value !== null && suffix ? suffix : ""}
       </p>
     </div>
   );
