@@ -25,6 +25,35 @@ async function readSql(filename: string) {
   return await fs.readFile(sqlPath, "utf8");
 }
 
+let schemaReadyPromise: Promise<void> | null = null;
+async function ensureChattergroundsSchema() {
+  if (schemaReadyPromise) return schemaReadyPromise;
+
+  schemaReadyPromise = (async () => {
+    const initSql = await readSql("init.sql");
+    await run(initSql);
+
+    const alterStatements = [
+      "ALTER TABLE chattergrounds_stats ADD COLUMN estimated_age INTEGER DEFAULT 0",
+      "ALTER TABLE chattergrounds_stats ADD COLUMN favorite_word TEXT",
+      "ALTER TABLE chattergrounds_stats ADD COLUMN favorite_emote TEXT",
+    ];
+
+    for (const sql of alterStatements) {
+      try {
+        await run(sql);
+      } catch (err: any) {
+        // Ignore duplicate column errors so we can run this on existing DBs
+        if (!String(err?.message ?? "").includes("duplicate column name")) {
+          throw err;
+        }
+      }
+    }
+  })();
+
+  return schemaReadyPromise;
+}
+
 async function getRandomJokeTrait() {
   try {
     const configPath = path.join(process.cwd(), "data", "chattergrounds_config.json");
@@ -66,10 +95,8 @@ export async function applyChattergroundsAction(
   const traits = await getRandomJokeTrait();
 
   try {
-    const initSql = await readSql("init.sql");
+    await ensureChattergroundsSchema();
     const upsertSql = await readSql("upsert_stats.sql");
-
-    await run(initSql);
     await run(upsertSql, [
       broadcasterId,
       payload.chatterId,
@@ -99,8 +126,7 @@ export async function applyChattergroundsAction(
 export async function getData(userId?: string) {
   const broadcasterId = userId || "system";
   try {
-    const initSql = await readSql("init.sql");
-    await run(initSql); 
+    await ensureChattergroundsSchema();
 
     const chatters = await all(
       "SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? ORDER BY messages_sent DESC",
@@ -120,8 +146,47 @@ export async function getData(userId?: string) {
 
 export async function GET() {
   const session = await getValidSession();
+  const owner = session
+    ? { userId: session.userId, login: session.login, displayName: session.displayName }
+    : undefined;
   const data = await getData(session?.userId);
-  return NextResponse.json({ data });
+
+  if (session && data.chatters.length === 0) {
+    try {
+      const chatters = await fetchChatters(session);
+      if (chatters.chatters?.length) {
+        const liveChatters = chatters.chatters.map((login) => ({
+          chatter_id: login,
+          name: login,
+          messages_sent: 0,
+          times_banned: 0,
+          times_timed_out: 0,
+          quests_completed: 0,
+          months_subbed: 0,
+          toadcoins_minted: 0,
+          toadcoins: 0,
+          last_message: null,
+          estimated_age: 0,
+          favorite_word: null,
+          favorite_emote: null,
+        }));
+
+        return NextResponse.json({
+          data: {
+            ...data,
+            updatedAt: new Date().toISOString(),
+            chatters: liveChatters,
+            origin: chatters.live ? "twitch" : data.origin,
+            owner,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Chattergrounds live fallback failed", error);
+    }
+  }
+
+  return NextResponse.json({ data: { ...data, owner } });
 }
 
 export async function POST(request: Request) {
