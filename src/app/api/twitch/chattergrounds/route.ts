@@ -3,6 +3,8 @@ import path from "node:path";
 
 import { NextResponse } from "next/server";
 
+import { fetchChatters, getValidSession } from "@/app/lib/twitch-auth";
+
 type RangeKey = "today" | "week" | "month" | "all";
 
 type MessagePoint = {
@@ -34,7 +36,7 @@ type ChatterProfile = {
 
 type ChattergroundsData = {
   updatedAt: string;
-  origin: "twitch" | "offline" | "seed";
+  origin: "twitch" | "offline" | "seed" | "fallback";
   chatters: ChatterProfile[];
   messageSeries: Record<RangeKey, MessagePoint[]>;
   toadcoin: {
@@ -42,6 +44,11 @@ type ChattergroundsData = {
     circulating: number;
     vault: number;
     ledger: Record<string, number>;
+  };
+  owner?: {
+    userId?: string;
+    login?: string;
+    displayName?: string;
   };
 };
 
@@ -59,6 +66,7 @@ type PersistAction =
 
 const DATA_PATH = path.join(process.cwd(), "data", "chattergrounds.json");
 const RANGE_KEYS: RangeKey[] = ["today", "week", "month", "all"];
+const DATA_DIR = path.join(process.cwd(), "data", "chattergrounds");
 
 export const dynamic = "force-dynamic";
 
@@ -84,21 +92,24 @@ function buildSeries(pointCount: number, stepMinutes: number, base: number): Mes
   });
 }
 
-function buildChatters(): ChatterProfile[] {
-  const names = [
-    "SpycyToast",
-    "FrogOfTheNorth",
-    "ModMatrix",
-    "LaggyMage",
-    "PixelPanda",
-    "NyaaCoder",
-    "BanHammered",
-    "QuestGoblin",
-    "HoverTank",
-    "ChonkKnight",
-    "MidnightMoth",
-    "DataDruid",
-  ];
+function buildChatters(sourceNames?: string[]): ChatterProfile[] {
+  const names =
+    sourceNames && sourceNames.length
+      ? sourceNames
+      : [
+          "SpycyToast",
+          "FrogOfTheNorth",
+          "ModMatrix",
+          "LaggyMage",
+          "PixelPanda",
+          "NyaaCoder",
+          "BanHammered",
+          "QuestGoblin",
+          "HoverTank",
+          "ChonkKnight",
+          "MidnightMoth",
+          "DataDruid",
+        ];
 
   const lastMessages = [
     "!doubledown let's go",
@@ -115,8 +126,19 @@ function buildChatters(): ChatterProfile[] {
     "ayo that drop was clean",
   ];
 
-  const words = ["copium", "pog", "toadcoin", "wizard", "bruh", "gaming", "greed", "tilt", "vibe", "gg"]; 
-  const emotes = ["Kappa", "PogChamp", "FeelsStrongMan", "peepoHappy", "CatJAM", "LUL", "BibleThump", "OMEGALUL", "PepeLaugh", "ResidentSleeper"];
+  const words = ["copium", "pog", "toadcoin", "wizard", "bruh", "gaming", "greed", "tilt", "vibe", "gg"];
+  const emotes = [
+    "Kappa",
+    "PogChamp",
+    "FeelsStrongMan",
+    "peepoHappy",
+    "CatJAM",
+    "LUL",
+    "BibleThump",
+    "OMEGALUL",
+    "PepeLaugh",
+    "ResidentSleeper",
+  ];
 
   return names.map((name, idx) => {
     const baseMessages = randomBetween(1400, 5200);
@@ -128,7 +150,7 @@ function buildChatters(): ChatterProfile[] {
       id: `chatter-${idx + 1}`,
       name,
       flair: idx % 3 === 0 ? "day-one" : idx % 2 === 0 ? "vip" : "regular",
-      lastMessage: lastMessages[idx] ?? "",
+      lastMessage: lastMessages[idx] ?? "No messages yet",
       stats: {
         toadcoins: randomBetween(200, 1200),
         toadcoinsMinted: minted,
@@ -146,8 +168,12 @@ function buildChatters(): ChatterProfile[] {
   });
 }
 
-function createSeedData(): ChattergroundsData {
-  const chatters = buildChatters();
+function createSeedData(options?: {
+  names?: string[];
+  origin?: ChattergroundsData["origin"];
+  owner?: ChattergroundsData["owner"];
+}): ChattergroundsData {
+  const chatters = buildChatters(options?.names);
   const totalMinted = chatters.reduce((sum, chatter) => sum + chatter.stats.toadcoinsMinted, 0);
 
   const messageSeries: Record<RangeKey, MessagePoint[]> = {
@@ -159,7 +185,7 @@ function createSeedData(): ChattergroundsData {
 
   return {
     updatedAt: new Date().toISOString(),
-    origin: "offline",
+    origin: options?.origin ?? "offline",
     chatters,
     messageSeries,
     toadcoin: {
@@ -168,12 +194,18 @@ function createSeedData(): ChattergroundsData {
       vault: Math.round(totalMinted * 0.18),
       ledger: Object.fromEntries(chatters.map((chatter) => [chatter.id, chatter.stats.toadcoinsMinted])),
     },
+    owner: options?.owner,
   } satisfies ChattergroundsData;
 }
 
-async function readPersistedData(): Promise<ChattergroundsData | null> {
+function resolveDataPath(userId?: string) {
+  if (!userId) return DATA_PATH;
+  return path.join(DATA_DIR, `${userId}.json`);
+}
+
+async function readPersistedData(userId?: string): Promise<ChattergroundsData | null> {
   try {
-    const file = await fs.readFile(DATA_PATH, "utf8");
+    const file = await fs.readFile(resolveDataPath(userId), "utf8");
     const parsed = JSON.parse(file) as ChattergroundsData;
     return parsed;
   } catch (error) {
@@ -182,9 +214,10 @@ async function readPersistedData(): Promise<ChattergroundsData | null> {
   }
 }
 
-async function persistData(data: ChattergroundsData) {
-  await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });
-  await fs.writeFile(DATA_PATH, JSON.stringify(data, null, 2), "utf8");
+async function persistData(data: ChattergroundsData, userId?: string) {
+  const targetPath = resolveDataPath(userId);
+  await fs.mkdir(path.dirname(targetPath), { recursive: true });
+  await fs.writeFile(targetPath, JSON.stringify(data, null, 2), "utf8");
 }
 
 function normalizeData(data: ChattergroundsData): ChattergroundsData {
@@ -222,14 +255,23 @@ function normalizeData(data: ChattergroundsData): ChattergroundsData {
   return normalized;
 }
 
-async function getData(): Promise<ChattergroundsData> {
-  const persisted = await readPersistedData();
+async function getData(options?: {
+  userId?: string;
+  owner?: ChattergroundsData["owner"];
+  seedNames?: string[];
+  origin?: ChattergroundsData["origin"];
+}): Promise<ChattergroundsData> {
+  const persisted = await readPersistedData(options?.userId);
   if (persisted) {
     return normalizeData(persisted);
   }
 
-  const seed = createSeedData();
-  await persistData(seed);
+  const seed = createSeedData({
+    names: options?.seedNames,
+    origin: options?.origin,
+    owner: options?.owner,
+  });
+  await persistData(seed, options?.userId);
   return seed;
 }
 
@@ -292,10 +334,37 @@ function findOrCreateChatter(data: ChattergroundsData, chatterId: string): Chatt
 }
 
 export async function GET() {
-  const data = await getData();
+  const session = await getValidSession();
+  const owner = session
+    ? { userId: session.userId, login: session.login, displayName: session.displayName }
+    : undefined;
+
+  let chattersFromTwitch: string[] | undefined;
+  let origin: ChattergroundsData["origin"] = session ? "twitch" : "offline";
+
+  if (session) {
+    try {
+      const chatters = await fetchChatters(session);
+      chattersFromTwitch = chatters.chatters;
+      origin = chatters.live ? "twitch" : "seed";
+    } catch (error) {
+      console.error("Falling back to offline chatter seed", error);
+      origin = "fallback";
+    }
+  }
+
+  const data = await getData({
+    userId: session?.userId,
+    seedNames: chattersFromTwitch,
+    origin,
+    owner,
+  });
+
   return NextResponse.json({
     data,
-    note: "Currently seeded with offline-friendly chatter analytics. Swap to Twitch API when tokens are wired up.",
+    note: session
+      ? "Twitch-connected. Using your channel chatters and persisting per broadcaster."
+      : "Offline seed. Connect Twitch to hydrate with your real chatters.",
   });
 }
 
@@ -311,7 +380,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Missing action payload" }, { status: 400 });
   }
 
-  const data = await getData();
+  const session = await getValidSession();
+  const data = await getData({
+    userId: session?.userId,
+    owner: session
+      ? { userId: session.userId, login: session.login, displayName: session.displayName }
+      : undefined,
+    origin: session ? "twitch" : "offline",
+  });
   const nowIso = new Date().toISOString();
 
   if (payload.action === "mint") {
@@ -344,7 +420,7 @@ export async function POST(request: Request) {
   }
 
   data.updatedAt = nowIso;
-  await persistData(normalizeData(data));
+  await persistData(normalizeData(data), session?.userId);
 
   return NextResponse.json({ ok: true, data });
 }

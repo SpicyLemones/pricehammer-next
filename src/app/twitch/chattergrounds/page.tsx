@@ -171,6 +171,7 @@ export default function ChattergroundsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ChattergroundsData | null>(null);
+  const [note, setNote] = useState<string | null>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -182,6 +183,7 @@ export default function ChattergroundsPage() {
         const json = (await res.json()) as ApiResponse;
         setData(json.data);
         setSelectedChatter(json.data.chatters[0] ?? null);
+        setNote(json.note ?? null);
       } catch (err) {
         console.error(err);
         setError("Could not load chatter analytics. Try refreshing.");
@@ -205,6 +207,15 @@ export default function ChattergroundsPage() {
     () => (data?.chatters ?? []).slice().sort((a, b) => b.stats.messagesSent - a.stats.messagesSent).slice(0, 10),
     [data],
   );
+  const isTwitchScoped = Boolean(data?.owner?.userId);
+  const originLabel =
+    data?.origin === "twitch"
+      ? "Live Twitch data"
+      : data?.origin === "seed"
+        ? "Twitch-connected (stream offline)"
+        : data?.origin === "fallback"
+          ? "Fallback seed"
+          : "Offline seed";
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50">
@@ -234,11 +245,44 @@ export default function ChattergroundsPage() {
             </p>
           </div>
 
-          <div className="ml-auto flex flex-wrap items-center gap-2 rounded-2xl border border-slate-800/70 bg-slate-900/70 px-3 py-2 shadow-inner shadow-black/40">
-            <Sparkles className="h-4 w-4 text-amber-300" />
-            <span className="text-sm text-slate-200">Updated {data ? formatTimeAgo(data.updatedAt) : "now"}</span>
+          <div className="ml-auto flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-2 rounded-2xl border border-slate-800/70 bg-slate-900/70 px-3 py-2 shadow-inner shadow-black/40">
+              <Sparkles className="h-4 w-4 text-amber-300" />
+              <span className="text-sm text-slate-200">Updated {data ? formatTimeAgo(data.updatedAt) : "now"}</span>
+            </div>
+            <div
+              className={clsx(
+                "flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold uppercase tracking-wide shadow-inner shadow-black/40",
+                data?.origin === "twitch" || data?.origin === "seed"
+                  ? "border-emerald-500/30 bg-emerald-500/15 text-emerald-100"
+                  : "border-amber-500/30 bg-amber-500/10 text-amber-100",
+              )}
+            >
+              {originLabel}
+            </div>
           </div>
         </header>
+
+        {!isTwitchScoped && (
+          <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-50 shadow-lg shadow-amber-900/40">
+            <span className="font-semibold">Connect Twitch</span>
+            <p className="text-amber-100/90">
+              You&apos;re seeing the offline sandbox. Connect Twitch to load your own chatters and persist data per channel.
+            </p>
+            <a
+              href="/api/twitch/login?redirect=%2Ftwitch%2Fchattergrounds"
+              className="rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold text-slate-900 shadow-lg shadow-amber-500/40 transition hover:bg-amber-300"
+            >
+              Authorize Twitch
+            </a>
+          </div>
+        )}
+        {note && (
+          <div className="flex items-center gap-2 text-xs text-slate-300">
+            <BadgeInfo className="h-4 w-4 text-emerald-300" />
+            <span>{note}</span>
+          </div>
+        )}
 
         <div className="grid gap-6 lg:grid-cols-[1.15fr_1fr]">
           <div className="space-y-6">
