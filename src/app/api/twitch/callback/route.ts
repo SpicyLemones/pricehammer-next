@@ -4,8 +4,8 @@ import {
   exchangeCodeForTokens, 
   verifyState, 
   writeSession, 
-  registerChattergroundsWebhook // Added this
-} from "@/lib/twitch-auth";
+  registerChattergroundsWebhook 
+} from "@/app/lib/twitch-auth"; // Double check this path matches your project
 
 export const dynamic = "force-dynamic";
 
@@ -33,17 +33,18 @@ export async function GET(request: Request) {
   }
 
   try {
+    // 1. Exchange the code for the streamer's user session
     const session = await exchangeCodeForTokens(code, request);
     await writeSession(session);
-    // --- NEW: CHATTERGROUNDS REGISTRATION ---
+
+    // 2. Register for Chat Webhooks
+    // We now only pass the userId; the function gets its own App Token internally
     try {
-      // Pass both the ID AND the token we just received
-      await registerChattergroundsWebhook(session.userId, session.accessToken); 
-      console.log(`Chattergrounds: Subscribed to ${session.displayName}`);
+      await registerChattergroundsWebhook(session.userId); 
+      console.log(`Chattergrounds: Subscription request sent for ${session.displayName}`);
     } catch (subErr) {
       console.error("Chattergrounds: Webhook registration failed:", subErr);
     }
-    // ----------------------------------------
 
     const successUrl = new URL(fallbackPath, origin);
     successUrl.searchParams.set("connected", "1");
