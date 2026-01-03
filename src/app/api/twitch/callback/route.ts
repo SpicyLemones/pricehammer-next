@@ -35,15 +35,13 @@ export async function GET(request: Request) {
   try {
     const session = await exchangeCodeForTokens(code, request);
     await writeSession(session);
-
     // --- NEW: CHATTERGROUNDS REGISTRATION ---
     try {
-      // session.userId is the numeric ID of the streamer who just logged in
-      await registerChattergroundsWebhook(session.userId);
+      // Pass both the ID AND the token we just received
+      await registerChattergroundsWebhook(session.userId, session.accessToken); 
       console.log(`Chattergrounds: Subscribed to ${session.displayName}`);
     } catch (subErr) {
       console.error("Chattergrounds: Webhook registration failed:", subErr);
-      // We don't block the login if this fails, just log it.
     }
     // ----------------------------------------
 

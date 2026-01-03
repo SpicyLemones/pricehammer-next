@@ -66,40 +66,30 @@ export function buildTwitchAuthUrl(redirect?: string, request?: Request) {
     : `${nonce}.${signState(nonce, stateSecret)}`;
 
   const params = new URLSearchParams({
-    client_id: clientId,
-    redirect_uri: redirectUri,
-    response_type: "code",
-    // ADD channel:bot TO THE LIST BELOW
-    scope: "chat:read moderator:read:chatters channel:bot", 
-    state,
-  });
+  client_id: clientId,
+  redirect_uri: redirectUri,
+  response_type: "code",
+  // REQUIRED: user:read:chat
+  scope: "chat:read moderator:read:chatters user:read:chat", 
+  state,
+});
 
   return `${TWITCH_AUTHORIZE_URL}?${params.toString()}`;
 }
 
-export async function registerChattergroundsWebhook(broadcasterId: string) {
-  const { clientId, clientSecret } = getTwitchConfig();
+export async function registerChattergroundsWebhook(broadcasterId: string, userAccessToken: string) {
+  const { clientId } = getTwitchConfig();
   const secret = process.env.CHATTERGROUNDS_INGEST_SECRET;
+  
+  // Ensure this URL matches your actual file structure!
   const callbackUrl = "https://www.spycy.fun/api/twitch/chattergrounds/ingest";
 
   try {
-    // 1. Get an App Access Token (Required for Webhooks)
-    const tokenRes = await fetch("https://id.twitch.tv/oauth2/token", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        client_id: clientId,
-        client_secret: clientSecret,
-        grant_type: "client_credentials",
-      }),
-    });
-    const { access_token } = await tokenRes.json();
-
-    // 2. Register the Chat Message subscription
     const subRes = await fetch("https://api.twitch.tv/helix/eventsub/subscriptions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${access_token}`,
+        // Use the userAccessToken passed from the callback
+        "Authorization": `Bearer ${userAccessToken}`, 
         "Client-Id": clientId,
         "Content-Type": "application/json",
       },
@@ -108,7 +98,7 @@ export async function registerChattergroundsWebhook(broadcasterId: string) {
         version: "1",
         condition: {
           broadcaster_user_id: broadcasterId,
-          user_id: broadcasterId, // We read the chat as the broadcaster
+          user_id: broadcasterId, 
         },
         transport: {
           method: "webhook",
@@ -118,7 +108,11 @@ export async function registerChattergroundsWebhook(broadcasterId: string) {
       }),
     });
 
-    return await subRes.json();
+    const data = await subRes.json();
+    
+    // Log the result so you can see if it's "webhook_callback_verification_pending"
+    console.log("Twitch Subscription Attempt:", data);
+    return data;
   } catch (err) {
     console.error("Failed to register EventSub:", err);
   }

@@ -4,6 +4,7 @@ import { applyChattergroundsAction, getData, type PersistAction } from "@/app/ap
 
 type EventSubEnvelope = {
   challenge?: string;
+  subscription?: { type: string };
   event?: Record<string, any>;
 };
 
@@ -15,7 +16,7 @@ function verifyTwitchSignature({
   headers: Headers;
 }) {
   const secret = process.env.CHATTERGROUNDS_INGEST_SECRET;
-  if (!secret) return true;
+  if (!secret) return true; // WARNING: In production, fail if secret is missing
 
   const messageId = headers.get("twitch-eventsub-message-id") ?? "";
   const timestamp = headers.get("twitch-eventsub-message-timestamp") ?? "";
@@ -38,7 +39,7 @@ function verifyTwitchSignature({
 
 function resolveBroadcasterId(event?: Record<string, any>) {
   return (
-    event?.broadcaster_user_id ||
+    event?.broadcaster_user_id || // Standard for channel.* events
     event?.broadcasterId ||
     event?.broadcaster_id ||
     event?.channel_id ||
@@ -50,9 +51,9 @@ async function handleNotification(subscriptionType: string, envelope: EventSubEn
   const event = envelope.event ?? {};
   const broadcasterId = resolveBroadcasterId(event);
   
-  // Cast to string for function compatibility
   const bIdString = typeof broadcasterId === "string" ? broadcasterId : undefined;
 
+  // Resolve Owner info for context
   const owner =
     event?.broadcaster_user_id || event?.broadcaster_user_login || event?.broadcaster_user_name
       ? {
@@ -64,28 +65,42 @@ async function handleNotification(subscriptionType: string, envelope: EventSubEn
 
   const actions: PersistAction[] = [];
 
+  // --- LOGIC FIX HERE ---
   if (subscriptionType === "channel.chat.message") {
-    const chatterId = event.chatter_user_id ?? event.user_id;
-    const text = event.message?.text ?? event.message ?? undefined;
-    if (chatterId) {
-      actions.push({ action: "record-message", chatterId, message: typeof text === "string" ? text : undefined });
+    // 1. chatter_user_id is the person speaking
+    const chatterId = event.chatter_user_id; 
+    
+    // 2. Extract text safely. event.message is an OBJECT in this sub type.
+    // Structure: { text: "Hello", fragments: [...] }
+    const text = event.message?.text; 
+    
+    if (chatterId && text) {
+      actions.push({ 
+        action: "record-message", 
+        chatterId, 
+        message: text 
+      });
     }
   } else if (subscriptionType === "channel.ban") {
-    const chatterId = event.user_id ?? event.target_user_id;
-    const isPermanent = event.is_permanent ?? event.permanent ?? event.ban?.is_permanent;
+    const chatterId = event.user_id; // The user being banned
+    const isPermanent = event.is_permanent;
     if (chatterId) {
       actions.push({ action: isPermanent ? "ban" : "timeout", chatterId });
     }
   } else if (subscriptionType === "channel.subscription" || subscriptionType === "channel.subscription.message") {
     const chatterId = event.user_id;
-    const months = event.cumulative_months ?? event.total_months ?? event.duration_months;
-    if (chatterId && typeof months === "number") {
+    // tier is often "1000", "2000", "3000" or "Prime"
+    // cumulative_months is usually available in subscription.message
+    const months = event.cumulative_months ?? 1; 
+    if (chatterId) {
       actions.push({ action: "sub-months", chatterId, months });
     }
   }
 
+  // Execute Actions
   const results: PersistAction[] = [];
   for (const action of actions) {
+    // We explicitly pass the broadcaster ID found in the event
     const result = await applyChattergroundsAction(action, {
       sessionUserId: bIdString,
       owner,
@@ -93,26 +108,26 @@ async function handleNotification(subscriptionType: string, envelope: EventSubEn
     });
     
     if (result && "error" in result) {
-      console.error("Chattergrounds ingest failure", action, result.error);
-      return NextResponse.json({ error: result.error }, { status: 400 });
+      console.error("❌ Chattergrounds DB Error:", action, result.error);
+      // Don't fail the webhook response, just log it, otherwise Twitch retries endlessly
+    } else {
+      results.push(action);
     }
-    results.push(action);
   }
 
-  if (!actions.length) {
-    return NextResponse.json({ ok: true, note: "Event ignored" });
+  if (!results.length) {
+    return NextResponse.json({ ok: true, note: "Event parsed but no actions taken" });
   }
 
-  // FIXED: Passing bIdString directly instead of an object
+  // Refresh cache/data after update
   const data = await getData(bIdString);
   return NextResponse.json({ ok: true, applied: results, data });
 }
 
 export async function POST(request: Request) {
   const rawBody = await request.text();
-
-  // Parse JSON after reading raw text so we can verify the signature
   let body: EventSubEnvelope;
+  
   try {
     body = JSON.parse(rawBody) as EventSubEnvelope;
   } catch {
@@ -120,17 +135,20 @@ export async function POST(request: Request) {
   }
 
   const messageType = request.headers.get("twitch-eventsub-message-type");
-  const subscriptionType = request.headers.get("twitch-eventsub-subscription-type") ?? "";
+  const subscriptionType = request.headers.get("twitch-eventsub-subscription-type") ?? body.subscription?.type ?? "";
 
-  // Twitch does not sign the initial verification challenge, so only verify signatures for notifications
-  if (messageType === "notification" && !verifyTwitchSignature({ body: rawBody, headers: request.headers })) {
+  // 1. Verify Verification Challenge (Handshake)
+  if (messageType === "webhook_callback_verification" && body.challenge) {
+    return new Response(body.challenge, { status: 200, headers: { "Content-Type": "text/plain" } });
+  }
+
+  // 2. Security Check
+  if (!verifyTwitchSignature({ body: rawBody, headers: request.headers })) {
+    console.error("❌ Invalid Twitch Signature");
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  if (messageType === "webhook_callback_verification" && body.challenge) {
-    return new Response(body.challenge, { status: 200 });
-  }
-
+  // 3. Handle Notification
   if (messageType === "notification") {
     return handleNotification(subscriptionType, body);
   }
