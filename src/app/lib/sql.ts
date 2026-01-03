@@ -122,7 +122,7 @@ function looksLikeSql(s: string) {
   // File names like "select/all_products" have no spaces.
   return (
     /\s/.test(s) &&
-    /\b(select|insert|update|delete|pragma|with|create|drop)\b/i.test(s)
+    /\b(select|insert|update|delete|pragma|with|create|drop|alter)\b/i.test(s)
   );
 }
 
