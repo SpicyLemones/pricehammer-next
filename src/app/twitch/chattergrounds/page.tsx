@@ -98,10 +98,11 @@ export default function ChattergroundsPage() {
         const res = await fetch("/api/twitch/chattergrounds", { cache: "no-store" });
         const json = await res.json();
         
+        console.log("1. RAW JSON FROM SERVER:", json);
         // Use a safe fallback for nested or flat data structures
         const rawData = json.data || json; 
         const rawChatters = rawData.chatters || [];
-
+        console.log("2. EXTRACTED CHATTERS:", rawChatters);
 
         const formatted: ChatterProfile[] = rawChatters.map((c: any) => ({
           id: c.chatter_id || c.id,
@@ -130,6 +131,16 @@ export default function ChattergroundsPage() {
         messageSeries: rawData.messageSeries || { today: [], week: [], month: [], all: [] },
         owner: rawData.owner || json.owner 
       });
+
+          const finalData = {
+          updatedAt: rawData.updatedAt || new Date().toISOString(),
+          origin: rawData.origin || (rawChatters.length > 0 ? "twitch" : "offline"), 
+          chatters: formatted,
+          messageSeries: rawData.messageSeries || { today: [], week: [], month: [], all: [] },
+          owner: rawData.owner || json.owner 
+        };
+
+        console.log("3. FINAL DATA STATE:", finalData); // <--- DEBUG 3
       } catch (e) {
         console.error("Chattergrounds Load Error:", e);
       } finally {
