@@ -81,14 +81,18 @@ export async function registerChattergroundsWebhook(broadcasterId: string, userA
   const { clientId } = getTwitchConfig();
   const secret = process.env.CHATTERGROUNDS_INGEST_SECRET;
   
-  // Ensure this URL matches your actual file structure!
+  // Verify this URL matches exactly where your POST ingest route is located
   const callbackUrl = "https://www.spycy.fun/api/twitch/chattergrounds/ingest";
+
+  if (!secret || secret.length < 10 || secret.length > 100) {
+    console.error("❌ EventSub Error: CHATTERGROUNDS_INGEST_SECRET must be between 10-100 characters.");
+    return { error: "Invalid Secret" };
+  }
 
   try {
     const subRes = await fetch("https://api.twitch.tv/helix/eventsub/subscriptions", {
       method: "POST",
       headers: {
-        // Use the userAccessToken passed from the callback
         "Authorization": `Bearer ${userAccessToken}`, 
         "Client-Id": clientId,
         "Content-Type": "application/json",
@@ -110,11 +114,14 @@ export async function registerChattergroundsWebhook(broadcasterId: string, userA
 
     const data = await subRes.json();
     
-    // Log the result so you can see if it's "webhook_callback_verification_pending"
-    console.log("Twitch Subscription Attempt:", data);
+    // This will tell us if Twitch accepted the request or why it failed (400, 401, 403, etc.)
+    console.log(`Twitch EventSub Status: ${subRes.status}`);
+    console.log("Twitch Subscription Response:", JSON.stringify(data, null, 2));
+
     return data;
   } catch (err) {
     console.error("Failed to register EventSub:", err);
+    return { error: "Fetch failed" };
   }
 }
 
