@@ -22,6 +22,12 @@ const modules = [
     href: "/twitch/wheel-of-blame",
     video: "/videos/demontys.mp4",
   },
+  {
+    title: "Chattergrounds",
+    description: "Live chatter intel, bans, and toadcoin lore.",
+    href: "/twitch/chattergrounds",
+    video: "/videos/toadcoin.mp4",
+  },
   { 
     title: "Toadcoin", 
     description: "Rich in the marketplace of ideas",
