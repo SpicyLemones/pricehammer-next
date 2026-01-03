@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
-import { clearSession, exchangeCodeForTokens, verifyState, writeSession } from "@/lib/twitch-auth";
+import { 
+  clearSession, 
+  exchangeCodeForTokens, 
+  verifyState, 
+  writeSession, 
+  registerChattergroundsWebhook // Added this
+} from "@/lib/twitch-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -9,19 +15,14 @@ export async function GET(request: Request) {
   const state = searchParams.get("state");
   const error = searchParams.get("error");
 
-  // Dynamically determine the real public URL (spycy.fun)
   const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
   const proto = request.headers.get("x-forwarded-proto") || "https";
   const origin = `${proto}://${host}`;
 
-  console.log("Twitch Callback Debug:", { origin, host, proto });
-
-  // Handle Twitch-side errors
   if (error) {
     return NextResponse.redirect(new URL(`/twitch?error=${encodeURIComponent(error)}`, origin));
   }
 
-  // Verify OAuth state
   const { valid, redirect: desiredRedirect } = verifyState(state ?? "");
   const fallbackPath = desiredRedirect ?? "/twitch";
 
@@ -32,11 +33,20 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Exchange code for access tokens
     const session = await exchangeCodeForTokens(code, request);
     await writeSession(session);
 
-    // Redirect to the final destination on the LIVE domain
+    // --- NEW: CHATTERGROUNDS REGISTRATION ---
+    try {
+      // session.userId is the numeric ID of the streamer who just logged in
+      await registerChattergroundsWebhook(session.userId);
+      console.log(`Chattergrounds: Subscribed to ${session.displayName}`);
+    } catch (subErr) {
+      console.error("Chattergrounds: Webhook registration failed:", subErr);
+      // We don't block the login if this fails, just log it.
+    }
+    // ----------------------------------------
+
     const successUrl = new URL(fallbackPath, origin);
     successUrl.searchParams.set("connected", "1");
     
