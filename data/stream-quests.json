@@ -1,25 +1,25 @@
 {
-  "date": "2026-01-02",
-  "generatedAt": "2026-01-02T13:06:03.058Z",
+  "date": "2026-01-03",
+  "generatedAt": "2026-01-03T04:04:35.381Z",
   "quests": [
     {
-      "id": "prime-beggar-3ba79f10-9519-46da-a748-cce783f63039",
+      "id": "stream-hours-ddc5839e-08a4-435f-a7e1-bf132d852200",
+      "title": "Stay Live",
+      "prompt": "Stream for more than 1 hour.",
+      "reward": 500,
+      "category": "stream-time",
+      "completed": false
+    },
+    {
+      "id": "prime-beggar-ce3aa2f2-3eee-472b-af72-930fcb4e56ae",
       "title": "Prime Beggar",
-      "prompt": "Successfully beg for 1 Twitch Prime sub.",
+      "prompt": "Successfully beg for 3 Twitch Prime subs.",
       "reward": 500,
       "category": "prime",
       "completed": false
     },
     {
-      "id": "insult-random-43030684-0a79-4a29-b977-0976e096e942",
-      "title": "Insult",
-      "prompt": "Insult ribbitriot in chat.",
-      "reward": 500,
-      "category": "insult",
-      "completed": false
-    },
-    {
-      "id": "react-8012ba5c-ac4f-4dee-8a87-e2957f569940",
+      "id": "react-7b82ca9e-3808-4f5e-9dcb-77e03d625c17",
       "title": "React Andy",
       "prompt": "React to a full youtube video",
       "reward": 500,
@@ -27,31 +27,32 @@
       "completed": false
     },
     {
-      "id": "stream-hours-8224f3d9-f63e-4dda-b348-038386a9dff7",
-      "title": "Stay Live",
-      "prompt": "Stream for more than 4 hours.",
+      "id": "insult-random-a9364afd-b9f7-475e-a0aa-4f1300b18f31",
+      "title": "Insult",
+      "prompt": "Insult hammerfan in chat.",
       "reward": 500,
-      "category": "stream-time",
+      "category": "insult",
       "completed": false
     },
     {
-      "id": "ban-random-863cf891-044c-4ba8-a366-69767d3bdf63",
+      "id": "ban-random-0bca40cd-14bc-4f5a-8938-dc2cd467d306",
       "title": "See You Later Bozo",
-      "prompt": "Ban hammerfan from your chat (they'll forgive you… probably).",
+      "prompt": "Ban lilypadlurker from your chat (get fucked lmao).",
       "reward": 500,
       "category": "ban",
       "completed": false
     },
     {
-      "id": "timeout-random-97a7f142-b5de-4de2-9659-050b0846c0ec",
-      "title": "Collateral Damage",
-      "prompt": "Time out ribbitriot for 5 minutes.",
+      "id": "wordle-501b4d71-5b91-4d91-8237-ac5b70e88615",
+      "title": "Wordle Warrior",
+      "prompt": "Complete today’s Wordle on stream.",
       "reward": 500,
-      "category": "timeout",
+      "category": "wordle",
       "completed": false
     }
   ],
   "ledger": {},
+  "lastAudienceHour": 490949,
   "lastAudience": {
     "names": [
       "toadette",
@@ -64,6 +65,5 @@
     ],
     "source": "unauthenticated",
     "note": "Link Twitch to pull live chatters. Using placeholders for now."
-  },
-  "lastAudienceHour": 490938
+  }
 }

@@ -1,49 +1,119 @@
-// src/app/twitch/page.tsx
+"use client";
 import Link from "next/link";
-
+import { useRef } from "react";
+import clsx from "clsx"; // Added the missing import
 import { TwitchAuthRedirect } from "./TwitchAuthRedirect";
 
 const modules = [
-  { title: "Pre-Stream Checklist", description: "Quick rundown before you go live." },
+  { 
+    title: "Pre-Stream Checklist", 
+    description: "Oh the camera's been on the whole time huh?",
+    video: "/videos/checklist.mp4" // Optional: add if you have one
+  },
   {
     title: "Stream Quest",
-    description: "Mini missions to keep chat engaged.",
+    description: "Do your dailies bro",
     href: "/twitch/stream-quest",
+    video: "/videos/dailyquest.mp4",
   },
   {
     title: "Wheel of Blame",
-    description: "Spin to assign the next oops with live chatters.",
+    description: "Whose fault is it this time?",
     href: "/twitch/wheel-of-blame",
+    video: "/videos/demontys.mp4",
   },
-  { title: "Toadcoin", description: "A silly stream currency idea." },
+  { 
+    title: "Toadcoin", 
+    description: "Rich in the marketplace of ideas",
+    video: "/videos/toadcoin.mp4" // Optional
+  },
 ];
 
-export const metadata = {
-  title: "Twitch fun modules",
-  description: "Pick a playful module to use during streams.",
-};
+function ModuleButton({ 
+  title, 
+  description, 
+  href, 
+  video 
+}: { 
+  title: string; 
+  description: string; 
+  href?: string;
+  video?: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-function ModuleButton({ title, description, href }: { title: string; description: string; href?: string }) {
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play().catch((err) => console.log("Playback interrupted", err));
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
   return (
     <Link
       href={href ?? "#"}
-      className="group relative flex w-full flex-col gap-2 overflow-hidden rounded-2xl border border-slate-200 bg-white/90 p-5 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl active:translate-y-[1px] active:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 dark:border-slate-800 dark:bg-slate-900/70"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="group relative flex w-full flex-col gap-2 overflow-hidden rounded-2xl border border-slate-200 bg-white/90 p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl active:translate-y-[1px] active:shadow-md dark:border-slate-800 dark:bg-slate-900/70"
     >
+      {/* Video Background */}
+      {video && (
+        <>
+          <video
+            ref={videoRef}
+            src={`${video}#t=0.001`}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 scale-105 group-hover:scale-100"
+          />
+          {/* Default Tint (Paused) */}
+          <div className="absolute inset-0 bg-white/30 dark:bg-black/20 transition-opacity duration-500 group-hover:opacity-0" />
+          
+          {/* Hover Overlay (Playing) */}
+          <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        </>
+      )}
+
+      {/* Content with Enhanced Visibility Shadows */}
+      <div className="relative z-10">
+        <h2 className={clsx(
+          "text-xl font-bold tracking-tight transition-all duration-300",
+          "text-slate-900 tracking-wide drop-shadow-[0_1.2px_1.2px_rgba(255,255,255,0.8)]",
+          "dark:text-white dark:drop-shadow-[0_10px_4px_rgba(0,0,0,0.8)]",
+          "group-hover:text-white group-hover:drop-shadow-[0_4px_12px_rgba(0,0,0,1)] group-hover:scale-[1.01]"
+        )}>
+          {title}
+        </h2>
+        
+        <p className={clsx(
+          "text-sm font-medium transition-all duration-300",
+          "text-slate-700 drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)]",
+          "dark:text-slate-200 dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]",
+          "group-hover:text-slate-50 group-hover:drop-shadow-[0_2px_6px_rgba(0,0,0,1)]"
+        )}>
+          {description}
+        </p>
+      </div>
+
+      {/* Shine Effect */}
       <span
-        className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 transition duration-300 group-hover:translate-x-full group-hover:opacity-100"
+        className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition duration-500 group-hover:translate-x-full group-hover:opacity-100"
         aria-hidden
       />
-      <div>
-        <h2 className="text-xl font-semibold text-slate-900 dark:text-white">{title}</h2>
-        <p className="text-sm text-slate-600 dark:text-slate-300">{description}</p>
-      </div>
     </Link>
   );
 }
 
 export default function TwitchPage() {
   return (
-    <div className="w-full max-w-3xl space-y-8 pt-4">
+    <div className="mx-auto w-full max-w-3xl space-y-8 pt-4">
       {/* Pinned Top-Left Back Button */}
       <div className="fixed left-6 top-6 z-50">
         <Link
@@ -69,11 +139,11 @@ export default function TwitchPage() {
       </div>
 
       <header className="space-y-3 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white md:text-5xl">
+        <h1 className="text-4xl font-bold tracking-wide text-slate-900 dark:text-white md:text-5xl">
           Twitch Toybox
         </h1>
         <p className="mx-auto max-w-md text-slate-600 dark:text-slate-400">
-          Choose someting to play with during your stream. 
+          Choose something to play with during your stream. 
         </p>
       </header>
 

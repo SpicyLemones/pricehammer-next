@@ -66,6 +66,30 @@
       "reward": 500
     },
     {
+      "id": "praise",
+      "category": "love",
+      "title": "My streamer loves me",
+      "prompt": "Praise {{chatter}} in chat.",
+      "reward": 500,
+      "variables": [
+        { "key": "chatter", "type": "chatter" }
+      ]
+    },
+    {
+      "id": "bandle",
+      "category": "bandle",
+      "title": "Dance monkey dance",
+      "prompt": "Do a little jig on stream.",
+      "reward": 500
+    },
+    {
+      "id": "food",
+      "category": "food",
+      "title": "Whale watching",
+      "prompt": "Order a dominoes pizza live on stream.",
+      "reward": 500
+    },
+    {
       "id": "react",
       "category": "stream-time",
       "title": "React Andy",
