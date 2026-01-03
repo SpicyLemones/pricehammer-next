@@ -20,9 +20,11 @@ type ApplyContext = {
   origin?: string;
 };
 
-/**
- * Helper to get a random item from our config JSON
- */
+async function readSql(filename: string) {
+  const sqlPath = path.join(process.cwd(), "data", "db", "queries", "chattergrounds", filename);
+  return await fs.readFile(sqlPath, "utf8");
+}
+
 async function getRandomJokeTrait() {
   try {
     const configPath = path.join(process.cwd(), "data", "chattergrounds_config.json");
@@ -35,7 +37,6 @@ async function getRandomJokeTrait() {
       age: Math.floor(Math.random() * (80 - 12 + 1)) + 12
     };
   } catch (e) {
-    // Fallback if file is missing
     return { word: "Toad", emote: "Kappa", age: 25 };
   }
 }
@@ -45,7 +46,6 @@ export async function applyChattergroundsAction(
   context: ApplyContext = {}
 ) {
   const broadcasterId = context.sessionUserId || "system";
-  
   let msgs = 0, bans = 0, timeouts = 0, subs = 0, quests = 0, mint = 0, msgText = null;
 
   if (payload.action === "record-message") {
@@ -63,13 +63,14 @@ export async function applyChattergroundsAction(
     mint = payload.amount;
   }
 
-  // Get random traits (only applied if the chatter is NEW)
   const traits = await getRandomJokeTrait();
 
   try {
-    await run("chattergrounds/init");
+    const initSql = await readSql("init.sql");
+    const upsertSql = await readSql("upsert_stats.sql");
 
-    await run("chattergrounds/upsert_stats", [
+    await run(initSql);
+    await run(upsertSql, [
       broadcasterId,
       payload.chatterId,
       payload.chatterId, 
@@ -89,24 +90,18 @@ export async function applyChattergroundsAction(
       "SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? AND chatter_id = ?",
       [broadcasterId, payload.chatterId]
     );
-  } catch (err) {
-    console.error("Chattergrounds DB Error:", err);
-    return { error: "Failed to update database" };
+  } catch (err: any) {
+    console.error("Chattergrounds Action Error:", err);
+    return { error: err.message || "Failed to update database" };
   }
 }
 
 export async function getData(userId?: string) {
   const broadcasterId = userId || "system";
-  
   try {
-    // 1. Correct the path to match your structure (data/db/queries/...)
-    const sqlPath = path.join(process.cwd(), "data", "db", "queries", "chattergrounds", "init.sql");
-    const initSql = await fs.readFile(sqlPath, "utf8");
-    
-    // Run the initialization script
+    const initSql = await readSql("init.sql");
     await run(initSql); 
 
-    // 2. Perform the actual query
     const chatters = await all(
       "SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? ORDER BY messages_sent DESC",
       [broadcasterId]
@@ -118,13 +113,8 @@ export async function getData(userId?: string) {
       origin: userId ? "twitch" : "offline"
     };
   } catch (err: any) {
-    console.error("Chattergrounds DB Failure:", err);
-    // Return exact error to browser for one last check
-    return { 
-      chatters: [], 
-      error: err.message,
-      attemptedPath: path.join(process.cwd(), "data", "db", "queries", "chattergrounds", "init.sql")
-    };
+    console.error("Chattergrounds GET Data Failure:", err);
+    return { chatters: [], error: err.message || "Query failed" };
   }
 }
 
@@ -147,6 +137,6 @@ export async function POST(request: Request) {
     sessionUserId: session?.userId,
   });
 
-  if ("error" in result) return NextResponse.json(result, { status: 400 });
+  if (result && "error" in result) return NextResponse.json(result, { status: 400 });
   return NextResponse.json({ ok: true, data: result });
 }

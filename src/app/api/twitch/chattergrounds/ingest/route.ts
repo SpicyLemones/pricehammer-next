@@ -1,6 +1,5 @@
 import crypto from "node:crypto";
 import { NextResponse } from "next/server";
-
 import { applyChattergroundsAction, getData, type PersistAction } from "@/app/api/twitch/chattergrounds/route";
 
 type EventSubEnvelope = {
@@ -10,9 +9,14 @@ type EventSubEnvelope = {
 
 function verifySecret(request: Request) {
   const expected = process.env.CHATTERGROUNDS_INGEST_SECRET;
-  if (!expected) return true; // soft allow if no secret configured
+  if (!expected) return true;
   const provided = request.headers.get("x-chattergrounds-secret");
-  return Boolean(provided && crypto.timingSafeEqual(Buffer.from(provided), Buffer.from(expected)));
+  if (!provided) return false;
+  try {
+    return crypto.timingSafeEqual(Buffer.from(provided), Buffer.from(expected));
+  } catch {
+    return false;
+  }
 }
 
 function resolveBroadcasterId(event?: Record<string, any>) {
@@ -28,6 +32,10 @@ function resolveBroadcasterId(event?: Record<string, any>) {
 async function handleNotification(subscriptionType: string, envelope: EventSubEnvelope) {
   const event = envelope.event ?? {};
   const broadcasterId = resolveBroadcasterId(event);
+  
+  // Cast to string for function compatibility
+  const bIdString = typeof broadcasterId === "string" ? broadcasterId : undefined;
+
   const owner =
     event?.broadcaster_user_id || event?.broadcaster_user_login || event?.broadcaster_user_name
       ? {
@@ -62,11 +70,12 @@ async function handleNotification(subscriptionType: string, envelope: EventSubEn
   const results: PersistAction[] = [];
   for (const action of actions) {
     const result = await applyChattergroundsAction(action, {
-      sessionUserId: broadcasterId ?? undefined,
+      sessionUserId: bIdString,
       owner,
       origin: "twitch",
     });
-    if ("error" in result) {
+    
+    if (result && "error" in result) {
       console.error("Chattergrounds ingest failure", action, result.error);
       return NextResponse.json({ error: result.error }, { status: 400 });
     }
@@ -74,10 +83,11 @@ async function handleNotification(subscriptionType: string, envelope: EventSubEn
   }
 
   if (!actions.length) {
-    return NextResponse.json({ ok: true, note: "Event ignored (no supported action derived)" });
+    return NextResponse.json({ ok: true, note: "Event ignored" });
   }
 
-  const data = await getData({ userId: broadcasterId ?? undefined, owner, origin: "twitch" });
+  // FIXED: Passing bIdString directly instead of an object
+  const data = await getData(bIdString);
   return NextResponse.json({ ok: true, applied: results, data });
 }
 
