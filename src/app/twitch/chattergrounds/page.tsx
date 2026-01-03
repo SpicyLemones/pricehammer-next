@@ -95,7 +95,7 @@ export default function ChattergroundsPage() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch("/api/chattergrounds", { cache: "no-store" });
+        const res = await fetch("/api/twitch/chattergrounds", { cache: "no-store" });
         const json = await res.json();
         
         // Use a safe fallback for nested or flat data structures
