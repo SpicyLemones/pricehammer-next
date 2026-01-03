@@ -97,21 +97,34 @@ export async function applyChattergroundsAction(
 
 export async function getData(userId?: string) {
   const broadcasterId = userId || "system";
+  
   try {
+    // 1. MANUALLY LOAD AND RUN INIT.SQL
+    // This bypasses any pathing issues with your 'run' helper
+    const sqlPath = path.join(process.cwd(), "app/lib/sql/chattergrounds/init.sql");
+    const initSql = await fs.readFile(sqlPath, "utf8");
+    await run(initSql); 
+
+    // 2. NOW RUN THE QUERY
     const chatters = await all(
       "SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? ORDER BY messages_sent DESC",
       [broadcasterId]
     );
+
     return {
       updatedAt: new Date().toISOString(),
-      chatters,
+      chatters: chatters || [],
       origin: userId ? "twitch" : "offline"
     };
-  } catch (err) {
-    return { chatters: [], error: "Query failed" };
+  } catch (err: any) {
+    console.error("Chattergrounds DB Failure:", err);
+    return { 
+      chatters: [], 
+      error: err.message,
+      path_attempted: path.join(process.cwd(), "app/lib/sql/chattergrounds/init.sql")
+    };
   }
 }
-
 export async function GET() {
   const session = await getValidSession();
   const data = await getData(session?.userId);
