@@ -35,20 +35,9 @@ function verifyTwitchSignature({ body, headers }: { body: string; headers: Heade
   }
 }
 
-function pickBestChatterName(login?: string | null, displayName?: string | null, id?: string | null) {
-  // I recommend storing login in your `name` field (stable + nice for URLs)
-  // and optionally storing display name separately if you have a column.
-  return login || displayName || id || "Unknown";
-}
-
 async function handleNotification(subscriptionType: string, envelope: EventSubEnvelope) {
   const event = envelope.event ?? {};
-
-  // Broadcaster ID can vary per event type
-  const broadcasterId =
-    event.broadcaster_user_id ||
-    event.broadcaster_id ||
-    event.broadcaster?.user_id;
+  const broadcasterId = event.broadcaster_user_id || event.broadcaster_id || event.broadcaster?.user_id;
 
   if (!broadcasterId) {
     return NextResponse.json({ error: "No broadcaster ID" }, { status: 400 });
@@ -56,12 +45,10 @@ async function handleNotification(subscriptionType: string, envelope: EventSubEn
 
   const actions: PersistAction[] = [];
 
-  // --- CHAT MESSAGES ---
   if (subscriptionType === "channel.chat.message") {
     const chatterId = event.chatter_user_id as string | undefined;
-    const chatterLogin = event.chatter_user_login as string | undefined; // lowercase login
-    const chatterDisplayName = event.chatter_user_name as string | undefined; // display name (caps)
-
+    const chatterLogin = event.chatter_user_login as string | undefined;
+    const chatterDisplayName = event.chatter_user_name as string | undefined;
     const text = event.message?.text as string | undefined;
 
     if (chatterId && text) {
@@ -71,15 +58,10 @@ async function handleNotification(subscriptionType: string, envelope: EventSubEn
         message: text,
         chatterLogin,
         chatterDisplayName,
-        // if you ever want it:
-        // messageId: event.message_id,
       });
     }
-  }
-
-  // --- BANS / TIMEOUTS ---
+  } 
   else if (subscriptionType === "channel.ban") {
-    // channel.ban event commonly uses: user_id, user_login, user_name
     const chatterId = event.user_id as string | undefined;
     const chatterLogin = event.user_login as string | undefined;
     const chatterDisplayName = event.user_name as string | undefined;
@@ -94,13 +76,7 @@ async function handleNotification(subscriptionType: string, envelope: EventSubEn
     }
   }
 
-  // Execute Database Actions
   for (const action of actions) {
-    // Optional: ensure a name exists even if Twitch didn’t send it for some reason
-    if (action.chatterId && !action.chatterLogin && !action.chatterDisplayName) {
-      // no-op; keep as-is
-    }
-
     await applyChattergroundsAction(action, {
       sessionUserId: broadcasterId,
       origin: "twitch",
@@ -114,7 +90,6 @@ export async function POST(request: Request) {
   const rawBody = await request.text();
   const headers = request.headers;
 
-  // 1) Verify signature (applies to challenge + notifications)
   if (!verifyTwitchSignature({ body: rawBody, headers })) {
     console.error("❌ Invalid Twitch Signature");
     return new Response("Unauthorized", { status: 401 });
@@ -128,29 +103,17 @@ export async function POST(request: Request) {
   }
 
   const messageType = headers.get("twitch-eventsub-message-type");
-  const subscriptionType =
-    headers.get("twitch-eventsub-subscription-type") ??
-    body.subscription?.type ??
-    "";
+  const subscriptionType = headers.get("twitch-eventsub-subscription-type") ?? body.subscription?.type ?? "";
 
-  // 2) Verification handshake
   if (messageType === "webhook_callback_verification") {
-    console.log("✅ Responding to Twitch Verification Challenge");
     return new Response(body.challenge ?? "", {
       status: 200,
       headers: { "Content-Type": "text/plain" },
     });
   }
 
-  // 3) Data notification
   if (messageType === "notification") {
     return handleNotification(subscriptionType, body);
-  }
-
-  // Nice to handle these explicitly (optional)
-  if (messageType === "revocation") {
-    console.warn("⚠️ Twitch subscription revoked:", subscriptionType);
-    return NextResponse.json({ ok: true, revoked: true });
   }
 
   return new Response("OK", { status: 200 });

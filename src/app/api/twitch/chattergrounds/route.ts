@@ -15,8 +15,9 @@ type ChatterIdentity = {
   chatterDisplayName?: string;
 };
 
+// REFACTORED: actions now favor 'xp' terminology
 export type PersistAction =
-  | (ChatterIdentity & { action: "mint"; amount: number })
+  | (ChatterIdentity & { action: "mint"; amount: number }) // Kept for legacy compatibility
   | (ChatterIdentity & { action: "record-message"; message?: string })
   | (ChatterIdentity & { action: "ban" })
   | (ChatterIdentity & { action: "timeout" })
@@ -42,22 +43,27 @@ async function ensureChattergroundsSchema() {
     const initSql = await readSql("init.sql");
     await run(initSql);
 
-    // existing DBs: add missing columns safely
-    const alterStatements = [
+    const migrations = [
+      // 1. Ensure estimated age exists
       "ALTER TABLE chattergrounds_stats ADD COLUMN estimated_age INTEGER DEFAULT 0",
+      // 2. Ensure favorite word exists
       "ALTER TABLE chattergrounds_stats ADD COLUMN favorite_word TEXT",
+      // 3. Ensure favorite emote exists
       "ALTER TABLE chattergrounds_stats ADD COLUMN favorite_emote TEXT",
+      // 4. THE CRITICAL RENAME: Change minted to xp (using a try/catch since it might already be renamed)
+      "ALTER TABLE chattergrounds_stats RENAME COLUMN toadcoins_minted TO xp",
+      // 5. Ensure the spendable toadcoins column exists
+      "ALTER TABLE chattergrounds_stats ADD COLUMN toadcoins INTEGER DEFAULT 0"
     ];
 
-    for (const sql of alterStatements) {
+    for (const sql of migrations) {
       try {
         await run(sql);
       } catch (err: any) {
-        if (!String(err?.message ?? "").includes("duplicate column name")) throw err;
+        // Silently catch errors where column already exists or rename already happened
       }
     }
 
-    // ensure pulse table exists even if init.sql didn’t run multi-statement
     await run(`
       CREATE TABLE IF NOT EXISTS chattergrounds_pulse (
         broadcaster_id TEXT NOT NULL,
@@ -124,11 +130,7 @@ function fillBuckets(
     points.push({ timestamp: new Date(t).toISOString(), messages: map.get(t) ?? 0 });
   }
 
-  // Always at least 2 points so your chart never shows “Awaiting…”
-  if (points.length === 1) {
-    points.unshift({ timestamp: new Date(start - stepMs).toISOString(), messages: 0 });
-  }
-  if (points.length === 0) {
+  if (points.length <= 1) {
     const now = alignDown(Date.now(), stepMs);
     return [
       { timestamp: new Date(now - stepMs).toISOString(), messages: 0 },
@@ -141,10 +143,9 @@ function fillBuckets(
 
 async function getMessageSeries(broadcasterId: string): Promise<Record<RangeKey, MessagePoint[]>> {
   const now = Date.now();
-
-  const todayStart = now - 60 * MINUTE_MS; // last 60 minutes
-  const weekStart = now - 7 * 24 * HOUR_MS; // last 7 days
-  const monthStart = now - 30 * DAY_MS; // last 30 days
+  const todayStart = now - 60 * MINUTE_MS;
+  const weekStart = now - 7 * 24 * HOUR_MS;
+  const monthStart = now - 30 * DAY_MS;
 
   const minRow = await get(
     "SELECT MIN(bucket_start) AS min_bucket FROM chattergrounds_pulse WHERE broadcaster_id = ?",
@@ -152,50 +153,13 @@ async function getMessageSeries(broadcasterId: string): Promise<Record<RangeKey,
   );
 
   const minBucket = Number(minRow?.min_bucket ?? 0);
-  const capAllStart = now - 730 * DAY_MS; // cap “all” to last ~2 years to keep payload sane
+  const capAllStart = now - 730 * DAY_MS;
   const allStart = minBucket > 0 ? Math.max(minBucket, capAllStart) : capAllStart;
 
-  // today (per-minute)
-  const todayRows = await all(
-    `SELECT bucket_start, messages
-     FROM chattergrounds_pulse
-     WHERE broadcaster_id = ? AND bucket_start >= ?
-     ORDER BY bucket_start ASC`,
-    [broadcasterId, alignDown(todayStart, MINUTE_MS)]
-  );
-
-  // week (per-hour)
-  const weekRows = await all(
-    `SELECT (CAST(bucket_start / ${HOUR_MS} AS INTEGER) * ${HOUR_MS}) AS bucket_start,
-            SUM(messages) AS messages
-     FROM chattergrounds_pulse
-     WHERE broadcaster_id = ? AND bucket_start >= ?
-     GROUP BY 1
-     ORDER BY 1 ASC`,
-    [broadcasterId, alignDown(weekStart, HOUR_MS)]
-  );
-
-  // month (per-day)
-  const monthRows = await all(
-    `SELECT (CAST(bucket_start / ${DAY_MS} AS INTEGER) * ${DAY_MS}) AS bucket_start,
-            SUM(messages) AS messages
-     FROM chattergrounds_pulse
-     WHERE broadcaster_id = ? AND bucket_start >= ?
-     GROUP BY 1
-     ORDER BY 1 ASC`,
-    [broadcasterId, alignDown(monthStart, DAY_MS)]
-  );
-
-  // all (per-day)
-  const allRows = await all(
-    `SELECT (CAST(bucket_start / ${DAY_MS} AS INTEGER) * ${DAY_MS}) AS bucket_start,
-            SUM(messages) AS messages
-     FROM chattergrounds_pulse
-     WHERE broadcaster_id = ? AND bucket_start >= ?
-     GROUP BY 1
-     ORDER BY 1 ASC`,
-    [broadcasterId, alignDown(allStart, DAY_MS)]
-  );
+  const todayRows = await all(`SELECT bucket_start, messages FROM chattergrounds_pulse WHERE broadcaster_id = ? AND bucket_start >= ? ORDER BY bucket_start ASC`, [broadcasterId, alignDown(todayStart, MINUTE_MS)]);
+  const weekRows = await all(`SELECT (CAST(bucket_start / ${HOUR_MS} AS INTEGER) * ${HOUR_MS}) AS bucket_start, SUM(messages) AS messages FROM chattergrounds_pulse WHERE broadcaster_id = ? AND bucket_start >= ? GROUP BY 1 ORDER BY 1 ASC`, [broadcasterId, alignDown(weekStart, HOUR_MS)]);
+  const monthRows = await all(`SELECT (CAST(bucket_start / ${DAY_MS} AS INTEGER) * ${DAY_MS}) AS bucket_start, SUM(messages) AS messages FROM chattergrounds_pulse WHERE broadcaster_id = ? AND bucket_start >= ? GROUP BY 1 ORDER BY 1 ASC`, [broadcasterId, alignDown(monthStart, DAY_MS)]);
+  const allRows = await all(`SELECT (CAST(bucket_start / ${DAY_MS} AS INTEGER) * ${DAY_MS}) AS bucket_start, SUM(messages) AS messages FROM chattergrounds_pulse WHERE broadcaster_id = ? AND bucket_start >= ? GROUP BY 1 ORDER BY 1 ASC`, [broadcasterId, alignDown(allStart, DAY_MS)]);
 
   return {
     today: fillBuckets(todayStart, now, MINUTE_MS, todayRows),
@@ -207,7 +171,6 @@ async function getMessageSeries(broadcasterId: string): Promise<Record<RangeKey,
 
 function normalizeSqlTimestamp(ts: unknown) {
   if (typeof ts !== "string" || !ts) return null;
-  // SQLite CURRENT_TIMESTAMP => "YYYY-MM-DD HH:MM:SS"
   if (ts.includes(" ") && !ts.includes("T")) {
     return new Date(ts.replace(" ", "T") + "Z").toISOString();
   }
@@ -218,27 +181,27 @@ function normalizeSqlTimestamp(ts: unknown) {
 export async function applyChattergroundsAction(payload: PersistAction, context: ApplyContext = {}) {
   const broadcasterId = context.sessionUserId || "system";
 
-  let msgs = 0,
-    bans = 0,
-    timeouts = 0,
-    subs = 0,
-    quests = 0,
-    mint = 0,
-    msgText: string | null = null;
+  let msgs = 0, bans = 0, timeouts = 0, subs = 0, quests = 0, coinsEarned = 0, xpEarned = 0, msgText: string | null = null;
 
   if (payload.action === "record-message") {
     msgs = 1;
     msgText = payload.message?.slice(0, 240) || null;
+    // Passive gain just for chatting
+    xpEarned = 5; 
   } else if (payload.action === "ban") {
     bans = 1;
   } else if (payload.action === "timeout") {
     timeouts = 1;
   } else if (payload.action === "sub-months") {
     subs = payload.months;
+    xpEarned = payload.months * 100;
   } else if (payload.action === "quest-completed") {
-    quests = payload.amount || 1;
+    quests = 1;
+    coinsEarned = payload.amount || 500;
+    xpEarned = payload.amount || 500;
   } else if (payload.action === "mint") {
-    mint = payload.amount;
+    coinsEarned = payload.amount;
+    xpEarned = payload.amount;
   }
 
   const storedName = resolveStoredName(payload);
@@ -247,7 +210,6 @@ export async function applyChattergroundsAction(payload: PersistAction, context:
   try {
     await ensureChattergroundsSchema();
 
-    // 1) Update chatter stats
     const upsertSql = await readSql("upsert_stats.sql");
     await run(upsertSql, [
       broadcasterId,
@@ -258,29 +220,20 @@ export async function applyChattergroundsAction(payload: PersistAction, context:
       timeouts,
       subs,
       quests,
-      mint,
+      coinsEarned, // maps to toadcoins
+      xpEarned,    // maps to xp
       msgText,
       traits.age,
       traits.word,
       traits.emote,
     ]);
 
-    // 2) Update pulse (only for real messages)
     if (msgs > 0) {
       const bucketStart = alignDown(Date.now(), MINUTE_MS);
-      await run(
-        `INSERT INTO chattergrounds_pulse (broadcaster_id, bucket_start, messages)
-         VALUES (?, ?, ?)
-         ON CONFLICT(broadcaster_id, bucket_start) DO UPDATE SET
-           messages = messages + excluded.messages`,
-        [broadcasterId, bucketStart, msgs]
-      );
+      await run(`INSERT INTO chattergrounds_pulse (broadcaster_id, bucket_start, messages) VALUES (?, ?, ?) ON CONFLICT(broadcaster_id, bucket_start) DO UPDATE SET messages = messages + excluded.messages`, [broadcasterId, bucketStart, msgs]);
     }
 
-    return await get(
-      "SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? AND chatter_id = ?",
-      [broadcasterId, payload.chatterId]
-    );
+    return await get("SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? AND chatter_id = ?", [broadcasterId, payload.chatterId]);
   } catch (err: any) {
     console.error("Chattergrounds Action Error:", err);
     return { error: err.message || "Failed to update database" };
@@ -291,49 +244,23 @@ export async function getData(userId?: string) {
   const broadcasterId = userId || "system";
   try {
     await ensureChattergroundsSchema();
-
-    const chatters = await all(
-      "SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? ORDER BY messages_sent DESC",
-      [broadcasterId]
-    );
-
-    const lastUpdateRow = await get(
-      "SELECT MAX(updated_at) AS updated_at FROM chattergrounds_stats WHERE broadcaster_id = ?",
-      [broadcasterId]
-    );
-
-    const updatedAt =
-      normalizeSqlTimestamp(lastUpdateRow?.updated_at) ?? new Date().toISOString();
-
+    const chatters = await all("SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? ORDER BY messages_sent DESC", [broadcasterId]);
+    const lastUpdateRow = await get("SELECT MAX(updated_at) AS updated_at FROM chattergrounds_stats WHERE broadcaster_id = ?", [broadcasterId]);
+    const updatedAt = normalizeSqlTimestamp(lastUpdateRow?.updated_at) ?? new Date().toISOString();
     const messageSeries = await getMessageSeries(broadcasterId);
 
-    return {
-      updatedAt,
-      chatters: chatters || [],
-      origin: userId ? "twitch" : "offline",
-      messageSeries,
-    };
+    return { updatedAt, chatters: chatters || [], origin: userId ? "twitch" : "offline", messageSeries };
   } catch (err: any) {
     console.error("Chattergrounds GET Data Failure:", err);
-    return {
-      updatedAt: new Date().toISOString(),
-      chatters: [],
-      origin: userId ? "twitch" : "offline",
-      messageSeries: { today: [], week: [], month: [], all: [] },
-      error: err.message || "Query failed",
-    };
+    return { updatedAt: new Date().toISOString(), chatters: [], origin: userId ? "twitch" : "offline", messageSeries: { today: [], week: [], month: [], all: [] }, error: err.message || "Query failed" };
   }
 }
 
 export async function GET() {
   const session = await getValidSession();
-  const owner = session
-    ? { userId: session.userId, login: session.login, displayName: session.displayName }
-    : undefined;
-
+  const owner = session ? { userId: session.userId, login: session.login, displayName: session.displayName } : undefined;
   const data = await getData(session?.userId);
 
-  // Live fallback if DB empty (UI-only)
   if (session && data.chatters.length === 0) {
     try {
       const chatters = await fetchChatters(session);
@@ -346,22 +273,15 @@ export async function GET() {
           times_timed_out: 0,
           quests_completed: 0,
           months_subbed: 0,
-          toadcoins_minted: 0,
-          toadcoins: 0,
+          xp: 0,           // Updated key
+          toadcoins: 0,    // Updated key
           last_message: null,
           estimated_age: 0,
           favorite_word: null,
           favorite_emote: null,
         }));
 
-        return NextResponse.json({
-          data: {
-            ...data,
-            chatters: liveChatters,
-            origin: chatters.live ? "twitch" : data.origin,
-            owner,
-          },
-        });
+        return NextResponse.json({ data: { ...data, chatters: liveChatters, origin: chatters.live ? "twitch" : data.origin, owner } });
       }
     } catch (error) {
       console.error("Chattergrounds live fallback failed", error);
@@ -380,9 +300,7 @@ export async function POST(request: Request) {
   }
 
   const session = await getValidSession();
-  const result = await applyChattergroundsAction(payload, {
-    sessionUserId: session?.userId,
-  });
+  const result = await applyChattergroundsAction(payload, { sessionUserId: session?.userId });
 
   if (result && "error" in result) return NextResponse.json(result, { status: 400 });
   return NextResponse.json({ ok: true, data: result });

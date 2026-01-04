@@ -44,7 +44,8 @@ type ChatterProfile = {
     estimatedAge: number;
     monthsSubbed: number;
     donosGifted: number;
-    toadcoins_minted: number; // For quests
+    toadcoins: number; // Spendable currency from DB
+    xp: number;        // Permanent progress from DB
     favoriteWord: string | null;
     favoriteEmote: string | null;
   };
@@ -96,6 +97,9 @@ function getChatterIdentity(msgs: number, timeouts: number, bans: number) {
   return "Chaotic Element";
 }
 
+/**
+ * REFACTORED: Now uses raw XP value from DB for leveling.
+ */
 function getLevelInfo(totalXp: number) {
   let level = 0;
   let currentThreshold = 500;
@@ -105,7 +109,12 @@ function getLevelInfo(totalXp: number) {
     level++;
     currentThreshold = Math.floor(currentThreshold * 1.2);
   }
-  return { level, progress: (remainingXpInLevel / currentThreshold) * 100, currentThreshold, remainingXp: Math.floor(remainingXpInLevel) };
+  return { 
+    level, 
+    progress: (remainingXpInLevel / currentThreshold) * 100, 
+    currentThreshold, 
+    remainingXp: Math.floor(remainingXpInLevel) 
+  };
 }
 
 export default function ChattergroundsPage() {
@@ -126,7 +135,6 @@ export default function ChattergroundsPage() {
   useEffect(() => { audioRef.current = new Audio("/audio/lvlup.mp3"); }, []);
   useEffect(() => { const t = setInterval(() => setNowTick(Date.now()), 10000); return () => clearInterval(t); }, []);
 
-  // Click outside to close
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
@@ -151,16 +159,17 @@ export default function ChattergroundsPage() {
         flair: (c.messages_sent ?? 0) > 100 ? "regular" : "new",
         lastMessage: c.last_message ?? c.lastMessage ?? null,
         stats: {
-          timesBanned: c.times_banned ?? c.timesBanned ?? 0,
-          timesTimedOut: c.times_timed_out ?? c.timesTimedOut ?? 0,
-          questsCompleted: c.quests_completed ?? c.questsCompleted ?? 0,
-          messagesSent: c.messages_sent ?? c.messagesSent ?? 0,
-          estimatedAge: c.estimated_age ?? c.estimatedAge ?? 20,
-          monthsSubbed: c.months_subbed ?? c.monthsSubbed ?? 0,
-          donosGifted: c.donos_gifted ?? c.donosGifted ?? 0,
-          toadcoins_minted: c.toadcoins_minted ?? 0, // toadcoin stuff
-          favoriteWord: c.favorite_word ?? c.favoriteWord ?? "Toad",
-          favoriteEmote: c.favorite_emote ?? c.favoriteEmote ?? "Kappa",
+          timesBanned: c.times_banned ?? 0,
+          timesTimedOut: c.times_timed_out ?? 0,
+          questsCompleted: c.quests_completed ?? 0,
+          messagesSent: c.messages_sent ?? 0,
+          estimatedAge: c.estimated_age ?? 20,
+          monthsSubbed: c.months_subbed ?? 0,
+          donosGifted: c.donos_gifted ?? 0,
+          toadcoins: c.toadcoins ?? 0,
+          xp: c.xp ?? 0,
+          favoriteWord: c.favorite_word ?? "Toad",
+          favoriteEmote: c.favorite_emote ?? "Kappa",
         },
       }));
       setData({ updatedAt: rawData.updatedAt || new Date().toISOString(), origin: rawData.origin || "twitch", chatters: formatted, messageSeries: rawData.messageSeries || {} });
@@ -177,7 +186,8 @@ export default function ChattergroundsPage() {
     if (!selectedChatter || !data) { prevLevelRef.current = null; return; }
     const currentData = data.chatters.find(c => c.id === selectedChatter.id);
     if (!currentData) return;
-    const { level } = getLevelInfo(((currentData.stats.messagesSent * 5) + (currentData.stats.toadcoins_minted)) * 0.85);
+
+    const { level } = getLevelInfo(currentData.stats.xp);
     
     if (prevLevelRef.current !== null && level > prevLevelRef.current) { 
       audioRef.current?.play().catch(() => {});
@@ -186,11 +196,11 @@ export default function ChattergroundsPage() {
     }
     prevLevelRef.current = level;
   }, [data, selectedChatter]);
-
+  
   const levelDisplay = useMemo(() => {
     if (!selectedChatter || !data) return null;
     const currentData = data.chatters.find(c => c.id === selectedChatter.id) || selectedChatter;
-    return getLevelInfo((currentData.stats.messagesSent * 5) * 0.85);
+    return getLevelInfo(currentData.stats.xp);
   }, [data, selectedChatter]);
 
   const series = useMemo(() => data?.messageSeries?.[range] ?? [], [data, range]);
@@ -221,23 +231,14 @@ export default function ChattergroundsPage() {
   return (
   <div className="relative min-h-screen bg-slate-950 text-slate-50 font-sans overflow-x-hidden">
     
-    {/* --- VIDEO BACKGROUND --- */}
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="h-full w-full object-cover blur-sm scale-110"
-      >
+      <video autoPlay muted loop playsInline className="h-full w-full object-cover blur-sm scale-110">
         <source src="/videos/chattergrounds.mp4" type="video/mp4" />
       </video>
-      {/* Dark overlay to ensure text readability */}
       <div className="absolute inset-0 bg-slate-950/60" />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950" />
     </div>
 
-    {/* --- FIXED BACK BUTTON --- */}
     <Link 
       href="/twitch" 
       className="fixed left-6 top-6 z-50 flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/80 px-5 py-2 text-xs font-bold text-slate-200 backdrop-blur-md hover:border-emerald-500/50 hover:text-emerald-400 transition-all shadow-lg active:scale-95"
@@ -246,10 +247,7 @@ export default function ChattergroundsPage() {
       BACK TO TOYBOX
     </Link>
 
-    {/* --- MAIN CONTENT WRAPPER --- */}
     <div className="relative z-10 p-6 lg:p-10">
-      
-      {/* HEADER */}
       <header className="mb-8 flex flex-wrap justify-between items-end gap-6 pt-16">
         <div>
           <h1 className="text-6xl font-black tracking-wider mb-2 drop-shadow-2xl">CHATTERGROUNDS</h1>
@@ -258,10 +256,7 @@ export default function ChattergroundsPage() {
               <Sparkles size={12} className="text-amber-400" /> 
               Updated {data ? formatTimeAgo(data.updatedAt, nowTick) : "just now"}
             </span>
-            <button 
-              onClick={() => load()} 
-              className="inline-flex items-center gap-1.5 rounded border border-slate-800 bg-slate-900/50 px-2 py-1 hover:text-emerald-400 hover:border-emerald-500/30 transition-colors"
-            >
+            <button onClick={() => load()} className="inline-flex items-center gap-1.5 rounded border border-slate-800 bg-slate-900/50 px-2 py-1 hover:text-emerald-400 hover:border-emerald-500/30 transition-colors">
               <RefreshCw size={12} className={clsx(refreshing && "animate-spin")} /> 
               {refreshing ? "refreshing" : "refresh"}
             </button>
@@ -270,7 +265,6 @@ export default function ChattergroundsPage() {
       </header>
 
       <div className="flex flex-col gap-6">
-        {/* ROW 1: YAP GRAPH & PULSE */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 bg-slate-900/60 border border-slate-800 p-8 rounded-[2.5rem] backdrop-blur-sm">
             <div className="flex justify-between items-center mb-8">
@@ -279,14 +273,7 @@ export default function ChattergroundsPage() {
               </h3>
               <div className="flex gap-1 bg-slate-950 p-1.5 rounded-full border border-slate-800">
                 {(Object.keys(rangeLabels) as RangeKey[]).map((k) => (
-                  <button 
-                    key={k} 
-                    onClick={() => setRange(k)} 
-                    className={clsx(
-                      "px-4 py-1.5 text-[10px] font-black rounded-full transition-all", 
-                      range === k ? "bg-emerald-500 text-slate-950" : "text-slate-500 hover:text-slate-300"
-                    )}
-                  >
+                  <button key={k} onClick={() => setRange(k)} className={clsx("px-4 py-1.5 text-[10px] font-black rounded-full transition-all", range === k ? "bg-emerald-500 text-slate-950" : "text-slate-500 hover:text-slate-300")}>
                     {rangeLabels[k].toUpperCase()}
                   </button>
                 ))}
@@ -297,9 +284,7 @@ export default function ChattergroundsPage() {
               <svg className="w-full h-full overflow-visible" viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}>
                 {[0, 0.5, 1].map((v) => (
                   <g key={v}>
-                    <text x={GRAPH_PADDING.left - 15} y={GRAPH_PADDING.top + CHART_H * (1 - v) + 4} textAnchor="end" className="fill-slate-500 text-[10px] font-mono font-bold">
-                      {Math.round(maxMessages * v)}
-                    </text>
+                    <text x={GRAPH_PADDING.left - 15} y={GRAPH_PADDING.top + CHART_H * (1 - v) + 4} textAnchor="end" className="fill-slate-500 text-[10px] font-mono font-bold">{Math.round(maxMessages * v)}</text>
                     <line x1={GRAPH_PADDING.left} y1={GRAPH_PADDING.top + CHART_H * (1 - v)} x2={VIEW_W - GRAPH_PADDING.right} y2={GRAPH_PADDING.top + CHART_H * (1 - v)} stroke="#334155" strokeDasharray="4 4" opacity="0.5" />
                   </g>
                 ))}
@@ -320,14 +305,12 @@ export default function ChattergroundsPage() {
           </div>
         </div>
 
-        {/* ROW 2: VERTICAL LEADERBOARDS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <VerticalBoard title="Top Chatters" icon={MessageSquare} items={leaderboards.chatters} stat="messagesSent" unit="msgs" onSelect={setSelectedChatter} />
           <VerticalBoard title="Ban Leaderboard" icon={Trophy} items={leaderboards.bans} stat="timesBanned" unit="bans" onSelect={setSelectedChatter} />
           <VerticalBoard title="Timeout Leaderboard" icon={Medal} items={leaderboards.timeouts} stat="timesTimedOut" unit="timeouts" onSelect={setSelectedChatter} />
         </div>
 
-        {/* ROW 3: ROSTER */}
         <div className="bg-slate-900/60 border border-slate-800 p-10 rounded-[2.5rem] backdrop-blur-sm">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
             <h3 className="font-black text-2xl uppercase flex items-center gap-3">
@@ -335,21 +318,12 @@ export default function ChattergroundsPage() {
             </h3>
             <div className="relative w-full md:w-96">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
-              <input 
-                type="text" 
-                placeholder="Search user..." 
-                className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all" 
-                onChange={(e) => setSearchTerm(e.target.value)} 
-              />
+              <input type="text" placeholder="Search user..." className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all" onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-h-[400px] overflow-y-auto pr-4 custom-scrollbar">
             {filteredRoster.map((c) => (
-              <button 
-                key={c.id} 
-                onClick={() => setSelectedChatter(c)} 
-                className="p-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-left hover:border-emerald-500 hover:bg-slate-900 transition-all active:scale-95 group"
-              >
+              <button key={c.id} onClick={() => setSelectedChatter(c)} className="p-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-left hover:border-emerald-500 hover:bg-slate-900 transition-all active:scale-95 group">
                 <p className="text-sm font-black truncate uppercase group-hover:text-emerald-400">{c.name}</p>
                 <p className="text-[10px] text-slate-600 font-mono font-bold uppercase">{formatNumber(c.stats.messagesSent)} MSGS</p>
               </button>
@@ -359,7 +333,7 @@ export default function ChattergroundsPage() {
       </div>
     </div>
 
-    {/* MODAL: PROFILE INTELLIGENCE (Layered above everything) */}
+    {/* MODAL: PROFILE INTELLIGENCE */}
     {selectedChatter && levelDisplay && (
       <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6 overflow-y-auto animate-in fade-in duration-300">
         <div ref={modalRef} className="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[3rem] p-10 relative animate-in zoom-in-95 shadow-2xl my-auto">
@@ -369,9 +343,7 @@ export default function ChattergroundsPage() {
                 <h2 className="text-5xl lg:text-6xl font-black tracking-wider uppercase">{selectedChatter.name}</h2>
                 <div className="relative group">
                   {showLevelUpAnim && (
-                    <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-amber-400 font-black italic text-2xl whitespace-nowrap animate-bounce pointer-events-none drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]">
-                      LEVEL UP!
-                    </span>
+                    <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-amber-400 font-black italic text-2xl whitespace-nowrap animate-bounce pointer-events-none drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]">LEVEL UP!</span>
                   )}
                   <div className="bg-emerald-500 text-slate-950 px-3 py-1 rounded-lg text-xl font-black italic shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-transform duration-300 group-hover:scale-110">
                     LVL {levelDisplay.level}
@@ -414,7 +386,7 @@ export default function ChattergroundsPage() {
             <StatTile label="Messages" val={selectedChatter.stats.messagesSent} color="text-emerald-400" />
             <StatTile label="Bans" val={selectedChatter.stats.timesBanned} color="text-red-400" />
             <StatTile label="Timeouts" val={selectedChatter.stats.timesTimedOut} color="text-orange-400" />
-            <StatTile icon={Coins} label="Net Worth" val={(selectedChatter.stats.messagesSent * 5) + (selectedChatter.stats.toadcoins_minted || 0)} suffix=" TC" color="text-amber-400" />
+            <StatTile icon={Coins} label="Toadcoins" val={selectedChatter.stats.toadcoins} suffix=" TC" color="text-amber-400" />
             <StatTile icon={Heart} label="Months Subbed" val={selectedChatter.stats.monthsSubbed} color="text-indigo-400" />
             <StatTile icon={Gift} label="Donos Gifted" val={selectedChatter.stats.donosGifted} color="text-pink-400" />
             <StatTile icon={Activity} label="Fav Activity" val={selectedChatter.stats.favoriteWord} color="text-slate-200" expandable />
