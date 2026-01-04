@@ -224,48 +224,40 @@ export function StreamQuestClient() {
   }
 
   async function completeQuest(id: string) {
-    if (!data) return;
-    setCompletingId(id);
-    setError(null);
+  if (!data || completingId) return; // Prevent double-clicks
+  
+  setCompletingId(id);
+  setError(null);
 
-    try {
-      const res = await fetch("/api/twitch/stream-quests", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-      });
+  try {
+    const res = await fetch("/api/twitch/stream-quests", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // Important: Send the quest ID so the server knows which one to mark
+      body: JSON.stringify({ id }), 
+    });
 
-      if (!res.ok) throw new Error("Failed to complete quest");
+    const json = await res.json();
 
-      const json = (await res.json()) as QuestResponse & {
-        quest?: StreamQuest;
-        recipients?: string[];
-      };
-
-      setData({
-        date: json.date,
-        generatedAt: json.generatedAt,
-        quests: json.quests,
-        ledger: json.ledger,
-        audience: json.audience,
-      });
-
-      const recipientText =
-        json.recipients && json.recipients.length > 0
-          ? `Sent ${json.quest?.reward ?? 500} toadcoins to ${json.recipients.length} chatter${json.recipients.length === 1 ? "" : "s"}.`
-          : "Marked as complete.";
-
-      triggerToast(recipientText);
-      setCelebratingId(id);
-      setTimeout(() => setCelebratingId(null), 1200);
-      void playQuestCompletionAudio();
-    } catch (err) {
-      console.error(err);
-      setError("Could not mark the quest as completed.");
-    } finally {
-      setCompletingId(null);
+    if (!res.ok) {
+      // If the server says "No", we show the error but DON'T refresh
+      throw new Error(json.error || "Server rejected the claim");
     }
+
+    // Success: Update the local state so they don't reshuffle
+    setData(json); 
+    setCelebratingId(id);
+    void playQuestCompletionAudio();
+    triggerToast("Quest Claimed!");
+
+  } catch (err: any) {
+    console.error("Claim failed:", err);
+    triggerToast(`Error: ${err.message}`); 
+    // We do NOT reload here, so the quests stay where they are
+  } finally {
+    setCompletingId(null);
   }
+}
 
   // --- Logic Guards ---
   const isLive = !!data?.audience?.live;

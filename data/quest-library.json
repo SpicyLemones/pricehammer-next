@@ -6,95 +6,275 @@
       "title": "Prime Beggar",
       "prompt": "Successfully beg for {{count}} Twitch Prime sub{{plural:count:s}}.",
       "reward": 500,
-      "variables": [
-        { "key": "count", "type": "range", "min": 1, "max": 3 }
-      ]
+      "variables": [{ "key": "count", "type": "range", "min": 1, "max": 5 }]
     },
     {
-      "id": "ban-random",
-      "category": "ban",
-      "title": "See You Later Bozo",
-      "prompt": "Ban {{chatter}} from your chat (get fucked lmao).",
-      "reward": 500,
-      "variables": [
-        { "key": "chatter", "type": "chatter" }
-      ]
-    },
-    {
-      "id": "timeout-random",
-      "category": "timeout",
-      "title": "Collateral Damage",
-      "prompt": "Time out {{chatter}} for {{minutes}} minute{{plural:minutes:s}}.",
-      "reward": 500,
-      "variables": [
-        { "key": "chatter", "type": "chatter" },
-        { "key": "minutes", "type": "range", "min": 1, "max": 20 }
-      ]
-    },
-    {
-      "id": "stream-hours",
-      "category": "stream-time",
-      "title": "Stay Live",
-      "prompt": "Stream for more than {{hours}} hour{{plural:hours:s}}.",
-      "reward": 500,
-      "variables": [
-        { "key": "hours", "type": "range", "min": 1, "max": 5 }
-      ]
-    },
-    {
-      "id": "insult-random",
+      "id": "nursery-rhyme",
       "category": "insult",
-      "title": "Insult",
-      "prompt": "Insult {{chatter}} in chat.",
-      "reward": 500,
-      "variables": [
-        { "key": "chatter", "type": "chatter" }
-      ]
-    },
-    {
-      "id": "wordle",
-      "category": "wordle",
-      "title": "Wordle Warrior",
-      "prompt": "Complete today’s Wordle on stream.",
+      "title": "Back to Preschool",
+      "prompt": "Sing a full nursery rhyme with maximum enthusiasm on stream.",
       "reward": 500
     },
     {
-      "id": "bandle",
-      "category": "bandle",
-      "title": "Bandle Bard",
-      "prompt": "Complete today’s Bandle on stream.",
-      "reward": 500
-    },
-    {
-      "id": "praise",
-      "category": "love",
-      "title": "My streamer loves me",
-      "prompt": "Praise {{chatter}} in chat.",
-      "reward": 500,
-      "variables": [
-        { "key": "chatter", "type": "chatter" }
-      ]
-    },
-    {
-      "id": "bandle",
-      "category": "bandle",
-      "title": "Dance monkey dance",
-      "prompt": "Do a little jig on stream.",
-      "reward": 500
-    },
-    {
-      "id": "food",
-      "category": "food",
-      "title": "Whale watching",
-      "prompt": "Order a dominoes pizza live on stream.",
-      "reward": 500
-    },
-    {
-      "id": "react",
+      "id": "six-sevens",
       "category": "stream-time",
-      "title": "React Andy",
-      "prompt": "React to a full youtube video",
+      "title": "The Zoomer",
+      "prompt": "Do {{count}} 6-7s in a row on camera without messing up.",
+      "reward": 600,
+      "variables": [{ "key": "count", "type": "range", "min": 1, "max": 10 }]
+    },
+    {
+      "id": "subway-order",
+      "category": "food",
+      "title": "Eat Fresh",
+      "prompt": "Order a Subway sandwich live on stream.",
+      "reward": 750
+    },
+    {
+      "id": "phone-a-friend",
+      "category": "social",
+      "title": "Social Obligation",
+      "prompt": "Phone a friend and tell them you are only calling because a quest told you to.",
+      "reward": 1000
+    },
+    {
+      "id": "water-chug",
+      "category": "food",
+      "title": "Hydro Homie",
+      "prompt": "Chug a full cup of water in one go.",
+      "reward": 300
+    },
+    {
+      "id": "pushups",
+      "category": "physical",
+      "title": "Chat's Personal Trainer",
+      "prompt": "Do {{count}} pushup{{plural:count:s}} on camera.",
+      "reward": 500,
+      "variables": [{ "key": "count", "type": "range", "min": 5, "max": 10 }]
+    },
+    {
+      "id": "game-grind",
+      "category": "stream-time",
+      "title": "Locked In",
+      "prompt": "Spend {{hours}} hour{{plural:hours:s}} playing a single videogame.",
+      "reward": 500,
+      "variables": [{ "key": "hours", "type": "range", "min": 1, "max": 5 }]
+    },
+    {
+      "id": "vtuber-watch",
+      "category": "social",
+      "title": "Degenerate Behavior",
+      "prompt": "Watch a V-Tuber stream on Twitch for {{minutes}} minute{{plural:minutes:s}}.",
+      "reward": 400,
+      "variables": [{ "key": "minutes", "type": "range", "min": 1, "max": 5 }]
+    },
+    {
+      "id": "raid-small-streamer",
+      "category": "social",
+      "title": "The Prophet",
+      "prompt": "Visit a stream with {{viewers}} viewer{{plural:viewers:s}} and tell them you are on a quest.",
+      "reward": 600,
+      "variables": [{ "key": "viewers", "type": "range", "min": 1, "max": 15 }]
+    },
+    {
+      "id": "jumping-jacks",
+      "category": "physical",
+      "title": "Cardio King",
+      "prompt": "Do {{count}} jumping jack{{plural:count:s}}.",
+      "reward": 300,
+      "variables": [{ "key": "count", "type": "range", "min": 1, "max": 10 }]
+    },
+    {
+      "id": "accent-challenge",
+      "category": "insult",
+      "title": "Stereotype Andy",
+      "prompt": "Do a bad Chinese accent for the next {{minutes}} minute{{plural:minutes:s}}.",
+      "reward": 800,
+      "variables": [{ "key": "minutes", "type": "range", "min": 1, "max": 5 }]
+    },
+    {
+      "id": "stare-contest",
+      "category": "stream-time",
+      "title": "Soul Gazer",
+      "prompt": "Stare directly into the camera without blinking for 30 seconds.",
+      "reward": 400
+    },
+    {
+      "id": "compliment-hater",
+      "category": "love",
+      "title": "Kill with Kindness",
+      "prompt": "Give {{chatter}} a genuine, heartfelt compliment.",
+      "reward": 400,
+      "variables": [{ "key": "chatter", "type": "chatter" }]
+    },
+    {
+      "id": "self-roast",
+      "category": "insult",
+      "title": "Self-Reflection",
+      "prompt": "Look in a mirror (or your webcam) and roast yourself for 30 seconds.",
       "reward": 500
+    },
+    {
+      "id": "whisper-mode",
+      "category": "stream-time",
+      "title": "ASMR Streamer",
+      "prompt": "Speak only in a whisper for the next 5 minutes.",
+      "reward": 500
+    },
+    {
+      "id": "balance-act",
+      "category": "physical",
+      "title": "Perfect Balance",
+      "prompt": "Balance a household object on your head for 1 minute while streaming.",
+      "reward": 450
+    },
+    {
+      "id": "desktop-reveal",
+      "category": "insult",
+      "title": "Clean your room",
+      "prompt": "Show your desktop icons and let chat judge you.",
+      "reward": 300
+    },
+    {
+      "id": "karaoke",
+      "category": "bandle",
+      "title": "The Voice",
+      "prompt": "Sing 1 minute of a song chosen by {{chatter}}.",
+      "reward": 800,
+      "variables": [{ "key": "chatter", "type": "chatter" }]
+    },
+    {
+      "id": "plank",
+      "category": "physical",
+      "title": "Core Strength",
+      "prompt": "Hold a plank for {{seconds}} seconds.",
+      "reward": 600,
+      "variables": [{ "key": "seconds", "type": "range", "min": 30, "max": 60 }]
+    },
+    {
+      "id": "twitter-post",
+      "category": "social",
+      "title": "Clout Chaser",
+      "prompt": "Post 'I am a little stinky boy' on Twitter/X right now.",
+      "reward": 500
+    },
+    {
+      "id": "cold-water",
+      "category": "physical",
+      "title": "Wim Hof Method",
+      "prompt": "Splash your face with ice cold water.",
+      "reward": 400
+    },
+    {
+      "id": "cold-beer",
+      "category": "physical",
+      "title": "Crack open a cold one",
+      "prompt": "Chug a can of beer.",
+      "reward": 400
+    },
+    {
+      "id": "blindfolded-typing",
+      "category": "stream-time",
+      "title": "Blind Typist",
+      "prompt": "Type 'The quick brown fox jumps over the lazy dog' with your eyes closed.",
+      "reward": 400
+    },
+    {
+      "id": "vip-betrayal",
+      "category": "ban",
+      "title": "Power Trip",
+      "prompt": "VIP {{chatter}} then immediately remove it 10 seconds later.",
+      "reward": 300,
+      "variables": [{ "key": "chatter", "type": "chatter" }]
+    },
+    {
+      "id": "drawing-prompt",
+      "category": "stream-time",
+      "title": "MS Paint Prodigy",
+      "prompt": "Draw a portrait of {{chatter}} in MS Paint in under 60 seconds.",
+      "reward": 500,
+      "variables": [{ "key": "chatter", "type": "chatter" }]
+    },
+    {
+      "id": "high-kick",
+      "category": "physical",
+      "title": "Ninja Skills",
+      "prompt": "Do a standing high-kick above your waist height.",
+      "reward": 400
+    },
+    {
+      "id": "no-the",
+      "category": "insult",
+      "title": "Vocabulary Restraint",
+      "prompt": "Do not say the word 'the' for the next 3 minutes.",
+      "reward": 700
+    },
+    {
+      "id": "spin-around",
+      "category": "physical",
+      "title": "Vertigo",
+      "prompt": "Spin in your chair {{count}} times then try to walk in a straight line.",
+      "reward": 500,
+      "variables": [{ "key": "count", "type": "range", "min": 5, "max": 10 }]
+    },
+    {
+      "id": "fake-ad",
+      "category": "stream-time",
+      "title": "Sell Out",
+      "prompt": "Do a 1-minute improvised ad read for a brand of toilet paper.",
+      "reward": 600
+    },
+    {
+      "id": "statue",
+      "category": "stream-time",
+      "title": "Is the stream frozen?",
+      "prompt": "Don't move or speak for 60 seconds straight.",
+      "reward": 400
+    },
+    {
+      "id": "shoe-on-head",
+      "category": "cringe",
+      "title": "Old School Internet",
+      "prompt": "Put your shoe on your head for 30 seconds.",
+      "reward": 500
+    },
+    {
+      "id": "chat-commands",
+      "category": "love",
+      "title": "Community Service",
+      "prompt": "Thank every person who has spoken in chat in the last 2 minutes by name.",
+      "reward": 600
+    },
+    {
+      "id": "bad-joke",
+      "category": "insult",
+      "title": "Dad Jokes",
+      "prompt": "Tell a joke so bad that {{chatter}} says '-2' in chat.",
+      "reward": 500,
+      "variables": [{ "key": "chatter", "type": "chatter" }]
+    },
+        {
+      "id": "good-joke",
+      "category": "insult",
+      "title": "Good Jokes",
+      "prompt": "Tell a joke so good that {{chatter}} says '+2' in chat.",
+      "reward": 500,
+      "variables": [{ "key": "chatter", "type": "chatter" }]
+    },
+    {
+      "id": "hug-object",
+      "category": "love",
+      "title": "Lonely Streamer",
+      "prompt": "Give your viewers(camera) a 10 second hug.",
+      "reward": 300
+    },
+    {
+      "id": "compliment-sandwich",
+      "category": "love",
+      "title": "Emotional Rollercoaster",
+      "prompt": "Compliment {{chatter}}, then roast them, then compliment them again.",
+      "reward": 600,
+      "variables": [{ "key": "chatter", "type": "chatter" }]
     }
   ]
 }
