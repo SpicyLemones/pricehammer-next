@@ -633,7 +633,7 @@ function QuestTile({
   celebrating: boolean;
   isActive: boolean;
 }) {
-  const meta = categoryMeta[quest.category];
+  const meta = categoryMeta[quest.category] || categoryMeta["stream-time"];
   const Icon = meta.icon;
   const isCompleted = quest.completed;
 
@@ -643,77 +643,83 @@ function QuestTile({
       onClick={!isCompleted && isActive ? onComplete : undefined}
       disabled={!isActive || isCompleted || completing}
       className={clsx(
-        "group relative isolate h-full w-full max-w-[420px] rounded-[32px] text-left transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200",
-        !isCompleted && isActive ? "hover:-translate-y-1 active:translate-y-0" : "cursor-not-allowed opacity-90"
+        "group relative isolate h-full w-full max-w-[420px] rounded-[32px] text-left transition-all duration-300",
+        // The "Squish" effect on click
+        !isCompleted && isActive 
+          ? "hover:-translate-y-2 active:scale-95 active:rotate-1 cursor-pointer" 
+          : "cursor-not-allowed opacity-90"
       )}
     >
-      <div className="absolute top-6 left-4 z-10 flex items-center gap-3">
-        <span className="rounded-full bg-[#b58200] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-50 shadow-[0_8px_18px_rgba(0,0,0,0.45)]">
+      {/* --- 1. SHIMMER EFFECT LAYER --- */}
+      <div className="pointer-events-none absolute inset-0 z-30 overflow-hidden rounded-[32px]">
+        <div className="absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-transform duration-1000 group-hover:translate-x-[50%] group-hover:opacity-100 group-hover:rotate-12" />
+      </div>
+
+      <div className="absolute top-6 left-4 z-40 flex items-center gap-3">
+        <span className="rounded-full bg-[#b58200] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-50 shadow-lg">
           Daily
         </span>
       </div>
 
       <div className={clsx(
-          "relative flex aspect-[1.5/1] min-h-[220px] w-full overflow-hidden rounded-[26px] bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-5 pb-14 pt-15 shadow-[0_18px_36px_rgba(0,0,0,0.35)]",
-          "before:absolute before:-inset-2 before:-z-10 before:rounded-[30px] before:bg-[radial-gradient(circle_at_center,rgba(222, 174, 161, 0.35),transparent_55%)] before:opacity-70 before:blur-xl before:transition-all before:duration-300",
-          !isCompleted && isActive ? "hover:before:opacity-100 hover:shadow-[0_22px_40px_rgba(0,0,0,0.42)]" : "before:opacity-40"
+          "relative flex aspect-[1.5/1] min-h-[220px] w-full overflow-hidden rounded-[26px] bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-5 pb-14 pt-15 shadow-[0_18px_36px_rgba(0,0,0,0.35)] transition-all duration-500",
+          !isCompleted && isActive 
+            ? "group-hover:shadow-[0_30px_60px_rgba(251,191,36,0.2)] group-hover:border-amber-400/30" 
+            : ""
         )}>
-        <div className="relative z-10 flex flex-1 flex-col gap-3 rounded-2xl border-2 border-[#c48652] bg-[#23354c] px-4 py-4 shadow-inner">
+        
+        {/* --- 2. THE MAIN CONTENT CARD --- */}
+        <div className="relative z-10 flex flex-1 flex-col gap-3 rounded-2xl border-2 border-[#c48652] bg-[#23354c] px-4 py-4 shadow-inner transition-transform duration-500 group-hover:scale-[1.01]">
           <div className="flex items-start gap-3">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#c48652]/60 bg-[#0f1b2b] text-amber-50 shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#c48652]/60 bg-[#0f1b2b] text-amber-50 shadow-md group-hover:rotate-6 transition-transform">
               <Icon className={clsx("h-6 w-6", meta.iconTint)} />
             </div>
 
             <div className="min-w-0 space-y-1">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="break-words text-balance text-[clamp(1rem,0.7vw+0.95rem,1.25rem)] font-semibold leading-snug text-amber-50 drop-shadow-sm">
+                <span className="text-lg font-bold text-amber-50 drop-shadow-sm group-hover:text-white transition-colors">
                   {quest.title}
                 </span>
-                <span className={clsx("rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.22em]", meta.chip)}>
+                <span className={clsx("rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest", meta.chip)}>
                   {meta.label}
                 </span>
               </div>
-              <p className="break-words text-justify text-pretty text-[clamp(0.95rem,0.55vw+0.85rem,1.05rem)] leading-relaxed text-amber-50/80">
+              <p className="text-sm leading-relaxed text-amber-50/70 group-hover:text-amber-50/90 transition-colors">
                 {quest.prompt}
               </p>
             </div>
           </div>
 
-          <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-100/90">
-            <div className="flex items-center gap-2">
-              <Coins className="h-4 w-4 text-amber-200" />
-              <span>{quest.reward ?? 500} Toadcoins</span>
+          <div className="mt-auto flex items-center justify-between pt-2">
+            <div className="flex items-center gap-2 text-xs font-bold text-amber-200">
+              <Coins className="h-4 w-4" />
+              <span>{quest.reward} TOADCOINS</span>
             </div>
-            {completing ? (
-              <div className="flex items-center gap-2 text-amber-200">
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                Processing…
-              </div>
-            ) : isCompleted ? (
-              <div className="flex items-center gap-2 text-emerald-200">
-                <BadgeCheck className="h-3.5 w-3.5" />
-                QUEST COMPLETE
-              </div>
-            ) : isActive ? (
-              <div className="text-amber-50/80">Click to complete</div>
-            ) : (
-              <div className="flex items-center gap-2 text-amber-100/60">
-                <Lock className="h-3.5 w-3.5" />
-                Locked
-              </div>
-            )}
           </div>
         </div>
-        {celebrating ? <CelebrationBurst /> : null}
-        {isCompleted ? (
-          <div className="pointer-events-none absolute inset-0 z-20 rounded-[26px] bg-[#0f1b2b]/70 backdrop-blur-[1px] animate-in fade-in duration-500">
-            <div className="absolute inset-2 rounded-[22px] border-2 border-emerald-300/50" />
-            <div className="relative flex h-full items-center justify-center gap-3 text-emerald-100 drop-shadow">
-              <BadgeCheck className="h-5 w-5" />
-              <span className="text-sm font-black uppercase tracking-[0.28em]">QUEST COMPLETE</span>
+
+        {/* --- 3. UNRAVEL / REVEAL EFFECT (When completed) --- */}
+        {isCompleted && (
+          <div 
+            className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#0f1b2b]/90 backdrop-blur-md animate-unravel"
+            style={{ clipPath: 'circle(150% at 50% 50%)' }}
+          >
+            <div className="relative">
+              <div className="absolute inset-0 animate-ping rounded-full bg-emerald-500/20" />
+              <BadgeCheck className="h-12 w-12 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]" />
             </div>
+            <span className="mt-4 text-xs font-black uppercase tracking-[0.3em] text-emerald-100">
+              Quest Complete
+            </span>
+            <div className="absolute inset-0 border-4 border-emerald-500/30 rounded-[26px]" />
           </div>
-        ) : null}
+        )}
+
+        {completing && (
+           <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+              <Loader2 className="h-8 w-8 animate-spin text-amber-400" />
+           </div>
+        )}
       </div>
     </button>
   );
