@@ -5,6 +5,8 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 
 import { fetchChatters, getValidSession } from "@/app/lib/twitch-auth";
+// Import the database logic from your chattergrounds route
+import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
 
 export const dynamic = "force-dynamic";
 
@@ -146,6 +148,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "missing_id" }, { status: 400 });
   }
 
+  const session = await getValidSession();
   const audience = await loadAudience();
   const { state } = await ensureState(audience);
 
@@ -163,6 +166,33 @@ export async function POST(request: Request) {
 
   const completedAt = new Date().toISOString();
   const recipients = new Set(audience.names.length ? audience.names : ["everyone"]);
+
+  // --- NEW: Sync with Chattergrounds Database ---
+  const dbPromises = Array.from(recipients).map((name) => {
+    return applyChattergroundsAction(
+      {
+        action: "quest-completed",
+        chatterId: name, // Using name as ID for quest tracking
+        chatterLogin: name,
+        amount: 1, // Increments quests_completed count
+      },
+      { sessionUserId: session?.userId || "system" }
+    ).then(() => {
+      // Also apply the reward coins as "minted" coins
+      return applyChattergroundsAction(
+        {
+          action: "mint",
+          chatterId: name,
+          chatterLogin: name,
+          amount: quest.reward,
+        },
+        { sessionUserId: session?.userId || "system" }
+      );
+    });
+  });
+
+  // Wait for all database updates to finish
+  await Promise.all(dbPromises);
 
   const ledger = { ...state.ledger };
   recipients.forEach((name) => {
@@ -312,9 +342,6 @@ async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
     const templates = Array.isArray(parsed) ? parsed : parsed.templates;
     const sanitized = (templates ?? []).map(sanitizeTemplateConfig).filter(Boolean) as QuestTemplateConfig[];
     if (sanitized.length >= 6) return sanitized;
-    if (sanitized.length > 0) {
-      console.warn("Stream quest: not enough templates in quest-library.json (need 6+), falling back to defaults.");
-    }
   } catch (error) {
     console.warn("Stream quest: failed to load quest-library.json, using defaults.", error);
   }

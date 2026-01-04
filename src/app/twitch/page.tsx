@@ -24,9 +24,9 @@ const modules = [
   },
   {
     title: "Chattergrounds",
-    description: "Live chatter intel, bans, and toadcoin lore.",
+    description: "Learn a little bit of something about your fans.",
     href: "/twitch/chattergrounds",
-    video: "/videos/toadcoin.mp4",
+    video: "/videos/chattergrounds.mp4",
   },
   { 
     title: "Toadcoin", 

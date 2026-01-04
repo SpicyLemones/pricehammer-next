@@ -44,6 +44,7 @@ type ChatterProfile = {
     estimatedAge: number;
     monthsSubbed: number;
     donosGifted: number;
+    toadcoins_minted: number; // For quests
     favoriteWord: string | null;
     favoriteEmote: string | null;
   };
@@ -157,6 +158,7 @@ export default function ChattergroundsPage() {
           estimatedAge: c.estimated_age ?? c.estimatedAge ?? 20,
           monthsSubbed: c.months_subbed ?? c.monthsSubbed ?? 0,
           donosGifted: c.donos_gifted ?? c.donosGifted ?? 0,
+          toadcoins_minted: c.toadcoins_minted ?? 0, // toadcoin stuff
           favoriteWord: c.favorite_word ?? c.favoriteWord ?? "Toad",
           favoriteEmote: c.favorite_emote ?? c.favoriteEmote ?? "Kappa",
         },
@@ -175,7 +177,7 @@ export default function ChattergroundsPage() {
     if (!selectedChatter || !data) { prevLevelRef.current = null; return; }
     const currentData = data.chatters.find(c => c.id === selectedChatter.id);
     if (!currentData) return;
-    const { level } = getLevelInfo((currentData.stats.messagesSent * 5) * 0.85);
+    const { level } = getLevelInfo(((currentData.stats.messagesSent * 5) + (currentData.stats.toadcoins_minted)) * 0.85);
     
     if (prevLevelRef.current !== null && level > prevLevelRef.current) { 
       audioRef.current?.play().catch(() => {});
@@ -217,47 +219,99 @@ export default function ChattergroundsPage() {
   if (loading) return <div className="flex min-h-screen items-center justify-center bg-slate-950 text-emerald-400"><Loader2 className="animate-spin" /></div>;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 p-6 lg:p-10 font-sans">
+  <div className="relative min-h-screen bg-slate-950 text-slate-50 font-sans overflow-x-hidden">
+    
+    {/* --- VIDEO BACKGROUND --- */}
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="h-full w-full object-cover opacity-20 blur-xl scale-110"
+      >
+        <source src="/videos/chattergrounds.mp4" type="video/mp4" />
+      </video>
+      {/* Dark overlay to ensure text readability */}
+      <div className="absolute inset-0 bg-slate-950/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950" />
+    </div>
+
+    {/* --- FIXED BACK BUTTON --- */}
+    <Link 
+      href="/twitch" 
+      className="fixed left-6 top-6 z-50 flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/80 px-5 py-2 text-xs font-bold text-slate-200 backdrop-blur-md hover:border-emerald-500/50 hover:text-emerald-400 transition-all shadow-lg active:scale-95"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      BACK TO TOYBOX
+    </Link>
+
+    {/* --- MAIN CONTENT WRAPPER --- */}
+    <div className="relative z-10 p-6 lg:p-10">
+      
+      {/* HEADER */}
       <header className="mb-8 flex flex-wrap justify-between items-end gap-6 pt-16">
         <div>
-          <h1 className="text-6xl font-black tracking-wider mb-2">CHATTERGROUNDS</h1>
-          <div className="flex items-center gap-3 text-slate-500 text-xs font-mono uppercase">
-            <span className="flex items-center gap-1.5"><Sparkles size={12} className="text-amber-400" /> Updated {data ? formatTimeAgo(data.updatedAt, nowTick) : "just now"}</span>
-            <button onClick={() => load()} className="inline-flex items-center gap-1.5 rounded border border-slate-800 px-2 py-0.5 hover:text-emerald-400">
-              <RefreshCw size={12} className={clsx(refreshing && "animate-spin")} /> {refreshing ? "refreshing" : "refresh"}
+          <h1 className="text-6xl font-black tracking-wider mb-2 drop-shadow-2xl">CHATTERGROUNDS</h1>
+          <div className="flex items-center gap-3 text-slate-400 text-xs font-mono uppercase">
+            <span className="flex items-center gap-1.5 bg-slate-900/50 px-2 py-1 rounded border border-slate-800">
+              <Sparkles size={12} className="text-amber-400" /> 
+              Updated {data ? formatTimeAgo(data.updatedAt, nowTick) : "just now"}
+            </span>
+            <button 
+              onClick={() => load()} 
+              className="inline-flex items-center gap-1.5 rounded border border-slate-800 bg-slate-900/50 px-2 py-1 hover:text-emerald-400 hover:border-emerald-500/30 transition-colors"
+            >
+              <RefreshCw size={12} className={clsx(refreshing && "animate-spin")} /> 
+              {refreshing ? "refreshing" : "refresh"}
             </button>
           </div>
         </div>
-        <Link href="/twitch" className="fixed left-6 top-6 z-50 flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/80 px-5 py-2 text-xs font-bold text-slate-200 backdrop-blur-md">
-          ← BACK TO TOYBOX
-        </Link>
       </header>
 
       <div className="flex flex-col gap-6">
+        {/* ROW 1: YAP GRAPH & PULSE */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 bg-slate-900/40 border border-slate-800 p-8 rounded-[2.5rem]">
+          <div className="lg:col-span-2 bg-slate-900/60 border border-slate-800 p-8 rounded-[2.5rem] backdrop-blur-sm">
             <div className="flex justify-between items-center mb-8">
-              <h3 className="flex items-center gap-2 font-black text-slate-200 uppercase text-xl"><Flame className="text-orange-500" size={20} /> Yap Graph</h3>
+              <h3 className="flex items-center gap-2 font-black text-slate-200 uppercase text-xl">
+                <Flame className="text-orange-500" size={20} /> Yap Graph
+              </h3>
               <div className="flex gap-1 bg-slate-950 p-1.5 rounded-full border border-slate-800">
                 {(Object.keys(rangeLabels) as RangeKey[]).map((k) => (
-                  <button key={k} onClick={() => setRange(k)} className={clsx("px-4 py-1.5 text-[10px] font-black rounded-full transition-all", range === k ? "bg-emerald-500 text-slate-950" : "text-slate-500")}>
+                  <button 
+                    key={k} 
+                    onClick={() => setRange(k)} 
+                    className={clsx(
+                      "px-4 py-1.5 text-[10px] font-black rounded-full transition-all", 
+                      range === k ? "bg-emerald-500 text-slate-950" : "text-slate-500 hover:text-slate-300"
+                    )}
+                  >
                     {rangeLabels[k].toUpperCase()}
                   </button>
                 ))}
               </div>
             </div>
+            
             <div className="h-64 w-full relative">
               <svg className="w-full h-full overflow-visible" viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}>
                 {[0, 0.5, 1].map((v) => (
-                  <g key={v}><text x={GRAPH_PADDING.left - 15} y={GRAPH_PADDING.top + CHART_H * (1 - v) + 4} textAnchor="end" className="fill-slate-600 text-[10px] font-mono font-bold">{Math.round(maxMessages * v)}</text>
-                  <line x1={GRAPH_PADDING.left} y1={GRAPH_PADDING.top + CHART_H * (1 - v)} x2={VIEW_W - GRAPH_PADDING.right} y2={GRAPH_PADDING.top + CHART_H * (1 - v)} stroke="#1e293b" strokeDasharray="4 4" /></g>
+                  <g key={v}>
+                    <text x={GRAPH_PADDING.left - 15} y={GRAPH_PADDING.top + CHART_H * (1 - v) + 4} textAnchor="end" className="fill-slate-500 text-[10px] font-mono font-bold">
+                      {Math.round(maxMessages * v)}
+                    </text>
+                    <line x1={GRAPH_PADDING.left} y1={GRAPH_PADDING.top + CHART_H * (1 - v)} x2={VIEW_W - GRAPH_PADDING.right} y2={GRAPH_PADDING.top + CHART_H * (1 - v)} stroke="#334155" strokeDasharray="4 4" opacity="0.5" />
+                  </g>
                 ))}
-                <path d={linePath} fill="none" stroke="#10b981" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                <path d={linePath} fill="none" stroke="#10b981" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
               </svg>
             </div>
           </div>
-          <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-[2.5rem]">
-            <h3 className="flex items-center gap-2 font-black text-slate-200 mb-8 uppercase text-xl"><BarChart3 className="text-indigo-400" size={20} /> Pulse</h3>
+
+          <div className="bg-slate-900/60 border border-slate-800 p-8 rounded-[2.5rem] backdrop-blur-sm">
+            <h3 className="flex items-center gap-2 font-black text-slate-200 mb-8 uppercase text-xl">
+              <BarChart3 className="text-indigo-400" size={20} /> Pulse
+            </h3>
             <div className="space-y-4">
               <PulseBox label="Accumulated Chat" value={data?.chatters.reduce((s, c) => s + c.stats.messagesSent, 0) || 0} color="text-indigo-400" />
               <PulseBox label="Unique Chatters" value={data?.chatters.length || 0} color="text-emerald-400" />
@@ -266,84 +320,128 @@ export default function ChattergroundsPage() {
           </div>
         </div>
 
+        {/* ROW 2: VERTICAL LEADERBOARDS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <VerticalBoard title="Top Chatters" icon={MessageSquare} items={leaderboards.chatters} stat="messagesSent" unit="msgs" onSelect={setSelectedChatter} />
           <VerticalBoard title="Ban Leaderboard" icon={Trophy} items={leaderboards.bans} stat="timesBanned" unit="bans" onSelect={setSelectedChatter} />
           <VerticalBoard title="Timeout Leaderboard" icon={Medal} items={leaderboards.timeouts} stat="timesTimedOut" unit="timeouts" onSelect={setSelectedChatter} />
         </div>
 
-        <div className="bg-slate-900/40 border border-slate-800 p-10 rounded-[2.5rem]">
+        {/* ROW 3: ROSTER */}
+        <div className="bg-slate-900/60 border border-slate-800 p-10 rounded-[2.5rem] backdrop-blur-sm">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
-            <h3 className="font-black text-2xl uppercase flex items-center gap-3"><Ghost size={24} className="text-slate-600" /> Global Roster</h3>
-            <div className="relative w-full md:w-96"><Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
-              <input type="text" placeholder="Search user..." className="w-full bg-slate-950 border border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none" onChange={(e) => setSearchTerm(e.target.value)} />
+            <h3 className="font-black text-2xl uppercase flex items-center gap-3">
+              <Ghost size={24} className="text-slate-500" /> Global Roster
+            </h3>
+            <div className="relative w-full md:w-96">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+              <input 
+                type="text" 
+                placeholder="Search user..." 
+                className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all" 
+                onChange={(e) => setSearchTerm(e.target.value)} 
+              />
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-h-[400px] overflow-y-auto pr-4 custom-scrollbar">
             {filteredRoster.map((c) => (
-              <button key={c.id} onClick={() => setSelectedChatter(c)} className="p-4 bg-slate-950 border border-slate-800 rounded-2xl text-left hover:border-emerald-500 hover:bg-slate-900 transition-all active:scale-95">
-                <p className="text-sm font-black truncate uppercase">{c.name}</p>
+              <button 
+                key={c.id} 
+                onClick={() => setSelectedChatter(c)} 
+                className="p-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-left hover:border-emerald-500 hover:bg-slate-900 transition-all active:scale-95 group"
+              >
+                <p className="text-sm font-black truncate uppercase group-hover:text-emerald-400">{c.name}</p>
                 <p className="text-[10px] text-slate-600 font-mono font-bold uppercase">{formatNumber(c.stats.messagesSent)} MSGS</p>
               </button>
             ))}
           </div>
         </div>
       </div>
+    </div>
 
-      {selectedChatter && levelDisplay && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6 overflow-y-auto animate-in fade-in duration-300">
-          <div ref={modalRef} className="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[3rem] p-10 relative animate-in zoom-in-95 shadow-2xl my-auto">
-            <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-10">
-              <div className="flex-1">
-                <div className="flex items-center gap-4 mb-2">
-                  <h2 className="text-5xl lg:text-6xl font-black tracking-wider uppercase">{selectedChatter.name}</h2>
-                  <div className="relative group">
-                    {showLevelUpAnim && (
-                      <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-amber-400 font-black italic text-2xl whitespace-nowrap animate-bounce pointer-events-none drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]">
-                        LEVEL UP!
-                      </span>
-                    )}
-                    <div className="bg-emerald-500 text-slate-950 px-3 py-1 rounded-lg text-xl font-black italic shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-transform duration-300 group-hover:scale-110">
-                      LVL {levelDisplay.level}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-                  <div className="flex items-center gap-2"><ShieldCheck size={16} className="text-emerald-500" /><span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Chatter Identity:</span>
-                  <span className="text-emerald-400 text-[10px] font-black uppercase tracking-widest">{getChatterIdentity(selectedChatter.stats.messagesSent, selectedChatter.stats.timesTimedOut, selectedChatter.stats.timesBanned)}</span></div>
-                  <div className="flex items-center gap-2"><User size={16} className="text-slate-600" /><span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">EST. AGE: {selectedChatter.stats.estimatedAge}</span></div>
-                </div>
-              </div>
-              <div className="w-full lg:w-72 bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                <div className="flex justify-between items-end mb-2"><span className="text-[10px] font-black text-slate-500 uppercase flex items-center gap-1"><Zap size={10} className="text-amber-400 fill-amber-400" /> XP Progress</span>
-                <span className="text-[10px] font-mono font-bold text-slate-400">{formatNumber(levelDisplay.remainingXp)} / {formatNumber(levelDisplay.currentThreshold)}</span></div>
-                <div className="h-3 bg-slate-900 rounded-full overflow-hidden border border-slate-800 relative">
-                  <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-1000 ease-out relative shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: `${levelDisplay.progress}%` }}>
-                    <div className="absolute inset-0 bg-white/20 animate-pulse" />
+    {/* MODAL: PROFILE INTELLIGENCE (Layered above everything) */}
+    {selectedChatter && levelDisplay && (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6 overflow-y-auto animate-in fade-in duration-300">
+        <div ref={modalRef} className="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[3rem] p-10 relative animate-in zoom-in-95 shadow-2xl my-auto">
+          <button 
+            onClick={() => setSelectedChatter(null)} 
+            className="absolute top-8 right-8 text-slate-500 hover:text-white font-bold text-xs bg-slate-950 px-4 py-2 rounded-full border border-slate-800 transition-colors z-10"
+          >
+            CLOSE
+          </button>
+
+          <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-10">
+            <div className="flex-1">
+              <div className="flex items-center gap-4 mb-2">
+                <h2 className="text-5xl lg:text-6xl font-black tracking-wider uppercase">{selectedChatter.name}</h2>
+                <div className="relative group">
+                  {showLevelUpAnim && (
+                    <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-amber-400 font-black italic text-2xl whitespace-nowrap animate-bounce pointer-events-none drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]">
+                      LEVEL UP!
+                    </span>
+                  )}
+                  <div className="bg-emerald-500 text-slate-950 px-3 py-1 rounded-lg text-xl font-black italic shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-transform duration-300 group-hover:scale-110">
+                    LVL {levelDisplay.level}
                   </div>
                 </div>
               </div>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck size={16} className="text-emerald-500" />
+                  <span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Chatter Identity:</span>
+                  <span className="text-emerald-400 text-[10px] font-black uppercase tracking-widest">
+                    {getChatterIdentity(selectedChatter.stats.messagesSent, selectedChatter.stats.timesTimedOut, selectedChatter.stats.timesBanned)}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <User size={16} className="text-slate-600" />
+                  <span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">EST. AGE: {selectedChatter.stats.estimatedAge}</span>
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-              <StatTile label="Messages" val={selectedChatter.stats.messagesSent} color="text-emerald-400" />
-              <StatTile label="Bans" val={selectedChatter.stats.timesBanned} color="text-red-400" />
-              <StatTile label="Timeouts" val={selectedChatter.stats.timesTimedOut} color="text-orange-400" />
-              <StatTile icon={Coins} label="Net Worth" val={selectedChatter.stats.messagesSent * 5} suffix=" TC" color="text-amber-400" />
-              <StatTile icon={Heart} label="Months Subbed" val={selectedChatter.stats.monthsSubbed} color="text-indigo-400" />
-              <StatTile icon={Gift} label="Donos Gifted" val={selectedChatter.stats.donosGifted} color="text-pink-400" />
-              <StatTile icon={Activity} label="Fav Activity" val={selectedChatter.stats.favoriteWord} color="text-slate-200" expandable />
-              <StatTile icon={SmilePlus} label="Fav Emote" val={selectedChatter.stats.favoriteEmote} color="text-slate-200" />
-            </div>
-            <div className="p-8 bg-slate-950 rounded-[2rem] border border-slate-800 shadow-inner relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent h-1" />
-              <p className="text-[10px] text-slate-500 uppercase font-black mb-4 tracking-widest flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Intercepted Transmission</p>
-              <p className="text-2xl font-medium italic text-slate-300 leading-relaxed">"{selectedChatter.lastMessage || "Target has remained silent..."}"</p>
+            
+            <div className="w-full lg:w-72 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+              <div className="flex justify-between items-end mb-2">
+                <span className="text-[10px] font-black text-slate-500 uppercase flex items-center gap-1">
+                  <Zap size={10} className="text-amber-400 fill-amber-400" /> XP Progress
+                </span>
+                <span className="text-[10px] font-mono font-bold text-slate-400">
+                  {formatNumber(levelDisplay.remainingXp)} / {formatNumber(levelDisplay.currentThreshold)}
+                </span>
+              </div>
+              <div className="h-3 bg-slate-900 rounded-full overflow-hidden border border-slate-800 relative">
+                <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-1000 ease-out relative shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: `${levelDisplay.progress}%` }}>
+                  <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                </div>
+              </div>
             </div>
           </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <StatTile label="Messages" val={selectedChatter.stats.messagesSent} color="text-emerald-400" />
+            <StatTile label="Bans" val={selectedChatter.stats.timesBanned} color="text-red-400" />
+            <StatTile label="Timeouts" val={selectedChatter.stats.timesTimedOut} color="text-orange-400" />
+            <StatTile icon={Coins} label="Net Worth" val={(selectedChatter.stats.messagesSent * 5) + (selectedChatter.stats.toadcoins_minted || 0)} suffix=" TC" color="text-amber-400" />
+            <StatTile icon={Heart} label="Months Subbed" val={selectedChatter.stats.monthsSubbed} color="text-indigo-400" />
+            <StatTile icon={Gift} label="Donos Gifted" val={selectedChatter.stats.donosGifted} color="text-pink-400" />
+            <StatTile icon={Activity} label="Fav Activity" val={selectedChatter.stats.favoriteWord} color="text-slate-200" expandable />
+            <StatTile icon={SmilePlus} label="Fav Emote" val={selectedChatter.stats.favoriteEmote} color="text-slate-200" />
+          </div>
+
+          <div className="p-8 bg-slate-950 rounded-[2rem] border border-slate-800 shadow-inner relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent h-1" />
+            <p className="text-[10px] text-slate-500 uppercase font-black mb-4 tracking-widest flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Intercepted Transmission
+            </p>
+            <p className="text-2xl font-medium italic text-slate-300 leading-relaxed">
+              "{selectedChatter.lastMessage || "Target has remained silent..."}"
+            </p>
+          </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 }
 
 function VerticalBoard({ title, icon: Icon, items, stat, unit, onSelect }: any) {
