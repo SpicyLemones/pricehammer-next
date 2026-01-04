@@ -363,13 +363,6 @@ export default function ChattergroundsPage() {
     {selectedChatter && levelDisplay && (
       <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6 overflow-y-auto animate-in fade-in duration-300">
         <div ref={modalRef} className="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[3rem] p-10 relative animate-in zoom-in-95 shadow-2xl my-auto">
-          <button 
-            onClick={() => setSelectedChatter(null)} 
-            className="absolute top-8 right-8 text-slate-500 hover:text-white font-bold text-xs bg-slate-950 px-4 py-2 rounded-full border border-slate-800 transition-colors z-10"
-          >
-            CLOSE
-          </button>
-
           <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-10">
             <div className="flex-1">
               <div className="flex items-center gap-4 mb-2">
