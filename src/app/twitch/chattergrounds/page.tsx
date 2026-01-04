@@ -228,7 +228,7 @@ export default function ChattergroundsPage() {
         muted
         loop
         playsInline
-        className="h-full w-full object-cover opacity-20 blur-xl scale-110"
+        className="h-full w-full object-cover blur-xl scale-110"
       >
         <source src="/videos/chattergrounds.mp4" type="video/mp4" />
       </video>
