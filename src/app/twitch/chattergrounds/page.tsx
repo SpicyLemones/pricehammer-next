@@ -20,8 +20,11 @@ import {
   Gift,
   ShieldCheck,
   Zap,
-  User 
+  User,
+  Star,
+  Wind, // NEW
 } from "lucide-react";
+
 import clsx from "clsx";
 
 type RangeKey = "today" | "week" | "month" | "all";
@@ -37,17 +40,18 @@ type ChatterProfile = {
   flair: string;
   lastMessage: string | null;
   stats: {
-    timesBanned: number;
-    timesTimedOut: number;
-    questsCompleted: number;
-    messagesSent: number;
-    estimatedAge: number;
-    monthsSubbed: number;
-    donosGifted: number;
-    toadcoins: number; // Spendable currency from DB
-    xp: number;        // Permanent progress from DB
-    favoriteWord: string | null;
-    favoriteEmote: string | null;
+  timesBanned: number;
+  timesTimedOut: number;
+  questsCompleted: number;
+  messagesSent: number;
+  estimatedAge: number;
+  monthsSubbed: number;
+  donosGifted: number;
+  isSubscriber: boolean; // NEW
+  toadcoins: number; // Spendable currency from DB
+  xp: number;        // Permanent progress from DB
+  favoriteWord: string | null;
+  favoriteEmote: string | null;
   };
 };
 
@@ -65,6 +69,8 @@ const rangeLabels: Record<RangeKey, string> = {
   month: "1 Month",
   all: "All",
 };
+
+
 
 const GRAPH_PADDING = { top: 30, right: 30, bottom: 50, left: 60 };
 const VIEW_W = 800;
@@ -117,6 +123,70 @@ function getLevelInfo(totalXp: number) {
   };
 }
 
+function SubscriberBadge({ isSubscriber }: { isSubscriber: boolean }) {
+  return (
+    <div className="relative group inline-flex items-center">
+      {/* Main Badge Body */}
+      <div
+        className={clsx(
+          "relative flex items-center justify-center rounded-md px-3 py-1 text-[10px] font-black italic tracking-tighter transition-all duration-300",
+          isSubscriber
+            ? "bg-emerald-500 text-slate-950 shadow-[0_0_10px_rgba(16,185,129,0.4)] group-hover:rotate-3 group-hover:scale-110"
+            : "bg-slate-700 text-slate-400 group-hover:[animation:shiver_0.2s_infinite]"
+        )}
+      >
+        <span className="flex items-center gap-1">
+          {isSubscriber ? (
+            <>
+              <Star size={12} className="fill-slate-950 group-hover:animate-spin" />
+              SUBSCRIBER (5% Bonus Gain!)
+            </>
+          ) : (
+            <>
+              POOR
+            </>
+          )}
+        </span>
+
+        {/* Subscriber Hover: Sparkles */}
+        {isSubscriber && (
+          <Sparkles
+            size={14}
+            className="absolute -top-2 -right-2 text-amber-300 opacity-0 transition-all group-hover:opacity-100 group-hover:animate-bounce"
+          />
+        )}
+
+        {/* Poor Hover: Stink/Sad Icons */}
+        {!isSubscriber && (
+          <div className="absolute -top-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+             <Wind size={10} className="text-green-700 animate-bounce" />
+             <Wind size={10} className="text-green-800 animate-bounce [animation-delay:0.2s]" />
+          </div>
+        )}
+      </div>
+
+      {/* CSS for the Shiver Animation (Injecting into a style tag) */}
+      <style>{`
+        @keyframes shiver {
+          0% { transform: translate(0, 0); }
+          25% { transform: translate(-1px, 1px); }
+          50% { transform: translate(1px, -1px); }
+          75% { transform: translate(-1px, -1px); }
+          100% { transform: translate(1px, 1px); }
+        }
+      `}</style>
+
+      {/* Tooltip */}
+      <div className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0 z-50">
+        <div className="rounded bg-slate-950 px-2 py-1 text-[9px] font-bold text-white border border-slate-800 whitespace-nowrap">
+          {isSubscriber ? "Big Donor" : "Smells like broke"}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 export default function ChattergroundsPage() {
   const [range, setRange] = useState<RangeKey>("today");
   const [selectedChatter, setSelectedChatter] = useState<ChatterProfile | null>(null);
@@ -166,6 +236,7 @@ export default function ChattergroundsPage() {
           estimatedAge: c.estimated_age ?? 20,
           monthsSubbed: c.months_subbed ?? 0,
           donosGifted: c.donos_gifted ?? 0,
+          isSubscriber: (c.is_subscriber ?? 0) === 1,
           toadcoins: c.toadcoins ?? 0,
           xp: c.xp ?? 0,
           favoriteWord: c.favorite_word ?? "Toad",
@@ -345,9 +416,16 @@ export default function ChattergroundsPage() {
                   {showLevelUpAnim && (
                     <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-amber-400 font-black italic text-2xl whitespace-nowrap animate-bounce pointer-events-none drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]">LEVEL UP!</span>
                   )}
-                  <div className="bg-emerald-500 text-slate-950 px-3 py-1 rounded-lg text-xl font-black italic shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-transform duration-300 group-hover:scale-110">
-                    LVL {levelDisplay.level}
-                  </div>
+                  <div className="flex items-center gap-3">
+  {/* Level Badge */}
+  <div className="bg-emerald-500 text-slate-950 px-3 py-1 rounded-md text-xl font-black italic shadow-[0_0_15px_rgba(16,185,129,0.5)]">
+    LVL {levelDisplay.level}
+  </div>
+
+  {/* The new Subscriber/Poor Badge */}
+  <SubscriberBadge isSubscriber={selectedChatter.stats.isSubscriber} />
+</div>
+
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2">

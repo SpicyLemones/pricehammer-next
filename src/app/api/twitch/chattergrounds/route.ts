@@ -17,12 +17,21 @@ type ChatterIdentity = {
 
 // REFACTORED: actions now favor 'xp' terminology
 export type PersistAction =
-  | (ChatterIdentity & { action: "mint"; amount: number }) // Kept for legacy compatibility
+  | (ChatterIdentity & { action: "mint"; amount: number })
   | (ChatterIdentity & { action: "record-message"; message?: string })
   | (ChatterIdentity & { action: "ban" })
   | (ChatterIdentity & { action: "timeout" })
   | (ChatterIdentity & { action: "quest-completed"; amount?: number })
-  | (ChatterIdentity & { action: "sub-months"; months: number });
+
+  // Set/refresh cumulative months (max) + implicitly subbed
+  | (ChatterIdentity & { action: "sub-months"; months: number; tier?: string })
+
+  // Track “gifter gave N gifted subs to broadcaster”
+  | (ChatterIdentity & { action: "gift-subs"; count: number })
+
+  // Track active sub state (true on subscribe/resub, false on end)
+  | (ChatterIdentity & { action: "sub-status"; isSubscriber: boolean; tier?: string; months?: number });
+
 
 type ApplyContext = {
   sessionUserId?: string;
@@ -53,7 +62,10 @@ async function ensureChattergroundsSchema() {
       // 4. THE CRITICAL RENAME: Change minted to xp (using a try/catch since it might already be renamed)
       "ALTER TABLE chattergrounds_stats RENAME COLUMN toadcoins_minted TO xp",
       // 5. Ensure the spendable toadcoins column exists
-      "ALTER TABLE chattergrounds_stats ADD COLUMN toadcoins INTEGER DEFAULT 0"
+      "ALTER TABLE chattergrounds_stats ADD COLUMN toadcoins INTEGER DEFAULT 0",
+      "ALTER TABLE chattergrounds_stats ADD COLUMN donos_gifted INTEGER DEFAULT 0",
+      "ALTER TABLE chattergrounds_stats ADD COLUMN is_subscriber INTEGER DEFAULT 0",
+      "ALTER TABLE chattergrounds_stats ADD COLUMN sub_tier TEXT",
     ];
 
     for (const sql of migrations) {
@@ -178,42 +190,77 @@ function normalizeSqlTimestamp(ts: unknown) {
   return isNaN(d.getTime()) ? null : d.toISOString();
 }
 
-export async function applyChattergroundsAction(payload: PersistAction, context: ApplyContext = {}) {
+export async function applyChattergroundsAction(
+  payload: PersistAction,
+  context: ApplyContext = {}
+) {
   const broadcasterId = context.sessionUserId || "system";
 
-  let msgs = 0, bans = 0, timeouts = 0, subs = 0, quests = 0, coinsEarned = 0, xpEarned = 0, msgText: string | null = null;
+  // Base increments
+  let msgs = 0;
+  let bans = 0;
+  let timeouts = 0;
+  let quests = 0;
+
+  // Cumulative months (we store MAX in DB)
+  let newCumulativeMonths: number | null = null;
+
+  // Gifted subs given by this user (increment)
+  let giftedSubsCount = 0;
+
+  // Current subscriber status: null means "don't change"
+  let isSubscriberDesired: boolean | null = null;
+
+  // Optional tier update: null means "don't change"
+  let subTier: string | null = null;
+
+  // Economy
+  let coinsEarned = 0;
+  let xpEarned = 0;
+
+  let msgText: string | null = null;
 
   // Rate Constants
   const COINS_PER_MSG = 5;
   const XP_RATIO = 0.85;
 
+  // ---- Decide action effects (NO DB reads yet) ----
   if (payload.action === "record-message") {
     msgs = 1;
     msgText = payload.message?.slice(0, 240) || null;
-    
-    // 5 coins per chat, XP is 85% of coins (4.25)
-    coinsEarned = COINS_PER_MSG;
-    xpEarned = COINS_PER_MSG * XP_RATIO; 
 
+    coinsEarned = COINS_PER_MSG;
+    xpEarned = COINS_PER_MSG * XP_RATIO;
   } else if (payload.action === "quest-completed") {
     quests = 1;
     const baseReward = payload.amount || 500;
-    
-    // 500 coins per quest, XP is 85% of coins (425)
+
     coinsEarned = baseReward;
     xpEarned = baseReward * XP_RATIO;
-
   } else if (payload.action === "ban") {
     bans = 1;
   } else if (payload.action === "timeout") {
     timeouts = 1;
-  } else if (payload.action === "sub-months") {
-    subs = payload.months;
-    // Subs get a flat 100 XP per month (Optional: change to payload.months * 100 * XP_RATIO if desired)
-    xpEarned = payload.months * 100;
   } else if (payload.action === "mint") {
     coinsEarned = payload.amount;
     xpEarned = payload.amount * XP_RATIO;
+  } else if (payload.action === "sub-months") {
+    // CUMULATIVE months (store MAX)
+    newCumulativeMonths = Math.max(0, Math.floor(payload.months || 0));
+    // If we’re seeing months, they’re subbed (at least at the time of the event)
+    isSubscriberDesired = true;
+    subTier = payload.tier ?? null;
+  } else if (payload.action === "gift-subs") {
+    // Gifted subs given by this user
+    giftedSubsCount = Math.max(0, Math.floor(payload.count || 0));
+  } else if (payload.action === "sub-status") {
+    isSubscriberDesired = !!payload.isSubscriber;
+    if (typeof payload.months === "number") {
+      newCumulativeMonths = Math.max(0, Math.floor(payload.months || 0));
+    }
+    if (typeof payload.tier === "string") {
+      subTier = payload.tier;
+    }
   }
 
   const storedName = resolveStoredName(payload);
@@ -222,7 +269,35 @@ export async function applyChattergroundsAction(payload: PersistAction, context:
   try {
     await ensureChattergroundsSchema();
 
+    // ---- Read existing values ONCE (for delta XP + preserving is_subscriber) ----
+    // Requires you to have added is_subscriber column via init.sql or migrations.
+    const existing = await get(
+      "SELECT months_subbed, is_subscriber FROM chattergrounds_stats WHERE broadcaster_id = ? AND chatter_id = ?",
+      [broadcasterId, payload.chatterId]
+    );
+
+    const currentMonths = Number(existing?.months_subbed ?? 0);
+    const currentIsSubscriber = Number(existing?.is_subscriber ?? 0) === 1;
+
+    // XP for sub months: award only for the increase since last seen
+    let monthsToStore = 0;
+    if (newCumulativeMonths !== null) {
+      monthsToStore = newCumulativeMonths;
+    }
+
+    // Preserve is_subscriber unless explicitly set by event
+    const finalIsSubscriber =
+      isSubscriberDesired === null ? currentIsSubscriber : isSubscriberDesired;
+
+    if (finalIsSubscriber) {
+      if (coinsEarned > 0) coinsEarned = Math.round(coinsEarned * 1.05);
+      if (xpEarned > 0) xpEarned *= 1.05; // XP can stay float
+    }
+
     const upsertSql = await readSql("upsert_stats.sql");
+
+    // NOTE: This param order must match your upsert_stats.sql placeholders.
+    // Expected columns: donos_gifted, is_subscriber, sub_tier exist.
     await run(upsertSql, [
       broadcasterId,
       payload.chatterId,
@@ -230,10 +305,13 @@ export async function applyChattergroundsAction(payload: PersistAction, context:
       msgs,
       bans,
       timeouts,
-      subs,
+      monthsToStore,       // months_subbed (cumulative; SQL uses MAX)
       quests,
-      coinsEarned, // maps to toadcoins
-      xpEarned,    // maps to xp (now handles decimals)
+      coinsEarned,         // toadcoins
+      xpEarned,            // xp
+      giftedSubsCount,     // donos_gifted (increment)
+      finalIsSubscriber ? 1 : 0, // is_subscriber (state)
+      subTier,             // sub_tier (optional)
       msgText,
       traits.age,
       traits.word,
@@ -242,15 +320,26 @@ export async function applyChattergroundsAction(payload: PersistAction, context:
 
     if (msgs > 0) {
       const bucketStart = alignDown(Date.now(), MINUTE_MS);
-      await run(`INSERT INTO chattergrounds_pulse (broadcaster_id, bucket_start, messages) VALUES (?, ?, ?) ON CONFLICT(broadcaster_id, bucket_start) DO UPDATE SET messages = messages + excluded.messages`, [broadcasterId, bucketStart, msgs]);
+      await run(
+        `INSERT INTO chattergrounds_pulse (broadcaster_id, bucket_start, messages)
+         VALUES (?, ?, ?)
+         ON CONFLICT(broadcaster_id, bucket_start)
+         DO UPDATE SET messages = messages + excluded.messages`,
+        [broadcasterId, bucketStart, msgs]
+      );
     }
 
-    return await get("SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? AND chatter_id = ?", [broadcasterId, payload.chatterId]);
+    return await get(
+      "SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? AND chatter_id = ?",
+      [broadcasterId, payload.chatterId]
+    );
   } catch (err: any) {
     console.error("Chattergrounds Action Error:", err);
     return { error: err.message || "Failed to update database" };
   }
 }
+
+
 export async function getData(userId?: string) {
   const broadcasterId = userId || "system";
   try {

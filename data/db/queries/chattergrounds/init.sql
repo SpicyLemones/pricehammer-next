@@ -2,20 +2,28 @@ CREATE TABLE IF NOT EXISTS chattergrounds_stats (
     broadcaster_id TEXT,
     chatter_id TEXT,
     name TEXT,
-    toadcoins INTEGER DEFAULT 0,  -- Spendable Balance
-    xp INTEGER DEFAULT 0,         -- Permanent Progression
+
+    toadcoins INTEGER DEFAULT 0,   -- Spendable Balance
+    xp REAL DEFAULT 0,             -- Permanent Progression (allow decimals)
+
     times_banned INTEGER DEFAULT 0,
     times_timed_out INTEGER DEFAULT 0,
     quests_completed INTEGER DEFAULT 0,
     messages_sent INTEGER DEFAULT 0,
-    months_subbed INTEGER DEFAULT 0,
-    donos_gifted REAL DEFAULT 0,
+
+    months_subbed INTEGER DEFAULT 0,      -- highest cumulative months seen
+    donos_gifted INTEGER DEFAULT 0,       -- total gifted subs given by THIS user
+    is_subscriber INTEGER DEFAULT 0,      -- 1 = currently subbed, 0 = not currently subbed
+    sub_tier TEXT,                        -- optional: "1000" | "2000" | "3000"
+
     -- Joke fields
     estimated_age INTEGER,
     favorite_word TEXT,
     favorite_emote TEXT,
+
     last_message TEXT,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
     PRIMARY KEY (broadcaster_id, chatter_id)
 );
 
