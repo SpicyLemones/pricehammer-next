@@ -246,6 +246,31 @@
   will-change: transform;
 }
 
+@keyframes unravel {
+  0% {
+    clip-path: circle(0% at 50% 50%);
+    opacity: 0;
+  }
+  100% {
+    clip-path: circle(150% at 50% 50%);
+    opacity: 1;
+  }
+}
+
+.animate-unravel {
+  animation: unravel 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Optional: Add a slight floating animation to active tiles */
+.quest-floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
 .wizard-shake {
   animation: wizardShake 0.55s linear infinite, wizardFloat 9s ease-in-out infinite;
 }
