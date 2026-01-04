@@ -12,6 +12,8 @@ import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route
 import { all } from "@/app/lib/sql";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 type QuestCategory =
   | "prime"
@@ -146,6 +148,20 @@ const DEFAULT_TEMPLATE_LIBRARY: QuestTemplateConfig[] = [
 
 type DbRecipient = { chatterId: string; login: string };
 
+type TwitchSession = Awaited<ReturnType<typeof getValidSession>>;
+
+function jsonNoStore(body: any, init?: { status?: number; headers?: HeadersInit }) {
+  const headers: Record<string, string> = {
+    "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+    Pragma: "no-cache",
+    Expires: "0",
+    Vary: "Cookie",
+    ...(init?.headers as any),
+  };
+
+  return NextResponse.json(body, { status: init?.status, headers });
+}
+
 async function loadRecipientsFromChattergrounds(broadcasterId: string): Promise<DbRecipient[]> {
   const rows = (await all(
     `SELECT chatter_id, name
@@ -172,82 +188,127 @@ async function loadRecipientsFromChattergrounds(broadcasterId: string): Promise<
   return out;
 }
 
+/**
+ * Best-effort "are we live?" check.
+ * - If we can’t verify (missing client id, API fails), we return `null` (unknown).
+ * - Call sites should treat unknown as “don’t hard-block”.
+ */
+async function checkLiveStatus(session: TwitchSession): Promise<boolean | null> {
+  try {
+    if (!session?.accessToken || !session?.userId) return null;
+    const clientId = process.env.TWITCH_CLIENT_ID || process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID;
+    if (!clientId) return null;
+
+    const url = `https://api.twitch.tv/helix/streams?user_id=${encodeURIComponent(session.userId)}`;
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Client-Id": clientId,
+        Authorization: `Bearer ${session.accessToken}`,
+      },
+      cache: "no-store",
+    });
+
+    if (!res.ok) return null;
+    const json = (await res.json().catch(() => null)) as any;
+    const live = Array.isArray(json?.data) && json.data.length > 0;
+    return live;
+  } catch {
+    return null;
+  }
+}
+
 export async function GET() {
   const session = await getValidSession();
-  
+
   // 1. Block if not logged in
   if (!session) {
-    return NextResponse.json({ error: "unauthenticated" }, { status: 401 });
+    return jsonNoStore({ error: "unauthenticated" }, { status: 401 });
   }
 
-  const audience = await loadAudience();
+  const audience = await loadAudience(session);
 
   // 2. Block if stream is not live (The Tavern is Closed)
-  if (!audience.live) {
-    return NextResponse.json({ 
-      error: "offline", 
-      message: "The Tavern is closed. You must be live to access quests." 
-    }, { status: 200 }); // Status 200 so the client can read the "offline" error
+  // NOTE: Only hard-block if we can confidently say it's offline.
+  if (audience.live === false) {
+    return jsonNoStore(
+      {
+        error: "offline",
+        message: "The Tavern is closed. You must be live to access quests.",
+      },
+      { status: 200 }
+    );
   }
 
   const { state, regenerated } = await ensureState(audience);
 
-  return NextResponse.json({
+  return jsonNoStore({
     regenerated,
     ...serializeState(state),
   });
 }
 
-
 export async function POST(request: Request) {
-  const body = (await request.json().catch(() => null)) as { id?: string; action?: string } | null;
-  
+  const body = (await request.json().catch(() => null)) as
+    | { id?: string; action?: string }
+    | null;
+
   // 1. Auth Check
   const session = await getValidSession();
-  if (!session) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  if (!session) return jsonNoStore({ error: "unauthorized" }, { status: 401 });
 
   const broadcasterId = session.userId;
   const broadcasterLogin = (session.login || session.displayName).toLowerCase();
 
-  // 2. Load Audience & Status
-  const audience = await loadAudience();
-  
-  // 3. TAVERN CHECK: Prevent actions if offline
-  if (!audience.live) {
-    return NextResponse.json({ error: "offline", message: "The Tavern is closed." }, { status: 403 });
+  // 2. Load Audience & Status (single session used everywhere; avoids “works after visiting other page” flakiness)
+  const audience = await loadAudience(session);
+
+  // 3. TAVERN CHECK: Prevent actions if offline (only if confidently offline)
+  if (audience.live === false) {
+    return jsonNoStore({ error: "offline", message: "The Tavern is closed." }, { status: 403 });
   }
 
   const { state } = await ensureState(audience);
 
+  const action = body?.action ?? (body?.id ? "claim" : undefined);
+
   // --- ACTION: REROLL ---
-  if (body?.action === "reroll") {
+  if (action === "reroll") {
     const questTemplates = await loadQuestTemplates();
-    // This keeps completed quests but rolls new ones for the incomplete slots
-    const newQuests = regenerateQuestsPreservingCompletions(state.quests, audience, questTemplates);
-    
+
+    // IMPORTANT FIX:
+    // Keep the current order and ONLY replace the incomplete slots in-place.
+    // (Your old function returned [...completed, ...replacements] which reorders = “board reshuffles”.)
+    const newQuests = rerollIncompleteQuestsPreserveOrder(state.quests, audience, questTemplates);
+
     const rerolledState: StreamQuestState = {
       ...state,
       quests: newQuests,
       generatedAt: new Date().toISOString(),
       lastAudience: audience,
+      lastAudienceHour: seedFromCurrentHour(),
     };
 
     await saveState(rerolledState);
-    return NextResponse.json({ 
-      regenerated: true, 
-      ...serializeState(rerolledState) 
+    return jsonNoStore({
+      regenerated: true,
+      ...serializeState(rerolledState),
     });
   }
 
   // --- ACTION: COMPLETE QUEST ---
-  if (!body?.id) return NextResponse.json({ error: "missing_id" }, { status: 400 });
+  if (action !== "claim") {
+    return jsonNoStore({ error: "bad_request" }, { status: 400 });
+  }
+
+  if (!body?.id) return jsonNoStore({ error: "missing_id" }, { status: 400 });
 
   const quest = state.quests.find((entry) => entry.id === body.id);
-  if (!quest) return NextResponse.json({ error: "quest_not_found" }, { status: 404 });
-  if (quest.completed) return NextResponse.json({ alreadyCompleted: true, ...serializeState(state) });
+  if (!quest) return jsonNoStore({ error: "quest_not_found" }, { status: 404 });
+  if (quest.completed) return jsonNoStore({ alreadyCompleted: true, ...serializeState(state) });
 
-  // 1. Get RECENT chatters (the loadRecipients function now handles the 30m filter)
-  let recipients = await loadRecipientsFromChattergrounds(broadcasterId);
+  // 1. Get RECENT chatters from chattergrounds DB
+  const recipients = await loadRecipientsFromChattergrounds(broadcasterId);
 
   // 2. Separate Broadcaster for Quest Completion tracking
   await applyChattergroundsAction(
@@ -261,7 +322,7 @@ export async function POST(request: Request) {
   );
 
   // 3. Mint coins for everyone else who is active
-  const others = recipients.filter(r => r.chatterId !== broadcasterId);
+  const others = recipients.filter((r) => r.chatterId !== broadcasterId);
   const BATCH_SIZE = 10;
   for (let i = 0; i < others.length; i += BATCH_SIZE) {
     const batch = others.slice(i, i + BATCH_SIZE);
@@ -287,24 +348,25 @@ export async function POST(request: Request) {
     ledger[r.login] = (ledger[r.login] ?? 0) + quest.reward;
   }
 
-  const updatedQuest: StreamQuest = { 
-    ...quest, 
-    completed: true, 
-    completedAt: new Date().toISOString() 
+  const updatedQuest: StreamQuest = {
+    ...quest,
+    completed: true,
+    completedAt: new Date().toISOString(),
   };
-  
+
   const updatedState: StreamQuestState = {
     ...state,
     quests: state.quests.map((entry) => (entry.id === quest.id ? updatedQuest : entry)),
     ledger,
     lastAudience: audience,
+    lastAudienceHour: seedFromCurrentHour(),
   };
 
   await saveState(updatedState);
 
-  return NextResponse.json({
+  return jsonNoStore({
     quest: updatedQuest,
-    recipients: [broadcasterLogin, ...others.map(r => r.login)],
+    recipients: [broadcasterLogin, ...others.map((r) => r.login)],
     totalRewarded: quest.reward * (others.length + 1),
     ...serializeState(updatedState),
   });
@@ -317,20 +379,18 @@ async function ensureState(audience: AudienceSnapshot) {
   const currentHour = seedFromCurrentHour();
 
   if (existing && existing.date === today) {
-    const hasAudienceChanged =
-      JSON.stringify(audience) !== JSON.stringify(existing.lastAudience) ||
-      existing.lastAudienceHour !== currentHour;
-    
-    const upgradedToTwitch = audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
-    const insufficientQuests = existing.quests.length < 6;
-    const audienceRegenerated = audience.source === "twitch" && hasAudienceChanged;
-    const shouldRegenerate = upgradedToTwitch || insufficientQuests || audienceRegenerated;
+    // IMPORTANT FIX:
+    // Do NOT regenerate quests just because roster/audience changed.
+    // That was causing “first claim reshuffles” (completed quests moved to front + new replacements).
+    //
+    // Only top-up if we somehow have fewer than 6 quests.
+    const needsTopUp = !Array.isArray(existing.quests) || existing.quests.length < 6;
 
-    if (shouldRegenerate) {
-      const quests = regenerateQuestsPreservingCompletions(existing.quests, audience, questTemplates);
+    if (needsTopUp) {
+      const toppedUp = topUpQuestsPreserveOrder(existing.quests ?? [], audience, questTemplates);
       const regeneratedState: StreamQuestState = {
         ...existing,
-        quests,
+        quests: toppedUp,
         generatedAt: new Date().toISOString(),
         lastAudience: audience,
         lastAudienceHour: currentHour,
@@ -339,7 +399,11 @@ async function ensureState(audience: AudienceSnapshot) {
       return { state: regeneratedState, regenerated: true };
     }
 
-    const updated = { ...existing, lastAudience: audience, lastAudienceHour: currentHour };
+    const updated: StreamQuestState = {
+      ...existing,
+      lastAudience: audience,
+      lastAudienceHour: currentHour,
+    };
     await saveState(updated);
     return { state: updated, regenerated: false };
   }
@@ -368,7 +432,7 @@ async function loadState(): Promise<StreamQuestState | null> {
     return {
       ...parsed,
       lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
-      lastAudience: parsed.lastAudience ?? { names: FALLBACK_CHATTERS, source: "fallback" },
+      lastAudience: parsed.lastAudience ?? { names: FALLBACK_CHATTERS, source: "fallback", live: true },
     };
   } catch {
     return null;
@@ -459,15 +523,50 @@ function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[])
   });
 }
 
-function regenerateQuestsPreservingCompletions(
+/**
+ * IMPORTANT FIX:
+ * Reroll incomplete quests IN PLACE, preserving the existing order.
+ * (No “completed quests move to the front” reshuffle.)
+ */
+function rerollIncompleteQuestsPreserveOrder(
   existingQuests: StreamQuest[],
   audience: AudienceSnapshot,
   library: QuestTemplateConfig[]
 ) {
-  const completed = existingQuests.filter((quest) => quest.completed);
-  const needed = Math.max(0, 6 - completed.length);
-  const replacements = buildQuests(audience, library).slice(0, needed);
-  return [...completed, ...replacements];
+  const base = Array.isArray(existingQuests) ? existingQuests.slice(0, 6) : [];
+  const replacements = buildQuests(audience, library);
+
+  let repIndex = 0;
+
+  const out: StreamQuest[] = base.map((q) => {
+    if (q.completed) return q;
+    const next = replacements[repIndex++]!;
+    return next;
+  });
+
+  // Top-up to 6 if we somehow had fewer
+  while (out.length < 6 && repIndex < replacements.length) {
+    out.push(replacements[repIndex++]!);
+  }
+
+  return out;
+}
+
+/**
+ * Top-up only (no reroll): if we have < 6 quests, append new ones until we hit 6.
+ * Keeps existing order stable.
+ */
+function topUpQuestsPreserveOrder(
+  existingQuests: StreamQuest[],
+  audience: AudienceSnapshot,
+  library: QuestTemplateConfig[]
+) {
+  const base = Array.isArray(existingQuests) ? existingQuests.slice(0, 6) : [];
+  if (base.length >= 6) return base;
+
+  const needed = 6 - base.length;
+  const additions = buildQuests(audience, library).slice(0, needed);
+  return [...base, ...additions];
 }
 
 function renderPrompt(prompt: string, values: Record<string, string | number>) {
@@ -521,29 +620,33 @@ function sanitizeTemplateConfig(config: QuestTemplateConfig) {
   };
 }
 
-async function loadAudience(): Promise<AudienceSnapshot> {
-  let session: Awaited<ReturnType<typeof getValidSession>> = null;
+async function loadAudience(session: TwitchSession): Promise<AudienceSnapshot> {
   try {
-    session = await getValidSession();
     if (!session) {
       return {
         names: FALLBACK_CHATTERS,
         source: "unauthenticated",
+        live: undefined,
         note: "Link Twitch to use chattergrounds roster. Using placeholders for now.",
       };
     }
 
     const recips = await loadRecipientsFromChattergrounds(session.userId);
+
+    // We keep this deterministic-per-hour, but we no longer let roster changes trigger quest regeneration.
     const names = shuffleWithSeed(
       recips.map((r) => r.login),
       seedFromCurrentHour()
     );
 
+    const liveCheck = await checkLiveStatus(session);
+    const live = liveCheck ?? true; // if unknown, don't false-negative lock the board
+
     return {
       names,
       source: "twitch",
       displayName: session.displayName,
-      live: true,
+      live,
       note: names.length === 0 ? "No chattergrounds users recorded yet." : undefined,
     };
   } catch (error) {
@@ -551,6 +654,7 @@ async function loadAudience(): Promise<AudienceSnapshot> {
     return {
       names: FALLBACK_CHATTERS,
       source: "error",
+      live: undefined,
       note: "DB error while loading roster.",
     };
   }

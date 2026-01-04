@@ -149,7 +149,11 @@ export function StreamQuestClient() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/twitch/stream-quests");
+      const res = await fetch("/api/twitch/stream-quests", {
+        credentials: "include",
+        cache: "no-store",
+      });
+
 
       if (res.status === 401) {
         setAuthState("unauthenticated");
@@ -232,10 +236,12 @@ export function StreamQuestClient() {
   try {
     const res = await fetch("/api/twitch/stream-quests", {
       method: "POST",
+      credentials: "include",
+      cache: "no-store",
       headers: { "Content-Type": "application/json" },
-      // Important: Send the quest ID so the server knows which one to mark
-      body: JSON.stringify({ id }), 
+      body: JSON.stringify({ action: "claim", id }),
     });
+
 
     const json = await res.json();
 
