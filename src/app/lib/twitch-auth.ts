@@ -467,11 +467,7 @@ export async function validateUserToken(accessToken: string) {
  *   const session = await getValidSession(); // broadcaster login session
  *   await registerChattergroundsWebhook(session!.userId, undefined, session!);
  */
-export async function registerChattergroundsWebhook(
-  broadcasterId: string,
-  botUserId?: string,
-  broadcasterSessionForScopeCheck?: StoredTwitchSession
-) {
+export async function registerChattergroundsWebhook(broadcasterId: string, botUserId?: string) {
   const { clientId, clientSecret } = getTwitchConfig();
 
   const secret = process.env.CHATTERGROUNDS_INGEST_SECRET;
@@ -480,42 +476,12 @@ export async function registerChattergroundsWebhook(
     "https://www.spycy.fun/api/twitch/chattergrounds/ingest";
 
   if (!secret || secret.length < 16) {
-    throw new Error("CHATTERGROUNDS_INGEST_SECRET is missing/too short. Use a long random string (>= 16 chars).");
+    throw new Error("CHATTERGROUNDS_INGEST_SECRET is missing/too short. Use >= 16 chars.");
   }
 
   const effectiveBotUserId = botUserId ?? broadcasterId;
 
-  // ---- 0) Ensure the broadcaster has granted required user scopes for ban/unban
-  // (App tokens don’t carry scopes; the broadcaster must have authorized the client ID with channel:moderate.) :contentReference[oaicite:6]{index=6}
-  const broadcasterSession = broadcasterSessionForScopeCheck ?? (await getValidSession());
-  if (!broadcasterSession?.accessToken) {
-    throw new Error(
-      "No broadcaster session available to verify scopes. " +
-        "Log in as the broadcaster first, then call registerChattergroundsWebhook(session.userId, undefined, session)."
-    );
-  }
-
-  const validation = await validateUserToken(broadcasterSession.accessToken);
-  const required = ["channel:moderate"];
-  const missing = required.filter((s) => !validation.scopes?.includes(s));
-
-  if (missing.length) {
-    throw new Error(
-      [
-        `Broadcaster OAuth grant is missing required scope(s): ${missing.join(", ")}`,
-        `Your current grant scopes are: ${validation.scopes.join(", ")}`,
-        "",
-        "Fix:",
-        "- Ensure your OAuth URL includes channel:moderate",
-        "- If you are in production, temporarily set TWITCH_FORCE_VERIFY=true so Twitch forces the consent screen",
-        "- Re-authorize as the broadcaster, then retry registration",
-        "",
-        "Also check you are NOT overriding scopes via TWITCH_SCOPES env var (hard override).",
-      ].join("\n")
-    );
-  }
-
-  // ---- 1) App access token (required for webhook subscriptions)
+  // 1) App access token (required for webhook EventSub create/list/delete) :contentReference[oaicite:3]{index=3}
   const tokenRes = await fetch(TWITCH_TOKEN_URL, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -530,7 +496,16 @@ export async function registerChattergroundsWebhook(
   const appAccessToken = tokenData.access_token as string | undefined;
   if (!appAccessToken) throw new Error(`Failed to get App Access Token: ${JSON.stringify(tokenData)}`);
 
-  async function listSubs() {
+  type ExistingSub = {
+    id: string;
+    type: string;
+    status: string;
+    version: string;
+    condition: Record<string, any>;
+    transport?: { method?: string; callback?: string };
+  };
+
+  async function listSubs(): Promise<ExistingSub[]> {
     const res = await fetch(`${TWITCH_API_BASE}/eventsub/subscriptions`, {
       headers: {
         Authorization: `Bearer ${appAccessToken}`,
@@ -538,31 +513,41 @@ export async function registerChattergroundsWebhook(
       },
       cache: "no-cache",
     });
-    if (!res.ok) return null;
-    return (await res.json()) as {
-      data: Array<{
-        id: string;
-        type: string;
-        status: string;
-        condition: Record<string, any>;
-        transport: { method: string; callback?: string };
-      }>;
-    };
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Failed to list EventSub subs: ${res.status} ${text}`);
+    }
+
+    const data = (await res.json()) as { data: ExistingSub[] };
+    return data.data ?? [];
   }
 
-  const existing = await listSubs();
-  const existingData = existing?.data ?? [];
-
-  function alreadySubscribed(type: string, condition: Record<string, any>) {
-    return existingData.some((s) => {
-      if (s.type !== type) return false;
-      if (s.transport?.method !== "webhook") return false;
-      if ((s.transport?.callback ?? "") !== callbackUrl) return false;
-      for (const [k, v] of Object.entries(condition)) {
-        if (String(s.condition?.[k] ?? "") !== String(v ?? "")) return false;
-      }
-      return true;
+  async function deleteSub(id: string) {
+    const res = await fetch(`${TWITCH_API_BASE}/eventsub/subscriptions?id=${encodeURIComponent(id)}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${appAccessToken}`,
+        "Client-Id": clientId,
+      },
+      cache: "no-cache",
     });
+
+    // DELETE returns 204 on success; treat 404 as fine (already gone)
+    if (!(res.status === 204 || res.status === 404)) {
+      const text = await res.text();
+      throw new Error(`Failed to delete sub ${id}: ${res.status} ${text}`);
+    }
+  }
+
+  function sameCondition(a: Record<string, any>, b: Record<string, any>) {
+    const aKeys = Object.keys(a);
+    const bKeys = Object.keys(b);
+    if (aKeys.length !== bKeys.length) return false;
+    for (const k of aKeys) {
+      if (String(a[k] ?? "") !== String(b[k] ?? "")) return false;
+    }
+    return true;
   }
 
   async function createSub(body: any) {
@@ -576,62 +561,96 @@ export async function registerChattergroundsWebhook(
       body: JSON.stringify(body),
     });
 
-    const data = await subRes.json();
+    const data = await subRes.json().catch(() => ({}));
     console.log(`Twitch EventSub(${body.type}) Status: ${subRes.status}`);
     console.log(`Twitch Subscription(${body.type}) Response:`, JSON.stringify(data, null, 2));
 
-    if (!subRes.ok) {
-      throw new Error(`EventSub subscribe failed (${body.type}) ${subRes.status}: ${JSON.stringify(data)}`);
-    }
+    if (!subRes.ok) throw new Error(`EventSub subscribe failed (${body.type}) ${subRes.status}: ${JSON.stringify(data)}`);
     return data;
   }
 
+  const desired = [
+    {
+      type: "channel.chat.message",
+      version: "1",
+      condition: { broadcaster_user_id: broadcasterId, user_id: effectiveBotUserId },
+    },
+    {
+      type: "channel.ban",
+      version: "1",
+      condition: { broadcaster_user_id: broadcasterId },
+    },
+    {
+      type: "channel.unban",
+      version: "1",
+      condition: { broadcaster_user_id: broadcasterId },
+    },
+  ] as const;
+
+  // If you changed CHATTERGROUNDS_INGEST_SECRET recently, old subs will keep signing with the OLD secret
+  // and your handler will reject -> Twitch revokes. This flag lets you wipe + recreate cleanly.
+  const forceRecreate =
+    (process.env.TWITCH_EVENTSUB_FORCE_RECREATE ?? "").trim().toLowerCase() === "true";
+
+  const existing = await listSubs();
+
+  // Optional nuke: delete anything on our callback so secrets/conditions can't get "stuck"
+  if (forceRecreate) {
+    const toDelete = existing.filter(
+      (s) => s.transport?.method === "webhook" && (s.transport?.callback ?? "") === callbackUrl
+    );
+    if (toDelete.length) {
+      console.log(`Force recreate ON: deleting ${toDelete.length} existing webhook subs for callback ${callbackUrl}`);
+      for (const s of toDelete) await deleteSub(s.id);
+    }
+  }
+
+  // Refresh list after optional nuke
+  const existing2 = forceRecreate ? await listSubs() : existing;
+
   const results: Record<string, any> = {};
 
-  // ---- 2) channel.chat.message (app token)
-  {
-    const type = "channel.chat.message";
-    const condition = { broadcaster_user_id: broadcasterId, user_id: effectiveBotUserId };
+  for (const d of desired) {
+    const matches = existing2.filter((s) => {
+      if (s.type !== d.type) return false;
+      if (s.transport?.method !== "webhook") return false;
+      if ((s.transport?.callback ?? "") !== callbackUrl) return false;
+      if (!sameCondition(s.condition ?? {}, d.condition)) return false;
+      return true;
+    });
 
-    results[type] = alreadySubscribed(type, condition)
-      ? { ok: true, skipped: true, reason: "already subscribed" }
-      : await createSub({
-          type,
-          version: "1",
-          condition,
-          transport: { method: "webhook", callback: callbackUrl, secret },
-        });
+    const enabled = matches.find((m) => m.status === "enabled");
+
+    if (enabled) {
+      results[d.type] = { ok: true, skipped: true, reason: "already enabled", id: enabled.id };
+      continue;
+    }
+
+    // Delete any dead/pending/broken ones so we don’t get stuck forever
+    for (const m of matches) {
+      console.log(`Deleting stale sub: type=${m.type} status=${m.status} id=${m.id}`);
+      await deleteSub(m.id);
+    }
+
+    results[d.type] = await createSub({
+      type: d.type,
+      version: d.version,
+      condition: d.condition,
+      transport: { method: "webhook", callback: callbackUrl, secret },
+    });
   }
 
-  // ---- 3) channel.ban (app token; requires broadcaster granted channel:moderate)
-  {
-    const type = "channel.ban";
-    const condition = { broadcaster_user_id: broadcasterId };
-
-    results[type] = alreadySubscribed(type, condition)
-      ? { ok: true, skipped: true, reason: "already subscribed" }
-      : await createSub({
-          type,
-          version: "1",
-          condition,
-          transport: { method: "webhook", callback: callbackUrl, secret },
-        });
-  }
-
-  // ---- 4) channel.unban (app token; requires broadcaster granted channel:moderate)
-  {
-    const type = "channel.unban";
-    const condition = { broadcaster_user_id: broadcasterId };
-
-    results[type] = alreadySubscribed(type, condition)
-      ? { ok: true, skipped: true, reason: "already subscribed" }
-      : await createSub({
-          type,
-          version: "1",
-          condition,
-          transport: { method: "webhook", callback: callbackUrl, secret },
-        });
-  }
+  // Helpful: dump current statuses so you can see if you’re actually enabled
+  const after = await listSubs();
+  const ours = after.filter(
+    (s) => s.transport?.method === "webhook" && (s.transport?.callback ?? "") === callbackUrl
+  );
+  console.log("EventSub subs for our callback:", ours.map((s) => ({
+    type: s.type,
+    status: s.status,
+    id: s.id,
+    condition: s.condition,
+  })));
 
   return results;
 }
