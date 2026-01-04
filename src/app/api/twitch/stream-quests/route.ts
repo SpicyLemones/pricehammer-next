@@ -150,7 +150,7 @@ export async function POST(request: Request) {
 
   const session = await getValidSession();
   if (!session) {
-     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
   const audience = await loadAudience();
@@ -167,37 +167,53 @@ export async function POST(request: Request) {
 
   const completedAt = new Date().toISOString();
 
-  /**
-   * FIX: Only reward the Broadcaster (the person logged in) 
-   * instead of the entire audience.names list.
-   */
-  const recipientName = session.displayName.toLowerCase(); 
-  const recipientId = session.userId; // Use the actual Twitch ID from session
+  // --- Reward ALL current chatters ---
+  const recipients = Array.from(
+    new Set((audience.names ?? []).map((n) => n.trim().toLowerCase()).filter(Boolean))
+  );
 
-  // --- Sync with Chattergrounds Database for the BROADCASTER ONLY ---
+  // Broadcaster identity (keep your existing behavior)
+  const recipientName = session.displayName.toLowerCase();
+  const recipientId = session.userId;
+
+  // Record quest completion once (broadcaster)
   await applyChattergroundsAction(
     {
       action: "quest-completed",
-      chatterId: recipientId,    // REAL ID (prevents duplicates)
+      chatterId: recipientId, // REAL ID (prevents duplicates for broadcaster)
       chatterLogin: recipientName,
-      amount: 1,
+      amount: 1, // your existing "counter" behavior
     },
     { sessionUserId: session.userId }
   );
 
-  await applyChattergroundsAction(
-    {
-      action: "mint",
-      chatterId: recipientId,
-      chatterLogin: recipientName,
-      amount: quest.reward,
-    },
-    { sessionUserId: session.userId }
-  );
+  // Mint the quest reward to EVERYONE currently in chat
+  // (batch to avoid 200 parallel DB writes)
+  const BATCH_SIZE = 10;
+  for (let i = 0; i < recipients.length; i += BATCH_SIZE) {
+    const batch = recipients.slice(i, i + BATCH_SIZE);
+    await Promise.all(
+      batch.map(async (login) => {
+        const chatterId = login === recipientName ? recipientId : login;
 
-  // Update the local JSON ledger for display
+        await applyChattergroundsAction(
+          {
+            action: "mint",
+            chatterId,
+            chatterLogin: login,
+            amount: quest.reward,
+          },
+          { sessionUserId: session.userId }
+        );
+      })
+    );
+  }
+
+  // Update the local JSON ledger for display (everyone gets reward)
   const ledger = { ...state.ledger };
-  ledger[recipientName] = (ledger[recipientName] ?? 0) + quest.reward;
+  for (const login of recipients) {
+    ledger[login] = (ledger[login] ?? 0) + quest.reward;
+  }
 
   const updatedQuest: StreamQuest = { ...quest, completed: true, completedAt };
   const updatedState: StreamQuestState = {
@@ -211,11 +227,12 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     quest: updatedQuest,
-    recipients: [recipientName],
-    totalRewarded: updatedQuest.reward,
+    recipients,
+    totalRewarded: quest.reward * recipients.length,
     ...serializeState(updatedState),
   });
 }
+
 async function ensureState(audience: AudienceSnapshot) {
   const today = currentDateKey();
   const existing = await loadState();
@@ -226,7 +243,8 @@ async function ensureState(audience: AudienceSnapshot) {
     const hasAudienceChanged =
       JSON.stringify(audience) !== JSON.stringify(existing.lastAudience) ||
       existing.lastAudienceHour !== currentHour;
-    const upgradedToTwitch = audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
+    const upgradedToTwitch =
+      audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
     const insufficientQuests = existing.quests.length < 6;
     const audienceRegenerated = audience.source === "twitch" && hasAudienceChanged;
     const shouldRegenerate = upgradedToTwitch || insufficientQuests || audienceRegenerated;
@@ -406,7 +424,7 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
     if (variable.type === "chatter") {
       const fallbackNames =
         audience.source === "twitch"
-          ? [audience.displayName].filter(Boolean) as string[]
+          ? ([audience.displayName].filter(Boolean) as string[])
           : FALLBACK_CHATTERS;
       values[variable.key] = pickChatter(audience.names, fallbackNames);
     }
@@ -417,7 +435,9 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
 
 function sanitizeTemplateConfig(config: QuestTemplateConfig) {
   if (!config?.id || !config.title || !config.prompt) return null;
-  if (!["prime", "ban", "timeout", "stream-time", "insult", "wordle", "bandle"].includes(config.category)) {
+  if (
+    !["prime", "ban", "timeout", "stream-time", "insult", "wordle", "bandle"].includes(config.category)
+  ) {
     return null;
   }
   return {
