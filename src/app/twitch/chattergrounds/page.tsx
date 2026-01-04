@@ -1,476 +1,453 @@
-import crypto from "node:crypto";
-import { promises as fs } from "node:fs";
-import path from "node:path";
+"use client";
 
-import { NextResponse } from "next/server";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import {
+  BarChart3,
+  Flame,
+  Ghost,
+  Loader2,
+  Medal,
+  MessageSquare,
+  Search,
+  Trophy,
+  Sparkles,
+  RefreshCw,
+  Coins,
+  Activity,
+  SmilePlus,
+  Heart,
+  Gift,
+  ShieldCheck,
+  Zap,
+  User 
+} from "lucide-react";
+import clsx from "clsx";
 
-import { getValidSession } from "@/app/lib/twitch-auth";
-// Import the database logic from your chattergrounds route
-import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
+type RangeKey = "today" | "week" | "month" | "all";
 
-// NEW: read recipients from chattergrounds DB
-import { all } from "@/app/lib/sql";
+type MessagePoint = {
+  timestamp: string;
+  messages: number;
+};
 
-export const dynamic = "force-dynamic";
-
-type QuestCategory =
-  | "prime"
-  | "ban"
-  | "timeout"
-  | "stream-time"
-  | "insult"
-  | "wordle"
-  | "bandle";
-
-type StreamQuest = {
+type ChatterProfile = {
   id: string;
-  title: string;
-  prompt: string;
-  reward: number;
-  category: QuestCategory;
-  completed: boolean;
-  completedAt?: string;
-};
-
-type AudienceSnapshot = {
-  names: string[];
-  source: "twitch" | "offline" | "unauthenticated" | "fallback" | "error";
-  displayName?: string;
-  live?: boolean;
-  note?: string;
-};
-
-type StreamQuestState = {
-  date: string;
-  generatedAt: string;
-  quests: StreamQuest[];
-  ledger: Record<string, number>;
-  lastAudienceHour: number;
-  lastAudience: AudienceSnapshot;
-};
-
-type QuestVariable =
-  | { key: string; type: "range"; min: number; max: number }
-  | { key: string; type: "chatter" };
-
-type QuestTemplateConfig = {
-  id: string;
-  category: QuestCategory;
-  title: string;
-  prompt: string;
-  reward?: number;
-  variables?: QuestVariable[];
-};
-
-const DATA_PATH = path.join(process.cwd(), "data", "stream-quests.json");
-const TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "quest-library.json");
-
-const FALLBACK_CHATTERS = [
-  "toadette",
-  "chat_goblin",
-  "ban_me_please",
-  "lilypadlurker",
-  "hammerfan",
-  "modbot9000",
-  "ribbitriot",
-];
-
-const BOT_LOGINS = new Set([
-  "streamelements",
-  "nightbot",
-  "moobot",
-  "streamlabs",
-  "soundalerts",
-  "sery_bot",
-]);
-
-const DEFAULT_TEMPLATE_LIBRARY: QuestTemplateConfig[] = [
-  {
-    id: "prime-beggar",
-    category: "prime",
-    title: "Prime Beggar",
-    prompt: "Successfully beg for {{count}} Twitch Prime sub{{plural:count:s}}.",
-    reward: 500,
-    variables: [{ key: "count", type: "range", min: 1, max: 3 }],
-  },
-  {
-    id: "ban-random",
-    category: "ban",
-    title: "See You Later",
-    prompt: "Ban {{chatter}} from your chat (they'll forgive you… probably).",
-    reward: 500,
-    variables: [{ key: "chatter", type: "chatter" }],
-  },
-  {
-    id: "timeout-random",
-    category: "timeout",
-    title: "Naughty Step",
-    prompt: "Time out {{chatter}} for {{minutes}} minute{{plural:minutes:s}}.",
-    reward: 500,
-    variables: [
-      { key: "chatter", type: "chatter" },
-      { key: "minutes", type: "range", min: 1, max: 20 },
-    ],
-  },
-  {
-    id: "stream-hours",
-    category: "stream-time",
-    title: "Stay Live",
-    prompt: "Stream for more than {{hours}} hour{{plural:hours:s}}.",
-    reward: 500,
-    variables: [{ key: "hours", type: "range", min: 1, max: 5 }],
-  },
-  {
-    id: "insult-random",
-    category: "insult",
-    title: "Roast Duty",
-    prompt: "Drop a playful insult on {{chatter}} in chat.",
-    reward: 500,
-    variables: [{ key: "chatter", type: "chatter" }],
-  },
-  {
-    id: "wordle",
-    category: "wordle",
-    title: "Wordle Warrior",
-    prompt: "Complete today’s Wordle on stream.",
-    reward: 500,
-  },
-  {
-    id: "bandle",
-    category: "bandle",
-    title: "Bandle Bard",
-    prompt: "Complete today’s Bandle on stream.",
-    reward: 500,
-  },
-];
-
-type DbRecipient = { chatterId: string; login: string };
-
-async function loadRecipientsFromChattergrounds(broadcasterId: string): Promise<DbRecipient[]> {
-  const rows = (await all(
-    `SELECT chatter_id, name
-    FROM chattergrounds_stats
-    WHERE broadcaster_id = ?
-      AND chatter_id GLOB '[0-9]*'
-    ORDER BY updated_at DESC`,
-    [broadcasterId]
-  )) as any[];
-
-  const seen = new Set<string>();
-  const out: DbRecipient[] = [];
-
-  for (const r of rows ?? []) {
-    const chatterId = String(r?.chatter_id ?? "").trim();
-    const login = String(r?.name ?? "").trim().toLowerCase();
-    if (!chatterId || !login) continue;
-    if (BOT_LOGINS.has(login)) continue;
-    if (seen.has(chatterId)) continue;
-    seen.add(chatterId);
-    out.push({ chatterId, login });
-  }
-
-  return out;
-}
-
-export async function GET() {
-  const audience = await loadAudience();
-  const { state, regenerated } = await ensureState(audience);
-
-  return NextResponse.json({
-    regenerated,
-    ...serializeState(state),
-  });
-}
-
-export async function POST(request: Request) {
-  const body = (await request.json().catch(() => null)) as { id?: string } | null;
-  if (!body?.id) {
-    return NextResponse.json({ error: "missing_id" }, { status: 400 });
-  }
-
-  const session = await getValidSession();
-  if (!session) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
-
-  const audience = await loadAudience();
-  const { state } = await ensureState(audience);
-
-  const quest = state.quests.find((entry) => entry.id === body.id);
-  if (!quest) {
-    return NextResponse.json({ error: "quest_not_found" }, { status: 404 });
-  }
-
-  if (quest.completed) {
-    return NextResponse.json({ alreadyCompleted: true, ...serializeState(state) });
-  }
-
-  const broadcasterLogin = (session.login || session.displayName).toLowerCase();
-  const broadcasterId = session.userId;
-
-  // Track quest completion for broadcaster
-  await applyChattergroundsAction(
-    {
-      action: "quest-completed",
-      chatterId: broadcasterId,
-      chatterLogin: broadcasterLogin,
-      amount: 1,
-    },
-    { sessionUserId: session.userId }
-  );
-
-  // Reward everyone in the DB
-  let recipients = await loadRecipientsFromChattergrounds(session.userId);
-
-  if (!recipients.some((r) => r.chatterId === broadcasterId)) {
-    recipients = [{ chatterId: broadcasterId, login: broadcasterLogin }, ...recipients];
-  }
-
-  const BATCH_SIZE = 10;
-  for (let i = 0; i < recipients.length; i += BATCH_SIZE) {
-    const batch = recipients.slice(i, i + BATCH_SIZE);
-    await Promise.all(
-      batch.map(async (r) => {
-        await applyChattergroundsAction(
-          {
-            action: "mint",
-            chatterId: r.chatterId,
-            chatterLogin: r.login,
-            amount: quest.reward,
-          },
-          { sessionUserId: session.userId }
-        );
-      })
-    );
-  }
-
-  const ledger = { ...state.ledger };
-  for (const r of recipients) {
-    ledger[r.login] = (ledger[r.login] ?? 0) + quest.reward;
-  }
-
-  const updatedQuest: StreamQuest = { 
-    ...quest, 
-    completed: true, 
-    completedAt: new Date().toISOString() 
+  name: string;
+  flair: string;
+  lastMessage: string | null;
+  stats: {
+    timesBanned: number;
+    timesTimedOut: number;
+    questsCompleted: number;
+    messagesSent: number;
+    estimatedAge: number;
+    monthsSubbed: number;
+    donosGifted: number;
+    toadcoins: number; // Spendable currency from DB
+    xp: number;        // Permanent progress from DB
+    favoriteWord: string | null;
+    favoriteEmote: string | null;
   };
-  
-  const updatedState: StreamQuestState = {
-    ...state,
-    quests: state.quests.map((entry) => (entry.id === quest.id ? updatedQuest : entry)),
-    ledger,
-    lastAudience: audience,
-  };
+};
 
-  await saveState(updatedState);
+type ChattergroundsData = {
+  updatedAt: string;
+  origin: string;
+  chatters: ChatterProfile[];
+  messageSeries: Record<RangeKey, MessagePoint[]>;
+};
 
-  return NextResponse.json({
-    quest: updatedQuest,
-    recipients: recipients.map((r) => r.login),
-    totalRewarded: quest.reward * recipients.length,
-    ...serializeState(updatedState),
-  });
+const POLL_MS = 5000;
+const rangeLabels: Record<RangeKey, string> = {
+  today: "Today",
+  week: "7 Days",
+  month: "1 Month",
+  all: "All",
+};
+
+const GRAPH_PADDING = { top: 30, right: 30, bottom: 50, left: 60 };
+const VIEW_W = 800;
+const VIEW_H = 350;
+const CHART_W = VIEW_W - GRAPH_PADDING.left - GRAPH_PADDING.right;
+const CHART_H = VIEW_H - GRAPH_PADDING.top - GRAPH_PADDING.bottom;
+
+const formatNumber = (num: number) => (Number.isFinite(num) ? num.toLocaleString() : "0");
+
+function formatTimeAgo(iso: string, nowMs: number) {
+  const delta = Math.max(0, nowMs - new Date(iso).getTime());
+  const seconds = Math.floor(delta / 1000);
+  if (seconds < 60) return `${seconds}s ago`;
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  return `${Math.floor(minutes / 60)}h ago`;
 }
 
-async function ensureState(audience: AudienceSnapshot) {
-  const today = currentDateKey();
-  const existing = await loadState();
-  const questTemplates = await loadQuestTemplates();
-  const currentHour = seedFromCurrentHour();
+function getChatterIdentity(msgs: number, timeouts: number, bans: number) {
+  if (msgs < 250) return "Unknown Entity";
+  const tRatio = timeouts === 0 ? Infinity : msgs / timeouts;
+  const bRatio = bans === 0 ? Infinity : msgs / bans;
+  if (bans === 0 && timeouts === 0) return "Boring safe NPC";
+  if (tRatio >= 500 && bRatio >= 50) return "Toadhead";
+  if (tRatio >= 400 && bRatio >= 40) return "IJBOL farmer";
+  if (tRatio >= 300 && bRatio >= 35) return "Javelin thrower";
+  if (tRatio >= 200 && bRatio >= 30) return "Normie";
+  if (tRatio >= 100 && bRatio >= 25) return "Chud";
+  if (tRatio >= 50 && bRatio >= 10) return "Unfunny chuddy";
+  return "Chaotic Element";
+}
 
-  if (existing && existing.date === today) {
-    const hasAudienceChanged =
-      JSON.stringify(audience) !== JSON.stringify(existing.lastAudience) ||
-      existing.lastAudienceHour !== currentHour;
+/**
+ * REFACTORED: Now uses raw XP value from DB for leveling.
+ */
+function getLevelInfo(totalXp: number) {
+  let level = 0;
+  let currentThreshold = 500;
+  let remainingXpInLevel = totalXp;
+  while (remainingXpInLevel >= currentThreshold) {
+    remainingXpInLevel -= currentThreshold;
+    level++;
+    currentThreshold = Math.floor(currentThreshold * 1.2);
+  }
+  return { 
+    level, 
+    progress: (remainingXpInLevel / currentThreshold) * 100, 
+    currentThreshold, 
+    remainingXp: Math.floor(remainingXpInLevel) 
+  };
+}
+
+export default function ChattergroundsPage() {
+  const [range, setRange] = useState<RangeKey>("today");
+  const [selectedChatter, setSelectedChatter] = useState<ChatterProfile | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [data, setData] = useState<ChattergroundsData | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [nowTick, setNowTick] = useState(() => Date.now());
+  const [showLevelUpAnim, setShowLevelUpAnim] = useState(false);
+
+  const modalRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const prevLevelRef = useRef<number | null>(null);
+  const inFlightRef = useRef(false);
+
+  useEffect(() => { audioRef.current = new Audio("/audio/lvlup.mp3"); }, []);
+  useEffect(() => { const t = setInterval(() => setNowTick(Date.now()), 10000); return () => clearInterval(t); }, []);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        setSelectedChatter(null);
+      }
+    }
+    if (selectedChatter) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [selectedChatter]);
+
+  const load = useCallback(async (opts?: { silent?: boolean }) => {
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
+    try {
+      if (!opts?.silent) setRefreshing(true);
+      const res = await fetch("/api/twitch/chattergrounds", { cache: "no-store" });
+      const json = await res.json();
+      const rawData = json.data || json;
+      const formatted: ChatterProfile[] = (rawData.chatters || []).map((c: any) => ({
+        id: c.chatter_id || c.chatter_user_id || c.id,
+        name: c.display_name || c.displayName || c.name || "Unknown",
+        flair: (c.messages_sent ?? 0) > 100 ? "regular" : "new",
+        lastMessage: c.last_message ?? c.lastMessage ?? null,
+        stats: {
+          timesBanned: c.times_banned ?? 0,
+          timesTimedOut: c.times_timed_out ?? 0,
+          questsCompleted: c.quests_completed ?? 0,
+          messagesSent: c.messages_sent ?? 0,
+          estimatedAge: c.estimated_age ?? 20,
+          monthsSubbed: c.months_subbed ?? 0,
+          donosGifted: c.donos_gifted ?? 0,
+          toadcoins: c.toadcoins ?? 0,
+          xp: c.xp ?? 0,
+          favoriteWord: c.favorite_word ?? "Toad",
+          favoriteEmote: c.favorite_emote ?? "Kappa",
+        },
+      }));
+      setData({ updatedAt: rawData.updatedAt || new Date().toISOString(), origin: rawData.origin || "twitch", chatters: formatted, messageSeries: rawData.messageSeries || {} });
+    } catch (e) { console.error(e); } finally { setRefreshing(false); setLoading(false); inFlightRef.current = false; }
+  }, []);
+
+  useEffect(() => {
+    load();
+    const id = setInterval(() => load({ silent: true }), POLL_MS);
+    return () => clearInterval(id);
+  }, [load]);
+
+  useEffect(() => {
+    if (!selectedChatter || !data) { prevLevelRef.current = null; return; }
+    const currentData = data.chatters.find(c => c.id === selectedChatter.id);
+    if (!currentData) return;
+
+    const { level } = getLevelInfo(currentData.stats.xp);
     
-    const upgradedToTwitch = audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
-    const insufficientQuests = existing.quests.length < 6;
-    const audienceRegenerated = audience.source === "twitch" && hasAudienceChanged;
-    const shouldRegenerate = upgradedToTwitch || insufficientQuests || audienceRegenerated;
-
-    if (shouldRegenerate) {
-      const quests = regenerateQuestsPreservingCompletions(existing.quests, audience, questTemplates);
-      const regeneratedState: StreamQuestState = {
-        ...existing,
-        quests,
-        generatedAt: new Date().toISOString(),
-        lastAudience: audience,
-        lastAudienceHour: currentHour,
-      };
-      await saveState(regeneratedState);
-      return { state: regeneratedState, regenerated: true };
+    if (prevLevelRef.current !== null && level > prevLevelRef.current) { 
+      audioRef.current?.play().catch(() => {});
+      setShowLevelUpAnim(true);
+      setTimeout(() => setShowLevelUpAnim(false), 3000);
     }
+    prevLevelRef.current = level;
+  }, [data, selectedChatter]);
+  
+  const levelDisplay = useMemo(() => {
+    if (!selectedChatter || !data) return null;
+    const currentData = data.chatters.find(c => c.id === selectedChatter.id) || selectedChatter;
+    return getLevelInfo(currentData.stats.xp);
+  }, [data, selectedChatter]);
 
-    const updated = { ...existing, lastAudience: audience, lastAudienceHour: currentHour };
-    await saveState(updated);
-    return { state: updated, regenerated: false };
-  }
+  const series = useMemo(() => data?.messageSeries?.[range] ?? [], [data, range]);
+  const maxMessages = useMemo(() => Math.max(...series.map((p) => p.messages), 1), [series]);
+  const linePath = useMemo(() => {
+    if (series.length < 2) return "";
+    const stepX = CHART_W / (series.length - 1);
+    return series.map((p, i) => {
+      const x = GRAPH_PADDING.left + i * stepX;
+      const y = GRAPH_PADDING.top + (CHART_H - (p.messages / maxMessages) * CHART_H);
+      return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+    }).join(" ");
+  }, [series, maxMessages]);
 
-  const quests = buildQuests(audience, questTemplates);
-  const state: StreamQuestState = {
-    date: today,
-    generatedAt: new Date().toISOString(),
-    quests,
-    ledger: existing?.ledger ?? {},
-    lastAudienceHour: currentHour,
-    lastAudience: audience,
-  };
-
-  await saveState(state);
-  return { state, regenerated: true };
-}
-
-async function loadState(): Promise<StreamQuestState | null> {
-  try {
-    const raw = await fs.readFile(DATA_PATH, "utf8");
-    const parsed = JSON.parse(raw) as StreamQuestState;
+  const leaderboards = useMemo(() => {
+    const base = [...(data?.chatters ?? [])];
     return {
-      ...parsed,
-      lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
-      lastAudience: parsed.lastAudience ?? { names: FALLBACK_CHATTERS, source: "fallback" },
+      chatters: [...base].sort((a, b) => b.stats.messagesSent - a.stats.messagesSent).slice(0, 5),
+      bans: [...base].sort((a, b) => b.stats.timesBanned - a.stats.timesBanned).slice(0, 5),
+      timeouts: [...base].sort((a, b) => b.stats.timesTimedOut - a.stats.timesTimedOut).slice(0, 5),
     };
-  } catch {
-    return null;
-  }
+  }, [data]);
+
+  const filteredRoster = useMemo(() => (data?.chatters ?? []).filter((c) => c.name.toLowerCase().includes(searchTerm.toLowerCase())), [data, searchTerm]);
+
+  if (loading) return <div className="flex min-h-screen items-center justify-center bg-slate-950 text-emerald-400"><Loader2 className="animate-spin" /></div>;
+
+  return (
+  <div className="relative min-h-screen bg-slate-950 text-slate-50 font-sans overflow-x-hidden">
+    
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+      <video autoPlay muted loop playsInline className="h-full w-full object-cover blur-sm scale-110">
+        <source src="/videos/chattergrounds.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-slate-950/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950" />
+    </div>
+
+    <Link 
+      href="/twitch" 
+      className="fixed left-6 top-6 z-50 flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/80 px-5 py-2 text-xs font-bold text-slate-200 backdrop-blur-md hover:border-emerald-500/50 hover:text-emerald-400 transition-all shadow-lg active:scale-95"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      BACK TO SPYCY.FUN/TWITCH
+    </Link>
+
+    <div className="relative z-10 p-6 lg:p-10">
+      <header className="mb-8 flex flex-wrap justify-between items-end gap-6 pt-16">
+        <div>
+          <h1 className="text-6xl font-black tracking-wider mb-2 drop-shadow-2xl">CHATTERGROUNDS</h1>
+          <div className="flex items-center gap-3 text-slate-400 text-xs font-mono uppercase">
+            <span className="flex items-center gap-1.5 bg-slate-900/50 px-2 py-1 rounded border border-slate-800">
+              <Sparkles size={12} className="text-amber-400" /> 
+              Updated {data ? formatTimeAgo(data.updatedAt, nowTick) : "just now"}
+            </span>
+            <button onClick={() => load()} className="inline-flex items-center gap-1.5 rounded border border-slate-800 bg-slate-900/50 px-2 py-1 hover:text-emerald-400 hover:border-emerald-500/30 transition-colors">
+              <RefreshCw size={12} className={clsx(refreshing && "animate-spin")} /> 
+              {refreshing ? "refreshing" : "refresh"}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex flex-col gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 bg-slate-900/60 border border-slate-800 p-8 rounded-[2.5rem] backdrop-blur-sm">
+            <div className="flex justify-between items-center mb-8">
+              <h3 className="flex items-center gap-2 font-black text-slate-200 uppercase text-xl">
+                <Flame className="text-orange-500" size={20} /> Yap Graph
+              </h3>
+              <div className="flex gap-1 bg-slate-950 p-1.5 rounded-full border border-slate-800">
+                {(Object.keys(rangeLabels) as RangeKey[]).map((k) => (
+                  <button key={k} onClick={() => setRange(k)} className={clsx("px-4 py-1.5 text-[10px] font-black rounded-full transition-all", range === k ? "bg-emerald-500 text-slate-950" : "text-slate-500 hover:text-slate-300")}>
+                    {rangeLabels[k].toUpperCase()}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            <div className="h-64 w-full relative">
+              <svg className="w-full h-full overflow-visible" viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}>
+                {[0, 0.5, 1].map((v) => (
+                  <g key={v}>
+                    <text x={GRAPH_PADDING.left - 15} y={GRAPH_PADDING.top + CHART_H * (1 - v) + 4} textAnchor="end" className="fill-slate-500 text-[10px] font-mono font-bold">{Math.round(maxMessages * v)}</text>
+                    <line x1={GRAPH_PADDING.left} y1={GRAPH_PADDING.top + CHART_H * (1 - v)} x2={VIEW_W - GRAPH_PADDING.right} y2={GRAPH_PADDING.top + CHART_H * (1 - v)} stroke="#334155" strokeDasharray="4 4" opacity="0.5" />
+                  </g>
+                ))}
+                <path d={linePath} fill="none" stroke="#10b981" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
+              </svg>
+            </div>
+          </div>
+
+          <div className="bg-slate-900/60 border border-slate-800 p-8 rounded-[2.5rem] backdrop-blur-sm">
+            <h3 className="flex items-center gap-2 font-black text-slate-200 mb-8 uppercase text-xl">
+              <BarChart3 className="text-indigo-400" size={20} /> Pulse
+            </h3>
+            <div className="space-y-4">
+              <PulseBox label="Accumulated Chat" value={data?.chatters.reduce((s, c) => s + c.stats.messagesSent, 0) || 0} color="text-indigo-400" />
+              <PulseBox label="Unique Chatters" value={data?.chatters.length || 0} color="text-emerald-400" />
+              <PulseBox label="Completed Quests" value={data?.chatters.reduce((s, c) => s + c.stats.questsCompleted, 0) || 0} color="text-orange-400" />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <VerticalBoard title="Top Chatters" icon={MessageSquare} items={leaderboards.chatters} stat="messagesSent" unit="msgs" onSelect={setSelectedChatter} />
+          <VerticalBoard title="Ban Leaderboard" icon={Trophy} items={leaderboards.bans} stat="timesBanned" unit="bans" onSelect={setSelectedChatter} />
+          <VerticalBoard title="Timeout Leaderboard" icon={Medal} items={leaderboards.timeouts} stat="timesTimedOut" unit="timeouts" onSelect={setSelectedChatter} />
+        </div>
+
+        <div className="bg-slate-900/60 border border-slate-800 p-10 rounded-[2.5rem] backdrop-blur-sm">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
+            <h3 className="font-black text-2xl uppercase flex items-center gap-3">
+              <Ghost size={24} className="text-slate-500" /> Global Roster
+            </h3>
+            <div className="relative w-full md:w-96">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+              <input type="text" placeholder="Search user..." className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none transition-all" onChange={(e) => setSearchTerm(e.target.value)} />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-h-[400px] overflow-y-auto pr-4 custom-scrollbar">
+            {filteredRoster.map((c) => (
+              <button key={c.id} onClick={() => setSelectedChatter(c)} className="p-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-left hover:border-emerald-500 hover:bg-slate-900 transition-all active:scale-95 group">
+                <p className="text-sm font-black truncate uppercase group-hover:text-emerald-400">{c.name}</p>
+                <p className="text-[10px] text-slate-600 font-mono font-bold uppercase">{formatNumber(c.stats.messagesSent)} MSGS</p>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* MODAL: PROFILE INTELLIGENCE */}
+    {selectedChatter && levelDisplay && (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6 overflow-y-auto animate-in fade-in duration-300">
+        <div ref={modalRef} className="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[3rem] p-10 relative animate-in zoom-in-95 shadow-2xl my-auto">
+          <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-10">
+            <div className="flex-1">
+              <div className="flex items-center gap-4 mb-2">
+                <h2 className="text-5xl lg:text-6xl font-black tracking-wider uppercase">{selectedChatter.name}</h2>
+                <div className="relative group">
+                  {showLevelUpAnim && (
+                    <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-amber-400 font-black italic text-2xl whitespace-nowrap animate-bounce pointer-events-none drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]">LEVEL UP!</span>
+                  )}
+                  <div className="bg-emerald-500 text-slate-950 px-3 py-1 rounded-lg text-xl font-black italic shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-transform duration-300 group-hover:scale-110">
+                    LVL {levelDisplay.level}
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck size={16} className="text-emerald-500" />
+                  <span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Chatter Identity:</span>
+                  <span className="text-emerald-400 text-[10px] font-black uppercase tracking-widest">
+                    {getChatterIdentity(selectedChatter.stats.messagesSent, selectedChatter.stats.timesTimedOut, selectedChatter.stats.timesBanned)}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <User size={16} className="text-slate-600" />
+                  <span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">EST. AGE: {selectedChatter.stats.estimatedAge}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="w-full lg:w-72 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+              <div className="flex justify-between items-end mb-2">
+                <span className="text-[10px] font-black text-slate-500 uppercase flex items-center gap-1">
+                  <Zap size={10} className="text-amber-400 fill-amber-400" /> XP Progress
+                </span>
+                <span className="text-[10px] font-mono font-bold text-slate-400">
+                  {formatNumber(levelDisplay.remainingXp)} / {formatNumber(levelDisplay.currentThreshold)}
+                </span>
+              </div>
+              <div className="h-3 bg-slate-900 rounded-full overflow-hidden border border-slate-800 relative">
+                <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-1000 ease-out relative shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: `${levelDisplay.progress}%` }}>
+                  <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <StatTile label="Messages" val={selectedChatter.stats.messagesSent} color="text-emerald-400" />
+            <StatTile label="Bans" val={selectedChatter.stats.timesBanned} color="text-red-400" />
+            <StatTile label="Timeouts" val={selectedChatter.stats.timesTimedOut} color="text-orange-400" />
+            <StatTile icon={Coins} label="Toadcoins" val={selectedChatter.stats.toadcoins} suffix=" TC" color="text-amber-400" />
+            <StatTile icon={Heart} label="Months Subbed" val={selectedChatter.stats.monthsSubbed} color="text-indigo-400" />
+            <StatTile icon={Gift} label="Donos Gifted" val={selectedChatter.stats.donosGifted} color="text-pink-400" />
+            <StatTile icon={Activity} label="Fav Activity" val={selectedChatter.stats.favoriteWord} color="text-slate-200" expandable />
+            <StatTile icon={SmilePlus} label="Fav Emote" val={selectedChatter.stats.favoriteEmote} color="text-slate-200" />
+          </div>
+
+          <div className="p-8 bg-slate-950 rounded-[2rem] border border-slate-800 shadow-inner relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent h-1" />
+            <p className="text-[10px] text-slate-500 uppercase font-black mb-4 tracking-widest flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Intercepted Transmission
+            </p>
+            <p className="text-2xl font-medium italic text-slate-300 leading-relaxed">
+              "{selectedChatter.lastMessage || "Target has remained silent..."}"
+            </p>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+);
 }
 
-async function saveState(state: StreamQuestState) {
-  await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });
-  await fs.writeFile(DATA_PATH, JSON.stringify(state, null, 2), "utf8");
+function VerticalBoard({ title, icon: Icon, items, stat, unit, onSelect }: any) {
+  return (
+    <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-[2.5rem]">
+      <h3 className="flex items-center gap-2 font-black text-slate-500 text-xs uppercase tracking-widest mb-6 px-2"><Icon size={16} /> {title}</h3>
+      <div className="space-y-2">
+        {items.map((item: any, i: number) => (
+          <button key={item.id} onClick={() => onSelect(item)} className="w-full flex items-center justify-between p-4 rounded-2xl bg-slate-950/50 border border-slate-800/50 hover:bg-slate-900 hover:border-emerald-500/50 transition-all group active:scale-95">
+            <div className="flex items-center gap-4"><span className="text-xs font-mono font-black text-slate-600 group-hover:text-emerald-400">#{i + 1}</span><span className="font-black uppercase text-sm text-slate-200">{item.name}</span></div>
+            <div className="text-right"><span className="font-mono font-black text-emerald-400">{item.stats[stat].toLocaleString()}</span><span className="text-[9px] text-slate-600 font-bold ml-1 uppercase">{unit}</span></div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-function serializeState(state: StreamQuestState) {
-  return {
-    date: state.date,
-    generatedAt: state.generatedAt,
-    quests: state.quests,
-    ledger: state.ledger,
-    audience: state.lastAudience,
-  };
+function PulseBox({ label, value, color }: any) {
+  return (
+    <div className="bg-slate-950 p-5 rounded-3xl border border-slate-800/50 shadow-inner"><p className="text-[10px] uppercase font-black text-slate-600 mb-1 tracking-widest">{label}</p><p className={clsx("text-3xl font-black font-mono", color)}>{value.toLocaleString()}</p></div>
+  );
 }
 
-function currentDateKey() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function randomBetween(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function pickChatter(chatters: string[], fallback: string[] = FALLBACK_CHATTERS) {
-  const pool = chatters.length ? chatters : fallback;
-  if (!pool.length) return "a viewer";
-  return pool[Math.floor(Math.random() * pool.length)];
-}
-
-function seedFromCurrentHour() {
-  return Math.floor(Date.now() / 3_600_000);
-}
-
-function shuffleWithSeed(values: string[], seed: number) {
-  const result = [...values];
-  let rng = seed % 2147483647;
-  if (rng <= 0) rng += 2147483646;
-
-  for (let i = result.length - 1; i > 0; i -= 1) {
-    rng = (rng * 16807) % 2147483647;
-    const j = rng % (i + 1);
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-
-  return result;
-}
-
-async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
-  try {
-    const raw = await fs.readFile(TEMPLATE_LIBRARY_PATH, "utf8");
-    const parsed = JSON.parse(raw) as any;
-    const templates = Array.isArray(parsed) ? parsed : parsed.templates;
-    return (templates ?? []).map(sanitizeTemplateConfig).filter(Boolean) as QuestTemplateConfig[];
-  } catch {
-    return DEFAULT_TEMPLATE_LIBRARY;
-  }
-}
-
-function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[]): StreamQuest[] {
-  const selected = [...library].sort(() => Math.random() - 0.5).slice(0, 6);
-
-  return selected.map((template) => {
-    const variables = resolveVariables(template.variables ?? [], audience);
-    const prompt = renderPrompt(template.prompt, variables);
-    return {
-      id: `${template.id}-${crypto.randomUUID()}`,
-      title: template.title,
-      prompt,
-      reward: template.reward ?? 500,
-      category: template.category,
-      completed: false,
-    };
-  });
-}
-
-function regenerateQuestsPreservingCompletions(
-  existingQuests: StreamQuest[],
-  audience: AudienceSnapshot,
-  library: QuestTemplateConfig[]
-) {
-  const completed = existingQuests.filter((quest) => quest.completed);
-  const needed = Math.max(0, 6 - completed.length);
-  const replacements = buildQuests(audience, library).slice(0, needed);
-  return [...completed, ...replacements];
-}
-
-function renderPrompt(prompt: string, values: Record<string, string | number>) {
-  const withPlural = prompt.replace(/\{\{plural:([^:}]+):([^}]+)\}\}/g, (match, key, suffix) => {
-    const value = values[key];
-    return (typeof value === "number" && value === 1) ? "" : suffix;
-  });
-
-  return withPlural.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
-    const value = values[key];
-    return value !== undefined ? String(value) : match;
-  });
-}
-
-function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot) {
-  const values: Record<string, string | number> = {};
-
-  variables.forEach((variable) => {
-    if (variable.type === "range") {
-      values[variable.key] = randomBetween(variable.min, variable.max);
-    }
-    if (variable.type === "chatter") {
-      const fallbackNames = audience.source === "twitch" ? [audience.displayName!] : FALLBACK_CHATTERS;
-      values[variable.key] = pickChatter(audience.names, fallbackNames);
-    }
-  });
-
-  return values;
-}
-
-function sanitizeTemplateConfig(config: QuestTemplateConfig) {
-  if (!config?.id || !config.title || !config.prompt) return null;
-  return config;
-}
-
-async function loadAudience(): Promise<AudienceSnapshot> {
-  let session = await getValidSession();
-  try {
-    if (!session) {
-      return { names: FALLBACK_CHATTERS, source: "unauthenticated" };
-    }
-
-    const recips = await loadRecipientsFromChattergrounds(session.userId);
-    const names = shuffleWithSeed(recips.map((r) => r.login), seedFromCurrentHour());
-
-    return {
-      names,
-      source: "twitch",
-      displayName: session.displayName,
-      live: true,
-      note: names.length === 0 ? "No chattergrounds users recorded yet." : undefined,
-    };
-  } catch (error) {
-    return { names: FALLBACK_CHATTERS, source: "error" };
-  }
+function StatTile({ label, val, suffix = "", color = "text-white", icon: Icon, expandable = false }: any) {
+  return (
+    <div className="group relative bg-slate-950 p-4 rounded-2xl border border-slate-800 shadow-inner overflow-hidden transition-all hover:border-slate-700">
+      <div className="flex items-center gap-1.5 mb-1">
+        {Icon && <Icon size={12} className="text-slate-500" />}
+        <p className="text-[9px] uppercase font-black text-slate-500 tracking-tighter">{label}</p>
+      </div>
+      <p className={clsx("text-lg font-black font-mono truncate", color)}>
+        {val}{suffix}
+      </p>
+      {expandable && (
+        <div className="absolute inset-0 bg-slate-950/95 p-4 flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+          <p className={clsx("text-sm font-black uppercase leading-tight", color)}>
+            {val}{suffix}
+          </p>
+        </div>
+      )}
+    </div>
+  );
 }

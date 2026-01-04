@@ -4,9 +4,12 @@ import path from "node:path";
 
 import { NextResponse } from "next/server";
 
-import { fetchChatters, getValidSession } from "@/app/lib/twitch-auth";
+import { getValidSession } from "@/app/lib/twitch-auth";
 // Import the database logic from your chattergrounds route
 import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
+
+// NEW: read recipients from chattergrounds DB
+import { all } from "@/app/lib/sql";
 
 export const dynamic = "force-dynamic";
 
@@ -72,6 +75,15 @@ const FALLBACK_CHATTERS = [
   "ribbitriot",
 ];
 
+const BOT_LOGINS = new Set([
+  "streamelements",
+  "nightbot",
+  "moobot",
+  "streamlabs",
+  "soundalerts",
+  "sery_bot",
+]);
+
 const DEFAULT_TEMPLATE_LIBRARY: QuestTemplateConfig[] = [
   {
     id: "prime-beggar",
@@ -132,6 +144,34 @@ const DEFAULT_TEMPLATE_LIBRARY: QuestTemplateConfig[] = [
   },
 ];
 
+type DbRecipient = { chatterId: string; login: string };
+
+async function loadRecipientsFromChattergrounds(broadcasterId: string): Promise<DbRecipient[]> {
+  const rows = (await all(
+    `SELECT chatter_id, name
+    FROM chattergrounds_stats
+    WHERE broadcaster_id = ?
+      AND chatter_id GLOB '[0-9]*'
+    ORDER BY updated_at DESC`,
+    [broadcasterId]
+  )) as any[];
+
+  const seen = new Set<string>();
+  const out: DbRecipient[] = [];
+
+  for (const r of rows ?? []) {
+    const chatterId = String(r?.chatter_id ?? "").trim();
+    const login = String(r?.name ?? "").trim().toLowerCase();
+    if (!chatterId || !login) continue;
+    if (BOT_LOGINS.has(login)) continue;
+    if (seen.has(chatterId)) continue;
+    seen.add(chatterId);
+    out.push({ chatterId, login });
+  }
+
+  return out;
+}
+
 export async function GET() {
   const audience = await loadAudience();
   const { state, regenerated } = await ensureState(audience);
@@ -165,42 +205,37 @@ export async function POST(request: Request) {
     return NextResponse.json({ alreadyCompleted: true, ...serializeState(state) });
   }
 
-  const completedAt = new Date().toISOString();
+  const broadcasterLogin = (session.login || session.displayName).toLowerCase();
+  const broadcasterId = session.userId;
 
-  // --- Reward ALL current chatters ---
-  const recipients = Array.from(
-    new Set((audience.names ?? []).map((n) => n.trim().toLowerCase()).filter(Boolean))
-  );
-
-  // Broadcaster identity (keep your existing behavior)
-  const recipientName = session.displayName.toLowerCase();
-  const recipientId = session.userId;
-
-  // Record quest completion once (broadcaster)
+  // Track quest completion for broadcaster
   await applyChattergroundsAction(
     {
       action: "quest-completed",
-      chatterId: recipientId, // REAL ID (prevents duplicates for broadcaster)
-      chatterLogin: recipientName,
-      amount: 1, // your existing "counter" behavior
+      chatterId: broadcasterId,
+      chatterLogin: broadcasterLogin,
+      amount: 1,
     },
     { sessionUserId: session.userId }
   );
 
-  // Mint the quest reward to EVERYONE currently in chat
-  // (batch to avoid 200 parallel DB writes)
+  // Reward everyone in the DB
+  let recipients = await loadRecipientsFromChattergrounds(session.userId);
+
+  if (!recipients.some((r) => r.chatterId === broadcasterId)) {
+    recipients = [{ chatterId: broadcasterId, login: broadcasterLogin }, ...recipients];
+  }
+
   const BATCH_SIZE = 10;
   for (let i = 0; i < recipients.length; i += BATCH_SIZE) {
     const batch = recipients.slice(i, i + BATCH_SIZE);
     await Promise.all(
-      batch.map(async (login) => {
-        const chatterId = login === recipientName ? recipientId : login;
-
+      batch.map(async (r) => {
         await applyChattergroundsAction(
           {
             action: "mint",
-            chatterId,
-            chatterLogin: login,
+            chatterId: r.chatterId,
+            chatterLogin: r.login,
             amount: quest.reward,
           },
           { sessionUserId: session.userId }
@@ -209,13 +244,17 @@ export async function POST(request: Request) {
     );
   }
 
-  // Update the local JSON ledger for display (everyone gets reward)
   const ledger = { ...state.ledger };
-  for (const login of recipients) {
-    ledger[login] = (ledger[login] ?? 0) + quest.reward;
+  for (const r of recipients) {
+    ledger[r.login] = (ledger[r.login] ?? 0) + quest.reward;
   }
 
-  const updatedQuest: StreamQuest = { ...quest, completed: true, completedAt };
+  const updatedQuest: StreamQuest = { 
+    ...quest, 
+    completed: true, 
+    completedAt: new Date().toISOString() 
+  };
+  
   const updatedState: StreamQuestState = {
     ...state,
     quests: state.quests.map((entry) => (entry.id === quest.id ? updatedQuest : entry)),
@@ -227,7 +266,7 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     quest: updatedQuest,
-    recipients,
+    recipients: recipients.map((r) => r.login),
     totalRewarded: quest.reward * recipients.length,
     ...serializeState(updatedState),
   });
@@ -243,8 +282,8 @@ async function ensureState(audience: AudienceSnapshot) {
     const hasAudienceChanged =
       JSON.stringify(audience) !== JSON.stringify(existing.lastAudience) ||
       existing.lastAudienceHour !== currentHour;
-    const upgradedToTwitch =
-      audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
+    
+    const upgradedToTwitch = audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
     const insufficientQuests = existing.quests.length < 6;
     const audienceRegenerated = audience.source === "twitch" && hasAudienceChanged;
     const shouldRegenerate = upgradedToTwitch || insufficientQuests || audienceRegenerated;
@@ -263,12 +302,7 @@ async function ensureState(audience: AudienceSnapshot) {
     }
 
     const updated = { ...existing, lastAudience: audience, lastAudienceHour: currentHour };
-    const shouldPersist =
-      JSON.stringify(updated.lastAudience) !== JSON.stringify(existing.lastAudience) ||
-      updated.lastAudienceHour !== existing.lastAudienceHour;
-    if (shouldPersist) {
-      await saveState(updated);
-    }
+    await saveState(updated);
     return { state: updated, regenerated: false };
   }
 
@@ -283,7 +317,6 @@ async function ensureState(audience: AudienceSnapshot) {
   };
 
   await saveState(state);
-
   return { state, regenerated: true };
 }
 
@@ -291,9 +324,6 @@ async function loadState(): Promise<StreamQuestState | null> {
   try {
     const raw = await fs.readFile(DATA_PATH, "utf8");
     const parsed = JSON.parse(raw) as StreamQuestState;
-    if (!parsed.date || !Array.isArray(parsed.quests) || parsed.ledger === undefined) {
-      return null;
-    }
     return {
       ...parsed,
       lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
@@ -354,36 +384,27 @@ function shuffleWithSeed(values: string[], seed: number) {
 async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
   try {
     const raw = await fs.readFile(TEMPLATE_LIBRARY_PATH, "utf8");
-    const parsed = JSON.parse(raw) as QuestTemplateConfig[] | { templates?: QuestTemplateConfig[] };
+    const parsed = JSON.parse(raw) as any;
     const templates = Array.isArray(parsed) ? parsed : parsed.templates;
-    const sanitized = (templates ?? []).map(sanitizeTemplateConfig).filter(Boolean) as QuestTemplateConfig[];
-    if (sanitized.length >= 6) return sanitized;
-  } catch (error) {
-    console.warn("Stream quest: failed to load quest-library.json, using defaults.", error);
+    return (templates ?? []).map(sanitizeTemplateConfig).filter(Boolean) as QuestTemplateConfig[];
+  } catch {
+    return DEFAULT_TEMPLATE_LIBRARY;
   }
-  return DEFAULT_TEMPLATE_LIBRARY;
 }
 
 function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[]): StreamQuest[] {
-  if (library.length < 6) {
-    throw new Error("At least 6 quest templates are required to build a daily set.");
-  }
-  const shuffled = [...library].sort(() => Math.random() - 0.5);
-  const selected = shuffled.slice(0, 6);
+  const selected = [...library].sort(() => Math.random() - 0.5).slice(0, 6);
 
   return selected.map((template) => {
     const variables = resolveVariables(template.variables ?? [], audience);
     const prompt = renderPrompt(template.prompt, variables);
-    const reward = template.reward ?? 500;
-
     return {
       id: `${template.id}-${crypto.randomUUID()}`,
       title: template.title,
       prompt,
-      reward,
+      reward: template.reward ?? 500,
       category: template.category,
       completed: false,
-      completedAt: undefined,
     };
   });
 }
@@ -402,13 +423,12 @@ function regenerateQuestsPreservingCompletions(
 function renderPrompt(prompt: string, values: Record<string, string | number>) {
   const withPlural = prompt.replace(/\{\{plural:([^:}]+):([^}]+)\}\}/g, (match, key, suffix) => {
     const value = values[key];
-    if (typeof value === "number" && value === 1) return "";
-    return typeof value !== "undefined" ? suffix : match;
+    return (typeof value === "number" && value === 1) ? "" : suffix;
   });
 
   return withPlural.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
     const value = values[key];
-    return typeof value !== "undefined" ? String(value) : match;
+    return value !== undefined ? String(value) : match;
   });
 }
 
@@ -417,15 +437,10 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
 
   variables.forEach((variable) => {
     if (variable.type === "range") {
-      const min = Number.isFinite(variable.min) ? variable.min : 1;
-      const max = Number.isFinite(variable.max) ? variable.max : min;
-      values[variable.key] = randomBetween(min, max);
+      values[variable.key] = randomBetween(variable.min, variable.max);
     }
     if (variable.type === "chatter") {
-      const fallbackNames =
-        audience.source === "twitch"
-          ? ([audience.displayName].filter(Boolean) as string[])
-          : FALLBACK_CHATTERS;
+      const fallbackNames = audience.source === "twitch" ? [audience.displayName!] : FALLBACK_CHATTERS;
       values[variable.key] = pickChatter(audience.names, fallbackNames);
     }
   });
@@ -435,70 +450,27 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
 
 function sanitizeTemplateConfig(config: QuestTemplateConfig) {
   if (!config?.id || !config.title || !config.prompt) return null;
-  if (
-    !["prime", "ban", "timeout", "stream-time", "insult", "wordle", "bandle"].includes(config.category)
-  ) {
-    return null;
-  }
-  return {
-    ...config,
-    variables: (config.variables ?? []).filter((variable) => {
-      if (variable.type === "chatter") return !!variable.key;
-      if (variable.type === "range") {
-        return !!variable.key && Number.isFinite(variable.min) && Number.isFinite(variable.max);
-      }
-      return false;
-    }),
-  };
+  return config;
 }
 
 async function loadAudience(): Promise<AudienceSnapshot> {
-  let session: Awaited<ReturnType<typeof getValidSession>> = null;
+  let session = await getValidSession();
   try {
-    session = await getValidSession();
     if (!session) {
-      return {
-        names: FALLBACK_CHATTERS,
-        source: "unauthenticated",
-        note: "Link Twitch to pull live chatters. Using placeholders for now.",
-      };
+      return { names: FALLBACK_CHATTERS, source: "unauthenticated" };
     }
 
-    const chatters = await fetchChatters(session);
-    if (!chatters.live) {
-      return {
-        names: [session.displayName].filter(Boolean) as string[],
-        source: "offline",
-        displayName: chatters.displayName,
-        live: false,
-        note: "Stream is offline.",
-      };
-    }
+    const recips = await loadRecipientsFromChattergrounds(session.userId);
+    const names = shuffleWithSeed(recips.map((r) => r.login), seedFromCurrentHour());
 
-    const names = chatters.chatters ?? [];
-    const shuffled = shuffleWithSeed(names, seedFromCurrentHour());
     return {
-      names: shuffled,
+      names,
       source: "twitch",
-      displayName: chatters.displayName,
+      displayName: session.displayName,
       live: true,
-      note: names.length === 0 ? "No chatters returned for this hour." : undefined,
+      note: names.length === 0 ? "No chattergrounds users recorded yet." : undefined,
     };
   } catch (error) {
-    console.error("Stream quest: failed to load chatters", error);
-    if (session) {
-      return {
-        names: [],
-        source: "error",
-        displayName: session.displayName,
-        live: false,
-        note: "Twitch error while loading chatters.",
-      };
-    }
-    return {
-      names: FALLBACK_CHATTERS,
-      source: "fallback",
-      note: "Using fallback names due to Twitch error.",
-    };
+    return { names: FALLBACK_CHATTERS, source: "error" };
   }
 }
