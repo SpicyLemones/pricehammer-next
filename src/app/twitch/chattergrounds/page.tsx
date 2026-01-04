@@ -8,7 +8,7 @@ import { getValidSession } from "@/app/lib/twitch-auth";
 // Import the database logic from your chattergrounds route
 import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
 
-// NEW: query chattergrounds directly (so we never touch /api/twitch/chatters)
+// NEW: read recipients from chattergrounds DB
 import { all } from "@/app/lib/sql";
 
 export const dynamic = "force-dynamic";
@@ -75,7 +75,6 @@ const FALLBACK_CHATTERS = [
   "ribbitriot",
 ];
 
-// Don’t reward bots / service accounts (customize as you like)
 const BOT_LOGINS = new Set([
   "streamelements",
   "nightbot",
@@ -145,11 +144,10 @@ const DEFAULT_TEMPLATE_LIBRARY: QuestTemplateConfig[] = [
   },
 ];
 
-// --- NEW: read recipients ONLY from chattergrounds_stats (numeric chatter_id only) ---
 type DbRecipient = { chatterId: string; login: string };
 
+// ONLY recipients already present in chattergrounds_stats (numeric chatter_id only)
 async function loadRecipientsFromChattergrounds(broadcasterId: string): Promise<DbRecipient[]> {
-  // Only numeric chatter_id rows are “real Twitch IDs”
   const rows = (await all(
     `
     SELECT chatter_id, name
@@ -161,24 +159,20 @@ async function loadRecipientsFromChattergrounds(broadcasterId: string): Promise<
     [broadcasterId]
   )) as any[];
 
-  const seenIds = new Set<string>();
-  const recipients: DbRecipient[] = [];
+  const seen = new Set<string>();
+  const out: DbRecipient[] = [];
 
   for (const r of rows ?? []) {
     const chatterId = String(r?.chatter_id ?? "").trim();
-    if (!chatterId) continue;
-
     const login = String(r?.name ?? "").trim().toLowerCase();
-    if (!login) continue;
+    if (!chatterId || !login) continue;
     if (BOT_LOGINS.has(login)) continue;
-
-    if (seenIds.has(chatterId)) continue;
-    seenIds.add(chatterId);
-
-    recipients.push({ chatterId, login });
+    if (seen.has(chatterId)) continue;
+    seen.add(chatterId);
+    out.push({ chatterId, login });
   }
 
-  return recipients;
+  return out;
 }
 
 export async function GET() {
@@ -202,7 +196,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  // IMPORTANT: audience for quests now comes from chattergrounds DB (not chatters API)
+  // audience is now derived from chattergrounds DB (not /api/twitch/chatters)
   const audience = await loadAudience();
   const { state } = await ensureState(audience);
 
@@ -217,30 +211,28 @@ export async function POST(request: Request) {
 
   const completedAt = new Date().toISOString();
 
-  // Broadcaster identity
-  const broadcasterLogin = (session.login || session.displayName || "broadcaster").toLowerCase();
+  const broadcasterLogin = (session.login || session.displayName).toLowerCase();
   const broadcasterId = session.userId;
 
-  // Record quest completion ONLY for broadcaster (your original intention)
+  // Keep your existing "quest completed" tracking for broadcaster
   await applyChattergroundsAction(
     {
       action: "quest-completed",
-      chatterId: broadcasterId, // numeric twitch id
+      chatterId: broadcasterId,
       chatterLogin: broadcasterLogin,
       amount: 1,
     },
     { sessionUserId: session.userId }
   );
 
-  // --- Reward ONLY people who already exist in chattergrounds_stats ---
+  // Reward ONLY people already in chattergrounds DB
   let recipients = await loadRecipientsFromChattergrounds(session.userId);
 
-  // Ensure broadcaster is included even if not in the list yet
+  // Ensure broadcaster is included
   if (!recipients.some((r) => r.chatterId === broadcasterId)) {
     recipients = [{ chatterId: broadcasterId, login: broadcasterLogin }, ...recipients];
   }
 
-  // Mint quest reward to each DB recipient (no new “invented” rows)
   const BATCH_SIZE = 10;
   for (let i = 0; i < recipients.length; i += BATCH_SIZE) {
     const batch = recipients.slice(i, i + BATCH_SIZE);
@@ -249,7 +241,7 @@ export async function POST(request: Request) {
         await applyChattergroundsAction(
           {
             action: "mint",
-            chatterId: r.chatterId, // ALWAYS numeric id from DB
+            chatterId: r.chatterId, // numeric id only -> no duplicates
             chatterLogin: r.login,
             amount: quest.reward,
           },
@@ -259,7 +251,7 @@ export async function POST(request: Request) {
     );
   }
 
-  // Update the local JSON ledger for display
+  // Update local JSON ledger for UI display
   const ledger = { ...state.ledger };
   for (const r of recipients) {
     ledger[r.login] = (ledger[r.login] ?? 0) + quest.reward;
@@ -499,7 +491,7 @@ function sanitizeTemplateConfig(config: QuestTemplateConfig) {
   };
 }
 
-// IMPORTANT: audience now comes from chattergrounds DB, not Twitch chatters API
+// IMPORTANT: audience is derived from chattergrounds DB (not /api/twitch/chatters)
 async function loadAudience(): Promise<AudienceSnapshot> {
   let session: Awaited<ReturnType<typeof getValidSession>> = null;
   try {
@@ -512,9 +504,9 @@ async function loadAudience(): Promise<AudienceSnapshot> {
       };
     }
 
-    const recipients = await loadRecipientsFromChattergrounds(session.userId);
+    const recips = await loadRecipientsFromChattergrounds(session.userId);
     const names = shuffleWithSeed(
-      recipients.map((r) => r.login),
+      recips.map((r) => r.login),
       seedFromCurrentHour()
     );
 
@@ -523,7 +515,7 @@ async function loadAudience(): Promise<AudienceSnapshot> {
       source: "twitch",
       displayName: session.displayName,
       live: true,
-      note: names.length === 0 ? "No chattergrounds users yet (no messages recorded yet)." : undefined,
+      note: names.length === 0 ? "No chattergrounds users yet (nobody has been recorded yet)." : undefined,
     };
   } catch (error) {
     console.error("Stream quest: failed to load chattergrounds roster", error);
