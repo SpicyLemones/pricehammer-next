@@ -6,15 +6,13 @@ import path from "node:path";
 
 export const dynamic = "force-dynamic";
 
-/**
- * IMPORTANT:
- * Your ingest now (should) pass chatterLogin + chatterDisplayName from EventSub.
- * We store a human-friendly "name" (login preferred) instead of the numeric chatterId.
- */
+type RangeKey = "today" | "week" | "month" | "all";
+type MessagePoint = { timestamp: string; messages: number };
+
 type ChatterIdentity = {
   chatterId: string;
-  chatterLogin?: string; // e.g. "spicylemones"
-  chatterDisplayName?: string; // e.g. "SpicyLemones"
+  chatterLogin?: string;
+  chatterDisplayName?: string;
 };
 
 export type PersistAction =
@@ -32,14 +30,7 @@ type ApplyContext = {
 };
 
 async function readSql(filename: string) {
-  const sqlPath = path.join(
-    process.cwd(),
-    "data",
-    "db",
-    "queries",
-    "chattergrounds",
-    filename
-  );
+  const sqlPath = path.join(process.cwd(), "data", "db", "queries", "chattergrounds", filename);
   return await fs.readFile(sqlPath, "utf8");
 }
 
@@ -51,25 +42,35 @@ async function ensureChattergroundsSchema() {
     const initSql = await readSql("init.sql");
     await run(initSql);
 
+    // existing DBs: add missing columns safely
     const alterStatements = [
       "ALTER TABLE chattergrounds_stats ADD COLUMN estimated_age INTEGER DEFAULT 0",
       "ALTER TABLE chattergrounds_stats ADD COLUMN favorite_word TEXT",
       "ALTER TABLE chattergrounds_stats ADD COLUMN favorite_emote TEXT",
-      // If you *already* have these columns, duplicate errors will be ignored.
-      // If you want display name stored separately, add this + update your SQL:
-      // "ALTER TABLE chattergrounds_stats ADD COLUMN display_name TEXT",
-      // "ALTER TABLE chattergrounds_stats ADD COLUMN login TEXT",
     ];
 
     for (const sql of alterStatements) {
       try {
         await run(sql);
       } catch (err: any) {
-        if (!String(err?.message ?? "").includes("duplicate column name")) {
-          throw err;
-        }
+        if (!String(err?.message ?? "").includes("duplicate column name")) throw err;
       }
     }
+
+    // ensure pulse table exists even if init.sql didn’t run multi-statement
+    await run(`
+      CREATE TABLE IF NOT EXISTS chattergrounds_pulse (
+        broadcaster_id TEXT NOT NULL,
+        bucket_start INTEGER NOT NULL,
+        messages INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (broadcaster_id, bucket_start)
+      );
+    `);
+
+    await run(`
+      CREATE INDEX IF NOT EXISTS idx_chattergrounds_pulse_broadcaster_bucket
+      ON chattergrounds_pulse(broadcaster_id, bucket_start);
+    `);
   })();
 
   return schemaReadyPromise;
@@ -92,14 +93,129 @@ async function getRandomJokeTrait() {
 }
 
 function resolveStoredName(payload: PersistAction) {
-  // Prefer login (stable + lowercase), then display name (pretty), then id (fallback)
   return payload.chatterLogin || payload.chatterDisplayName || payload.chatterId;
 }
 
-export async function applyChattergroundsAction(
-  payload: PersistAction,
-  context: ApplyContext = {}
-) {
+const MINUTE_MS = 60_000;
+const HOUR_MS = 3_600_000;
+const DAY_MS = 86_400_000;
+
+function alignDown(ms: number, step: number) {
+  return Math.floor(ms / step) * step;
+}
+
+function fillBuckets(
+  startMs: number,
+  endMs: number,
+  stepMs: number,
+  rows: Array<{ bucket_start: number; messages: number }>
+): MessagePoint[] {
+  const map = new Map<number, number>();
+  for (const r of rows) {
+    const k = Number(r.bucket_start);
+    map.set(k, Number(r.messages) || 0);
+  }
+
+  const start = alignDown(startMs, stepMs);
+  const end = alignDown(endMs, stepMs);
+
+  const points: MessagePoint[] = [];
+  for (let t = start; t <= end; t += stepMs) {
+    points.push({ timestamp: new Date(t).toISOString(), messages: map.get(t) ?? 0 });
+  }
+
+  // Always at least 2 points so your chart never shows “Awaiting…”
+  if (points.length === 1) {
+    points.unshift({ timestamp: new Date(start - stepMs).toISOString(), messages: 0 });
+  }
+  if (points.length === 0) {
+    const now = alignDown(Date.now(), stepMs);
+    return [
+      { timestamp: new Date(now - stepMs).toISOString(), messages: 0 },
+      { timestamp: new Date(now).toISOString(), messages: 0 },
+    ];
+  }
+
+  return points;
+}
+
+async function getMessageSeries(broadcasterId: string): Promise<Record<RangeKey, MessagePoint[]>> {
+  const now = Date.now();
+
+  const todayStart = now - 60 * MINUTE_MS; // last 60 minutes
+  const weekStart = now - 7 * 24 * HOUR_MS; // last 7 days
+  const monthStart = now - 30 * DAY_MS; // last 30 days
+
+  const minRow = await get(
+    "SELECT MIN(bucket_start) AS min_bucket FROM chattergrounds_pulse WHERE broadcaster_id = ?",
+    [broadcasterId]
+  );
+
+  const minBucket = Number(minRow?.min_bucket ?? 0);
+  const capAllStart = now - 730 * DAY_MS; // cap “all” to last ~2 years to keep payload sane
+  const allStart = minBucket > 0 ? Math.max(minBucket, capAllStart) : capAllStart;
+
+  // today (per-minute)
+  const todayRows = await all(
+    `SELECT bucket_start, messages
+     FROM chattergrounds_pulse
+     WHERE broadcaster_id = ? AND bucket_start >= ?
+     ORDER BY bucket_start ASC`,
+    [broadcasterId, alignDown(todayStart, MINUTE_MS)]
+  );
+
+  // week (per-hour)
+  const weekRows = await all(
+    `SELECT (CAST(bucket_start / ${HOUR_MS} AS INTEGER) * ${HOUR_MS}) AS bucket_start,
+            SUM(messages) AS messages
+     FROM chattergrounds_pulse
+     WHERE broadcaster_id = ? AND bucket_start >= ?
+     GROUP BY 1
+     ORDER BY 1 ASC`,
+    [broadcasterId, alignDown(weekStart, HOUR_MS)]
+  );
+
+  // month (per-day)
+  const monthRows = await all(
+    `SELECT (CAST(bucket_start / ${DAY_MS} AS INTEGER) * ${DAY_MS}) AS bucket_start,
+            SUM(messages) AS messages
+     FROM chattergrounds_pulse
+     WHERE broadcaster_id = ? AND bucket_start >= ?
+     GROUP BY 1
+     ORDER BY 1 ASC`,
+    [broadcasterId, alignDown(monthStart, DAY_MS)]
+  );
+
+  // all (per-day)
+  const allRows = await all(
+    `SELECT (CAST(bucket_start / ${DAY_MS} AS INTEGER) * ${DAY_MS}) AS bucket_start,
+            SUM(messages) AS messages
+     FROM chattergrounds_pulse
+     WHERE broadcaster_id = ? AND bucket_start >= ?
+     GROUP BY 1
+     ORDER BY 1 ASC`,
+    [broadcasterId, alignDown(allStart, DAY_MS)]
+  );
+
+  return {
+    today: fillBuckets(todayStart, now, MINUTE_MS, todayRows),
+    week: fillBuckets(weekStart, now, HOUR_MS, weekRows),
+    month: fillBuckets(monthStart, now, DAY_MS, monthRows),
+    all: fillBuckets(allStart, now, DAY_MS, allRows),
+  };
+}
+
+function normalizeSqlTimestamp(ts: unknown) {
+  if (typeof ts !== "string" || !ts) return null;
+  // SQLite CURRENT_TIMESTAMP => "YYYY-MM-DD HH:MM:SS"
+  if (ts.includes(" ") && !ts.includes("T")) {
+    return new Date(ts.replace(" ", "T") + "Z").toISOString();
+  }
+  const d = new Date(ts);
+  return isNaN(d.getTime()) ? null : d.toISOString();
+}
+
+export async function applyChattergroundsAction(payload: PersistAction, context: ApplyContext = {}) {
   const broadcasterId = context.sessionUserId || "system";
 
   let msgs = 0,
@@ -126,22 +242,17 @@ export async function applyChattergroundsAction(
   }
 
   const storedName = resolveStoredName(payload);
-
-  // NOTE: This currently generates new "traits" every update.
-  // If you want traits to be "set once", change upsert_stats.sql to only set them on INSERT,
-  // or do a SELECT first and only generate when the row doesn't exist.
   const traits = await getRandomJokeTrait();
 
   try {
     await ensureChattergroundsSchema();
-    const upsertSql = await readSql("upsert_stats.sql");
 
-    // Your current param order is:
-    // broadcaster_id, chatter_id, name, msgs, bans, timeouts, subs, quests, mint, last_message, estimated_age, favorite_word, favorite_emote
+    // 1) Update chatter stats
+    const upsertSql = await readSql("upsert_stats.sql");
     await run(upsertSql, [
       broadcasterId,
       payload.chatterId,
-      storedName, // ✅ FIX: store human name/login instead of numeric id
+      storedName,
       msgs,
       bans,
       timeouts,
@@ -153,6 +264,18 @@ export async function applyChattergroundsAction(
       traits.word,
       traits.emote,
     ]);
+
+    // 2) Update pulse (only for real messages)
+    if (msgs > 0) {
+      const bucketStart = alignDown(Date.now(), MINUTE_MS);
+      await run(
+        `INSERT INTO chattergrounds_pulse (broadcaster_id, bucket_start, messages)
+         VALUES (?, ?, ?)
+         ON CONFLICT(broadcaster_id, bucket_start) DO UPDATE SET
+           messages = messages + excluded.messages`,
+        [broadcasterId, bucketStart, msgs]
+      );
+    }
 
     return await get(
       "SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? AND chatter_id = ?",
@@ -174,14 +297,31 @@ export async function getData(userId?: string) {
       [broadcasterId]
     );
 
+    const lastUpdateRow = await get(
+      "SELECT MAX(updated_at) AS updated_at FROM chattergrounds_stats WHERE broadcaster_id = ?",
+      [broadcasterId]
+    );
+
+    const updatedAt =
+      normalizeSqlTimestamp(lastUpdateRow?.updated_at) ?? new Date().toISOString();
+
+    const messageSeries = await getMessageSeries(broadcasterId);
+
     return {
-      updatedAt: new Date().toISOString(),
+      updatedAt,
       chatters: chatters || [],
       origin: userId ? "twitch" : "offline",
+      messageSeries,
     };
   } catch (err: any) {
     console.error("Chattergrounds GET Data Failure:", err);
-    return { chatters: [], error: err.message || "Query failed" };
+    return {
+      updatedAt: new Date().toISOString(),
+      chatters: [],
+      origin: userId ? "twitch" : "offline",
+      messageSeries: { today: [], week: [], month: [], all: [] },
+      error: err.message || "Query failed",
+    };
   }
 }
 
@@ -193,15 +333,12 @@ export async function GET() {
 
   const data = await getData(session?.userId);
 
-  // "Live fallback" if DB is empty: returns current chatters (logins) for UI only.
-  // This does NOT persist to DB.
+  // Live fallback if DB empty (UI-only)
   if (session && data.chatters.length === 0) {
     try {
       const chatters = await fetchChatters(session);
       if (chatters.chatters?.length) {
         const liveChatters = chatters.chatters.map((login) => ({
-          // NOTE: This is just UI fallback. It uses login as id.
-          // Your real DB rows will use numeric chatter_id from EventSub, with name=login.
           chatter_id: login,
           name: login,
           messages_sent: 0,
@@ -220,7 +357,6 @@ export async function GET() {
         return NextResponse.json({
           data: {
             ...data,
-            updatedAt: new Date().toISOString(),
             chatters: liveChatters,
             origin: chatters.live ? "twitch" : data.origin,
             owner,
