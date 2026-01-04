@@ -5,7 +5,6 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 
 import { fetchChatters, getValidSession } from "@/app/lib/twitch-auth";
-// Import the database logic from your chattergrounds route
 import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
 
 export const dynamic = "force-dynamic";
@@ -150,7 +149,7 @@ export async function POST(request: Request) {
 
   const session = await getValidSession();
   if (!session) {
-     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
   const audience = await loadAudience();
@@ -166,38 +165,34 @@ export async function POST(request: Request) {
   }
 
   const completedAt = new Date().toISOString();
+  const questReward = quest.reward;
+  
+  // 1. COLLECT RECIPIENTS: We want everyone in the current audience snapshot
+  // Filter out any empty names just in case
+  const recipients = audience.names.filter(Boolean);
 
-  /**
-   * FIX: Only reward the Broadcaster (the person logged in) 
-   * instead of the entire audience.names list.
-   */
-  const recipientName = session.displayName.toLowerCase(); 
-  const recipientId = session.userId; // Use the actual Twitch ID from session
-
-  // --- Sync with Chattergrounds Database for the BROADCASTER ONLY ---
-  await applyChattergroundsAction(
-    {
-      action: "quest-completed",
-      chatterId: recipientId,    // REAL ID (prevents duplicates)
-      chatterLogin: recipientName,
-      amount: 1,
-    },
-    { sessionUserId: session.userId }
+  // 2. MASS UPDATE: Loop through all chatters and apply the quest reward
+  // We use Promise.all to fire these off in parallel
+  await Promise.all(
+    recipients.map((chatterName) =>
+      applyChattergroundsAction(
+        {
+          action: "quest-completed",
+          chatterId: chatterName,     // Using the name as the ID per your schema
+          chatterLogin: chatterName,
+          amount: questReward,        // 500 coins and (500 * 0.85) XP
+        },
+        { sessionUserId: session.userId }
+      )
+    )
   );
 
-  await applyChattergroundsAction(
-    {
-      action: "mint",
-      chatterId: recipientId,
-      chatterLogin: recipientName,
-      amount: quest.reward,
-    },
-    { sessionUserId: session.userId }
-  );
-
-  // Update the local JSON ledger for display
+  // 3. Update the local JSON ledger for display in the Quest UI
+  // We add the reward to every recipient in the display ledger
   const ledger = { ...state.ledger };
-  ledger[recipientName] = (ledger[recipientName] ?? 0) + quest.reward;
+  recipients.forEach((name) => {
+    ledger[name] = (ledger[name] ?? 0) + questReward;
+  });
 
   const updatedQuest: StreamQuest = { ...quest, completed: true, completedAt };
   const updatedState: StreamQuestState = {
@@ -211,11 +206,12 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     quest: updatedQuest,
-    recipients: [recipientName],
-    totalRewarded: updatedQuest.reward,
+    recipients: recipients,
+    totalRewarded: questReward,
     ...serializeState(updatedState),
   });
 }
+
 async function ensureState(audience: AudienceSnapshot) {
   const today = currentDateKey();
   const existing = await loadState();

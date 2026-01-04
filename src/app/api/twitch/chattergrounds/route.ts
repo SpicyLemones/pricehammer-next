@@ -183,25 +183,37 @@ export async function applyChattergroundsAction(payload: PersistAction, context:
 
   let msgs = 0, bans = 0, timeouts = 0, subs = 0, quests = 0, coinsEarned = 0, xpEarned = 0, msgText: string | null = null;
 
+  // Rate Constants
+  const COINS_PER_MSG = 5;
+  const XP_RATIO = 0.85;
+
   if (payload.action === "record-message") {
     msgs = 1;
     msgText = payload.message?.slice(0, 240) || null;
-    // Passive gain just for chatting
-    xpEarned = 5; 
+    
+    // 5 coins per chat, XP is 85% of coins (4.25)
+    coinsEarned = COINS_PER_MSG;
+    xpEarned = COINS_PER_MSG * XP_RATIO; 
+
+  } else if (payload.action === "quest-completed") {
+    quests = 1;
+    const baseReward = payload.amount || 500;
+    
+    // 500 coins per quest, XP is 85% of coins (425)
+    coinsEarned = baseReward;
+    xpEarned = baseReward * XP_RATIO;
+
   } else if (payload.action === "ban") {
     bans = 1;
   } else if (payload.action === "timeout") {
     timeouts = 1;
   } else if (payload.action === "sub-months") {
     subs = payload.months;
+    // Subs get a flat 100 XP per month (Optional: change to payload.months * 100 * XP_RATIO if desired)
     xpEarned = payload.months * 100;
-  } else if (payload.action === "quest-completed") {
-    quests = 1;
-    coinsEarned = payload.amount || 500;
-    xpEarned = payload.amount || 500;
   } else if (payload.action === "mint") {
     coinsEarned = payload.amount;
-    xpEarned = payload.amount;
+    xpEarned = payload.amount * XP_RATIO;
   }
 
   const storedName = resolveStoredName(payload);
@@ -221,7 +233,7 @@ export async function applyChattergroundsAction(payload: PersistAction, context:
       subs,
       quests,
       coinsEarned, // maps to toadcoins
-      xpEarned,    // maps to xp
+      xpEarned,    // maps to xp (now handles decimals)
       msgText,
       traits.age,
       traits.word,
@@ -239,7 +251,6 @@ export async function applyChattergroundsAction(payload: PersistAction, context:
     return { error: err.message || "Failed to update database" };
   }
 }
-
 export async function getData(userId?: string) {
   const broadcasterId = userId || "system";
   try {
