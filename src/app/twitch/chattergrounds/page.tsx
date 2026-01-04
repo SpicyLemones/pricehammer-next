@@ -122,7 +122,7 @@ export default function ChattergroundsPage() {
   const prevLevelRef = useRef<number | null>(null);
   const inFlightRef = useRef(false);
 
-  useEffect(() => { audioRef.current = new Audio("/lvlup.mp3"); }, []);
+  useEffect(() => { audioRef.current = new Audio("audio/lvlup.mp3"); }, []);
   useEffect(() => { const t = setInterval(() => setNowTick(Date.now()), 10000); return () => clearInterval(t); }, []);
 
   // Click outside to close
