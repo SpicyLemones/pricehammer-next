@@ -469,11 +469,7 @@ export async function validateUserToken(accessToken: string) {
  * If you have a separate bot account:
  *   await registerChattergroundsWebhook(broadcasterId, botUserId, broadcasterSession)
  */
-export async function registerChattergroundsWebhook(
-  broadcasterId: string,
-  botUserId?: string,
-  broadcasterSessionForUserScopedSubs?: StoredTwitchSession
-) {
+export async function registerChattergroundsWebhook(broadcasterId: string, botUserId?: string) {
   const { clientId, clientSecret } = getTwitchConfig();
 
   const secret = process.env.CHATTERGROUNDS_INGEST_SECRET;
@@ -482,12 +478,12 @@ export async function registerChattergroundsWebhook(
     "https://www.spycy.fun/api/twitch/chattergrounds/ingest";
 
   if (!secret || secret.length < 16) {
-    throw new Error("CHATTERGROUNDS_INGEST_SECRET is missing/too short. Use a long random string (>= 16 chars).");
+    throw new Error("CHATTERGROUNDS_INGEST_SECRET is missing/too short. Use >= 16 chars.");
   }
 
   const effectiveBotUserId = botUserId ?? broadcasterId;
 
-  // App token (client_credentials) – OK for channel.chat.message creation
+  // App access token (required for webhook EventSub subscriptions)
   const tokenRes = await fetch(TWITCH_TOKEN_URL, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -500,16 +496,48 @@ export async function registerChattergroundsWebhook(
 
   const tokenData = await tokenRes.json();
   const appAccessToken = tokenData.access_token as string | undefined;
+  if (!appAccessToken) throw new Error(`Failed to get App Access Token: ${JSON.stringify(tokenData)}`);
 
-  if (!appAccessToken) {
-    throw new Error(`Failed to get App Access Token: ${JSON.stringify(tokenData)}`);
+  async function listSubs() {
+    const res = await fetch(`${TWITCH_API_BASE}/eventsub/subscriptions`, {
+      headers: {
+        Authorization: `Bearer ${appAccessToken}`,
+        "Client-Id": clientId,
+      },
+      cache: "no-cache",
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as {
+      data: Array<{
+        id: string;
+        type: string;
+        status: string;
+        condition: Record<string, any>;
+        transport: { method: string; callback?: string };
+      }>;
+    };
   }
 
-  async function createSub(token: string, body: any) {
+  const existing = await listSubs();
+  const existingData = existing?.data ?? [];
+
+  function alreadySubscribed(type: string, condition: Record<string, any>) {
+    return existingData.some((s) => {
+      if (s.type !== type) return false;
+      if (s.transport?.method !== "webhook") return false;
+      if ((s.transport?.callback ?? "") !== callbackUrl) return false;
+      for (const [k, v] of Object.entries(condition)) {
+        if (String(s.condition?.[k] ?? "") !== String(v ?? "")) return false;
+      }
+      return true;
+    });
+  }
+
+  async function createSub(body: any) {
     const subRes = await fetch(`${TWITCH_API_BASE}/eventsub/subscriptions`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${appAccessToken}`,
         "Client-Id": clientId,
         "Content-Type": "application/json",
       },
@@ -520,50 +548,64 @@ export async function registerChattergroundsWebhook(
     console.log(`Twitch EventSub(${body.type}) Status: ${subRes.status}`);
     console.log(`Twitch Subscription(${body.type}) Response:`, JSON.stringify(data, null, 2));
 
-    if (!subRes.ok) {
-      throw new Error(`EventSub subscribe failed (${body.type}) ${subRes.status}: ${JSON.stringify(data)}`);
-    }
-
+    if (!subRes.ok) throw new Error(`EventSub subscribe failed (${body.type}) ${subRes.status}: ${JSON.stringify(data)}`);
     return data;
   }
 
   const results: Record<string, any> = {};
 
-  // 1) channel.chat.message (app token)
-  results["channel.chat.message"] = await createSub(appAccessToken, {
-    type: "channel.chat.message",
-    version: "1",
-    condition: {
+  // channel.chat.message
+  {
+    const type = "channel.chat.message";
+    const condition = {
       broadcaster_user_id: broadcasterId,
       user_id: effectiveBotUserId,
-    },
-    transport: {
-      method: "webhook",
-      callback: callbackUrl,
-      secret,
-    },
-  });
-
-  // 2) channel.ban (USER token with channel:moderate required)
-  if (!broadcasterSessionForUserScopedSubs?.accessToken) {
-    results["channel.ban"] = {
-      ok: false,
-      skipped: true,
-      reason: "No broadcaster user session provided (required for channel.ban because it needs channel:moderate).",
     };
-  } else {
-    results["channel.ban"] = await createSub(broadcasterSessionForUserScopedSubs.accessToken, {
-      type: "channel.ban",
+
+    const body = {
+      type,
       version: "1",
-      condition: {
-        broadcaster_user_id: broadcasterId,
-      },
-      transport: {
-        method: "webhook",
-        callback: callbackUrl,
-        secret,
-      },
-    });
+      condition,
+      transport: { method: "webhook", callback: callbackUrl, secret },
+    };
+
+    results[type] = alreadySubscribed(type, condition)
+      ? { ok: true, skipped: true, reason: "already subscribed" }
+      : await createSub(body);
+  }
+
+  // channel.ban (timeouts + bans)
+  {
+    const type = "channel.ban";
+    const condition = { broadcaster_user_id: broadcasterId };
+
+    const body = {
+      type,
+      version: "1",
+      condition,
+      transport: { method: "webhook", callback: callbackUrl, secret },
+    };
+
+    results[type] = alreadySubscribed(type, condition)
+      ? { ok: true, skipped: true, reason: "already subscribed" }
+      : await createSub(body);
+  }
+
+  // channel.unban (useful for untimeout / unban)
+  {
+    const type = "channel.unban";
+    const condition = { broadcaster_user_id: broadcasterId };
+
+    const body = {
+      type,
+      version: "1",
+      condition,
+      transport: { method: "webhook", callback: callbackUrl, secret },
+    };
+
+    results[type] = alreadySubscribed(type, condition)
+      ? { ok: true, skipped: true, reason: "already subscribed" }
+      : await createSub(body);
   }
 
   return results;
