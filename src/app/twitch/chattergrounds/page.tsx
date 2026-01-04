@@ -130,33 +130,13 @@ function resolveChatterName(c: any) {
   return String(candidate);
 }
 
-// Build / extend series from a single metric (total messages_sent across all chatters).
-function buildSeries(prev: Record<RangeKey, MessagePoint[]> | undefined, total: number, nowIso: string) {
-  const caps: Record<RangeKey, number> = { today: 60, week: 120, month: 180, all: 240 };
-
-  const make = (k: RangeKey) => {
-    const existing = prev?.[k] ?? [];
-    const next: MessagePoint = { timestamp: nowIso, messages: total };
-
-    // Ensure we start with 2 points so the graph renders immediately.
-    if (existing.length === 0) {
-      const seed: MessagePoint = {
-        timestamp: new Date(Date.now() - POLL_MS).toISOString(),
-        messages: Math.max(0, total - 1),
-      };
-      return [seed, next];
-    }
-
-    const out = [...existing, next];
-    return out.slice(-caps[k]);
-  };
-
-  return {
-    today: make("today"),
-    week: make("week"),
-    month: make("month"),
-    all: make("all"),
-  } satisfies Record<RangeKey, MessagePoint[]>;
+function zeroSeries(): MessagePoint[] {
+  const t2 = new Date().toISOString();
+  const t1 = new Date(Date.now() - POLL_MS).toISOString();
+  return [
+    { timestamp: t1, messages: 0 },
+    { timestamp: t2, messages: 0 },
+  ];
 }
 
 export default function ChattergroundsPage() {
@@ -213,23 +193,30 @@ export default function ChattergroundsPage() {
       });
 
       const nowIso = new Date().toISOString();
-      const totalMessages = formatted.reduce((s, c) => s + (c.stats.messagesSent || 0), 0);
 
       setData((prev) => {
-        // If server ever starts providing series, prefer it. Otherwise build client series.
-        const serverSeries = rawData.messageSeries as Record<RangeKey, MessagePoint[]> | undefined;
-        const hasServerSeries =
-          serverSeries && Object.values(serverSeries).some((arr) => Array.isArray(arr) && arr.length >= 2);
+        const serverSeries = rawData.messageSeries as Partial<Record<RangeKey, MessagePoint[]>> | undefined;
 
-        const messageSeries = hasServerSeries
-          ? serverSeries!
-          : buildSeries(prev?.messageSeries, totalMessages, nowIso);
+        const pick = (k: RangeKey): MessagePoint[] => {
+          const arr = serverSeries?.[k];
+          if (Array.isArray(arr) && arr.length >= 2) return arr;
+
+          const prevArr = prev?.messageSeries?.[k];
+          if (Array.isArray(prevArr) && prevArr.length >= 2) return prevArr;
+
+          return zeroSeries();
+        };
 
         return {
           origin: rawData.origin || (formatted.length > 0 ? "twitch" : "offline"),
           updatedAt: rawData.updatedAt || nowIso,
           chatters: formatted,
-          messageSeries,
+          messageSeries: {
+            today: pick("today"),
+            week: pick("week"),
+            month: pick("month"),
+            all: pick("all"),
+          },
           owner: rawData.owner || json.owner,
         };
       });
@@ -249,14 +236,18 @@ export default function ChattergroundsPage() {
     return () => clearInterval(id);
   }, [load]);
 
+  // refresh immediately when you tab back in
+  useEffect(() => {
+    const onFocus = () => load({ silent: true });
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, [load]);
+
   const series = useMemo(() => data?.messageSeries?.[range] ?? [], [data, range]);
 
   const isTwitchScoped = useMemo(() => {
     if (!data) return false;
-    return (
-      data.origin === "twitch" ||
-      Boolean(data.owner?.userId || data.owner?.login || data.chatters.length > 0)
-    );
+    return data.origin === "twitch" || Boolean(data.owner?.userId || data.owner?.login || data.chatters.length > 0);
   }, [data]);
 
   const leaderboards = useMemo(() => {
@@ -269,9 +260,7 @@ export default function ChattergroundsPage() {
   }, [data]);
 
   const filteredRoster = useMemo(() => {
-    return (data?.chatters ?? []).filter((c) =>
-      c.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    return (data?.chatters ?? []).filter((c) => c.name.toLowerCase().includes(searchTerm.toLowerCase()));
   }, [data, searchTerm]);
 
   if (loading)
@@ -312,9 +301,7 @@ export default function ChattergroundsPage() {
             <span
               className={clsx(
                 "px-2 py-0.5 rounded border transition-colors",
-                isTwitchScoped
-                  ? "border-emerald-500/50 text-emerald-400"
-                  : "border-slate-800 text-slate-500"
+                isTwitchScoped ? "border-emerald-500/50 text-emerald-400" : "border-slate-800 text-slate-500"
               )}
             >
               Status: {isTwitchScoped ? "Live Sync" : "Offline Mode"}
@@ -386,11 +373,7 @@ export default function ChattergroundsPage() {
                   </linearGradient>
                 </defs>
 
-                <path
-                  d={areaPath(series, 600, 200)}
-                  fill="url(#g)"
-                  className="transition-all duration-700 ease-in-out"
-                />
+                <path d={areaPath(series, 600, 200)} fill="url(#g)" className="transition-all duration-700 ease-in-out" />
                 <path
                   d={linePath(series, 600, 200)}
                   fill="none"
@@ -430,9 +413,23 @@ export default function ChattergroundsPage() {
         </div>
 
         {/* FULL WIDTH LEADERBOARDS */}
-        <WideBoard title="Top Chatters" icon={MessageSquare} items={leaderboards.chatters} stat="messagesSent" unit="msgs" color="border-emerald-500/10" />
+        <WideBoard
+          title="Top Chatters"
+          icon={MessageSquare}
+          items={leaderboards.chatters}
+          stat="messagesSent"
+          unit="msgs"
+          color="border-emerald-500/10"
+        />
         <WideBoard title="Ban Leaderboard" icon={Trophy} items={leaderboards.bans} stat="timesBanned" unit="bans" color="border-red-500/10" />
-        <WideBoard title="Timeout Leaderboard" icon={Medal} items={leaderboards.timeouts} stat="timesTimedOut" unit="timeouts" color="border-amber-500/10" />
+        <WideBoard
+          title="Timeout Leaderboard"
+          icon={Medal}
+          items={leaderboards.timeouts}
+          stat="timesTimedOut"
+          unit="timeouts"
+          color="border-amber-500/10"
+        />
 
         {/* ROSTER */}
         <div className="bg-slate-900/40 border border-slate-800 p-10 rounded-[2.5rem]">
