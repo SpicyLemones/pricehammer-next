@@ -14,7 +14,7 @@ import {
   Sparkles,
   RefreshCw,
   Coins,
-  Languages,
+  Activity,
   SmilePlus,
   Heart,
   Gift,
@@ -64,15 +64,12 @@ const rangeLabels: Record<RangeKey, string> = {
   all: "All",
 };
 
-// Graph Layout Constants
 const GRAPH_PADDING = { top: 30, right: 30, bottom: 50, left: 60 };
 const VIEW_W = 800;
 const VIEW_H = 350;
 const CHART_W = VIEW_W - GRAPH_PADDING.left - GRAPH_PADDING.right;
 const CHART_H = VIEW_H - GRAPH_PADDING.top - GRAPH_PADDING.bottom;
 
-/** * HELPERS
- */
 const formatNumber = (num: number) => (Number.isFinite(num) ? num.toLocaleString() : "0");
 
 function formatTimeAgo(iso: string, nowMs: number) {
@@ -88,7 +85,6 @@ function getChatterIdentity(msgs: number, timeouts: number, bans: number) {
   if (msgs < 250) return "Unknown Entity";
   const tRatio = timeouts === 0 ? Infinity : msgs / timeouts;
   const bRatio = bans === 0 ? Infinity : msgs / bans;
-
   if (bans === 0 && timeouts === 0) return "Boring safe NPC";
   if (tRatio >= 500 && bRatio >= 50) return "Toadhead";
   if (tRatio >= 400 && bRatio >= 40) return "IJBOL farmer";
@@ -119,13 +115,26 @@ export default function ChattergroundsPage() {
   const [data, setData] = useState<ChattergroundsData | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [nowTick, setNowTick] = useState(() => Date.now());
+  const [showLevelUpAnim, setShowLevelUpAnim] = useState(false);
 
+  const modalRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const prevLevelRef = useRef<number | null>(null);
   const inFlightRef = useRef(false);
 
   useEffect(() => { audioRef.current = new Audio("/lvlup.mp3"); }, []);
   useEffect(() => { const t = setInterval(() => setNowTick(Date.now()), 10000); return () => clearInterval(t); }, []);
+
+  // Click outside to close
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        setSelectedChatter(null);
+      }
+    }
+    if (selectedChatter) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [selectedChatter]);
 
   const load = useCallback(async (opts?: { silent?: boolean }) => {
     if (inFlightRef.current) return;
@@ -167,7 +176,12 @@ export default function ChattergroundsPage() {
     const currentData = data.chatters.find(c => c.id === selectedChatter.id);
     if (!currentData) return;
     const { level } = getLevelInfo((currentData.stats.messagesSent * 5) * 0.85);
-    if (prevLevelRef.current !== null && level > prevLevelRef.current) { audioRef.current?.play().catch(() => {}); }
+    
+    if (prevLevelRef.current !== null && level > prevLevelRef.current) { 
+      audioRef.current?.play().catch(() => {});
+      setShowLevelUpAnim(true);
+      setTimeout(() => setShowLevelUpAnim(false), 3000);
+    }
     prevLevelRef.current = level;
   }, [data, selectedChatter]);
 
@@ -206,7 +220,7 @@ export default function ChattergroundsPage() {
     <div className="min-h-screen bg-slate-950 text-slate-50 p-6 lg:p-10 font-sans">
       <header className="mb-8 flex flex-wrap justify-between items-end gap-6 pt-16">
         <div>
-          <h1 className="text-6xl font-black tracking-tight mb-2">CHATTERGROUNDS</h1>
+          <h1 className="text-6xl font-black tracking-wider mb-2">CHATTERGROUNDS</h1>
           <div className="flex items-center gap-3 text-slate-500 text-xs font-mono uppercase">
             <span className="flex items-center gap-1.5"><Sparkles size={12} className="text-amber-400" /> Updated {data ? formatTimeAgo(data.updatedAt, nowTick) : "just now"}</span>
             <button onClick={() => load()} className="inline-flex items-center gap-1.5 rounded border border-slate-800 px-2 py-0.5 hover:text-emerald-400">
@@ -277,13 +291,22 @@ export default function ChattergroundsPage() {
       </div>
 
       {selectedChatter && levelDisplay && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6 overflow-y-auto">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[3rem] p-10 relative animate-in zoom-in-95 shadow-2xl my-auto">
-            <button onClick={() => setSelectedChatter(null)} className="absolute top-8 right-8 text-slate-500 hover:text-white font-bold text-xs bg-slate-950 px-4 py-2 rounded-full border border-slate-800 transition-colors z-10 uppercase tracking-widest">Close</button>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6 overflow-y-auto animate-in fade-in duration-300">
+          <div ref={modalRef} className="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[3rem] p-10 relative animate-in zoom-in-95 shadow-2xl my-auto">
             <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-10">
               <div className="flex-1">
-                <div className="flex items-center gap-4 mb-2"><h2 className="text-5xl lg:text-6xl font-black tracking-tighter uppercase">{selectedChatter.name}</h2>
-                  <div className="bg-emerald-500 text-slate-950 px-3 py-1 rounded-lg text-xl font-black italic shadow-[0_0_15px_rgba(16,185,129,0.5)]">LVL {levelDisplay.level}</div>
+                <div className="flex items-center gap-4 mb-2">
+                  <h2 className="text-5xl lg:text-6xl font-black tracking-wider uppercase">{selectedChatter.name}</h2>
+                  <div className="relative group">
+                    {showLevelUpAnim && (
+                      <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-amber-400 font-black italic text-2xl whitespace-nowrap animate-bounce pointer-events-none drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]">
+                        LEVEL UP!
+                      </span>
+                    )}
+                    <div className="bg-emerald-500 text-slate-950 px-3 py-1 rounded-lg text-xl font-black italic shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-transform duration-300 group-hover:scale-110">
+                      LVL {levelDisplay.level}
+                    </div>
+                  </div>
                 </div>
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                   <div className="flex items-center gap-2"><ShieldCheck size={16} className="text-emerald-500" /><span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Chatter Identity:</span>
@@ -308,7 +331,7 @@ export default function ChattergroundsPage() {
               <StatTile icon={Coins} label="Net Worth" val={selectedChatter.stats.messagesSent * 5} suffix=" TC" color="text-amber-400" />
               <StatTile icon={Heart} label="Months Subbed" val={selectedChatter.stats.monthsSubbed} color="text-indigo-400" />
               <StatTile icon={Gift} label="Donos Gifted" val={selectedChatter.stats.donosGifted} color="text-pink-400" />
-              <StatTile icon={Languages} label="Fav Activity" val={selectedChatter.stats.favoriteWord} color="text-slate-200" />
+              <StatTile icon={Activity} label="Fav Activity" val={selectedChatter.stats.favoriteWord} color="text-slate-200" expandable />
               <StatTile icon={SmilePlus} label="Fav Emote" val={selectedChatter.stats.favoriteEmote} color="text-slate-200" />
             </div>
             <div className="p-8 bg-slate-950 rounded-[2rem] border border-slate-800 shadow-inner relative overflow-hidden">
@@ -345,8 +368,23 @@ function PulseBox({ label, value, color }: any) {
   );
 }
 
-function StatTile({ label, val, suffix = "", color = "text-white", icon: Icon }: any) {
+function StatTile({ label, val, suffix = "", color = "text-white", icon: Icon, expandable = false }: any) {
   return (
-    <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 shadow-inner"><div className="flex items-center gap-1.5 mb-1">{Icon && <Icon size={12} className="text-slate-500" />}<p className="text-[9px] uppercase font-black text-slate-500 tracking-tighter">{label}</p></div><p className={clsx("text-lg font-black font-mono truncate", color)}>{val}{suffix}</p></div>
+    <div className="group relative bg-slate-950 p-4 rounded-2xl border border-slate-800 shadow-inner overflow-hidden transition-all hover:border-slate-700">
+      <div className="flex items-center gap-1.5 mb-1">
+        {Icon && <Icon size={12} className="text-slate-500" />}
+        <p className="text-[9px] uppercase font-black text-slate-500 tracking-tighter">{label}</p>
+      </div>
+      <p className={clsx("text-lg font-black font-mono truncate", color)}>
+        {val}{suffix}
+      </p>
+      {expandable && (
+        <div className="absolute inset-0 bg-slate-950/95 p-4 flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+          <p className={clsx("text-sm font-black uppercase leading-tight", color)}>
+            {val}{suffix}
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
