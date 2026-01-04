@@ -20,7 +20,7 @@ import {
   Gift,
   ShieldCheck,
   Zap,
-  User // Added missing icon
+  User 
 } from "lucide-react";
 import clsx from "clsx";
 
@@ -71,18 +71,24 @@ const VIEW_H = 350;
 const CHART_W = VIEW_W - GRAPH_PADDING.left - GRAPH_PADDING.right;
 const CHART_H = VIEW_H - GRAPH_PADDING.top - GRAPH_PADDING.bottom;
 
+/** * HELPERS
+ */
 const formatNumber = (num: number) => (Number.isFinite(num) ? num.toLocaleString() : "0");
 
-/**
- * IDENTITY LOGIC
- */
+function formatTimeAgo(iso: string, nowMs: number) {
+  const delta = Math.max(0, nowMs - new Date(iso).getTime());
+  const seconds = Math.floor(delta / 1000);
+  if (seconds < 60) return `${seconds}s ago`;
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  return `${Math.floor(minutes / 60)}h ago`;
+}
+
 function getChatterIdentity(msgs: number, timeouts: number, bans: number) {
   if (msgs < 250) return "Unknown Entity";
-
   const tRatio = timeouts === 0 ? Infinity : msgs / timeouts;
   const bRatio = bans === 0 ? Infinity : msgs / bans;
 
-  // Priority check for behavior
   if (bans === 0 && timeouts === 0) return "Boring safe NPC";
   if (tRatio >= 500 && bRatio >= 50) return "Toadhead";
   if (tRatio >= 400 && bRatio >= 40) return "IJBOL farmer";
@@ -90,28 +96,19 @@ function getChatterIdentity(msgs: number, timeouts: number, bans: number) {
   if (tRatio >= 200 && bRatio >= 30) return "Normie";
   if (tRatio >= 100 && bRatio >= 25) return "Chud";
   if (tRatio >= 50 && bRatio >= 10) return "Unfunny chuddy";
-  
   return "Chaotic Element";
 }
 
-/**
- * LEVELING LOGIC (XP = 85% of ToadCoin)
- * Threshold = 500 * (1.2 ^ level)
- */
 function getLevelInfo(totalXp: number) {
   let level = 0;
   let currentThreshold = 500;
-  let accumulatedXp = 0;
   let remainingXpInLevel = totalXp;
-
   while (remainingXpInLevel >= currentThreshold) {
     remainingXpInLevel -= currentThreshold;
     level++;
     currentThreshold = Math.floor(currentThreshold * 1.2);
   }
-
-  const progress = (remainingXpInLevel / currentThreshold) * 100;
-  return { level, progress, currentThreshold, remainingXp: Math.floor(remainingXpInLevel) };
+  return { level, progress: (remainingXpInLevel / currentThreshold) * 100, currentThreshold, remainingXp: Math.floor(remainingXpInLevel) };
 }
 
 export default function ChattergroundsPage() {
@@ -127,10 +124,8 @@ export default function ChattergroundsPage() {
   const prevLevelRef = useRef<number | null>(null);
   const inFlightRef = useRef(false);
 
-  // Initialize audio and set initial level when a user is selected
-  useEffect(() => {
-    audioRef.current = new Audio("/lvlup.mp3");
-  }, []);
+  useEffect(() => { audioRef.current = new Audio("/lvlup.mp3"); }, []);
+  useEffect(() => { const t = setInterval(() => setNowTick(Date.now()), 10000); return () => clearInterval(t); }, []);
 
   const load = useCallback(async (opts?: { silent?: boolean }) => {
     if (inFlightRef.current) return;
@@ -140,9 +135,7 @@ export default function ChattergroundsPage() {
       const res = await fetch("/api/twitch/chattergrounds", { cache: "no-store" });
       const json = await res.json();
       const rawData = json.data || json;
-      const rawChatters = rawData.chatters || [];
-
-      const formatted: ChatterProfile[] = rawChatters.map((c: any) => ({
+      const formatted: ChatterProfile[] = (rawData.chatters || []).map((c: any) => ({
         id: c.chatter_id || c.chatter_user_id || c.id,
         name: c.display_name || c.displayName || c.name || "Unknown",
         flair: (c.messages_sent ?? 0) > 100 ? "regular" : "new",
@@ -159,20 +152,8 @@ export default function ChattergroundsPage() {
           favoriteEmote: c.favorite_emote ?? c.favoriteEmote ?? "Kappa",
         },
       }));
-
-      setData({
-        updatedAt: rawData.updatedAt || new Date().toISOString(),
-        origin: rawData.origin || "twitch",
-        chatters: formatted,
-        messageSeries: rawData.messageSeries || {},
-      });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setRefreshing(false);
-      setLoading(false);
-      inFlightRef.current = false;
-    }
+      setData({ updatedAt: rawData.updatedAt || new Date().toISOString(), origin: rawData.origin || "twitch", chatters: formatted, messageSeries: rawData.messageSeries || {} });
+    } catch (e) { console.error(e); } finally { setRefreshing(false); setLoading(false); inFlightRef.current = false; }
   }, []);
 
   useEffect(() => {
@@ -181,36 +162,21 @@ export default function ChattergroundsPage() {
     return () => clearInterval(id);
   }, [load]);
 
-  // Level Up Detection Logic
   useEffect(() => {
-    if (!selectedChatter || !data) {
-        prevLevelRef.current = null;
-        return;
-    }
-    
+    if (!selectedChatter || !data) { prevLevelRef.current = null; return; }
     const currentData = data.chatters.find(c => c.id === selectedChatter.id);
     if (!currentData) return;
-
-    const toadCoin = currentData.stats.messagesSent * 5;
-    const xp = toadCoin * 0.85;
-    const { level } = getLevelInfo(xp);
-
-    // Only play if we have a baseline and it increased
-    if (prevLevelRef.current !== null && level > prevLevelRef.current) {
-      audioRef.current?.play().catch(() => {});
-    }
+    const { level } = getLevelInfo((currentData.stats.messagesSent * 5) * 0.85);
+    if (prevLevelRef.current !== null && level > prevLevelRef.current) { audioRef.current?.play().catch(() => {}); }
     prevLevelRef.current = level;
   }, [data, selectedChatter]);
 
   const levelDisplay = useMemo(() => {
     if (!selectedChatter || !data) return null;
     const currentData = data.chatters.find(c => c.id === selectedChatter.id) || selectedChatter;
-    const toadCoin = currentData.stats.messagesSent * 5;
-    const xp = toadCoin * 0.85;
-    return getLevelInfo(xp);
+    return getLevelInfo((currentData.stats.messagesSent * 5) * 0.85);
   }, [data, selectedChatter]);
 
-  // Graph Calculations
   const series = useMemo(() => data?.messageSeries?.[range] ?? [], [data, range]);
   const maxMessages = useMemo(() => Math.max(...series.map((p) => p.messages), 1), [series]);
   const linePath = useMemo(() => {
@@ -232,9 +198,7 @@ export default function ChattergroundsPage() {
     };
   }, [data]);
 
-  const filteredRoster = useMemo(() => {
-    return (data?.chatters ?? []).filter((c) => c.name.toLowerCase().includes(searchTerm.toLowerCase()));
-  }, [data, searchTerm]);
+  const filteredRoster = useMemo(() => (data?.chatters ?? []).filter((c) => c.name.toLowerCase().includes(searchTerm.toLowerCase())), [data, searchTerm]);
 
   if (loading) return <div className="flex min-h-screen items-center justify-center bg-slate-950 text-emerald-400"><Loader2 className="animate-spin" /></div>;
 
@@ -245,12 +209,12 @@ export default function ChattergroundsPage() {
           <h1 className="text-6xl font-black tracking-tight mb-2">CHATTERGROUNDS</h1>
           <div className="flex items-center gap-3 text-slate-500 text-xs font-mono uppercase">
             <span className="flex items-center gap-1.5"><Sparkles size={12} className="text-amber-400" /> Updated {data ? formatTimeAgo(data.updatedAt, nowTick) : "just now"}</span>
-            <button onClick={() => load()} className="inline-flex items-center gap-1.5 rounded border border-slate-800 px-2 py-0.5 hover:text-emerald-400 transition-colors">
+            <button onClick={() => load()} className="inline-flex items-center gap-1.5 rounded border border-slate-800 px-2 py-0.5 hover:text-emerald-400">
               <RefreshCw size={12} className={clsx(refreshing && "animate-spin")} /> {refreshing ? "refreshing" : "refresh"}
             </button>
           </div>
         </div>
-        <Link href="/twitch" className="fixed left-6 top-6 z-50 flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/80 px-5 py-2 text-xs font-bold text-slate-200 backdrop-blur-md hover:border-emerald-500 transition-all">
+        <Link href="/twitch" className="fixed left-6 top-6 z-50 flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/80 px-5 py-2 text-xs font-bold text-slate-200 backdrop-blur-md">
           ← BACK TO TOYBOX
         </Link>
       </header>
@@ -262,7 +226,7 @@ export default function ChattergroundsPage() {
               <h3 className="flex items-center gap-2 font-black text-slate-200 uppercase text-xl"><Flame className="text-orange-500" size={20} /> Yap Graph</h3>
               <div className="flex gap-1 bg-slate-950 p-1.5 rounded-full border border-slate-800">
                 {(Object.keys(rangeLabels) as RangeKey[]).map((k) => (
-                  <button key={k} onClick={() => setRange(k)} className={clsx("px-4 py-1.5 text-[10px] font-black rounded-full transition-all", range === k ? "bg-emerald-500 text-slate-950" : "text-slate-500 hover:text-slate-300")}>
+                  <button key={k} onClick={() => setRange(k)} className={clsx("px-4 py-1.5 text-[10px] font-black rounded-full transition-all", range === k ? "bg-emerald-500 text-slate-950" : "text-slate-500")}>
                     {rangeLabels[k].toUpperCase()}
                   </button>
                 ))}
@@ -271,16 +235,13 @@ export default function ChattergroundsPage() {
             <div className="h-64 w-full relative">
               <svg className="w-full h-full overflow-visible" viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}>
                 {[0, 0.5, 1].map((v) => (
-                  <g key={v}>
-                    <text x={GRAPH_PADDING.left - 15} y={GRAPH_PADDING.top + CHART_H * (1 - v) + 4} textAnchor="end" className="fill-slate-600 text-[10px] font-mono font-bold">{Math.round(maxMessages * v)}</text>
-                    <line x1={GRAPH_PADDING.left} y1={GRAPH_PADDING.top + CHART_H * (1 - v)} x2={VIEW_W - GRAPH_PADDING.right} y2={GRAPH_PADDING.top + CHART_H * (1 - v)} stroke="#1e293b" strokeDasharray="4 4" />
-                  </g>
+                  <g key={v}><text x={GRAPH_PADDING.left - 15} y={GRAPH_PADDING.top + CHART_H * (1 - v) + 4} textAnchor="end" className="fill-slate-600 text-[10px] font-mono font-bold">{Math.round(maxMessages * v)}</text>
+                  <line x1={GRAPH_PADDING.left} y1={GRAPH_PADDING.top + CHART_H * (1 - v)} x2={VIEW_W - GRAPH_PADDING.right} y2={GRAPH_PADDING.top + CHART_H * (1 - v)} stroke="#1e293b" strokeDasharray="4 4" /></g>
                 ))}
                 <path d={linePath} fill="none" stroke="#10b981" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
           </div>
-
           <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-[2.5rem]">
             <h3 className="flex items-center gap-2 font-black text-slate-200 mb-8 uppercase text-xl"><BarChart3 className="text-indigo-400" size={20} /> Pulse</h3>
             <div className="space-y-4">
@@ -300,8 +261,7 @@ export default function ChattergroundsPage() {
         <div className="bg-slate-900/40 border border-slate-800 p-10 rounded-[2.5rem]">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
             <h3 className="font-black text-2xl uppercase flex items-center gap-3"><Ghost size={24} className="text-slate-600" /> Global Roster</h3>
-            <div className="relative w-full md:w-96">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+            <div className="relative w-full md:w-96"><Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
               <input type="text" placeholder="Search user..." className="w-full bg-slate-950 border border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-emerald-500/50 outline-none" onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
           </div>
@@ -316,57 +276,31 @@ export default function ChattergroundsPage() {
         </div>
       </div>
 
-      {/* PROFILE POPUP */}
       {selectedChatter && levelDisplay && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6 overflow-y-auto">
           <div className="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-[3rem] p-10 relative animate-in zoom-in-95 shadow-2xl my-auto">
             <button onClick={() => setSelectedChatter(null)} className="absolute top-8 right-8 text-slate-500 hover:text-white font-bold text-xs bg-slate-950 px-4 py-2 rounded-full border border-slate-800 transition-colors z-10 uppercase tracking-widest">Close</button>
-            
             <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-10">
               <div className="flex-1">
-                <div className="flex items-center gap-4 mb-2">
-                   <h2 className="text-5xl lg:text-6xl font-black tracking-tighter uppercase">{selectedChatter.name}</h2>
-                   <div className="bg-emerald-500 text-slate-950 px-3 py-1 rounded-lg text-xl font-black italic shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-in fade-in zoom-in duration-500">
-                      LVL {levelDisplay.level}
-                   </div>
+                <div className="flex items-center gap-4 mb-2"><h2 className="text-5xl lg:text-6xl font-black tracking-tighter uppercase">{selectedChatter.name}</h2>
+                  <div className="bg-emerald-500 text-slate-950 px-3 py-1 rounded-lg text-xl font-black italic shadow-[0_0_15px_rgba(16,185,129,0.5)]">LVL {levelDisplay.level}</div>
                 </div>
-                
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck size={16} className="text-emerald-500" />
-                    <span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Chatter Identity:</span>
-                    <span className="text-emerald-400 text-[10px] font-black uppercase tracking-widest">
-                      {getChatterIdentity(selectedChatter.stats.messagesSent, selectedChatter.stats.timesTimedOut, selectedChatter.stats.timesBanned)}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <User size={16} className="text-slate-600" />
-                    <span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">EST. AGE: {selectedChatter.stats.estimatedAge}</span>
-                  </div>
+                  <div className="flex items-center gap-2"><ShieldCheck size={16} className="text-emerald-500" /><span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Chatter Identity:</span>
+                  <span className="text-emerald-400 text-[10px] font-black uppercase tracking-widest">{getChatterIdentity(selectedChatter.stats.messagesSent, selectedChatter.stats.timesTimedOut, selectedChatter.stats.timesBanned)}</span></div>
+                  <div className="flex items-center gap-2"><User size={16} className="text-slate-600" /><span className="text-slate-500 text-[10px] font-black uppercase tracking-widest">EST. AGE: {selectedChatter.stats.estimatedAge}</span></div>
                 </div>
               </div>
-
-              {/* LIVE XP BAR */}
               <div className="w-full lg:w-72 bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                <div className="flex justify-between items-end mb-2">
-                  <span className="text-[10px] font-black text-slate-500 uppercase flex items-center gap-1">
-                    <Zap size={10} className="text-amber-400 fill-amber-400" /> XP Progress
-                  </span>
-                  <span className="text-[10px] font-mono font-bold text-slate-400">
-                    {formatNumber(levelDisplay.remainingXp)} / {formatNumber(levelDisplay.currentThreshold)}
-                  </span>
-                </div>
+                <div className="flex justify-between items-end mb-2"><span className="text-[10px] font-black text-slate-500 uppercase flex items-center gap-1"><Zap size={10} className="text-amber-400 fill-amber-400" /> XP Progress</span>
+                <span className="text-[10px] font-mono font-bold text-slate-400">{formatNumber(levelDisplay.remainingXp)} / {formatNumber(levelDisplay.currentThreshold)}</span></div>
                 <div className="h-3 bg-slate-900 rounded-full overflow-hidden border border-slate-800 relative">
-                  <div 
-                    className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-1000 ease-out relative shadow-[0_0_10px_rgba(16,185,129,0.5)]"
-                    style={{ width: `${levelDisplay.progress}%` }}
-                  >
+                  <div className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-1000 ease-out relative shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: `${levelDisplay.progress}%` }}>
                     <div className="absolute inset-0 bg-white/20 animate-pulse" />
                   </div>
                 </div>
               </div>
             </div>
-
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
               <StatTile label="Messages" val={selectedChatter.stats.messagesSent} color="text-emerald-400" />
               <StatTile label="Bans" val={selectedChatter.stats.timesBanned} color="text-red-400" />
@@ -374,18 +308,13 @@ export default function ChattergroundsPage() {
               <StatTile icon={Coins} label="Net Worth" val={selectedChatter.stats.messagesSent * 5} suffix=" TC" color="text-amber-400" />
               <StatTile icon={Heart} label="Months Subbed" val={selectedChatter.stats.monthsSubbed} color="text-indigo-400" />
               <StatTile icon={Gift} label="Donos Gifted" val={selectedChatter.stats.donosGifted} color="text-pink-400" />
-              <StatTile icon={Languages} label="Fav Word" val={selectedChatter.stats.favoriteWord} color="text-slate-200" />
+              <StatTile icon={Languages} label="Fav Activity" val={selectedChatter.stats.favoriteWord} color="text-slate-200" />
               <StatTile icon={SmilePlus} label="Fav Emote" val={selectedChatter.stats.favoriteEmote} color="text-slate-200" />
             </div>
-
             <div className="p-8 bg-slate-950 rounded-[2rem] border border-slate-800 shadow-inner relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent pointer-events-none h-1" />
-              <p className="text-[10px] text-slate-500 uppercase font-black mb-4 tracking-widest flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Intercepted Transmission
-              </p>
-              <p className="text-2xl font-medium italic text-slate-300 leading-relaxed">
-                "{selectedChatter.lastMessage || "Target has remained silent..."}"
-              </p>
+              <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent h-1" />
+              <p className="text-[10px] text-slate-500 uppercase font-black mb-4 tracking-widest flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Intercepted Transmission</p>
+              <p className="text-2xl font-medium italic text-slate-300 leading-relaxed">"{selectedChatter.lastMessage || "Target has remained silent..."}"</p>
             </div>
           </div>
         </div>
@@ -401,14 +330,8 @@ function VerticalBoard({ title, icon: Icon, items, stat, unit, onSelect }: any) 
       <div className="space-y-2">
         {items.map((item: any, i: number) => (
           <button key={item.id} onClick={() => onSelect(item)} className="w-full flex items-center justify-between p-4 rounded-2xl bg-slate-950/50 border border-slate-800/50 hover:bg-slate-900 hover:border-emerald-500/50 transition-all group active:scale-95">
-            <div className="flex items-center gap-4">
-              <span className="text-xs font-mono font-black text-slate-600 group-hover:text-emerald-400">#{i + 1}</span>
-              <span className="font-black uppercase text-sm text-slate-200">{item.name}</span>
-            </div>
-            <div className="text-right">
-              <span className="font-mono font-black text-emerald-400">{item.stats[stat].toLocaleString()}</span>
-              <span className="text-[9px] text-slate-600 font-bold ml-1 uppercase">{unit}</span>
-            </div>
+            <div className="flex items-center gap-4"><span className="text-xs font-mono font-black text-slate-600 group-hover:text-emerald-400">#{i + 1}</span><span className="font-black uppercase text-sm text-slate-200">{item.name}</span></div>
+            <div className="text-right"><span className="font-mono font-black text-emerald-400">{item.stats[stat].toLocaleString()}</span><span className="text-[9px] text-slate-600 font-bold ml-1 uppercase">{unit}</span></div>
           </button>
         ))}
       </div>
@@ -418,21 +341,12 @@ function VerticalBoard({ title, icon: Icon, items, stat, unit, onSelect }: any) 
 
 function PulseBox({ label, value, color }: any) {
   return (
-    <div className="bg-slate-950 p-5 rounded-3xl border border-slate-800/50 shadow-inner">
-      <p className="text-[10px] uppercase font-black text-slate-600 mb-1 tracking-widest">{label}</p>
-      <p className={clsx("text-3xl font-black font-mono", color)}>{value.toLocaleString()}</p>
-    </div>
+    <div className="bg-slate-950 p-5 rounded-3xl border border-slate-800/50 shadow-inner"><p className="text-[10px] uppercase font-black text-slate-600 mb-1 tracking-widest">{label}</p><p className={clsx("text-3xl font-black font-mono", color)}>{value.toLocaleString()}</p></div>
   );
 }
 
 function StatTile({ label, val, suffix = "", color = "text-white", icon: Icon }: any) {
   return (
-    <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 shadow-inner">
-      <div className="flex items-center gap-1.5 mb-1">
-        {Icon && <Icon size={12} className="text-slate-500" />}
-        <p className="text-[9px] uppercase font-black text-slate-500 tracking-tighter">{label}</p>
-      </div>
-      <p className={clsx("text-lg font-black font-mono truncate", color)}>{val}{suffix}</p>
-    </div>
+    <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 shadow-inner"><div className="flex items-center gap-1.5 mb-1">{Icon && <Icon size={12} className="text-slate-500" />}<p className="text-[9px] uppercase font-black text-slate-500 tracking-tighter">{label}</p></div><p className={clsx("text-lg font-black font-mono truncate", color)}>{val}{suffix}</p></div>
   );
 }
