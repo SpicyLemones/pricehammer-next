@@ -295,7 +295,12 @@ export default function ChattergroundsPage() {
     };
   }, [data]);
 
-  const filteredRoster = useMemo(() => (data?.chatters ?? []).filter((c) => c.name.toLowerCase().includes(searchTerm.toLowerCase())), [data, searchTerm]);
+  const filteredRoster = useMemo(() => {
+    return (data?.chatters ?? [])
+      .filter((c) => c.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      // Sort by XP descending (highest level first)
+      .sort((a, b) => b.stats.xp - a.stats.xp);
+  }, [data, searchTerm])
 
   if (loading) return <div className="flex min-h-screen items-center justify-center bg-slate-950 text-emerald-400"><Loader2 className="animate-spin" /></div>;
 
@@ -393,12 +398,25 @@ export default function ChattergroundsPage() {
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-h-[400px] overflow-y-auto pr-4 custom-scrollbar">
-            {filteredRoster.map((c) => (
-              <button key={c.id} onClick={() => setSelectedChatter(c)} className="p-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-left hover:border-emerald-500 hover:bg-slate-900 transition-all active:scale-95 group">
-                <p className="text-sm font-black truncate uppercase group-hover:text-emerald-400">{c.name}</p>
-                <p className="text-[10px] text-slate-600 font-mono font-bold uppercase">{formatNumber(c.stats.messagesSent)} MSGS</p>
+            {filteredRoster.map((c) => {
+            // Calculate level for the small card display
+            const { level } = getLevelInfo(c.stats.xp);
+            
+            return (
+              <button 
+                key={c.id} 
+                onClick={() => setSelectedChatter(c)} 
+                className="p-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-left hover:border-emerald-500 hover:bg-slate-900 transition-all active:scale-95 group"
+              >
+                <p className="text-sm font-black truncate uppercase group-hover:text-emerald-400">
+                  {c.name}
+                </p>
+                <p className="text-[10px] text-emerald-500 font-mono font-bold uppercase">
+                  LVL {level}
+                </p>
               </button>
-            ))}
+            );
+          })}
           </div>
         </div>
       </div>
