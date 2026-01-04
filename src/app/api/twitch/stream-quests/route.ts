@@ -173,7 +173,23 @@ async function loadRecipientsFromChattergrounds(broadcasterId: string): Promise<
 }
 
 export async function GET() {
+  const session = await getValidSession();
+  
+  // 1. Block if not logged in
+  if (!session) {
+    return NextResponse.json({ error: "unauthenticated" }, { status: 401 });
+  }
+
   const audience = await loadAudience();
+
+  // 2. Block if stream is not live (The Tavern is Closed)
+  if (!audience.live) {
+    return NextResponse.json({ 
+      error: "offline", 
+      message: "The Tavern is closed. You must be live to access quests." 
+    }, { status: 200 }); // Status 200 so the client can read the "offline" error
+  }
+
   const { state, regenerated } = await ensureState(audience);
 
   return NextResponse.json({
@@ -182,28 +198,58 @@ export async function GET() {
   });
 }
 
-export async function POST(request: Request) {
-  const body = (await request.json().catch(() => null)) as { id?: string } | null;
-  if (!body?.id) return NextResponse.json({ error: "missing_id" }, { status: 400 });
 
+export async function POST(request: Request) {
+  const body = (await request.json().catch(() => null)) as { id?: string; action?: string } | null;
+  
+  // 1. Auth Check
   const session = await getValidSession();
   if (!session) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
+  const broadcasterId = session.userId;
+  const broadcasterLogin = (session.login || session.displayName).toLowerCase();
+
+  // 2. Load Audience & Status
   const audience = await loadAudience();
+  
+  // 3. TAVERN CHECK: Prevent actions if offline
+  if (!audience.live) {
+    return NextResponse.json({ error: "offline", message: "The Tavern is closed." }, { status: 403 });
+  }
+
   const { state } = await ensureState(audience);
+
+  // --- ACTION: REROLL ---
+  if (body?.action === "reroll") {
+    const questTemplates = await loadQuestTemplates();
+    // This keeps completed quests but rolls new ones for the incomplete slots
+    const newQuests = regenerateQuestsPreservingCompletions(state.quests, audience, questTemplates);
+    
+    const rerolledState: StreamQuestState = {
+      ...state,
+      quests: newQuests,
+      generatedAt: new Date().toISOString(),
+      lastAudience: audience,
+    };
+
+    await saveState(rerolledState);
+    return NextResponse.json({ 
+      regenerated: true, 
+      ...serializeState(rerolledState) 
+    });
+  }
+
+  // --- ACTION: COMPLETE QUEST ---
+  if (!body?.id) return NextResponse.json({ error: "missing_id" }, { status: 400 });
 
   const quest = state.quests.find((entry) => entry.id === body.id);
   if (!quest) return NextResponse.json({ error: "quest_not_found" }, { status: 404 });
   if (quest.completed) return NextResponse.json({ alreadyCompleted: true, ...serializeState(state) });
 
-  const broadcasterId = session.userId;
-  const broadcasterLogin = (session.login || session.displayName).toLowerCase();
-
-  // 1. Get everyone recorded in the DB
+  // 1. Get RECENT chatters (the loadRecipients function now handles the 30m filter)
   let recipients = await loadRecipientsFromChattergrounds(broadcasterId);
 
-  // 2. Separate Broadcaster from Audience for Action Mapping
-  // Broadcaster gets the +1 Quest Completion
+  // 2. Separate Broadcaster for Quest Completion tracking
   await applyChattergroundsAction(
     {
       action: "quest-completed",
@@ -214,7 +260,7 @@ export async function POST(request: Request) {
     { sessionUserId: broadcasterId }
   );
 
-  // 3. Everyone else gets just the Coins/XP via "mint"
+  // 3. Mint coins for everyone else who is active
   const others = recipients.filter(r => r.chatterId !== broadcasterId);
   const BATCH_SIZE = 10;
   for (let i = 0; i < others.length; i += BATCH_SIZE) {
@@ -234,7 +280,7 @@ export async function POST(request: Request) {
     );
   }
 
-  // 4. Update the local JSON ledger for display
+  // 4. Update the local JSON ledger
   const ledger = { ...state.ledger };
   ledger[broadcasterLogin] = (ledger[broadcasterLogin] ?? 0) + quest.reward;
   for (const r of others) {

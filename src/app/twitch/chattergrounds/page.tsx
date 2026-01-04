@@ -139,7 +139,7 @@ function SubscriberBadge({ isSubscriber }: { isSubscriber: boolean }) {
           {isSubscriber ? (
             <>
               <Star size={12} className="fill-slate-950 group-hover:animate-spin" />
-              SUBSCRIBER (5% Bonus Gain!)
+              SUBSCRIBER (5% Bonus!)
             </>
           ) : (
             <>
