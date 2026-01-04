@@ -456,20 +456,22 @@ export async function validateUserToken(accessToken: string) {
 }
 
 /**
- * Register EventSub webhooks for Chattergrounds.
+ * Register EventSub webhooks for Chattergrounds (webhook transport).
  *
- * - channel.chat.message can be created with an app token (client_credentials),
- *   but it still depends on the app being authorized with the right bot scopes. :contentReference[oaicite:3]{index=3}
- * - channel.ban REQUIRES a USER token with channel:moderate. :contentReference[oaicite:4]{index=4}
+ * IMPORTANT:
+ * - Webhook subscriptions MUST be created with an APP access token (client_credentials). :contentReference[oaicite:3]{index=3}
+ * - channel.ban / channel.unban require that the broadcaster has granted channel:moderate to your app. :contentReference[oaicite:4]{index=4}
+ * - channel.chat.message uses an app token when subscribing. :contentReference[oaicite:5]{index=5}
  *
  * Usage:
- *   const session = await getValidSession();
+ *   const session = await getValidSession(); // broadcaster login session
  *   await registerChattergroundsWebhook(session!.userId, undefined, session!);
- *
- * If you have a separate bot account:
- *   await registerChattergroundsWebhook(broadcasterId, botUserId, broadcasterSession)
  */
-export async function registerChattergroundsWebhook(broadcasterId: string, botUserId?: string) {
+export async function registerChattergroundsWebhook(
+  broadcasterId: string,
+  botUserId?: string,
+  broadcasterSessionForScopeCheck?: StoredTwitchSession
+) {
   const { clientId, clientSecret } = getTwitchConfig();
 
   const secret = process.env.CHATTERGROUNDS_INGEST_SECRET;
@@ -478,12 +480,42 @@ export async function registerChattergroundsWebhook(broadcasterId: string, botUs
     "https://www.spycy.fun/api/twitch/chattergrounds/ingest";
 
   if (!secret || secret.length < 16) {
-    throw new Error("CHATTERGROUNDS_INGEST_SECRET is missing/too short. Use >= 16 chars.");
+    throw new Error("CHATTERGROUNDS_INGEST_SECRET is missing/too short. Use a long random string (>= 16 chars).");
   }
 
   const effectiveBotUserId = botUserId ?? broadcasterId;
 
-  // App access token (required for webhook EventSub subscriptions)
+  // ---- 0) Ensure the broadcaster has granted required user scopes for ban/unban
+  // (App tokens don’t carry scopes; the broadcaster must have authorized the client ID with channel:moderate.) :contentReference[oaicite:6]{index=6}
+  const broadcasterSession = broadcasterSessionForScopeCheck ?? (await getValidSession());
+  if (!broadcasterSession?.accessToken) {
+    throw new Error(
+      "No broadcaster session available to verify scopes. " +
+        "Log in as the broadcaster first, then call registerChattergroundsWebhook(session.userId, undefined, session)."
+    );
+  }
+
+  const validation = await validateUserToken(broadcasterSession.accessToken);
+  const required = ["channel:moderate"];
+  const missing = required.filter((s) => !validation.scopes?.includes(s));
+
+  if (missing.length) {
+    throw new Error(
+      [
+        `Broadcaster OAuth grant is missing required scope(s): ${missing.join(", ")}`,
+        `Your current grant scopes are: ${validation.scopes.join(", ")}`,
+        "",
+        "Fix:",
+        "- Ensure your OAuth URL includes channel:moderate",
+        "- If you are in production, temporarily set TWITCH_FORCE_VERIFY=true so Twitch forces the consent screen",
+        "- Re-authorize as the broadcaster, then retry registration",
+        "",
+        "Also check you are NOT overriding scopes via TWITCH_SCOPES env var (hard override).",
+      ].join("\n")
+    );
+  }
+
+  // ---- 1) App access token (required for webhook subscriptions)
   const tokenRes = await fetch(TWITCH_TOKEN_URL, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -548,68 +580,62 @@ export async function registerChattergroundsWebhook(broadcasterId: string, botUs
     console.log(`Twitch EventSub(${body.type}) Status: ${subRes.status}`);
     console.log(`Twitch Subscription(${body.type}) Response:`, JSON.stringify(data, null, 2));
 
-    if (!subRes.ok) throw new Error(`EventSub subscribe failed (${body.type}) ${subRes.status}: ${JSON.stringify(data)}`);
+    if (!subRes.ok) {
+      throw new Error(`EventSub subscribe failed (${body.type}) ${subRes.status}: ${JSON.stringify(data)}`);
+    }
     return data;
   }
 
   const results: Record<string, any> = {};
 
-  // channel.chat.message
+  // ---- 2) channel.chat.message (app token)
   {
     const type = "channel.chat.message";
-    const condition = {
-      broadcaster_user_id: broadcasterId,
-      user_id: effectiveBotUserId,
-    };
-
-    const body = {
-      type,
-      version: "1",
-      condition,
-      transport: { method: "webhook", callback: callbackUrl, secret },
-    };
+    const condition = { broadcaster_user_id: broadcasterId, user_id: effectiveBotUserId };
 
     results[type] = alreadySubscribed(type, condition)
       ? { ok: true, skipped: true, reason: "already subscribed" }
-      : await createSub(body);
+      : await createSub({
+          type,
+          version: "1",
+          condition,
+          transport: { method: "webhook", callback: callbackUrl, secret },
+        });
   }
 
-  // channel.ban (timeouts + bans)
+  // ---- 3) channel.ban (app token; requires broadcaster granted channel:moderate)
   {
     const type = "channel.ban";
     const condition = { broadcaster_user_id: broadcasterId };
 
-    const body = {
-      type,
-      version: "1",
-      condition,
-      transport: { method: "webhook", callback: callbackUrl, secret },
-    };
-
     results[type] = alreadySubscribed(type, condition)
       ? { ok: true, skipped: true, reason: "already subscribed" }
-      : await createSub(body);
+      : await createSub({
+          type,
+          version: "1",
+          condition,
+          transport: { method: "webhook", callback: callbackUrl, secret },
+        });
   }
 
-  // channel.unban (useful for untimeout / unban)
+  // ---- 4) channel.unban (app token; requires broadcaster granted channel:moderate)
   {
     const type = "channel.unban";
     const condition = { broadcaster_user_id: broadcasterId };
 
-    const body = {
-      type,
-      version: "1",
-      condition,
-      transport: { method: "webhook", callback: callbackUrl, secret },
-    };
-
     results[type] = alreadySubscribed(type, condition)
       ? { ok: true, skipped: true, reason: "already subscribed" }
-      : await createSub(body);
+      : await createSub({
+          type,
+          version: "1",
+          condition,
+          transport: { method: "webhook", callback: callbackUrl, secret },
+        });
   }
 
   return results;
 }
+
 
 export type TwitchChattersResponse = {
   live: boolean;
