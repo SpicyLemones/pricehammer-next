@@ -5,6 +5,7 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 
 import { fetchChatters, getValidSession } from "@/app/lib/twitch-auth";
+// Import the database logic from your chattergrounds route
 import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
 
 export const dynamic = "force-dynamic";
@@ -166,25 +167,38 @@ export async function POST(request: Request) {
 
   const completedAt = new Date().toISOString();
   const questReward = quest.reward;
-  const recipients = audience.names.filter(Boolean);
 
-  // 1. DISTRIBUTE REWARDS
-  // Every active chatter gets the coins + XP (base rate * 0.85)
+  // 1. COLLECT RECIPIENTS: Use the list from the audience snapshot
+  const recipients = audience.names.filter(Boolean).map(n => n.toLowerCase());
+
+  // 2. MASS UPDATE: Parallel calls to sync rewards to database via applyChattergroundsAction
   await Promise.all(
-    recipients.map((chatterName) =>
-      applyChattergroundsAction(
+    recipients.map(async (chatterName) => {
+      // Increment completion count
+      await applyChattergroundsAction(
         {
           action: "quest-completed",
+          chatterId: chatterName, // Using name as ID per current schema
+          chatterLogin: chatterName,
+          amount: 1,
+        },
+        { sessionUserId: session.userId }
+      );
+
+      // Mint the Toadcoins reward
+      await applyChattergroundsAction(
+        {
+          action: "mint",
           chatterId: chatterName,
           chatterLogin: chatterName,
           amount: questReward,
         },
         { sessionUserId: session.userId }
-      )
-    )
+      );
+    })
   );
 
-  // 2. UPDATE LOCAL LEDGER
+  // 3. UPDATE LOCAL LEDGER: Increment existing values instead of replacing
   const ledger = { ...state.ledger };
   recipients.forEach((name) => {
     ledger[name] = (ledger[name] ?? 0) + questReward;
@@ -207,7 +221,6 @@ export async function POST(request: Request) {
     ...serializeState(updatedState),
   });
 }
-
 async function ensureState(audience: AudienceSnapshot) {
   const today = currentDateKey();
   const existing = await loadState();
@@ -215,10 +228,15 @@ async function ensureState(audience: AudienceSnapshot) {
   const currentHour = seedFromCurrentHour();
 
   if (existing && existing.date === today) {
-    // Only regenerate if we actually have a broken quest list (less than 6)
+    const hasAudienceChanged =
+      JSON.stringify(audience) !== JSON.stringify(existing.lastAudience) ||
+      existing.lastAudienceHour !== currentHour;
+    const upgradedToTwitch = audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
     const insufficientQuests = existing.quests.length < 6;
+    const audienceRegenerated = audience.source === "twitch" && hasAudienceChanged;
+    const shouldRegenerate = upgradedToTwitch || insufficientQuests || audienceRegenerated;
 
-    if (insufficientQuests) {
+    if (shouldRegenerate) {
       const quests = regenerateQuestsPreservingCompletions(existing.quests, audience, questTemplates);
       const regeneratedState: StreamQuestState = {
         ...existing,
@@ -231,22 +249,16 @@ async function ensureState(audience: AudienceSnapshot) {
       return { state: regeneratedState, regenerated: true };
     }
 
-    // UPDATED: Simply update the metadata without triggering a quest shuffle
-    const updated = { 
-      ...existing, 
-      lastAudience: audience, 
-      lastAudienceHour: currentHour 
-    };
-    
-    // Save only if the metadata changed, keeping quest progress intact
-    if (JSON.stringify(existing.lastAudience) !== JSON.stringify(audience)) {
+    const updated = { ...existing, lastAudience: audience, lastAudienceHour: currentHour };
+    const shouldPersist =
+      JSON.stringify(updated.lastAudience) !== JSON.stringify(existing.lastAudience) ||
+      updated.lastAudienceHour !== existing.lastAudienceHour;
+    if (shouldPersist) {
       await saveState(updated);
     }
-    
     return { state: updated, regenerated: false };
   }
 
-  // Brand new day or no state: generate fresh
   const quests = buildQuests(audience, questTemplates);
   const state: StreamQuestState = {
     date: today,
@@ -258,6 +270,7 @@ async function ensureState(audience: AudienceSnapshot) {
   };
 
   await saveState(state);
+
   return { state, regenerated: true };
 }
 
