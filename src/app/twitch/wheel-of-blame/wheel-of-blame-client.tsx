@@ -675,17 +675,6 @@ export default function WheelOfBlameClient() {
               </p>
               <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center">
                 <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Roll log</p>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Recent winner</h3>
-                  {result ? (
-                    <div className="mt-3 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-green-800 shadow-sm dark:border-green-900/60 dark:bg-green-950/30 dark:text-green-100">
-                      🎉 {result.winner}
-                    </div>
-                  ) : (
-                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">No spins yet.</p>
-                  )}
-                </div>
-                <div className="w-full max-w-sm space-y-2 rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Chatters</p>
                   <div className="max-h-64 overflow-auto rounded-2xl border border-slate-200 bg-white/60 p-3 text-sm shadow-inner dark:border-slate-800 dark:bg-slate-900/50">
                     {chatters.length ? (
