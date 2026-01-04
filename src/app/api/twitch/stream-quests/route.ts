@@ -149,6 +149,10 @@ export async function POST(request: Request) {
   }
 
   const session = await getValidSession();
+  if (!session) {
+     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  }
+
   const audience = await loadAudience();
   const { state } = await ensureState(audience);
 
@@ -158,46 +162,42 @@ export async function POST(request: Request) {
   }
 
   if (quest.completed) {
-    return NextResponse.json({
-      alreadyCompleted: true,
-      ...serializeState(state),
-    });
+    return NextResponse.json({ alreadyCompleted: true, ...serializeState(state) });
   }
 
   const completedAt = new Date().toISOString();
-  const recipients = new Set(audience.names.length ? audience.names : ["everyone"]);
 
-  // --- NEW: Sync with Chattergrounds Database ---
-  const dbPromises = Array.from(recipients).map((name) => {
-    return applyChattergroundsAction(
-      {
-        action: "quest-completed",
-        chatterId: name, // Using name as ID for quest tracking
-        chatterLogin: name,
-        amount: 1, // Increments quests_completed count
-      },
-      { sessionUserId: session?.userId || "system" }
-    ).then(() => {
-      // Also apply the reward coins as "minted" coins
-      return applyChattergroundsAction(
-        {
-          action: "mint",
-          chatterId: name,
-          chatterLogin: name,
-          amount: quest.reward,
-        },
-        { sessionUserId: session?.userId || "system" }
-      );
-    });
-  });
+  /**
+   * FIX: Only reward the Broadcaster (the person logged in) 
+   * instead of the entire audience.names list.
+   */
+  const recipientName = session.displayName.toLowerCase(); 
+  const recipientId = session.userId; // Use the actual Twitch ID from session
 
-  // Wait for all database updates to finish
-  await Promise.all(dbPromises);
+  // --- Sync with Chattergrounds Database for the BROADCASTER ONLY ---
+  await applyChattergroundsAction(
+    {
+      action: "quest-completed",
+      chatterId: recipientId,    // REAL ID (prevents duplicates)
+      chatterLogin: recipientName,
+      amount: 1,
+    },
+    { sessionUserId: session.userId }
+  );
 
+  await applyChattergroundsAction(
+    {
+      action: "mint",
+      chatterId: recipientId,
+      chatterLogin: recipientName,
+      amount: quest.reward,
+    },
+    { sessionUserId: session.userId }
+  );
+
+  // Update the local JSON ledger for display
   const ledger = { ...state.ledger };
-  recipients.forEach((name) => {
-    ledger[name] = (ledger[name] ?? 0) + quest.reward;
-  });
+  ledger[recipientName] = (ledger[recipientName] ?? 0) + quest.reward;
 
   const updatedQuest: StreamQuest = { ...quest, completed: true, completedAt };
   const updatedState: StreamQuestState = {
@@ -211,13 +211,11 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     quest: updatedQuest,
-    recipients: Array.from(recipients),
-    totalRewarded: updatedQuest.reward * recipients.size,
-    audience,
+    recipients: [recipientName],
+    totalRewarded: updatedQuest.reward,
     ...serializeState(updatedState),
   });
 }
-
 async function ensureState(audience: AudienceSnapshot) {
   const today = currentDateKey();
   const existing = await loadState();
