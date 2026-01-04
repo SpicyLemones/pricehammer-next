@@ -31,15 +31,11 @@ const TWITCH_API_BASE = "https://api.twitch.tv/helix";
  * Control with:
  * - TWITCH_SCOPE_PRESET=minimal|standard|power
  * OR
- * - TWITCH_SCOPES="space separated scopes" (full override)
- *
- * NOTE:
- * - For webhook subscriptions, Twitch requires an APP access token to create subs,
- *   BUT the user must have granted your app the required scopes beforehand. (So your OAuth scopes still matter.)
+ * - TWITCH_SCOPES="space separated scopes" (hard override)
  */
 const SCOPE_PRESETS: Record<"minimal" | "standard" | "power", string[]> = {
   minimal: [
-    // Chat message EventSub
+    // channel.chat.message auth requirements (chatting user + bot)
     "user:read:chat",
     "user:bot",
     "channel:bot",
@@ -47,19 +43,18 @@ const SCOPE_PRESETS: Record<"minimal" | "standard" | "power", string[]> = {
     // /chat/chatters
     "moderator:read:chatters",
 
-    // Ban/timeout EventSub
+    // channel.ban EventSub requires channel:moderate (user token)
     "channel:moderate",
   ],
 
   standard: [
-    // minimal
     "user:read:chat",
     "user:bot",
     "channel:bot",
     "moderator:read:chatters",
     "channel:moderate",
 
-    // common reads
+    // common read scopes
     "bits:read",
     "user:read:email",
     "channel:read:subscriptions",
@@ -68,16 +63,16 @@ const SCOPE_PRESETS: Record<"minimal" | "standard" | "power", string[]> = {
     "channel:read:predictions",
     "channel:read:hype_train",
     "channel:read:goals",
+    "channel:read:vips",
     "moderation:read",
     "moderator:read:banned_users",
     "moderator:read:chat_messages",
     "moderator:read:followers",
     "moderator:read:moderators",
-    "moderator:read:vips",
   ],
 
   power: [
-    // standard
+    // Standard
     "user:read:chat",
     "user:bot",
     "channel:bot",
@@ -91,14 +86,14 @@ const SCOPE_PRESETS: Record<"minimal" | "standard" | "power", string[]> = {
     "channel:read:predictions",
     "channel:read:hype_train",
     "channel:read:goals",
+    "channel:read:vips",
     "moderation:read",
     "moderator:read:banned_users",
     "moderator:read:chat_messages",
     "moderator:read:followers",
     "moderator:read:moderators",
-    "moderator:read:vips",
 
-    // chat write / moderation management
+    // Write / manage (broad)
     "user:write:chat",
     "moderator:manage:announcements",
     "moderator:manage:automod",
@@ -110,7 +105,6 @@ const SCOPE_PRESETS: Record<"minimal" | "standard" | "power", string[]> = {
     "moderator:manage:shoutouts",
     "moderator:manage:unban_requests",
 
-    // channel management
     "channel:manage:ads",
     "channel:read:ads",
     "channel:manage:broadcast",
@@ -124,38 +118,23 @@ const SCOPE_PRESETS: Record<"minimal" | "standard" | "power", string[]> = {
     "channel:manage:vips",
     "channel:manage:videos",
     "channel:manage:extensions",
-    "channel:manage:guest_star",
-    "channel:read:guest_star",
 
-    // sensitive
-    "channel:read:stream_key",
-
-    // whispers
-    "user:read:whispers",
-    "user:manage:whispers",
-
-    // clips
+    // Clips
     "clips:edit",
-    "channel:manage:clips",
-    "editor:manage:clips",
   ],
 };
 
 function dedupeScopes(scopes: string[]) {
-  const out: string[] = [];
-  const seen = new Set<string>();
+  const set = new Set<string>();
   for (const s of scopes) {
     const t = (s ?? "").trim();
-    if (!t) continue;
-    if (seen.has(t)) continue;
-    seen.add(t);
-    out.push(t);
+    if (t) set.add(t);
   }
-  return out;
+  return Array.from(set);
 }
 
 function getOAuthScopes(): string {
-  // Full override
+  // Hard override: TWITCH_SCOPES="a b c"
   const override = (process.env.TWITCH_SCOPES ?? "").trim();
   if (override) return dedupeScopes(override.split(/\s+/)).join(" ");
 
@@ -164,7 +143,8 @@ function getOAuthScopes(): string {
     | "standard"
     | "power");
 
-  return dedupeScopes((SCOPE_PRESETS[preset] ?? SCOPE_PRESETS.standard)).join(" ");
+  const scopes = SCOPE_PRESETS[preset] ?? SCOPE_PRESETS.standard;
+  return dedupeScopes(scopes).join(" ");
 }
 
 function resolveRedirectUri(_request?: Request) {
@@ -209,7 +189,7 @@ export function buildTwitchAuthUrl(redirect?: string, request?: Request) {
 
   const scopes = getOAuthScopes();
 
-  // Re-consent toggle while iterating scopes
+  // Force re-consent while debugging scopes:
   const forceVerifyEnv = (process.env.TWITCH_FORCE_VERIFY ?? "").trim().toLowerCase();
   const force_verify =
     forceVerifyEnv === "true"
@@ -217,8 +197,8 @@ export function buildTwitchAuthUrl(redirect?: string, request?: Request) {
       : forceVerifyEnv === "false"
       ? "false"
       : process.env.NODE_ENV === "production"
-      ? "false"
-      : "true";
+        ? "false"
+        : "true";
 
   const params = new URLSearchParams({
     client_id: clientId,
@@ -240,6 +220,7 @@ export function verifyState(state: string) {
   if (!nonce || !signature) return { valid: false as const };
 
   const expected = signState(nonce, stateSecret);
+
   const sigBuf = Buffer.from(signature, "utf8");
   const expBuf = Buffer.from(expected, "utf8");
   if (sigBuf.length !== expBuf.length) return { valid: false as const };
@@ -250,13 +231,9 @@ export function verifyState(state: string) {
   return { valid, redirect } as const;
 }
 
-async function getCookieStore() {
-  // In newer Next.js, cookies() is async (Promise). Await works in both old + new.
-  return await cookies();
-}
-
 export async function readSession(): Promise<StoredTwitchSession | null> {
-  const cookieStore = await getCookieStore();
+  // IMPORTANT: Next may return cookies() as a Promise in your setup — await it.
+  const cookieStore: any = await cookies();
   const raw = cookieStore.get(COOKIE_NAME)?.value;
   if (!raw) return null;
 
@@ -271,20 +248,20 @@ export async function readSession(): Promise<StoredTwitchSession | null> {
 }
 
 export async function writeSession(session: StoredTwitchSession) {
-  const cookieStore = await getCookieStore();
+  const cookieStore: any = await cookies();
   const encoded = Buffer.from(JSON.stringify(session), "utf8").toString("base64url");
 
   cookieStore.set(COOKIE_NAME, encoded, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // allow localhost http
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 24 * 30, // 30 days
+    maxAge: 60 * 60 * 24 * 30,
   });
 }
 
 export async function clearSession() {
-  const cookieStore = await getCookieStore();
+  const cookieStore: any = await cookies();
   cookieStore.delete(COOKIE_NAME);
 }
 
@@ -383,7 +360,10 @@ async function fetchUser(accessToken: string) {
     throw new Error(`Failed to fetch Twitch user: ${response.status} ${text}`);
   }
 
-  const data = (await response.json()) as { data: Array<{ id: string; login: string; display_name: string }> };
+  const data = (await response.json()) as {
+    data: Array<{ id: string; login: string; display_name: string }>;
+  };
+
   if (!data.data?.length) throw new Error("No user info returned from Twitch");
   return data.data[0];
 }
@@ -407,7 +387,7 @@ export async function getValidSession() {
 export async function twitchApi<T>(path: string, session: StoredTwitchSession, init?: RequestInit): Promise<T> {
   const { clientId } = getTwitchConfig();
 
-  const response = await fetch(`${TWITCH_API_BASE}${path}`, {
+  const res = await fetch(`${TWITCH_API_BASE}${path}`, {
     ...init,
     headers: {
       Authorization: `Bearer ${session.accessToken}`,
@@ -417,14 +397,44 @@ export async function twitchApi<T>(path: string, session: StoredTwitchSession, i
     cache: "no-cache",
   });
 
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Twitch API error ${response.status}: ${text}`);
+  if (!res.ok) {
+    const text = await res.text();
+
+    // If token got revoked/expired unexpectedly, try a single refresh+retry
+    if (res.status === 401) {
+      try {
+        const refreshed = await refreshTokens(session);
+        const retry = await fetch(`${TWITCH_API_BASE}${path}`, {
+          ...init,
+          headers: {
+            Authorization: `Bearer ${refreshed.accessToken}`,
+            "Client-Id": clientId,
+            ...(init?.headers || {}),
+          },
+          cache: "no-cache",
+        });
+
+        if (!retry.ok) {
+          const retryText = await retry.text();
+          throw new Error(`Twitch API error ${retry.status}: ${retryText}`);
+        }
+
+        return (await retry.json()) as T;
+      } catch (e) {
+        await clearSession();
+        throw new Error(`Twitch API error 401 (token invalid, cleared session): ${text}`);
+      }
+    }
+
+    throw new Error(`Twitch API error ${res.status}: ${text}`);
   }
 
-  return (await response.json()) as T;
+  return (await res.json()) as T;
 }
 
+/**
+ * Validate user token (handy for debugging missing scopes)
+ */
 export async function validateUserToken(accessToken: string) {
   const res = await fetch(TWITCH_VALIDATE_URL, {
     headers: { Authorization: `OAuth ${accessToken}` },
@@ -448,15 +458,28 @@ export async function validateUserToken(accessToken: string) {
 /**
  * Register EventSub webhooks for Chattergrounds.
  *
- * Webhook subscription creation requires an APP access token.
- * For subscription types requiring user authorization, the user must grant scopes before subscribing.
+ * - channel.chat.message can be created with an app token (client_credentials),
+ *   but it still depends on the app being authorized with the right bot scopes. :contentReference[oaicite:3]{index=3}
+ * - channel.ban REQUIRES a USER token with channel:moderate. :contentReference[oaicite:4]{index=4}
+ *
+ * Usage:
+ *   const session = await getValidSession();
+ *   await registerChattergroundsWebhook(session!.userId, undefined, session!);
+ *
+ * If you have a separate bot account:
+ *   await registerChattergroundsWebhook(broadcasterId, botUserId, broadcasterSession)
  */
-export async function registerChattergroundsWebhook(broadcasterId: string, botUserId?: string) {
+export async function registerChattergroundsWebhook(
+  broadcasterId: string,
+  botUserId?: string,
+  broadcasterSessionForUserScopedSubs?: StoredTwitchSession
+) {
   const { clientId, clientSecret } = getTwitchConfig();
 
   const secret = process.env.CHATTERGROUNDS_INGEST_SECRET;
   const callbackUrl =
-    process.env.CHATTERGROUNDS_CALLBACK_URL ?? "https://www.spycy.fun/api/twitch/chattergrounds/ingest";
+    process.env.CHATTERGROUNDS_CALLBACK_URL ??
+    "https://www.spycy.fun/api/twitch/chattergrounds/ingest";
 
   if (!secret || secret.length < 16) {
     throw new Error("CHATTERGROUNDS_INGEST_SECRET is missing/too short. Use a long random string (>= 16 chars).");
@@ -464,7 +487,7 @@ export async function registerChattergroundsWebhook(broadcasterId: string, botUs
 
   const effectiveBotUserId = botUserId ?? broadcasterId;
 
-  // 1) App access token (client_credentials)
+  // App token (client_credentials) – OK for channel.chat.message creation
   const tokenRes = await fetch(TWITCH_TOKEN_URL, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -477,49 +500,16 @@ export async function registerChattergroundsWebhook(broadcasterId: string, botUs
 
   const tokenData = await tokenRes.json();
   const appAccessToken = tokenData.access_token as string | undefined;
-  if (!appAccessToken) throw new Error(`Failed to get App Access Token: ${JSON.stringify(tokenData)}`);
 
-  // Helper: list existing webhook subs for our callback to avoid duplicates
-  async function listSubs() {
-    const res = await fetch(`${TWITCH_API_BASE}/eventsub/subscriptions`, {
-      headers: {
-        Authorization: `Bearer ${appAccessToken}`,
-        "Client-Id": clientId,
-      },
-      cache: "no-cache",
-    });
-    if (!res.ok) return null;
-    return (await res.json()) as {
-      data: Array<{
-        id: string;
-        type: string;
-        status: string;
-        condition: Record<string, any>;
-        transport: { method: string; callback?: string };
-      }>;
-    };
+  if (!appAccessToken) {
+    throw new Error(`Failed to get App Access Token: ${JSON.stringify(tokenData)}`);
   }
 
-  const existing = await listSubs();
-  const existingData = existing?.data ?? [];
-
-  function alreadySubscribed(type: string, condition: Record<string, any>) {
-    return existingData.some((s) => {
-      if (s.type !== type) return false;
-      if (s.transport?.method !== "webhook") return false;
-      if ((s.transport?.callback ?? "") !== callbackUrl) return false;
-      for (const [k, v] of Object.entries(condition)) {
-        if (String(s.condition?.[k] ?? "") !== String(v ?? "")) return false;
-      }
-      return true;
-    });
-  }
-
-  async function createSub(body: any) {
+  async function createSub(token: string, body: any) {
     const subRes = await fetch(`${TWITCH_API_BASE}/eventsub/subscriptions`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${appAccessToken}`,
+        Authorization: `Bearer ${token}`,
         "Client-Id": clientId,
         "Content-Type": "application/json",
       },
@@ -530,43 +520,50 @@ export async function registerChattergroundsWebhook(broadcasterId: string, botUs
     console.log(`Twitch EventSub(${body.type}) Status: ${subRes.status}`);
     console.log(`Twitch Subscription(${body.type}) Response:`, JSON.stringify(data, null, 2));
 
-    if (!subRes.ok) throw new Error(`EventSub subscribe failed (${body.type}) ${subRes.status}: ${JSON.stringify(data)}`);
+    if (!subRes.ok) {
+      throw new Error(`EventSub subscribe failed (${body.type}) ${subRes.status}: ${JSON.stringify(data)}`);
+    }
+
     return data;
   }
 
   const results: Record<string, any> = {};
 
-  // channel.chat.message
-  {
-    const type = "channel.chat.message";
-    const body = {
-      type,
+  // 1) channel.chat.message (app token)
+  results["channel.chat.message"] = await createSub(appAccessToken, {
+    type: "channel.chat.message",
+    version: "1",
+    condition: {
+      broadcaster_user_id: broadcasterId,
+      user_id: effectiveBotUserId,
+    },
+    transport: {
+      method: "webhook",
+      callback: callbackUrl,
+      secret,
+    },
+  });
+
+  // 2) channel.ban (USER token with channel:moderate required)
+  if (!broadcasterSessionForUserScopedSubs?.accessToken) {
+    results["channel.ban"] = {
+      ok: false,
+      skipped: true,
+      reason: "No broadcaster user session provided (required for channel.ban because it needs channel:moderate).",
+    };
+  } else {
+    results["channel.ban"] = await createSub(broadcasterSessionForUserScopedSubs.accessToken, {
+      type: "channel.ban",
       version: "1",
       condition: {
         broadcaster_user_id: broadcasterId,
-        user_id: effectiveBotUserId,
       },
-      transport: { method: "webhook", callback: callbackUrl, secret },
-    };
-
-    results[type] = alreadySubscribed(type, body.condition)
-      ? { ok: true, skipped: true, reason: "already subscribed" }
-      : await createSub(body);
-  }
-
-  // channel.ban (timeouts + bans)
-  {
-    const type = "channel.ban";
-    const body = {
-      type,
-      version: "1",
-      condition: { broadcaster_user_id: broadcasterId },
-      transport: { method: "webhook", callback: callbackUrl, secret },
-    };
-
-    results[type] = alreadySubscribed(type, body.condition)
-      ? { ok: true, skipped: true, reason: "already subscribed" }
-      : await createSub(body);
+      transport: {
+        method: "webhook",
+        callback: callbackUrl,
+        secret,
+      },
+    });
   }
 
   return results;
@@ -586,7 +583,11 @@ export async function fetchChatters(
   const broadcasterId = opts?.broadcasterId ?? session.userId;
   const moderatorId = opts?.moderatorId ?? session.userId;
 
-  const streams = await twitchApi<{ data: Array<{ id: string }> }>(`/streams?user_id=${broadcasterId}`, session);
+  // Check if stream is live
+  const streams = await twitchApi<{ data: Array<{ id: string }> }>(
+    `/streams?user_id=${broadcasterId}`,
+    session
+  );
 
   if (!streams.data?.length) {
     return { live: false, displayName: session.displayName, login: session.login };
