@@ -146,16 +146,13 @@ const DEFAULT_TEMPLATE_LIBRARY: QuestTemplateConfig[] = [
 
 type DbRecipient = { chatterId: string; login: string };
 
-// ONLY recipients already present in chattergrounds_stats (numeric chatter_id only)
 async function loadRecipientsFromChattergrounds(broadcasterId: string): Promise<DbRecipient[]> {
   const rows = (await all(
-    `
-    SELECT chatter_id, name
+    `SELECT chatter_id, name
     FROM chattergrounds_stats
     WHERE broadcaster_id = ?
       AND chatter_id GLOB '[0-9]*'
-    ORDER BY updated_at DESC
-    `,
+    ORDER BY updated_at DESC`,
     [broadcasterId]
   )) as any[];
 
@@ -196,7 +193,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  // audience is now derived from chattergrounds DB (not /api/twitch/chatters)
   const audience = await loadAudience();
   const { state } = await ensureState(audience);
 
@@ -209,12 +205,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ alreadyCompleted: true, ...serializeState(state) });
   }
 
-  const completedAt = new Date().toISOString();
-
   const broadcasterLogin = (session.login || session.displayName).toLowerCase();
   const broadcasterId = session.userId;
 
-  // Keep your existing "quest completed" tracking for broadcaster
+  // Track quest completion for broadcaster
   await applyChattergroundsAction(
     {
       action: "quest-completed",
@@ -225,10 +219,9 @@ export async function POST(request: Request) {
     { sessionUserId: session.userId }
   );
 
-  // Reward ONLY people already in chattergrounds DB
+  // Reward everyone in the DB
   let recipients = await loadRecipientsFromChattergrounds(session.userId);
 
-  // Ensure broadcaster is included
   if (!recipients.some((r) => r.chatterId === broadcasterId)) {
     recipients = [{ chatterId: broadcasterId, login: broadcasterLogin }, ...recipients];
   }
@@ -241,7 +234,7 @@ export async function POST(request: Request) {
         await applyChattergroundsAction(
           {
             action: "mint",
-            chatterId: r.chatterId, // numeric id only -> no duplicates
+            chatterId: r.chatterId,
             chatterLogin: r.login,
             amount: quest.reward,
           },
@@ -251,13 +244,17 @@ export async function POST(request: Request) {
     );
   }
 
-  // Update local JSON ledger for UI display
   const ledger = { ...state.ledger };
   for (const r of recipients) {
     ledger[r.login] = (ledger[r.login] ?? 0) + quest.reward;
   }
 
-  const updatedQuest: StreamQuest = { ...quest, completed: true, completedAt };
+  const updatedQuest: StreamQuest = { 
+    ...quest, 
+    completed: true, 
+    completedAt: new Date().toISOString() 
+  };
+  
   const updatedState: StreamQuestState = {
     ...state,
     quests: state.quests.map((entry) => (entry.id === quest.id ? updatedQuest : entry)),
@@ -285,6 +282,7 @@ async function ensureState(audience: AudienceSnapshot) {
     const hasAudienceChanged =
       JSON.stringify(audience) !== JSON.stringify(existing.lastAudience) ||
       existing.lastAudienceHour !== currentHour;
+    
     const upgradedToTwitch = audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
     const insufficientQuests = existing.quests.length < 6;
     const audienceRegenerated = audience.source === "twitch" && hasAudienceChanged;
@@ -304,12 +302,7 @@ async function ensureState(audience: AudienceSnapshot) {
     }
 
     const updated = { ...existing, lastAudience: audience, lastAudienceHour: currentHour };
-    const shouldPersist =
-      JSON.stringify(updated.lastAudience) !== JSON.stringify(existing.lastAudience) ||
-      updated.lastAudienceHour !== existing.lastAudienceHour;
-    if (shouldPersist) {
-      await saveState(updated);
-    }
+    await saveState(updated);
     return { state: updated, regenerated: false };
   }
 
@@ -324,7 +317,6 @@ async function ensureState(audience: AudienceSnapshot) {
   };
 
   await saveState(state);
-
   return { state, regenerated: true };
 }
 
@@ -332,9 +324,6 @@ async function loadState(): Promise<StreamQuestState | null> {
   try {
     const raw = await fs.readFile(DATA_PATH, "utf8");
     const parsed = JSON.parse(raw) as StreamQuestState;
-    if (!parsed.date || !Array.isArray(parsed.quests) || parsed.ledger === undefined) {
-      return null;
-    }
     return {
       ...parsed,
       lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
@@ -395,36 +384,27 @@ function shuffleWithSeed(values: string[], seed: number) {
 async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
   try {
     const raw = await fs.readFile(TEMPLATE_LIBRARY_PATH, "utf8");
-    const parsed = JSON.parse(raw) as QuestTemplateConfig[] | { templates?: QuestTemplateConfig[] };
+    const parsed = JSON.parse(raw) as any;
     const templates = Array.isArray(parsed) ? parsed : parsed.templates;
-    const sanitized = (templates ?? []).map(sanitizeTemplateConfig).filter(Boolean) as QuestTemplateConfig[];
-    if (sanitized.length >= 6) return sanitized;
-  } catch (error) {
-    console.warn("Stream quest: failed to load quest-library.json, using defaults.", error);
+    return (templates ?? []).map(sanitizeTemplateConfig).filter(Boolean) as QuestTemplateConfig[];
+  } catch {
+    return DEFAULT_TEMPLATE_LIBRARY;
   }
-  return DEFAULT_TEMPLATE_LIBRARY;
 }
 
 function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[]): StreamQuest[] {
-  if (library.length < 6) {
-    throw new Error("At least 6 quest templates are required to build a daily set.");
-  }
-  const shuffled = [...library].sort(() => Math.random() - 0.5);
-  const selected = shuffled.slice(0, 6);
+  const selected = [...library].sort(() => Math.random() - 0.5).slice(0, 6);
 
   return selected.map((template) => {
     const variables = resolveVariables(template.variables ?? [], audience);
     const prompt = renderPrompt(template.prompt, variables);
-    const reward = template.reward ?? 500;
-
     return {
       id: `${template.id}-${crypto.randomUUID()}`,
       title: template.title,
       prompt,
-      reward,
+      reward: template.reward ?? 500,
       category: template.category,
       completed: false,
-      completedAt: undefined,
     };
   });
 }
@@ -443,13 +423,12 @@ function regenerateQuestsPreservingCompletions(
 function renderPrompt(prompt: string, values: Record<string, string | number>) {
   const withPlural = prompt.replace(/\{\{plural:([^:}]+):([^}]+)\}\}/g, (match, key, suffix) => {
     const value = values[key];
-    if (typeof value === "number" && value === 1) return "";
-    return typeof value !== "undefined" ? suffix : match;
+    return (typeof value === "number" && value === 1) ? "" : suffix;
   });
 
   return withPlural.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
     const value = values[key];
-    return typeof value !== "undefined" ? String(value) : match;
+    return value !== undefined ? String(value) : match;
   });
 }
 
@@ -458,15 +437,10 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
 
   variables.forEach((variable) => {
     if (variable.type === "range") {
-      const min = Number.isFinite(variable.min) ? variable.min : 1;
-      const max = Number.isFinite(variable.max) ? variable.max : min;
-      values[variable.key] = randomBetween(min, max);
+      values[variable.key] = randomBetween(variable.min, variable.max);
     }
     if (variable.type === "chatter") {
-      const fallbackNames =
-        audience.source === "twitch"
-          ? ([audience.displayName].filter(Boolean) as string[])
-          : FALLBACK_CHATTERS;
+      const fallbackNames = audience.source === "twitch" ? [audience.displayName!] : FALLBACK_CHATTERS;
       values[variable.key] = pickChatter(audience.names, fallbackNames);
     }
   });
@@ -476,62 +450,27 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
 
 function sanitizeTemplateConfig(config: QuestTemplateConfig) {
   if (!config?.id || !config.title || !config.prompt) return null;
-  if (!["prime", "ban", "timeout", "stream-time", "insult", "wordle", "bandle"].includes(config.category)) {
-    return null;
-  }
-  return {
-    ...config,
-    variables: (config.variables ?? []).filter((variable) => {
-      if (variable.type === "chatter") return !!variable.key;
-      if (variable.type === "range") {
-        return !!variable.key && Number.isFinite(variable.min) && Number.isFinite(variable.max);
-      }
-      return false;
-    }),
-  };
+  return config;
 }
 
-// IMPORTANT: audience is derived from chattergrounds DB (not /api/twitch/chatters)
 async function loadAudience(): Promise<AudienceSnapshot> {
-  let session: Awaited<ReturnType<typeof getValidSession>> = null;
+  let session = await getValidSession();
   try {
-    session = await getValidSession();
     if (!session) {
-      return {
-        names: FALLBACK_CHATTERS,
-        source: "unauthenticated",
-        note: "Link Twitch to use chattergrounds roster. Using placeholders for now.",
-      };
+      return { names: FALLBACK_CHATTERS, source: "unauthenticated" };
     }
 
     const recips = await loadRecipientsFromChattergrounds(session.userId);
-    const names = shuffleWithSeed(
-      recips.map((r) => r.login),
-      seedFromCurrentHour()
-    );
+    const names = shuffleWithSeed(recips.map((r) => r.login), seedFromCurrentHour());
 
     return {
       names,
       source: "twitch",
       displayName: session.displayName,
       live: true,
-      note: names.length === 0 ? "No chattergrounds users yet (nobody has been recorded yet)." : undefined,
+      note: names.length === 0 ? "No chattergrounds users recorded yet." : undefined,
     };
   } catch (error) {
-    console.error("Stream quest: failed to load chattergrounds roster", error);
-    if (session) {
-      return {
-        names: [],
-        source: "error",
-        displayName: session.displayName,
-        live: false,
-        note: "DB error while loading chattergrounds roster.",
-      };
-    }
-    return {
-      names: FALLBACK_CHATTERS,
-      source: "fallback",
-      note: "Using fallback names due to error.",
-    };
+    return { names: FALLBACK_CHATTERS, source: "error" };
   }
 }
