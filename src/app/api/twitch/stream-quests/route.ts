@@ -150,7 +150,7 @@ export async function POST(request: Request) {
 
   const session = await getValidSession();
   if (!session) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
   const audience = await loadAudience();
@@ -166,43 +166,38 @@ export async function POST(request: Request) {
   }
 
   const completedAt = new Date().toISOString();
-  const questReward = quest.reward;
 
-  // 1. COLLECT RECIPIENTS: Use the list from the audience snapshot
-  const recipients = audience.names.filter(Boolean).map(n => n.toLowerCase());
+  /**
+   * FIX: Only reward the Broadcaster (the person logged in) 
+   * instead of the entire audience.names list.
+   */
+  const recipientName = session.displayName.toLowerCase(); 
+  const recipientId = session.userId; // Use the actual Twitch ID from session
 
-  // 2. MASS UPDATE: Parallel calls to sync rewards to database via applyChattergroundsAction
-  await Promise.all(
-    recipients.map(async (chatterName) => {
-      // Increment completion count
-      await applyChattergroundsAction(
-        {
-          action: "quest-completed",
-          chatterId: chatterName, // Using name as ID per current schema
-          chatterLogin: chatterName,
-          amount: 1,
-        },
-        { sessionUserId: session.userId }
-      );
-
-      // Mint the Toadcoins reward
-      await applyChattergroundsAction(
-        {
-          action: "mint",
-          chatterId: chatterName,
-          chatterLogin: chatterName,
-          amount: questReward,
-        },
-        { sessionUserId: session.userId }
-      );
-    })
+  // --- Sync with Chattergrounds Database for the BROADCASTER ONLY ---
+  await applyChattergroundsAction(
+    {
+      action: "quest-completed",
+      chatterId: recipientId,    // REAL ID (prevents duplicates)
+      chatterLogin: recipientName,
+      amount: 1,
+    },
+    { sessionUserId: session.userId }
   );
 
-  // 3. UPDATE LOCAL LEDGER: Increment existing values instead of replacing
+  await applyChattergroundsAction(
+    {
+      action: "mint",
+      chatterId: recipientId,
+      chatterLogin: recipientName,
+      amount: quest.reward,
+    },
+    { sessionUserId: session.userId }
+  );
+
+  // Update the local JSON ledger for display
   const ledger = { ...state.ledger };
-  recipients.forEach((name) => {
-    ledger[name] = (ledger[name] ?? 0) + questReward;
-  });
+  ledger[recipientName] = (ledger[recipientName] ?? 0) + quest.reward;
 
   const updatedQuest: StreamQuest = { ...quest, completed: true, completedAt };
   const updatedState: StreamQuestState = {
@@ -216,8 +211,8 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     quest: updatedQuest,
-    recipients: recipients,
-    totalRewarded: questReward,
+    recipients: [recipientName],
+    totalRewarded: updatedQuest.reward,
     ...serializeState(updatedState),
   });
 }
