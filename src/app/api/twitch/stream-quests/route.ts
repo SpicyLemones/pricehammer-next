@@ -166,29 +166,25 @@ export async function POST(request: Request) {
 
   const completedAt = new Date().toISOString();
   const questReward = quest.reward;
-  
-  // 1. COLLECT RECIPIENTS: We want everyone in the current audience snapshot
-  // Filter out any empty names just in case
   const recipients = audience.names.filter(Boolean);
 
-  // 2. MASS UPDATE: Loop through all chatters and apply the quest reward
-  // We use Promise.all to fire these off in parallel
+  // 1. DISTRIBUTE REWARDS
+  // Every active chatter gets the coins + XP (base rate * 0.85)
   await Promise.all(
     recipients.map((chatterName) =>
       applyChattergroundsAction(
         {
           action: "quest-completed",
-          chatterId: chatterName,     // Using the name as the ID per your schema
+          chatterId: chatterName,
           chatterLogin: chatterName,
-          amount: questReward,        // 500 coins and (500 * 0.85) XP
+          amount: questReward,
         },
         { sessionUserId: session.userId }
       )
     )
   );
 
-  // 3. Update the local JSON ledger for display in the Quest UI
-  // We add the reward to every recipient in the display ledger
+  // 2. UPDATE LOCAL LEDGER
   const ledger = { ...state.ledger };
   recipients.forEach((name) => {
     ledger[name] = (ledger[name] ?? 0) + questReward;
@@ -219,15 +215,10 @@ async function ensureState(audience: AudienceSnapshot) {
   const currentHour = seedFromCurrentHour();
 
   if (existing && existing.date === today) {
-    const hasAudienceChanged =
-      JSON.stringify(audience) !== JSON.stringify(existing.lastAudience) ||
-      existing.lastAudienceHour !== currentHour;
-    const upgradedToTwitch = audience.source === "twitch" && existing.lastAudience?.source !== "twitch";
+    // Only regenerate if we actually have a broken quest list (less than 6)
     const insufficientQuests = existing.quests.length < 6;
-    const audienceRegenerated = audience.source === "twitch" && hasAudienceChanged;
-    const shouldRegenerate = upgradedToTwitch || insufficientQuests || audienceRegenerated;
 
-    if (shouldRegenerate) {
+    if (insufficientQuests) {
       const quests = regenerateQuestsPreservingCompletions(existing.quests, audience, questTemplates);
       const regeneratedState: StreamQuestState = {
         ...existing,
@@ -240,16 +231,22 @@ async function ensureState(audience: AudienceSnapshot) {
       return { state: regeneratedState, regenerated: true };
     }
 
-    const updated = { ...existing, lastAudience: audience, lastAudienceHour: currentHour };
-    const shouldPersist =
-      JSON.stringify(updated.lastAudience) !== JSON.stringify(existing.lastAudience) ||
-      updated.lastAudienceHour !== existing.lastAudienceHour;
-    if (shouldPersist) {
+    // UPDATED: Simply update the metadata without triggering a quest shuffle
+    const updated = { 
+      ...existing, 
+      lastAudience: audience, 
+      lastAudienceHour: currentHour 
+    };
+    
+    // Save only if the metadata changed, keeping quest progress intact
+    if (JSON.stringify(existing.lastAudience) !== JSON.stringify(audience)) {
       await saveState(updated);
     }
+    
     return { state: updated, regenerated: false };
   }
 
+  // Brand new day or no state: generate fresh
   const quests = buildQuests(audience, questTemplates);
   const state: StreamQuestState = {
     date: today,
@@ -261,7 +258,6 @@ async function ensureState(audience: AudienceSnapshot) {
   };
 
   await saveState(state);
-
   return { state, regenerated: true };
 }
 

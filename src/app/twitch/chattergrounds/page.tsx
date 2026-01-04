@@ -244,7 +244,7 @@ export default function ChattergroundsPage() {
       className="fixed left-6 top-6 z-50 flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/80 px-5 py-2 text-xs font-bold text-slate-200 backdrop-blur-md hover:border-emerald-500/50 hover:text-emerald-400 transition-all shadow-lg active:scale-95"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      BACK TO TOYBOX
+      BACK TO SPYCY.FUN/TWITCH
     </Link>
 
     <div className="relative z-10 p-6 lg:p-10">
