@@ -245,7 +245,21 @@ export function StreamQuestClient() {
     }
 
     // Success: Update the local state so they don't reshuffle
-    setData(json); 
+    setData(prev => {
+      if (!prev) return json; // Fallback if prev is null
+      
+      return {
+        ...prev,
+        // Keep the existing quest list order, but flip the "completed" bit 
+        // for the one we just finished.
+        quests: prev.quests.map(q => 
+          q.id === id ? { ...q, completed: true } : q
+        ),
+        // Update the ledger with the new coin count from the server
+        ledger: json.ledger 
+      };
+    });
+
     setCelebratingId(id);
     void playQuestCompletionAudio();
     triggerToast("Quest Claimed!");
@@ -274,14 +288,21 @@ export function StreamQuestClient() {
     );
   }
 
-  if (error === "OFFLINE") {
+if (error === "OFFLINE") {
     return (
-      <div className="flex flex-col items-center justify-center rounded-[32px] border border-amber-900/40 bg-[#1a0f0a]/90 p-12 text-center shadow-2xl">
+      <div className="flex flex-col items-center justify-center rounded-[32px] border border-amber-900/40 bg-[#1a0f0a]/90 p-12 text-center shadow-2xl animate-in fade-in zoom-in-95 duration-500">
         <Lock className="mb-4 h-12 w-12 text-amber-600 animate-pulse" />
         <h2 className="text-2xl font-bold tracking-widest text-amber-100 uppercase">The Tavern is Closed</h2>
         <p className="mt-2 text-amber-50/60 text-balance max-w-md">
-          Quests are only available while your stream is live. Go live on Twitch to unlock today's rewards!
+          Quests are only available while your stream is live.
         </p>
+        <button 
+          onClick={() => loadData()}
+          className="mt-6 flex items-center gap-2 rounded-full bg-amber-600/20 px-4 py-2 text-xs font-bold uppercase tracking-widest text-amber-400 border border-amber-600/30 hover:bg-amber-600/40 transition-all"
+        >
+          <Loader2 className={clsx("h-3 w-3", loading && "animate-spin")} />
+          Check Stream Status
+        </button>
       </div>
     );
   }
