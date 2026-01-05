@@ -30,7 +30,7 @@ const DEFAULT_GRADIENTS = [
   "from-sky-300 to-purple-400",
 ];
 
-function getOverlaySecret(): string {
+export function getOverlaySecret(): string {
   const secret = process.env.TWITCH_OVERLAY_SECRET ?? process.env.TWITCH_STATE_SECRET;
   if (!secret) {
     throw new Error("TWITCH_OVERLAY_SECRET or TWITCH_STATE_SECRET must be configured for overlay auth");
@@ -78,6 +78,23 @@ export function verifyOverlayToken(token: string | null | undefined, streamerId:
   }
 
   return { ok: true as const, expiresAt: payload.exp };
+}
+
+export function verifyOverlaySecret(secret: string | null | undefined, streamerId: string) {
+  if (!secret) return { ok: false as const, reason: "missing_secret" };
+  if (secret !== getOverlaySecret()) return { ok: false as const, reason: "invalid_secret" };
+
+  // Treat a matching secret as short-lived access for the given streamer.
+  const expiresAt = Date.now() + 15 * 60_000;
+  const payload = JSON.stringify({ streamerId, exp: expiresAt });
+  const signature = crypto.createHmac("sha256", getOverlaySecret()).update(payload).digest("hex");
+  const encodedPayload = Buffer.from(payload).toString("base64url");
+
+  return {
+    ok: true as const,
+    expiresAt,
+    token: `${encodedPayload}.${signature}`,
+  };
 }
 
 export function subscribeToOverlay(streamerId: string, listener: Listener) {

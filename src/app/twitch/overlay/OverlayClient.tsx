@@ -106,9 +106,17 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
 
   useEffect(() => {
     const baseUrl = window.location.origin;
-    const token = new URLSearchParams(window.location.search).get("token");
+    const searchParams = new URLSearchParams(window.location.search);
+    const token = searchParams.get("token");
+    const secret = searchParams.get("secret");
+    if (!token && !secret) {
+      setConnectionState("error");
+      setLastError("Missing overlay token or secret in URL.");
+      return;
+    }
     const url = new URL(`/api/twitch/overlay/events/${encodeURIComponent(streamerId)}`, baseUrl);
     if (token) url.searchParams.set("token", token);
+    if (secret) url.searchParams.set("secret", secret);
 
     let cancelled = false;
 

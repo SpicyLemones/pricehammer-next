@@ -7,6 +7,7 @@ import {
   publishOverlayLevelUp,
   subscribeToOverlay,
   verifyOverlayToken,
+  verifyOverlaySecret,
 } from "./channel";
 
 export const dynamic = "force-dynamic";
@@ -40,12 +41,27 @@ function parseToken(request: NextRequest) {
   return token?.trim() || null;
 }
 
+function parseSecret(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const secret = searchParams.get("secret") || request.headers.get("x-overlay-secret") || null;
+  return secret?.trim() || null;
+}
+
 export async function GET(request: NextRequest) {
   const streamerId = parseStreamerId(request);
   if (!streamerId) return jsonError("missing_streamerId", 400);
 
   const token = parseToken(request);
-  const auth = verifyOverlayToken(token, streamerId);
+  const secret = parseSecret(request);
+
+  let auth = verifyOverlayToken(token, streamerId);
+  if (!auth.ok && secret) {
+    const secretResult = verifyOverlaySecret(secret, streamerId);
+    if (secretResult.ok) {
+      auth = { ok: true, expiresAt: secretResult.expiresAt } as const;
+    }
+  }
+
   if (!auth.ok) return jsonError(`unauthorized:${auth.reason}`, 401);
 
   const { readable, writable } = new TransformStream();
