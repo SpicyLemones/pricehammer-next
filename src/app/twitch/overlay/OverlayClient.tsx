@@ -1,17 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUp, PartyPopper, Sparkles } from "lucide-react";
 
-type RosterEntry = {
+type OverlayTarget = {
   id: string;
   name: string;
   level: number;
   color: string;
   flair: string;
-};
-
-type OverlayTarget = RosterEntry & {
   xpToNext: number;
 };
 
@@ -23,7 +20,7 @@ type Toast = {
   color: string;
 };
 
-const COOLDOWN_MS = 60_000;
+const OVERLAY_COOLDOWN_MS = 60_000;
 
 function createToast(target: OverlayTarget): Toast {
   return {
@@ -35,29 +32,25 @@ function createToast(target: OverlayTarget): Toast {
   };
 }
 
-export function OverlayClient() {
-  const roster = useMemo<RosterEntry[]>(
-    () => [
-      { id: "nessie", name: "Nessie", level: 14, color: "from-fuchsia-400 to-sky-400", flair: "Arcane Diver" },
-      { id: "aster", name: "Aster", level: 22, color: "from-amber-300 to-rose-400", flair: "Star Map Keeper" },
-      { id: "quinn", name: "Quinn", level: 9, color: "from-emerald-300 to-cyan-400", flair: "Wetlands Tank" },
-      { id: "ivy", name: "Ivy", level: 31, color: "from-indigo-300 to-purple-500", flair: "Storm Archivist" },
-      { id: "morrow", name: "Morrow", level: 17, color: "from-teal-300 to-lime-300", flair: "Toadcoin Magnate" },
-    ],
-    [],
-  );
+type ConnectionState = "connecting" | "open" | "closed" | "error";
 
-  const [queue, setQueue] = useState<OverlayTarget[]>(() =>
-    roster.slice(0, 2).map((entry, index) => ({
-      ...entry,
-      xpToNext: 44 - index * 7,
-    })),
-  );
+export function OverlayClient({ streamerId }: { streamerId: string }) {
+  const [queue, setQueue] = useState<OverlayTarget[]>([]);
   const [active, setActive] = useState<OverlayTarget | null>(null);
   const [xpFill, setXpFill] = useState(0.7);
   const [celebration, setCelebration] = useState<OverlayTarget | null>(null);
-  const [cooldowns, setCooldowns] = useState<Record<string, number>>({});
+  const [, setCooldowns] = useState<Record<string, number>>({});
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const [connectionState, setConnectionState] = useState<ConnectionState>("connecting");
+  const [lastError, setLastError] = useState<string | null>(null);
+  const reconnectAttempts = useRef(0);
+  const eventSourceRef = useRef<EventSource | null>(null);
+  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const activeRef = useRef<OverlayTarget | null>(null);
+
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -95,7 +88,7 @@ export function OverlayClient() {
     const celebrationTimer = window.setTimeout(() => {
       setCelebration(active);
       setToasts((prev) => [...prev, createToast(active)]);
-      setCooldowns((prev) => ({ ...prev, [active.id]: Date.now() + COOLDOWN_MS }));
+      setCooldowns((prev) => ({ ...prev, [active.id]: Date.now() + OVERLAY_COOLDOWN_MS }));
     }, 5200);
 
     const cleanupTimer = window.setTimeout(() => {
@@ -112,19 +105,82 @@ export function OverlayClient() {
   }, [active]);
 
   useEffect(() => {
-    const interval = window.setInterval(() => {
-      const candidate = roster[Math.floor(Math.random() * roster.length)];
-      const now = Date.now();
-      if ((cooldowns[candidate.id] ?? 0) > now) return;
-      if (active?.id === candidate.id) return;
-      if (queue.some((item) => item.id === candidate.id)) return;
+    const baseUrl = window.location.origin;
+    const searchParams = new URLSearchParams(window.location.search);
+    const token = searchParams.get("token");
+    const secret = searchParams.get("secret");
+    if (!token && !secret) {
+      setConnectionState("error");
+      setLastError("Missing overlay token or secret in URL.");
+      return;
+    }
+    const url = new URL(`/api/twitch/overlay/events/${encodeURIComponent(streamerId)}`, baseUrl);
+    if (token) url.searchParams.set("token", token);
+    if (secret) url.searchParams.set("secret", secret);
 
-      const xpToNext = 12 + Math.floor(Math.random() * 40);
-      setQueue((prev) => [...prev, { ...candidate, xpToNext }]);
-    }, 12_500);
+    let cancelled = false;
 
-    return () => window.clearInterval(interval);
-  }, [active?.id, cooldowns, queue, roster]);
+    const connect = () => {
+      if (cancelled) return;
+
+      const source = new EventSource(url.toString());
+      eventSourceRef.current = source;
+      setConnectionState("connecting");
+      setLastError(null);
+
+      source.onopen = () => {
+        reconnectAttempts.current = 0;
+        setConnectionState("open");
+        setLastError(null);
+      };
+
+      source.onerror = (event) => {
+        console.error("overlay sse error", event);
+        setConnectionState("error");
+        setLastError("Connection lost, retrying…");
+        source.close();
+
+        if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current);
+        const attempt = reconnectAttempts.current + 1;
+        reconnectAttempts.current = attempt;
+        const backoff = Math.min(15_000, 1000 * 2 ** Math.min(4, attempt));
+        reconnectTimerRef.current = setTimeout(connect, backoff);
+      };
+
+      source.onmessage = (event) => {
+        try {
+          const parsed = JSON.parse(event.data ?? "{}");
+          if (parsed?.type === "level-up" && parsed.payload) {
+            const payload: OverlayTarget = parsed.payload;
+            const now = Date.now();
+
+            setCooldowns((prev) => {
+              if ((prev[payload.id] ?? 0) > now) return prev;
+
+              setQueue((queuePrev) => {
+                if (queuePrev.some((item) => item.id === payload.id)) return queuePrev;
+                if (activeRef.current?.id === payload.id) return queuePrev;
+                return [...queuePrev, payload];
+              });
+
+              return { ...prev, [payload.id]: now + OVERLAY_COOLDOWN_MS };
+            });
+          }
+        } catch (error) {
+          console.error("Failed to parse overlay event", error);
+        }
+      };
+    };
+
+    connect();
+
+    return () => {
+      cancelled = true;
+      eventSourceRef.current?.close();
+      eventSourceRef.current = null;
+      if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current);
+    };
+  }, [streamerId]);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -150,7 +206,7 @@ export function OverlayClient() {
       <div className="pointer-events-none fixed left-6 top-6 z-30 flex flex-col gap-3">
         <div className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-100 shadow-lg backdrop-blur">
           <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-300" />
-          Overlay Live
+          Overlay {connectionState === "open" ? "Live" : connectionState === "connecting" ? "Connecting" : "Offline"}
           <span className="rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold uppercase text-amber-100 shadow-inner shadow-amber-500/20 backdrop-blur-sm">
             twitch/overlay
           </span>
@@ -159,7 +215,7 @@ export function OverlayClient() {
         <div className="pointer-events-auto w-80 rounded-2xl border border-white/10 bg-white/5 p-3 text-sm shadow-lg backdrop-blur">
           <p className="text-xs uppercase tracking-[0.16em] text-slate-200/80">Incoming queue</p>
           <div className="mt-2 flex flex-wrap gap-2">
-            {(queue.length === 0 ? roster.slice(0, 3) : queue).map((entry) => (
+            {queue.map((entry) => (
               <span
                 key={entry.id}
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white/90 shadow-inner"
@@ -171,8 +227,13 @@ export function OverlayClient() {
             ))}
           </div>
           <p className="mt-2 text-[11px] leading-relaxed text-slate-100/70">
-            Only one runner is spotlighted at a time. Cooldown {Math.round(COOLDOWN_MS / 1000)}s before repeat.
+            Only one runner is spotlighted at a time. Cooldown {Math.round(OVERLAY_COOLDOWN_MS / 1000)}s before repeat.
           </p>
+          {lastError && (
+            <p className="mt-2 rounded-lg border border-amber-300/30 bg-amber-100/10 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-100">
+              {lastError}
+            </p>
+          )}
         </div>
       </div>
 
