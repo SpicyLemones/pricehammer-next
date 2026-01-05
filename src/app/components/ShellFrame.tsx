@@ -9,6 +9,15 @@ export function ShellFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() || "/";
   const isHub = pathname === "/";
   const isPriceLookup = pathname.startsWith("/price-lookup");
+  const isTwitchOverlay = pathname.startsWith("/twitch/overlay");
+
+  if (isTwitchOverlay) {
+    return (
+      <div className="relative min-h-dvh w-full overflow-hidden bg-transparent text-white">
+        {children}
+      </div>
+    );
+  }
 
   if (isHub) {
     return (
