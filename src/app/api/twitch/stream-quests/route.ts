@@ -64,7 +64,7 @@ type QuestTemplateConfig = {
   variables?: QuestVariable[];
 };
 
-const DATA_PATH = path.join(process.cwd(), "data", "stream-quests.json");
+const STREAM_QUESTS_DIR = path.join(process.cwd(), "data", "stream-quests");
 const TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "quest-library.json");
 
 const FALLBACK_CHATTERS = [
@@ -240,7 +240,7 @@ export async function GET() {
     );
   }
 
-  const { state, regenerated } = await ensureState(audience);
+  const { state, regenerated } = await ensureState(audience, session.userId);
 
   return jsonNoStore({
     regenerated,
@@ -268,7 +268,7 @@ export async function POST(request: Request) {
     return jsonNoStore({ error: "offline", message: "The Tavern is closed." }, { status: 403 });
   }
 
-  const { state } = await ensureState(audience);
+  const { state } = await ensureState(audience, session.userId);
 
   const action = body?.action ?? (body?.id ? "claim" : undefined);
 
@@ -289,7 +289,7 @@ export async function POST(request: Request) {
       lastAudienceHour: seedFromCurrentHour(),
     };
 
-    await saveState(rerolledState);
+    await saveState(session.userId, rerolledState);
     return jsonNoStore({
       regenerated: true,
       ...serializeState(rerolledState),
@@ -362,7 +362,7 @@ export async function POST(request: Request) {
     lastAudienceHour: seedFromCurrentHour(),
   };
 
-  await saveState(updatedState);
+  await saveState(session.userId, updatedState);
 
   return jsonNoStore({
     quest: updatedQuest,
@@ -372,9 +372,9 @@ export async function POST(request: Request) {
   });
 }
 
-async function ensureState(audience: AudienceSnapshot) {
+async function ensureState(audience: AudienceSnapshot, userId: string) {
   const today = currentDateKey();
-  const existing = await loadState();
+  const existing = await loadState(userId);
   const questTemplates = await loadQuestTemplates();
   const currentHour = seedFromCurrentHour();
 
@@ -395,7 +395,7 @@ async function ensureState(audience: AudienceSnapshot) {
         lastAudience: audience,
         lastAudienceHour: currentHour,
       };
-      await saveState(regeneratedState);
+      await saveState(userId, regeneratedState);
       return { state: regeneratedState, regenerated: true };
     }
 
@@ -404,7 +404,7 @@ async function ensureState(audience: AudienceSnapshot) {
       lastAudience: audience,
       lastAudienceHour: currentHour,
     };
-    await saveState(updated);
+    await saveState(userId, updated);
     return { state: updated, regenerated: false };
   }
 
@@ -418,13 +418,24 @@ async function ensureState(audience: AudienceSnapshot) {
     lastAudience: audience,
   };
 
-  await saveState(state);
+  await saveState(userId, state);
   return { state, regenerated: true };
 }
 
-async function loadState(): Promise<StreamQuestState | null> {
+function sanitizeUserId(userId: string) {
+  const safe = String(userId ?? "").trim();
+  if (!safe) throw new Error("Missing Twitch user id");
+  return safe.replace(/[^a-zA-Z0-9_-]/g, "_");
+}
+
+function getDataPath(userId: string) {
+  const safeId = sanitizeUserId(userId);
+  return path.join(STREAM_QUESTS_DIR, `${safeId}.json`);
+}
+
+async function loadState(userId: string): Promise<StreamQuestState | null> {
   try {
-    const raw = await fs.readFile(DATA_PATH, "utf8");
+    const raw = await fs.readFile(getDataPath(userId), "utf8");
     const parsed = JSON.parse(raw) as StreamQuestState;
     if (!parsed.date || !Array.isArray(parsed.quests) || parsed.ledger === undefined) {
       return null;
@@ -439,9 +450,10 @@ async function loadState(): Promise<StreamQuestState | null> {
   }
 }
 
-async function saveState(state: StreamQuestState) {
-  await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });
-  await fs.writeFile(DATA_PATH, JSON.stringify(state, null, 2), "utf8");
+async function saveState(userId: string, state: StreamQuestState) {
+  const dataPath = getDataPath(userId);
+  await fs.mkdir(path.dirname(dataPath), { recursive: true });
+  await fs.writeFile(dataPath, JSON.stringify(state, null, 2), "utf8");
 }
 
 function serializeState(state: StreamQuestState) {
