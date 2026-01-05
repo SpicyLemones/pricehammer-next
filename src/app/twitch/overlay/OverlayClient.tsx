@@ -20,6 +20,12 @@ type Toast = {
   color: string;
 };
 
+type InlineNotification = {
+  id: string;
+  message: string;
+  tone: "level" | "xp";
+};
+
 const OVERLAY_COOLDOWN_MS = 60_000;
 
 function createToast(target: OverlayTarget): Toast {
@@ -43,6 +49,7 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [connectionState, setConnectionState] = useState<ConnectionState>("connecting");
   const [lastError, setLastError] = useState<string | null>(null);
+  const [notifications, setNotifications] = useState<InlineNotification[]>([]);
   const reconnectAttempts = useRef(0);
   const eventSourceRef = useRef<EventSource | null>(null);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -154,6 +161,24 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
             const payload: OverlayTarget = parsed.payload;
             const now = Date.now();
 
+            setNotifications((prev) => [
+              ...prev,
+              {
+                id: `${payload.id}-${payload.level + 1}-${now}`,
+                message: `${payload.name} leveling to ${payload.level + 1}`,
+                tone: "level",
+              },
+              ...(payload.xpToNext <= 50
+                ? [
+                    {
+                      id: `${payload.id}-xp-${now}`,
+                      message: `${payload.name} is ${payload.xpToNext} XP away`,
+                      tone: "xp",
+                    },
+                  ]
+                : []),
+            ]);
+
             setCooldowns((prev) => {
               if ((prev[payload.id] ?? 0) > now) return prev;
 
@@ -238,6 +263,10 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
       </div>
 
       <ToastStack toasts={toasts} onDismiss={(id) => setToasts((prev) => prev.filter((toast) => toast.id !== id))} />
+      <InlineNotificationStack
+        notifications={notifications}
+        onDismiss={(id) => setNotifications((prev) => prev.filter((n) => n.id !== id))}
+      />
 
       {active && (
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-20 mb-6 flex items-end justify-center px-4">
@@ -369,6 +398,29 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
         .animate-overlay-pulse {
           animation: overlayPulse 4s ease-in-out infinite;
         }
+
+        @keyframes overlayNotice {
+          0% {
+            transform: translateY(-10px);
+            opacity: 0;
+          }
+          15% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+          85% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-8px);
+            opacity: 0;
+          }
+        }
+
+        .animate-overlay-notice {
+          animation: overlayNotice 1.8s ease-in-out forwards;
+        }
       `}</style>
     </div>
   );
@@ -433,6 +485,39 @@ function CelebrationBurst({ target }: { target: OverlayTarget }) {
           Cooldown armed
         </div>
       </div>
+    </div>
+  );
+}
+
+function InlineNotificationStack({
+  notifications,
+  onDismiss,
+}: {
+  notifications: InlineNotification[];
+  onDismiss: (id: string) => void;
+}) {
+  useEffect(() => {
+    const timers = notifications.map((notice) => window.setTimeout(() => onDismiss(notice.id), 1800));
+    return () => timers.forEach((id) => window.clearTimeout(id));
+  }, [notifications, onDismiss]);
+
+  return (
+    <div className="pointer-events-none fixed right-6 top-6 z-50 flex w-full max-w-xs flex-col gap-2">
+      {notifications.map((notice) => (
+        <div
+          key={notice.id}
+          className="animate-overlay-notice overflow-hidden rounded-xl border border-white/15 bg-black/70 px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-black/40 backdrop-blur"
+        >
+          <div className="flex items-center gap-2">
+            <span
+              className={`h-2 w-2 rounded-full ${
+                notice.tone === "xp" ? "bg-amber-300 animate-pulse" : "bg-emerald-300 animate-pulse"
+              }`}
+            />
+            <span className="truncate">{notice.message}</span>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
