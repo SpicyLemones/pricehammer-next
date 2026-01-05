@@ -570,22 +570,18 @@ export async function registerChattergroundsWebhook(broadcasterId: string, botUs
   }
 
   const desired = [
-    {
-      type: "channel.chat.message",
-      version: "1",
-      condition: { broadcaster_user_id: broadcasterId, user_id: effectiveBotUserId },
-    },
-    {
-      type: "channel.ban",
-      version: "1",
-      condition: { broadcaster_user_id: broadcasterId },
-    },
-    {
-      type: "channel.unban",
-      version: "1",
-      condition: { broadcaster_user_id: broadcasterId },
-    },
-  ] as const;
+  // existing
+  { type: "channel.chat.message", version: "1", condition: { broadcaster_user_id: broadcasterId, user_id: effectiveBotUserId } },
+  { type: "channel.ban", version: "1", condition: { broadcaster_user_id: broadcasterId } },
+  { type: "channel.unban", version: "1", condition: { broadcaster_user_id: broadcasterId } },
+
+  // NEW: subscription lifecycle
+  { type: "channel.subscribe", version: "1", condition: { broadcaster_user_id: broadcasterId } },
+  { type: "channel.subscription.message", version: "1", condition: { broadcaster_user_id: broadcasterId } },
+  { type: "channel.subscription.gift", version: "1", condition: { broadcaster_user_id: broadcasterId } },
+  { type: "channel.subscription.end", version: "1", condition: { broadcaster_user_id: broadcasterId } },
+] as const;
+
 
   // If you changed CHATTERGROUNDS_INGEST_SECRET recently, old subs will keep signing with the OLD secret
   // and your handler will reject -> Twitch revokes. This flag lets you wipe + recreate cleanly.
