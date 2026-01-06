@@ -1,535 +1,298 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ArrowUp, PartyPopper, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { Wifi, WifiOff } from "lucide-react";
+
+// --- Configuration ---
+const FOCUS_DURATION_MS = 15 * 60 * 1000; // 15 Minutes
+const TRANSITION_DELAY_MS = 15 * 1000; // 15 Seconds
+const MOCK_CHAT_INTERVAL_MS = 10000; // Just for demo purposes (removable)
 
 type OverlayTarget = {
   id: string;
   name: string;
   level: number;
+  xpCurrent: number; // Inferred from xpToNext for demo logic
+  xpMax: number;     // Inferred
   color: string;
   flair: string;
-  xpToNext: number;
 };
 
-type Toast = {
+type ChatMessage = {
   id: string;
-  name: string;
-  newLevel: number;
-  flair: string;
-  color: string;
+  text: string;
 };
-
-type InlineNotification = {
-  id: string;
-  message: string;
-  tone: "level" | "xp";
-};
-
-const OVERLAY_COOLDOWN_MS = 60_000;
-
-function createToast(target: OverlayTarget): Toast {
-  return {
-    id: `${target.id}-${Date.now()}`,
-    name: target.name,
-    flair: target.flair,
-    color: target.color,
-    newLevel: target.level + 1,
-  };
-}
 
 type ConnectionState = "connecting" | "open" | "closed" | "error";
 
 export function OverlayClient({ streamerId }: { streamerId: string }) {
-  const [queue, setQueue] = useState<OverlayTarget[]>([]);
-  const [active, setActive] = useState<OverlayTarget | null>(null);
-  const [xpFill, setXpFill] = useState(0.7);
-  const [celebration, setCelebration] = useState<OverlayTarget | null>(null);
-  const [, setCooldowns] = useState<Record<string, number>>({});
-  const [toasts, setToasts] = useState<Toast[]>([]);
+  // Store all known users from the session
+  const [userRegistry, setUserRegistry] = useState<Record<string, OverlayTarget>>({});
+  
+  // Who is currently being shown on the bar
+  const [focusId, setFocusId] = useState<string | null>(null);
+  
+  // Visual state
+  const [isVisible, setIsVisible] = useState(false);
+  const [isLevelingUp, setIsLevelingUp] = useState(false);
+  const [activeChat, setActiveChat] = useState<ChatMessage | null>(null);
+  
+  // Connection logic
   const [connectionState, setConnectionState] = useState<ConnectionState>("connecting");
-  const [lastError, setLastError] = useState<string | null>(null);
-  const [notifications, setNotifications] = useState<InlineNotification[]>([]);
-  const reconnectAttempts = useRef(0);
   const eventSourceRef = useRef<EventSource | null>(null);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const activeRef = useRef<OverlayTarget | null>(null);
 
-  useEffect(() => {
-    activeRef.current = active;
-  }, [active]);
-
-  useEffect(() => {
-    const html = document.documentElement;
-    const body = document.body;
-    const previousHtmlBg = html.style.backgroundColor;
-    const previousBodyBg = body.style.backgroundColor;
-    const previousBodyImage = body.style.backgroundImage;
-
-    html.style.backgroundColor = "transparent";
-    body.style.backgroundColor = "transparent";
-    body.style.backgroundImage = "none";
-
-    return () => {
-      html.style.backgroundColor = previousHtmlBg;
-      body.style.backgroundColor = previousBodyBg;
-      body.style.backgroundImage = previousBodyImage;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!active && queue.length > 0) {
-      const [next, ...rest] = queue;
-      setQueue(rest);
-      setActive(next);
-      const startingFill = Math.max(0.58, 1 - next.xpToNext / 140);
-      setXpFill(startingFill);
-    }
-  }, [active, queue]);
-
-  useEffect(() => {
-    if (!active) return;
-
-    const ramp = requestAnimationFrame(() => setXpFill(1));
-
-    const celebrationTimer = window.setTimeout(() => {
-      setCelebration(active);
-      setToasts((prev) => [...prev, createToast(active)]);
-      setCooldowns((prev) => ({ ...prev, [active.id]: Date.now() + OVERLAY_COOLDOWN_MS }));
-    }, 5200);
-
-    const cleanupTimer = window.setTimeout(() => {
-      setCelebration(null);
-      setActive(null);
-      setXpFill(0.7);
-    }, 9200);
-
-    return () => {
-      cancelAnimationFrame(ramp);
-      window.clearTimeout(celebrationTimer);
-      window.clearTimeout(cleanupTimer);
-    };
-  }, [active]);
-
+  // --- 1. Connection Logic (SSE) ---
   useEffect(() => {
     const baseUrl = window.location.origin;
     const searchParams = new URLSearchParams(window.location.search);
     const token = searchParams.get("token");
     const secret = searchParams.get("secret");
+
     if (!token && !secret) {
       setConnectionState("error");
-      setLastError("Missing overlay token or secret in URL.");
       return;
     }
+
     const url = new URL(`/api/twitch/overlay/events/${encodeURIComponent(streamerId)}`, baseUrl);
     if (token) url.searchParams.set("token", token);
     if (secret) url.searchParams.set("secret", secret);
 
-    let cancelled = false;
-
     const connect = () => {
-      if (cancelled) return;
-
       const source = new EventSource(url.toString());
       eventSourceRef.current = source;
       setConnectionState("connecting");
-      setLastError(null);
 
-      source.onopen = () => {
-        reconnectAttempts.current = 0;
-        setConnectionState("open");
-        setLastError(null);
-      };
+      source.onopen = () => setConnectionState("open");
 
-      source.onerror = (event) => {
-        console.error("overlay sse error", event);
+      source.onerror = () => {
         setConnectionState("error");
-        setLastError("Connection lost, retrying…");
         source.close();
-
-        if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current);
-        const attempt = reconnectAttempts.current + 1;
-        reconnectAttempts.current = attempt;
-        const backoff = Math.min(15_000, 1000 * 2 ** Math.min(4, attempt));
-        reconnectTimerRef.current = setTimeout(connect, backoff);
+        // Simple backoff retry
+        reconnectTimerRef.current = setTimeout(connect, 5000);
       };
 
       source.onmessage = (event) => {
         try {
           const parsed = JSON.parse(event.data ?? "{}");
+          
           if (parsed?.type === "level-up" && parsed.payload) {
-            const payload: OverlayTarget = parsed.payload;
-            const now = Date.now();
+            const payload = parsed.payload;
+            
+            // Normalize data to fit our WoW bar logic
+            // Assuming the payload gives us xpToNext. We approximate Max/Current for visual flair
+            // if your backend provides current/max, map them directly here.
+            const estimatedMax = 500 * (1 + payload.level * 0.1); 
+            const estimatedCurrent = Math.max(0, estimatedMax - payload.xpToNext);
 
-            setNotifications((prev) => [
-              ...prev,
-              {
-                id: `${payload.id}-${payload.level + 1}-${now}`,
-                message: `${payload.name} leveling to ${payload.level + 1}`,
-                tone: "level",
-              },
-              ...(payload.xpToNext <= 50
-                ? [
-                    {
-                      id: `${payload.id}-xp-${now}`,
-                      message: `${payload.name} is ${payload.xpToNext} XP away`,
-                      tone: "xp",
-                    },
-                  ]
-                : []),
-            ]);
+            const updatedUser: OverlayTarget = {
+              id: payload.id,
+              name: payload.name,
+              level: payload.level,
+              color: payload.color || "from-purple-600 to-indigo-600",
+              flair: payload.flair,
+              xpCurrent: Math.floor(estimatedCurrent),
+              xpMax: Math.floor(estimatedMax),
+            };
 
-            setCooldowns((prev) => {
-              if ((prev[payload.id] ?? 0) > now) return prev;
+            setUserRegistry((prev) => ({ ...prev, [payload.id]: updatedUser }));
 
-              setQueue((queuePrev) => {
-                if (queuePrev.some((item) => item.id === payload.id)) return queuePrev;
-                if (activeRef.current?.id === payload.id) return queuePrev;
-                return [...queuePrev, payload];
-              });
-
-              return { ...prev, [payload.id]: now + OVERLAY_COOLDOWN_MS };
-            });
+            // If this update is for the person currently focused, trigger a subtle effect
+            if (focusId === payload.id) {
+               setIsLevelingUp(true);
+               setTimeout(() => setIsLevelingUp(false), 2000); // 2s gold flash
+            }
           }
         } catch (error) {
-          console.error("Failed to parse overlay event", error);
+          console.error("Parse error", error);
         }
       };
     };
 
     connect();
 
+    // Background Cleanup
+    const html = document.documentElement;
+    const body = document.body;
+    html.style.backgroundColor = "transparent";
+    body.style.backgroundColor = "transparent";
+
     return () => {
-      cancelled = true;
       eventSourceRef.current?.close();
-      eventSourceRef.current = null;
       if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current);
     };
-  }, [streamerId]);
+  }, [streamerId, focusId]);
 
+
+  // --- 2. Focus Rotation Logic ---
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      const now = Date.now();
-      setCooldowns((prev) => {
-        const next = { ...prev };
-        Object.entries(next).forEach(([id, until]) => {
-          if (until < now) delete next[id];
+    // Get list of available user IDs
+    const userIds = Object.keys(userRegistry);
+    if (userIds.length === 0) return;
+
+    // If nobody is focused, start the cycle
+    if (!focusId) {
+      setFocusId(userIds[0]);
+      setIsVisible(true);
+      return;
+    }
+
+    // Timer to switch user
+    const interval = setInterval(() => {
+      // 1. Fade out
+      setIsVisible(false);
+
+      // 2. Wait, then switch
+      setTimeout(() => {
+        setFocusId((current) => {
+          const userIds = Object.keys(userRegistry);
+          const idx = userIds.indexOf(current || "");
+          const nextIdx = (idx + 1) % userIds.length;
+          return userIds[nextIdx];
         });
-        return next;
-      });
-    }, 5_000);
+        // 3. Fade in
+        setIsVisible(true);
+      }, TRANSITION_DELAY_MS);
 
-    return () => window.clearInterval(timer);
-  }, []);
+    }, FOCUS_DURATION_MS);
 
-  const remainingXp = active ? Math.max(0, Math.round(active.xpToNext * (1 - xpFill))) : 0;
+    return () => clearInterval(interval);
+  }, [userRegistry, focusId]);
 
-  return (
-    <div className="relative min-h-dvh w-full overflow-hidden font-ui text-white">
-      <Atmosphere />
 
-      <div className="pointer-events-none fixed left-6 top-6 z-30 flex flex-col gap-3">
-        <div className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-100 shadow-lg backdrop-blur">
-          <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-300" />
-          Overlay {connectionState === "open" ? "Live" : connectionState === "connecting" ? "Connecting" : "Offline"}
-          <span className="rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold uppercase text-amber-100 shadow-inner shadow-amber-500/20 backdrop-blur-sm">
-            twitch/overlay
-          </span>
-        </div>
-
-        <div className="pointer-events-auto w-80 rounded-2xl border border-white/10 bg-white/5 p-3 text-sm shadow-lg backdrop-blur">
-          <p className="text-xs uppercase tracking-[0.16em] text-slate-200/80">Incoming queue</p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {queue.map((entry) => (
-              <span
-                key={entry.id}
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white/90 shadow-inner"
-              >
-                <span className="h-2 w-2 rounded-full bg-white/70" />
-                {entry.name}
-                <span className="text-white/60">Lvl {entry.level}</span>
-              </span>
-            ))}
-          </div>
-          <p className="mt-2 text-[11px] leading-relaxed text-slate-100/70">
-            Only one runner is spotlighted at a time. Cooldown {Math.round(OVERLAY_COOLDOWN_MS / 1000)}s before repeat.
-          </p>
-          {lastError && (
-            <p className="mt-2 rounded-lg border border-amber-300/30 bg-amber-100/10 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-100">
-              {lastError}
-            </p>
-          )}
-        </div>
-      </div>
-
-      <ToastStack toasts={toasts} onDismiss={(id) => setToasts((prev) => prev.filter((toast) => toast.id !== id))} />
-      <InlineNotificationStack
-        notifications={notifications}
-        onDismiss={(id) => setNotifications((prev) => prev.filter((n) => n.id !== id))}
-      />
-
-      {active && (
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-20 mb-6 flex items-end justify-center px-4">
-          <div className="w-full max-w-5xl translate-y-6 animate-overlay-bar">
-            <div className="relative overflow-hidden rounded-3xl border border-white/12 bg-gradient-to-t from-black/70 via-black/40 to-white/5 p-4 shadow-[0_10px_120px_-40px_rgba(0,0,0,0.8)] backdrop-blur">
-              <div className="absolute inset-0 bg-gradient-to-r from-white/8 via-white/0 to-white/8 opacity-80" />
-              <div className="relative flex items-center gap-4">
-                <div
-                  aria-hidden
-                  className={`h-16 w-16 shrink-0 rounded-2xl border border-white/20 bg-gradient-to-br ${active.color} shadow-lg shadow-black/40`}
-                />
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-baseline gap-3">
-                    <p className="text-lg font-bold tracking-[0.08em] uppercase text-white drop-shadow">
-                      {active.name}
-                    </p>
-                    <span className="rounded-full border border-white/10 bg-white/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-white/80">
-                      {active.flair}
-                    </span>
-                    <span className="ml-auto flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase text-emerald-100">
-                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />
-                      Focus locked
-                    </span>
-                  </div>
-
-                  <div className="mt-3 flex items-center gap-3">
-                    <div className="relative h-6 flex-1 overflow-hidden rounded-full border border-white/15 bg-white/10 shadow-inner">
-                      <div
-                        className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-emerald-300 via-lime-200 to-amber-200 transition-[width] duration-[5s] ease-out"
-                        style={{ width: `${Math.min(1, xpFill) * 100}%` }}
-                      />
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(255,255,255,0.25),transparent_35%)] opacity-70 mix-blend-screen" />
-                    </div>
-                    <div className="flex flex-col items-end">
-                      <p className="text-xs uppercase tracking-[0.14em] text-white/70">xp to next</p>
-                      <p className="text-sm font-semibold text-white">{remainingXp} xp</p>
-                    </div>
-                  </div>
-
-                  <p className="mt-2 text-[13px] uppercase tracking-[0.18em] text-white/60">
-                    Charging level {active.level + 1} — stay put until it pops.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {celebration && (
-        <div className="pointer-events-none fixed inset-0 z-10 flex items-center justify-center">
-          <CelebrationBurst target={celebration} />
-        </div>
-      )}
-
-      <div className="pointer-events-auto fixed right-6 bottom-6 z-30 max-w-sm rounded-2xl border border-white/10 bg-black/60 p-4 text-sm text-slate-100 shadow-xl backdrop-blur">
-        <p className="text-xs uppercase tracking-[0.2em] text-white/70">What&apos;s planned next</p>
-        <ul className="mt-2 space-y-1 text-sm leading-relaxed text-slate-50/90">
-          <li>Toadcoin spends to drop images or trigger effects.</li>
-          <li>Queue controls from chat + broadcaster dashboard.</li>
-          <li>Websocket feed for real live leveling data.</li>
-        </ul>
-        <div className="mt-3 flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-100">
-          <Sparkles size={14} /> Open ended on purpose — just drop it into OBS.
-        </div>
-      </div>
-
-      <style jsx global>{`
-        @keyframes overlayToast {
-          0% {
-            transform: translateY(-14px) scale(0.94);
-            opacity: 0;
-            filter: blur(2px);
-          }
-          12% {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-            filter: blur(0);
-          }
-          82% {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-12px) scale(0.98);
-            opacity: 0;
-            filter: blur(3px);
-          }
-        }
-
-        @keyframes overlayBar {
-          0% {
-            transform: translateY(22px);
-            opacity: 0;
-          }
-          35% {
-            transform: translateY(0);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(0);
-            opacity: 1;
-          }
-        }
-
-        @keyframes overlayPulse {
-          0% {
-            transform: scale(0.8);
-            opacity: 0.2;
-          }
-          50% {
-            transform: scale(1.02);
-            opacity: 0.6;
-          }
-          100% {
-            transform: scale(0.85);
-            opacity: 0.2;
-          }
-        }
-
-        .animate-overlay-toast {
-          animation: overlayToast 5.4s ease-in-out forwards;
-        }
-
-        .animate-overlay-bar {
-          animation: overlayBar 0.9s ease-out forwards;
-        }
-
-        .animate-overlay-pulse {
-          animation: overlayPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes overlayNotice {
-          0% {
-            transform: translateY(-10px);
-            opacity: 0;
-          }
-          15% {
-            transform: translateY(0);
-            opacity: 1;
-          }
-          85% {
-            transform: translateY(0);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-8px);
-            opacity: 0;
-          }
-        }
-
-        .animate-overlay-notice {
-          animation: overlayNotice 1.8s ease-in-out forwards;
-        }
-      `}</style>
-    </div>
-  );
-}
-
-function ToastStack({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id: string) => void }) {
+  // --- 3. Mock Chat Simulation (For Demo Only) ---
+  // In reality, you would expose a function here like `handleChat(userId, msg)` 
+  // and call it from your chat listener.
   useEffect(() => {
-    const timers = toasts.map((toast) => window.setTimeout(() => onDismiss(toast.id), 5200));
-    return () => timers.forEach((id) => window.clearTimeout(id));
-  }, [onDismiss, toasts]);
+    if (!focusId || !isVisible) return;
+    
+    const messages = [
+      "poggers", "can we get a hype train?", "lvl up soon!", 
+      "this looks like wow classic", "kekw", "monkaS", "LFG"
+    ];
+
+    const timer = setInterval(() => {
+       if (Math.random() > 0.5) {
+         setActiveChat({
+           id: Date.now().toString(),
+           text: messages[Math.floor(Math.random() * messages.length)]
+         });
+         // Hide bubble after 4s
+         setTimeout(() => setActiveChat(null), 4000);
+       }
+    }, MOCK_CHAT_INTERVAL_MS);
+
+    return () => clearInterval(timer);
+  }, [focusId, isVisible]);
+
+
+  // --- Render Helpers ---
+  const activeUser = focusId ? userRegistry[focusId] : null;
 
   return (
-    <div className="pointer-events-none fixed right-6 top-6 z-40 flex w-full max-w-xs flex-col gap-3">
-      {toasts.map((toast) => (
-        <div
-          key={toast.id}
-          className={`animate-overlay-toast overflow-hidden rounded-2xl border border-white/12 bg-gradient-to-br ${toast.color} p-[1px] shadow-lg shadow-black/50`}
-        >
-          <div className="relative rounded-[1rem] bg-black/70 p-4 backdrop-blur">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.2),transparent_35%)] opacity-70" />
-            <div className="relative flex items-start gap-3">
-              <div className="mt-0.5 rounded-full bg-black/40 p-2 text-amber-200 shadow-inner shadow-amber-400/30">
-                <PartyPopper size={18} />
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold uppercase tracking-[0.1em] text-white">
-                  {toast.name} reached level {toast.newLevel}
-                </p>
-                <p className="text-xs uppercase tracking-[0.18em] text-white/70">{toast.flair}</p>
-              </div>
-            </div>
-          </div>
+    <div className="relative min-h-screen w-full overflow-hidden font-sans">
+      
+      {/* Top Left Status */}
+      <div className="fixed left-4 top-4 z-50 flex items-center gap-2">
+        <div className={`flex items-center gap-2 rounded bg-black/60 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-colors ${
+          connectionState === "open" ? "border-l-4 border-emerald-500" : "border-l-4 border-red-500"
+        }`}>
+          {connectionState === "open" ? <Wifi size={14} /> : <WifiOff size={14} />}
+          {connectionState === "open" ? "Live" : "Offline"}
         </div>
-      ))}
-    </div>
-  );
-}
-
-function CelebrationBurst({ target }: { target: OverlayTarget }) {
-  return (
-    <div className="relative flex flex-col items-center justify-center gap-4">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.16),transparent_45%)] blur-3xl" />
-      <div className={`animate-overlay-pulse absolute h-56 w-56 rounded-full bg-gradient-to-br ${target.color} blur-3xl`} />
-
-      <div className="relative flex items-center gap-3 rounded-[32px] border border-white/15 bg-white/10 px-6 py-3 text-sm uppercase tracking-[0.16em] text-white backdrop-blur">
-        <Sparkles size={18} className="text-amber-200" />
-        Leveling complete
-        <ArrowUp size={18} className="text-emerald-200" />
       </div>
 
-      <div className="relative flex items-center gap-4 rounded-[40px] border border-white/20 bg-gradient-to-br from-black/70 via-black/40 to-white/5 px-10 py-6 shadow-[0_30px_80px_-50px_rgba(0,0,0,0.8)] backdrop-blur-lg">
-        <div className={`h-14 w-14 rounded-2xl bg-gradient-to-br ${target.color} shadow-inner shadow-black/40`} />
-        <div className="min-w-0">
-          <p className="text-sm uppercase tracking-[0.14em] text-white/70">Welcome to</p>
-          <p className="text-3xl font-bold uppercase tracking-[0.08em] text-white drop-shadow">
-            Level {target.level + 1}
-          </p>
-          <p className="text-sm uppercase tracking-[0.14em] text-white/80">{target.name}</p>
-        </div>
-        <div className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-amber-100">
-          <PartyPopper size={16} />
-          Cooldown armed
-        </div>
+      {/* Bottom XP Bar Area */}
+      <div className={`fixed bottom-0 left-0 right-0 z-40 transition-all duration-1000 ease-in-out ${
+        isVisible && activeUser ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+      }`}>
+        {activeUser && (
+          <WoWBar 
+            user={activeUser} 
+            isLevelingUp={isLevelingUp}
+            chatMessage={activeChat}
+          />
+        )}
       </div>
     </div>
   );
 }
 
-function InlineNotificationStack({
-  notifications,
-  onDismiss,
-}: {
-  notifications: InlineNotification[];
-  onDismiss: (id: string) => void;
+
+function WoWBar({ 
+  user, 
+  isLevelingUp, 
+  chatMessage 
+}: { 
+  user: OverlayTarget; 
+  isLevelingUp: boolean;
+  chatMessage: ChatMessage | null;
 }) {
-  useEffect(() => {
-    const timers = notifications.map((notice) => window.setTimeout(() => onDismiss(notice.id), 1800));
-    return () => timers.forEach((id) => window.clearTimeout(id));
-  }, [notifications, onDismiss]);
+  const percentage = Math.min(100, Math.max(0, (user.xpCurrent / user.xpMax) * 100));
 
   return (
-    <div className="pointer-events-none fixed right-6 top-6 z-50 flex w-full max-w-xs flex-col gap-2">
-      {notifications.map((notice) => (
-        <div
-          key={notice.id}
-          className="animate-overlay-notice overflow-hidden rounded-xl border border-white/15 bg-black/70 px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-black/40 backdrop-blur"
-        >
-          <div className="flex items-center gap-2">
-            <span
-              className={`h-2 w-2 rounded-full ${
-                notice.tone === "xp" ? "bg-amber-300 animate-pulse" : "bg-emerald-300 animate-pulse"
-              }`}
-            />
-            <span className="truncate">{notice.message}</span>
+    <div className="relative w-full">
+      
+      {/* Chat Bubble Container (Pops up from the bar) */}
+      <div className="absolute bottom-full left-8 mb-2 w-full pointer-events-none">
+        <div className={`flex w-fit max-w-sm flex-col transition-all duration-300 ${
+          chatMessage ? "translate-y-0 opacity-100 scale-100" : "translate-y-4 opacity-0 scale-95"
+        }`}>
+          <div className="relative rounded-xl border border-white/10 bg-black/80 px-4 py-2 text-sm text-white shadow-xl backdrop-blur-md">
+            <span className="font-bold text-emerald-400">{user.name}: </span>
+            <span className="text-slate-200">{chatMessage?.text}</span>
+            {/* Little triangle pointer */}
+            <div className="absolute -bottom-1.5 left-4 h-3 w-3 rotate-45 border-b border-r border-white/10 bg-black/80"></div>
           </div>
         </div>
-      ))}
-    </div>
-  );
-}
+      </div>
 
-function Atmosphere() {
-  return (
-    <div className="pointer-events-none absolute inset-0">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(255,255,255,0.08),transparent_35%),radial-gradient(circle_at_80%_10%,rgba(56,189,248,0.12),transparent_35%),radial-gradient(circle_at_70%_70%,rgba(236,72,153,0.12),transparent_38%)]" />
-      <div className="absolute -left-10 top-10 h-64 w-64 rounded-full bg-emerald-300/20 blur-3xl" />
-      <div className="absolute right-0 bottom-0 h-72 w-72 rounded-full bg-fuchsia-400/15 blur-3xl" />
-      <div className="absolute left-1/2 top-0 h-56 w-[120%] -translate-x-1/2 bg-gradient-to-b from-white/10 via-white/5 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/40 via-black/0 to-transparent" />
+      {/* The Bar Itself */}
+      <div className="relative h-5 w-full border-t border-black/80 bg-[#0a0a0a]">
+        
+        {/* Background Grid (The empty slots) */}
+        <div className="absolute inset-0 flex">
+           {Array.from({ length: 20 }).map((_, i) => (
+             <div key={i} className="flex-1 border-r border-white/10 opacity-20" />
+           ))}
+        </div>
+
+        {/* The Fill Bar */}
+        <div 
+          className={`h-full transition-all duration-700 ease-out ${
+            isLevelingUp ? "bg-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.6)]" : "bg-[#5c1c8a]"
+          }`}
+          style={{ width: `${percentage}%` }}
+        >
+          {/* Shine effect on the fill */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent" />
+        </div>
+
+        {/* The Segments Overlay (Black lines to chop up the bar) */}
+        <div className="absolute inset-0 flex">
+           {Array.from({ length: 20 }).map((_, i) => (
+             <div key={i} className="flex-1 border-r border-black/60" />
+           ))}
+        </div>
+
+        {/* Text Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <p 
+            className="font-sans text-[10px] font-bold uppercase tracking-widest text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]"
+            style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
+          >
+            {isLevelingUp ? (
+              <span className="text-amber-300 animate-pulse">Level Up!</span>
+            ) : (
+              <>
+                <span className="text-gray-300">{user.name}</span>
+                <span className="mx-2 text-gray-500">•</span>
+                <span className="text-[#d8b4fe]">XP: {user.xpCurrent} / {user.xpMax}</span>
+              </>
+            )}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
