@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchChatters, getValidSession } from "@/app/lib/twitch-auth";
+import { fetchChatters, getTwitchConfig, getValidSession } from "@/app/lib/twitch-auth";
 import { run, get, all } from "@/app/lib/sql";
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -117,6 +117,92 @@ function resolveStoredName(payload: PersistAction) {
 const MINUTE_MS = 60_000;
 const HOUR_MS = 3_600_000;
 const DAY_MS = 86_400_000;
+const LIVE_CACHE_TTL_MS = 30_000;
+
+type LiveCacheEntry = { status: boolean | null; expiresAt: number };
+
+let appAccessTokenCache: { token: string; expiresAt: number } | null = null;
+const liveStatusCache = new Map<string, LiveCacheEntry>();
+
+async function getAppAccessToken(): Promise<string | null> {
+  try {
+    const now = Date.now();
+    if (appAccessTokenCache && appAccessTokenCache.expiresAt > now + 60_000) {
+      return appAccessTokenCache.token;
+    }
+
+    const { clientId, clientSecret } = getTwitchConfig();
+    const res = await fetch("https://id.twitch.tv/oauth2/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        client_id: clientId,
+        client_secret: clientSecret,
+        grant_type: "client_credentials",
+      }),
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      console.error("Failed to fetch app access token for live check", res.status);
+      return null;
+    }
+
+    const json = (await res.json()) as { access_token?: string; expires_in?: number };
+    if (!json.access_token) return null;
+
+    const expiresAt = now + Math.max(0, Number(json.expires_in || 0) * 1000);
+    appAccessTokenCache = { token: json.access_token, expiresAt };
+    return json.access_token;
+  } catch (error) {
+    console.error("Failed to resolve app access token", error);
+    return null;
+  }
+}
+
+async function isBroadcasterLive(broadcasterId: string): Promise<boolean | null> {
+  try {
+    const cached = liveStatusCache.get(broadcasterId);
+    const now = Date.now();
+    if (cached && cached.expiresAt > now) {
+      return cached.status;
+    }
+
+    const token = await getAppAccessToken();
+    if (!token) {
+      liveStatusCache.set(broadcasterId, { status: null, expiresAt: now + LIVE_CACHE_TTL_MS });
+      return null;
+    }
+
+    const { clientId } = getTwitchConfig();
+    const res = await fetch(
+      `https://api.twitch.tv/helix/streams?user_id=${encodeURIComponent(broadcasterId)}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Client-Id": clientId,
+        },
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      console.error("Live check failed", res.status);
+      liveStatusCache.set(broadcasterId, { status: null, expiresAt: now + LIVE_CACHE_TTL_MS });
+      return null;
+    }
+
+    const json = (await res.json().catch(() => null)) as any;
+    const live = Array.isArray(json?.data) && json.data.length > 0;
+    liveStatusCache.set(broadcasterId, { status: live, expiresAt: now + LIVE_CACHE_TTL_MS });
+    return live;
+  } catch (error) {
+    console.error("Error checking live status", error);
+    liveStatusCache.set(broadcasterId, { status: null, expiresAt: Date.now() + LIVE_CACHE_TTL_MS });
+    return null;
+  }
+}
 
 function alignDown(ms: number, step: number) {
   return Math.floor(ms / step) * step;
@@ -195,6 +281,17 @@ export async function applyChattergroundsAction(
   context: ApplyContext = {}
 ) {
   const broadcasterId = context.sessionUserId || "system";
+  const requiresLive =
+    payload.action === "record-message" ||
+    payload.action === "quest-completed" ||
+    payload.action === "mint";
+
+  if (requiresLive) {
+    const live = await isBroadcasterLive(broadcasterId);
+    if (live !== true) {
+      return { skipped: true, reason: "Broadcaster is not live" };
+    }
+  }
 
   // Base increments
   let msgs = 0;
