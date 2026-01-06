@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { fetchChatters, getTwitchConfig, getValidSession } from "@/app/lib/twitch-auth";
 import { run, get, all } from "@/app/lib/sql";
+import { publishOverlayLevelUp } from "@/app/api/twitch/overlay/channel";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
@@ -112,6 +113,24 @@ async function getRandomJokeTrait() {
 
 function resolveStoredName(payload: PersistAction) {
   return payload.chatterLogin || payload.chatterDisplayName || payload.chatterId;
+}
+
+function getLevelInfo(totalXp: number) {
+  let level = 0;
+  let currentThreshold = 500;
+  let remainingXpInLevel = totalXp;
+
+  while (remainingXpInLevel >= currentThreshold) {
+    remainingXpInLevel -= currentThreshold;
+    level++;
+    currentThreshold = Math.floor(currentThreshold * 1.2);
+  }
+
+  return {
+    level,
+    currentThreshold,
+    remainingXp: Math.floor(remainingXpInLevel),
+  };
 }
 
 const MINUTE_MS = 60_000;
@@ -368,10 +387,10 @@ export async function applyChattergroundsAction(
 
     // ---- Read existing values ONCE (for delta XP + preserving is_subscriber) ----
     // Requires you to have added is_subscriber column via init.sql or migrations.
-    const existing = await get(
-      "SELECT months_subbed, is_subscriber FROM chattergrounds_stats WHERE broadcaster_id = ? AND chatter_id = ?",
-      [broadcasterId, payload.chatterId]
-    );
+  const existing = await get(
+    "SELECT months_subbed, is_subscriber, xp FROM chattergrounds_stats WHERE broadcaster_id = ? AND chatter_id = ?",
+    [broadcasterId, payload.chatterId]
+  );
 
     const currentMonths = Number(existing?.months_subbed ?? 0);
     const currentIsSubscriber = Number(existing?.is_subscriber ?? 0) === 1;
@@ -426,10 +445,27 @@ export async function applyChattergroundsAction(
       );
     }
 
-    return await get(
+    const result = await get(
       "SELECT * FROM chattergrounds_stats WHERE broadcaster_id = ? AND chatter_id = ?",
       [broadcasterId, payload.chatterId]
     );
+
+    // Emit overlay event if the chatter leveled up
+    const prevXp = Number(existing?.xp ?? 0);
+    const prevLevelInfo = getLevelInfo(prevXp);
+    const newLevelInfo = getLevelInfo(Number(result?.xp ?? prevXp));
+
+    if (newLevelInfo.level > prevLevelInfo.level) {
+      const xpToNext = Math.max(1, newLevelInfo.currentThreshold - newLevelInfo.remainingXp);
+      publishOverlayLevelUp(broadcasterId, {
+        id: payload.chatterId,
+        name: resolveStoredName(payload),
+        level: newLevelInfo.level,
+        xpToNext,
+      });
+    }
+
+    return result;
   } catch (err: any) {
     console.error("Chattergrounds Action Error:", err);
     return { error: err.message || "Failed to update database" };
