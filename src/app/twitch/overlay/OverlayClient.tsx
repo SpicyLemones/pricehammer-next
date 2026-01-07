@@ -35,6 +35,11 @@ type LevelUpNotice = {
 
 type ConnectionState = "connecting" | "open" | "closed" | "error";
 
+type OverlayEvent =
+  | { type: "level-up"; payload: any }
+  | { type: "progress"; payload: any }
+  | { type: "chat"; payload: any };
+
 export function OverlayClient({ streamerId }: { streamerId: string }) {
   // Store all known users from the session
   const [userRegistry, setUserRegistry] = useState<Record<string, OverlayTarget>>({});
@@ -126,7 +131,7 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
 
       source.onmessage = (event) => {
         try {
-          const parsed = JSON.parse(event.data ?? "{}");
+          const parsed: OverlayEvent = JSON.parse(event.data ?? "{}");
           
           if (parsed?.type === "level-up" && parsed.payload) {
             const payload = parsed.payload;
@@ -211,6 +216,34 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
 
               return { ...prev, [payload.id]: updatedUser };
             });
+          } else if (parsed?.type === "progress" && parsed.payload) {
+            const payload = parsed.payload;
+            const level = Number.isFinite(payload.level) ? Number(payload.level) : 1;
+            const xpCurrent = Number.isFinite(payload.xpCurrent) ? Number(payload.xpCurrent) : 0;
+            const xpMax = Number.isFinite(payload.xpMax) ? Number(payload.xpMax) : 1;
+
+            setUserRegistry((prev) => {
+              const previous = prev[payload.id];
+              const updatedUser: OverlayTarget = {
+                id: payload.id,
+                name: payload.name || previous?.name || "Adventurer",
+                level: Math.max(1, Math.floor(level)),
+                color: payload.color || previous?.color || "from-purple-600 to-indigo-600",
+                flair: payload.flair || previous?.flair || "Channel Runner",
+                xpCurrent: Math.max(0, Math.round(xpCurrent)),
+                xpMax: Math.max(1, Math.round(xpMax)),
+                lastMessage: previous?.lastMessage,
+                lastMessageAt: previous?.lastMessageAt,
+              };
+
+              return { ...prev, [payload.id]: updatedUser };
+            });
+
+            // If this is the first user, kick off rotation visibility
+            setIsVisible(true);
+            if (!focusId) {
+              setFocusId(payload.id);
+            }
           }
         } catch (error) {
           console.error("Parse error", error);
