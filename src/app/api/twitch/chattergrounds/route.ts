@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { fetchChatters, getTwitchConfig, getValidSession } from "@/app/lib/twitch-auth";
 import { run, get, all } from "@/app/lib/sql";
-import { publishOverlayLevelUp } from "@/app/api/twitch/overlay/channel";
+import { publishOverlayChat, publishOverlayLevelUp } from "@/app/api/twitch/overlay/channel";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
@@ -462,6 +462,16 @@ export async function applyChattergroundsAction(
         name: resolveStoredName(payload),
         level: newLevelInfo.level,
         xpToNext,
+        message: msgText ?? undefined,
+      });
+    }
+
+    // Stream live chat to the overlay for the focused chatter bubble
+    if (msgText) {
+      publishOverlayChat(broadcasterId, {
+        id: payload.chatterId,
+        name: resolveStoredName(payload),
+        message: msgText,
       });
     }
 
