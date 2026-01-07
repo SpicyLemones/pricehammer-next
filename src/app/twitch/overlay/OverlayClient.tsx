@@ -106,11 +106,6 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
     const token = searchParams.get("token");
     const secret = searchParams.get("secret");
 
-    if (!token && !secret) {
-      setConnectionState("error");
-      return;
-    }
-
     const url = new URL(`/api/twitch/overlay/events/${encodeURIComponent(streamerId)}`, baseUrl);
     if (token) url.searchParams.set("token", token);
     if (secret) url.searchParams.set("secret", secret);

@@ -47,11 +47,18 @@ export async function GET(request: NextRequest, { params }: { params: { streamer
   const token = parseToken(request);
   const secret = parseSecret(request);
 
-  let auth = verifyOverlayToken(token, streamerId);
-  if (!auth.ok && secret) {
-    const secretResult = verifyOverlaySecret(secret, streamerId);
-    if (secretResult.ok) {
-      auth = { ok: true, expiresAt: secretResult.expiresAt } as const;
+  const hasCredentials = Boolean(token || secret);
+  let auth: { ok: true; expiresAt: number | null } | { ok: false; reason: string };
+
+  if (!hasCredentials) {
+    auth = { ok: true, expiresAt: null };
+  } else {
+    auth = verifyOverlayToken(token, streamerId);
+    if (!auth.ok && secret) {
+      const secretResult = verifyOverlaySecret(secret, streamerId);
+      if (secretResult.ok) {
+        auth = { ok: true, expiresAt: secretResult.expiresAt } as const;
+      }
     }
   }
   if (!auth.ok) return jsonError(`unauthorized:${auth.reason}`, 401);
