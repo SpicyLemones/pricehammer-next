@@ -9,10 +9,34 @@ export type OverlayLevelUpPayload = {
   xpToNext: number;
   flair: string;
   color: string;
+  message?: string;
   at: string;
 };
 
-export type OverlayEventEnvelope = { type: "level-up"; payload: OverlayLevelUpPayload };
+export type OverlayProgressPayload = {
+  id: string;
+  name: string;
+  level: number;
+  xpCurrent: number;
+  xpMax: number;
+  flair: string;
+  color: string;
+  at: string;
+};
+
+export type OverlayChatPayload = {
+  id: string;
+  name: string;
+  message: string;
+  flair: string;
+  color: string;
+  at: string;
+};
+
+export type OverlayEventEnvelope =
+  | { type: "level-up"; payload: OverlayLevelUpPayload }
+  | { type: "progress"; payload: OverlayProgressPayload }
+  | { type: "chat"; payload: OverlayChatPayload };
 
 type Listener = (event: OverlayEventEnvelope) => void;
 
@@ -115,8 +139,11 @@ type IncomingOverlayEvent = {
   name?: string;
   level?: number;
   xpToNext?: number;
+  xpCurrent?: number;
+  xpMax?: number;
   flair?: string;
   color?: string;
+  message?: string;
 };
 
 function colorFromId(id: string) {
@@ -137,6 +164,7 @@ function normalizeEvent(event: IncomingOverlayEvent): OverlayLevelUpPayload {
   const flair = (event.flair ?? "Channel Runner").trim();
   const xpToNextRaw = Number.isFinite(event.xpToNext) ? Number(event.xpToNext) : 25;
   const levelRaw = Number.isFinite(event.level) ? Number(event.level) : 1;
+  const message = (event.message ?? "").toString().trim() || undefined;
 
   return {
     id: trimmedId || crypto.randomUUID(),
@@ -145,8 +173,71 @@ function normalizeEvent(event: IncomingOverlayEvent): OverlayLevelUpPayload {
     level: Math.max(1, Math.floor(levelRaw)),
     xpToNext: Math.max(1, Math.round(xpToNextRaw)),
     color: (event.color ?? colorFromId(trimmedId || name)).trim() || DEFAULT_GRADIENTS[0],
+    message,
     at: now,
   };
+}
+
+export function publishOverlayChat(streamerId: string, event: IncomingOverlayEvent) {
+  const trimmedId = (event.id ?? "").trim();
+  const name = (event.name ?? event.id ?? "").trim() || "Adventurer";
+  const message = (event.message ?? "").toString().trim();
+  const flair = (event.flair ?? "Channel Runner").trim();
+  const color = (event.color ?? colorFromId(trimmedId || name)).trim() || DEFAULT_GRADIENTS[0];
+
+  if (!message) {
+    return { accepted: false as const, reason: "empty_message" };
+  }
+
+  const payload: OverlayChatPayload = {
+    id: trimmedId || crypto.randomUUID(),
+    name,
+    message,
+    flair,
+    color,
+    at: new Date().toISOString(),
+  };
+
+  const listeners = subscriberMap.get(streamerId);
+  if (listeners?.size) {
+    const envelope: OverlayEventEnvelope = { type: "chat", payload };
+    listeners.forEach((listener) => listener(envelope));
+  }
+
+  return { accepted: true as const, payload };
+}
+
+export function publishOverlayProgress(streamerId: string, event: IncomingOverlayEvent) {
+  const trimmedId = (event.id ?? "").trim();
+  const name = (event.name ?? event.id ?? "").trim() || "Adventurer";
+  const flair = (event.flair ?? "Channel Runner").trim();
+  const color = (event.color ?? colorFromId(trimmedId || name)).trim() || DEFAULT_GRADIENTS[0];
+
+  const xpMaxRaw = Number.isFinite(event.xpMax) ? Number(event.xpMax) : null;
+  const xpCurrentRaw = Number.isFinite(event.xpCurrent) ? Number(event.xpCurrent) : null;
+
+  if (xpMaxRaw === null || xpCurrentRaw === null) {
+    return { accepted: false as const, reason: "missing_progress" };
+  }
+
+  const payload: OverlayProgressPayload = {
+    id: trimmedId || crypto.randomUUID(),
+    name,
+    level: Math.max(1, Math.floor(Number.isFinite(event.level) ? Number(event.level) : 1)),
+    xpCurrent: Math.max(0, Math.round(xpCurrentRaw)),
+    xpMax: Math.max(1, Math.round(xpMaxRaw)),
+    flair,
+    color,
+    at: new Date().toISOString(),
+  };
+
+  const listeners = subscriberMap.get(streamerId);
+  if (listeners?.size) {
+    const envelope: OverlayEventEnvelope = { type: "progress", payload };
+    listeners.forEach((listener) => listener(envelope));
+  }
+
+  return { accepted: true as const, payload };
 }
 
 export function publishOverlayLevelUp(streamerId: string, event: IncomingOverlayEvent) {
