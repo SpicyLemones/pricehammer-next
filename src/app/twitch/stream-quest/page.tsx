@@ -26,7 +26,7 @@ export default function StreamQuestPage() {
         href="/twitch"
         className="fixed left-4 top-4 z-50 rounded-full bg-amber-900/80 px-4 py-2 text-sm font-semibold text-amber-50 shadow-lg backdrop-blur transition hover:bg-amber-800/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-50"
       >
-        ← Back to spycy.fun/twitch
+        ← Back to twitch toys
       </Link>
       
       <BardToggle />

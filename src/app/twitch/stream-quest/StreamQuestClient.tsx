@@ -13,10 +13,12 @@ import {
   Laugh,
   Loader2,
   Lock,
+  MessageSquare,
   Music2,
   Puzzle,
   Sparkles,
   Timer,
+  User,
 } from "lucide-react";
 
 import clsx from "clsx";
@@ -139,6 +141,7 @@ export function StreamQuestClient() {
   const [completingId, setCompletingId] = useState<string | null>(null);
   const [celebratingId, setCelebratingId] = useState<string | null>(null);
   const [claimingChatterId, setClaimingChatterId] = useState<string | null>(null);
+  const [celebratingChatterId, setCelebratingChatterId] = useState<string | null>(null);
   
   const [toast, setToast] = useState<string | null>(null);
   const [isToastVisible, setIsToastVisible] = useState(false);
@@ -356,7 +359,11 @@ export function StreamQuestClient() {
 
         const json = await res.json();
         if (!res.ok) throw new Error(json.error || "Server rejected the claim");
+        
+        // Optimistic update or server data usage
         setData(json);
+        
+        setCelebratingChatterId(id);
         void playQuestCompletionAudio();
         triggerToast("Chatter quest claimed!");
       } catch (err: any) {
@@ -534,46 +541,22 @@ if (error === "OFFLINE") {
                   )}
                 >
                   <Sparkles className="h-3 w-3" />
-                  {/* Updated display text */}
                   {chatterRerollUsed ? "No Rerolls Left" : `Reroll (${3 - (data?.chatterRerollCount ?? 0)} left)`}
                 </button>
               </div>
             </div>
 
-            <div className="relative mt-6 grid gap-4 md:grid-cols-3">
+            <div className="relative mt-8 grid auto-rows-fr items-stretch gap-6 md:grid-cols-3">
               {chatterQuests.map((quest) => (
-                <button
+                <ChatterQuestTile
                   key={quest.id}
-                  type="button"
-                  onClick={!quest.completed && isActive ? () => claimChatterQuest(quest.id) : undefined}
-                  disabled={!isActive || quest.completed || claimingChatterId === quest.id}
-                  className={clsx(
-                    "group flex h-full flex-col rounded-2xl border px-4 py-4 text-left transition",
-                    quest.completed
-                      ? "border-amber-600/30 bg-amber-950/40 text-amber-100/50 line-through"
-                      : isActive
-                        ? "border-amber-300/20 bg-black/25 text-amber-50 hover:border-amber-300/40 hover:bg-black/40"
-                        : "cursor-not-allowed border-amber-900/30 bg-black/30 text-amber-50/50"
-                  )}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="text-sm font-semibold text-amber-100/80">Chatter Quest</span>
-                    <span
-                      className={clsx(
-                        "rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-[0.2em]",
-                        quest.completed
-                          ? "border-emerald-400/40 bg-emerald-900/20 text-emerald-200/70"
-                          : "border-amber-400/30 bg-amber-900/20 text-amber-200/70"
-                      )}
-                    >
-                      {quest.completed ? "Completed" : "Available"}
-                    </span>
-                  </div>
-                  <p className="mt-3 text-sm leading-relaxed">{quest.prompt}</p>
-                  <div className="mt-auto pt-4 text-xs text-amber-100/70">
-                    Reward: XP + toadcoins to <span className="font-semibold text-amber-100">{dailyQuestor}</span>
-                  </div>
-                </button>
+                  quest={quest}
+                  dailyQuestor={dailyQuestor}
+                  onComplete={() => claimChatterQuest(quest.id)}
+                  completing={claimingChatterId === quest.id}
+                  celebrating={celebratingChatterId === quest.id}
+                  isActive={isActive}
+                />
               ))}
             </div>
           </section>
@@ -911,6 +894,117 @@ function QuestTile({
               <Loader2 className="h-8 w-8 animate-spin text-amber-400" />
            </div>
         )}
+
+        {celebrating && <CelebrationBurst />}
+      </div>
+    </button>
+  );
+}
+
+function ChatterQuestTile({
+  quest,
+  dailyQuestor,
+  onComplete,
+  completing,
+  celebrating,
+  isActive,
+}: {
+  quest: ChatterQuest;
+  dailyQuestor: string;
+  onComplete: () => void;
+  completing: boolean;
+  celebrating: boolean;
+  isActive: boolean;
+}) {
+  const isCompleted = quest.completed;
+
+  return (
+    <button
+      type="button"
+      onClick={!isCompleted && isActive ? onComplete : undefined}
+      disabled={!isActive || isCompleted || completing}
+      className={clsx(
+        "group relative isolate h-full w-full rounded-[32px] text-left transition-all duration-300",
+        !isCompleted && isActive 
+          ? "hover:-translate-y-2 active:scale-95 active:rotate-1 cursor-pointer" 
+          : "cursor-not-allowed opacity-90"
+      )}
+    >
+      {/* Shimmer Effect */}
+      <div className="pointer-events-none absolute inset-0 z-30 overflow-hidden rounded-[32px]">
+        <div className="absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-transform duration-1000 group-hover:translate-x-[50%] group-hover:opacity-100 group-hover:rotate-12" />
+      </div>
+
+      <div className="absolute top-6 left-4 z-40 flex items-center gap-3">
+        <span className="rounded-full bg-[#1e293b] border border-blue-400/30 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-blue-100 shadow-lg">
+          Chatter Quest
+        </span>
+      </div>
+
+      <div className={clsx(
+          "relative flex aspect-[1.5/1] min-h-[220px] w-full overflow-hidden rounded-[26px] bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-5 pb-14 pt-15 shadow-[0_18px_36px_rgba(0,0,0,0.35)] transition-all duration-500",
+          !isCompleted && isActive 
+            ? "group-hover:shadow-[0_30px_60px_rgba(56,189,248,0.15)] group-hover:border-blue-400/30" 
+            : ""
+        )}>
+        
+        {/* Main Content Card */}
+        <div className="relative z-10 flex flex-1 flex-col gap-3 rounded-2xl border-2 border-[#528cc4] bg-[#162032] px-4 py-4 shadow-inner transition-transform duration-500 group-hover:scale-[1.01]">
+          <div className="flex items-start gap-3">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#528cc4]/60 bg-[#0f1b2b] text-blue-100 shadow-md group-hover:rotate-6 transition-transform">
+              <MessageSquare className="h-6 w-6 text-blue-200" />
+            </div>
+
+            <div className="min-w-0 space-y-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-lg font-bold text-blue-50 drop-shadow-sm group-hover:text-white transition-colors">
+                  {quest.title}
+                </span>
+                <span className="rounded-full border border-[#528cc4]/70 bg-[#2b3952] text-blue-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest">
+                  Chat
+                </span>
+              </div>
+              <p className="text-sm leading-relaxed text-blue-50/70 group-hover:text-blue-50/90 transition-colors">
+                {quest.prompt}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-auto flex items-center justify-between pt-2 border-t border-blue-800/30">
+            <div className="flex items-center gap-2 text-[10px] font-medium text-blue-200/80 uppercase tracking-wider">
+               For: <span className="font-bold text-white">{dailyQuestor}</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs font-bold text-amber-200">
+              <Coins className="h-4 w-4" />
+              <span>{quest.reward}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Completion Overlay */}
+        {isCompleted && (
+          <div 
+            className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#0f1b2b]/90 backdrop-blur-md animate-unravel"
+            style={{ clipPath: 'circle(150% at 50% 50%)' }}
+          >
+            <div className="relative">
+              <div className="absolute inset-0 animate-ping rounded-full bg-emerald-500/20" />
+              <BadgeCheck className="h-12 w-12 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]" />
+            </div>
+            <span className="mt-4 text-xs font-black uppercase tracking-[0.3em] text-emerald-100">
+              Quest Complete
+            </span>
+            <div className="absolute inset-0 border-4 border-emerald-500/30 rounded-[26px]" />
+          </div>
+        )}
+
+        {completing && (
+           <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+              <Loader2 className="h-8 w-8 animate-spin text-blue-400" />
+           </div>
+        )}
+
+        {celebrating && <CelebrationBurst />}
       </div>
     </button>
   );
@@ -918,12 +1012,12 @@ function QuestTile({
 
 function CelebrationBurst() {
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+    <div className="pointer-events-none absolute inset-0 z-[60] flex items-center justify-center">
       <div className="absolute h-44 w-44 rounded-full bg-[#f06a4c]/30 blur-3xl" />
       <div className="relative flex items-center gap-2 text-amber-50">
-        <Sparkles className="h-6 w-6 animate-ping" />
-        <Sparkles className="h-5 w-5 animate-pulse delay-150" />
-        <Sparkles className="h-4 w-4 animate-ping delay-300" />
+        <Sparkles className="h-12 w-12 animate-ping text-amber-200" />
+        <Sparkles className="absolute h-8 w-8 animate-pulse text-white delay-150" />
+        <Sparkles className="absolute h-6 w-6 animate-ping text-yellow-400 delay-300" />
       </div>
     </div>
   );

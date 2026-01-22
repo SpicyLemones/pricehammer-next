@@ -16,15 +16,25 @@ type PunishmentTone = "punish" | "saved";
 
 const fallbackColors = ["#FFD166", "#EF476F", "#06D6A0", "#118AB2", "#A556F6", "#F78C6B", "#4CC9F0", "#BDE0FE"];
 const defaultDoubleDownOptions = [
-  "8 hour time out",
-  "8 billion seconds time out",
+  "1 hour time out",
+  "8 million seconds time out",
   "Write an apology paragraph in chat",
   "3 year discord ban",
+  "1 week discord ban",
+  "1 day discord ban",
   "Donate 1 sub",
-  "Donate 10 gifted sub",
-  "Lose half your toadcoins",
-  "Lose all your toadcoins",
-  "SAVED",
+  "Donate 10 subs",
+  "Donate 100 gold in a game of the streamer's choice",
+  "Donate 10 gold in a game of the streamer's choice",
+  "Donate 1 gold in a game of the streamer's choice",
+  "The mods decide your fate",
+  "Flip a coin. Heads = ban, Tails = 10 minute timeout",
+  "Ask a magic 8 ball live on stream for your punishment",
+  "Beat the streamer in typeracer.",
+  "If you are not subbed, immediate ban, otherwise, SAVED",
+  "Start a Poll on Twitch for your punishment, voted for by chat",
+  "Ask another streamer that is live to vouch for you, otherwise its a BAN",
+  "SAVED"
 ];
 
 function useChatters() {
@@ -441,7 +451,7 @@ export default function WheelOfBlameClient() {
           href="/twitch"
           className="fixed left-4 top-4 z-50 rounded-full bg-slate-900/80 px-4 py-2 text-sm font-semibold text-white shadow-lg backdrop-blur transition hover:bg-slate-800/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
-          ← Back to spycy.fun/twitch
+          ← Back to twitch toys
         </a>
         <button
           type="button"

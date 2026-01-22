@@ -12,7 +12,7 @@
       "id": "nursery-rhyme",
       "category": "insult",
       "title": "Back to Preschool",
-      "prompt": "Sing a full nursery rhyme with maximum enthusiasm on stream.",
+      "prompt": "Sing a full nursery rhyme.",
       "reward": 500
     },
     {
@@ -191,7 +191,7 @@
       "id": "drawing-prompt",
       "category": "stream-time",
       "title": "MS Paint Prodigy",
-      "prompt": "Draw a portrait of {{chatter}} in MS Paint in under 60 seconds.",
+      "prompt": "Draw a portrait of {{chatter}} in MS Paint.",
       "reward": 500,
       "variables": [{ "key": "chatter", "type": "chatter" }]
     },
@@ -213,7 +213,7 @@
       "id": "spin-around",
       "category": "physical",
       "title": "Vertigo",
-      "prompt": "Spin in your chair {{count}} times then try to walk in a straight line.",
+      "prompt": "Spin in place {{count}} times then try to walk in a straight line.",
       "reward": 500,
       "variables": [{ "key": "count", "type": "range", "min": 5, "max": 10 }]
     },
@@ -221,7 +221,7 @@
       "id": "fake-ad",
       "category": "stream-time",
       "title": "Sell Out",
-      "prompt": "Do a 1-minute improvised ad read for a brand of toilet paper.",
+      "prompt": "Do a 1-minute improvised ad read for a product of your choice",
       "reward": 600
     },
     {
