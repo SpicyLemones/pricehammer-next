@@ -134,7 +134,7 @@
       ]
     },
     {
-      "id": "gift-2-sub",
+      "id": "gift-10-sub",
       "category": "chatter",
       "title": "Gift 10 Subs to {{streamer}}",
       "prompt": "Gift 10 Subs to {{streamer}}",

@@ -152,6 +152,16 @@ export function StreamQuestClient() {
   const questFinAudioRef = useRef<HTMLAudioElement | null>(null);
   const moneyAudioRef = useRef<HTMLAudioElement | null>(null);
   const chatterQuestAudioRef = useRef<HTMLAudioElement | null>(null);
+  const parseResponseJson = useCallback(async (res: Response) => {
+    const text = await res.text();
+    if (!text) return {};
+    try {
+      return JSON.parse(text);
+    } catch (err) {
+      console.warn("Failed to parse JSON response", err);
+      return {};
+    }
+  }, []);
   const triggerToast = useCallback((message: string) => {
     setToast(message);
     setTimeout(() => setIsToastVisible(true), 10);
@@ -177,7 +187,7 @@ export function StreamQuestClient() {
         return;
       }
 
-      const json = await res.json();
+      const json = await parseResponseJson(res);
 
       if (json.error === "offline") {
         setAuthState("ready");
@@ -199,7 +209,7 @@ export function StreamQuestClient() {
     } finally {
       setLoading(false);
     }
-  }, [triggerToast]);
+  }, [parseResponseJson, triggerToast]);
 
   useEffect(() => {
     loadData();
@@ -240,6 +250,7 @@ export function StreamQuestClient() {
 
   async function rerollChatterQuestor() {
     if (chatterRerollUsed) return;
+    if (!isActive) return;
     setLoading(true);
     try {
       const res = await fetch("/api/twitch/stream-quests", {
@@ -247,7 +258,7 @@ export function StreamQuestClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "reroll-chatter" }),
       });
-      const json = await res.json();
+      const json = await parseResponseJson(res);
       if (!res.ok) throw new Error(json.error || "Failed to reroll chatter questor");
       setData(json);
       triggerToast("Chatter questor rerolled!");
@@ -261,6 +272,7 @@ export function StreamQuestClient() {
 
   async function completeChatterQuest(id: string) {
     if (!data || chatterCompletingId) return;
+    if (!isActive) return;
     setChatterCompletingId(id);
     try {
       const res = await fetch("/api/twitch/stream-quests", {
@@ -270,9 +282,18 @@ export function StreamQuestClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "claim-chatter", id }),
       });
-      const json = await res.json();
+      const json = await parseResponseJson(res);
       if (!res.ok) throw new Error(json.error || "Server rejected the chatter claim");
-      setData(json);
+      setData((prev) => {
+        if (!prev) return json;
+        return {
+          ...prev,
+          chatterQuests: prev.chatterQuests.map((quest) =>
+            quest.id === id ? { ...quest, completed: true } : quest
+          ),
+          chatterRerollUsed: json.chatterRerollUsed ?? prev.chatterRerollUsed,
+        };
+      });
       void playChatterQuestAudio();
       triggerToast("Chatter quest claimed!");
     } catch (err: any) {
@@ -292,7 +313,7 @@ export function StreamQuestClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "reroll" }),
       });
-      const json = await res.json();
+      const json = await parseResponseJson(res);
       setData(json);
       triggerToast("Quests have been reshuffled!");
     } catch (err) {
@@ -318,7 +339,7 @@ export function StreamQuestClient() {
     });
 
 
-    const json = await res.json();
+    const json = await parseResponseJson(res);
 
     if (!res.ok) {
       // If the server says "No", we show the error but DON'T refresh
@@ -511,7 +532,7 @@ if (error === "OFFLINE") {
                 <button
                   type="button"
                   onClick={rerollChatterQuestor}
-                  disabled={chatterRerollUsed}
+                  disabled={chatterRerollUsed || !isActive}
                   className={clsx(
                     "flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-widest transition",
                     chatterRerollUsed
@@ -531,7 +552,7 @@ if (error === "OFFLINE") {
                   key={quest.id}
                   type="button"
                   onClick={() => completeChatterQuest(quest.id)}
-                  disabled={quest.completed || chatterCompletingId === quest.id}
+                  disabled={quest.completed || chatterCompletingId === quest.id || !isActive}
                   className={clsx(
                     "group relative isolate flex h-full flex-col rounded-2xl border px-3 py-3 text-left transition-all duration-300",
                     quest.completed
