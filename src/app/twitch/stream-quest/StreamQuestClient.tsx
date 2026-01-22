@@ -21,6 +21,8 @@ import {
 
 import clsx from "clsx";
 
+import chatterQuestLibrary from "../../../../data/chatter-quest-library.json";
+
 type QuestCategory =
   | "prime"
   | "ban"
