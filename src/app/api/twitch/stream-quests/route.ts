@@ -34,6 +34,14 @@ type StreamQuest = {
   completedAt?: string;
 };
 
+type ChatterQuest = {
+  id: string;
+  title: string;
+  reward: number;
+  completed: boolean;
+  completedAt?: string;
+};
+
 type AudienceSnapshot = {
   names: string[];
   source: "twitch" | "offline" | "unauthenticated" | "fallback" | "error";
@@ -49,6 +57,7 @@ type StreamQuestState = {
   ledger: Record<string, number>;
   lastAudienceHour: number;
   lastAudience: AudienceSnapshot;
+  chatter: ChatterQuestState;
 };
 
 type QuestVariable =
@@ -64,8 +73,30 @@ type QuestTemplateConfig = {
   variables?: QuestVariable[];
 };
 
+type ChatterQuestVariable =
+  | { key: string; type: "range"; min: number; max: number }
+  | { key: string; type: "chatter" }
+  | { key: string; type: "streamer" };
+
+type ChatterQuestTemplateConfig = {
+  id: string;
+  title: string;
+  prompt: string;
+  reward?: number;
+  variables?: ChatterQuestVariable[];
+};
+
+type ChatterQuestState = {
+  questorId: string;
+  questorLogin: string;
+  rerollUsed: boolean;
+  quests: ChatterQuest[];
+};
+
 const STREAM_QUESTS_DIR = path.join(process.cwd(), "data", "stream-quests");
 const TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "quest-library.json");
+const CHATTER_TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "chatter-quest-library.json");
+const CHATTER_REWARD_POOL = [200, 300, 500];
 
 const FALLBACK_CHATTERS = [
   "toadette",
@@ -240,7 +271,8 @@ export async function GET() {
     );
   }
 
-  const { state, regenerated } = await ensureState(audience, session.userId);
+  const recipients = await loadRecipientsFromChattergrounds(session.userId);
+  const { state, regenerated } = await ensureState(audience, session.userId, recipients);
 
   return jsonNoStore({
     regenerated,
@@ -268,7 +300,8 @@ export async function POST(request: Request) {
     return jsonNoStore({ error: "offline", message: "The Tavern is closed." }, { status: 403 });
   }
 
-  const { state } = await ensureState(audience, session.userId);
+  const recipients = await loadRecipientsFromChattergrounds(broadcasterId);
+  const { state } = await ensureState(audience, session.userId, recipients);
 
   const action = body?.action ?? (body?.id ? "claim" : undefined);
 
@@ -296,20 +329,81 @@ export async function POST(request: Request) {
     });
   }
 
+  if (action === "reroll-chatter") {
+    if (state.chatter.rerollUsed) {
+      return jsonNoStore({ error: "reroll_used", ...serializeState(state) }, { status: 400 });
+    }
+
+    const chatterTemplates = await loadChatterQuestTemplates();
+    const rerolledChatter = buildChatterQuestState(audience, recipients, chatterTemplates);
+
+    const rerolledState: StreamQuestState = {
+      ...state,
+      chatter: { ...rerolledChatter, rerollUsed: true },
+      generatedAt: new Date().toISOString(),
+      lastAudience: audience,
+      lastAudienceHour: seedFromCurrentHour(),
+    };
+
+    await saveState(session.userId, rerolledState);
+    return jsonNoStore({
+      regenerated: true,
+      ...serializeState(rerolledState),
+    });
+  }
+
   // --- ACTION: COMPLETE QUEST ---
-  if (action !== "claim") {
+  if (action !== "claim" && action !== "claim-chatter") {
     return jsonNoStore({ error: "bad_request" }, { status: 400 });
   }
 
   if (!body?.id) return jsonNoStore({ error: "missing_id" }, { status: 400 });
+
+  if (action === "claim-chatter") {
+    const chatterQuest = state.chatter.quests.find((entry) => entry.id === body.id);
+    if (!chatterQuest) return jsonNoStore({ error: "quest_not_found" }, { status: 404 });
+    if (chatterQuest.completed) return jsonNoStore({ alreadyCompleted: true, ...serializeState(state) });
+
+    if (state.chatter.questorId) {
+      await applyChattergroundsAction(
+        {
+          action: "quest-completed",
+          chatterId: state.chatter.questorId,
+          chatterLogin: state.chatter.questorLogin,
+          amount: chatterQuest.reward,
+        },
+        { sessionUserId: broadcasterId }
+      );
+    }
+
+    const updatedQuest: ChatterQuest = {
+      ...chatterQuest,
+      completed: true,
+      completedAt: new Date().toISOString(),
+    };
+
+    const updatedState: StreamQuestState = {
+      ...state,
+      chatter: {
+        ...state.chatter,
+        quests: state.chatter.quests.map((entry) => (entry.id === body.id ? updatedQuest : entry)),
+      },
+      lastAudience: audience,
+      lastAudienceHour: seedFromCurrentHour(),
+    };
+
+    await saveState(session.userId, updatedState);
+    return jsonNoStore({
+      quest: updatedQuest,
+      ...serializeState(updatedState),
+    });
+  }
 
   const quest = state.quests.find((entry) => entry.id === body.id);
   if (!quest) return jsonNoStore({ error: "quest_not_found" }, { status: 404 });
   if (quest.completed) return jsonNoStore({ alreadyCompleted: true, ...serializeState(state) });
 
   // 1. Get RECENT chatters from chattergrounds DB
-  const recipients = await loadRecipientsFromChattergrounds(broadcasterId);
-
   // 2. Separate Broadcaster for Quest Completion tracking
   await applyChattergroundsAction(
     {
@@ -372,10 +466,11 @@ export async function POST(request: Request) {
   });
 }
 
-async function ensureState(audience: AudienceSnapshot, userId: string) {
+async function ensureState(audience: AudienceSnapshot, userId: string, recipients: DbRecipient[]) {
   const today = currentDateKey();
   const existing = await loadState(userId);
   const questTemplates = await loadQuestTemplates();
+  const chatterTemplates = await loadChatterQuestTemplates();
   const currentHour = seedFromCurrentHour();
 
   if (existing && existing.date === today) {
@@ -399,8 +494,14 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
       return { state: regeneratedState, regenerated: true };
     }
 
+    const updatedChatter =
+      existing.chatter?.quests?.length === 3
+        ? existing.chatter
+        : buildChatterQuestState(audience, recipients, chatterTemplates);
+
     const updated: StreamQuestState = {
       ...existing,
+      chatter: updatedChatter,
       lastAudience: audience,
       lastAudienceHour: currentHour,
     };
@@ -409,11 +510,13 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
   }
 
   const quests = buildQuests(audience, questTemplates);
+  const chatter = buildChatterQuestState(audience, recipients, chatterTemplates);
   const state: StreamQuestState = {
     date: today,
     generatedAt: new Date().toISOString(),
     quests,
     ledger: existing?.ledger ?? {},
+    chatter,
     lastAudienceHour: currentHour,
     lastAudience: audience,
   };
@@ -442,6 +545,13 @@ async function loadState(userId: string): Promise<StreamQuestState | null> {
     }
     return {
       ...parsed,
+      chatter:
+        parsed.chatter ?? {
+          questorId: "",
+          questorLogin: "a chatter",
+          rerollUsed: false,
+          quests: [],
+        },
       lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
       lastAudience: parsed.lastAudience ?? { names: FALLBACK_CHATTERS, source: "fallback", live: true },
     };
@@ -462,6 +572,9 @@ function serializeState(state: StreamQuestState) {
     generatedAt: state.generatedAt,
     quests: state.quests,
     ledger: state.ledger,
+    chatterQuests: state.chatter.quests,
+    chatterQuestor: state.chatter.questorLogin,
+    chatterRerollUsed: state.chatter.rerollUsed,
     audience: state.lastAudience,
   };
 }
@@ -511,6 +624,21 @@ async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
   return DEFAULT_TEMPLATE_LIBRARY;
 }
 
+async function loadChatterQuestTemplates(): Promise<ChatterQuestTemplateConfig[]> {
+  try {
+    const raw = await fs.readFile(CHATTER_TEMPLATE_LIBRARY_PATH, "utf8");
+    const parsed = JSON.parse(raw) as ChatterQuestTemplateConfig[] | { templates?: ChatterQuestTemplateConfig[] };
+    const templates = Array.isArray(parsed) ? parsed : parsed.templates;
+    const sanitized = (templates ?? [])
+      .map(sanitizeChatterTemplateConfig)
+      .filter(Boolean) as ChatterQuestTemplateConfig[];
+    if (sanitized.length >= 3) return sanitized;
+  } catch (error) {
+    console.warn("Stream quest: failed to load chatter-quest-library.json.", error);
+  }
+  return [];
+}
+
 function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[]): StreamQuest[] {
   if (library.length < 6) {
     throw new Error("At least 6 quest templates are required to build a daily set.");
@@ -533,6 +661,40 @@ function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[])
       completedAt: undefined,
     };
   });
+}
+
+function buildChatterQuestState(
+  audience: AudienceSnapshot,
+  recipients: DbRecipient[],
+  library: ChatterQuestTemplateConfig[]
+): ChatterQuestState {
+  const questor = pickQuestor(recipients, audience);
+  const streamerName = audience.displayName || "the streamer";
+  const shuffled = [...library].sort(() => Math.random() - 0.5);
+  const selected = shuffled.slice(0, 3);
+
+  const quests = selected.map((template) => {
+    const variables = resolveChatterVariables(template.variables ?? [], audience, questor.login, streamerName);
+    const title = renderPrompt(template.prompt ?? template.title, variables);
+    const reward = Number.isFinite(template.reward)
+      ? Number(template.reward)
+      : CHATTER_REWARD_POOL[randomBetween(0, CHATTER_REWARD_POOL.length - 1)];
+
+    return {
+      id: `${template.id}-${crypto.randomUUID()}`,
+      title,
+      reward,
+      completed: false,
+      completedAt: undefined,
+    };
+  });
+
+  return {
+    questorId: questor.id,
+    questorLogin: questor.login,
+    rerollUsed: false,
+    quests,
+  };
 }
 
 /**
@@ -630,6 +792,64 @@ function sanitizeTemplateConfig(config: QuestTemplateConfig) {
       return false;
     }),
   };
+}
+
+function resolveChatterVariables(
+  variables: ChatterQuestVariable[],
+  audience: AudienceSnapshot,
+  questorLogin: string,
+  streamerName: string
+) {
+  const values: Record<string, string | number> = {};
+
+  variables.forEach((variable) => {
+    if (variable.type === "range") {
+      const min = Number.isFinite(variable.min) ? variable.min : 1;
+      const max = Number.isFinite(variable.max) ? variable.max : min;
+      values[variable.key] = randomBetween(min, max);
+    }
+    if (variable.type === "chatter") {
+      const pool = audience.names.filter((name) => name !== questorLogin);
+      const fallbackNames =
+        audience.source === "twitch"
+          ? ([audience.displayName].filter(Boolean) as string[])
+          : FALLBACK_CHATTERS;
+      values[variable.key] = pickChatter(pool, fallbackNames);
+    }
+    if (variable.type === "streamer") {
+      values[variable.key] = streamerName;
+    }
+  });
+
+  return values;
+}
+
+function sanitizeChatterTemplateConfig(config: ChatterQuestTemplateConfig) {
+  if (!config?.id || !config.title) return null;
+  return {
+    ...config,
+    prompt: config.prompt ?? config.title,
+    variables: (config.variables ?? []).filter((variable) => {
+      if (variable.type === "chatter" || variable.type === "streamer") return !!variable.key;
+      if (variable.type === "range") {
+        return !!variable.key && Number.isFinite(variable.min) && Number.isFinite(variable.max);
+      }
+      return false;
+    }),
+  };
+}
+
+function pickQuestor(recipients: DbRecipient[], audience: AudienceSnapshot) {
+  if (recipients.length) {
+    const pick = recipients[Math.floor(Math.random() * recipients.length)];
+    return { id: pick.chatterId, login: pick.login };
+  }
+  const fallbackNames =
+    audience.source === "twitch"
+      ? ([audience.displayName].filter(Boolean) as string[])
+      : FALLBACK_CHATTERS;
+  const login = pickChatter(audience.names, fallbackNames);
+  return { id: "", login };
 }
 
 async function loadAudience(session: TwitchSession): Promise<AudienceSnapshot> {

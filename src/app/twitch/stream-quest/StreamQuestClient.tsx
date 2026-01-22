@@ -54,6 +54,9 @@ type QuestResponse = {
   generatedAt: string;
   quests: StreamQuest[];
   ledger: Record<string, number>;
+  chatterQuests: ChatterQuest[];
+  chatterQuestor: string;
+  chatterRerollUsed: boolean;
   audience: AudienceSnapshot;
 };
 
@@ -61,6 +64,7 @@ type ChatterQuest = {
   id: string;
   title: string;
   completed: boolean;
+  reward: number;
 };
 
 const categoryMeta: Record<
@@ -119,72 +123,6 @@ const categoryMeta: Record<
 const WIZARD_COOLDOWN_KEY = "stream-quest-wizard-cooldown";
 const WIZARD_SILENCE_MS = 5 * 60 * 60 * 1000;
 const WIZARD_SOUNDS = ["/audio/wizard1.mp3", "/audio/wizard2.mp3", "/audio/wizard3.mp3", "/audio/wizard4.mp3"];
-const CHATTER_QUEST_STORAGE_KEY = "stream-quest-chatter-daily";
-
-const CHATTER_QUEST_POOL = [
-  "Chat with only emotes for the next (1-5) minute(s)",
-  "Compete with (streamer name) in https://play.typeracer.com/ and win",
-  "Compete with (streamer name) in https://krunker.io/ and win",
-  "Post your favourite emote in chat",
-  "Post your favourite clip of (streamer name) in chat",
-  "Post your favourite copypasta from the (streamer name)'s stream in chat",
-  "Send a paragraph in chat glazing (streamer name)",
-  "Insult (another random chatter) in chat",
-  "Praise (another random chatter) in chat",
-  "Solve this riddle: I can run 100m in 7 seconds and throw a javelin 700m, but only when I’m talking. Who am I?",
-  "Gift 1 Sub",
-  "Gift 2 Sub",
-  "Use your Twitch Prime on (streamer name)'s channel",
-  "Tell (streamer name)'s chat all the things you love about them",
-  "Post a copypasta with MonsterTTS",
-  "Drop your hype emote of the day",
-  "Share your favorite stream moment in one sentence",
-  "Type only in all caps for the next 5 messages",
-  "Post a wholesome compliment about (streamer name)",
-  "Ask a fun question in chat that others can answer",
-  "Create a new short catchphrase for the stream",
-  "Guess the next game (streamer name) will play",
-  "Use only question marks for your next 3 messages",
-  "Send a haiku about the stream",
-  "Post a clip or timestamp of a funny moment",
-  "Start a friendly debate about a game mechanic",
-  "Share a cozy snack recommendation",
-  "Teach chat a random trivia fact",
-  "Translate a hype phrase into another language",
-  "Post your favorite boss fight in chat",
-  "Type the alphabet backwards in chat",
-  "Do a quick tongue twister in chat",
-  "Send a motivational quote for (streamer name)",
-  "Write a two-line rap about the stream",
-  "Type your favorite emote three times in a row",
-  "Name a legendary in-game item",
-  "Describe (streamer name)'s vibe in 3 words",
-  "Send a short story that includes (streamer name)",
-  "Make a pun about the current game",
-  "Show love to a new chatter in chat",
-  "Convince chat to hydrate in one sentence",
-  "Share your current song on repeat",
-  "Post your favorite stream meme",
-  "Type only animal sounds for 2 messages",
-  "Describe the stream using only emojis",
-  "Give a shoutout to (another random chatter)",
-  "Challenge (another random chatter) to a friendly duel",
-  "Start a chain of the same emote",
-  "Guess the streamer’s next snack",
-  "Share a cozy game recommendation",
-  "Post your favorite achievement of the week",
-  "Drop a villain laugh in chat",
-  "Send a pirate-themed message",
-  "Write a limerick about the stream",
-  "Post a dragon roar in chat",
-  "Say something nice about the mods",
-  "Describe the stream as a movie title",
-  "Post your favorite stream moment in emojis",
-  "Share a joke that fits the stream theme",
-  "Offer a ridiculous quest reward to (streamer name)",
-  "Make up a new nickname for (another random chatter)",
-  "Type a one-line poem about today's stream",
-];
 
 function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -200,6 +138,7 @@ export function StreamQuestClient() {
   const [error, setError] = useState<string | null>(null);
   const [completingId, setCompletingId] = useState<string | null>(null);
   const [celebratingId, setCelebratingId] = useState<string | null>(null);
+  const [chatterCompletingId, setChatterCompletingId] = useState<string | null>(null);
   const [chatterQuests, setChatterQuests] = useState<ChatterQuest[]>([]);
   const [dailyQuestor, setDailyQuestor] = useState<string>("Mystery Chatter");
   const [chatterRerollUsed, setChatterRerollUsed] = useState(false);
@@ -210,47 +149,7 @@ export function StreamQuestClient() {
   const [authState, setAuthState] = useState<"checking" | "unauthenticated" | "ready">("checking");
   const questFinAudioRef = useRef<HTMLAudioElement | null>(null);
   const moneyAudioRef = useRef<HTMLAudioElement | null>(null);
-  const questDateKey = useMemo(() => new Date().toISOString().slice(0, 10), []);
-
-  const getRandomChatterName = useCallback(
-    (exclude: string[] = []) => {
-      const pool = data?.audience?.names?.filter((name) => !exclude.includes(name)) ?? [];
-      if (pool.length === 0) return "a fellow chatter";
-      return pool[Math.floor(Math.random() * pool.length)];
-    },
-    [data?.audience?.names]
-  );
-
-  const streamDisplayName = data?.audience?.displayName || "the streamer";
-
-  const formatChatterQuest = useCallback(
-    (template: string, questor: string) => {
-      const emoteMinutes = randomBetween(1, 5);
-      return template
-        .replace("(1-5)", String(emoteMinutes))
-        .replace(/\(streamer name\)/gi, streamDisplayName)
-        .replace(/\(another random chatter\)/gi, getRandomChatterName([questor]))
-        .replace(/\(streamer name\)'s/gi, `${streamDisplayName}'s`);
-    },
-    [getRandomChatterName, streamDisplayName]
-  );
-
-  const generateChatterQuests = useCallback(
-    (questor: string) => {
-      const pool = CHATTER_QUEST_POOL.map((quest) => formatChatterQuest(quest, questor));
-      const shuffled = pool
-        .map((value) => ({ value, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ value }) => value);
-      return shuffled.slice(0, 3).map((title) => ({
-        id: crypto.randomUUID(),
-        title,
-        completed: false,
-      }));
-    },
-    [formatChatterQuest]
-  );
-
+  const chatterQuestAudioRef = useRef<HTMLAudioElement | null>(null);
   const triggerToast = useCallback((message: string) => {
     setToast(message);
     setTimeout(() => setIsToastVisible(true), 10);
@@ -306,71 +205,10 @@ export function StreamQuestClient() {
 
   useEffect(() => {
     if (!data) return;
-    const stored = typeof window !== "undefined" ? localStorage.getItem(CHATTER_QUEST_STORAGE_KEY) : null;
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored) as {
-          date: string;
-          questor: string;
-          quests: ChatterQuest[];
-          rerollUsed: boolean;
-        };
-        if (parsed.date === questDateKey && parsed.quests?.length) {
-          setDailyQuestor(parsed.questor);
-          setChatterQuests(parsed.quests);
-          setChatterRerollUsed(parsed.rerollUsed);
-          return;
-        }
-      } catch {
-        // ignore and regenerate
-      }
-    }
-    const questor = getRandomChatterName();
-    const quests = generateChatterQuests(questor);
-    setDailyQuestor(questor);
-    setChatterQuests(quests);
-    setChatterRerollUsed(false);
-    if (typeof window !== "undefined") {
-      localStorage.setItem(
-        CHATTER_QUEST_STORAGE_KEY,
-        JSON.stringify({ date: questDateKey, questor, quests, rerollUsed: false })
-      );
-    }
-  }, [data, generateChatterQuests, getRandomChatterName, questDateKey]);
-
-  const persistChatterQuests = useCallback(
-    (questor: string, quests: ChatterQuest[], rerollUsed: boolean) => {
-      if (typeof window === "undefined") return;
-      localStorage.setItem(
-        CHATTER_QUEST_STORAGE_KEY,
-        JSON.stringify({ date: questDateKey, questor, quests, rerollUsed })
-      );
-    },
-    [questDateKey]
-  );
-
-  const toggleChatterQuest = useCallback(
-    (id: string) => {
-      setChatterQuests((prev) => {
-        const next = prev.map((quest) =>
-          quest.id === id ? { ...quest, completed: !quest.completed } : quest
-        );
-        persistChatterQuests(dailyQuestor, next, chatterRerollUsed);
-        return next;
-      });
-    },
-    [dailyQuestor, chatterRerollUsed, persistChatterQuests]
-  );
-
-  const rerollChatterQuestor = useCallback(() => {
-    if (chatterRerollUsed) return;
-    const questor = getRandomChatterName([dailyQuestor]);
-    const quests = generateChatterQuests(questor);
-    setDailyQuestor(questor);
-    setChatterQuests(quests);
-    setChatterRerollUsed(true);
-    persistChatterQuests(questor, quests, true);
-  }, [chatterRerollUsed, dailyQuestor, generateChatterQuests, getRandomChatterName, persistChatterQuests]);
+    setDailyQuestor(data.chatterQuestor || "Mystery Chatter");
+    setChatterQuests(data.chatterQuests || []);
+    setChatterRerollUsed(Boolean(data.chatterRerollUsed));
+  }, [data]);
 
   const totalMinted = useMemo(() => {
     if (!data) return 0;
@@ -390,6 +228,58 @@ export function StreamQuestClient() {
       money.play().catch((err) => console.warn("Unable to play reward audio", err));
     }, 3000); 
   }, []);
+
+  const playChatterQuestAudio = useCallback(async () => {
+    const chatterAudio = chatterQuestAudioRef.current;
+    if (!chatterAudio) return;
+    chatterAudio.currentTime = 0;
+    chatterAudio.play().catch((err) => console.warn("Unable to play chatter quest audio", err));
+  }, []);
+
+  async function rerollChatterQuestor() {
+    if (chatterRerollUsed) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/twitch/stream-quests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "reroll-chatter" }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Failed to reroll chatter questor");
+      setData(json);
+      triggerToast("Chatter questor rerolled!");
+    } catch (err: any) {
+      console.error("Chatter reroll failed:", err);
+      triggerToast(`Error: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function completeChatterQuest(id: string) {
+    if (!data || chatterCompletingId) return;
+    setChatterCompletingId(id);
+    try {
+      const res = await fetch("/api/twitch/stream-quests", {
+        method: "POST",
+        credentials: "include",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "claim-chatter", id }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Server rejected the chatter claim");
+      setData(json);
+      void playChatterQuestAudio();
+      triggerToast("Chatter quest claimed!");
+    } catch (err: any) {
+      console.error("Chatter claim failed:", err);
+      triggerToast(`Error: ${err.message}`);
+    } finally {
+      setChatterCompletingId(null);
+    }
+  }
 
   async function rerollQuests() {
     if (!confirm("Reroll available quests? Completed quests will stay.")) return;
@@ -508,6 +398,7 @@ if (error === "OFFLINE") {
     <div className="space-y-6">
       <audio ref={questFinAudioRef} src="/audio/questfin.mp3" preload="auto" aria-hidden className="hidden" />
       <audio ref={moneyAudioRef} src="/audio/money.mp3" preload="auto" aria-hidden className="hidden" />
+      <audio ref={chatterQuestAudioRef} src="/audio/chatterquest.mp3" preload="auto" aria-hidden className="hidden" />
 
       <MysticWizard />
 
@@ -599,20 +490,20 @@ if (error === "OFFLINE") {
             </div>
           </section>
 
-          <section className="relative overflow-hidden rounded-[28px] border border-amber-300/15 bg-[#140c07]/80 px-4 py-6 shadow-[0_18px_45px_rgba(0,0,0,0.4)] backdrop-blur md:px-6">
+          <section className="relative mx-auto max-w-5xl overflow-hidden rounded-[26px] border border-amber-300/15 bg-[#140c07]/80 px-4 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.4)] backdrop-blur md:px-5">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(255,255,255,0.05),transparent_35%),radial-gradient(circle_at_90%_40%,rgba(255,183,94,0.08),transparent_45%)]" />
 
             <div className="relative flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div>
-                <p className="text-2xl font-bold uppercase tracking-[0.28em] text-amber-100/80">
+                <p className="text-xl font-bold uppercase tracking-[0.28em] text-amber-100/80">
                   Daily Chatter Quests
                 </p>
-                <p className="text-sm text-amber-50/70">
+                <p className="text-xs text-amber-50/70">
                   Three quests for one chosen chatter. Rewards go only to today&apos;s questor.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <span className="rounded-full border border-amber-300/40 bg-amber-900/60 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100">
+                <span className="rounded-full border border-amber-300/40 bg-amber-900/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-amber-100">
                   Today&apos;s Daily Questor: {dailyQuestor}
                 </span>
                 <button
@@ -620,7 +511,7 @@ if (error === "OFFLINE") {
                   onClick={rerollChatterQuestor}
                   disabled={chatterRerollUsed}
                   className={clsx(
-                    "flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-widest transition",
+                    "flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-widest transition",
                     chatterRerollUsed
                       ? "cursor-not-allowed border-amber-700/40 bg-amber-900/20 text-amber-200/50"
                       : "border-amber-500/30 bg-amber-500/10 text-amber-200 hover:bg-amber-500/20"
@@ -632,24 +523,30 @@ if (error === "OFFLINE") {
               </div>
             </div>
 
-            <div className="relative mt-6 grid gap-4 md:grid-cols-3">
+            <div className="relative mt-5 grid gap-3 md:grid-cols-3">
               {chatterQuests.map((quest) => (
                 <button
                   key={quest.id}
                   type="button"
-                  onClick={() => toggleChatterQuest(quest.id)}
+                  onClick={() => completeChatterQuest(quest.id)}
+                  disabled={quest.completed || chatterCompletingId === quest.id}
                   className={clsx(
-                    "group flex h-full flex-col rounded-2xl border px-4 py-4 text-left transition",
+                    "group relative isolate flex h-full flex-col rounded-2xl border px-3 py-3 text-left transition-all duration-300",
                     quest.completed
                       ? "border-amber-600/30 bg-amber-950/40 text-amber-100/50 line-through"
-                      : "border-amber-300/20 bg-black/25 text-amber-50 hover:border-amber-300/40 hover:bg-black/40"
+                      : "border-amber-300/20 bg-black/25 text-amber-50 hover:-translate-y-2 hover:border-amber-300/40 hover:bg-black/40 active:scale-95"
                   )}
                 >
+                  {!quest.completed ? (
+                    <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-2xl">
+                      <div className="absolute -inset-[120%] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-transform duration-1000 group-hover:translate-x-[45%] group-hover:opacity-100 group-hover:rotate-12" />
+                    </div>
+                  ) : null}
                   <div className="flex items-start justify-between gap-3">
-                    <span className="text-sm font-semibold text-amber-100/80">Chatter Quest</span>
+                    <span className="text-xs font-semibold text-amber-100/80">Chatter Quest</span>
                     <span
                       className={clsx(
-                        "rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-[0.2em]",
+                        "rounded-full border px-2 py-0.5 text-[9px] uppercase tracking-[0.2em]",
                         quest.completed
                           ? "border-emerald-400/40 bg-emerald-900/20 text-emerald-200/70"
                           : "border-amber-400/30 bg-amber-900/20 text-amber-200/70"
@@ -658,9 +555,10 @@ if (error === "OFFLINE") {
                       {quest.completed ? "Completed" : "Available"}
                     </span>
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed">{quest.title}</p>
-                  <div className="mt-auto pt-4 text-xs text-amber-100/70">
-                    Reward: XP + toadcoins to <span className="font-semibold text-amber-100">{dailyQuestor}</span>
+                  <p className="mt-3 text-xs leading-relaxed">{quest.title}</p>
+                  <div className="mt-auto pt-3 text-[11px] text-amber-100/70">
+                    Reward: {quest.reward} TOADCOINS + XP to{" "}
+                    <span className="font-semibold text-amber-100">{dailyQuestor}</span>
                   </div>
                 </button>
               ))}
