@@ -20,7 +20,7 @@
       "category": "chatter",
       "title": "Compete with {{streamer}} in https://play.typeracer.com/ and win",
       "prompt": "Compete with {{streamer}} in https://play.typeracer.com/ and win",
-      "reward": 300,
+      "reward": 500,
       "variables": [
         {
           "key": "streamer",
@@ -134,10 +134,10 @@
       ]
     },
     {
-      "id": "gift-2-sub",
+      "id": "gift-10-sub",
       "category": "chatter",
-      "title": "Gift 2 Sub to {{streamer}}",
-      "prompt": "Gift 2 Sub to {{streamer}}",
+      "title": "Gift 10 Subs to {{streamer}}",
+      "prompt": "Gift 10 Subs to {{streamer}}",
       "reward": 500,
       "variables": [
         {
@@ -182,8 +182,8 @@
     {
       "id": "hype-emote",
       "category": "chatter",
-      "title": "Drop your hype emote of the day",
-      "prompt": "Drop your hype emote of the day",
+      "title": "Drop your emote of the day",
+      "prompt": "Drop your emote of the day",
       "reward": 200
     },
     {
@@ -257,8 +257,8 @@
     {
       "id": "clip-or-timestamp",
       "category": "chatter",
-      "title": "Post a clip or timestamp of a funny moment",
-      "prompt": "Post a clip or timestamp of a funny moment",
+      "title": "Post a clip of a funny moment",
+      "prompt": "Post a clip of a funny moment",
       "reward": 200
     },
     {
@@ -271,8 +271,8 @@
     {
       "id": "cozy-snack",
       "category": "chatter",
-      "title": "Share a cozy snack recommendation",
-      "prompt": "Share a cozy snack recommendation",
+      "title": "Share a snack recommendation",
+      "prompt": "Share a snack recommendation",
       "reward": 500
     },
     {
@@ -281,34 +281,6 @@
       "title": "Teach chat a random trivia fact",
       "prompt": "Teach chat a random trivia fact",
       "reward": 200
-    },
-    {
-      "id": "translate-hype",
-      "category": "chatter",
-      "title": "Translate a hype phrase into another language",
-      "prompt": "Translate a hype phrase into another language",
-      "reward": 300
-    },
-    {
-      "id": "favorite-boss",
-      "category": "chatter",
-      "title": "Post your favorite boss fight in chat",
-      "prompt": "Post your favorite boss fight in chat",
-      "reward": 500
-    },
-    {
-      "id": "alphabet-backwards",
-      "category": "chatter",
-      "title": "Type the alphabet backwards in chat",
-      "prompt": "Type the alphabet backwards in chat",
-      "reward": 200
-    },
-    {
-      "id": "tongue-twister",
-      "category": "chatter",
-      "title": "Do a quick tongue twister in chat",
-      "prompt": "Do a quick tongue twister in chat",
-      "reward": 300
     },
     {
       "id": "motivational-quote",
@@ -358,26 +330,6 @@
       ]
     },
     {
-      "id": "short-story",
-      "category": "chatter",
-      "title": "Send a short story that includes {{streamer}}",
-      "prompt": "Send a short story that includes {{streamer}}",
-      "reward": 300,
-      "variables": [
-        {
-          "key": "streamer",
-          "type": "streamer"
-        }
-      ]
-    },
-    {
-      "id": "pun-about-game",
-      "category": "chatter",
-      "title": "Make a pun about the current game",
-      "prompt": "Make a pun about the current game",
-      "reward": 500
-    },
-    {
       "id": "show-love-new-chatter",
       "category": "chatter",
       "title": "Show love to a new chatter in chat",
@@ -385,17 +337,10 @@
       "reward": 200
     },
     {
-      "id": "hydrate-sentence",
-      "category": "chatter",
-      "title": "Convince chat to hydrate in one sentence",
-      "prompt": "Convince chat to hydrate in one sentence",
-      "reward": 300
-    },
-    {
       "id": "song-on-repeat",
       "category": "chatter",
-      "title": "Share your current song on repeat",
-      "prompt": "Share your current song on repeat",
+      "title": "Share a song with the stream",
+      "prompt": "Share a song with the stream",
       "reward": 500
     },
     {
@@ -467,25 +412,11 @@
       "reward": 300
     },
     {
-      "id": "achievement-week",
-      "category": "chatter",
-      "title": "Post your favorite achievement of the week",
-      "prompt": "Post your favorite achievement of the week",
-      "reward": 500
-    },
-    {
       "id": "villain-laugh",
       "category": "chatter",
       "title": "Drop a villain laugh in chat",
       "prompt": "Drop a villain laugh in chat",
       "reward": 200
-    },
-    {
-      "id": "pirate-message",
-      "category": "chatter",
-      "title": "Send a pirate-themed message",
-      "prompt": "Send a pirate-themed message",
-      "reward": 300
     },
     {
       "id": "limerick",
@@ -495,25 +426,11 @@
       "reward": 500
     },
     {
-      "id": "dragon-roar",
-      "category": "chatter",
-      "title": "Post a dragon roar in chat",
-      "prompt": "Post a dragon roar in chat",
-      "reward": 200
-    },
-    {
       "id": "nice-about-mods",
       "category": "chatter",
       "title": "Say something nice about the mods",
       "prompt": "Say something nice about the mods",
       "reward": 300
-    },
-    {
-      "id": "movie-title",
-      "category": "chatter",
-      "title": "Describe the stream as a movie title",
-      "prompt": "Describe the stream as a movie title",
-      "reward": 500
     },
     {
       "id": "moment-emojis",
@@ -528,19 +445,6 @@
       "title": "Share a joke that fits the stream theme",
       "prompt": "Share a joke that fits the stream theme",
       "reward": 300
-    },
-    {
-      "id": "ridiculous-reward",
-      "category": "chatter",
-      "title": "Offer a ridiculous quest reward to {{streamer}}",
-      "prompt": "Offer a ridiculous quest reward to {{streamer}}",
-      "reward": 500,
-      "variables": [
-        {
-          "key": "streamer",
-          "type": "streamer"
-        }
-      ]
     },
     {
       "id": "new-nickname",
