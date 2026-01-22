@@ -1,0 +1,566 @@
+{
+  "templates": [
+    {
+      "id": "emotes-only",
+      "category": "chatter",
+      "title": "Chat with only emotes for the next {{minutes}} minute{{plural:minutes:s}}",
+      "prompt": "Chat with only emotes for the next {{minutes}} minute{{plural:minutes:s}}",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "minutes",
+          "type": "range",
+          "min": 1,
+          "max": 5
+        }
+      ]
+    },
+    {
+      "id": "typeracer-win",
+      "category": "chatter",
+      "title": "Compete with {{streamer}} in https://play.typeracer.com/ and win",
+      "prompt": "Compete with {{streamer}} in https://play.typeracer.com/ and win",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "krunker-win",
+      "category": "chatter",
+      "title": "Compete with {{streamer}} in https://krunker.io/ and win",
+      "prompt": "Compete with {{streamer}} in https://krunker.io/ and win",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "favorite-emote",
+      "category": "chatter",
+      "title": "Post your favourite emote in chat",
+      "prompt": "Post your favourite emote in chat",
+      "reward": 0
+    },
+    {
+      "id": "favorite-clip",
+      "category": "chatter",
+      "title": "Post your favourite clip of {{streamer}} in chat",
+      "prompt": "Post your favourite clip of {{streamer}} in chat",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "favorite-copypasta",
+      "category": "chatter",
+      "title": "Post your favourite copypasta from the {{streamer}}'s stream in chat",
+      "prompt": "Post your favourite copypasta from the {{streamer}}'s stream in chat",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "glaze-streamer",
+      "category": "chatter",
+      "title": "Send a paragraph in chat glazing {{streamer}}",
+      "prompt": "Send a paragraph in chat glazing {{streamer}}",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "insult-chatter",
+      "category": "chatter",
+      "title": "Insult {{chatter}} in chat",
+      "prompt": "Insult {{chatter}} in chat",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "chatter",
+          "type": "chatter"
+        }
+      ]
+    },
+    {
+      "id": "praise-chatter",
+      "category": "chatter",
+      "title": "Praise {{chatter}} in chat",
+      "prompt": "Praise {{chatter}} in chat",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "chatter",
+          "type": "chatter"
+        }
+      ]
+    },
+    {
+      "id": "talking-riddle",
+      "category": "chatter",
+      "title": "Solve this riddle: I can run 100m in 7 seconds and throw a javelin 700m, but only when I’m talking. Who am I?",
+      "prompt": "Solve this riddle: I can run 100m in 7 seconds and throw a javelin 700m, but only when I’m talking. Who am I?",
+      "reward": 0
+    },
+    {
+      "id": "gift-1-sub",
+      "category": "chatter",
+      "title": "Gift 1 Sub to {{streamer}}",
+      "prompt": "Gift 1 Sub to {{streamer}}",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "gift-2-sub",
+      "category": "chatter",
+      "title": "Gift 2 Sub to {{streamer}}",
+      "prompt": "Gift 2 Sub to {{streamer}}",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "twitch-prime",
+      "category": "chatter",
+      "title": "Use your Twitch Prime on {{streamer}}'s channel",
+      "prompt": "Use your Twitch Prime on {{streamer}}'s channel",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "love-about-chat",
+      "category": "chatter",
+      "title": "Tell {{streamer}}'s chat all the things you love about them",
+      "prompt": "Tell {{streamer}}'s chat all the things you love about them",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "monstertts-copypasta",
+      "category": "chatter",
+      "title": "Post a copypasta with MonsterTTS",
+      "prompt": "Post a copypasta with MonsterTTS",
+      "reward": 0
+    },
+    {
+      "id": "hype-emote",
+      "category": "chatter",
+      "title": "Drop your hype emote of the day",
+      "prompt": "Drop your hype emote of the day",
+      "reward": 0
+    },
+    {
+      "id": "favorite-moment",
+      "category": "chatter",
+      "title": "Share your favorite stream moment in one sentence",
+      "prompt": "Share your favorite stream moment in one sentence",
+      "reward": 0
+    },
+    {
+      "id": "all-caps",
+      "category": "chatter",
+      "title": "Type only in all caps for the next 5 messages",
+      "prompt": "Type only in all caps for the next 5 messages",
+      "reward": 0
+    },
+    {
+      "id": "wholesome-compliment",
+      "category": "chatter",
+      "title": "Post a wholesome compliment about {{streamer}}",
+      "prompt": "Post a wholesome compliment about {{streamer}}",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "ask-fun-question",
+      "category": "chatter",
+      "title": "Ask a fun question in chat that others can answer",
+      "prompt": "Ask a fun question in chat that others can answer",
+      "reward": 0
+    },
+    {
+      "id": "catchphrase",
+      "category": "chatter",
+      "title": "Create a new short catchphrase for the stream",
+      "prompt": "Create a new short catchphrase for the stream",
+      "reward": 0
+    },
+    {
+      "id": "guess-next-game",
+      "category": "chatter",
+      "title": "Guess the next game {{streamer}} will play",
+      "prompt": "Guess the next game {{streamer}} will play",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "question-marks",
+      "category": "chatter",
+      "title": "Use only question marks for your next 3 messages",
+      "prompt": "Use only question marks for your next 3 messages",
+      "reward": 0
+    },
+    {
+      "id": "haiku",
+      "category": "chatter",
+      "title": "Send a haiku about the stream",
+      "prompt": "Send a haiku about the stream",
+      "reward": 0
+    },
+    {
+      "id": "clip-or-timestamp",
+      "category": "chatter",
+      "title": "Post a clip or timestamp of a funny moment",
+      "prompt": "Post a clip or timestamp of a funny moment",
+      "reward": 0
+    },
+    {
+      "id": "friendly-debate",
+      "category": "chatter",
+      "title": "Start a friendly debate about a game mechanic",
+      "prompt": "Start a friendly debate about a game mechanic",
+      "reward": 0
+    },
+    {
+      "id": "cozy-snack",
+      "category": "chatter",
+      "title": "Share a cozy snack recommendation",
+      "prompt": "Share a cozy snack recommendation",
+      "reward": 0
+    },
+    {
+      "id": "random-trivia",
+      "category": "chatter",
+      "title": "Teach chat a random trivia fact",
+      "prompt": "Teach chat a random trivia fact",
+      "reward": 0
+    },
+    {
+      "id": "translate-hype",
+      "category": "chatter",
+      "title": "Translate a hype phrase into another language",
+      "prompt": "Translate a hype phrase into another language",
+      "reward": 0
+    },
+    {
+      "id": "favorite-boss",
+      "category": "chatter",
+      "title": "Post your favorite boss fight in chat",
+      "prompt": "Post your favorite boss fight in chat",
+      "reward": 0
+    },
+    {
+      "id": "alphabet-backwards",
+      "category": "chatter",
+      "title": "Type the alphabet backwards in chat",
+      "prompt": "Type the alphabet backwards in chat",
+      "reward": 0
+    },
+    {
+      "id": "tongue-twister",
+      "category": "chatter",
+      "title": "Do a quick tongue twister in chat",
+      "prompt": "Do a quick tongue twister in chat",
+      "reward": 0
+    },
+    {
+      "id": "motivational-quote",
+      "category": "chatter",
+      "title": "Send a motivational quote for {{streamer}}",
+      "prompt": "Send a motivational quote for {{streamer}}",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "two-line-rap",
+      "category": "chatter",
+      "title": "Write a two-line rap about the stream",
+      "prompt": "Write a two-line rap about the stream",
+      "reward": 0
+    },
+    {
+      "id": "emote-three-times",
+      "category": "chatter",
+      "title": "Type your favorite emote three times in a row",
+      "prompt": "Type your favorite emote three times in a row",
+      "reward": 0
+    },
+    {
+      "id": "legendary-item",
+      "category": "chatter",
+      "title": "Name a legendary in-game item",
+      "prompt": "Name a legendary in-game item",
+      "reward": 0
+    },
+    {
+      "id": "vibe-three-words",
+      "category": "chatter",
+      "title": "Describe {{streamer}}'s vibe in 3 words",
+      "prompt": "Describe {{streamer}}'s vibe in 3 words",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "short-story",
+      "category": "chatter",
+      "title": "Send a short story that includes {{streamer}}",
+      "prompt": "Send a short story that includes {{streamer}}",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "pun-about-game",
+      "category": "chatter",
+      "title": "Make a pun about the current game",
+      "prompt": "Make a pun about the current game",
+      "reward": 0
+    },
+    {
+      "id": "show-love-new-chatter",
+      "category": "chatter",
+      "title": "Show love to a new chatter in chat",
+      "prompt": "Show love to a new chatter in chat",
+      "reward": 0
+    },
+    {
+      "id": "hydrate-sentence",
+      "category": "chatter",
+      "title": "Convince chat to hydrate in one sentence",
+      "prompt": "Convince chat to hydrate in one sentence",
+      "reward": 0
+    },
+    {
+      "id": "song-on-repeat",
+      "category": "chatter",
+      "title": "Share your current song on repeat",
+      "prompt": "Share your current song on repeat",
+      "reward": 0
+    },
+    {
+      "id": "favorite-meme",
+      "category": "chatter",
+      "title": "Post your favorite stream meme",
+      "prompt": "Post your favorite stream meme",
+      "reward": 0
+    },
+    {
+      "id": "animal-sounds",
+      "category": "chatter",
+      "title": "Type only animal sounds for 2 messages",
+      "prompt": "Type only animal sounds for 2 messages",
+      "reward": 0
+    },
+    {
+      "id": "emoji-only",
+      "category": "chatter",
+      "title": "Describe the stream using only emojis",
+      "prompt": "Describe the stream using only emojis",
+      "reward": 0
+    },
+    {
+      "id": "shoutout-chatter",
+      "category": "chatter",
+      "title": "Give a shoutout to {{chatter}}",
+      "prompt": "Give a shoutout to {{chatter}}",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "chatter",
+          "type": "chatter"
+        }
+      ]
+    },
+    {
+      "id": "friendly-duel",
+      "category": "chatter",
+      "title": "Challenge {{chatter}} to a friendly duel",
+      "prompt": "Challenge {{chatter}} to a friendly duel",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "chatter",
+          "type": "chatter"
+        }
+      ]
+    },
+    {
+      "id": "emote-chain",
+      "category": "chatter",
+      "title": "Start a chain of the same emote",
+      "prompt": "Start a chain of the same emote",
+      "reward": 0
+    },
+    {
+      "id": "guess-snack",
+      "category": "chatter",
+      "title": "Guess the streamer’s next snack",
+      "prompt": "Guess the streamer’s next snack",
+      "reward": 0
+    },
+    {
+      "id": "cozy-game",
+      "category": "chatter",
+      "title": "Share a cozy game recommendation",
+      "prompt": "Share a cozy game recommendation",
+      "reward": 0
+    },
+    {
+      "id": "achievement-week",
+      "category": "chatter",
+      "title": "Post your favorite achievement of the week",
+      "prompt": "Post your favorite achievement of the week",
+      "reward": 0
+    },
+    {
+      "id": "villain-laugh",
+      "category": "chatter",
+      "title": "Drop a villain laugh in chat",
+      "prompt": "Drop a villain laugh in chat",
+      "reward": 0
+    },
+    {
+      "id": "pirate-message",
+      "category": "chatter",
+      "title": "Send a pirate-themed message",
+      "prompt": "Send a pirate-themed message",
+      "reward": 0
+    },
+    {
+      "id": "limerick",
+      "category": "chatter",
+      "title": "Write a limerick about the stream",
+      "prompt": "Write a limerick about the stream",
+      "reward": 0
+    },
+    {
+      "id": "dragon-roar",
+      "category": "chatter",
+      "title": "Post a dragon roar in chat",
+      "prompt": "Post a dragon roar in chat",
+      "reward": 0
+    },
+    {
+      "id": "nice-about-mods",
+      "category": "chatter",
+      "title": "Say something nice about the mods",
+      "prompt": "Say something nice about the mods",
+      "reward": 0
+    },
+    {
+      "id": "movie-title",
+      "category": "chatter",
+      "title": "Describe the stream as a movie title",
+      "prompt": "Describe the stream as a movie title",
+      "reward": 0
+    },
+    {
+      "id": "moment-emojis",
+      "category": "chatter",
+      "title": "Post your favorite stream moment in emojis",
+      "prompt": "Post your favorite stream moment in emojis",
+      "reward": 0
+    },
+    {
+      "id": "theme-joke",
+      "category": "chatter",
+      "title": "Share a joke that fits the stream theme",
+      "prompt": "Share a joke that fits the stream theme",
+      "reward": 0
+    },
+    {
+      "id": "ridiculous-reward",
+      "category": "chatter",
+      "title": "Offer a ridiculous quest reward to {{streamer}}",
+      "prompt": "Offer a ridiculous quest reward to {{streamer}}",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "streamer",
+          "type": "streamer"
+        }
+      ]
+    },
+    {
+      "id": "new-nickname",
+      "category": "chatter",
+      "title": "Make up a new nickname for {{chatter}}",
+      "prompt": "Make up a new nickname for {{chatter}}",
+      "reward": 0,
+      "variables": [
+        {
+          "key": "chatter",
+          "type": "chatter"
+        }
+      ]
+    },
+    {
+      "id": "one-line-poem",
+      "category": "chatter",
+      "title": "Type a one-line poem about today's stream",
+      "prompt": "Type a one-line poem about today's stream",
+      "reward": 0
+    }
+  ]
+}
