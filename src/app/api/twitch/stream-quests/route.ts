@@ -4,7 +4,7 @@ import path from "node:path";
 
 import { NextResponse } from "next/server";
 
-import { getValidSession } from "@/app/lib/twitch-auth";
+import { fetchChatters, getValidSession } from "@/app/lib/twitch-auth";
 // Import the database logic from your chattergrounds route
 import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
 
@@ -99,16 +99,6 @@ type QuestTemplateConfig = {
 const STREAM_QUESTS_DIR = path.join(process.cwd(), "data", "stream-quests");
 const TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "quest-library.json");
 const CHAT_TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "chat-quest-library.json");
-
-const FALLBACK_CHATTERS = [
-  "toadette",
-  "chat_goblin",
-  "ban_me_please",
-  "lilypadlurker",
-  "hammerfan",
-  "modbot9000",
-  "ribbitriot",
-];
 
 const BOT_LOGINS = new Set([
   "streamelements",
@@ -276,7 +266,7 @@ export async function POST(request: Request) {
     }
 
     const chatTemplates = await loadQuestTemplates(CHAT_TEMPLATE_LIBRARY_PATH);
-    const newQuestor = pickChatter(audience.names, FALLBACK_CHATTERS, [state.dailyQuestor]);
+    const newQuestor = pickChatter(audience.names, [], [state.dailyQuestor]);
     const newChatterQuests = buildChatterQuests(newQuestor, audience, chatTemplates);
 
     const newState: StreamQuestState = {
@@ -518,7 +508,7 @@ async function loadState(userId: string): Promise<StreamQuestState | null> {
       dailyQuestor: parsed.dailyQuestor || "",
       chatterRerollCount: rerollCount,
       lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
-      lastAudience: parsed.lastAudience ?? { names: FALLBACK_CHATTERS, source: "fallback", live: true },
+      lastAudience: parsed.lastAudience ?? { names: [], source: "offline", live: false },
     };
   } catch {
     return null;
@@ -554,10 +544,10 @@ function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function pickChatter(chatters: string[], fallback: string[] = FALLBACK_CHATTERS, exclude: string[] = []) {
+function pickChatter(chatters: string[], fallback: string[] = [], exclude: string[] = []) {
   const pool = chatters.filter(n => !exclude.includes(n));
   const finalPool = pool.length ? pool : fallback;
-  if (!finalPool.length) return "a viewer";
+  if (!finalPool.length) return "";
   return finalPool[Math.floor(Math.random() * finalPool.length)];
 }
 
@@ -692,9 +682,7 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
       values[variable.key] = randomBetween(min, max);
     }
     if (variable.type === "chatter") {
-      const fallbackNames = audience.source === "twitch"
-          ? ([audience.displayName].filter(Boolean) as string[])
-          : FALLBACK_CHATTERS;
+      const fallbackNames: string[] = [];
       // Ensure we don't pick the daily questor as the target of their own insult
       const excluded = excludeChatter ? [excludeChatter] : [];
       values[variable.key] = pickChatter(audience.names, fallbackNames, excluded);
@@ -725,37 +713,42 @@ async function loadAudience(session: TwitchSession): Promise<AudienceSnapshot> {
   try {
     if (!session) {
       return {
-        names: FALLBACK_CHATTERS,
+        names: [],
         source: "unauthenticated",
-        live: undefined,
-        note: "Link Twitch to use chattergrounds roster. Using placeholders for now.",
+        live: false,
+        note: "Link Twitch to use chattergrounds roster.",
       };
     }
 
     const recips = await loadRecipientsFromChattergrounds(session.userId);
 
-    const names = shuffleWithSeed(
-      recips.map((r) => r.login),
-      seedFromCurrentHour()
-    );
+    let names = recips.map((r) => r.login);
+    if (names.length === 0) {
+      const liveChatters = await fetchChatters(session);
+      names = liveChatters.chatters?.map((login) => login.toLowerCase()) ?? [];
+    }
+
+    names = names.filter((login) => login && !BOT_LOGINS.has(login));
+    const shuffledNames = shuffleWithSeed(names, seedFromCurrentHour());
 
     const liveCheck = await checkLiveStatus(session);
-    const live = liveCheck ?? true;
+    const hasChatters = shuffledNames.length > 0;
+    const live = hasChatters ? (liveCheck ?? true) : false;
 
     return {
-      names,
+      names: shuffledNames,
       source: "twitch",
       displayName: session.displayName,
       live,
-      note: names.length === 0 ? "No chattergrounds users recorded yet." : undefined,
+      note: hasChatters ? undefined : "No live chatters available.",
     };
   } catch (error) {
     console.error("Stream quest: failed to load chattergrounds roster", error);
     return {
-      names: FALLBACK_CHATTERS,
+      names: [],
       source: "error",
-      live: undefined,
-      note: "DB error while loading roster.",
+      live: false,
+      note: "Failed to load roster.",
     };
   }
 }
