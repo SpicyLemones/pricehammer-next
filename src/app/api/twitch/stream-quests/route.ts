@@ -4,7 +4,7 @@ import path from "node:path";
 
 import { NextResponse } from "next/server";
 
-import { fetchChatters, getValidSession } from "@/app/lib/twitch-auth";
+import { fetchChatters, getValidSession, twitchApi } from "@/app/lib/twitch-auth";
 // Import the database logic from your chattergrounds route
 import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
 
@@ -62,6 +62,7 @@ type AudienceSnapshot = {
   displayName?: string;
   live?: boolean;
   note?: string;
+  recipientByLogin?: Record<string, string>;
 };
 
 type StreamQuestState = {
@@ -160,6 +161,38 @@ async function loadRecipientsFromChattergrounds(broadcasterId: string): Promise<
   }
 
   return out;
+}
+
+function mapRecipientsByLogin(recipients: DbRecipient[]) {
+  return recipients.reduce<Record<string, string>>((acc, entry) => {
+    const login = entry.login.toLowerCase();
+    if (!acc[login]) acc[login] = entry.chatterId;
+    return acc;
+  }, {});
+}
+
+async function resolveChatterId(
+  session: TwitchSession,
+  broadcasterId: string,
+  login?: string
+): Promise<string | null> {
+  if (!login || !session) return null;
+  const normalizedLogin = login.toLowerCase();
+  const recipients = await loadRecipientsFromChattergrounds(broadcasterId);
+  const match = recipients.find((r) => r.login === normalizedLogin);
+  if (match?.chatterId) return match.chatterId;
+
+  try {
+    const users = await twitchApi<{ data?: Array<{ id: string; login: string }> }>(
+      `/users?login=${encodeURIComponent(normalizedLogin)}`,
+      session
+    );
+    const resolved = users.data?.find((user) => user.login === normalizedLogin)?.id ?? null;
+    return resolved;
+  } catch (error) {
+    console.warn("Stream quest: failed to resolve chatter id", error);
+    return null;
+  }
 }
 
 async function checkLiveStatus(session: TwitchSession): Promise<boolean | null> {
@@ -267,11 +300,15 @@ export async function POST(request: Request) {
 
     const chatTemplates = await loadQuestTemplates(CHAT_TEMPLATE_LIBRARY_PATH);
     const newQuestor = pickChatter(audience.names, [], [state.dailyQuestor]);
+    const newQuestorId = newQuestor
+      ? audience.recipientByLogin?.[newQuestor.toLowerCase()]
+      : undefined;
     const newChatterQuests = buildChatterQuests(newQuestor, audience, chatTemplates);
 
     const newState: StreamQuestState = {
         ...state,
         dailyQuestor: newQuestor,
+        dailyQuestorId: newQuestorId,
         chatterQuests: newChatterQuests,
         chatterRerollCount: currentCount + 1, // Increment count
         lastAudience: audience
@@ -296,11 +333,17 @@ export async function POST(request: Request) {
 
     // Reward the SPECIFIC questor
     const targetChatter = state.dailyQuestor;
+    const resolvedChatterId =
+      state.dailyQuestorId ||
+      (await resolveChatterId(session, broadcasterId, targetChatter));
+    if (!resolvedChatterId) {
+      return jsonNoStore({ error: "missing_chatter_id" }, { status: 400 });
+    }
     
     // We try to find their ID if possible from the audience source, but falling back to name is handled by applyChattergroundsAction usually if name based
     await applyChattergroundsAction({
         action: "mint",
-        chatterId: "0", // 0 implies name-based lookup or simple minting
+        chatterId: resolvedChatterId,
         chatterLogin: targetChatter,
         amount: quest.reward
     }, { sessionUserId: broadcasterId });
@@ -421,10 +464,21 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
       stateDirty = true;
     }
 
+    if (existing.dailyQuestor && !existing.dailyQuestorId && audience.recipientByLogin) {
+      const resolvedId = audience.recipientByLogin[existing.dailyQuestor.toLowerCase()];
+      if (resolvedId) {
+        newState.dailyQuestorId = resolvedId;
+        stateDirty = true;
+      }
+    }
+
     // 2. Initialize Chatter Quests if missing (Backwards compatibility for existing day)
     if (!existing.chatterQuests || existing.chatterQuests.length === 0 || !existing.dailyQuestor) {
         const questor = pickChatter(audience.names);
         newState.dailyQuestor = questor;
+        newState.dailyQuestorId = questor
+          ? audience.recipientByLogin?.[questor.toLowerCase()]
+          : undefined;
         newState.chatterQuests = buildChatterQuests(questor, audience, chatQuestTemplates);
         newState.chatterRerollCount = 0; // Init counter
         stateDirty = true;
@@ -456,6 +510,9 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
   
   // Pick Chatter Questor
   const dailyQuestor = pickChatter(audience.names);
+  const dailyQuestorId = dailyQuestor
+    ? audience.recipientByLogin?.[dailyQuestor.toLowerCase()]
+    : undefined;
   const chatterQuests = buildChatterQuests(dailyQuestor, audience, chatQuestTemplates);
 
   const state: StreamQuestState = {
@@ -463,6 +520,7 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
     generatedAt: new Date().toISOString(),
     quests,
     dailyQuestor,
+    dailyQuestorId,
     chatterQuests,
     chatterRerollCount: 0, // Set starting count
     ledger: existing?.ledger ?? {},
@@ -721,6 +779,7 @@ async function loadAudience(session: TwitchSession): Promise<AudienceSnapshot> {
     }
 
     const recips = await loadRecipientsFromChattergrounds(session.userId);
+    const recipientByLogin = mapRecipientsByLogin(recips);
 
     let names = recips.map((r) => r.login);
     if (names.length === 0) {
@@ -741,6 +800,7 @@ async function loadAudience(session: TwitchSession): Promise<AudienceSnapshot> {
       displayName: session.displayName,
       live,
       note: hasChatters ? undefined : "No live chatters available.",
+      recipientByLogin,
     };
   } catch (error) {
     console.error("Stream quest: failed to load chattergrounds roster", error);
