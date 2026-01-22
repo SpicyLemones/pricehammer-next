@@ -177,13 +177,6 @@
       "reward": 300
     },
     {
-      "id": "cq-tongue-twister",
-      "category": "chat",
-      "title": "Twisted Tongue",
-      "prompt": "Do a quick tongue twister in chat.",
-      "reward": 200
-    },
-    {
       "id": "cq-rap",
       "category": "creative",
       "title": "Soundcloud Rapper",
@@ -199,13 +192,6 @@
       "variables": [{ "key": "streamer", "type": "streamer" }]
     },
     {
-      "id": "cq-pun",
-      "category": "fun",
-      "title": "Dad Humor",
-      "prompt": "Make a pun about the current game/category.",
-      "reward": 250
-    },
-    {
       "id": "cq-welcome",
       "category": "interaction",
       "title": "Greeter",
@@ -213,25 +199,11 @@
       "reward": 200
     },
     {
-      "id": "cq-hydrate",
-      "category": "health",
-      "title": "Hydro Homie",
-      "prompt": "Convince chat to hydrate in one sentence.",
-      "reward": 150
-    },
-    {
       "id": "cq-song",
       "category": "music",
       "title": "DJ Chat",
-      "prompt": "Share your current song on repeat.",
+      "prompt": "Share a song with the chat.",
       "reward": 100
-    },
-    {
-      "id": "cq-animal",
-      "category": "fun",
-      "title": "Zoo",
-      "prompt": "Type only animal sounds for 2 messages.",
-      "reward": 200
     },
     {
       "id": "cq-emoji-desc",
