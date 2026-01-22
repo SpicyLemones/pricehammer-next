@@ -522,7 +522,7 @@ if (error === "OFFLINE") {
                   Daily Chatter Quests
                 </p>
                 <p className="text-sm text-amber-50/70">
-                  Three quests for one chosen chatter. Rewards go only to today&apos;s questor.
+                  Stop! Who approaches the bridge of death, would must complete these questing three. Rewards go only to today&apos;s questor.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3">
@@ -546,12 +546,12 @@ if (error === "OFFLINE") {
               </div>
             </div>
 
-            <div className="relative mt-8 grid auto-rows-fr items-stretch gap-6 md:grid-cols-3">
+            {/* Grid fixed with items-start to prevent stretching and consistent spacing */}
+            <div className="relative mt-8 grid grid-cols-1 gap-6 md:grid-cols-3 items-start justify-items-center">
               {chatterQuests.map((quest) => (
                 <ChatterQuestTile
                   key={quest.id}
                   quest={quest}
-                  dailyQuestor={dailyQuestor}
                   onComplete={() => claimChatterQuest(quest.id)}
                   completing={claimingChatterId === quest.id}
                   celebrating={celebratingChatterId === quest.id}
@@ -903,14 +903,12 @@ function QuestTile({
 
 function ChatterQuestTile({
   quest,
-  dailyQuestor,
   onComplete,
   completing,
   celebrating,
   isActive,
 }: {
   quest: ChatterQuest;
-  dailyQuestor: string;
   onComplete: () => void;
   completing: boolean;
   celebrating: boolean;
@@ -924,59 +922,55 @@ function ChatterQuestTile({
       onClick={!isCompleted && isActive ? onComplete : undefined}
       disabled={!isActive || isCompleted || completing}
       className={clsx(
-        "group relative isolate h-full w-full rounded-[32px] text-left transition-all duration-300",
+        // Constrain width so it doesn't span the whole screen
+        "group relative isolate h-full w-full max-w-[340px] mx-auto rounded-[24px] text-left transition-all duration-300",
         !isCompleted && isActive 
           ? "hover:-translate-y-2 active:scale-95 active:rotate-1 cursor-pointer" 
           : "cursor-not-allowed opacity-90"
       )}
     >
       {/* Shimmer Effect */}
-      <div className="pointer-events-none absolute inset-0 z-30 overflow-hidden rounded-[32px]">
+      <div className="pointer-events-none absolute inset-0 z-30 overflow-hidden rounded-[24px]">
         <div className="absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-transform duration-1000 group-hover:translate-x-[50%] group-hover:opacity-100 group-hover:rotate-12" />
       </div>
 
-      <div className="absolute top-6 left-4 z-40 flex items-center gap-3">
-        <span className="rounded-full bg-[#1e293b] border border-blue-400/30 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-blue-100 shadow-lg">
-          Chatter Quest
+      <div className="absolute top-5 left-4 z-40 flex items-center gap-3">
+        <span className="rounded-full bg-[#1e293b] border border-blue-400/30 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-100 shadow-lg">
+          Chatter
         </span>
       </div>
 
       <div className={clsx(
-          "relative flex aspect-[1.5/1] min-h-[220px] w-full overflow-hidden rounded-[26px] bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-5 pb-14 pt-15 shadow-[0_18px_36px_rgba(0,0,0,0.35)] transition-all duration-500",
+          "relative flex flex-col min-h-[180px] w-full overflow-hidden rounded-[20px] bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-4 pb-12 pt-12 shadow-[0_18px_36px_rgba(0,0,0,0.35)] transition-all duration-500",
           !isCompleted && isActive 
             ? "group-hover:shadow-[0_30px_60px_rgba(56,189,248,0.15)] group-hover:border-blue-400/30" 
             : ""
         )}>
         
         {/* Main Content Card */}
-        <div className="relative z-10 flex flex-1 flex-col gap-3 rounded-2xl border-2 border-[#528cc4] bg-[#162032] px-4 py-4 shadow-inner transition-transform duration-500 group-hover:scale-[1.01]">
+        <div className="relative z-10 flex flex-1 flex-col gap-2 rounded-xl border-2 border-[#528cc4] bg-[#162032] px-3 py-3 shadow-inner transition-transform duration-500 group-hover:scale-[1.01]">
           <div className="flex items-start gap-3">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#528cc4]/60 bg-[#0f1b2b] text-blue-100 shadow-md group-hover:rotate-6 transition-transform">
-              <MessageSquare className="h-6 w-6 text-blue-200" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[#528cc4]/60 bg-[#0f1b2b] text-blue-100 shadow-md group-hover:rotate-6 transition-transform">
+              <MessageSquare className="h-5 w-5 text-blue-200" />
             </div>
 
-            <div className="min-w-0 space-y-1">
+            <div className="min-w-0 space-y-0.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-lg font-bold text-blue-50 drop-shadow-sm group-hover:text-white transition-colors">
+                <span className="text-base font-bold text-blue-50 drop-shadow-sm group-hover:text-white transition-colors">
                   {quest.title}
                 </span>
-                <span className="rounded-full border border-[#528cc4]/70 bg-[#2b3952] text-blue-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest">
-                  Chat
-                </span>
               </div>
-              <p className="text-sm leading-relaxed text-blue-50/70 group-hover:text-blue-50/90 transition-colors">
+              <p className="text-xs leading-relaxed text-blue-50/70 group-hover:text-blue-50/90 transition-colors">
                 {quest.prompt}
               </p>
             </div>
           </div>
 
-          <div className="mt-auto flex items-center justify-between pt-2 border-t border-blue-800/30">
-            <div className="flex items-center gap-2 text-[10px] font-medium text-blue-200/80 uppercase tracking-wider">
-               For: <span className="font-bold text-white">{dailyQuestor}</span>
-            </div>
-            <div className="flex items-center gap-2 text-xs font-bold text-amber-200">
-              <Coins className="h-4 w-4" />
-              <span>{quest.reward}</span>
+          {/* Reward Section - Now matches Streamer Quest style */}
+          <div className="mt-auto flex items-center justify-between pt-2">
+            <div className="flex items-center gap-2 text-[10px] font-bold text-amber-200 uppercase tracking-tight">
+              <Coins className="h-3.5 w-3.5" />
+              <span>{quest.reward} TOADCOINS</span>
             </div>
           </div>
         </div>
@@ -989,18 +983,18 @@ function ChatterQuestTile({
           >
             <div className="relative">
               <div className="absolute inset-0 animate-ping rounded-full bg-emerald-500/20" />
-              <BadgeCheck className="h-12 w-12 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]" />
+              <BadgeCheck className="h-10 w-10 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]" />
             </div>
-            <span className="mt-4 text-xs font-black uppercase tracking-[0.3em] text-emerald-100">
+            <span className="mt-3 text-[10px] font-black uppercase tracking-[0.3em] text-emerald-100">
               Quest Complete
             </span>
-            <div className="absolute inset-0 border-4 border-emerald-500/30 rounded-[26px]" />
+            <div className="absolute inset-0 border-4 border-emerald-500/30 rounded-[20px]" />
           </div>
         )}
 
         {completing && (
            <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-              <Loader2 className="h-8 w-8 animate-spin text-blue-400" />
+              <Loader2 className="h-6 w-6 animate-spin text-blue-400" />
            </div>
         )}
 
