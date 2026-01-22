@@ -53,6 +53,9 @@ type QuestResponse = {
   date: string;
   generatedAt: string;
   quests: StreamQuest[];
+  dailyQuestor: string;
+  chatterQuests: ChatterQuest[];
+  chatterRerollCount: number;
   ledger: Record<string, number>;
   audience: AudienceSnapshot;
 };
@@ -60,6 +63,8 @@ type QuestResponse = {
 type ChatterQuest = {
   id: string;
   title: string;
+  prompt: string;
+  reward: number;
   completed: boolean;
 };
 
@@ -119,73 +124,6 @@ const categoryMeta: Record<
 const WIZARD_COOLDOWN_KEY = "stream-quest-wizard-cooldown";
 const WIZARD_SILENCE_MS = 5 * 60 * 60 * 1000;
 const WIZARD_SOUNDS = ["/audio/wizard1.mp3", "/audio/wizard2.mp3", "/audio/wizard3.mp3", "/audio/wizard4.mp3"];
-const CHATTER_QUEST_STORAGE_KEY = "stream-quest-chatter-daily";
-
-const CHATTER_QUEST_POOL = [
-  "Chat with only emotes for the next (1-5) minute(s)",
-  "Compete with (streamer name) in https://play.typeracer.com/ and win",
-  "Compete with (streamer name) in https://krunker.io/ and win",
-  "Post your favourite emote in chat",
-  "Post your favourite clip of (streamer name) in chat",
-  "Post your favourite copypasta from the (streamer name)'s stream in chat",
-  "Send a paragraph in chat glazing (streamer name)",
-  "Insult (another random chatter) in chat",
-  "Praise (another random chatter) in chat",
-  "Solve this riddle: I can run 100m in 7 seconds and throw a javelin 700m, but only when I’m talking. Who am I?",
-  "Gift 1 Sub",
-  "Gift 2 Sub",
-  "Use your Twitch Prime on (streamer name)'s channel",
-  "Tell (streamer name)'s chat all the things you love about them",
-  "Post a copypasta with MonsterTTS",
-  "Drop your hype emote of the day",
-  "Share your favorite stream moment in one sentence",
-  "Type only in all caps for the next 5 messages",
-  "Post a wholesome compliment about (streamer name)",
-  "Ask a fun question in chat that others can answer",
-  "Create a new short catchphrase for the stream",
-  "Guess the next game (streamer name) will play",
-  "Use only question marks for your next 3 messages",
-  "Send a haiku about the stream",
-  "Post a clip or timestamp of a funny moment",
-  "Start a friendly debate about a game mechanic",
-  "Share a cozy snack recommendation",
-  "Teach chat a random trivia fact",
-  "Translate a hype phrase into another language",
-  "Post your favorite boss fight in chat",
-  "Type the alphabet backwards in chat",
-  "Do a quick tongue twister in chat",
-  "Send a motivational quote for (streamer name)",
-  "Write a two-line rap about the stream",
-  "Type your favorite emote three times in a row",
-  "Name a legendary in-game item",
-  "Describe (streamer name)'s vibe in 3 words",
-  "Send a short story that includes (streamer name)",
-  "Make a pun about the current game",
-  "Show love to a new chatter in chat",
-  "Convince chat to hydrate in one sentence",
-  "Share your current song on repeat",
-  "Post your favorite stream meme",
-  "Type only animal sounds for 2 messages",
-  "Describe the stream using only emojis",
-  "Give a shoutout to (another random chatter)",
-  "Challenge (another random chatter) to a friendly duel",
-  "Start a chain of the same emote",
-  "Guess the streamer’s next snack",
-  "Share a cozy game recommendation",
-  "Post your favorite achievement of the week",
-  "Drop a villain laugh in chat",
-  "Send a pirate-themed message",
-  "Write a limerick about the stream",
-  "Post a dragon roar in chat",
-  "Say something nice about the mods",
-  "Describe the stream as a movie title",
-  "Post your favorite stream moment in emojis",
-  "Share a joke that fits the stream theme",
-  "Offer a ridiculous quest reward to (streamer name)",
-  "Make up a new nickname for (another random chatter)",
-  "Type a one-line poem about today's stream",
-];
-
 function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -200,10 +138,7 @@ export function StreamQuestClient() {
   const [error, setError] = useState<string | null>(null);
   const [completingId, setCompletingId] = useState<string | null>(null);
   const [celebratingId, setCelebratingId] = useState<string | null>(null);
-  const [chatterQuests, setChatterQuests] = useState<ChatterQuest[]>([]);
-  const [dailyQuestor, setDailyQuestor] = useState<string>("Mystery Chatter");
-  // Change state from boolean to counter
-  const [chatterRerollCount, setChatterRerollCount] = useState(0); 
+  const [claimingChatterId, setClaimingChatterId] = useState<string | null>(null);
   
   const [toast, setToast] = useState<string | null>(null);
   const [isToastVisible, setIsToastVisible] = useState(false);
@@ -211,49 +146,11 @@ export function StreamQuestClient() {
   const [authState, setAuthState] = useState<"checking" | "unauthenticated" | "ready">("checking");
   const questFinAudioRef = useRef<HTMLAudioElement | null>(null);
   const moneyAudioRef = useRef<HTMLAudioElement | null>(null);
-  const questDateKey = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
   // Helper variable to keep original logic working at the bottom
-  const chatterRerollUsed = chatterRerollCount >= 3;
-
-  const getRandomChatterName = useCallback(
-    (exclude: string[] = []) => {
-      const pool = data?.audience?.names?.filter((name) => !exclude.includes(name)) ?? [];
-      if (pool.length === 0) return "a fellow chatter";
-      return pool[Math.floor(Math.random() * pool.length)];
-    },
-    [data?.audience?.names]
-  );
-
-  const streamDisplayName = data?.audience?.displayName || "the streamer";
-
-  const formatChatterQuest = useCallback(
-    (template: string, questor: string) => {
-      const emoteMinutes = randomBetween(1, 5);
-      return template
-        .replace("(1-5)", String(emoteMinutes))
-        .replace(/\(streamer name\)/gi, streamDisplayName)
-        .replace(/\(another random chatter\)/gi, getRandomChatterName([questor]))
-        .replace(/\(streamer name\)'s/gi, `${streamDisplayName}'s`);
-    },
-    [getRandomChatterName, streamDisplayName]
-  );
-
-  const generateChatterQuests = useCallback(
-    (questor: string) => {
-      const pool = CHATTER_QUEST_POOL.map((quest) => formatChatterQuest(quest, questor));
-      const shuffled = pool
-        .map((value) => ({ value, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ value }) => value);
-      return shuffled.slice(0, 3).map((title) => ({
-        id: crypto.randomUUID(),
-        title,
-        completed: false,
-      }));
-    },
-    [formatChatterQuest]
-  );
+  const chatterRerollUsed = (data?.chatterRerollCount ?? 0) >= 3;
+  const dailyQuestor = data?.dailyQuestor ?? "Mystery Chatter";
+  const chatterQuests = data?.chatterQuests ?? [];
 
   const triggerToast = useCallback((message: string) => {
     setToast(message);
@@ -309,74 +206,48 @@ export function StreamQuestClient() {
   }, [loadData]);
 
   useEffect(() => {
-    if (!data) return;
-    const stored = typeof window !== "undefined" ? localStorage.getItem(CHATTER_QUEST_STORAGE_KEY) : null;
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored) as {
-          date: string;
-          questor: string;
-          quests: ChatterQuest[];
-          rerollCount: number; // Updated storage key
-        };
-        if (parsed.date === questDateKey && parsed.quests?.length) {
-          setDailyQuestor(parsed.questor);
-          setChatterQuests(parsed.quests);
-          setChatterRerollCount(parsed.rerollCount || 0);
-          return;
-        }
-      } catch {
-        // ignore and regenerate
-      }
-    }
-    const questor = getRandomChatterName();
-    const quests = generateChatterQuests(questor);
-    setDailyQuestor(questor);
-    setChatterQuests(quests);
-    setChatterRerollCount(0);
-    if (typeof window !== "undefined") {
-      localStorage.setItem(
-        CHATTER_QUEST_STORAGE_KEY,
-        JSON.stringify({ date: questDateKey, questor, quests, rerollCount: 0 })
-      );
-    }
-  }, [data, generateChatterQuests, getRandomChatterName, questDateKey]);
+    if (typeof window === "undefined") return;
+    let timeoutId: number;
 
-  const persistChatterQuests = useCallback(
-    (questor: string, quests: ChatterQuest[], rerollCount: number) => {
-      if (typeof window === "undefined") return;
-      localStorage.setItem(
-        CHATTER_QUEST_STORAGE_KEY,
-        JSON.stringify({ date: questDateKey, questor, quests, rerollCount })
-      );
-    },
-    [questDateKey]
-  );
+    const scheduleRefresh = () => {
+      const now = new Date();
+      const nextMidnight = new Date(now);
+      nextMidnight.setHours(24, 0, 0, 0);
+      const delay = Math.max(1000, nextMidnight.getTime() - now.getTime());
+      timeoutId = window.setTimeout(async () => {
+        await loadData();
+        scheduleRefresh();
+      }, delay);
+    };
 
-  const toggleChatterQuest = useCallback(
-    (id: string) => {
-      setChatterQuests((prev) => {
-        const next = prev.map((quest) =>
-          quest.id === id ? { ...quest, completed: !quest.completed } : quest
-        );
-        persistChatterQuests(dailyQuestor, next, chatterRerollCount);
-        return next;
-      });
-    },
-    [dailyQuestor, chatterRerollCount, persistChatterQuests]
-  );
+    scheduleRefresh();
+    return () => {
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+  }, [loadData]);
 
   // Logic to handle 3 rerolls
-  const rerollChatterQuestor = useCallback(() => {
-    if (chatterRerollCount >= 3) return;
-    const questor = getRandomChatterName([dailyQuestor]);
-    const quests = generateChatterQuests(questor);
-    const nextCount = chatterRerollCount + 1;
-    setDailyQuestor(questor);
-    setChatterQuests(quests);
-    setChatterRerollCount(nextCount);
-    persistChatterQuests(questor, quests, nextCount);
-  }, [chatterRerollCount, dailyQuestor, generateChatterQuests, getRandomChatterName, persistChatterQuests]);
+  const rerollChatterQuestor = useCallback(async () => {
+    if (chatterRerollUsed) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/twitch/stream-quests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "reroll_questor" }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Failed to reroll questor");
+      setData(json);
+      triggerToast("New daily questor assigned.");
+    } catch (err: any) {
+      console.error(err);
+      triggerToast(err.message || "Failed to reroll questor.");
+    } finally {
+      setLoading(false);
+    }
+  }, [chatterRerollUsed, triggerToast]);
 
   const totalMinted = useMemo(() => {
     if (!data) return 0;
@@ -467,6 +338,36 @@ export function StreamQuestClient() {
     setCompletingId(null);
   }
 }
+
+  const claimChatterQuest = useCallback(
+    async (id: string) => {
+      if (!data || claimingChatterId) return;
+      setClaimingChatterId(id);
+      setError(null);
+
+      try {
+        const res = await fetch("/api/twitch/stream-quests", {
+          method: "POST",
+          credentials: "include",
+          cache: "no-store",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "claim_chatter_quest", id }),
+        });
+
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error || "Server rejected the claim");
+        setData(json);
+        void playQuestCompletionAudio();
+        triggerToast("Chatter quest claimed!");
+      } catch (err: any) {
+        console.error("Chatter quest claim failed:", err);
+        triggerToast(`Error: ${err.message}`);
+      } finally {
+        setClaimingChatterId(null);
+      }
+    },
+    [claimingChatterId, data, playQuestCompletionAudio, triggerToast]
+  );
 
   // --- Logic Guards ---
   const isLive = !!data?.audience?.live;
@@ -634,7 +535,7 @@ if (error === "OFFLINE") {
                 >
                   <Sparkles className="h-3 w-3" />
                   {/* Updated display text */}
-                  {chatterRerollUsed ? "No Rerolls Left" : `Reroll (${3 - chatterRerollCount} left)`}
+                  {chatterRerollUsed ? "No Rerolls Left" : `Reroll (${3 - (data?.chatterRerollCount ?? 0)} left)`}
                 </button>
               </div>
             </div>
@@ -644,12 +545,15 @@ if (error === "OFFLINE") {
                 <button
                   key={quest.id}
                   type="button"
-                  onClick={() => toggleChatterQuest(quest.id)}
+                  onClick={!quest.completed && isActive ? () => claimChatterQuest(quest.id) : undefined}
+                  disabled={!isActive || quest.completed || claimingChatterId === quest.id}
                   className={clsx(
                     "group flex h-full flex-col rounded-2xl border px-4 py-4 text-left transition",
                     quest.completed
                       ? "border-amber-600/30 bg-amber-950/40 text-amber-100/50 line-through"
-                      : "border-amber-300/20 bg-black/25 text-amber-50 hover:border-amber-300/40 hover:bg-black/40"
+                      : isActive
+                        ? "border-amber-300/20 bg-black/25 text-amber-50 hover:border-amber-300/40 hover:bg-black/40"
+                        : "cursor-not-allowed border-amber-900/30 bg-black/30 text-amber-50/50"
                   )}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -665,7 +569,7 @@ if (error === "OFFLINE") {
                       {quest.completed ? "Completed" : "Available"}
                     </span>
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed">{quest.title}</p>
+                  <p className="mt-3 text-sm leading-relaxed">{quest.prompt}</p>
                   <div className="mt-auto pt-4 text-xs text-amber-100/70">
                     Reward: XP + toadcoins to <span className="font-semibold text-amber-100">{dailyQuestor}</span>
                   </div>
