@@ -73,7 +73,7 @@ type StreamQuestState = {
   dailyQuestor: string; // The selected chatter name
   dailyQuestorId?: string; // Optional ID if known
   chatterQuests: ChatterQuest[]; // The 3 quests for the chatter
-  chatterRerollUsed: boolean;
+  chatterRerollCount: number; // CHANGED: Now a number instead of boolean
   
   ledger: Record<string, number>;
   lastAudienceHour: number;
@@ -267,10 +267,12 @@ export async function POST(request: Request) {
     });
   }
 
-  // --- ACTION: REROLL CHATTER QUESTOR ---
+  // --- ACTION: REROLL CHATTER QUESTOR (UPDATED FOR 3 ROLLS) ---
   if (action === "reroll_questor") {
-    if (state.chatterRerollUsed) {
-        return jsonNoStore({ error: "Reroll already used" }, { status: 400 });
+    const currentCount = typeof state.chatterRerollCount === 'number' ? state.chatterRerollCount : 0;
+
+    if (currentCount >= 3) {
+        return jsonNoStore({ error: "No rerolls remaining" }, { status: 400 });
     }
 
     const chatTemplates = await loadQuestTemplates(CHAT_TEMPLATE_LIBRARY_PATH);
@@ -281,7 +283,7 @@ export async function POST(request: Request) {
         ...state,
         dailyQuestor: newQuestor,
         chatterQuests: newChatterQuests,
-        chatterRerollUsed: true,
+        chatterRerollCount: currentCount + 1, // Increment count
         lastAudience: audience
     }
 
@@ -434,7 +436,7 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
         const questor = pickChatter(audience.names);
         newState.dailyQuestor = questor;
         newState.chatterQuests = buildChatterQuests(questor, audience, chatQuestTemplates);
-        newState.chatterRerollUsed = false;
+        newState.chatterRerollCount = 0; // Init counter
         stateDirty = true;
     }
 
@@ -472,7 +474,7 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
     quests,
     dailyQuestor,
     chatterQuests,
-    chatterRerollUsed: false,
+    chatterRerollCount: 0, // Set starting count
     ledger: existing?.ledger ?? {},
     lastAudienceHour: currentHour,
     lastAudience: audience,
@@ -500,13 +502,21 @@ async function loadState(userId: string): Promise<StreamQuestState | null> {
     if (!parsed.date || parsed.ledger === undefined) {
       return null;
     }
+
+    // Handle migration from boolean to number
+    let rerollCount = 0;
+    if (typeof (parsed as any).chatterRerollCount === 'number') {
+      rerollCount = (parsed as any).chatterRerollCount;
+    } else if ((parsed as any).chatterRerollUsed) {
+      rerollCount = 1;
+    }
+
     return {
       ...parsed,
       quests: parsed.quests || [],
-      // Ensure backward compat for old files without chatter quests
       chatterQuests: parsed.chatterQuests || [],
       dailyQuestor: parsed.dailyQuestor || "",
-      chatterRerollUsed: !!parsed.chatterRerollUsed,
+      chatterRerollCount: rerollCount,
       lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
       lastAudience: parsed.lastAudience ?? { names: FALLBACK_CHATTERS, source: "fallback", live: true },
     };
@@ -529,7 +539,7 @@ function serializeState(state: StreamQuestState) {
     // Chatter specific data
     dailyQuestor: state.dailyQuestor,
     chatterQuests: state.chatterQuests,
-    chatterRerollUsed: state.chatterRerollUsed,
+    chatterRerollCount: state.chatterRerollCount,
     // General
     ledger: state.ledger,
     audience: state.lastAudience,
