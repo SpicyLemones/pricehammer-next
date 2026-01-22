@@ -1,0 +1,244 @@
+{
+  "templates": [
+    {
+      "id": "cq-emotes-only",
+      "category": "chat",
+      "title": "Emote Mode",
+      "prompt": "Chat with only emotes for the next {{minutes}} minute{{plural:minutes:s}}.",
+      "reward": 300,
+      "variables": [{ "key": "minutes", "type": "range", "min": 1, "max": 5 }]
+    },
+    {
+      "id": "cq-typeracer",
+      "category": "game",
+      "title": "Speed Demon",
+      "prompt": "Compete with {{streamer}} in https://play.typeracer.com/ and win.",
+      "reward": 1000,
+      "variables": [{ "key": "streamer", "type": "streamer" }]
+    },
+    {
+      "id": "cq-krunker",
+      "category": "game",
+      "title": "FPS God",
+      "prompt": "Compete with {{streamer}} in https://krunker.io/ and win.",
+      "reward": 1000,
+      "variables": [{ "key": "streamer", "type": "streamer" }]
+    },
+    {
+      "id": "cq-fav-emote",
+      "category": "chat",
+      "title": "Emote Spam",
+      "prompt": "Post your favourite emote in chat.",
+      "reward": 100
+    },
+    {
+      "id": "cq-fav-clip",
+      "category": "social",
+      "title": "Clip It",
+      "prompt": "Post your favourite clip of {{streamer}} in chat.",
+      "reward": 250,
+      "variables": [{ "key": "streamer", "type": "streamer" }]
+    },
+    {
+      "id": "cq-copypasta",
+      "category": "chat",
+      "title": "Pasta Chef",
+      "prompt": "Post your favourite copypasta from {{streamer}}'s stream in chat.",
+      "reward": 200,
+      "variables": [{ "key": "streamer", "type": "streamer" }]
+    },
+    {
+      "id": "cq-glazing",
+      "category": "love",
+      "title": "Top Tier Glazing",
+      "prompt": "Send a paragraph in chat strictly glazing {{streamer}}.",
+      "reward": 500,
+      "variables": [{ "key": "streamer", "type": "streamer" }]
+    },
+    {
+      "id": "cq-insult-chatter",
+      "category": "interaction",
+      "title": "Chat War",
+      "prompt": "Insult {{target}} in chat.",
+      "reward": 400,
+      "variables": [{ "key": "target", "type": "chatter" }]
+    },
+    {
+      "id": "cq-praise-chatter",
+      "category": "interaction",
+      "title": "Wholesome Moment",
+      "prompt": "Praise {{target}} in chat.",
+      "reward": 400,
+      "variables": [{ "key": "target", "type": "chatter" }]
+    },
+    {
+      "id": "cq-riddle-1",
+      "category": "brain",
+      "title": "Riddle Me This",
+      "prompt": "Solve this riddle: I can run 100m in 7 seconds and throw a javelin 700m, but only when I’m talking. Who am I?",
+      "reward": 500
+    },
+    {
+      "id": "cq-gift-sub",
+      "category": "support",
+      "title": "Gifter",
+      "prompt": "Gift {{count}} Sub{{plural:count:s}} to {{streamer}}.",
+      "reward": 1000,
+      "variables": [
+        { "key": "count", "type": "range", "min": 1, "max": 2 },
+        { "key": "streamer", "type": "streamer" }
+      ]
+    },
+    {
+      "id": "cq-prime",
+      "category": "support",
+      "title": "Prime Time",
+      "prompt": "Use your Twitch Prime on {{streamer}}'s channel.",
+      "reward": 1500,
+      "variables": [{ "key": "streamer", "type": "streamer" }]
+    },
+    {
+      "id": "cq-love-list",
+      "category": "love",
+      "title": "Appreciation Post",
+      "prompt": "Tell {{streamer}}'s chat all the things you love about them.",
+      "reward": 300,
+      "variables": [{ "key": "streamer", "type": "streamer" }]
+    },
+    {
+      "id": "cq-monstertts",
+      "category": "fun",
+      "title": "Voice of God",
+      "prompt": "Post a copypasta using MonsterTTS.",
+      "reward": 250
+    },
+    {
+      "id": "cq-hype-emote",
+      "category": "chat",
+      "title": "Hype Train",
+      "prompt": "Drop your hype emote of the day.",
+      "reward": 100
+    },
+    {
+      "id": "cq-caps-lock",
+      "category": "chat",
+      "title": "LOUD NOISES",
+      "prompt": "Type only in ALL CAPS for the next 5 messages.",
+      "reward": 200
+    },
+    {
+      "id": "cq-question",
+      "category": "interaction",
+      "title": "Ice Breaker",
+      "prompt": "Ask a fun question in chat that others can answer.",
+      "reward": 150
+    },
+    {
+      "id": "cq-prediction",
+      "category": "game",
+      "title": "Oracle",
+      "prompt": "Guess the next game {{streamer}} will play.",
+      "reward": 200,
+      "variables": [{ "key": "streamer", "type": "streamer" }]
+    },
+    {
+      "id": "cq-haiku",
+      "category": "creative",
+      "title": "Poet Laureate",
+      "prompt": "Send a haiku about the stream.",
+      "reward": 500
+    },
+    {
+      "id": "cq-snack",
+      "category": "food",
+      "title": "Snack Time",
+      "prompt": "Share a cozy snack recommendation in chat.",
+      "reward": 100
+    },
+    {
+      "id": "cq-trivia",
+      "category": "brain",
+      "title": "Professor",
+      "prompt": "Teach chat a random trivia fact.",
+      "reward": 200
+    },
+    {
+      "id": "cq-translate",
+      "category": "brain",
+      "title": "Bilingual",
+      "prompt": "Translate a hype phrase into another language.",
+      "reward": 200
+    },
+    {
+      "id": "cq-abc-backwards",
+      "category": "brain",
+      "title": "Sobriety Test",
+      "prompt": "Type the alphabet backwards in chat.",
+      "reward": 300
+    },
+    {
+      "id": "cq-tongue-twister",
+      "category": "chat",
+      "title": "Twisted Tongue",
+      "prompt": "Do a quick tongue twister in chat.",
+      "reward": 200
+    },
+    {
+      "id": "cq-rap",
+      "category": "creative",
+      "title": "Soundcloud Rapper",
+      "prompt": "Write a two-line rap about the stream.",
+      "reward": 400
+    },
+    {
+      "id": "cq-vibe-check",
+      "category": "interaction",
+      "title": "Vibe Check",
+      "prompt": "Describe {{streamer}}'s vibe in exactly 3 words.",
+      "reward": 150,
+      "variables": [{ "key": "streamer", "type": "streamer" }]
+    },
+    {
+      "id": "cq-pun",
+      "category": "fun",
+      "title": "Dad Humor",
+      "prompt": "Make a pun about the current game/category.",
+      "reward": 250
+    },
+    {
+      "id": "cq-welcome",
+      "category": "interaction",
+      "title": "Greeter",
+      "prompt": "Show love to a new chatter in chat.",
+      "reward": 200
+    },
+    {
+      "id": "cq-hydrate",
+      "category": "health",
+      "title": "Hydro Homie",
+      "prompt": "Convince chat to hydrate in one sentence.",
+      "reward": 150
+    },
+    {
+      "id": "cq-song",
+      "category": "music",
+      "title": "DJ Chat",
+      "prompt": "Share your current song on repeat.",
+      "reward": 100
+    },
+    {
+      "id": "cq-animal",
+      "category": "fun",
+      "title": "Zoo",
+      "prompt": "Type only animal sounds for 2 messages.",
+      "reward": 200
+    },
+    {
+      "id": "cq-emoji-desc",
+      "category": "creative",
+      "title": "Hieroglyphs",
+      "prompt": "Describe the stream using only emojis.",
+      "reward": 150
+    }
+  ]
+}

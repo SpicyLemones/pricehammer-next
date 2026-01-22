@@ -8,12 +8,14 @@ import { getValidSession } from "@/app/lib/twitch-auth";
 // Import the database logic from your chattergrounds route
 import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
 
-// NEW: read recipients from chattergrounds DB
+// Read recipients from chattergrounds DB
 import { all } from "@/app/lib/sql";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const fetchCache = "force-no-store";
+
+// --- Types ---
 
 type QuestCategory =
   | "prime"
@@ -22,7 +24,19 @@ type QuestCategory =
   | "stream-time"
   | "insult"
   | "wordle"
-  | "bandle";
+  | "bandle"
+  | "chat"   // New categories for chat quests
+  | "game"
+  | "social"
+  | "love"
+  | "interaction"
+  | "brain"
+  | "support"
+  | "fun"
+  | "creative"
+  | "food"
+  | "health"
+  | "music";
 
 type StreamQuest = {
   id: string;
@@ -32,6 +46,14 @@ type StreamQuest = {
   category: QuestCategory;
   completed: boolean;
   completedAt?: string;
+};
+
+type ChatterQuest = {
+  id: string;
+  title: string;
+  prompt: string;
+  reward: number;
+  completed: boolean;
 };
 
 type AudienceSnapshot = {
@@ -45,7 +67,14 @@ type AudienceSnapshot = {
 type StreamQuestState = {
   date: string;
   generatedAt: string;
-  quests: StreamQuest[];
+  quests: StreamQuest[]; // Streamer quests
+  
+  // -- NEW CHATTER QUEST STATE --
+  dailyQuestor: string; // The selected chatter name
+  dailyQuestorId?: string; // Optional ID if known
+  chatterQuests: ChatterQuest[]; // The 3 quests for the chatter
+  chatterRerollUsed: boolean;
+  
   ledger: Record<string, number>;
   lastAudienceHour: number;
   lastAudience: AudienceSnapshot;
@@ -53,7 +82,8 @@ type StreamQuestState = {
 
 type QuestVariable =
   | { key: string; type: "range"; min: number; max: number }
-  | { key: string; type: "chatter" };
+  | { key: string; type: "chatter" }
+  | { key: string; type: "streamer" }; // New variable type
 
 type QuestTemplateConfig = {
   id: string;
@@ -64,8 +94,11 @@ type QuestTemplateConfig = {
   variables?: QuestVariable[];
 };
 
+// --- Config ---
+
 const STREAM_QUESTS_DIR = path.join(process.cwd(), "data", "stream-quests");
 const TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "quest-library.json");
+const CHAT_TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "chat-quest-library.json");
 
 const FALLBACK_CHATTERS = [
   "toadette",
@@ -88,33 +121,6 @@ const BOT_LOGINS = new Set([
 
 const DEFAULT_TEMPLATE_LIBRARY: QuestTemplateConfig[] = [
   {
-    id: "prime-beggar",
-    category: "prime",
-    title: "Prime Beggar",
-    prompt: "Successfully beg for {{count}} Twitch Prime sub{{plural:count:s}}.",
-    reward: 500,
-    variables: [{ key: "count", type: "range", min: 1, max: 3 }],
-  },
-  {
-    id: "ban-random",
-    category: "ban",
-    title: "See You Later",
-    prompt: "Ban {{chatter}} from your chat (they'll forgive you… probably).",
-    reward: 500,
-    variables: [{ key: "chatter", type: "chatter" }],
-  },
-  {
-    id: "timeout-random",
-    category: "timeout",
-    title: "Naughty Step",
-    prompt: "Time out {{chatter}} for {{minutes}} minute{{plural:minutes:s}}.",
-    reward: 500,
-    variables: [
-      { key: "chatter", type: "chatter" },
-      { key: "minutes", type: "range", min: 1, max: 20 },
-    ],
-  },
-  {
     id: "stream-hours",
     category: "stream-time",
     title: "Stay Live",
@@ -122,33 +128,12 @@ const DEFAULT_TEMPLATE_LIBRARY: QuestTemplateConfig[] = [
     reward: 500,
     variables: [{ key: "hours", type: "range", min: 1, max: 5 }],
   },
-  {
-    id: "insult-random",
-    category: "insult",
-    title: "Roast Duty",
-    prompt: "Drop a playful insult on {{chatter}} in chat.",
-    reward: 500,
-    variables: [{ key: "chatter", type: "chatter" }],
-  },
-  {
-    id: "wordle",
-    category: "wordle",
-    title: "Wordle Warrior",
-    prompt: "Complete today’s Wordle on stream.",
-    reward: 500,
-  },
-  {
-    id: "bandle",
-    category: "bandle",
-    title: "Bandle Bard",
-    prompt: "Complete today’s Bandle on stream.",
-    reward: 500,
-  },
 ];
 
 type DbRecipient = { chatterId: string; login: string };
-
 type TwitchSession = Awaited<ReturnType<typeof getValidSession>>;
+
+// --- Helpers ---
 
 function jsonNoStore(body: any, init?: { status?: number; headers?: HeadersInit }) {
   const headers: Record<string, string> = {
@@ -158,7 +143,6 @@ function jsonNoStore(body: any, init?: { status?: number; headers?: HeadersInit 
     Vary: "Cookie",
     ...(init?.headers as any),
   };
-
   return NextResponse.json(body, { status: init?.status, headers });
 }
 
@@ -188,11 +172,6 @@ async function loadRecipientsFromChattergrounds(broadcasterId: string): Promise<
   return out;
 }
 
-/**
- * Best-effort "are we live?" check.
- * - If we can’t verify (missing client id, API fails), we return `null` (unknown).
- * - Call sites should treat unknown as “don’t hard-block”.
- */
 async function checkLiveStatus(session: TwitchSession): Promise<boolean | null> {
   try {
     if (!session?.accessToken || !session?.userId) return null;
@@ -218,6 +197,8 @@ async function checkLiveStatus(session: TwitchSession): Promise<boolean | null> 
   }
 }
 
+// --- Routes ---
+
 export async function GET() {
   const session = await getValidSession();
 
@@ -228,8 +209,7 @@ export async function GET() {
 
   const audience = await loadAudience(session);
 
-  // 2. Block if stream is not live (The Tavern is Closed)
-  // NOTE: Only hard-block if we can confidently say it's offline.
+  // 2. Block if stream is not live
   if (audience.live === false) {
     return jsonNoStore(
       {
@@ -253,32 +233,23 @@ export async function POST(request: Request) {
     | { id?: string; action?: string }
     | null;
 
-  // 1. Auth Check
   const session = await getValidSession();
   if (!session) return jsonNoStore({ error: "unauthorized" }, { status: 401 });
 
   const broadcasterId = session.userId;
   const broadcasterLogin = (session.login || session.displayName).toLowerCase();
-
-  // 2. Load Audience & Status (single session used everywhere; avoids “works after visiting other page” flakiness)
   const audience = await loadAudience(session);
 
-  // 3. TAVERN CHECK: Prevent actions if offline (only if confidently offline)
   if (audience.live === false) {
     return jsonNoStore({ error: "offline", message: "The Tavern is closed." }, { status: 403 });
   }
 
   const { state } = await ensureState(audience, session.userId);
-
   const action = body?.action ?? (body?.id ? "claim" : undefined);
 
-  // --- ACTION: REROLL ---
+  // --- ACTION: REROLL STREAMER QUESTS ---
   if (action === "reroll") {
-    const questTemplates = await loadQuestTemplates();
-
-    // IMPORTANT FIX:
-    // Keep the current order and ONLY replace the incomplete slots in-place.
-    // (Your old function returned [...completed, ...replacements] which reorders = “board reshuffles”.)
+    const questTemplates = await loadQuestTemplates(TEMPLATE_LIBRARY_PATH);
     const newQuests = rerollIncompleteQuestsPreserveOrder(state.quests, audience, questTemplates);
 
     const rerolledState: StreamQuestState = {
@@ -296,109 +267,189 @@ export async function POST(request: Request) {
     });
   }
 
-  // --- ACTION: COMPLETE QUEST ---
-  if (action !== "claim") {
-    return jsonNoStore({ error: "bad_request" }, { status: 400 });
+  // --- ACTION: REROLL CHATTER QUESTOR ---
+  if (action === "reroll_questor") {
+    if (state.chatterRerollUsed) {
+        return jsonNoStore({ error: "Reroll already used" }, { status: 400 });
+    }
+
+    const chatTemplates = await loadQuestTemplates(CHAT_TEMPLATE_LIBRARY_PATH);
+    const newQuestor = pickChatter(audience.names, FALLBACK_CHATTERS, [state.dailyQuestor]);
+    const newChatterQuests = buildChatterQuests(newQuestor, audience, chatTemplates);
+
+    const newState: StreamQuestState = {
+        ...state,
+        dailyQuestor: newQuestor,
+        chatterQuests: newChatterQuests,
+        chatterRerollUsed: true,
+        lastAudience: audience
+    }
+
+    await saveState(session.userId, newState);
+    return jsonNoStore({
+        regenerated: true,
+        ...serializeState(newState)
+    });
   }
 
-  if (!body?.id) return jsonNoStore({ error: "missing_id" }, { status: 400 });
+  // --- ACTION: CLAIM CHATTER QUEST ---
+  if (action === "claim_chatter_quest") {
+    if (!body?.id) return jsonNoStore({ error: "missing_id" }, { status: 400 });
 
-  const quest = state.quests.find((entry) => entry.id === body.id);
-  if (!quest) return jsonNoStore({ error: "quest_not_found" }, { status: 404 });
-  if (quest.completed) return jsonNoStore({ alreadyCompleted: true, ...serializeState(state) });
+    const questIndex = state.chatterQuests.findIndex(q => q.id === body.id);
+    if (questIndex === -1) return jsonNoStore({ error: "quest_not_found" }, { status: 404 });
+    
+    const quest = state.chatterQuests[questIndex];
+    if (quest.completed) return jsonNoStore({ alreadyCompleted: true, ...serializeState(state) });
 
-  // 1. Get RECENT chatters from chattergrounds DB
-  const recipients = await loadRecipientsFromChattergrounds(broadcasterId);
+    // Reward the SPECIFIC questor
+    const targetChatter = state.dailyQuestor;
+    
+    // We try to find their ID if possible from the audience source, but falling back to name is handled by applyChattergroundsAction usually if name based
+    await applyChattergroundsAction({
+        action: "mint",
+        chatterId: "0", // 0 implies name-based lookup or simple minting
+        chatterLogin: targetChatter,
+        amount: quest.reward
+    }, { sessionUserId: broadcasterId });
 
-  // 2. Separate Broadcaster for Quest Completion tracking
-  await applyChattergroundsAction(
-    {
-      action: "quest-completed",
-      chatterId: broadcasterId,
-      chatterLogin: broadcasterLogin,
-      amount: quest.reward,
-    },
-    { sessionUserId: broadcasterId }
-  );
+    // Update Ledger
+    const ledger = { ...state.ledger };
+    ledger[targetChatter] = (ledger[targetChatter] ?? 0) + quest.reward;
 
-  // 3. Mint coins for everyone else who is active
-  const others = recipients.filter((r) => r.chatterId !== broadcasterId);
-  const BATCH_SIZE = 10;
-  for (let i = 0; i < others.length; i += BATCH_SIZE) {
-    const batch = others.slice(i, i + BATCH_SIZE);
-    await Promise.all(
-      batch.map((r) =>
-        applyChattergroundsAction(
-          {
-            action: "mint",
-            chatterId: r.chatterId,
-            chatterLogin: r.login,
-            amount: quest.reward,
-          },
-          { sessionUserId: broadcasterId }
-        )
-      )
+    // Update State
+    const updatedQuests = [...state.chatterQuests];
+    updatedQuests[questIndex] = { ...quest, completed: true };
+
+    const updatedState: StreamQuestState = {
+        ...state,
+        chatterQuests: updatedQuests,
+        ledger
+    };
+
+    await saveState(session.userId, updatedState);
+    return jsonNoStore({
+        quest: updatedQuests[questIndex],
+        recipient: targetChatter,
+        ...serializeState(updatedState)
+    });
+  }
+
+  // --- ACTION: COMPLETE STREAMER QUEST (Existing Logic) ---
+  if (action === "claim") {
+    if (!body?.id) return jsonNoStore({ error: "missing_id" }, { status: 400 });
+
+    const quest = state.quests.find((entry) => entry.id === body.id);
+    if (!quest) return jsonNoStore({ error: "quest_not_found" }, { status: 404 });
+    if (quest.completed) return jsonNoStore({ alreadyCompleted: true, ...serializeState(state) });
+
+    const recipients = await loadRecipientsFromChattergrounds(broadcasterId);
+
+    // Reward Broadcaster
+    await applyChattergroundsAction(
+      {
+        action: "quest-completed",
+        chatterId: broadcasterId,
+        chatterLogin: broadcasterLogin,
+        amount: quest.reward,
+      },
+      { sessionUserId: broadcasterId }
     );
+
+    // Reward Audience
+    const others = recipients.filter((r) => r.chatterId !== broadcasterId);
+    const BATCH_SIZE = 10;
+    for (let i = 0; i < others.length; i += BATCH_SIZE) {
+      const batch = others.slice(i, i + BATCH_SIZE);
+      await Promise.all(
+        batch.map((r) =>
+          applyChattergroundsAction(
+            {
+              action: "mint",
+              chatterId: r.chatterId,
+              chatterLogin: r.login,
+              amount: quest.reward,
+            },
+            { sessionUserId: broadcasterId }
+          )
+        )
+      );
+    }
+
+    // Ledger Update
+    const ledger = { ...state.ledger };
+    ledger[broadcasterLogin] = (ledger[broadcasterLogin] ?? 0) + quest.reward;
+    for (const r of others) {
+      ledger[r.login] = (ledger[r.login] ?? 0) + quest.reward;
+    }
+
+    const updatedQuest: StreamQuest = {
+      ...quest,
+      completed: true,
+      completedAt: new Date().toISOString(),
+    };
+
+    const updatedState: StreamQuestState = {
+      ...state,
+      quests: state.quests.map((entry) => (entry.id === quest.id ? updatedQuest : entry)),
+      ledger,
+      lastAudience: audience,
+      lastAudienceHour: seedFromCurrentHour(),
+    };
+
+    await saveState(session.userId, updatedState);
+
+    return jsonNoStore({
+      quest: updatedQuest,
+      recipients: [broadcasterLogin, ...others.map((r) => r.login)],
+      totalRewarded: quest.reward * (others.length + 1),
+      ...serializeState(updatedState),
+    });
   }
 
-  // 4. Update the local JSON ledger
-  const ledger = { ...state.ledger };
-  ledger[broadcasterLogin] = (ledger[broadcasterLogin] ?? 0) + quest.reward;
-  for (const r of others) {
-    ledger[r.login] = (ledger[r.login] ?? 0) + quest.reward;
-  }
-
-  const updatedQuest: StreamQuest = {
-    ...quest,
-    completed: true,
-    completedAt: new Date().toISOString(),
-  };
-
-  const updatedState: StreamQuestState = {
-    ...state,
-    quests: state.quests.map((entry) => (entry.id === quest.id ? updatedQuest : entry)),
-    ledger,
-    lastAudience: audience,
-    lastAudienceHour: seedFromCurrentHour(),
-  };
-
-  await saveState(session.userId, updatedState);
-
-  return jsonNoStore({
-    quest: updatedQuest,
-    recipients: [broadcasterLogin, ...others.map((r) => r.login)],
-    totalRewarded: quest.reward * (others.length + 1),
-    ...serializeState(updatedState),
-  });
+  return jsonNoStore({ error: "bad_request" }, { status: 400 });
 }
+
+// --- Logic & State Management ---
 
 async function ensureState(audience: AudienceSnapshot, userId: string) {
   const today = currentDateKey();
   const existing = await loadState(userId);
-  const questTemplates = await loadQuestTemplates();
+  const streamQuestTemplates = await loadQuestTemplates(TEMPLATE_LIBRARY_PATH);
+  const chatQuestTemplates = await loadQuestTemplates(CHAT_TEMPLATE_LIBRARY_PATH);
   const currentHour = seedFromCurrentHour();
 
   if (existing && existing.date === today) {
-    // IMPORTANT FIX:
-    // Do NOT regenerate quests just because roster/audience changed.
-    // That was causing “first claim reshuffles” (completed quests moved to front + new replacements).
-    //
-    // Only top-up if we somehow have fewer than 6 quests.
-    const needsTopUp = !Array.isArray(existing.quests) || existing.quests.length < 6;
+    let stateDirty = false;
+    let newState = { ...existing };
 
-    if (needsTopUp) {
-      const toppedUp = topUpQuestsPreserveOrder(existing.quests ?? [], audience, questTemplates);
-      const regeneratedState: StreamQuestState = {
-        ...existing,
-        quests: toppedUp,
-        generatedAt: new Date().toISOString(),
-        lastAudience: audience,
-        lastAudienceHour: currentHour,
-      };
-      await saveState(userId, regeneratedState);
-      return { state: regeneratedState, regenerated: true };
+    // 1. Top up Streamer Quests if missing
+    if (!Array.isArray(existing.quests) || existing.quests.length < 6) {
+      newState.quests = topUpQuestsPreserveOrder(existing.quests ?? [], audience, streamQuestTemplates);
+      stateDirty = true;
     }
 
+    // 2. Initialize Chatter Quests if missing (Backwards compatibility for existing day)
+    if (!existing.chatterQuests || existing.chatterQuests.length === 0 || !existing.dailyQuestor) {
+        const questor = pickChatter(audience.names);
+        newState.dailyQuestor = questor;
+        newState.chatterQuests = buildChatterQuests(questor, audience, chatQuestTemplates);
+        newState.chatterRerollUsed = false;
+        stateDirty = true;
+    }
+
+    if (stateDirty) {
+        const finalizedState = {
+            ...newState,
+            generatedAt: new Date().toISOString(),
+            lastAudience: audience,
+            lastAudienceHour: currentHour,
+        };
+        await saveState(userId, finalizedState);
+        return { state: finalizedState, regenerated: true };
+    }
+
+    // Just update audience metadata
     const updated: StreamQuestState = {
       ...existing,
       lastAudience: audience,
@@ -408,11 +459,20 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
     return { state: updated, regenerated: false };
   }
 
-  const quests = buildQuests(audience, questTemplates);
+  // --- NEW DAY GENERATION ---
+  const quests = buildQuests(audience, streamQuestTemplates);
+  
+  // Pick Chatter Questor
+  const dailyQuestor = pickChatter(audience.names);
+  const chatterQuests = buildChatterQuests(dailyQuestor, audience, chatQuestTemplates);
+
   const state: StreamQuestState = {
     date: today,
     generatedAt: new Date().toISOString(),
     quests,
+    dailyQuestor,
+    chatterQuests,
+    chatterRerollUsed: false,
     ledger: existing?.ledger ?? {},
     lastAudienceHour: currentHour,
     lastAudience: audience,
@@ -437,11 +497,16 @@ async function loadState(userId: string): Promise<StreamQuestState | null> {
   try {
     const raw = await fs.readFile(getDataPath(userId), "utf8");
     const parsed = JSON.parse(raw) as StreamQuestState;
-    if (!parsed.date || !Array.isArray(parsed.quests) || parsed.ledger === undefined) {
+    if (!parsed.date || parsed.ledger === undefined) {
       return null;
     }
     return {
       ...parsed,
+      quests: parsed.quests || [],
+      // Ensure backward compat for old files without chatter quests
+      chatterQuests: parsed.chatterQuests || [],
+      dailyQuestor: parsed.dailyQuestor || "",
+      chatterRerollUsed: !!parsed.chatterRerollUsed,
       lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
       lastAudience: parsed.lastAudience ?? { names: FALLBACK_CHATTERS, source: "fallback", live: true },
     };
@@ -461,6 +526,11 @@ function serializeState(state: StreamQuestState) {
     date: state.date,
     generatedAt: state.generatedAt,
     quests: state.quests,
+    // Chatter specific data
+    dailyQuestor: state.dailyQuestor,
+    chatterQuests: state.chatterQuests,
+    chatterRerollUsed: state.chatterRerollUsed,
+    // General
     ledger: state.ledger,
     audience: state.lastAudience,
   };
@@ -474,10 +544,11 @@ function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function pickChatter(chatters: string[], fallback: string[] = FALLBACK_CHATTERS) {
-  const pool = chatters.length ? chatters : fallback;
-  if (!pool.length) return "a viewer";
-  return pool[Math.floor(Math.random() * pool.length)];
+function pickChatter(chatters: string[], fallback: string[] = FALLBACK_CHATTERS, exclude: string[] = []) {
+  const pool = chatters.filter(n => !exclude.includes(n));
+  const finalPool = pool.length ? pool : fallback;
+  if (!finalPool.length) return "a viewer";
+  return finalPool[Math.floor(Math.random() * finalPool.length)];
 }
 
 function seedFromCurrentHour() {
@@ -494,26 +565,25 @@ function shuffleWithSeed(values: string[], seed: number) {
     const j = rng % (i + 1);
     [result[i], result[j]] = [result[j], result[i]];
   }
-
   return result;
 }
 
-async function loadQuestTemplates(): Promise<QuestTemplateConfig[]> {
+async function loadQuestTemplates(filePath: string): Promise<QuestTemplateConfig[]> {
   try {
-    const raw = await fs.readFile(TEMPLATE_LIBRARY_PATH, "utf8");
+    const raw = await fs.readFile(filePath, "utf8");
     const parsed = JSON.parse(raw) as QuestTemplateConfig[] | { templates?: QuestTemplateConfig[] };
     const templates = Array.isArray(parsed) ? parsed : parsed.templates;
-    const sanitized = (templates ?? []).map(sanitizeTemplateConfig).filter(Boolean) as QuestTemplateConfig[];
-    if (sanitized.length >= 6) return sanitized;
+    return (templates ?? []).map(sanitizeTemplateConfig).filter(Boolean) as QuestTemplateConfig[];
   } catch (error) {
-    console.warn("Stream quest: failed to load quest-library.json, using defaults.", error);
+    console.warn(`Stream quest: failed to load ${filePath}, using defaults.`, error);
   }
   return DEFAULT_TEMPLATE_LIBRARY;
 }
 
 function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[]): StreamQuest[] {
   if (library.length < 6) {
-    throw new Error("At least 6 quest templates are required to build a daily set.");
+    // Fallback if library is broken
+    return buildQuests(audience, DEFAULT_TEMPLATE_LIBRARY); 
   }
   const shuffled = [...library].sort(() => Math.random() - 0.5);
   const selected = shuffled.slice(0, 6);
@@ -535,11 +605,25 @@ function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[])
   });
 }
 
-/**
- * IMPORTANT FIX:
- * Reroll incomplete quests IN PLACE, preserving the existing order.
- * (No “completed quests move to the front” reshuffle.)
- */
+function buildChatterQuests(questorName: string, audience: AudienceSnapshot, library: QuestTemplateConfig[]): ChatterQuest[] {
+    const shuffled = [...library].sort(() => Math.random() - 0.5);
+    const selected = shuffled.slice(0, 3);
+    
+    return selected.map(template => {
+        // We override specific vars to ensure they relate to context
+        const variables = resolveVariables(template.variables ?? [], audience, questorName);
+        const prompt = renderPrompt(template.prompt, variables);
+
+        return {
+            id: `${template.id}-${crypto.randomUUID()}`,
+            title: template.title,
+            prompt,
+            reward: template.reward ?? 200,
+            completed: false
+        };
+    });
+}
+
 function rerollIncompleteQuestsPreserveOrder(
   existingQuests: StreamQuest[],
   audience: AudienceSnapshot,
@@ -549,14 +633,12 @@ function rerollIncompleteQuestsPreserveOrder(
   const replacements = buildQuests(audience, library);
 
   let repIndex = 0;
-
   const out: StreamQuest[] = base.map((q) => {
     if (q.completed) return q;
     const next = replacements[repIndex++]!;
     return next;
   });
 
-  // Top-up to 6 if we somehow had fewer
   while (out.length < 6 && repIndex < replacements.length) {
     out.push(replacements[repIndex++]!);
   }
@@ -564,10 +646,6 @@ function rerollIncompleteQuestsPreserveOrder(
   return out;
 }
 
-/**
- * Top-up only (no reroll): if we have < 6 quests, append new ones until we hit 6.
- * Keeps existing order stable.
- */
 function topUpQuestsPreserveOrder(
   existingQuests: StreamQuest[],
   audience: AudienceSnapshot,
@@ -594,7 +672,7 @@ function renderPrompt(prompt: string, values: Record<string, string | number>) {
   });
 }
 
-function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot) {
+function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot, excludeChatter?: string) {
   const values: Record<string, string | number> = {};
 
   variables.forEach((variable) => {
@@ -604,11 +682,15 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
       values[variable.key] = randomBetween(min, max);
     }
     if (variable.type === "chatter") {
-      const fallbackNames =
-        audience.source === "twitch"
+      const fallbackNames = audience.source === "twitch"
           ? ([audience.displayName].filter(Boolean) as string[])
           : FALLBACK_CHATTERS;
-      values[variable.key] = pickChatter(audience.names, fallbackNames);
+      // Ensure we don't pick the daily questor as the target of their own insult
+      const excluded = excludeChatter ? [excludeChatter] : [];
+      values[variable.key] = pickChatter(audience.names, fallbackNames, excluded);
+    }
+    if (variable.type === "streamer") {
+        values[variable.key] = audience.displayName || "The Streamer";
     }
   });
 
@@ -617,13 +699,10 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
 
 function sanitizeTemplateConfig(config: QuestTemplateConfig) {
   if (!config?.id || !config.title || !config.prompt) return null;
-  if (!["prime", "ban", "timeout", "stream-time", "insult", "wordle", "bandle"].includes(config.category)) {
-    return null;
-  }
   return {
     ...config,
     variables: (config.variables ?? []).filter((variable) => {
-      if (variable.type === "chatter") return !!variable.key;
+      if (variable.type === "chatter" || variable.type === "streamer") return !!variable.key;
       if (variable.type === "range") {
         return !!variable.key && Number.isFinite(variable.min) && Number.isFinite(variable.max);
       }
@@ -645,14 +724,13 @@ async function loadAudience(session: TwitchSession): Promise<AudienceSnapshot> {
 
     const recips = await loadRecipientsFromChattergrounds(session.userId);
 
-    // We keep this deterministic-per-hour, but we no longer let roster changes trigger quest regeneration.
     const names = shuffleWithSeed(
       recips.map((r) => r.login),
       seedFromCurrentHour()
     );
 
     const liveCheck = await checkLiveStatus(session);
-    const live = liveCheck ?? true; // if unknown, don't false-negative lock the board
+    const live = liveCheck ?? true;
 
     return {
       names,
