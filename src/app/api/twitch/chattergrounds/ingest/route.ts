@@ -75,6 +75,97 @@ async function handleNotification(subscriptionType: string, envelope: EventSubEn
       });
     }
   }
+  else if (subscriptionType === "channel.subscribe") {
+    const chatterId = event.user_id as string | undefined;
+    const chatterLogin = event.user_login as string | undefined;
+    const chatterDisplayName = event.user_name as string | undefined;
+    const tier = event.tier as string | undefined;
+
+    if (chatterId) {
+      actions.push({
+        action: "sub-status",
+        chatterId,
+        chatterLogin,
+        chatterDisplayName,
+        isSubscriber: true,
+        tier,
+      });
+    }
+  }
+  else if (subscriptionType === "channel.subscription.message") {
+    const chatterId = event.user_id as string | undefined;
+    const chatterLogin = event.user_login as string | undefined;
+    const chatterDisplayName = event.user_name as string | undefined;
+    const tier = event.tier as string | undefined;
+    const cumulativeMonths = Number(event.cumulative_months ?? 0);
+
+    if (chatterId && Number.isFinite(cumulativeMonths) && cumulativeMonths > 0) {
+      actions.push({
+        action: "sub-months",
+        chatterId,
+        chatterLogin,
+        chatterDisplayName,
+        months: cumulativeMonths,
+        tier,
+      });
+    } else if (chatterId) {
+      actions.push({
+        action: "sub-status",
+        chatterId,
+        chatterLogin,
+        chatterDisplayName,
+        isSubscriber: true,
+        tier,
+      });
+    }
+  }
+  else if (subscriptionType === "channel.subscription.gift") {
+    const gifterId = event.user_id as string | undefined;
+    const gifterLogin = event.user_login as string | undefined;
+    const gifterDisplayName = event.user_name as string | undefined;
+    const giftCount = Math.max(1, Math.floor(Number(event.total ?? 1)));
+
+    if (gifterId) {
+      actions.push({
+        action: "gift-subs",
+        chatterId: gifterId,
+        chatterLogin: gifterLogin,
+        chatterDisplayName: gifterDisplayName,
+        count: giftCount,
+      });
+    }
+
+    const recipientId = event.recipient_user_id as string | undefined;
+    const recipientLogin = event.recipient_user_login as string | undefined;
+    const recipientDisplayName = event.recipient_user_name as string | undefined;
+    const recipientTier = event.tier as string | undefined;
+
+    if (recipientId) {
+      actions.push({
+        action: "sub-status",
+        chatterId: recipientId,
+        chatterLogin: recipientLogin,
+        chatterDisplayName: recipientDisplayName,
+        isSubscriber: true,
+        tier: recipientTier,
+      });
+    }
+  }
+  else if (subscriptionType === "channel.subscription.end") {
+    const chatterId = event.user_id as string | undefined;
+    const chatterLogin = event.user_login as string | undefined;
+    const chatterDisplayName = event.user_name as string | undefined;
+
+    if (chatterId) {
+      actions.push({
+        action: "sub-status",
+        chatterId,
+        chatterLogin,
+        chatterDisplayName,
+        isSubscriber: false,
+      });
+    }
+  }
 
   for (const action of actions) {
     await applyChattergroundsAction(action, {
