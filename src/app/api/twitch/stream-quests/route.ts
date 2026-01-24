@@ -5,10 +5,7 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 
 import { fetchChatters, getValidSession, twitchApi } from "@/app/lib/twitch-auth";
-// Import the database logic from your chattergrounds route
 import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
-
-// Read recipients from chattergrounds DB
 import { all } from "@/app/lib/sql";
 
 export const dynamic = "force-dynamic";
@@ -25,7 +22,7 @@ type QuestCategory =
   | "insult"
   | "wordle"
   | "bandle"
-  | "chat"   // New categories for chat quests
+  | "chat"
   | "game"
   | "social"
   | "love"
@@ -54,6 +51,8 @@ type ChatterQuest = {
   prompt: string;
   reward: number;
   completed: boolean;
+  assignedTo: string; // The specific chatter this quest is for
+  assignedToId?: string;
 };
 
 type AudienceSnapshot = {
@@ -71,10 +70,7 @@ type StreamQuestState = {
   quests: StreamQuest[]; // Streamer quests
   
   // -- NEW CHATTER QUEST STATE --
-  dailyQuestor: string; // The selected chatter name
-  dailyQuestorId?: string; // Optional ID if known
-  chatterQuests: ChatterQuest[]; // The 3 quests for the chatter
-  chatterRerollCount: number; // CHANGED: Now a number instead of boolean
+  chatterQuests: ChatterQuest[]; // Now 6 individual quests
   
   ledger: Record<string, number>;
   lastAudienceHour: number;
@@ -84,7 +80,7 @@ type StreamQuestState = {
 type QuestVariable =
   | { key: string; type: "range"; min: number; max: number }
   | { key: string; type: "chatter" }
-  | { key: string; type: "streamer" }; // New variable type
+  | { key: string; type: "streamer" };
 
 type QuestTemplateConfig = {
   id: string;
@@ -225,14 +221,12 @@ async function checkLiveStatus(session: TwitchSession): Promise<boolean | null> 
 export async function GET() {
   const session = await getValidSession();
 
-  // 1. Block if not logged in
   if (!session) {
     return jsonNoStore({ error: "unauthenticated" }, { status: 401 });
   }
 
   const audience = await loadAudience(session);
 
-  // 2. Block if stream is not live
   if (audience.live === false) {
     return jsonNoStore(
       {
@@ -290,33 +284,51 @@ export async function POST(request: Request) {
     });
   }
 
-  // --- ACTION: REROLL CHATTER QUESTOR (UPDATED FOR 3 ROLLS) ---
-  if (action === "reroll_questor") {
-    const currentCount = typeof state.chatterRerollCount === 'number' ? state.chatterRerollCount : 0;
+  // --- ACTION: REROLL SINGLE CHATTER QUEST ---
+  if (action === "reroll_single_chatter_quest") {
+    if (!body?.id) return jsonNoStore({ error: "missing_id" }, { status: 400 });
 
-    if (currentCount >= 3) {
-        return jsonNoStore({ error: "No rerolls remaining" }, { status: 400 });
+    const questIndex = state.chatterQuests.findIndex(q => q.id === body.id);
+    if (questIndex === -1) return jsonNoStore({ error: "quest_not_found" }, { status: 404 });
+    if (state.chatterQuests[questIndex].completed) {
+        return jsonNoStore({ error: "Cannot reroll completed quest" }, { status: 400 });
     }
 
+    // Load templates and pick a new one
     const chatTemplates = await loadQuestTemplates(CHAT_TEMPLATE_LIBRARY_PATH);
-    const newQuestor = pickChatter(audience.names, [], [state.dailyQuestor]);
-    const newQuestorId = newQuestor
-      ? audience.recipientByLogin?.[newQuestor.toLowerCase()]
-      : undefined;
-    const newChatterQuests = buildChatterQuests(newQuestor, audience, chatTemplates);
+    const newTemplate = chatTemplates[Math.floor(Math.random() * chatTemplates.length)];
+    
+    // Pick a new chatter
+    const newAssignedTo = pickChatter(audience.names);
+    const newAssignedToId = newAssignedTo 
+        ? audience.recipientByLogin?.[newAssignedTo.toLowerCase()] 
+        : undefined;
+
+    // Resolve variables for the new prompt
+    const variables = resolveVariables(newTemplate.variables ?? [], audience, newAssignedTo);
+    const prompt = renderPrompt(newTemplate.prompt, variables);
+
+    const newQuest: ChatterQuest = {
+        id: `${newTemplate.id}-${crypto.randomUUID()}`,
+        title: newTemplate.title,
+        prompt,
+        reward: newTemplate.reward ?? 200,
+        completed: false,
+        assignedTo: newAssignedTo || "Mystery Chatter",
+        assignedToId: newAssignedToId
+    };
+
+    const updatedQuests = [...state.chatterQuests];
+    updatedQuests[questIndex] = newQuest;
 
     const newState: StreamQuestState = {
         ...state,
-        dailyQuestor: newQuestor,
-        dailyQuestorId: newQuestorId,
-        chatterQuests: newChatterQuests,
-        chatterRerollCount: currentCount + 1, // Increment count
+        chatterQuests: updatedQuests,
         lastAudience: audience
-    }
+    };
 
     await saveState(session.userId, newState);
     return jsonNoStore({
-        regenerated: true,
         ...serializeState(newState)
     });
   }
@@ -331,16 +343,16 @@ export async function POST(request: Request) {
     const quest = state.chatterQuests[questIndex];
     if (quest.completed) return jsonNoStore({ alreadyCompleted: true, ...serializeState(state) });
 
-    // Reward the SPECIFIC questor
-    const targetChatter = state.dailyQuestor;
+    // Reward the ASSIGNED chatter, not a global one
+    const targetChatter = quest.assignedTo;
     const resolvedChatterId =
-      state.dailyQuestorId ||
+      quest.assignedToId ||
       (await resolveChatterId(session, broadcasterId, targetChatter));
+    
     if (!resolvedChatterId) {
       return jsonNoStore({ error: "missing_chatter_id" }, { status: 400 });
     }
     
-    // We try to find their ID if possible from the audience source, but falling back to name is handled by applyChattergroundsAction usually if name based
     await applyChattergroundsAction({
         action: "mint",
         chatterId: resolvedChatterId,
@@ -370,7 +382,7 @@ export async function POST(request: Request) {
     });
   }
 
-  // --- ACTION: COMPLETE STREAMER QUEST (Existing Logic) ---
+  // --- ACTION: COMPLETE STREAMER QUEST ---
   if (action === "claim") {
     if (!body?.id) return jsonNoStore({ error: "missing_id" }, { status: 400 });
 
@@ -464,23 +476,13 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
       stateDirty = true;
     }
 
-    if (existing.dailyQuestor && !existing.dailyQuestorId && audience.recipientByLogin) {
-      const resolvedId = audience.recipientByLogin[existing.dailyQuestor.toLowerCase()];
-      if (resolvedId) {
-        newState.dailyQuestorId = resolvedId;
-        stateDirty = true;
-      }
-    }
-
-    // 2. Initialize Chatter Quests if missing (Backwards compatibility for existing day)
-    if (!existing.chatterQuests || existing.chatterQuests.length === 0 || !existing.dailyQuestor) {
-        const questor = pickChatter(audience.names);
-        newState.dailyQuestor = questor;
-        newState.dailyQuestorId = questor
-          ? audience.recipientByLogin?.[questor.toLowerCase()]
-          : undefined;
-        newState.chatterQuests = buildChatterQuests(questor, audience, chatQuestTemplates);
-        newState.chatterRerollCount = 0; // Init counter
+    // 2. Chatter Quests Migration/Top-up (Migrate from 3 to 6 or from global to specific)
+    const currentChatterQuests = existing.chatterQuests || [];
+    const hasInvalidQuests = currentChatterQuests.some(q => !q.assignedTo);
+    
+    if (currentChatterQuests.length < 6 || hasInvalidQuests) {
+        // Regenerate completely to be safe and ensure distribution
+        newState.chatterQuests = buildChatterQuests(audience, chatQuestTemplates);
         stateDirty = true;
     }
 
@@ -508,21 +510,14 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
   // --- NEW DAY GENERATION ---
   const quests = buildQuests(audience, streamQuestTemplates);
   
-  // Pick Chatter Questor
-  const dailyQuestor = pickChatter(audience.names);
-  const dailyQuestorId = dailyQuestor
-    ? audience.recipientByLogin?.[dailyQuestor.toLowerCase()]
-    : undefined;
-  const chatterQuests = buildChatterQuests(dailyQuestor, audience, chatQuestTemplates);
+  // Pick Chatter Quests (6 individual ones)
+  const chatterQuests = buildChatterQuests(audience, chatQuestTemplates);
 
   const state: StreamQuestState = {
     date: today,
     generatedAt: new Date().toISOString(),
     quests,
-    dailyQuestor,
-    dailyQuestorId,
     chatterQuests,
-    chatterRerollCount: 0, // Set starting count
     ledger: existing?.ledger ?? {},
     lastAudienceHour: currentHour,
     lastAudience: audience,
@@ -551,20 +546,10 @@ async function loadState(userId: string): Promise<StreamQuestState | null> {
       return null;
     }
 
-    // Handle migration from boolean to number
-    let rerollCount = 0;
-    if (typeof (parsed as any).chatterRerollCount === 'number') {
-      rerollCount = (parsed as any).chatterRerollCount;
-    } else if ((parsed as any).chatterRerollUsed) {
-      rerollCount = 1;
-    }
-
     return {
       ...parsed,
       quests: parsed.quests || [],
       chatterQuests: parsed.chatterQuests || [],
-      dailyQuestor: parsed.dailyQuestor || "",
-      chatterRerollCount: rerollCount,
       lastAudienceHour: parsed.lastAudienceHour ?? seedFromCurrentHour(),
       lastAudience: parsed.lastAudience ?? { names: [], source: "offline", live: false },
     };
@@ -584,11 +569,7 @@ function serializeState(state: StreamQuestState) {
     date: state.date,
     generatedAt: state.generatedAt,
     quests: state.quests,
-    // Chatter specific data
-    dailyQuestor: state.dailyQuestor,
     chatterQuests: state.chatterQuests,
-    chatterRerollCount: state.chatterRerollCount,
-    // General
     ledger: state.ledger,
     audience: state.lastAudience,
   };
@@ -640,7 +621,6 @@ async function loadQuestTemplates(filePath: string): Promise<QuestTemplateConfig
 
 function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[]): StreamQuest[] {
   if (library.length < 6) {
-    // Fallback if library is broken
     return buildQuests(audience, DEFAULT_TEMPLATE_LIBRARY); 
   }
   const shuffled = [...library].sort(() => Math.random() - 0.5);
@@ -663,13 +643,19 @@ function buildQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[])
   });
 }
 
-function buildChatterQuests(questorName: string, audience: AudienceSnapshot, library: QuestTemplateConfig[]): ChatterQuest[] {
+// Updated to build 6 individual quests with unique chatters
+function buildChatterQuests(audience: AudienceSnapshot, library: QuestTemplateConfig[]): ChatterQuest[] {
     const shuffled = [...library].sort(() => Math.random() - 0.5);
-    const selected = shuffled.slice(0, 3);
+    const selected = shuffled.slice(0, 6);
     
     return selected.map(template => {
-        // We override specific vars to ensure they relate to context
-        const variables = resolveVariables(template.variables ?? [], audience, questorName);
+        // Pick a random chatter for this specific quest
+        const assignedTo = pickChatter(audience.names);
+        const assignedToId = assignedTo ? audience.recipientByLogin?.[assignedTo.toLowerCase()] : undefined;
+
+        // Resolve variables (passing assignedTo to avoid self-targeting if needed, 
+        // though logic depends on if you want them to target themselves or others)
+        const variables = resolveVariables(template.variables ?? [], audience, assignedTo);
         const prompt = renderPrompt(template.prompt, variables);
 
         return {
@@ -677,7 +663,9 @@ function buildChatterQuests(questorName: string, audience: AudienceSnapshot, lib
             title: template.title,
             prompt,
             reward: template.reward ?? 200,
-            completed: false
+            completed: false,
+            assignedTo: assignedTo || "Mystery Chatter",
+            assignedToId
         };
     });
 }
@@ -741,7 +729,6 @@ function resolveVariables(variables: QuestVariable[], audience: AudienceSnapshot
     }
     if (variable.type === "chatter") {
       const fallbackNames: string[] = [];
-      // Ensure we don't pick the daily questor as the target of their own insult
       const excluded = excludeChatter ? [excludeChatter] : [];
       values[variable.key] = pickChatter(audience.names, fallbackNames, excluded);
     }

@@ -16,6 +16,7 @@ import {
   MessageSquare,
   Music2,
   Puzzle,
+  RefreshCcw,
   Sparkles,
   Timer,
   User,
@@ -55,9 +56,7 @@ type QuestResponse = {
   date: string;
   generatedAt: string;
   quests: StreamQuest[];
-  dailyQuestor: string;
   chatterQuests: ChatterQuest[];
-  chatterRerollCount: number;
   ledger: Record<string, number>;
   audience: AudienceSnapshot;
 };
@@ -68,6 +67,7 @@ type ChatterQuest = {
   prompt: string;
   reward: number;
   completed: boolean;
+  assignedTo: string;
 };
 
 const categoryMeta: Record<
@@ -150,9 +150,6 @@ export function StreamQuestClient() {
   const questFinAudioRef = useRef<HTMLAudioElement | null>(null);
   const moneyAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Helper variable to keep original logic working at the bottom
-  const chatterRerollUsed = (data?.chatterRerollCount ?? 0) >= 3;
-  const dailyQuestor = data?.dailyQuestor ?? "Mystery Chatter";
   const chatterQuests = data?.chatterQuests ?? [];
 
   const triggerToast = useCallback((message: string) => {
@@ -229,29 +226,6 @@ export function StreamQuestClient() {
     };
   }, [loadData]);
 
-  // Logic to handle 3 rerolls
-  const rerollChatterQuestor = useCallback(async () => {
-    if (chatterRerollUsed) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/twitch/stream-quests", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "reroll_questor" }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Failed to reroll questor");
-      setData(json);
-      triggerToast("New daily questor assigned.");
-    } catch (err: any) {
-      console.error(err);
-      triggerToast(err.message || "Failed to reroll questor.");
-    } finally {
-      setLoading(false);
-    }
-  }, [chatterRerollUsed, triggerToast]);
-
   const totalMinted = useMemo(() => {
     if (!data) return 0;
     return Object.values(data.ledger).reduce((sum, value) => sum + value, 0);
@@ -289,6 +263,28 @@ export function StreamQuestClient() {
       setLoading(false);
     }
   }
+
+  // Reroll a SINGLE chatter quest card
+  const rerollSpecificChatterQuest = useCallback(async (id: string) => {
+    // Optimistic loading state could handle disabling the button, 
+    // but for now we rely on the button component state or general loading
+    try {
+        const res = await fetch("/api/twitch/stream-quests", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "reroll_single_chatter_quest", id }),
+        });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error || "Failed to reroll");
+        
+        // Update local state
+        setData(json);
+        triggerToast("Quest rerolled!");
+    } catch (err: any) {
+        console.error(err);
+        triggerToast(err.message || "Failed to reroll.");
+    }
+  }, [triggerToast]);
 
   async function completeQuest(id: string) {
   if (!data || completingId) return; // Prevent double-clicks
@@ -522,37 +518,20 @@ if (error === "OFFLINE") {
                   Daily Chatter Quests
                 </p>
                 <p className="text-sm text-amber-50/70">
-                  Stop! Who approaches the bridge of death, would must complete these questing three. Rewards go only to today&apos;s questor.
+                   Complete these quests to earn rewards for specific chatters.
                 </p>
               </div>
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="rounded-full border border-amber-300/40 bg-amber-900/60 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-100">
-                  Today&apos;s Daily Questor: {dailyQuestor}
-                </span>
-                <button
-                  type="button"
-                  onClick={rerollChatterQuestor}
-                  disabled={chatterRerollUsed}
-                  className={clsx(
-                    "flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-widest transition",
-                    chatterRerollUsed
-                      ? "cursor-not-allowed border-amber-700/40 bg-amber-900/20 text-amber-200/50"
-                      : "border-amber-500/30 bg-amber-500/10 text-amber-200 hover:bg-amber-500/20"
-                  )}
-                >
-                  <Sparkles className="h-3 w-3" />
-                  {chatterRerollUsed ? "No Rerolls Left" : `Reroll (${3 - (data?.chatterRerollCount ?? 0)} left)`}
-                </button>
-              </div>
+              {/* Removed the global daily questor badge/reroll button here */}
             </div>
 
-            {/* Grid fixed with items-start to prevent stretching and consistent spacing */}
+            {/* Grid updated for 6 items (3 cols x 2 rows roughly) */}
             <div className="relative mt-8 grid grid-cols-1 gap-6 md:grid-cols-3 items-start justify-items-center">
               {chatterQuests.map((quest) => (
                 <ChatterQuestTile
                   key={quest.id}
                   quest={quest}
                   onComplete={() => claimChatterQuest(quest.id)}
+                  onReroll={() => rerollSpecificChatterQuest(quest.id)}
                   completing={claimingChatterId === quest.id}
                   celebrating={celebratingChatterId === quest.id}
                   isActive={isActive}
@@ -904,12 +883,14 @@ function QuestTile({
 function ChatterQuestTile({
   quest,
   onComplete,
+  onReroll,
   completing,
   celebrating,
   isActive,
 }: {
   quest: ChatterQuest;
   onComplete: () => void;
+  onReroll: () => void;
   completing: boolean;
   celebrating: boolean;
   isActive: boolean;
@@ -917,90 +898,111 @@ function ChatterQuestTile({
   const isCompleted = quest.completed;
 
   return (
-    <button
-      type="button"
-      onClick={!isCompleted && isActive ? onComplete : undefined}
-      disabled={!isActive || isCompleted || completing}
-      className={clsx(
-        // Constrain width so it doesn't span the whole screen
-        "group relative isolate h-full w-full max-w-[340px] mx-auto rounded-[24px] text-left transition-all duration-300",
-        !isCompleted && isActive 
-          ? "hover:-translate-y-2 active:scale-95 active:rotate-1 cursor-pointer" 
-          : "cursor-not-allowed opacity-90"
-      )}
-    >
-      {/* Shimmer Effect */}
-      <div className="pointer-events-none absolute inset-0 z-30 overflow-hidden rounded-[24px]">
-        <div className="absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-transform duration-1000 group-hover:translate-x-[50%] group-hover:opacity-100 group-hover:rotate-12" />
-      </div>
+    <div className="relative h-full w-full max-w-[340px] mx-auto group">
+        {/* Reroll Button (Top Right, outside the clickable card area) */}
+        {!isCompleted && isActive && (
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    if(confirm("Reroll this specific quest?")) onReroll();
+                }}
+                className="absolute -top-2 -right-2 z-50 flex h-8 w-8 items-center justify-center rounded-full border border-amber-500/40 bg-[#1a0f0a] text-amber-200 shadow-lg transition-transform hover:scale-110 hover:bg-amber-900/80 hover:text-white"
+                title="Reroll this quest"
+            >
+                <RefreshCcw className="h-3.5 w-3.5" />
+            </button>
+        )}
 
-      <div className="absolute top-5 left-4 z-40 flex items-center gap-3">
-        <span className="rounded-full bg-[#1e293b] border border-blue-400/30 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-100 shadow-lg">
-          Chatter
-        </span>
-      </div>
-
-      <div className={clsx(
-          "relative flex flex-col min-h-[180px] w-full overflow-hidden rounded-[20px] bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-4 pb-12 pt-12 shadow-[0_18px_36px_rgba(0,0,0,0.35)] transition-all duration-500",
-          !isCompleted && isActive 
-            ? "group-hover:shadow-[0_30px_60px_rgba(56,189,248,0.15)] group-hover:border-blue-400/30" 
-            : ""
-        )}>
-        
-        {/* Main Content Card */}
-        <div className="relative z-10 flex flex-1 flex-col gap-2 rounded-xl border-2 border-[#528cc4] bg-[#162032] px-3 py-3 shadow-inner transition-transform duration-500 group-hover:scale-[1.01]">
-          <div className="flex items-start gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[#528cc4]/60 bg-[#0f1b2b] text-blue-100 shadow-md group-hover:rotate-6 transition-transform">
-              <MessageSquare className="h-5 w-5 text-blue-200" />
-            </div>
-
-            <div className="min-w-0 space-y-0.5">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-base font-bold text-blue-50 drop-shadow-sm group-hover:text-white transition-colors">
-                  {quest.title}
-                </span>
-              </div>
-              <p className="text-xs leading-relaxed text-blue-50/70 group-hover:text-blue-50/90 transition-colors">
-                {quest.prompt}
-              </p>
-            </div>
+        <button
+          type="button"
+          onClick={!isCompleted && isActive ? onComplete : undefined}
+          disabled={!isActive || isCompleted || completing}
+          className={clsx(
+            // Constrain width so it doesn't span the whole screen
+            "relative isolate h-full w-full rounded-[24px] text-left transition-all duration-300",
+            !isCompleted && isActive 
+              ? "hover:-translate-y-2 active:scale-95 active:rotate-1 cursor-pointer" 
+              : "cursor-not-allowed opacity-90"
+          )}
+        >
+          {/* Shimmer Effect */}
+          <div className="pointer-events-none absolute inset-0 z-30 overflow-hidden rounded-[24px]">
+            <div className="absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-transform duration-1000 group-hover:translate-x-[50%] group-hover:opacity-100 group-hover:rotate-12" />
           </div>
 
-          {/* Reward Section - Now matches Streamer Quest style */}
-          <div className="mt-auto flex items-center justify-between pt-2">
-            <div className="flex items-center gap-2 text-[10px] font-bold text-amber-200 uppercase tracking-tight">
-              <Coins className="h-3.5 w-3.5" />
-              <span>{quest.reward} TOADCOINS</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Completion Overlay */}
-        {isCompleted && (
-          <div 
-            className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#0f1b2b]/90 backdrop-blur-md animate-unravel"
-            style={{ clipPath: 'circle(150% at 50% 50%)' }}
-          >
-            <div className="relative">
-              <div className="absolute inset-0 animate-ping rounded-full bg-emerald-500/20" />
-              <BadgeCheck className="h-10 w-10 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]" />
-            </div>
-            <span className="mt-3 text-[10px] font-black uppercase tracking-[0.3em] text-emerald-100">
-              Quest Complete
+          <div className="absolute top-5 left-4 z-40 flex items-center gap-3">
+            <span className="rounded-full bg-[#1e293b] border border-blue-400/30 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-blue-100 shadow-lg">
+              Chatter
             </span>
-            <div className="absolute inset-0 border-4 border-emerald-500/30 rounded-[20px]" />
           </div>
-        )}
 
-        {completing && (
-           <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-              <Loader2 className="h-6 w-6 animate-spin text-blue-400" />
-           </div>
-        )}
+          <div className={clsx(
+              "relative flex flex-col min-h-[180px] w-full overflow-hidden rounded-[20px] bg-[url('/images/questplate.png')] bg-cover bg-center bg-no-repeat px-4 pb-12 pt-12 shadow-[0_18px_36px_rgba(0,0,0,0.35)] transition-all duration-500",
+              !isCompleted && isActive 
+                ? "group-hover:shadow-[0_30px_60px_rgba(56,189,248,0.15)] group-hover:border-blue-400/30" 
+                : ""
+            )}>
+            
+            {/* Main Content Card */}
+            <div className="relative z-10 flex flex-1 flex-col gap-2 rounded-xl border-2 border-[#528cc4] bg-[#162032] px-3 py-3 shadow-inner transition-transform duration-500 group-hover:scale-[1.01]">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[#528cc4]/60 bg-[#0f1b2b] text-blue-100 shadow-md group-hover:rotate-6 transition-transform">
+                  <MessageSquare className="h-5 w-5 text-blue-200" />
+                </div>
 
-        {celebrating && <CelebrationBurst />}
-      </div>
-    </button>
+                <div className="min-w-0 space-y-0.5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-base font-bold text-blue-50 drop-shadow-sm group-hover:text-white transition-colors">
+                      {quest.title}
+                    </span>
+                  </div>
+                  <p className="text-xs leading-relaxed text-blue-50/70 group-hover:text-blue-50/90 transition-colors">
+                    {quest.prompt}
+                  </p>
+                </div>
+              </div>
+
+              {/* Reward Section - Now matches Streamer Quest style */}
+              <div className="mt-auto flex items-center justify-between pt-2">
+                 {/* Assigned To Name */}
+                 <div className="flex items-center gap-1 text-[9px] font-medium text-blue-200/60 uppercase tracking-wider">
+                   For: <span className="font-bold text-blue-100 truncate max-w-[80px]">{quest.assignedTo}</span>
+                </div>
+                
+                <div className="flex items-center gap-2 text-[10px] font-bold text-amber-200 uppercase tracking-tight">
+                  <Coins className="h-3.5 w-3.5" />
+                  <span>{quest.reward} TOADCOINS</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Completion Overlay */}
+            {isCompleted && (
+              <div 
+                className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#0f1b2b]/90 backdrop-blur-md animate-unravel"
+                style={{ clipPath: 'circle(150% at 50% 50%)' }}
+              >
+                <div className="relative">
+                  <div className="absolute inset-0 animate-ping rounded-full bg-emerald-500/20" />
+                  <BadgeCheck className="h-10 w-10 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]" />
+                </div>
+                <span className="mt-3 text-[10px] font-black uppercase tracking-[0.3em] text-emerald-100">
+                  Quest Complete
+                </span>
+                <div className="absolute inset-0 border-4 border-emerald-500/30 rounded-[20px]" />
+              </div>
+            )}
+
+            {completing && (
+               <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+                  <Loader2 className="h-6 w-6 animate-spin text-blue-400" />
+               </div>
+            )}
+
+            {celebrating && <CelebrationBurst />}
+          </div>
+        </button>
+    </div>
   );
 }
 
