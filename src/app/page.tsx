@@ -28,14 +28,14 @@ const tiles = [
     type: "video"
   },
   { 
-    title: "JOB SPAMMER", 
-    subtitle: "release date circa 2030", 
+    title: "MY MODS", 
+    subtitle: "Hidden for privacy/NDA", 
     href: "#", 
     external: false 
   },
   { 
     title: "Useful Links", 
-    subtitle: "In Maintenance", 
+    subtitle: "Hidden for privacy/NDA", 
     href: "#", 
     external: false 
   },
