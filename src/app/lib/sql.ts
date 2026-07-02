@@ -20,13 +20,19 @@ declare global {
 }
 
 function openDb(): SqliteDb {
-
-    console.log("[DB] Using", DB_PATH);
-    console.log("[SQL] Root", SQL_ROOT);
   if (global.__pricehammer_db__) return global.__pricehammer_db__;
 
-  // ensure folder exists
-  fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
+  console.log("[DB] Using", DB_PATH);
+  console.log("[SQL] Root", SQL_ROOT);
+
+  // ensure folder exists — but never crash the process if we can't create it
+  // (e.g. during `next build`, DB_PATH may point at a runtime-only mount like
+  // /data that isn't writable yet). The real open below is what matters.
+  try {
+    fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
+  } catch (e) {
+    console.warn("[DB] could not create dir", path.dirname(DB_PATH), (e as Error)?.message);
+  }
 
   // verbose for better stack traces in dev
   sqlite3.verbose();
@@ -44,7 +50,18 @@ function openDb(): SqliteDb {
   return db;
 }
 
-const db = openDb();
+// Lazily open the DB on FIRST USE rather than at import time, so importing this
+// module (e.g. while `next build` collects page data) never touches the
+// filesystem. Critical when DB_PATH is a runtime-only mount like /data.
+const db: SqliteDb = new Proxy({} as SqliteDb, {
+  get(_target, prop) {
+    const real = openDb();
+    const value = (real as unknown as Record<string | symbol, unknown>)[prop];
+    return typeof value === "function"
+      ? (value as (...args: unknown[]) => unknown).bind(real)
+      : value;
+  },
+});
 
 /** ---- SQL file cache ---- */
 const sqlCache = new Map<string, string>();
