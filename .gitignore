@@ -42,3 +42,5 @@ next-env.d.ts
 
 *.sqlite-wal
 *.sqlite-shm
+# generated analysis output (dev tooling)
+scripts/analysis-output/

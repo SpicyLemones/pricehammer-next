@@ -4,7 +4,12 @@ import path from "path";
 import sqlite3 from "sqlite3";
 
 /** Absolute paths (adjust if your repo layout changes) */
-const DB_PATH = path.join(process.cwd(), "data", "db", "data.sqlite");
+// Honor DB_PATH (set in Docker to point at the mounted persistent volume);
+// fall back to the in-repo file for local dev.
+const DB_PATH =
+  process.env.DB_PATH && process.env.DB_PATH.trim() !== ""
+    ? path.resolve(process.env.DB_PATH)
+    : path.join(process.cwd(), "data", "db", "data.sqlite");
 const SQL_ROOT = path.join(process.cwd(), "data", "db", "queries");
 
 /** ---- Singleton DB across hot-reloads/dev ---- */
