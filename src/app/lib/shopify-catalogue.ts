@@ -1,8 +1,7 @@
-import { Products } from "../../../data/db/Product";
 import {
-  ProductSkuCatalogue,
-  type ProductSkuCatalogueEntry,
-} from "../../../data/db/product-skus";
+  loadSkuCatalogue,
+  type SkuCatalogueRecord,
+} from "@/app/lib/sku-catalogue";
 import {
   normalizeShopifySku,
   type ShopifyFeedProduct,
@@ -54,7 +53,6 @@ export type ShopifyMatchSummary = {
 };
 
 type CanonicalEntry = {
-  catalogue: ProductSkuCatalogueEntry;
   productId: string;
   canonicalSku: string | null;
   skuSet: Set<string>;
@@ -154,51 +152,53 @@ const SYSTEM_MARKERS = [
   "necromunda",
 ].map(singularize);
 
-function buildCanonicalEntries(): CanonicalEntry[] {
-  const productsById = new Map(Products.map((p) => [p.id, p] as const));
+function buildCanonicalEntry(record: SkuCatalogueRecord): CanonicalEntry {
+  const name = record.name || record.nameAliases[0] || "";
+  const skuSet = new Set<string>();
 
-  return ProductSkuCatalogue.map((entry) => {
-    const product = productsById.get(entry.productId);
-    const name = product?.name ?? entry.nameAliases?.[0] ?? "";
-    const skuSet = new Set<string>();
+  const canonicalSku = normalizeShopifySku(record.canonicalSku);
+  if (canonicalSku) skuSet.add(canonicalSku);
+  for (const alias of record.skuAliases) {
+    const normalized = normalizeShopifySku(alias);
+    if (normalized) skuSet.add(normalized);
+  }
 
-    const canonicalSku = normalizeShopifySku(entry.canonicalSku);
-    if (canonicalSku) skuSet.add(canonicalSku);
-    for (const alias of entry.skuAliases ?? []) {
-      const normalized = normalizeShopifySku(alias);
-      if (normalized) skuSet.add(normalized);
-    }
+  const nameVariants = new Set<string>();
+  if (name) nameVariants.add(name);
+  for (const alias of record.nameAliases) nameVariants.add(alias);
 
-    const nameVariants = new Set<string>();
-    if (product?.name) nameVariants.add(product.name);
-    for (const alias of entry.nameAliases ?? []) nameVariants.add(alias);
+  const tokens = new Set<string>();
+  for (const variantName of nameVariants) {
+    if (!variantName) continue;
+    for (const token of toTokenSet(variantName)) tokens.add(token);
+  }
 
-    const tokens = new Set<string>();
-    for (const variantName of nameVariants) {
-      if (!variantName) continue;
-      const variantTokens = toTokenSet(variantName);
-      for (const token of variantTokens) tokens.add(token);
-    }
-
-    return {
-      catalogue: entry,
-      productId: entry.productId,
-      canonicalSku,
-      skuSet,
-      tokens,
-      nameVariants: Array.from(nameVariants).filter(Boolean),
-      image: product?.image,
-      name,
-    } satisfies CanonicalEntry;
-  });
+  return {
+    productId: record.productId,
+    canonicalSku,
+    skuSet,
+    tokens,
+    nameVariants: Array.from(nameVariants).filter(Boolean),
+    image: record.image ?? undefined,
+    name,
+  };
 }
 
-const CANONICAL_ENTRIES = buildCanonicalEntries();
-const CANONICAL_BY_SKU = new Map<string, CanonicalEntry>();
-for (const entry of CANONICAL_ENTRIES) {
-  for (const sku of entry.skuSet) {
-    CANONICAL_BY_SKU.set(sku, entry);
+type CanonicalIndex = {
+  entries: CanonicalEntry[];
+  bySku: Map<string, CanonicalEntry>;
+};
+
+// Built lazily from the DB-backed SKU catalogue; loadSkuCatalogue caches for
+// 5 minutes, so rebuilding here is cheap and stays fresh after syncs.
+async function getCanonicalIndex(): Promise<CanonicalIndex> {
+  const records = await loadSkuCatalogue();
+  const entries = records.map(buildCanonicalEntry);
+  const bySku = new Map<string, CanonicalEntry>();
+  for (const entry of entries) {
+    for (const sku of entry.skuSet) bySku.set(sku, entry);
   }
+  return { entries, bySku };
 }
 
 export function buildShopifyProductUrl(
@@ -278,17 +278,19 @@ function computeNameScore(
   return best;
 }
 
-export function matchShopifyProductsAgainstCatalogue(
+export async function matchShopifyProductsAgainstCatalogue(
   products: ShopifyFeedProduct[],
   opts: {
     baseUrl?: string | null;
     maxFuzzyCandidates?: number;
     minFuzzyScore?: number;
   } = {},
-): ShopifyMatchSummary {
+): Promise<ShopifyMatchSummary> {
   const maxFuzzyCandidates = opts.maxFuzzyCandidates ?? 3;
   const minFuzzyScore = opts.minFuzzyScore ?? 0.55;
   const baseUrl = opts.baseUrl ?? null;
+
+  const { entries: canonicalEntries, bySku: canonicalBySku } = await getCanonicalIndex();
 
   const results: ShopifyMatchResult[] = [];
   let matchedBySku = 0;
@@ -301,7 +303,7 @@ export function matchShopifyProductsAgainstCatalogue(
 
     for (const variant of variantSkus) {
       if (!variant.normalized) continue;
-      const canonical = CANONICAL_BY_SKU.get(variant.normalized);
+      const canonical = canonicalBySku.get(variant.normalized);
       if (!canonical) {
         unmatchedSkus.push(variant.normalized);
         continue;
@@ -322,7 +324,7 @@ export function matchShopifyProductsAgainstCatalogue(
 
     if (!hasSkuCandidate) {
       const scoredEntries: Array<{ entry: CanonicalEntry; score: number }> = [];
-      for (const entry of CANONICAL_ENTRIES) {
+      for (const entry of canonicalEntries) {
         const score = computeNameScore(entry, product);
         if (score >= minFuzzyScore) {
           scoredEntries.push({ entry, score });

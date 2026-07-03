@@ -8,7 +8,7 @@
 // frontend bundle — safe to embed, but override via env if it ever rotates.
 
 import { normalizeShopifySku } from "@/app/lib/shopify";
-import { ProductSkuCatalogue } from "../../../data/db/product-skus";
+import { loadSkuCatalogue } from "@/app/lib/sku-catalogue";
 
 const APP_ID = process.env.GW_ALGOLIA_APP_ID || "M5ZIQZNQ2H";
 const API_KEY =
@@ -23,6 +23,9 @@ export type GwCatalogueItem = {
   normalizedSku: string | null;
   price: number | null;
   productType: string | null;
+  image: string | null;
+  /** Set when fetched via fetchGwCatalogueByGame */
+  game?: string;
 };
 
 type AlgoliaHit = Record<string, unknown>;
@@ -58,6 +61,15 @@ async function algoliaQuery(
 
 function pickItem(hit: AlgoliaHit): GwCatalogueItem {
   const sku = typeof hit.sku === "string" ? hit.sku : null;
+  // prefer a static 920x950 render over threeSixty spins
+  let image: string | null = null;
+  if (Array.isArray(hit.images)) {
+    const paths = (hit.images as unknown[]).filter(
+      (v): v is string => typeof v === "string",
+    );
+    const still = paths.find((p) => p.includes("920x950")) ?? paths[0] ?? null;
+    image = still ? `https://www.warhammer.com${still}` : null;
+  }
   return {
     name: typeof hit.name === "string" ? hit.name : null,
     slug: typeof hit.slug === "string" ? hit.slug : null,
@@ -65,6 +77,7 @@ function pickItem(hit: AlgoliaHit): GwCatalogueItem {
     normalizedSku: normalizeShopifySku(sku),
     price: typeof hit.price === "number" ? hit.price : null,
     productType: typeof hit.productType === "string" ? hit.productType : null,
+    image,
   };
 }
 
@@ -131,6 +144,44 @@ export async function fetchGwCatalogue(
   return [...byKey.values()];
 }
 
+/**
+ * Fetch GW catalogue items for specific game systems and product types —
+ * used by the catalogue sync to discover new releases. Items are tagged
+ * with the game they were fetched under.
+ */
+export async function fetchGwCatalogueByGame(
+  games: string[],
+  productTypes: string[],
+  fetchImpl: FetchLike = fetch,
+): Promise<GwCatalogueItem[]> {
+  const byKey = new Map<string, GwCatalogueItem>();
+
+  for (const game of games) {
+    const gameFilter = `GameSystemsRoot.lvl0:"${game.replace(/"/g, '\\"')}"`;
+    for (const type of productTypes) {
+      for (const stock of ["true", "false"]) {
+        const filters = `${gameFilter} AND productType:"${type}" AND isInStock:${stock}`;
+        let page = 0;
+        let nbPages = 1;
+        while (page < nbPages) {
+          const r = await algoliaQuery(
+            { query: "", hitsPerPage: 500, page, filters },
+            fetchImpl,
+          );
+          nbPages = r.nbPages ?? 1;
+          for (const hit of r.hits ?? []) {
+            const item = pickItem(hit);
+            item.game = game;
+            byKey.set(item.slug ?? item.sku ?? JSON.stringify(hit).slice(0, 60), item);
+          }
+          page++;
+        }
+      }
+    }
+  }
+  return [...byKey.values()];
+}
+
 export type GwPriceMatch = {
   productId: number;
   price: number | null;
@@ -158,11 +209,12 @@ export async function buildGwPriceMap(
     }
   }
 
+  const catalogueRecords = await loadSkuCatalogue();
   const map = new Map<number, GwPriceMatch>();
-  for (const entry of ProductSkuCatalogue) {
+  for (const entry of catalogueRecords) {
     const productId = Number(entry.productId);
     if (!Number.isFinite(productId)) continue;
-    const skus = [entry.canonicalSku, ...(entry.skuAliases ?? [])]
+    const skus = [entry.canonicalSku, ...entry.skuAliases]
       .map((s) => normalizeShopifySku(s))
       .filter((s): s is string => Boolean(s));
     for (const sku of skus) {
