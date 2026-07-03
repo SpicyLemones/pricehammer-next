@@ -12,8 +12,9 @@ import {
   type ShopifyMatchSummary,
   type ShopifyMatchReason,
 } from "@/app/lib/shopify-catalogue";
+import { buildGwPriceMap } from "@/app/lib/gw-algolia";
 
-export type StorefrontPlatform = "shopify" | "woocommerce" | "misc";
+export type StorefrontPlatform = "shopify" | "woocommerce" | "gw-algolia" | "misc";
 export type StorefrontMatchStrategy = "name" | "sku-from-page";
 
 export type SellerStorefrontConfig = {
@@ -75,6 +76,9 @@ function coercePlatform(value: string | null | undefined): StorefrontPlatform {
       return "shopify";
     case "woocommerce":
       return "woocommerce";
+    case "gw-algolia":
+    case "gw":
+      return "gw-algolia";
     default:
       return "misc";
   }
@@ -259,6 +263,12 @@ async function ensureSkuForProducts(
   );
 }
 
+// Rank competing retailer products claiming the same canonical product:
+// SKU-verified beats fuzzy-name, then higher confidence, then having a price.
+function matchRank(m: StorefrontPriceMatch): number {
+  return (m.reason === "sku" ? 100 : 0) + m.confidence + (m.price != null ? 0.001 : 0);
+}
+
 function buildMatchesFromSummary(
   summary: ShopifyMatchSummary,
   products: ShopifyFeedProduct[],
@@ -274,7 +284,7 @@ function buildMatchesFromSummary(
     const compareAt = variant?.compareAtPrice ?? null;
     const image = product?.image ?? null;
     const url = product?.productUrl ?? null;
-    map.set(idNum, {
+    const candidate: StorefrontPriceMatch = {
       price,
       compareAtPrice: compareAt,
       image,
@@ -284,7 +294,11 @@ function buildMatchesFromSummary(
       confidence: result.bestCandidate.confidence,
       reason: result.bestCandidate.reason,
       variantTitle: variant?.title ?? null,
-    });
+    };
+    const existing = map.get(idNum);
+    if (!existing || matchRank(candidate) > matchRank(existing)) {
+      map.set(idNum, candidate);
+    }
   });
   return map;
 }
@@ -392,6 +406,8 @@ export async function buildStorefrontIndex(
   switch (config.platform) {
     case "shopify":
       return buildShopifyIndex(seller, config, fetchImpl);
+    case "gw-algolia":
+      return buildGwAlgoliaIndex(seller, config, fetchImpl);
     case "woocommerce":
       return {
         status: "unavailable",
@@ -403,5 +419,57 @@ export async function buildStorefrontIndex(
       };
     default:
       return null;
+  }
+}
+
+async function buildGwAlgoliaIndex(
+  seller: SellerRow,
+  config: SellerStorefrontConfig,
+  fetchImpl: FetchLike,
+): Promise<StorefrontIndexResult> {
+  try {
+    const priceMap = await buildGwPriceMap(fetchImpl);
+    const matches = new Map<number, StorefrontPriceMatch>();
+    for (const [productId, gwMatch] of priceMap) {
+      matches.set(productId, {
+        price: gwMatch.price,
+        compareAtPrice: null,
+        image: null,
+        url: gwMatch.url,
+        title: gwMatch.title,
+        handle: undefined,
+        confidence: 1,
+        reason: "sku",
+        variantTitle: null,
+      });
+    }
+    if (!matches.size) {
+      return {
+        status: "unavailable",
+        platform: "gw-algolia",
+        config,
+        diagnostics: [
+          `GW Algolia index returned no SKU matches for ${seller.name ?? seller.id} — is product-skus.ts seeded?`,
+        ],
+      };
+    }
+    return {
+      status: "ready",
+      platform: "gw-algolia",
+      config,
+      matches,
+      diagnostics: [
+        `GW Algolia catalogue resolved ${matches.size} products by canonical SKU`,
+      ],
+    };
+  } catch (error) {
+    return {
+      status: "unavailable",
+      platform: "gw-algolia",
+      config,
+      diagnostics: [
+        `GW Algolia fetch failed for ${seller.name ?? seller.id}: ${(error as Error)?.message ?? error}`,
+      ],
+    };
   }
 }

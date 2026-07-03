@@ -30,8 +30,9 @@ const OUT_FILE = path.join(OUT_DIR, "gw-skus.json");
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
 const BASE = "https://www.warhammer.com/en-AU/plp?search=";
-const CONCURRENCY = 2;
+const CONCURRENCY = 1; // GW throttles rapid parallel requests — go single-file
 const NAME_ACCEPT = 0.5; // min name score to bother opening a product page
+const PACE_MS = [2000, 4500]; // random delay between products (throttle-dodging)
 
 /* ---- args ---- */
 const args = process.argv.slice(2);
@@ -68,11 +69,16 @@ async function searchAndResolve(browser, product) {
     await page.setUserAgent(UA);
     await page.setExtraHTTPHeaders({ "accept-language": "en-AU,en;q=0.9" });
     await page.setViewport({ width: 1280, height: 900 });
-    await new Promise((r) => setTimeout(r, Math.random() * 1500)); // jitter to ease throttling
+    // pace between products (single-file) to stay under GW's rate limit
+    const [pMin, pMax] = PACE_MS;
+    await new Promise((r) => setTimeout(r, pMin + Math.random() * (pMax - pMin)));
 
-    // fetch cards, with one retry if the grid doesn't render (GW throttling/slow JS)
+    // fetch cards, with escalating-backoff retries when the grid doesn't render
+    // (GW throttling shows up as an empty results page)
     let cards = [];
-    for (let attempt = 0; attempt < 2; attempt++) {
+    const BACKOFFS = [0, 8000, 25000];
+    for (let attempt = 0; attempt < BACKOFFS.length; attempt++) {
+      if (BACKOFFS[attempt]) await new Promise((r) => setTimeout(r, BACKOFFS[attempt] + Math.random() * 4000));
       await page.goto(BASE + encodeURIComponent(term), { waitUntil: "domcontentloaded", timeout: 30000 });
       try { await page.waitForSelector('[data-test="product-card"]', { timeout: 12000 }); } catch {}
       await page.evaluate(async () => { for (let i=0;i<3;i++){ window.scrollBy(0,1200); await new Promise(r=>setTimeout(r,300)); } });
@@ -87,7 +93,6 @@ async function searchAndResolve(browser, product) {
         return out;
       });
       if (cards.length) break;
-      await new Promise((r) => setTimeout(r, 2500 + Math.random() * 2000)); // back off then retry
     }
 
     if (!cards.length) return { productId: String(product.id), name: product.name, status: "no-results", term };

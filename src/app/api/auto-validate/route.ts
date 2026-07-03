@@ -1,26 +1,39 @@
-// src/app/api/admin/auto-validate/route.ts
+// src/app/api/auto-validate/route.ts
+//
+// Auto-validate unchecked seller/product price pairs using storefront feeds
+// and the canonical GW SKU catalogue — NOT "first search hit wins".
+//
+// Acceptance rules (per matched feed product):
+//   - SKU-verified match           -> accept
+//   - fuzzy-name confidence >=0.85 -> accept
+//   - anything else                -> left unchecked for /tinder review
+// Sellers without a usable storefront feed (misc/Cloudflare-walled) are
+// skipped entirely: we no longer blind-validate scraper guesses.
+//
+// Params (query string, JSON body, or form data; body wins):
+//   seller  - only process this seller id
+//   product - only process this product id
+//   dryRun  - "1"/"true": report what WOULD be accepted, write nothing
 import { NextResponse } from "next/server";
-import pLimit from "p-limit";
 import { query, recomputeRemaining } from "@/lib/sql";
-import { searchSeller } from "@/lib/scraper";
+import {
+  buildStorefrontIndex,
+  type StorefrontIndexReady,
+  type StorefrontPriceMatch,
+} from "@/app/lib/storefronts";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+const NAME_ACCEPT_CONFIDENCE = 0.85;
 
 type PairRow = { seller_id: number; product_id: number };
 type SellerRow = {
   id: number;
   name?: string;
-  base_url: string;
-  search_url: string;
-  product_selector: string;
-  name_selector?: string;
-  link_selector?: string;
-  price_selector?: string;
-  sale_selector?: string;
-  image_selector?: string;
+  base_url?: string;
+  storefront?: unknown;
 };
-type ProductRow = { id: number; name: string; search_term: string };
 
 function toInt(v: unknown): number | null {
   if (v === null || v === undefined || v === "") return null;
@@ -28,150 +41,165 @@ function toInt(v: unknown): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+function toBool(v: unknown): boolean {
+  return v === true || v === "1" || v === "true" || v === "on";
+}
+
+function shouldAccept(match: StorefrontPriceMatch): boolean {
+  if (match.price == null || !match.url) return false;
+  if (match.reason === "sku") return true;
+  return match.confidence >= NAME_ACCEPT_CONFIDENCE;
+}
+
 export async function POST(req: Request) {
   try {
-    // 1) read from query string
     const url = new URL(req.url);
-    const qsSeller = toInt(url.searchParams.get("seller"));
-    const qsProduct = toInt(url.searchParams.get("product"));
-    const qsLimit = toInt(url.searchParams.get("limit"));
+    let seller = toInt(url.searchParams.get("seller"));
+    let product = toInt(url.searchParams.get("product"));
+    let dryRun = toBool(url.searchParams.get("dryRun"));
 
-    // 2) read body based on content-type (JSON or form)
     const ct = req.headers.get("content-type") || "";
-    let bodySeller: number | null = null;
-    let bodyProduct: number | null = null;
-    let bodyLimit: number | null = null;
-
     if (ct.includes("application/json")) {
       const j = (await req.json().catch(() => ({}))) as Record<string, unknown>;
-      bodySeller = toInt(j?.seller);
-      bodyProduct = toInt(j?.product);
-      bodyLimit = toInt(j?.limit);
-    } else if (ct.includes("application/x-www-form-urlencoded") || ct.includes("multipart/form-data")) {
+      seller = toInt(j?.seller) ?? seller;
+      product = toInt(j?.product) ?? product;
+      if (j?.dryRun !== undefined) dryRun = toBool(j.dryRun);
+    } else if (
+      ct.includes("application/x-www-form-urlencoded") ||
+      ct.includes("multipart/form-data")
+    ) {
       const form = await req.formData().catch(() => null);
       if (form) {
-        bodySeller = toInt(form.get("seller"));
-        bodyProduct = toInt(form.get("product"));
-        bodyLimit = toInt(form.get("limit"));
+        seller = toInt(form.get("seller")) ?? seller;
+        product = toInt(form.get("product")) ?? product;
+        if (form.get("dryRun") != null) dryRun = toBool(form.get("dryRun"));
       }
     }
 
-    // 3) final filters (body wins over query)
-    const sellerFilter = bodySeller ?? qsSeller;
-    const productFilter = bodyProduct ?? qsProduct;
-    const limitCount = bodyLimit ?? qsLimit ?? null;
+    console.log("[auto-validate] filters =>", { seller, product, dryRun });
 
-    console.log("[auto-validate] filters =>", {
-      sellerFilter,
-      productFilter,
-      limitCount,
-      source: ct.includes("json") ? "json" : ct ? "form" : "query",
-    });
-
-    // 4) build filtered SQL
-    let sql = `
-      SELECT pr.seller_id, pr.product_id
-      FROM prices pr
-      WHERE pr.validated IS NULL
-    `;
+    // 1) load unchecked pairs
+    let sql = `SELECT pr.seller_id, pr.product_id FROM prices pr WHERE pr.validated IS NULL`;
     const params: unknown[] = [];
-    if (sellerFilter !== null) {
+    if (seller !== null) {
       sql += " AND pr.seller_id = ?";
-      params.push(sellerFilter);
+      params.push(seller);
     }
-    if (productFilter !== null) {
+    if (product !== null) {
       sql += " AND pr.product_id = ?";
-      params.push(productFilter);
+      params.push(product);
     }
-    if (Number.isFinite(limitCount) && (limitCount as number) > 0) {
-      sql += " LIMIT ?";
-      params.push(limitCount as number);
-    }
-
     const unchecked = (await query("all", sql, params)) as PairRow[];
-    console.log("[auto-validate] candidates:", unchecked.length);
 
     if (!unchecked.length) {
-      const remainingCount = await recomputeRemaining();
       return NextResponse.json({
         ok: true,
+        dryRun,
         processed: 0,
-        validated: 0,
-        skipped: 0,
-        remainingCount,
+        accepted: 0,
+        remainingCount: await recomputeRemaining(),
       });
     }
 
-    // 5) cache sellers/products
-    const [sellers, products] = await Promise.all([
-      query("all", "select/all_sellers"),
-      query("all", "select/all_products"),
-    ]);
-    const sById: Record<number, SellerRow> = Object.fromEntries(
-      (sellers as SellerRow[]).map((s) => [s.id, s])
-    );
-    const pById: Record<number, ProductRow> = Object.fromEntries(
-      (products as ProductRow[]).map((p) => [p.id, p])
-    );
+    // 2) group pairs by seller and build one storefront index per seller
+    const bySeller = new Map<number, PairRow[]>();
+    for (const pair of unchecked) {
+      const list = bySeller.get(pair.seller_id) ?? [];
+      list.push(pair);
+      bySeller.set(pair.seller_id, list);
+    }
 
-    // 6) process with small concurrency
-    const limit = pLimit(2);
-    let validated = 0;
-    let skipped = 0;
+    const sellers = (await query("all", "select/all_sellers")) as SellerRow[];
+    const sellerById = new Map(sellers.map((s) => [Number(s.id), s]));
 
-    await Promise.all(
-      unchecked.map(({ seller_id, product_id }) =>
-        limit(async () => {
-          const s = sById[seller_id];
-          const p = pById[product_id];
-          if (!s || !p) {
-            skipped++;
-            console.log("[auto-validate] skip: missing s/p", { seller_id, product_id });
-            return;
-          }
+    let accepted = 0;
+    let acceptedBySku = 0;
+    let acceptedByName = 0;
+    let leftForReview = 0;
+    let skippedNoStorefront = 0;
+    const perSeller: Record<string, unknown>[] = [];
+    const acceptedRows: Record<string, unknown>[] = [];
 
-          try {
-            const cands = await searchSeller(s as any, p as any);
-            const first = cands?.[0];
-            if (!first?.link) {
-              skipped++;
-              console.log("[auto-validate] no candidates", { seller_id, product_id });
-              return;
-            }
+    for (const [sellerId, pairs] of bySeller) {
+      const sellerRow = sellerById.get(sellerId);
+      const label = `${sellerRow?.name ?? "Seller"}#${sellerId}`;
+      if (!sellerRow) {
+        skippedNoStorefront += pairs.length;
+        perSeller.push({ seller: label, skipped: pairs.length, why: "unknown seller" });
+        continue;
+      }
 
-            await query("run", "update/auto_validate_price", [
-              first.price ?? null,
-              first.link,
-              seller_id,
-              product_id,
-            ]);
+      const index = await buildStorefrontIndex(sellerRow as never);
+      if (!index || index.status !== "ready") {
+        skippedNoStorefront += pairs.length;
+        const why =
+          index?.diagnostics?.[0] ??
+          "no storefront feed (misc platform) — pairs stay unchecked for manual review";
+        console.log(`[auto-validate] SKIP ${label}: ${why}`);
+        perSeller.push({ seller: label, skipped: pairs.length, why });
+        continue;
+      }
 
-            validated++;
-            console.log("[auto-validate] VALIDATED", {
-              seller_id,
-              product_id,
-              link: first.link,
-              price: first.price ?? null,
-            });
-          } catch (e: unknown) {
-            skipped++;
-            console.log("[auto-validate] error", {
-              seller_id,
-              product_id,
-              err: e instanceof Error ? e.message : String(e),
-            });
-          }
-        })
-      )
-    );
+      const ready = index as StorefrontIndexReady;
+      let sellerAccepted = 0;
+      let sellerReview = 0;
 
-    const remainingCount = await recomputeRemaining();
+      for (const { seller_id, product_id } of pairs) {
+        const match = ready.matches.get(Number(product_id));
+        if (!match || !shouldAccept(match)) {
+          sellerReview++;
+          continue;
+        }
+
+        if (!dryRun) {
+          await query("run", "update/auto_validate_price", [
+            match.price,
+            match.url,
+            seller_id,
+            product_id,
+          ]);
+        }
+        sellerAccepted++;
+        accepted++;
+        if (match.reason === "sku") acceptedBySku++;
+        else acceptedByName++;
+        acceptedRows.push({
+          seller_id,
+          product_id,
+          price: match.price,
+          url: match.url,
+          reason: match.reason,
+          confidence: Number(match.confidence.toFixed(3)),
+          title: match.title,
+        });
+      }
+
+      leftForReview += sellerReview;
+      perSeller.push({
+        seller: label,
+        pairs: pairs.length,
+        accepted: sellerAccepted,
+        leftForReview: sellerReview,
+      });
+      console.log(
+        `[auto-validate] ${label}: accepted=${sellerAccepted} review=${sellerReview}${dryRun ? " (dry run)" : ""}`,
+      );
+    }
+
+    const remainingCount = dryRun ? null : await recomputeRemaining();
     return NextResponse.json({
       ok: true,
+      dryRun,
       processed: unchecked.length,
-      validated,
-      skipped,
+      accepted,
+      acceptedBySku,
+      acceptedByName,
+      leftForReview,
+      skippedNoStorefront,
       remainingCount,
+      perSeller,
+      // cap detail rows so huge runs stay readable
+      acceptedSample: acceptedRows.slice(0, 200),
     });
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : String(e);
