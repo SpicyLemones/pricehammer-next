@@ -64,6 +64,9 @@ type CanonicalEntry = {
   name: string;
 };
 
+// NOTE: deliberately does NOT include distinguishing words like "battleforce",
+// "army", "starter", "bundle" — stripping those makes a Battleforce box look
+// identical to the base unit kit and causes wrong matches.
 const STOP_WORDS = new Set([
   "the",
   "and",
@@ -75,22 +78,37 @@ const STOP_WORDS = new Set([
   "warhammer",
   "games",
   "workshop",
+  "citadel",
+  "gw",
+  "40k",
+  "40000",
+  "aos",
+  "sigmar",
   "preorder",
   "pre-order",
   "edition",
-  "battleforce",
-  "army",
-  "starter",
-  "bundle",
+  "new",
+  "plastic",
+  "kit",
+  "miniatures",
+  "miniature",
 ]);
+
+// Reduce simple plurals so "Necron Warriors" matches "Necron Warrior".
+function singularize(token: string): string {
+  return token.length > 3 && token.endsWith("s") ? token.slice(0, -1) : token;
+}
 
 function normalizeNameForMatch(value: string): string {
   return value
     .toLowerCase()
+    .replace(/\[[^\]]*\]/g, " ") // "[PRE-ORDER]" style prefixes
+    .replace(/\([^)]*\)/g, " ")
     .replace(/[’'`]/g, "")
     .replace(/[^a-z0-9]+/g, " ")
     .split(" ")
     .filter((part) => part && !STOP_WORDS.has(part))
+    .map(singularize)
     .join(" ");
 }
 
@@ -100,15 +118,41 @@ function toTokenSet(value: string): Set<string> {
   return new Set(tokens);
 }
 
-function jaccardScore(a: Set<string>, b: Set<string>): number {
+// Dice coefficient over token sets (0..1). Preferred over Jaccard because it
+// is gentler on size differences between short canonical names and long,
+// prefix-laden retailer titles.
+function diceScore(a: Set<string>, b: Set<string>): number {
   if (a.size === 0 || b.size === 0) return 0;
   let intersection = 0;
   for (const token of a) {
     if (b.has(token)) intersection++;
   }
-  const union = a.size + b.size - intersection;
-  return union === 0 ? 0 : intersection / union;
+  return (2 * intersection) / (a.size + b.size);
 }
+
+// Containment: how much of the canonical name appears in the retailer title.
+// Retailer titles are typically longer ("Warhammer 40k - Astra Militarum -
+// Ciaphas Cain"), so recall of OUR tokens is the strong signal.
+function containmentScore(canonical: Set<string>, retailer: Set<string>): number {
+  if (canonical.size === 0) return 0;
+  let hit = 0;
+  for (const token of canonical) {
+    if (retailer.has(token)) hit++;
+  }
+  return hit / canonical.size;
+}
+
+// Products from a different scale/system line: if the retailer title carries
+// one of these markers and the canonical name doesn't, it is a different
+// physical product (e.g. the Legions Imperialis epic-scale reissue of a kit).
+const SYSTEM_MARKERS = [
+  "legions",
+  "imperialis",
+  "epic",
+  "underworlds",
+  "warcry",
+  "necromunda",
+].map(singularize);
 
 function buildCanonicalEntries(): CanonicalEntry[] {
   const productsById = new Map(Products.map((p) => [p.id, p] as const));
@@ -197,33 +241,40 @@ function dedupeCandidates(candidates: ShopifyMatchCandidate[]): ShopifyMatchCand
 function computeNameScore(
   entry: CanonicalEntry,
   product: ShopifyFeedProduct,
-  variantSkus: ShopifyVariantSku[],
 ): number {
-  const productTitleTokens = toTokenSet(product.title);
+  const titleTokens = toTokenSet(product.title);
   const handleTokens = toTokenSet(product.handle.replace(/[-_]+/g, " "));
-  let best = jaccardScore(productTitleTokens, entry.tokens);
-  best = Math.max(best, jaccardScore(handleTokens, entry.tokens));
+  const retailerAll = new Set([...titleTokens, ...handleTokens]);
 
-  for (const variant of product.variants) {
-    const tokens = toTokenSet(variant.title);
-    best = Math.max(best, jaccardScore(tokens, entry.tokens));
-  }
+  const markerMismatch = SYSTEM_MARKERS.some(
+    (mk) => retailerAll.has(mk) && !entry.tokens.has(mk),
+  );
 
+  const scoreAgainst = (canonicalTokens: Set<string>): number => {
+    if (canonicalTokens.size === 0) return 0;
+    let s = Math.max(
+      diceScore(canonicalTokens, titleTokens),
+      diceScore(canonicalTokens, handleTokens),
+    );
+    // exact normalized-name equality (multi-word) → certain
+    if (canonicalTokens.size >= 2) {
+      const canonicalKey = [...canonicalTokens].sort().join(" ");
+      const titleKey = [...titleTokens].sort().join(" ");
+      if (canonicalKey === titleKey) s = 1;
+      // containment bonus: our short name fully present in their long title
+      s = Math.max(s, 0.92 * containmentScore(canonicalTokens, retailerAll));
+    } else {
+      // single generic words (Ancient, Chosen, Apothecary…) are too ambiguous
+      s = Math.min(s, 0.75);
+    }
+    if (markerMismatch) s = Math.min(s, 0.7);
+    return s;
+  };
+
+  let best = scoreAgainst(entry.tokens);
   for (const alias of entry.nameVariants) {
-    const tokens = toTokenSet(alias);
-    best = Math.max(best, jaccardScore(tokens, productTitleTokens));
-    best = Math.max(best, jaccardScore(tokens, handleTokens));
+    best = Math.max(best, scoreAgainst(toTokenSet(alias)));
   }
-
-  const skuTokens = new Set<string>();
-  for (const variant of variantSkus) {
-    if (variant.normalized) skuTokens.add(variant.normalized);
-  }
-  if (skuTokens.size > 0 && entry.canonicalSku) {
-    const canonicalTokens = new Set<string>([entry.canonicalSku]);
-    best = Math.max(best, jaccardScore(skuTokens, canonicalTokens));
-  }
-
   return best;
 }
 
@@ -272,7 +323,7 @@ export function matchShopifyProductsAgainstCatalogue(
     if (!hasSkuCandidate) {
       const scoredEntries: Array<{ entry: CanonicalEntry; score: number }> = [];
       for (const entry of CANONICAL_ENTRIES) {
-        const score = computeNameScore(entry, product, variantSkus);
+        const score = computeNameScore(entry, product);
         if (score >= minFuzzyScore) {
           scoredEntries.push({ entry, score });
         }
@@ -285,7 +336,9 @@ export function matchShopifyProductsAgainstCatalogue(
           canonicalName: entry.name,
           canonicalSku: entry.canonicalSku,
           reason: "fuzzy-name",
-          confidence: Math.min(0.95, Math.max(0.6, score)),
+          // confidence IS the name score — downstream consumers gate on it
+          // (auto-validate accepts >= 0.85), so don't inflate it.
+          confidence: Math.min(0.99, score),
           nameScore: score,
           productUrl: buildShopifyProductUrl(baseUrl, product.handle),
           image: entry.image ?? null,

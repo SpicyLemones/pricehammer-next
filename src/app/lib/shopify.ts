@@ -45,7 +45,9 @@ export type ShopifyFeedResult = ShopifyFeedSuccess | ShopifyFeedFailure;
 
 type FetchLike = typeof fetch;
 
-const DEFAULT_MAX_PAGES = 20;
+// Real-world feeds run deep: The Combat Company ~12.5k products, Gap Games and
+// Gumnut ~20k. 80 pages x 250 = 20k coverage; loop still exits early on a short page.
+const DEFAULT_MAX_PAGES = 80;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -128,20 +130,38 @@ export async function fetchShopifyProductFeed(
     if (sinceId != null) url.searchParams.set("since_id", String(sinceId));
     else url.searchParams.set("page", String(page));
 
-    let res: Response;
-    try {
-      res = await fetchImpl(url.toString(), {
-        headers: { Accept: "application/json" },
-        cache: "no-store",
-      });
-    } catch (error) {
-      const message = (error as Error)?.message || String(error);
+    // small spacing between pages keeps us under Shopify's public rate limit
+    if (page > 1) await new Promise((r) => setTimeout(r, 350));
+
+    let res: Response | null = null;
+    let lastError: string | null = null;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        res = await fetchImpl(url.toString(), {
+          headers: { Accept: "application/json" },
+          cache: "no-store",
+        });
+      } catch (error) {
+        lastError = (error as Error)?.message || String(error);
+        res = null;
+        break; // network failure — retrying rarely helps mid-run
+      }
+      requestCount++;
+      if (res.status !== 429) break;
+      // rate limited: honor Retry-After (or back off progressively) and retry
+      const retryAfter = Number(res.headers.get("retry-after"));
+      const waitMs = Number.isFinite(retryAfter) && retryAfter > 0
+        ? retryAfter * 1000
+        : 3000 * (attempt + 1);
+      await new Promise((r) => setTimeout(r, waitMs));
+    }
+
+    if (!res) {
       return {
         ok: false,
-        error: `Failed to fetch Shopify feed (${message})`,
+        error: `Failed to fetch Shopify feed (${lastError ?? "unknown error"})`,
       };
     }
-    requestCount++;
 
     if (!res.ok) {
       return {

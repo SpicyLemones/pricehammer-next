@@ -24,8 +24,8 @@
     "sale_selector": ".NOSALESBITCH",
     "image_selector": ".product-image",
     "storefront": {
-      "platform": "misc",
-      "note": "Custom Games Workshop storefront"
+      "platform": "gw-algolia",
+      "note": "Priced via the public Algolia index behind warhammer.com search"
     }
   },
   {
