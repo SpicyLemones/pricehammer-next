@@ -11,6 +11,7 @@ import { ProductSkuCatalogue } from "../../../data/db/product-skus";
 export type SkuCatalogueRecord = {
   productId: string;
   name: string;
+  searchTerm: string | null;
   canonicalSku: string | null;
   skuAliases: string[];
   nameAliases: string[];
@@ -23,6 +24,7 @@ type DbRow = {
   sku_aliases: string | null;
   name_aliases: string | null;
   name: string | null;
+  search_term: string | null;
   image: string | null;
 };
 
@@ -53,7 +55,7 @@ export async function loadSkuCatalogue(): Promise<SkuCatalogueRecord[]> {
     const rows = (await query(
       "all",
       `SELECT ps.product_id, ps.canonical_sku, ps.sku_aliases, ps.name_aliases,
-              p.name, pm.image
+              p.name, p.search_term, pm.image
        FROM product_skus ps
        LEFT JOIN products p ON p.id = ps.product_id
        LEFT JOIN product_metadata pm ON pm.product_id = ps.product_id`,
@@ -61,6 +63,7 @@ export async function loadSkuCatalogue(): Promise<SkuCatalogueRecord[]> {
     records = rows.map((r) => ({
       productId: String(r.product_id),
       name: r.name ?? "",
+      searchTerm: r.search_term ?? null,
       canonicalSku: r.canonical_sku,
       skuAliases: parseJsonList(r.sku_aliases),
       nameAliases: parseJsonList(r.name_aliases),
@@ -74,6 +77,7 @@ export async function loadSkuCatalogue(): Promise<SkuCatalogueRecord[]> {
     records = ProductSkuCatalogue.map((entry) => ({
       productId: entry.productId,
       name: entry.nameAliases?.[0] ?? "",
+      searchTerm: null,
       canonicalSku: entry.canonicalSku,
       skuAliases: entry.skuAliases ?? [],
       nameAliases: entry.nameAliases ?? [],

@@ -165,6 +165,7 @@ function buildCanonicalEntry(record: SkuCatalogueRecord): CanonicalEntry {
 
   const nameVariants = new Set<string>();
   if (name) nameVariants.add(name);
+  if (record.searchTerm) nameVariants.add(record.searchTerm);
   for (const alias of record.nameAliases) nameVariants.add(alias);
 
   const tokens = new Set<string>();
@@ -238,6 +239,11 @@ function dedupeCandidates(candidates: ShopifyMatchCandidate[]): ShopifyMatchCand
   return Array.from(seen.values()).sort((a, b) => b.confidence - a.confidence);
 }
 
+// Retailer product types that are NOT the miniature kit itself: a novel,
+// paint, or dice set whose title contains a kit name must never outrank the
+// real kit ("Ciaphas Cain - For The Emperor (Hardback)" vs the model).
+const NON_KIT_TYPE = /book|novel|black library|paint|dice|audio|magazine|puzzle|apparel|mug|print/i;
+
 function computeNameScore(
   entry: CanonicalEntry,
   product: ShopifyFeedProduct,
@@ -249,6 +255,7 @@ function computeNameScore(
   const markerMismatch = SYSTEM_MARKERS.some(
     (mk) => retailerAll.has(mk) && !entry.tokens.has(mk),
   );
+  const nonKitType = NON_KIT_TYPE.test(product.productType ?? "");
 
   const scoreAgainst = (canonicalTokens: Set<string>): number => {
     if (canonicalTokens.size === 0) return 0;
@@ -268,6 +275,7 @@ function computeNameScore(
       s = Math.min(s, 0.75);
     }
     if (markerMismatch) s = Math.min(s, 0.7);
+    if (nonKitType) s = Math.min(s, 0.7);
     return s;
   };
 
