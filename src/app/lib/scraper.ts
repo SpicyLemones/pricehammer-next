@@ -59,9 +59,28 @@ const MAX_PRICE = 5000;
 const isSanePrice = (n: unknown) =>
   typeof n === "number" && Number.isFinite(n) && n >= MIN_PRICE && n <= MAX_PRICE;
 
-/* ---------------- Single shared Puppeteer instance ---------------- */
+/* ---------------- Single shared Puppeteer instance ----------------
+   Long refresh runs used to die with "Target.createTarget timed out" or OOM:
+   one Chromium instance serving hundreds of pages slowly leaks until protocol
+   calls stall. Mitigations:
+   - explicit protocolTimeout so slow calls fail fast instead of wedging
+   - browser recycling: after RECYCLE_AFTER_PAGES page opens, the next request
+     closes the old browser (once idle) and launches a fresh one            */
+const RECYCLE_AFTER_PAGES = 40;
+
 let _browserPromise: Promise<BrowserLike> | null = null;
+let _pagesOpened = 0;
+let _activePages = 0;
+
 async function getBrowser(): Promise<BrowserLike> {
+  // recycle a tired browser between requests (never mid-flight)
+  if (_browserPromise && _pagesOpened >= RECYCLE_AFTER_PAGES && _activePages === 0) {
+    const old = _browserPromise;
+    _browserPromise = null;
+    _pagesOpened = 0;
+    old.then((b) => b.close()).catch(() => {});
+    console.log("[scraper] recycled Chromium after page budget");
+  }
   if (!_browserPromise) _browserPromise = launchPuppeteer();
   try {
     return await _browserPromise;
@@ -71,16 +90,35 @@ async function getBrowser(): Promise<BrowserLike> {
   }
 }
 
+/** Open a page with lifecycle tracking so recycling stays safe. */
+async function openTrackedPage(browser: BrowserLike): Promise<PageLike> {
+  const page = await browser.newPage();
+  _pagesOpened++;
+  _activePages++;
+  const origClose = page.close.bind(page);
+  page.close = async () => {
+    _activePages = Math.max(0, _activePages - 1);
+    await origClose();
+  };
+  return page;
+}
+
 async function launchPuppeteer(): Promise<BrowserLike> {
   const puppeteer = (await import("puppeteer")).default as any;
 
-  const args = ["--no-sandbox", "--disable-setuid-sandbox"];
+  const args = [
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    "--disable-dev-shm-usage", // avoid tiny /dev/shm OOMs in containers
+    "--disable-gpu",
+  ];
   const proxy = process.env.PUPPETEER_PROXY;
   if (proxy) args.push(`--proxy-server=${proxy}`);
 
   const browser = await puppeteer.launch({
     headless: true,
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, // optional
+    protocolTimeout: 60_000, // fail fast instead of wedging the whole run
     args,
   });
   return browser as unknown as BrowserLike;
@@ -140,7 +178,7 @@ export async function fetchPriceFromLinkWithSellerSelectors(
   link: string
 ): Promise<number | null> {
   const browser = await getBrowser();
-  const page = await browser.newPage();
+  const page = await openTrackedPage(browser);
 
   try {
     await page.setUserAgent(UA);
@@ -284,7 +322,7 @@ export async function searchSeller(
   product: Product
 ): Promise<Candidate[]> {
   const browser = await getBrowser();
-  const page = await browser.newPage();
+  const page = await openTrackedPage(browser);
 
   try {
     await page.setUserAgent(UA);

@@ -115,7 +115,13 @@ export async function POST(req: Request) {
         const storefrontIndex = storefrontIndexes.get(Number(seller_id));
         if (storefrontIndex) {
           const match = storefrontIndex.matches.get(Number(product_id));
-          if (match) {
+          // Trust the feed only for SKU-verified or high-confidence name
+          // matches (same gate as auto-validate). Weaker fuzzy matches must
+          // NOT update validated pairs — a 0.55 name match can overwrite a
+          // human-validated link with a related-but-wrong product.
+          const trusted =
+            match && (match.reason === "sku" || match.confidence >= 0.85);
+          if (match && trusted) {
             if (match.price != null) {
               price = match.price;
               priceSource = "api";
@@ -136,6 +142,10 @@ export async function POST(req: Request) {
                 `[refresh-prices] STORE SKIP p=${product_id} s=${seller_id} (no price in feed, reason=${match.reason})`
               );
             }
+          } else if (match && !trusted) {
+            console.log(
+              `[refresh-prices] STORE LOWCONF p=${product_id} s=${seller_id} (conf=${match.confidence.toFixed(2)}) — falling back to stored link`
+            );
           }
         }
 

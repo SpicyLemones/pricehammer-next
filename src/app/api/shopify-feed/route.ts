@@ -113,7 +113,7 @@ export async function GET(req: Request) {
 
   const extras = includeMatches
     ? {
-        matchSummary: matchShopifyProductsAgainstCatalogue(result.products, {
+        matchSummary: await matchShopifyProductsAgainstCatalogue(result.products, {
           baseUrl,
         }),
       }
@@ -154,7 +154,7 @@ export async function POST(req: Request) {
   const includeMatches = Boolean(body?.includeMatches);
   const extras = includeMatches
     ? {
-        matchSummary: matchShopifyProductsAgainstCatalogue(result.products, {
+        matchSummary: await matchShopifyProductsAgainstCatalogue(result.products, {
           baseUrl: body.baseUrl,
         }),
       }

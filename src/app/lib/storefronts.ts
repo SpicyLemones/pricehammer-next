@@ -356,7 +356,7 @@ async function buildShopifyIndex(
     await ensureSkuForProducts(products, baseUrl, fetchImpl);
   }
 
-  const summary = matchShopifyProductsAgainstCatalogue(products, {
+  const summary = await matchShopifyProductsAgainstCatalogue(products, {
     baseUrl,
   });
 

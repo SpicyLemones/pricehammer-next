@@ -85,7 +85,8 @@
     "image_selector": ".product-image img",
     "storefront": {
       "platform": "shopify",
-      "matchStrategy": "name"
+      "matchStrategy": "name",
+      "maxFeedPages": 240
     }
   },
   {

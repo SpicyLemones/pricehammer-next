@@ -122,13 +122,14 @@ export async function fetchShopifyProductFeed(
   const products: ShopifyFeedProduct[] = [];
   let pageCount = 0;
   let requestCount = 0;
-  let sinceId: number | null = null;
 
+  // Plain page-based pagination. Mixing page= (first request, default order)
+  // with since_id= (subsequent requests, id order) anchors the walk at the
+  // wrong id and silently skips large chunks of the feed.
   for (let page = 1; page <= maxPages; page++) {
     const url = new URL("/products.json", origin);
     url.searchParams.set("limit", "250");
-    if (sinceId != null) url.searchParams.set("since_id", String(sinceId));
-    else url.searchParams.set("page", String(page));
+    url.searchParams.set("page", String(page));
 
     // small spacing between pages keeps us under Shopify's public rate limit
     if (page > 1) await new Promise((r) => setTimeout(r, 350));
@@ -258,9 +259,6 @@ export async function fetchShopifyProductFeed(
         image: imageSrc,
         imageAlt: imageAlt ?? undefined,
       });
-
-      const idNum = coerceNumber(prod.id);
-      if (idNum != null) sinceId = idNum;
     }
 
     pageCount++;
