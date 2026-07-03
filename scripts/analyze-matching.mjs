@@ -24,7 +24,7 @@ const OUT_DIR = path.join(ROOT, "scripts", "analysis-output");
 
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
-const MAX_FEED_PAGES = 20; // 250 * 20 = up to 5000 products per store
+const MAX_FEED_PAGES = 80; // 250 * 80 = up to 20k products per store (CombatCo's feed is >6k)
 const HIGH = 0.85; // >= this normalized-name score = high-confidence
 const LOW = 0.6; // >= this but < HIGH = low-confidence (needs review)
 
