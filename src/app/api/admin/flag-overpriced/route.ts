@@ -13,7 +13,8 @@ import { isAuthorizedAdmin } from "@/lib/auth";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const RRP_TOLERANCE = 1.03;
+const RRP_CEILING = 1.03; // above this x RRP: suspect (GW is never undercut upward)
+const RRP_FLOOR = 0.5; // below this x RRP: suspect (deeper than any normal discount)
 
 type Row = {
   seller_id: number;
@@ -43,13 +44,14 @@ export async function POST(req: Request) {
      WHERE pr.validated = 1
        AND s.name NOT LIKE '%Warhammer%'
        AND pr.price IS NOT NULL AND gw.price IS NOT NULL AND gw.price > 0
-       AND pr.price > gw.price * ${RRP_TOLERANCE}
+       AND (pr.price > gw.price * ${RRP_CEILING} OR pr.price < gw.price * ${RRP_FLOOR})
      ORDER BY (pr.price / gw.price) DESC`,
   )) as Row[];
 
-  // Consensus rule: if two or more third-party stores agree on a price well
-  // above "RRP", our GW price is the outlier (wrong GW match) — flag the GW
-  // pair for review instead of punishing the retailers.
+  // Consensus rule (both directions): if two or more third-party stores agree
+  // on a price far above OR far below "RRP", our GW price is the outlier
+  // (a wrong GW match) — flag the GW pair for review instead of punishing
+  // the retailers.
   const byProduct = new Map<number, Row[]>();
   for (const r of rows) {
     const list = byProduct.get(r.product_id) ?? [];
@@ -60,7 +62,8 @@ export async function POST(req: Request) {
   const gwSuspect: { product_id: number; product: string; rrp: number; others: number }[] = [];
   for (const [productId, list] of byProduct) {
     const wellAbove = list.filter((r) => r.price > r.rrp * 1.5);
-    if (wellAbove.length >= 2) {
+    const wellBelow = list.filter((r) => r.price < r.rrp * 0.4);
+    if (wellAbove.length >= 2 || wellBelow.length >= 2) {
       gwSuspect.push({
         product_id: productId,
         product: list[0].product,

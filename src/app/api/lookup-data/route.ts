@@ -42,17 +42,22 @@ type APIProduct = {
   retailers: APIRetailer[];
 };
 
-// Warhammer Official's price is the RRP — the ceiling. A third-party price
-// meaningfully above it is almost always a wrong link or stale data, so it
-// is hidden from display (3% tolerance for rounding/price-rise lag).
-const RRP_TOLERANCE = 1.03;
+// Warhammer Official's price is the RRP. Third-party prices meaningfully
+// ABOVE it (ceiling, 3% tolerance) or absurdly BELOW it (floor: less than
+// half RRP — deeper than any normal AU discount) are almost always wrong
+// links or stale data, so they are hidden from display.
+const RRP_CEILING = 1.03;
+const RRP_FLOOR = 0.5;
 
 function filterSuspiciousPrices(rows: DBPriceRow[]): DBPriceRow[] {
   const gw = rows.find((r) => /warhammer/i.test(r.seller_name));
   const rrp = gw?.price;
   if (rrp == null || !Number.isFinite(rrp) || rrp <= 0) return rows;
   return rows.filter(
-    (r) => r === gw || r.price == null || r.price <= rrp * RRP_TOLERANCE,
+    (r) =>
+      r === gw ||
+      r.price == null ||
+      (r.price <= rrp * RRP_CEILING && r.price >= rrp * RRP_FLOOR),
   );
 }
 
