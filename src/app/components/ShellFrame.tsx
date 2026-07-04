@@ -8,7 +8,8 @@ import { Footer } from "@/components/Footer";
 export function ShellFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() || "/";
   const isHub = pathname === "/";
-  const isPriceLookup = pathname.startsWith("/price-lookup");
+  // PriceHammer pages share the themed frame with header + footer
+  const isPriceHammer = /^\/(price-lookup|about|contact|product|admin)/.test(pathname);
   const isTwitchOverlay = pathname.startsWith("/twitch/overlay");
 
   if (isTwitchOverlay) {
@@ -29,7 +30,7 @@ export function ShellFrame({ children }: { children: React.ReactNode }) {
     );
   }
 
-  if (isPriceLookup) {
+  if (isPriceHammer) {
     return (
       <div className="min-h-dvh bg-scroll bg-cover bg-center md:bg-fixed app-bg">
         <div className="min-h-dvh flex flex-col bg-white/60 dark:bg-black/70 backdrop-blur-sm">
