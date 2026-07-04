@@ -14,6 +14,10 @@
 //   seller  - only process this seller id
 //   product - only process this product id
 //   dryRun  - "1"/"true": report what WOULD be accepted, write nothing
+//   invalidateUnmatched - "1"/"true": pairs with NO feed match at all (for a
+//       SKU-tracked product at a feed-ready seller) are marked validated=0 —
+//       the store's full inventory is in the feed, so no match means they
+//       don't stock it. Pairs with a low-confidence candidate stay for review.
 import { NextResponse } from "next/server";
 import { query, recomputeRemaining } from "@/lib/sql";
 import {
@@ -58,6 +62,7 @@ export async function POST(req: Request) {
     let seller = toInt(url.searchParams.get("seller"));
     let product = toInt(url.searchParams.get("product"));
     let dryRun = toBool(url.searchParams.get("dryRun"));
+    let invalidateUnmatched = toBool(url.searchParams.get("invalidateUnmatched"));
 
     const ct = req.headers.get("content-type") || "";
     if (ct.includes("application/json")) {
@@ -65,6 +70,7 @@ export async function POST(req: Request) {
       seller = toInt(j?.seller) ?? seller;
       product = toInt(j?.product) ?? product;
       if (j?.dryRun !== undefined) dryRun = toBool(j.dryRun);
+      if (j?.invalidateUnmatched !== undefined) invalidateUnmatched = toBool(j.invalidateUnmatched);
     } else if (
       ct.includes("application/x-www-form-urlencoded") ||
       ct.includes("multipart/form-data")
@@ -113,9 +119,17 @@ export async function POST(req: Request) {
     const sellers = (await query("all", "select/all_sellers")) as SellerRow[];
     const sellerById = new Map(sellers.map((s) => [Number(s.id), s]));
 
+    // SKU-tracked products: for these, "absent from the feed" is meaningful
+    const skuTracked = new Set<number>(
+      ((await query("all", `SELECT product_id FROM product_skus`)) as { product_id: number }[]).map(
+        (r) => Number(r.product_id),
+      ),
+    );
+
     let accepted = 0;
     let acceptedBySku = 0;
     let acceptedByName = 0;
+    let invalidatedNotStocked = 0;
     let leftForReview = 0;
     let skippedNoStorefront = 0;
     const perSeller: Record<string, unknown>[] = [];
@@ -163,6 +177,21 @@ export async function POST(req: Request) {
 
       for (const { seller_id, product_id } of pairs) {
         const match = ready.matches.get(Number(product_id));
+
+        // No feed match at all for a SKU-tracked product = the store's feed
+        // (their full inventory) doesn't carry it -> not stocked.
+        if (!match && invalidateUnmatched && skuTracked.has(Number(product_id))) {
+          if (!dryRun) {
+            await query(
+              "run",
+              `UPDATE prices SET validated = 0 WHERE seller_id = ? AND product_id = ?`,
+              [seller_id, product_id],
+            );
+          }
+          invalidatedNotStocked++;
+          continue;
+        }
+
         if (!match || !shouldAccept(match)) {
           sellerReview++;
           continue;
@@ -211,6 +240,7 @@ export async function POST(req: Request) {
       accepted,
       acceptedBySku,
       acceptedByName,
+      invalidatedNotStocked,
       leftForReview,
       skippedNoStorefront,
       remainingCount,

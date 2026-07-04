@@ -14,9 +14,21 @@ export function About() {
         straight to the store.
       </p>
       <p className="text-slate-700 dark:text-slate-300">
-        It&apos;s a hobby project and not affiliated with Games Workshop. If
-        something looks wrong, or you know a store worth adding, get in touch
-        via the contact page.
+        It&apos;s a hobby project and not affiliated with Games Workshop.
+      </p>
+
+      <h2 className="text-2xl font-display font-semibold pt-4">Get in touch</h2>
+      <p className="text-slate-700 dark:text-slate-300">
+        Spotted a wrong price, a broken link, or a store worth adding? Send me
+        an email:
+      </p>
+      <p>
+        <a
+          className="font-medium text-blue-600 hover:underline dark:text-blue-400"
+          href="mailto:pricehammer25@gmail.com?subject=PriceHammer%20Feedback%20/%20Bug"
+        >
+          pricehammer25@gmail.com
+        </a>
       </p>
     </div>
   );

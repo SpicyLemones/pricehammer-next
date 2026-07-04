@@ -16,7 +16,6 @@ export function Footer() {
         {/* Middle: nav */}
         <nav className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <Link className="hover:underline" href="/about">About</Link>
-          <Link className="hover:underline" href="/contact">Contact</Link>
           {/* 
           <Link className="hover:underline" href="/privacy">Privacy</Link>
           <Link className="hover:underline" href="/terms">Terms</Link> 

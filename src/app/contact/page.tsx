@@ -1,17 +1,8 @@
-import type { Metadata } from "next";
-import { ContactStatic } from "@/components/ContactStatic";
+import { redirect } from "next/navigation";
 
-const description =
-  "Contact us at PriceHammer to report incorrect Warhammer prices, request new Australian stores, or share feedback.";
-
-export const metadata: Metadata = {
-  title: "Contact PriceHammer",
-  description,
-  alternates: {
-    canonical: "/contact",
-  },
-};
+// Contact lives on the About page now; keep old /contact links working.
+export const dynamic = "force-dynamic";
 
 export default function ContactPage() {
-  return <ContactStatic />;
+  redirect("/about");
 }
