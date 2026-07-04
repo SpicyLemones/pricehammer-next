@@ -19,8 +19,20 @@ declare global {
   var __pricehammer_db__: SqliteDb | undefined;
 }
 
+/**
+ * Close the live connection (if any) so the DB file can be swapped on disk.
+ * Lives HERE so it always operates on the same handle the app queries with,
+ * regardless of how the bundler scopes route modules.
+ */
+export async function closeDb(): Promise<void> {
+  const handle = globalThis.__pricehammer_db__;
+  if (!handle) return;
+  await new Promise<void>((resolve) => handle.close(() => resolve()));
+  globalThis.__pricehammer_db__ = undefined;
+}
+
 function openDb(): SqliteDb {
-  if (global.__pricehammer_db__) return global.__pricehammer_db__;
+  if (globalThis.__pricehammer_db__) return globalThis.__pricehammer_db__;
 
   console.log("[DB] Using", DB_PATH);
   console.log("[SQL] Root", SQL_ROOT);
@@ -46,7 +58,7 @@ function openDb(): SqliteDb {
     db.run("PRAGMA busy_timeout = 5000;");
   });
 
-  global.__pricehammer_db__ = db;
+  globalThis.__pricehammer_db__ = db;
   return db;
 }
 
