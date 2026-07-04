@@ -33,7 +33,7 @@ export function ShellFrame({ children }: { children: React.ReactNode }) {
   if (isPriceHammer) {
     return (
       <div className="min-h-dvh bg-scroll bg-cover bg-center md:bg-fixed app-bg">
-        <div className="min-h-dvh flex flex-col bg-white/60 dark:bg-black/70 backdrop-blur-sm">
+        <div className="min-h-dvh flex flex-col bg-slate-50/95 dark:bg-slate-950/95">
           <Header />
           <main className="flex-1 w-full max-w-screen-xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
             {children}

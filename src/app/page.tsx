@@ -66,7 +66,7 @@ function TileCard({ tile }: { tile: any }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const commonClasses =
-    "group relative flex flex-col justify-between gap-3 overflow-hidden rounded-2xl border border-slate-200 bg-white/80 p-5 text-slate-900 shadow-sm transition hover:-translate-y-1 hover:shadow-xl active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-50";
+    "group relative flex flex-col justify-between gap-3 overflow-hidden rounded-md border border-slate-300 bg-white p-5 text-slate-900 transition-colors hover:border-slate-500 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-50 dark:hover:border-slate-400";
 
   const handleMouseEnter = () => {
     if (tile.type === "video" && videoRef.current) {
@@ -106,12 +106,6 @@ function TileCard({ tile }: { tile: any }) {
           <div className="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </div>
       )}
-
-      {/* Shine effect from your original code */}
-      <span
-        className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 transition duration-300 group-hover:translate-x-full group-hover:opacity-100"
-        aria-hidden
-      />
 
       {/* Text Content */}
       <div className="relative z-10 space-y-1">

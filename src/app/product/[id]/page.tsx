@@ -124,21 +124,11 @@ export default async function ProductPage({
 
   return (
     <div className="relative">
-      <div
-        aria-hidden
-        className="fixed inset-0 -z-10 pointer-events-none
-                   bg-gradient-to-b from-black/85 to-white/10
-                   dark:from-slate-950/80 dark:to-slate-950/70
-                   backdrop-blur-md-100"
-      />
-
-      <div className="max-w-4xl mx-auto p-6">
-        <div className="space-y-6 rounded-xl border border-slate-200 shadow-lg
-                        bg-white/95 dark:bg-slate-900/95
-                        supports-[backdrop-filter]:backdrop-blur-sm p-6">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6">
+        <div className="space-y-6 rounded-md border border-slate-300 bg-white p-4 dark:border-slate-700 dark:bg-slate-900 sm:p-6">
 
           {hidden && isAdmin && (
-            <div className="rounded-lg border border-amber-500/50 bg-amber-50/80 p-4 text-amber-800 shadow-sm dark:border-amber-400/40 dark:bg-amber-500/10 dark:text-amber-100">
+            <div className="rounded-md border border-amber-500/50 bg-amber-50 p-4 text-amber-800 dark:border-amber-400/40 dark:bg-amber-500/10 dark:text-amber-100">
               <h2 className="text-sm font-semibold uppercase tracking-[0.32em] text-amber-700 dark:text-amber-200">Hidden product</h2>
               <p className="mt-2 text-sm text-amber-700/90 dark:text-amber-100/90">
                 This product is hidden from public listings. Use the toggle in the edit panel to make it visible again.
@@ -146,7 +136,7 @@ export default async function ProductPage({
             </div>
           )}
 
-          <div className="flex gap-6 items-start">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
             {/* Clickable image (opens modal) */}
             <button
               type="button"
@@ -217,7 +207,7 @@ export default async function ProductPage({
               <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Retailers</h2>
 
               {/* Buttons (no navigation) */}
-              <div className="inline-flex rounded-md shadow-sm overflow-hidden border border-slate-300 dark:border-slate-700">
+              <div className="inline-flex rounded-md overflow-hidden border border-slate-300 dark:border-slate-700">
                 <button
                   type="button"
                   id="sort-asc"
@@ -325,7 +315,7 @@ export default async function ProductPage({
         aria-modal="true"
       >
         {/* Backdrop */}
-        <div id="img-backdrop" className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+        <div id="img-backdrop" className="absolute inset-0 bg-black/80"></div>
 
         {/* Centered large image */}
         <div className="relative z-10 h-full w-full flex items-center justify-center p-4">
@@ -347,7 +337,7 @@ export default async function ProductPage({
             <img
               src={imgSrc}
               alt={displayName}
-              className="w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-2xl bg-white dark:bg-slate-900"
+              className="w-full h-auto max-h-[85vh] object-contain rounded-md bg-white dark:bg-slate-900"
             />
           </div>
         </div>
