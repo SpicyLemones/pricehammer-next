@@ -6,8 +6,30 @@ import { query } from "@/lib/sql";
 import { fetchAllProductMetadata } from "@/app/lib/product-metadata";
 
 // Types to keep things clear
-type DBPriceRow = { seller_name: string; price: number | null; link: string | null };
-type APIRetailer = { store: string; price: number | null; url: string | null };
+type DBPriceRow = {
+  seller_name: string;
+  shipping_info: string | null;
+  price: number | null;
+  link: string | null;
+};
+type APIShipping = { tag: string; deal: string };
+type APIRetailer = {
+  store: string;
+  price: number | null;
+  url: string | null;
+  shipping?: APIShipping;
+};
+
+function parseShipping(raw: string | null): APIShipping | undefined {
+  if (!raw) return undefined;
+  try {
+    const j = JSON.parse(raw);
+    if (j && typeof j.tag === "string" && typeof j.deal === "string") {
+      return { tag: j.tag, deal: j.deal };
+    }
+  } catch {}
+  return undefined;
+}
 type APIProduct = {
   id: string;
   name: string;
@@ -46,6 +68,7 @@ export async function GET() {
         store: r.seller_name,
         price: r.price,
         url: r.link,
+        shipping: parseShipping(r.shipping_info),
       })),
     });
   }

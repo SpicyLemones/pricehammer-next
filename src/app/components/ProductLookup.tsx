@@ -21,7 +21,13 @@ import { Search, ExternalLink, X } from "lucide-react";
 
 // Manual metadata (fallback + fields like game/faction/category/points/image)
 // ---------- Types ----------
-type Retailer = { store: string; price: number | null; url: string | null };
+type RetailerShipping = { tag: string; deal: string };
+type Retailer = {
+  store: string;
+  price: number | null;
+  url: string | null;
+  shipping?: RetailerShipping;
+};
 type Product = {
   id: string;
   name: string;
@@ -523,7 +529,23 @@ function ProductCard({ product }: { product: Product }) {
                   key={`${r.store}-${idx}`}
                   className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-3 px-3 py-2"
                 >
-                  <div className="font-medium">{r.store || "Unknown Store"}</div>
+                  <div className="flex min-w-0 flex-wrap items-center gap-2">
+                    <span className="font-medium">{r.store || "Unknown Store"}</span>
+                    {r.shipping && (
+                      <span
+                        className="group relative inline-flex cursor-help items-center rounded-full border border-slate-300 bg-white px-2 py-0.5 text-xs text-slate-600 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                        tabIndex={0}
+                      >
+                        {r.shipping.tag}
+                        <span
+                          role="tooltip"
+                          className="pointer-events-none absolute bottom-full left-0 z-20 mb-1.5 hidden w-64 rounded-md border border-slate-200 bg-white p-2 text-xs leading-snug text-slate-700 shadow-lg group-hover:block group-focus-visible:block dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200"
+                        >
+                          {r.shipping.deal}
+                        </span>
+                      </span>
+                    )}
+                  </div>
                   <div className="font-bold tabular-nums">
                     {Number.isFinite(Number(r.price)) ? fmtAUD(r.price) : "—"}
                   </div>

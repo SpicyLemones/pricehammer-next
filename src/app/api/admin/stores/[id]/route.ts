@@ -34,7 +34,11 @@ export async function PATCH(req: Request, ctx: Params) {
     return NextResponse.json({ ok: false, error: "store not found" }, { status: 404 });
   }
 
-  let body: { status?: string; name?: string };
+  let body: {
+    status?: string;
+    name?: string;
+    shippingInfo?: { tag?: string; deal?: string } | null;
+  };
   try {
     body = (await req.json()) as typeof body;
   } catch {
@@ -43,6 +47,22 @@ export async function PATCH(req: Request, ctx: Params) {
 
   const updates: string[] = [];
   const params: unknown[] = [];
+  if (body.shippingInfo !== undefined) {
+    if (body.shippingInfo === null) {
+      updates.push("shipping_info = NULL");
+    } else if (
+      typeof body.shippingInfo.tag === "string" &&
+      typeof body.shippingInfo.deal === "string"
+    ) {
+      updates.push("shipping_info = ?");
+      params.push(JSON.stringify({ tag: body.shippingInfo.tag, deal: body.shippingInfo.deal }));
+    } else {
+      return NextResponse.json(
+        { ok: false, error: "shippingInfo must be null or {tag, deal}" },
+        { status: 400 },
+      );
+    }
+  }
   if (body.status !== undefined) {
     if (!VALID_STATUS.has(body.status)) {
       return NextResponse.json(

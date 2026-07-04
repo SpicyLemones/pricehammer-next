@@ -1,5 +1,6 @@
 SELECT
   sellers.name AS seller_name,
+  sellers.shipping_info AS shipping_info,
   price,
   link
 FROM
