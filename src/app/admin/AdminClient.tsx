@@ -72,10 +72,10 @@ function Status({ state, message }: { state: RunState; message: string }) {
     <div
       className={`mt-2 text-sm flex items-center gap-2 ${
         state === "working"
-          ? "text-slate-600"
+          ? "text-slate-600 dark:text-slate-300"
           : state === "done"
-          ? "text-emerald-700"
-          : "text-red-600"
+          ? "text-emerald-700 dark:text-emerald-400"
+          : "text-red-600 dark:text-red-400"
       }`}
       aria-live="polite"
       role="status"
@@ -109,8 +109,8 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
   const reportWrongAct = useAction();
 
   const Card = ({ title, children }: { title: string; children: React.ReactNode }) => (
-    <div className="border rounded-xl p-4 shadow-sm bg-white">
-      <h3 className="font-semibold mb-2">{title}</h3>
+    <div className="border rounded-xl p-4 shadow-sm bg-white text-slate-700 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300">
+      <h3 className="font-semibold mb-2 text-slate-900 dark:text-slate-100">{title}</h3>
       {children}
     </div>
   );
@@ -118,12 +118,12 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
   return (
     <div className="mx-auto max-w-5xl py-8 px-4 space-y-6">
       <div className="flex items-baseline justify-between">
-        <h1 className="text-2xl font-bold">Admin Panel</h1>
-        <div className="text-sm text-slate-600 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Admin Panel</h1>
+        <div className="text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2">
           Remaining unchecked prices: <b>{initialCount}</b>
           <button
             onClick={() => location.reload()}
-            className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-700 transition"
+            className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition"
             title="Reload count"
           >
             <RefreshCw className="h-4 w-4" />
@@ -133,16 +133,16 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Link href="/" className="px-3 py-2 rounded-md bg-slate-900 text-white hover:bg-slate-800 active:scale-95 transition">
+        <Link href="/" className="px-3 py-2 rounded-md bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 active:scale-95 transition">
           Home
         </Link>
-        <Link href="/tinder" className="px-3 py-2 rounded-md bg-slate-900 text-white hover:bg-slate-800 active:scale-95 transition">
+        <Link href="/tinder" className="px-3 py-2 rounded-md bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 active:scale-95 transition">
           Tinder
         </Link>
         {/* keep your GET link that writes Data.ts on the server */}
         <a
           href="/api/export"
-          className="px-3 py-2 rounded-md bg-slate-900 text-white hover:bg-slate-800 active:scale-95 transition"
+          className="px-3 py-2 rounded-md bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 active:scale-95 transition"
         >
           Export Data.ts
         </a>
@@ -155,14 +155,14 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
             <input
               name="seller"
               placeholder="Seller ID (optional)"
-              className="border rounded px-3 py-2"
+              className="border rounded px-3 py-2 bg-white text-slate-900 placeholder:text-slate-400 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:placeholder:text-slate-500"
               value={autoSeller}
               onChange={(e) => setAutoSeller(e.target.value.replace(/[^\d]/g, ""))}
             />
             <input
               name="product"
               placeholder="Product ID (optional)"
-              className="border rounded px-3 py-2"
+              className="border rounded px-3 py-2 bg-white text-slate-900 placeholder:text-slate-400 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:placeholder:text-slate-500"
               value={autoProduct}
               onChange={(e) => setAutoProduct(e.target.value.replace(/[^\d]/g, ""))}
             />
@@ -195,7 +195,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
             <input
               name="seller"
               placeholder="Seller ID (optional)"
-              className="border rounded px-3 py-2"
+              className="border rounded px-3 py-2 bg-white text-slate-900 placeholder:text-slate-400 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:placeholder:text-slate-500"
               value={refreshSeller}
               onChange={(e) => setRefreshSeller(e.target.value.replace(/[^\d]/g, ""))}
             />
@@ -228,7 +228,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
               name="seller"
               placeholder="Seller ID"
               required
-              className="border rounded px-3 py-2"
+              className="border rounded px-3 py-2 bg-white text-slate-900 placeholder:text-slate-400 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:placeholder:text-slate-500"
               value={seedSeller}
               onChange={(e) => setSeedSeller(e.target.value.replace(/[^\d]/g, ""))}
             />
@@ -257,7 +257,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
               name="product"
               placeholder="Product ID"
               required
-              className="border rounded px-3 py-2"
+              className="border rounded px-3 py-2 bg-white text-slate-900 placeholder:text-slate-400 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:placeholder:text-slate-500"
               value={seedProduct}
               onChange={(e) => setSeedProduct(e.target.value.replace(/[^\d]/g, ""))}
             />
@@ -328,7 +328,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
               name="seller"
               placeholder="Seller ID"
               required
-              className="border rounded px-3 py-2"
+              className="border rounded px-3 py-2 bg-white text-slate-900 placeholder:text-slate-400 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:placeholder:text-slate-500"
               value={reportSeller}
               onChange={(e) => setReportSeller(e.target.value.replace(/[^\d]/g, ""))}
             />
@@ -336,7 +336,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
               name="product"
               placeholder="Product ID"
               required
-              className="border rounded px-3 py-2"
+              className="border rounded px-3 py-2 bg-white text-slate-900 placeholder:text-slate-400 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:placeholder:text-slate-500"
               value={reportProduct}
               onChange={(e) => setReportProduct(e.target.value.replace(/[^\d]/g, ""))}
             />
@@ -344,7 +344,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
               name="reason"
               rows={3}
               placeholder="Reason (optional)"
-              className="border rounded px-3 py-2"
+              className="border rounded px-3 py-2 bg-white text-slate-900 placeholder:text-slate-400 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:placeholder:text-slate-500"
               value={reportReason}
               onChange={(e) => setReportReason(e.target.value)}
             />
@@ -370,7 +370,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
             </button>
             <div className="mt-2 text-sm">
               Or{" "}
-              <a href="/report-by-link" className="text-blue-600 underline hover:text-blue-800">
+              <a href="/report-by-link" className="text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                 report by link
               </a>.
             </div>

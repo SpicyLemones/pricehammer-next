@@ -7,9 +7,9 @@ export function Footer() {
     <footer className="border-t bg-white/40 backdrop-blur dark:bg-slate-900/80">
       <div className="max-w-screen-xl mx-auto px-3 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="text-sm text-slate-500 space-y-1">
-          <p>© {new Date().getFullYear()} Spyce.fun</p>
+          <p>© {new Date().getFullYear()} Spycy.fun</p>
           <p className="max-w-xs text-left">
-            Project hub by the PriceHammer crew. Warhammer price tracking and new interactive experiments.
+            Warhammer price tracking and other side projects.
           </p>
         </div>
 

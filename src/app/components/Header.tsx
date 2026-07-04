@@ -36,7 +36,7 @@ function NavItem({
 export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
-      <div className="max-w-screen-xl mx-auto flex h-12 items-center gap-3 px-3 sm:h-14 sm:px-6 lg:px-8">  
+      <div className="max-w-screen-xl mx-auto grid grid-cols-[auto_1fr_auto] items-center gap-3 px-3 py-3 sm:px-6 sm:py-4 lg:px-8">
         {/* Brand */}
         <Link
           href="/price-lookup"
@@ -59,28 +59,16 @@ export function Header() {
           <span className="text-base sm:text-lg">PriceHammer</span>
         </Link>
 
-        {/* Nav + actions */}
-        <div className="flex min-w-0 flex-1 items-center justify-end gap-3">
-          <nav className="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar -mx-2 px-2">
-            <NavItem href="/" exact>
-              🛰️ Home
-            </NavItem>
-            <NavItem href="/price-lookup">🔎 PriceHammer</NavItem>
-            <NavItem href="/about">About</NavItem>
-            <NavItem href="/contact">Contact</NavItem>
+        {/* Nav, centred in the bar */}
+        <nav className="flex items-center justify-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar px-2">
+          <NavItem href="/" exact>
+            Home
+          </NavItem>
+          <NavItem href="/about">About</NavItem>
+          <NavItem href="/contact">Contact</NavItem>
+        </nav>
 
-            {/* Region “button”—kept as non-route but styled like the tabs */}
-            <button
-              type="button"
-              className="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 whitespace-nowrap dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800/60"
-              aria-label="Change region"
-              title="Change region (WIP)"
-            >
-              Change Region: <span className="ml-1 align-middle">🇦🇺 (WIP)</span>
-            </button>
-          </nav>
-          <ThemeToggle />
-        </div>
+        <ThemeToggle />
       </div>
     </header>
   );

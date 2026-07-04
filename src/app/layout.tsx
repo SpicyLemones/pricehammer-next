@@ -26,7 +26,7 @@ const ui = Montserrat({
 const metadataBase = new URL("https://spycy.fun");
 
 const primaryDescription =
-  "Spycy.fun is the hub for PriceHammer and future interactive experiments. Explore live tools, track Warhammer prices, and follow along as new playful projects launch.";
+  "Spycy.fun is home to PriceHammer, a Warhammer price tracker for Australian retailers, plus assorted side projects.";
 
 export const metadata: Metadata = {
   metadataBase,

@@ -56,11 +56,13 @@ export async function POST(req: Request) {
     }
   } catch {}
 
-  // 1) GW's current catalogue for the scoped games/types
+  // 1) GW's current catalogue for the scoped games/types.
+  // Models only: even within miniatureKit/boxedSet, skip paint/tool bundles.
+  const NON_MODEL_NAME = /paint(s)? set|paints \+|\+ paints|tool(s)? set|\bbrush\b|\bdice\b/i;
   const gwItems = await fetchGwCatalogueByGame(games, types);
   const usable = gwItems.filter(
     (i): i is GwCatalogueItem & { normalizedSku: string; name: string } =>
-      Boolean(i.normalizedSku && i.name),
+      Boolean(i.normalizedSku && i.name && !NON_MODEL_NAME.test(i.name)),
   );
 
   // 2) what we already track

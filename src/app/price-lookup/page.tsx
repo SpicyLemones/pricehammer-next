@@ -24,17 +24,12 @@ export const metadata: Metadata = {
 export default function WarhammerPricesPage() {
   return (
     <div className="space-y-12">
-      <section className="space-y-6 text-center sm:text-left">
-        <p className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-1 text-sm font-medium text-amber-700 dark:bg-amber-900/40 dark:text-amber-200">
-          This Warhammer price tracker is currently only available for Australian 🇦🇺 Retailers! 
-        </p>
+      <section className="space-y-4 text-center sm:text-left">
         <h1 className="text-4xl font-display font-bold text-slate-900 dark:text-white">
-          Find the best prices for warhammer and wargaming kits across multiple retailers!
+          Warhammer prices across Australian retailers
         </h1>
-        
-        <p className="mx-auto max-w-3xl text-lg text-slate-700 dark:text-slate-300 flex items-start gap-2 rounded-lg border border-slate-200 bg-white/80 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
-          This website monitors Games Workshop products from third party retailers so you can compare prices, check stock,
-          and jump on deals before they sell out. More regions will follow once local data is ready.
+        <p className="max-w-3xl text-lg text-slate-700 dark:text-slate-300">
+          Compare Games Workshop kits across Australian stores, all in one place.
         </p>
       </section>
 
