@@ -24,15 +24,6 @@ export const metadata: Metadata = {
 export default function WarhammerPricesPage() {
   return (
     <div className="space-y-12">
-      <section className="space-y-4 text-center sm:text-left">
-        <h1 className="text-4xl font-display font-bold text-slate-900 dark:text-white">
-          Warhammer prices across Australian retailers
-        </h1>
-        <p className="max-w-3xl text-lg text-slate-700 dark:text-slate-300">
-          Compare Games Workshop kits across Australian stores, all in one place.
-        </p>
-      </section>
-
       <section aria-labelledby="lookup-heading" className="space-y-4">
         <h2 id="lookup-heading" className="sr-only">
           Warhammer price lookup
