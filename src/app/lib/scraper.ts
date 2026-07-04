@@ -230,19 +230,41 @@ export async function fetchPriceFromLinkWithSellerSelectors(
       const reg = by(sel.product_price_selector);
       if (sane(reg)) return reg!;
 
-      // 2) Listing selectors
-      const sale2 = by(sel.sale_selector);
-      if (sane(sale2)) return sale2!;
-      const reg2 = by(sel.price_selector);
-      if (sane(reg2)) return reg2!;
+      // 2) JSON-LD offers — the page's own authoritative price. Checked
+      // BEFORE listing selectors: those are meant for search-result cards and
+      // on a product page they can hit "related products" carousels instead.
+      try {
+        const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
+        for (const s of scripts) {
+          try {
+            const data = JSON.parse(s.textContent || "null");
+            const arr = Array.isArray(data) ? data : [data];
+            for (const d of arr) {
+              const offers = d?.offers;
+              const raw =
+                (Array.isArray(offers) ? offers[0]?.price : offers?.price) ??
+                (Array.isArray(offers) ? offers[0]?.priceSpecification?.price : offers?.priceSpecification?.price);
+              const v = parseNum(raw != null ? String(raw) : "");
+              if (sane(v)) return v!;
+            }
+          } catch {}
+        }
+      } catch {}
 
-      // 3) itemprop=price
+      // 3) itemprop=price (first occurrence = the page's main product)
       const itemProp =
         document.querySelector("[itemprop='price']")?.getAttribute?.("content") ||
         document.querySelector("[itemprop='price']")?.textContent ||
         "";
       const itemNum = parseNum(itemProp);
       if (sane(itemNum)) return itemNum!;
+
+      // 4) Listing selectors (may hit related-product cards — last resort
+      // before generic classes)
+      const sale2 = by(sel.sale_selector);
+      if (sane(sale2)) return sale2!;
+      const reg2 = by(sel.price_selector);
+      if (sane(reg2)) return reg2!;
 
       // 4) common price classes requiring currency nearby
       const COMMON = [

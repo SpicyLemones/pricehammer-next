@@ -41,8 +41,23 @@ export type StorefrontIndexReady = {
   platform: StorefrontPlatform;
   config: SellerStorefrontConfig;
   matches: Map<number, StorefrontPriceMatch>;
+  /** Every feed product keyed by normalized product URL — lets refresh look
+   *  up a pair's STORED link directly, no name matching required. */
+  byLink: Map<string, StorefrontPriceMatch>;
   diagnostics: string[];
 };
+
+/** Normalize a product URL for byLink lookups. */
+export function normalizeProductUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    let path = u.pathname.replace(/\/+$/, "");
+    return `${u.hostname.replace(/^www\./, "").toLowerCase()}${path.toLowerCase()}`;
+  } catch {
+    return null;
+  }
+}
 
 export type StorefrontIndexUnavailable = {
   status: "unavailable";
@@ -374,6 +389,27 @@ async function finishFeedIndex(
   });
 
   const matches = buildMatchesFromSummary(summary, products);
+
+  // Index EVERY feed product by URL: a stored, verified link identifies its
+  // product exactly, so refresh can price it without any name matching.
+  const byLink = new Map<string, StorefrontPriceMatch>();
+  for (const product of products) {
+    const key = normalizeProductUrl(product.productUrl);
+    if (!key) continue;
+    const variant = pickVariantForPricing(product.variants ?? []);
+    byLink.set(key, {
+      price: variant?.price ?? null,
+      compareAtPrice: variant?.compareAtPrice ?? null,
+      image: product.image ?? null,
+      url: product.productUrl ?? null,
+      title: product.title,
+      handle: product.handle,
+      confidence: 1,
+      reason: "sku", // identity by stored link — as strong as a SKU match
+      variantTitle: variant?.title ?? null,
+    });
+  }
+
   if (!matches.size) {
     return {
       status: "unavailable",
@@ -398,6 +434,7 @@ async function finishFeedIndex(
     platform,
     config,
     matches,
+    byLink,
     diagnostics: summary.products
       .filter((result) => !result.bestCandidate)
       .map(
@@ -490,8 +527,9 @@ async function buildGwAlgoliaIndex(
   try {
     const priceMap = await buildGwPriceMap(fetchImpl);
     const matches = new Map<number, StorefrontPriceMatch>();
+    const byLink = new Map<string, StorefrontPriceMatch>();
     for (const [productId, gwMatch] of priceMap) {
-      matches.set(productId, {
+      const match: StorefrontPriceMatch = {
         price: gwMatch.price,
         compareAtPrice: null,
         image: null,
@@ -501,7 +539,10 @@ async function buildGwAlgoliaIndex(
         confidence: 1,
         reason: "sku",
         variantTitle: null,
-      });
+      };
+      matches.set(productId, match);
+      const key = normalizeProductUrl(gwMatch.url);
+      if (key) byLink.set(key, match);
     }
     if (!matches.size) {
       return {
@@ -518,6 +559,7 @@ async function buildGwAlgoliaIndex(
       platform: "gw-algolia",
       config,
       matches,
+      byLink,
       diagnostics: [
         `GW Algolia catalogue resolved ${matches.size} products by canonical SKU`,
       ],
