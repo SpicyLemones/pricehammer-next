@@ -1,5 +1,7 @@
-SELECT *
+SELECT prices.*
 FROM prices
-WHERE validated IS NULL
-ORDER BY seller_id, product_id
+JOIN sellers ON sellers.id = prices.seller_id
+WHERE prices.validated IS NULL
+  AND COALESCE(sellers.status, 'active') NOT IN ('dead', 'retired')
+ORDER BY prices.seller_id, prices.product_id
 LIMIT 1;

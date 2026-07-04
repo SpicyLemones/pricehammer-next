@@ -9,5 +9,6 @@ CREATE TABLE sellers (
   price_selector TEXT NOT NULL,
   sale_selector TEXT NOT NULL,
   image_selector TEXT NOT NULL,
-  storefront TEXT
+  storefront TEXT,
+  status TEXT NOT NULL DEFAULT 'active'
 );

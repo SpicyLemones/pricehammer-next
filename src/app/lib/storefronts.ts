@@ -13,6 +13,7 @@ import {
   type ShopifyMatchReason,
 } from "@/app/lib/shopify-catalogue";
 import { buildGwPriceMap } from "@/app/lib/gw-algolia";
+import { fetchWooCommerceProductFeed } from "@/app/lib/woocommerce";
 
 export type StorefrontPlatform = "shopify" | "woocommerce" | "gw-algolia" | "misc";
 export type StorefrontMatchStrategy = "name" | "sku-from-page";
@@ -356,6 +357,18 @@ async function buildShopifyIndex(
     await ensureSkuForProducts(products, baseUrl, fetchImpl);
   }
 
+  return finishFeedIndex("shopify", seller, config, baseUrl, products);
+}
+
+// Shared tail for feed-based platforms: run the SKU/name matcher over the
+// normalized feed and package the result as a storefront index.
+async function finishFeedIndex(
+  platform: StorefrontPlatform,
+  seller: SellerRow,
+  config: SellerStorefrontConfig,
+  baseUrl: string,
+  products: ShopifyFeedProduct[],
+): Promise<StorefrontIndexResult> {
   const summary = await matchShopifyProductsAgainstCatalogue(products, {
     baseUrl,
   });
@@ -364,10 +377,10 @@ async function buildShopifyIndex(
   if (!matches.size) {
     return {
       status: "unavailable",
-      platform: "shopify",
+      platform,
       config,
       diagnostics: [
-        `Shopify feed for ${seller.name ?? seller.id} returned no confident catalogue matches`,
+        `${platform} feed for ${seller.name ?? seller.id} returned no confident catalogue matches`,
       ],
       fallbackOption: {
         message:
@@ -382,7 +395,7 @@ async function buildShopifyIndex(
 
   return {
     status: "ready",
-    platform: "shopify",
+    platform,
     config,
     matches,
     diagnostics: summary.products
@@ -392,6 +405,60 @@ async function buildShopifyIndex(
           `No confident match for ${result.title} (${result.handle}) from ${seller.name ?? seller.id}`,
       ),
   };
+}
+
+async function buildWooCommerceIndex(
+  seller: SellerRow,
+  config: SellerStorefrontConfig,
+  fetchImpl: FetchLike,
+): Promise<StorefrontIndexResult> {
+  const baseUrl = typeof seller.base_url === "string" ? seller.base_url : "";
+  if (!baseUrl) {
+    return {
+      status: "unavailable",
+      platform: "woocommerce",
+      config,
+      diagnostics: [
+        `Seller ${seller.id} is missing a base_url, skipping WooCommerce feed sync`,
+      ],
+    };
+  }
+
+  const feedResult = await fetchWooCommerceProductFeed(baseUrl, {
+    fetchImpl,
+    maxPages: config.maxFeedPages,
+  });
+  if (!feedResult.ok) {
+    return {
+      status: "unavailable",
+      platform: "woocommerce",
+      config,
+      diagnostics: [
+        `WooCommerce feed for ${seller.name ?? seller.id} failed: ${feedResult.error}`,
+      ],
+    };
+  }
+
+  return finishFeedIndex("woocommerce", seller, config, baseUrl, feedResult.products);
+}
+
+// Feed indexes are expensive (minutes for 10k+ item feeds), so interactive
+// consumers (/tinder) use this cache. Batch jobs should call
+// buildStorefrontIndex directly for fresh data.
+const INDEX_CACHE = new Map<number, { ts: number; index: StorefrontIndexResult | null }>();
+const INDEX_CACHE_TTL_MS = 15 * 60 * 1000;
+
+export async function getCachedStorefrontIndex(
+  seller: SellerRow,
+  fetchImpl: FetchLike = fetch,
+): Promise<StorefrontIndexResult | null> {
+  const id = Number(seller?.id);
+  if (!Number.isFinite(id)) return buildStorefrontIndex(seller, fetchImpl);
+  const hit = INDEX_CACHE.get(id);
+  if (hit && Date.now() - hit.ts < INDEX_CACHE_TTL_MS) return hit.index;
+  const index = await buildStorefrontIndex(seller, fetchImpl);
+  INDEX_CACHE.set(id, { ts: Date.now(), index });
+  return index;
 }
 
 export async function buildStorefrontIndex(
@@ -409,14 +476,7 @@ export async function buildStorefrontIndex(
     case "gw-algolia":
       return buildGwAlgoliaIndex(seller, config, fetchImpl);
     case "woocommerce":
-      return {
-        status: "unavailable",
-        platform: "woocommerce",
-        config,
-        diagnostics: [
-          "WooCommerce integration is not yet implemented. Configure storefront.platform=\"shopify\" or leave it as \"misc\" to continue using the legacy scraper.",
-        ],
-      };
+      return buildWooCommerceIndex(seller, config, fetchImpl);
     default:
       return null;
   }
