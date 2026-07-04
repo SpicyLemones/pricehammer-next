@@ -8,6 +8,7 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { isAuthorizedAdmin } from "@/lib/auth";
+import { closeDb, query } from "@/lib/sql";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,11 +57,8 @@ export async function POST(req: Request) {
     fs.mkdirSync(dir, { recursive: true });
 
     // Close the live connection so we can safely swap the file underneath.
-    const g = global as unknown as { __pricehammer_db__?: { close(cb?: (e: Error | null) => void): void } };
-    if (g.__pricehammer_db__) {
-      await new Promise<void>((resolve) => g.__pricehammer_db__!.close(() => resolve()));
-      g.__pricehammer_db__ = undefined;
-    }
+    // Done via sql.ts so it targets the exact handle the app queries with.
+    await closeDb();
 
     // Remove stale WAL/SHM sidecars from the previous database.
     for (const suffix of ["-wal", "-shm"]) {
@@ -78,5 +76,20 @@ export async function POST(req: Request) {
     );
   }
 
-  return NextResponse.json({ ok: true, path: dbPath, bytes: bytes.length });
+  // Self-verification: query through the app's own connection (reopens the
+  // swapped file) and report what it sees, so a stale-handle swap failure
+  // can never masquerade as success again.
+  let verification: Record<string, unknown> = {};
+  try {
+    const cols = (await query("all", "PRAGMA table_info(sellers)")) as { name: string }[];
+    const products = (await query("get", "SELECT COUNT(*) AS c FROM products")) as { c: number };
+    verification = {
+      sellerColumns: cols.map((c) => c.name),
+      products: products.c,
+    };
+  } catch (e) {
+    verification = { error: `post-swap query failed: ${e instanceof Error ? e.message : e}` };
+  }
+
+  return NextResponse.json({ ok: true, path: dbPath, bytes: bytes.length, verification });
 }
