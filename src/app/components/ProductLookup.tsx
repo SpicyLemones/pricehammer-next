@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 
@@ -193,6 +193,8 @@ const sample = <T,>(arr: T[], n: number) => {
   return a.slice(0, n);
 };
 
+const PAGE_SIZE = 24;
+
 // ---------- Component ----------
 export function ProductLookup() {
   const [sourceProducts, setSourceProducts] = useState<Product[]>([]);
@@ -202,7 +204,9 @@ export function ProductLookup() {
   const [selectedFaction, setSelectedFaction] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [sortBy, setSortBy] = useState<SortKey>("featured");
-  const featuredIdsRef = useRef<string[] | null>(null);
+  // Results only appear after a deliberate search or filter choice
+  const [hasSearched, setHasSearched] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   // Fetch live retailers + (same) metadata from the DB-backed API
   useEffect(() => {
@@ -239,16 +243,7 @@ export function ProductLookup() {
       .filter((g) => g.items.length > 0);
   }, [factionSet]);
 
-  const games = ["warhammer40k", "ageofsigmar"] as const;
-
-  const hasQueryOrFilters =
-    searchTerm.trim().length > 0 ||
-    selectedGame !== "all" ||
-    selectedFaction !== "all" ||
-    selectedCategory !== "all" ||
-    sortBy !== "featured";
-
-  // 1) Filtering
+  // 1) Filtering — only meaningful once a search has been committed
   const filteredAll = useMemo(() => {
     return (sourceProducts as Product[]).filter((p) => {
       const term = searchTerm.toLowerCase().trim();
@@ -265,21 +260,9 @@ export function ProductLookup() {
     });
   }, [searchTerm, selectedGame, selectedFaction, selectedCategory, sourceProducts]);
 
-  // 2) initial featured (first load only): 5 random with prices
-  const initialFeatured = useMemo(() => {
-    if (hasQueryOrFilters) return [];
-    const withPrices = (sourceProducts as Product[]).filter(hasAnyPrice);
-    const chosen = sample(withPrices, 5);
-    featuredIdsRef.current = chosen.map((c) => c.id);
-    return chosen;
-  }, [hasQueryOrFilters, sourceProducts]);
-
-  // 3) working set
-  const workingSet: Product[] = hasQueryOrFilters ? filteredAll : initialFeatured;
-
-  // 4) sorting
+  // 2) sorting
   const sorted = useMemo(() => {
-    const arr = [...workingSet];
+    const arr = [...filteredAll];
     switch (sortBy) {
       case "price-asc":
         arr.sort(cmpPriceAsc);
@@ -299,16 +282,25 @@ export function ProductLookup() {
       case "points-desc":
         arr.sort((a, b) => (b.points ?? -Infinity) - (a.points ?? -Infinity));
         break;
-      case "featured":
       default:
-        if (!hasQueryOrFilters && featuredIdsRef.current) {
-          const order = new Map(featuredIdsRef.current.map((id, i) => [id, i]));
-          arr.sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
-        }
         break;
     }
     return arr;
-  }, [workingSet, sortBy, hasQueryOrFilters]);
+  }, [filteredAll, sortBy]);
+
+  // 3) cap rendering — 1,400 cards at once helps nobody
+  const shown = sorted.slice(0, visibleCount);
+
+  const commitSearch = () => {
+    setSearchTerm(queryInput.trim());
+    setHasSearched(true);
+    setVisibleCount(PAGE_SIZE);
+  };
+  const commitFilter = (setter: (v: string) => void) => (v: string) => {
+    setter(v);
+    setHasSearched(true);
+    setVisibleCount(PAGE_SIZE);
+  };
 
   return (
     <div className="space-y-6">
@@ -318,54 +310,50 @@ export function ProductLookup() {
         <p className="text-muted-foreground">Search for units and compare prices across retailers</p>
       </div>
 
-      {/* Filters */}
-      <div className="flex gap-4 flex-wrap">
+      {/* Search + filters */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
         {/* search */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            setSearchTerm(queryInput.trim());
+            commitSearch();
           }}
-          className="relative flex-1 min-w-[300px] group focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-1 rounded-md"
+          className="flex w-full gap-2 sm:min-w-[300px] sm:flex-1"
         >
           <Input
             placeholder="Search units, factions, or keywords..."
             value={queryInput}
             onChange={(e) => setQueryInput(e.target.value)}
-            className="pr-12 bg-white dark:bg-slate-800"
+            className="bg-white dark:bg-slate-800"
           />
-          <button
-            type="submit"
-            aria-label="Search"
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all duration-150 hover:bg-slate-100 dark:hover:bg-slate-800/60 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-          >
-            <Search className="h-5 w-5 text-slate-600 dark:text-slate-300" />
-          </button>
+          <Button type="submit" variant="default" className="shrink-0 px-4">
+            <Search className="h-4 w-4" />
+            <span className="hidden sm:inline">Search</span>
+          </Button>
         </form>
 
         {/* universe */}
-        <Select value={selectedGame} onValueChange={setSelectedGame}>
-          <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800 ">
+        <Select value={selectedGame} onValueChange={commitFilter(setSelectedGame)}>
+          <SelectTrigger className="w-full bg-white dark:bg-slate-800 sm:w-[180px]">
             <SelectValue placeholder="All Universes" />
           </SelectTrigger>
-          <SelectContent className="w-[180px] bg-white dark:bg-slate-800">
+          <SelectContent className="bg-white dark:bg-slate-800">
             <SelectItem value="all">All Universes</SelectItem>
-            {(["warhammer40k", "ageofsigmar"] as const).map((g) => (
-              <SelectItem key={g} value={g}>{g}</SelectItem>
-            ))}
+            <SelectItem value="warhammer40k">Warhammer 40,000</SelectItem>
+            <SelectItem value="ageofsigmar">Age of Sigmar</SelectItem>
           </SelectContent>
         </Select>
 
         {/* faction */}
-        <Select value={selectedFaction} onValueChange={setSelectedFaction}>
-          <SelectTrigger className="w-[220px] bg-white dark:bg-slate-800">
+        <Select value={selectedFaction} onValueChange={commitFilter(setSelectedFaction)}>
+          <SelectTrigger className="w-full bg-white dark:bg-slate-800 sm:w-[220px]">
             <SelectValue placeholder="All Factions" />
           </SelectTrigger>
           <SelectContent
             position="popper"
             side="bottom"
             align="start"
-            className="w-[280px] max-h-[70vh] overflow-y-auto overscroll-contain bg-white dark:bg-slate-800 [scrollbar-gutter:stable] border"
+            className="max-h-[70vh] w-[280px] overflow-y-auto overscroll-contain border bg-white [scrollbar-gutter:stable] dark:bg-slate-800"
           >
             <SelectItem value="all">All Factions</SelectItem>
             {groupedFactions.map(({ group, items }) => (
@@ -385,11 +373,11 @@ export function ProductLookup() {
         </Select>
 
         {/* category */}
-        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800">
+        <Select value={selectedCategory} onValueChange={commitFilter(setSelectedCategory)}>
+          <SelectTrigger className="w-full bg-white dark:bg-slate-800 sm:w-[180px]">
             <SelectValue placeholder="All Categories" />
           </SelectTrigger>
-          <SelectContent className="w-[180px] bg-white dark:bg-slate-800">
+          <SelectContent className="bg-white dark:bg-slate-800">
             <SelectItem value="all">All Categories</SelectItem>
             {categories.map((c) => (
               <SelectItem key={c} value={c}>{c}</SelectItem>
@@ -399,11 +387,11 @@ export function ProductLookup() {
 
         {/* sort */}
         <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortKey)}>
-          <SelectTrigger className="w-[200px] bg-white dark:bg-slate-800">
+          <SelectTrigger className="w-full bg-white dark:bg-slate-800 sm:w-[200px]">
             <SelectValue placeholder="Sort" />
           </SelectTrigger>
-          <SelectContent className="w-[200px] bg-white dark:bg-slate-800">
-            <SelectItem value="featured">Featured</SelectItem>
+          <SelectContent className="bg-white dark:bg-slate-800">
+            <SelectItem value="featured">Relevance</SelectItem>
             <SelectItem value="price-asc">Price (low → high)</SelectItem>
             <SelectItem value="price-desc">Price (high → low)</SelectItem>
             <SelectItem value="best-deal-desc">Best deals (largest savings)</SelectItem>
@@ -415,14 +403,38 @@ export function ProductLookup() {
       </div>
 
       {/* Results */}
-      <div className="grid gap-4">
-        {sorted.map((p) => (
-          <ProductCard key={p.id} product={p} />
-        ))}
-        {sorted.length === 0 && (
-          <div className="text-center py-12 text-muted-foreground">No products found.</div>
-        )}
-      </div>
+      {!hasSearched ? (
+        <div className="border-t border-slate-300 py-16 text-center dark:border-slate-700">
+          <p className="text-lg text-slate-600 dark:text-slate-300">Nothing searched yet.</p>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+            Search for a unit, or pick a faction or category to browse.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {sorted.length} result{sorted.length === 1 ? "" : "s"}
+            {sorted.length > shown.length ? ` — showing ${shown.length}` : ""}
+          </p>
+          <div className="grid gap-4">
+            {shown.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+            {sorted.length === 0 && (
+              <div className="border-t border-slate-300 py-12 text-center text-muted-foreground dark:border-slate-700">
+                No products found. Try different keywords or fewer filters.
+              </div>
+            )}
+          </div>
+          {sorted.length > shown.length && (
+            <div className="text-center">
+              <Button variant="outline" onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}>
+                Show more ({sorted.length - shown.length} remaining)
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -447,14 +459,14 @@ function ProductCard({ product }: { product: Product }) {
 
   return (
     <>
-      <Card className="overflow-hidden border border-slate-200/80 bg-white/95 shadow-md dark:border-white/10 dark:bg-slate-900/70">
+      <Card className="overflow-hidden border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
         <CardHeader className="pb-0">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Image */}
-            <div className="w-full min-h md:w-40 flex-shrink-0">
+            <div className="w-28 sm:w-32 md:w-40 flex-shrink-0">
               <Link href={productUrl} className="block">
                 <div
-                  className="aspect-square cursor-pointer overflow-hidden rounded-md border border-slate-200/70 bg-white/80 transition-colors dark:border-white/10 dark:bg-slate-900/60"
+                  className="aspect-square cursor-pointer overflow-hidden bg-white dark:bg-slate-950/40"
                   aria-label={`Open ${product.name}`}
                   onClick={(e) => { e.preventDefault(); setZoomed(true); }}
                   onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); setZoomed(true);} }}
@@ -496,16 +508,16 @@ function ProductCard({ product }: { product: Product }) {
             </div>
 
             {/* Best price with “highest” slashed if different (AUD) */}
-            <div className="text-right md:self-start">
+            <div className="text-left md:text-right md:self-start">
               <div className="text-xs text-slate-500 dark:text-slate-400">Best Price</div>
               {best ? (
                 <div className="leading-tight">
                   {highest && highest.price !== best.price && (
-                    <div className="text-base md:text-lg text-red-600 line-through">
+                    <div className="text-base text-red-700 line-through dark:text-red-400">
                       {fmtAUD(highest.price)}
                     </div>
                   )}
-                  <div className="text-4xl md:text-5xl font-extrabold text-green-600 dark:text-emerald-300">
+                  <div className="text-3xl md:text-4xl font-extrabold text-green-700 dark:text-emerald-300">
                     {fmtAUD(best.price)}
                   </div>
                 </div>
@@ -523,30 +535,30 @@ function ProductCard({ product }: { product: Product }) {
           <div className="mb-3 font-medium">Available at:</div>
 
           {visible.length > 0 ? (
-            <div className="divide-y rounded-md border border-slate-200/80 bg-slate-50/60 backdrop-blur-sm dark:divide-white/10 dark:border-white/10 dark:bg-slate-950/40">
+            <div className="divide-y divide-slate-200 border-t border-slate-200 dark:divide-slate-800 dark:border-slate-800">
               {visible.map((r, idx) => (
                 <div
                   key={`${r.store}-${idx}`}
-                  className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-3 px-3 py-2"
+                  className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-2 py-2 sm:gap-3"
                 >
                   <div className="flex min-w-0 flex-wrap items-center gap-2">
-                    <span className="font-medium">{r.store || "Unknown Store"}</span>
+                    <span className="truncate font-medium">{r.store || "Unknown Store"}</span>
                     {r.shipping && (
                       <span
-                        className="group relative inline-flex cursor-help items-center rounded-full border border-slate-300 bg-white px-2 py-0.5 text-xs text-slate-600 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                        className="group relative inline-flex cursor-help items-center border border-slate-300 px-1.5 py-0.5 text-xs text-slate-600 dark:border-slate-600 dark:text-slate-300"
                         tabIndex={0}
                       >
                         {r.shipping.tag}
                         <span
                           role="tooltip"
-                          className="pointer-events-none absolute bottom-full left-0 z-20 mb-1.5 hidden w-64 rounded-md border border-slate-200 bg-white p-2 text-xs leading-snug text-slate-700 shadow-lg group-hover:block group-focus-visible:block dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200"
+                          className="pointer-events-none absolute bottom-full left-0 z-20 mb-1.5 hidden w-64 border border-slate-300 bg-white p-2 text-xs leading-snug text-slate-700 group-hover:block group-focus-visible:block dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200"
                         >
                           {r.shipping.deal}
                         </span>
                       </span>
                     )}
                   </div>
-                  <div className="font-bold tabular-nums">
+                  <div className="text-sm font-bold tabular-nums sm:text-base">
                     {Number.isFinite(Number(r.price)) ? fmtAUD(r.price) : "—"}
                   </div>
                   <div>
@@ -611,16 +623,16 @@ function ProductCard({ product }: { product: Product }) {
       {zoomed &&
         createPortal(
           <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80"
             onClick={() => setZoomed(false)}
           >
             <div
-              className="relative flex max-h-[90vh] max-w-[90vw] items-center justify-center rounded-lg border border-slate-200/60 bg-white/95 p-4 shadow-lg dark:border-white/10 dark:bg-slate-900/90"
+              className="relative flex max-h-[90vh] max-w-[90vw] items-center justify-center rounded-md border border-slate-300 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setZoomed(false)}
-                className="absolute right-3 top-3 rounded-full border border-slate-200/60 bg-white/90 p-1 shadow transition-colors hover:bg-slate-100/90 dark:border-white/10 dark:bg-slate-800/80 dark:hover:bg-slate-700/70"
+                className="absolute right-3 top-3 border border-slate-300 bg-white p-1 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700"
                 aria-label="Close image preview"
               >
                 <X className="h-5 w-5 text-slate-700 dark:text-slate-200" />

@@ -7,7 +7,7 @@
 
 /* ---- Design tokens ---- */
 @theme {
-  --radius: 0.625rem; /* slightly larger default */
+  --radius: 0.25rem; /* restrained corners — square-ish, not bubbly */
 
   /* Brand accent (Warhammer button yellow) */
   --brand-yellow: oklch(0.89 0.19 98);
@@ -175,7 +175,6 @@
     line-height: 0.9;
     text-transform: uppercase;
     text-rendering: optimizeLegibility;
-    text-shadow: 0 2px 6px color-mix(in oklch, black 25%, transparent);
   }
 
   h4, h5, h6 {
@@ -207,20 +206,19 @@
     text-transform: uppercase;
   }
 
-  /* CTA pill like the screenshot */
+  /* Primary CTA */
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full px-4 py-2;
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2;
     background: var(--brand-yellow);
     color: var(--brand-yellow-ink);
     font-family: var(--font-ui), system-ui, sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    box-shadow: 0 6px 16px color-mix(in oklch, var(--brand-yellow) 40%, black);
-    transition: transform .06s ease, box-shadow .15s ease, filter .2s ease;
+    transition: filter .15s ease;
   }
-  .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.05); }
-  .btn-primary:active { transform: translateY(0); filter: brightness(0.97); }
+  .btn-primary:hover { filter: brightness(1.05); }
+  .btn-primary:active { filter: brightness(0.97); }
 }
 
 /* ---- App background helper (image + dim) ---- */

@@ -35,8 +35,8 @@ export default function WarhammerPricesPage() {
         <h2 id="faq-heading" className="text-2xl font-display font-semibold text-slate-900 dark:text-white">
           Frequently asked questions
         </h2>
-        <div className="space-y-3">
-          <details className="group rounded-lg border border-slate-200 bg-white/80 p-4 text-left shadow-sm dark:border-slate-700 dark:bg-slate-900/60">
+        <div>
+          <details className="group border-t border-slate-300 py-4 text-left last:border-b dark:border-slate-700">
             <summary className="cursor-pointer text-lg font-medium text-slate-800 transition-colors group-open:text-emerald-600 dark:text-slate-200">
               Where do the prices come from?
             </summary>
@@ -45,7 +45,7 @@ export default function WarhammerPricesPage() {
               links directly to the retailer.
             </p>
           </details>
-          <details className="group rounded-lg border border-slate-200 bg-white/80 p-4 text-left shadow-sm dark:border-slate-700 dark:bg-slate-900/60">
+          <details className="group border-t border-slate-300 py-4 text-left last:border-b dark:border-slate-700">
             <summary className="cursor-pointer text-lg font-medium text-slate-800 transition-colors group-open:text-emerald-600 dark:text-slate-200">
               How can I request a store or product to be added?
             </summary>
@@ -54,7 +54,7 @@ export default function WarhammerPricesPage() {
               next data imports and ensures regional coverage stays accurate.
             </p>
           </details>
-          <details className="group rounded-lg border border-slate-200 bg-white/80 p-4 text-left shadow-sm dark:border-slate-700 dark:bg-slate-900/60">
+          <details className="group border-t border-slate-300 py-4 text-left last:border-b dark:border-slate-700">
             <summary className="cursor-pointer text-lg font-medium text-slate-800 transition-colors group-open:text-emerald-600 dark:text-slate-200">
               I found a broken link/item, what can I do?
             </summary>
