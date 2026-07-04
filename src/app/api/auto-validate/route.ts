@@ -21,6 +21,7 @@ import {
   type StorefrontIndexReady,
   type StorefrontPriceMatch,
 } from "@/app/lib/storefronts";
+import { probeSellerHealth, reconcileSellerStatus } from "@/app/lib/seller-health";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -126,6 +127,22 @@ export async function POST(req: Request) {
       if (!sellerRow) {
         skippedNoStorefront += pairs.length;
         perSeller.push({ seller: label, skipped: pairs.length, why: "unknown seller" });
+        continue;
+      }
+
+      // lifecycle check: retired sellers never process; dead sellers are
+      // re-probed so they resurrect automatically when back online
+      const currentStatus = (sellerRow as { status?: string }).status || "active";
+      if (currentStatus === "retired") {
+        skippedNoStorefront += pairs.length;
+        perSeller.push({ seller: label, skipped: pairs.length, why: "retired" });
+        continue;
+      }
+      const health = await probeSellerHealth(String(sellerRow.base_url ?? ""));
+      const status = await reconcileSellerStatus(sellerId, currentStatus, health);
+      if (status === "dead") {
+        skippedNoStorefront += pairs.length;
+        perSeller.push({ seller: label, skipped: pairs.length, why: `dead (${health.detail})` });
         continue;
       }
 

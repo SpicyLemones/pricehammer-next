@@ -152,6 +152,31 @@ const SYSTEM_MARKERS = [
   "necromunda",
 ].map(singularize);
 
+/**
+ * Similarity between a retailer page title and a canonical product name,
+ * using the same normalization as feed matching (0..1). Used by the
+ * link-verification job for stores that publish no SKU.
+ */
+export function scoreTitleAgainstName(pageTitle: string, productName: string): number {
+  const titleTokens = toTokenSet(pageTitle);
+  const nameTokens = toTokenSet(productName);
+  if (!titleTokens.size || !nameTokens.size) return 0;
+  let s = diceScore(nameTokens, titleTokens);
+  if (nameTokens.size >= 2) {
+    s = Math.max(s, 0.92 * containmentScore(nameTokens, titleTokens));
+    const a = [...nameTokens].sort().join(" ");
+    const b = [...titleTokens].sort().join(" ");
+    if (a === b) s = 1;
+  } else {
+    // single-word names can't be verified strongly, but if the word IS in the
+    // title ("Genestealer Cults: Aberrants" vs "Aberrants") that's not
+    // evidence of a WRONG link either — park it in the unclear zone.
+    if (containmentScore(nameTokens, titleTokens) >= 1) s = Math.max(s, 0.75);
+    s = Math.min(s, 0.75);
+  }
+  return s;
+}
+
 function buildCanonicalEntry(record: SkuCatalogueRecord): CanonicalEntry {
   const name = record.name || record.nameAliases[0] || "";
   const skuSet = new Set<string>();

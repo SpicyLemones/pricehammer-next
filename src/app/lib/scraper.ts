@@ -314,6 +314,91 @@ export async function fetchPriceFromLinkWithSellerSelectors(
 }
 
 /* ------------------------------------------------
+   Product-page SKU + price extraction (for link verification).
+   Reads JSON-LD, data-product-sku, and itemprop fallbacks.
+-------------------------------------------------- */
+export async function fetchSkuAndPriceFromPage(
+  link: string
+): Promise<{ sku: string | null; price: number | null; title: string | null }> {
+  const browser = await getBrowser();
+  const page = await openTrackedPage(browser);
+  try {
+    await page.setUserAgent(UA);
+    await page.setExtraHTTPHeaders?.({ "accept-language": "en-AU,en;q=0.9" });
+    await page.goto(link, { waitUntil: "domcontentloaded", timeout: 20_000 });
+    await page.evaluate(() => new Promise((r) => setTimeout(r, 800)));
+
+    const out = await page.evaluate(() => {
+      const parseNum = (t?: string | null) => {
+        if (!t) return null;
+        const m = String(t).replace(/,/g, "").match(/-?\d+(?:\.\d+)?/);
+        return m ? parseFloat(m[0]) : null;
+      };
+      let sku: string | null = null;
+      let price: number | null = null;
+
+      // JSON-LD product blocks
+      for (const el of Array.from(
+        document.querySelectorAll('script[type="application/ld+json"]')
+      )) {
+        try {
+          const data = JSON.parse(el.textContent || "null");
+          const arr = Array.isArray(data) ? data : [data];
+          const walk = (n: any) => {
+            if (!n || typeof n !== "object") return;
+            if (!sku && typeof n.sku === "string" && n.sku.trim()) sku = n.sku.trim();
+            if (price == null && n.offers) {
+              const offers = Array.isArray(n.offers) ? n.offers : [n.offers];
+              for (const o of offers) {
+                const v = parseNum(o?.price != null ? String(o.price) : null);
+                if (v != null) { price = v; break; }
+              }
+            }
+            for (const v of Object.values(n)) walk(v);
+          };
+          for (const d of arr) walk(d);
+        } catch {}
+        if (sku && price != null) break;
+      }
+
+      // attribute + itemprop fallbacks
+      if (!sku) {
+        sku =
+          document.querySelector("[data-product-sku]")?.getAttribute("data-product-sku") ||
+          document.querySelector("[itemprop='sku']")?.textContent?.trim() ||
+          null;
+      }
+      if (price == null) {
+        price = parseNum(
+          document.querySelector("[itemprop='price']")?.getAttribute("content") ||
+            document.querySelector("[itemprop='price']")?.textContent ||
+            null
+        );
+      }
+
+      // page title for name-based verification when the store hides SKUs
+      const title =
+        document.querySelector("h1")?.textContent?.trim() ||
+        document.querySelector("meta[property='og:title']")?.getAttribute("content") ||
+        document.title ||
+        null;
+
+      return { sku, price, title };
+    });
+
+    return {
+      sku: out?.sku ?? null,
+      price: isSanePrice(out?.price) ? out.price : null,
+      title: out?.title ?? null,
+    };
+  } catch {
+    return { sku: null, price: null, title: null };
+  } finally {
+    await page.close().catch(() => {});
+  }
+}
+
+/* ------------------------------------------------
    Search a seller for candidates (link, price, img URL)
    NOTE: No server-side image downloads anymore.
 -------------------------------------------------- */

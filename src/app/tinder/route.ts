@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { query } from "@/lib/sql";
 import { searchSeller } from "@/lib/scraper";
+import { getCachedStorefrontIndex } from "@/app/lib/storefronts";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -15,6 +16,44 @@ async function remainingCount(): Promise<number> {
 type Seller = any;
 type Product = any;
 
+type FeedInfo = {
+  reason: string;
+  candidate?: {
+    title: string;
+    price: number | null;
+    url: string | null;
+    confidence: number;
+    matchReason: string;
+  };
+};
+
+function esc(s: unknown): string {
+  return String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function feedBox(sellerId: number, productId: number, feed?: FeedInfo): string {
+  if (!feed) return "";
+  const c = feed.candidate;
+  if (!c || !c.url || c.price == null) {
+    return `
+    <div style="border:1px solid #e0d6b8; background:#fdf8e8; border-radius:10px; padding:10px 14px; margin-bottom:14px;">
+      <b>Why is this here?</b> ${esc(feed.reason)}
+    </div>`;
+  }
+  const acceptHref =
+    `/tinder/validate?s=${sellerId}&p=${productId}` +
+    `&link=${encodeURIComponent(c.url)}&price=${encodeURIComponent(String(c.price))}`;
+  return `
+  <div style="border:1px solid #bcd9bc; background:#eef8ee; border-radius:10px; padding:10px 14px; margin-bottom:14px;">
+    <div><b>Feed suggestion</b> (${esc(feed.reason)}):</div>
+    <div style="margin:6px 0;">
+      <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title)}</a>
+      — $${esc(c.price)} — confidence ${(c.confidence * 100).toFixed(0)}% (${esc(c.matchReason)})
+    </div>
+    <a href="${acceptHref}"><button style="background:#2e9e44;color:#fff;border:0;border-radius:6px;padding:8px 14px;cursor:pointer;">✅ Accept feed match</button></a>
+  </div>`;
+}
+
 function htmlPage(opts: {
   seller: Seller;
   product: Product;
@@ -22,8 +61,9 @@ function htmlPage(opts: {
   showAltBox: boolean;
   altTerm?: string;
   remaining: number;
+  feed?: FeedInfo;
 }) {
-  const { seller, product, items, showAltBox, altTerm = "", remaining } = opts;
+  const { seller, product, items, showAltBox, altTerm = "", remaining, feed } = opts;
 
   return `
   <div style="max-width:900px;margin:24px auto;font-family:system-ui,Segoe UI,Arial">
@@ -35,6 +75,8 @@ function htmlPage(opts: {
     <div style="font-size: 20px; margin-bottom: 16px; text-align:center;">
       Remaining unchecked prices: ${remaining}
     </div>
+
+    ${feedBox(Number(seller?.id), Number(product?.id), feed)}
 
     <div id="loading" style="text-align:center; margin:8px 0 10px; color:#666;">Loading candidates…</div>
 
@@ -229,6 +271,43 @@ function htmlPage(opts: {
   `;
 }
 
+async function buildFeedInfo(seller: Seller, productId: number): Promise<FeedInfo> {
+  try {
+    const index = await getCachedStorefrontIndex(seller);
+    if (!index) {
+      return { reason: "store has no product feed (custom or bot-walled site) — manual check needed" };
+    }
+    if (index.status !== "ready") {
+      return { reason: `feed unavailable: ${index.diagnostics?.[0] ?? "unknown"}` };
+    }
+    const match = index.matches.get(productId);
+    if (!match) {
+      return { reason: "no feed match at all — the store likely doesn't stock this product" };
+    }
+    const candidate = {
+      title: match.title,
+      price: match.price,
+      url: match.url,
+      confidence: match.confidence,
+      matchReason: match.reason,
+    };
+    if (match.reason === "sku" || match.confidence >= 0.85) {
+      return {
+        reason: match.price == null
+          ? "strong feed match but it has no price (out of stock?)"
+          : "strong feed match — auto-validate may not have run since it appeared",
+        candidate,
+      };
+    }
+    return {
+      reason: `best feed match is only ${(match.confidence * 100).toFixed(0)}% confident — below the auto-accept bar`,
+      candidate,
+    };
+  } catch (e) {
+    return { reason: `feed lookup failed: ${e instanceof Error ? e.message : e}` };
+  }
+}
+
 function noStoreHeaders() {
   return {
     "content-type": "text/html; charset=utf-8",
@@ -251,6 +330,8 @@ export async function GET(req: Request) {
   const seller  = await query("get", "select/seller_id",  [price.seller_id]);
   const product = await query("get", "select/product_id", [price.product_id]);
 
+  const feed = await buildFeedInfo(seller, Number(price.product_id));
+
   const results = await searchSeller(seller, product);
   const usable = (results || [])
     .filter((c: any) => !!c.link)
@@ -268,6 +349,7 @@ export async function GET(req: Request) {
     items: usable,
     showAltBox: true,
     remaining: await remainingCount(),
+    feed,
   });
 
   return new NextResponse(html, { headers: noStoreHeaders() });

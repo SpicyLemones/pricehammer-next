@@ -8,6 +8,7 @@ import {
   type StorefrontIndexReady,
 } from "@/app/lib/storefronts";
 import { ensureProductImage } from "@/app/lib/product-metadata";
+import { probeSellerHealth, reconcileSellerStatus } from "@/app/lib/seller-health";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -50,6 +51,25 @@ export async function POST(req: Request) {
   const sById: Record<number, any> = {};
   (sellers as any[])?.forEach((s) => s && (sById[s.id] = s));
 
+  // Health-check each seller first: dead/retired stores are skipped entirely
+  // (their pairs keep old data but display already hides dead sellers).
+  const skipSellers = new Set<number>();
+  await Promise.allSettled(
+    (sellers as any[]).map(async (s) => {
+      if (!s) return;
+      if ((s.status || "active") === "retired") {
+        skipSellers.add(Number(s.id));
+        return;
+      }
+      const health = await probeSellerHealth(String(s.base_url ?? ""));
+      const status = await reconcileSellerStatus(Number(s.id), s.status, health);
+      if (status === "dead") {
+        skipSellers.add(Number(s.id));
+        console.log(`[refresh-prices] SKIP seller ${s.name ?? s.id} (dead: ${health.detail})`);
+      }
+    }),
+  );
+
   const storefrontIndexes = new Map<number, StorefrontIndexReady>();
   const storefrontLimit = pLimit(2);
   await Promise.allSettled(
@@ -57,7 +77,7 @@ export async function POST(req: Request) {
       storefrontLimit(async () => {
         if (!sellerRow) return;
         const sellerId = Number(sellerRow.id);
-        if (!Number.isFinite(sellerId)) return;
+        if (!Number.isFinite(sellerId) || skipSellers.has(sellerId)) return;
         const index = await buildStorefrontIndex(sellerRow);
         if (!index) return;
         const label = `${sellerRow.name ?? "Seller"}#${sellerId}`;
@@ -99,6 +119,10 @@ export async function POST(req: Request) {
           console.log(
             `[refresh-prices] SKIP p=${product_id} s=${seller_id} (seller missing)`
           );
+          return;
+        }
+        if (skipSellers.has(Number(seller_id))) {
+          skipped++;
           return;
         }
 
