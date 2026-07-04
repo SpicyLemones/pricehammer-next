@@ -65,7 +65,6 @@ export function Header() {
             Home
           </NavItem>
           <NavItem href="/about">About</NavItem>
-          <NavItem href="/contact">Contact</NavItem>
         </nav>
 
         <ThemeToggle />
