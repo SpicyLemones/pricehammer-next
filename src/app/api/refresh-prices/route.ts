@@ -5,6 +5,7 @@ import { query } from "@/lib/sql";
 import { fetchPriceFromLinkWithSellerSelectors } from "@/lib/scraper";
 import {
   buildStorefrontIndex,
+  normalizeProductUrl,
   type StorefrontIndexReady,
 } from "@/app/lib/storefronts";
 import { ensureProductImage } from "@/app/lib/product-metadata";
@@ -138,13 +139,24 @@ export async function POST(req: Request) {
 
         const storefrontIndex = storefrontIndexes.get(Number(seller_id));
         if (storefrontIndex) {
-          const match = storefrontIndex.matches.get(Number(product_id));
-          // Trust the feed only for SKU-verified or high-confidence name
-          // matches (same gate as auto-validate). Weaker fuzzy matches must
-          // NOT update validated pairs — a 0.55 name match can overwrite a
-          // human-validated link with a related-but-wrong product.
+          // The stored link IS the product's identity (it was validated or
+          // SKU-verified) — look it up in the feed directly first. Only fall
+          // back to catalogue matching when the link isn't in the feed.
+          const linkKey = normalizeProductUrl(existingLink);
+          const byLinkMatch = linkKey
+            ? storefrontIndex.byLink?.get(linkKey)
+            : undefined;
+          const catalogueMatch = storefrontIndex.matches.get(Number(product_id));
+          // Trust gate for catalogue matches only (byLink is inherently
+          // trusted): SKU-verified or high-confidence name, same as
+          // auto-validate. Weaker fuzzy matches must NOT update validated
+          // pairs — a 0.55 name match can overwrite a human-validated link
+          // with a related-but-wrong product.
           const trusted =
-            match && (match.reason === "sku" || match.confidence >= 0.85);
+            byLinkMatch != null ||
+            (catalogueMatch &&
+              (catalogueMatch.reason === "sku" || catalogueMatch.confidence >= 0.85));
+          const match = byLinkMatch ?? catalogueMatch;
           if (match && trusted) {
             if (match.price != null) {
               price = match.price;
