@@ -1,0 +1,30 @@
+name: Weekly GW catalogue sync
+
+on:
+  schedule:
+    # 16:30 UTC Sunday = 2:30am AEST Monday — picks up the week's GW releases
+    - cron: "30 16 * * 0"
+  workflow_dispatch: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Sync GW catalogue (add new releases)
+        run: |
+          set -euo pipefail
+          RESPONSE=$(curl -sS -m 1800 \
+            -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
+            -X POST "https://www.spycy.fun/api/admin/sync-gw-catalogue?apply=1")
+          echo "$RESPONSE"
+          echo "$RESPONSE" | grep -q '"ok":true' || { echo "sync failed"; exit 1; }
+
+      - name: Auto-validate new pairs across sellers
+        run: |
+          set -euo pipefail
+          RESPONSE=$(curl -sS -m 3600 \
+            -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
+            -X POST "https://www.spycy.fun/api/auto-validate")
+          echo "$RESPONSE"
+          echo "$RESPONSE" | grep -q '"ok":true' || { echo "auto-validate failed"; exit 1; }
