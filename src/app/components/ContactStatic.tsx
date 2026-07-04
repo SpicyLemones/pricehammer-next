@@ -3,8 +3,8 @@ export function ContactStatic() {
     <div className="max-w-2xl mx-auto space-y-4">
       <h1 className="text-3xl font-display font-bold">Contact</h1>
       <p className="text-slate-700 dark:text-slate-300">
-        Spotted something wrong, like an incorrect name, description, or a price mismatch? Send me an email so we can keep the
-         tool as accurate as possible:
+        Spotted a wrong price, a broken link, or a store worth adding? Send me
+        an email:
       </p>
       <p>
         <a

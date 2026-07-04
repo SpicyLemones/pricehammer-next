@@ -42,7 +42,7 @@ export function ThemeToggle() {
     ? isDark
       ? "Switch to light mode"
       : "Switch to dark mode"
-    : "Toggle color mode";
+    : "Toggle colour mode";
 
   return (
     <Button
