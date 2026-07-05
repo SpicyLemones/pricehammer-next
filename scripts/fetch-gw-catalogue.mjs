@@ -50,6 +50,8 @@ function pick(hit) {
     price: hit.price ?? null,
     productType: hit.productType ?? null,
     image,
+    isNewRelease: hit.isNewRelease === true,
+    isPreOrder: hit.isPreOrder === true,
     gameLvl0: Array.isArray(gs.lvl0) ? gs.lvl0 : [],
     gameLvl1: Array.isArray(gs.lvl1) ? gs.lvl1 : [],
     gameLvl2: Array.isArray(gs.lvl2) ? gs.lvl2 : [],

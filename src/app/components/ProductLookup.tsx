@@ -19,10 +19,17 @@ import {
 import { Separator } from "./ui/separator";
 import { Search, ExternalLink, X } from "lucide-react";
 import { GAME_LABELS, gameLabel } from "@/lib/game-labels";
+import { addToCart } from "@/lib/cart";
 
 // Manual metadata (fallback + fields like game/faction/category/points/image)
 // ---------- Types ----------
-type RetailerShipping = { tag: string; deal: string };
+type RetailerShipping = {
+  tag?: string | null;
+  deal?: string | null;
+  flat?: number | null;
+  freeOver?: number | null;
+  note?: string | null;
+};
 type Retailer = {
   store: string;
   price: number | null;
@@ -448,6 +455,13 @@ export function ProductLookup() {
 function ProductCard({ product }: { product: Product }) {
   const [showAll, setShowAll] = useState(false);
   const [zoomed, setZoomed] = useState(false);
+  const [added, setAdded] = useState(false);
+
+  const handleAdd = () => {
+    addToCart(product.id);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  };
 
   const productUrl = `/product/${product.id}`;
   const sortedRetailers = [...(product.retailers ?? [])]
@@ -526,6 +540,16 @@ function ProductCard({ product }: { product: Product }) {
               ) : (
                 <div className="text-slate-400 dark:text-slate-500">No prices</div>
               )}
+              {best && (
+                <Button
+                  size="sm"
+                  variant={added ? "secondary" : "default"}
+                  className="mt-2"
+                  onClick={handleAdd}
+                >
+                  {added ? "Added ✓" : "Add to cart"}
+                </Button>
+              )}
             </div>
           </div>
         </CardHeader>
@@ -545,7 +569,7 @@ function ProductCard({ product }: { product: Product }) {
                 >
                   <div className="flex min-w-0 flex-wrap items-center gap-2">
                     <span className="truncate font-medium">{r.store || "Unknown Store"}</span>
-                    {r.shipping && (
+                    {r.shipping?.tag && (
                       <span
                         className="group relative inline-flex cursor-help items-center border border-slate-300 px-1.5 py-0.5 text-xs text-slate-600 dark:border-slate-600 dark:text-slate-300"
                         tabIndex={0}
@@ -555,7 +579,7 @@ function ProductCard({ product }: { product: Product }) {
                           role="tooltip"
                           className="pointer-events-none absolute bottom-full left-0 z-20 mb-1.5 hidden w-64 border border-slate-300 bg-white p-2 text-xs leading-snug text-slate-700 group-hover:block group-focus-visible:block dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200"
                         >
-                          {r.shipping.deal}
+                          {r.shipping.deal ?? r.shipping.tag}
                         </span>
                       </span>
                     )}

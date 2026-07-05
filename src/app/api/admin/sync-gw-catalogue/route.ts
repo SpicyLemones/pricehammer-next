@@ -114,6 +114,25 @@ export async function POST(req: Request) {
     }
   }
 
+  // 3b) refresh new-release / pre-order flags for everything we track, so the
+  // /new-releases page stays current with each weekly sync
+  if (apply) {
+    const productBySku = new Map<string, number>();
+    for (const r of skuRows) {
+      if (r.canonical_sku) productBySku.set(r.canonical_sku, r.product_id);
+    }
+    await query("run", `UPDATE product_metadata SET is_new_release = 0, is_pre_order = 0`);
+    for (const item of usable) {
+      const pid = productBySku.get(item.normalizedSku);
+      if (!pid || (!item.isNewRelease && !item.isPreOrder)) continue;
+      await query(
+        "run",
+        `UPDATE product_metadata SET is_new_release = ?, is_pre_order = ? WHERE product_id = ?`,
+        [item.isNewRelease ? 1 : 0, item.isPreOrder ? 1 : 0, pid],
+      );
+    }
+  }
+
   // 4) discontinued check: tracked SKUs (for in-scope games) missing from GW
   const gwSkuSet = new Set(usable.map((i) => i.normalizedSku));
   const inScopeGames = games.map((g) => GAME_MAP[g] ?? g);
