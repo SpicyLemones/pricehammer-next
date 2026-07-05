@@ -8,7 +8,9 @@ export type ProductMetadata = {
   displayName: string;
   searchTerm: string;
   game: string | null;
+  games: string[];
   faction: string | null;
+  factions: string[];
   category: string | null;
   points: number | null;
   hidden: boolean;
@@ -31,7 +33,9 @@ type ProductWithMetadataRow = {
   search_term: string;
   metadata_name?: string | null;
   game?: string | null;
+  games?: string | null;
   faction?: string | null;
+  factions?: string | null;
   category?: string | null;
   points?: number | null;
   hidden?: number | null;
@@ -90,7 +94,23 @@ const mapRowToMetadata = (row: ProductWithMetadataRow): ProductMetadata => {
     displayName,
     searchTerm: toNullableString(row.search_term) ?? "",
     game: toNullableString(row.game),
+    games: (() => {
+      try {
+        const parsed = JSON.parse(row.games ?? "null");
+        if (Array.isArray(parsed)) return parsed.filter((v): v is string => typeof v === "string");
+      } catch {}
+      const single = toNullableString(row.game);
+      return single ? [single] : [];
+    })(),
     faction: toNullableString(row.faction),
+    factions: (() => {
+      try {
+        const parsed = JSON.parse(row.factions ?? "null");
+        if (Array.isArray(parsed)) return parsed.filter((v): v is string => typeof v === "string");
+      } catch {}
+      const single = toNullableString(row.faction);
+      return single ? [single] : [];
+    })(),
     category: toNullableString(row.category),
     points: toNullableNumber(row.points),
     hidden: toBoolean(row.hidden),

@@ -33,11 +33,20 @@ type Product = {
   id: string;
   name: string;
   game?: string;
+  games?: string[];
   faction?: string;
+  factions?: string[];
   image?: string | null;
   hidden?: boolean;
   retailers: Retailer[];
 };
+
+// every universe tag a product carries (multi-system kits have several)
+const gamesOf = (p: Product): string[] =>
+  p.games?.length ? p.games : p.game ? [p.game] : [];
+// every faction a product belongs to (Chaos kits often span several)
+const factionsOf = (p: Product): string[] =>
+  p.factions?.length ? p.factions : p.faction ? [p.faction] : [];
 
 // ---------- Image helper ----------
 const PLACEHOLDER = "/logo/logo.png";
@@ -223,22 +232,40 @@ export function ProductLookup() {
     return () => { cancelled = true; };
   }, []);
 
-  const factions = useMemo(
-    () => [...new Set(sourceProducts.map((p) => p.faction).filter(Boolean))] as string[],
-    [sourceProducts]
-  );
-  // universes present in the data, in label order
+  // universes present in the data (all tags, not just primaries), in label order
   const gamesPresent = useMemo(() => {
-    const present = new Set(sourceProducts.map((p) => p.game).filter(Boolean) as string[]);
+    const present = new Set(sourceProducts.flatMap(gamesOf));
     return Object.keys(GAME_LABELS).filter((slug) => present.has(slug));
   }, [sourceProducts]);
 
+  // factions scoped to the selected universe — pick 40k and you will never
+  // see an Age of Sigmar faction in the list, and vice versa
+  const factions = useMemo(() => {
+    const pool =
+      selectedGame === "all"
+        ? sourceProducts
+        : sourceProducts.filter((p) => gamesOf(p).includes(selectedGame));
+    return [...new Set(pool.flatMap(factionsOf).filter(Boolean))];
+  }, [sourceProducts, selectedGame]);
+
+  // if the chosen faction falls outside the new universe scope, reset it
+  useEffect(() => {
+    if (selectedFaction !== "all" && !factions.includes(selectedFaction)) {
+      setSelectedFaction("all");
+    }
+  }, [factions, selectedFaction]);
+
   const factionSet = useMemo(() => new Set(factions), [factions]);
   const groupedFactions = useMemo(() => {
-    return (Object.entries(FACTION_GROUPS) as [keyof typeof FACTION_GROUPS, string[]][])
+    const grouped = (Object.entries(FACTION_GROUPS) as [string, string[]][])
       .map(([group, list]) => ({ group, items: list.filter((f) => factionSet.has(f)) }))
       .filter((g) => g.items.length > 0);
-  }, [factionSet]);
+    // anything GW names that our hardcoded groups don't know about
+    const known = new Set(Object.values(FACTION_GROUPS).flat());
+    const other = factions.filter((f) => !known.has(f)).sort();
+    if (other.length) grouped.push({ group: "Other", items: other });
+    return grouped;
+  }, [factionSet, factions]);
 
   // 1) Filtering — only meaningful once a search has been committed
   const filteredAll = useMemo(() => {
@@ -249,8 +276,8 @@ export function ProductLookup() {
         p.name.toLowerCase().includes(term) ||
         (p.faction?.toLowerCase?.() ?? "").includes(term);
 
-      const matchesGame = selectedGame === "all" || p.game === selectedGame;
-      const matchesFaction = selectedFaction === "all" || p.faction === selectedFaction;
+      const matchesGame = selectedGame === "all" || gamesOf(p).includes(selectedGame);
+      const matchesFaction = selectedFaction === "all" || factionsOf(p).includes(selectedFaction);
 
       return matchesSearch && matchesGame && matchesFaction;
     });
@@ -472,7 +499,9 @@ function ProductCard({ product }: { product: Product }) {
                   </Link>
                 </CardTitle>
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
-                  {product.game && <Badge variant="outline">{gameLabel(product.game)}</Badge>}
+                  {gamesOf(product).map((slug) => (
+                    <Badge key={slug} variant="outline">{gameLabel(slug)}</Badge>
+                  ))}
                   {product.faction && product.faction !== "No Faction / Misc" && (
                     <span className="text-slate-600 dark:text-slate-300">{product.faction}</span>
                   )}
