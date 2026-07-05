@@ -18,6 +18,7 @@ import {
 } from "./ui/select";
 import { Separator } from "./ui/separator";
 import { Search, ExternalLink, X } from "lucide-react";
+import { GAME_LABELS, gameLabel } from "@/lib/game-labels";
 
 // Manual metadata (fallback + fields like game/faction/category/points/image)
 // ---------- Types ----------
@@ -31,10 +32,8 @@ type Retailer = {
 type Product = {
   id: string;
   name: string;
-  game?: "warhammer40k" | "ageofsigmar" | "killteam" | "both";
+  game?: string;
   faction?: string;
-  category?: string;
-  points?: number;
   image?: string | null;
   hidden?: boolean;
   retailers: Retailer[];
@@ -133,8 +132,6 @@ type SortKey =
   | "featured"
   | "price-asc"
   | "price-desc"
-  | "points-asc"
-  | "points-desc"
   | "best-deal-desc"
   | "best-deal-asc";
 
@@ -202,7 +199,6 @@ export function ProductLookup() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGame, setSelectedGame] = useState<string>("all");
   const [selectedFaction, setSelectedFaction] = useState<string>("all");
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [sortBy, setSortBy] = useState<SortKey>("featured");
   // Results only appear after a deliberate search or filter choice
   const [hasSearched, setHasSearched] = useState(false);
@@ -231,10 +227,11 @@ export function ProductLookup() {
     () => [...new Set(sourceProducts.map((p) => p.faction).filter(Boolean))] as string[],
     [sourceProducts]
   );
-  const categories = useMemo(
-    () => [...new Set(sourceProducts.map((p) => p.category).filter(Boolean))] as string[],
-    [sourceProducts]
-  );
+  // universes present in the data, in label order
+  const gamesPresent = useMemo(() => {
+    const present = new Set(sourceProducts.map((p) => p.game).filter(Boolean) as string[]);
+    return Object.keys(GAME_LABELS).filter((slug) => present.has(slug));
+  }, [sourceProducts]);
 
   const factionSet = useMemo(() => new Set(factions), [factions]);
   const groupedFactions = useMemo(() => {
@@ -252,13 +249,12 @@ export function ProductLookup() {
         p.name.toLowerCase().includes(term) ||
         (p.faction?.toLowerCase?.() ?? "").includes(term);
 
-      const matchesGame = selectedGame === "all" || p.game === (selectedGame as any);
+      const matchesGame = selectedGame === "all" || p.game === selectedGame;
       const matchesFaction = selectedFaction === "all" || p.faction === selectedFaction;
-      const matchesCategory = selectedCategory === "all" || p.category === selectedCategory;
 
-      return matchesSearch && matchesGame && matchesFaction && matchesCategory;
+      return matchesSearch && matchesGame && matchesFaction;
     });
-  }, [searchTerm, selectedGame, selectedFaction, selectedCategory, sourceProducts]);
+  }, [searchTerm, selectedGame, selectedFaction, sourceProducts]);
 
   // 2) sorting
   const sorted = useMemo(() => {
@@ -275,12 +271,6 @@ export function ProductLookup() {
         break;
       case "best-deal-asc":
         arr.sort(cmpBestDealAsc);
-        break;
-      case "points-asc":
-        arr.sort((a, b) => (a.points ?? Infinity) - (b.points ?? Infinity));
-        break;
-      case "points-desc":
-        arr.sort((a, b) => (b.points ?? -Infinity) - (a.points ?? -Infinity));
         break;
       default:
         break;
@@ -339,8 +329,9 @@ export function ProductLookup() {
           </SelectTrigger>
           <SelectContent className="bg-white dark:bg-slate-800">
             <SelectItem value="all">All Universes</SelectItem>
-            <SelectItem value="warhammer40k">Warhammer 40,000</SelectItem>
-            <SelectItem value="ageofsigmar">Age of Sigmar</SelectItem>
+            {gamesPresent.map((slug) => (
+              <SelectItem key={slug} value={slug}>{GAME_LABELS[slug]}</SelectItem>
+            ))}
           </SelectContent>
         </Select>
 
@@ -372,19 +363,6 @@ export function ProductLookup() {
           </SelectContent>
         </Select>
 
-        {/* category */}
-        <Select value={selectedCategory} onValueChange={commitFilter(setSelectedCategory)}>
-          <SelectTrigger className="w-full bg-white dark:bg-slate-800 sm:w-[180px]">
-            <SelectValue placeholder="All Categories" />
-          </SelectTrigger>
-          <SelectContent className="bg-white dark:bg-slate-800">
-            <SelectItem value="all">All Categories</SelectItem>
-            {categories.map((c) => (
-              <SelectItem key={c} value={c}>{c}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
         {/* sort */}
         <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortKey)}>
           <SelectTrigger className="w-full bg-white dark:bg-slate-800 sm:w-[200px]">
@@ -396,8 +374,6 @@ export function ProductLookup() {
             <SelectItem value="price-desc">Price (high → low)</SelectItem>
             <SelectItem value="best-deal-desc">Best deals (largest savings)</SelectItem>
             <SelectItem value="best-deal-asc">Best deals (smallest savings)</SelectItem>
-            <SelectItem value="points-asc">Points (low → high)</SelectItem>
-            <SelectItem value="points-desc">Points (high → low)</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -407,7 +383,7 @@ export function ProductLookup() {
         <div className="border-t border-slate-300 py-16 text-center dark:border-slate-700">
           <p className="text-lg text-slate-600 dark:text-slate-300">Nothing searched yet.</p>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-            Search for a unit, or pick a faction or category to browse.
+            Search for a unit, or pick a universe or faction to browse.
           </p>
         </div>
       ) : (
@@ -496,12 +472,9 @@ function ProductCard({ product }: { product: Product }) {
                   </Link>
                 </CardTitle>
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
-                  <Badge variant="outline">{product.faction || "Unknown Faction"}</Badge>
-                  <span className="text-slate-600 dark:text-slate-300">{product.category || "Uncategorized"}</span>
-                  {typeof product.points === "number" && product.points > 0 ? (
-                    <span className="text-slate-600 dark:text-slate-300">• {product.points} pts</span>
-                  ) : (
-                    <span className="text-slate-400 dark:text-slate-500">• Points TBD</span>
+                  {product.game && <Badge variant="outline">{gameLabel(product.game)}</Badge>}
+                  {product.faction && product.faction !== "No Faction / Misc" && (
+                    <span className="text-slate-600 dark:text-slate-300">{product.faction}</span>
                   )}
                 </div>
               </div>

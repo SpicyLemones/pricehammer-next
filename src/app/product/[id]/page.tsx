@@ -7,6 +7,7 @@ import { headers } from "next/headers";
 import { isAuthorizedAdmin } from "@/app/lib/auth";
 import ProductEditForm from "./ProductEditForm";
 import { fetchProductMetadata } from "@/app/lib/product-metadata";
+import { gameLabel } from "@/app/lib/game-labels";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -176,10 +177,8 @@ export default async function ProductPage({
               </div>
 
               <div className="text-slate-700 dark:text-slate-200 mt-2 space-y-0.5">
-                <div><span className="font-semibold">Universe:</span> {game}</div>
+                <div><span className="font-semibold">Universe:</span> {gameLabel(game)}</div>
                 <div><span className="font-semibold">Faction:</span> {faction}</div>
-                <div><span className="font-semibold">Category:</span> {category}</div>
-                <div><span className="font-semibold">Points:</span> {points ?? "—"}</div>
               </div>
 
               {isAdmin && (

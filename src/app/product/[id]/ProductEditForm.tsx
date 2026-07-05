@@ -302,45 +302,7 @@ export default function ProductEditForm({ productId, initialValues, gameCategori
           />
         </div>
 
-        <div className="grid gap-1">
-          <label htmlFor={`category-${productId}`} className="text-sm font-medium text-slate-700 dark:text-slate-200">
-            Category
-          </label>
-          <input
-            id={`category-${productId}`}
-            name="category"
-            list={categoryDatalistId}
-            placeholder="Enter category"
-            className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
-            value={category}
-            onChange={(event) => setCategory(event.target.value)}
-            autoComplete="off"
-          />
-          <datalist id={categoryDatalistId}>
-            {categoryOptions.map((option) => (
-              <option key={option} value={option} />
-            ))}
-          </datalist>
-        </div>
-
-        <div className="grid gap-1">
-          <label htmlFor={`points-${productId}`} className="text-sm font-medium text-slate-700 dark:text-slate-200">
-            Points
-          </label>
-          <input
-            id={`points-${productId}`}
-            name="points"
-            type="number"
-            min={0}
-            step="any"
-            placeholder="Leave blank to clear"
-            className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
-            value={points}
-            onChange={(event) => setPoints(event.target.value)}
-          />
-        </div>
-
-        <div className="rounded-md border border-slate-200/80 bg-white/90 p-3 text-sm text-slate-700 shadow-sm transition dark:border-slate-700/70 dark:bg-slate-900/70 dark:text-slate-100">
+        <div className="rounded-md border border-slate-300 bg-white p-3 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
           <label className="flex items-start gap-3">
             <input
               type="checkbox"
