@@ -52,6 +52,7 @@ function pick(hit) {
     image,
     gameLvl0: Array.isArray(gs.lvl0) ? gs.lvl0 : [],
     gameLvl1: Array.isArray(gs.lvl1) ? gs.lvl1 : [],
+    gameLvl2: Array.isArray(gs.lvl2) ? gs.lvl2 : [],
   };
 }
 

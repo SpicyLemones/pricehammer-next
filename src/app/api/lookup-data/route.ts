@@ -34,7 +34,9 @@ type APIProduct = {
   id: string;
   name: string;
   game?: string;
+  games?: string[];
   faction?: string;
+  factions?: string[];
   image?: string | null;
   hidden?: boolean;
   retailers: APIRetailer[];
@@ -76,7 +78,9 @@ export async function GET() {
       id: String(meta.productId),
       name: meta.displayName,
       game: meta.game ?? undefined,
+      games: meta.games.length ? meta.games : undefined,
       faction: meta.faction ?? undefined,
+      factions: meta.factions.length ? meta.factions : undefined,
       image: meta.image,
       hidden: meta.hidden,
       retailers: filterSuspiciousPrices(prices ?? []).map((r) => ({

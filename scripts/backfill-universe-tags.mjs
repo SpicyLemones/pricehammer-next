@@ -1,7 +1,7 @@
-// scripts/backfill-universe-tags.mjs
-// Tag every SKU-mapped product's universe (product_metadata.game) from GW's
-// own GameSystemsRoot hierarchy. Sub-games (Kill Team, Necromunda...) win
-// over the parent system when GW tags both.
+// scripts/backfill-universe-tags.mjs (v2)
+// Tag products with ALL universes GW lists them under (games JSON array),
+// plus a primary (game) where main systems outrank sub-games — a Dreadnought
+// is warhammer40k first, killteam additionally; never "a Kill Team product".
 import fs from "node:fs";
 import sqlite3 from "sqlite3";
 
@@ -28,43 +28,58 @@ const MAIN_GAMES = {
   "Middle-Earth": "middleearth",
 };
 
-function slugFor(item) {
+function tagsFor(item) {
+  const games = [];
+  // main systems first, in priority order (first = primary)
+  for (const [name, slug] of Object.entries(MAIN_GAMES)) {
+    if ((item.gameLvl0 ?? []).includes(name)) games.push(slug);
+  }
+  // then sub-games
   for (const l of item.gameLvl1 ?? []) {
     const m = l.match(/^Other Games > (.+)$/);
-    if (m && SUB_GAMES[m[1]]) return SUB_GAMES[m[1]];
+    if (m && SUB_GAMES[m[1]] && !games.includes(SUB_GAMES[m[1]])) games.push(SUB_GAMES[m[1]]);
   }
-  // priority order for main systems when multiple present
-  for (const name of Object.keys(MAIN_GAMES)) {
-    if ((item.gameLvl0 ?? []).includes(name)) return MAIN_GAMES[name];
-  }
-  if ((item.gameLvl0 ?? []).length) return "other";
-  return null;
+  if (!games.length && (item.gameLvl0 ?? []).length) games.push("other");
+  return games;
 }
 
 const bySku = new Map();
-for (const g of gw) { const n = norm(g.sku); if (n) bySku.set(n, slugFor(g)); }
+for (const g of gw) { const n = norm(g.sku); if (n) bySku.set(n, tagsFor(g)); }
 
 const db = new sqlite3.Database("data/db/data.sqlite");
 const all = (s, p = []) => new Promise((res, rej) => db.all(s, p, (e, r) => (e ? rej(e) : res(r))));
 const run = (s, p = []) => new Promise((res, rej) => db.run(s, p, function (e) { e ? rej(e) : res(this); }));
 
+const cols = await all("PRAGMA table_info(product_metadata)");
+if (!cols.some((c) => c.name === "games")) {
+  await run("ALTER TABLE product_metadata ADD COLUMN games TEXT");
+  console.log("added product_metadata.games");
+}
+
 const rows = await all(`
-  SELECT ps.product_id, ps.canonical_sku, m.game
+  SELECT ps.product_id, ps.canonical_sku, m.game, m.games
   FROM product_skus ps JOIN product_metadata m ON m.product_id = ps.product_id`);
 
-const counts = {}; let changed = 0, unknown = 0;
+const primaryCounts = {}; const multi = {}; let changed = 0, unknown = 0;
 for (const r of rows) {
-  const slug = bySku.get(r.canonical_sku);
-  if (!slug) { unknown++; continue; }
-  counts[slug] = (counts[slug] || 0) + 1;
-  if (slug !== r.game) {
+  const tags = bySku.get(r.canonical_sku);
+  if (!tags || !tags.length) { unknown++; continue; }
+  const primary = tags[0];
+  const gamesJson = JSON.stringify(tags);
+  primaryCounts[primary] = (primaryCounts[primary] || 0) + 1;
+  if (tags.length > 1) multi[tags.join("+")] = (multi[tags.join("+")] || 0) + 1;
+  if (primary !== r.game || gamesJson !== r.games) {
     changed++;
     if (APPLY) {
-      await run(`UPDATE product_metadata SET game = ?, updated_at = datetime('now') WHERE product_id = ?`, [slug, r.product_id]);
+      await run(
+        `UPDATE product_metadata SET game = ?, games = ?, updated_at = datetime('now') WHERE product_id = ?`,
+        [primary, gamesJson, r.product_id],
+      );
     }
   }
 }
-console.log("universe counts:", JSON.stringify(counts));
+console.log("primary counts:", JSON.stringify(primaryCounts));
+console.log("multi-tag combos (top):", Object.entries(multi).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([k,v])=>`${k}:${v}`).join("  "));
 console.log(`sku-mapped: ${rows.length} | changed: ${changed} | not in catalogue: ${unknown}`);
 console.log(APPLY ? "APPLIED" : "dry run — use --apply");
 db.close();
