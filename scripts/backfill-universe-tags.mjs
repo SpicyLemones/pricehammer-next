@@ -28,16 +28,33 @@ const MAIN_GAMES = {
   "Middle-Earth": "middleearth",
 };
 
+// Some sub-game tags on GW's store are too loose for shopping purposes:
+// "Nemesis Operatives" marks 40k kits merely USABLE as Kill Team mission
+// bosses, and Warcry "Allies/Chaotic Beasts" are AoS units on loan. Only a
+// qualifying lvl2 bucket makes a product genuinely OF that sub-game.
+const SUB_GAME_QUALIFIERS = {
+  "Kill Team": ["Choose a Kill Team", "Terrain - Killzones"],
+  "Warcry": ["Warbands"],
+};
+
 function tagsFor(item) {
   const games = [];
   // main systems first, in priority order (first = primary)
   for (const [name, slug] of Object.entries(MAIN_GAMES)) {
     if ((item.gameLvl0 ?? []).includes(name)) games.push(slug);
   }
-  // then sub-games
+  // then sub-games (subject to qualifiers)
   for (const l of item.gameLvl1 ?? []) {
     const m = l.match(/^Other Games > (.+)$/);
-    if (m && SUB_GAMES[m[1]] && !games.includes(SUB_GAMES[m[1]])) games.push(SUB_GAMES[m[1]]);
+    if (!m || !SUB_GAMES[m[1]] || games.includes(SUB_GAMES[m[1]])) continue;
+    const quals = SUB_GAME_QUALIFIERS[m[1]];
+    if (quals) {
+      const ok = (item.gameLvl2 ?? []).some((p) =>
+        quals.some((q) => p === `Other Games > ${m[1]} > ${q}`),
+      );
+      if (!ok) continue;
+    }
+    games.push(SUB_GAMES[m[1]]);
   }
   if (!games.length && (item.gameLvl0 ?? []).length) games.push("other");
   return games;
