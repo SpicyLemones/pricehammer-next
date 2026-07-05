@@ -50,6 +50,7 @@ export function CartClient() {
   const [items, setItems] = useState<CartItem[]>([]);
   const [products, setProducts] = useState<Map<string, Product>>(new Map());
   const [loading, setLoading] = useState(true);
+  const [openedCount, setOpenedCount] = useState(0);
 
   useEffect(() => {
     setItems(getCart());
@@ -265,11 +266,34 @@ export function CartClient() {
             the store&apos;s checkout.
           </p>
         )}
-        <div className="pt-2 text-right">
+        <div className="flex flex-wrap justify-end gap-2 pt-2">
+          <Button
+            variant="default"
+            onClick={() => {
+              const urls = lines
+                .map((l) => l.chosen?.url)
+                .filter((u): u is string => Boolean(u));
+              // one window.open per URL; browsers may keep only the first
+              // unless the user allows pop-ups for this site
+              urls.forEach((u) => window.open(u, "_blank", "noopener,noreferrer"));
+              if (urls.length > 1) {
+                setOpenedCount(urls.length);
+                setTimeout(() => setOpenedCount(0), 6000);
+              }
+            }}
+          >
+            Open all store pages ({lines.filter((l) => l.chosen?.url).length})
+          </Button>
           <Button asChild variant="outline">
             <Link href="/price-lookup">Keep browsing</Link>
           </Button>
         </div>
+        {openedCount > 1 && (
+          <p className="text-right text-xs text-slate-500 dark:text-slate-400">
+            Opened {openedCount} tabs — if only one appeared, allow pop-ups for this site and
+            try again.
+          </p>
+        )}
       </div>
     </div>
   );
