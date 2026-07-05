@@ -6,6 +6,7 @@ import Script from "next/script";
 import { headers } from "next/headers";
 import { isAuthorizedAdmin } from "@/app/lib/auth";
 import ProductEditForm from "./ProductEditForm";
+import AddToCartButton from "./AddToCartButton";
 import { fetchProductMetadata } from "@/app/lib/product-metadata";
 import { gameLabel } from "@/app/lib/game-labels";
 
@@ -161,19 +162,7 @@ export default async function ProductPage({
             <div className="flex-1">
               <div className="flex items-start justify-between gap-3">
                 <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">{displayName}</h1>
-
-                {/* Share / Copy */}
-                <button
-                  id="share-btn"
-                  className="inline-flex items-center rounded-md border border-slate-300
-                             px-3 py-1.5 text-sm font-medium
-                             bg-white hover:bg-slate-50
-                             dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700
-                             text-slate-800 dark:text-slate-100"
-                  data-title={displayName}
-                >
-                  Share
-                </button>
+                <AddToCartButton productId={String(product.id)} />
               </div>
 
               <div className="text-slate-700 dark:text-slate-200 mt-2 space-y-0.5">
@@ -351,29 +340,8 @@ export default async function ProductPage({
         </div>
       </div>
 
-      {/* Share + Report + Dynamic Sort + Image Lightbox (no reload) */}
+      {/* Report + Dynamic Sort + Image Lightbox (no reload) */}
       <Script id={`enhancements-${id}`} strategy="afterInteractive">{`
-        // SHARE
-        (function(){
-          const btn = document.getElementById('share-btn');
-          if(!btn) return;
-          btn.addEventListener('click', async () => {
-            const title = btn.getAttribute('data-title') || document.title;
-            const url = window.location.href;
-            try {
-              if (navigator.share) {
-                await navigator.share({ title, url });
-              } else if (navigator.clipboard && window.isSecureContext) {
-                await navigator.clipboard.writeText(url);
-                btn.textContent = 'Link copied!';
-                setTimeout(() => (btn.textContent = 'Share'), 1200);
-              } else {
-                window.prompt('Copy this link:', url);
-              }
-            } catch {}
-          });
-        })();
-
         // REPORT (your existing flow)
         async function reportWrong(link, sellerName, productName) {
           const cleanLink = (link ?? "").trim();
