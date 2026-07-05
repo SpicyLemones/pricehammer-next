@@ -36,12 +36,22 @@ async function algolia(params) {
 }
 
 function pick(hit) {
+  let image = null;
+  if (Array.isArray(hit.images)) {
+    const paths = hit.images.filter((v) => typeof v === "string");
+    const still = paths.find((p) => p.includes("920x950")) ?? paths[0] ?? null;
+    image = still ? `https://www.warhammer.com${still}` : null;
+  }
+  const gs = hit.GameSystemsRoot ?? {};
   return {
     name: hit.name ?? null,
     slug: hit.slug ?? null,
     sku: hit.sku ?? null,
     price: hit.price ?? null,
     productType: hit.productType ?? null,
+    image,
+    gameLvl0: Array.isArray(gs.lvl0) ? gs.lvl0 : [],
+    gameLvl1: Array.isArray(gs.lvl1) ? gs.lvl1 : [],
   };
 }
 

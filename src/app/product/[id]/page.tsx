@@ -7,6 +7,7 @@ import { headers } from "next/headers";
 import { isAuthorizedAdmin } from "@/app/lib/auth";
 import ProductEditForm from "./ProductEditForm";
 import { fetchProductMetadata } from "@/app/lib/product-metadata";
+import { gameLabel } from "@/app/lib/game-labels";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -79,12 +80,18 @@ export default async function ProductPage({
   const publicDir = path.join(process.cwd(), "public");
   let imgSrc = PLACEHOLDER;
 
-  const metadataImage = metadata?.image ?? null;
-  if (metadataImage && metadataImage.trim()) {
-    const relative = path.join("images", "product", metadataImage.trim());
-    const absolute = path.join(publicDir, relative);
-    if (fs.existsSync(absolute)) {
-      imgSrc = "/" + relative.replace(/\\/g, "/");
+  const metadataImage = (metadata?.image ?? "").trim();
+  if (metadataImage) {
+    if (/^https?:\/\//.test(metadataImage) || metadataImage.startsWith("/")) {
+      // official GW catalogue image (or another absolute/rooted URL)
+      imgSrc = metadataImage;
+    } else {
+      // legacy local filename in /public/images/product
+      const relative = path.join("images", "product", metadataImage);
+      const absolute = path.join(publicDir, relative);
+      if (fs.existsSync(absolute)) {
+        imgSrc = "/" + relative.replace(/\\/g, "/");
+      }
     }
   }
 
@@ -170,10 +177,8 @@ export default async function ProductPage({
               </div>
 
               <div className="text-slate-700 dark:text-slate-200 mt-2 space-y-0.5">
-                <div><span className="font-semibold">Universe:</span> {game}</div>
+                <div><span className="font-semibold">Universe:</span> {gameLabel(game)}</div>
                 <div><span className="font-semibold">Faction:</span> {faction}</div>
-                <div><span className="font-semibold">Category:</span> {category}</div>
-                <div><span className="font-semibold">Points:</span> {points ?? "—"}</div>
               </div>
 
               {isAdmin && (
