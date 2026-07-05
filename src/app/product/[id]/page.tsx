@@ -79,12 +79,18 @@ export default async function ProductPage({
   const publicDir = path.join(process.cwd(), "public");
   let imgSrc = PLACEHOLDER;
 
-  const metadataImage = metadata?.image ?? null;
-  if (metadataImage && metadataImage.trim()) {
-    const relative = path.join("images", "product", metadataImage.trim());
-    const absolute = path.join(publicDir, relative);
-    if (fs.existsSync(absolute)) {
-      imgSrc = "/" + relative.replace(/\\/g, "/");
+  const metadataImage = (metadata?.image ?? "").trim();
+  if (metadataImage) {
+    if (/^https?:\/\//.test(metadataImage) || metadataImage.startsWith("/")) {
+      // official GW catalogue image (or another absolute/rooted URL)
+      imgSrc = metadataImage;
+    } else {
+      // legacy local filename in /public/images/product
+      const relative = path.join("images", "product", metadataImage);
+      const absolute = path.join(publicDir, relative);
+      if (fs.existsSync(absolute)) {
+        imgSrc = "/" + relative.replace(/\\/g, "/");
+      }
     }
   }
 
