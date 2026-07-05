@@ -12,7 +12,13 @@ type DBPriceRow = {
   price: number | null;
   link: string | null;
 };
-type APIShipping = { tag: string; deal: string };
+type APIShipping = {
+  tag?: string | null;
+  deal?: string | null;
+  flat?: number | null;
+  freeOver?: number | null;
+  note?: string | null;
+};
 type APIRetailer = {
   store: string;
   price: number | null;
@@ -24,8 +30,14 @@ function parseShipping(raw: string | null): APIShipping | undefined {
   if (!raw) return undefined;
   try {
     const j = JSON.parse(raw);
-    if (j && typeof j.tag === "string" && typeof j.deal === "string") {
-      return { tag: j.tag, deal: j.deal };
+    if (j && typeof j === "object") {
+      return {
+        tag: typeof j.tag === "string" ? j.tag : null,
+        deal: typeof j.deal === "string" ? j.deal : null,
+        flat: typeof j.flat === "number" ? j.flat : null,
+        freeOver: typeof j.freeOver === "number" ? j.freeOver : null,
+        note: typeof j.note === "string" ? j.note : null,
+      };
     }
   } catch {}
   return undefined;

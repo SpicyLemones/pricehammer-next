@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { ShoppingCart } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { cartCount, onCartChange } from "@/lib/cart";
 
 /** Returns the tab CSS for active/inactive state */
 function tabClass(isActive: boolean) {
@@ -29,6 +32,27 @@ function NavItem({
   return (
     <Link href={href} className={tabClass(active)}>
       {children}
+    </Link>
+  );
+}
+
+function CartLink() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    setCount(cartCount());
+    return onCartChange(() => setCount(cartCount()));
+  }, []);
+  const pathname = usePathname() || "/";
+  return (
+    <Link
+      href="/cart"
+      className={`relative inline-flex items-center ${tabClass(pathname.startsWith("/cart"))}`}
+      aria-label={`Cart (${count} items)`}
+    >
+      <ShoppingCart className="h-4 w-4" />
+      {count > 0 && (
+        <span className="ml-1 text-xs font-semibold tabular-nums">{count}</span>
+      )}
     </Link>
   );
 }
@@ -64,10 +88,14 @@ export function Header() {
           <NavItem href="/" exact>
             Home
           </NavItem>
+          <NavItem href="/new-releases">New Releases</NavItem>
           <NavItem href="/about">About</NavItem>
         </nav>
 
-        <ThemeToggle />
+        <div className="flex items-center gap-1">
+          <CartLink />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

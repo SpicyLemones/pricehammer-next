@@ -24,6 +24,8 @@ export type GwCatalogueItem = {
   price: number | null;
   productType: string | null;
   image: string | null;
+  isNewRelease: boolean;
+  isPreOrder: boolean;
   /** Set when fetched via fetchGwCatalogueByGame */
   game?: string;
 };
@@ -78,6 +80,8 @@ function pickItem(hit: AlgoliaHit): GwCatalogueItem {
     price: typeof hit.price === "number" ? hit.price : null,
     productType: typeof hit.productType === "string" ? hit.productType : null,
     image,
+    isNewRelease: hit.isNewRelease === true,
+    isPreOrder: hit.isPreOrder === true,
   };
 }
 

@@ -9,7 +9,7 @@ export function ShellFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() || "/";
   const isHub = pathname === "/";
   // PriceHammer pages share the themed frame with header + footer
-  const isPriceHammer = /^\/(price-lookup|about|contact|product|admin)/.test(pathname);
+  const isPriceHammer = /^\/(price-lookup|about|contact|product|admin|cart|new-releases)/.test(pathname);
   const isTwitchOverlay = pathname.startsWith("/twitch/overlay");
 
   if (isTwitchOverlay) {
