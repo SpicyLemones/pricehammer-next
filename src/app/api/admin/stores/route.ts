@@ -14,8 +14,9 @@
 //          Then run /api/auto-validate?seller=<id> to pull prices.
 import { NextResponse } from "next/server";
 import { query } from "@/lib/sql";
-import { isAuthorizedAdmin } from "@/lib/auth";
+import { isAdminRequest } from "@/lib/auth";
 import { probeSellerHealth } from "@/app/lib/seller-health";
+import { logAudit } from "@/app/lib/audit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -76,7 +77,7 @@ async function detectPlatform(baseUrl: string): Promise<DetectedPlatform> {
 }
 
 export async function GET(req: Request) {
-  if (!isAuthorizedAdmin(req.headers.get("authorization"))) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
   const rows = await query(
@@ -93,7 +94,7 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  if (!isAuthorizedAdmin(req.headers.get("authorization"))) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
 
@@ -182,6 +183,7 @@ export async function POST(req: Request) {
     [sellerId],
   )) as { c: number };
 
+  await logAudit("admin", "store-add", { id: sellerId, name, baseUrl, platform: detected.platform });
   return NextResponse.json({
     ok: true,
     store: { id: sellerId, name, baseUrl, status },

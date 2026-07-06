@@ -8,7 +8,8 @@
 //   curl -u U:P -X POST "/api/admin/flag-overpriced?apply=1"  # unvalidate
 import { NextResponse } from "next/server";
 import { query } from "@/lib/sql";
-import { isAuthorizedAdmin } from "@/lib/auth";
+import { isAdminRequest } from "@/lib/auth";
+import { logAudit } from "@/app/lib/audit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -26,7 +27,7 @@ type Row = {
 };
 
 export async function POST(req: Request) {
-  if (!isAuthorizedAdmin(req.headers.get("authorization"))) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
   const url = new URL(req.url);
@@ -97,6 +98,7 @@ export async function POST(req: Request) {
     }
   }
 
+  if (apply) await logAudit("admin", "flag-overpriced", { flagged, gwFlagged });
   return NextResponse.json({
     ok: true,
     apply,

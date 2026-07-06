@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Loader2, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
+import { Loader2, CheckCircle2, AlertCircle, RefreshCw, LogOut } from "lucide-react";
 
 type RunState = "idle" | "working" | "done" | "error";
 
@@ -128,6 +128,17 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
           >
             <RefreshCw className="h-4 w-4" />
             Reload
+          </button>
+          <button
+            onClick={async () => {
+              await fetch("/api/admin/login", { method: "DELETE" });
+              location.href = "/admin/login";
+            }}
+            className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition"
+            title="Sign out"
+          >
+            <LogOut className="h-4 w-4" />
+            Sign out
           </button>
         </div>
       </div>
@@ -377,6 +388,151 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
             <Status state={reportWrongAct.state} message={reportWrongAct.message} />
           </div>
         </Card>
+      </div>
+
+      <ReportsPanel />
+      <AuditPanel />
+    </div>
+  );
+}
+
+type ReportGroup = {
+  link: string;
+  reportCount: number;
+  latest: string;
+  productName: string | null;
+  sellerName: string | null;
+  productId: number | null;
+  reasons: string | null;
+};
+
+function ReportsPanel() {
+  const [groups, setGroups] = useState<ReportGroup[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [busyLink, setBusyLink] = useState("");
+
+  const load = async () => {
+    try {
+      const res = await fetch("/api/admin/reports", { cache: "no-store" });
+      const j = await res.json();
+      setGroups(Array.isArray(j.groups) ? j.groups : []);
+    } catch {}
+    setLoaded(true);
+  };
+  useEffect(() => {
+    load();
+  }, []);
+
+  const act = async (link: string, action: string) => {
+    setBusyLink(link);
+    try {
+      await fetch("/api/admin/reports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ link, action }),
+      });
+      await load();
+    } finally {
+      setBusyLink("");
+    }
+  };
+
+  return (
+    <div className="mt-8">
+      <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+        User reports {loaded ? `(${groups.length} open)` : ""}
+      </h2>
+      <p className="text-sm text-slate-600 dark:text-slate-300">
+        Sorted by report count. Reports never change data by themselves — every action here is
+        yours.
+      </p>
+      {loaded && groups.length === 0 && (
+        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">No open reports.</p>
+      )}
+      <div className="mt-3 divide-y divide-slate-200 border-t border-slate-300 dark:divide-slate-800 dark:border-slate-700">
+        {groups.map((g) => (
+          <div key={g.link} className="py-3">
+            <div className="flex flex-wrap items-baseline gap-2">
+              <span className="inline-block min-w-[2rem] border border-slate-400 px-1.5 text-center text-sm font-bold tabular-nums dark:border-slate-500">
+                {g.reportCount}
+              </span>
+              <span className="font-medium text-slate-900 dark:text-slate-100">
+                {g.productName ?? "(unknown product)"}
+              </span>
+              <span className="text-sm text-slate-500 dark:text-slate-400">
+                at {g.sellerName ?? "(unknown store)"}
+              </span>
+              <span className="text-xs text-slate-400">latest {g.latest}</span>
+            </div>
+            <div className="mt-1 break-all text-xs text-slate-500 dark:text-slate-400">
+              <a className="underline" href={g.link} target="_blank" rel="noopener noreferrer">
+                {g.link}
+              </a>
+            </div>
+            {g.reasons && (
+              <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">{g.reasons}</div>
+            )}
+            <div className="mt-2 flex flex-wrap gap-2 text-sm">
+              {g.productId != null && (
+                <Link href={`/product/${g.productId}`} className="underline">
+                  view product
+                </Link>
+              )}
+              <button
+                disabled={busyLink === g.link}
+                onClick={() => act(g.link, "unvalidate")}
+                className="rounded bg-amber-600 px-2 py-0.5 text-white hover:bg-amber-700 disabled:opacity-50"
+                title="Hide this price and send it back to the review queue"
+              >
+                pull price for re-check
+              </button>
+              <button
+                disabled={busyLink === g.link}
+                onClick={() => act(g.link, "resolve")}
+                className="rounded bg-emerald-700 px-2 py-0.5 text-white hover:bg-emerald-800 disabled:opacity-50"
+              >
+                resolve
+              </button>
+              <button
+                disabled={busyLink === g.link}
+                onClick={() => act(g.link, "dismiss")}
+                className="rounded bg-slate-500 px-2 py-0.5 text-white hover:bg-slate-600 disabled:opacity-50"
+              >
+                dismiss
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AuditPanel() {
+  const [events, setEvents] = useState<
+    { at: string; actor: string; action: string; detail: string | null }[]
+  >([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch("/api/admin/audit", { cache: "no-store" });
+        const j = await res.json();
+        setEvents(Array.isArray(j.events) ? j.events : []);
+      } catch {}
+    })();
+  }, []);
+  if (!events.length) return null;
+  return (
+    <div className="mt-8">
+      <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">Recent admin activity</h2>
+      <div className="mt-3 divide-y divide-slate-200 border-t border-slate-300 text-sm dark:divide-slate-800 dark:border-slate-700">
+        {events.map((e, i) => (
+          <div key={i} className="flex flex-wrap gap-2 py-1.5">
+            <span className="tabular-nums text-slate-400">{e.at}</span>
+            <span className="font-medium text-slate-900 dark:text-slate-100">{e.action}</span>
+            <span className="break-all text-slate-500 dark:text-slate-400">{e.detail ?? ""}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

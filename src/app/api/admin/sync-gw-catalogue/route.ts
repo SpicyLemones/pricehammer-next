@@ -15,7 +15,8 @@
 //   curl -u U:P -X POST "https://<host>/api/admin/sync-gw-catalogue?apply=1"    # write
 import { NextResponse } from "next/server";
 import { query } from "@/lib/sql";
-import { isAuthorizedAdmin } from "@/lib/auth";
+import { isAdminRequest } from "@/lib/auth";
+import { logAudit } from "@/app/lib/audit";
 import { fetchGwCatalogueByGame, type GwCatalogueItem } from "@/app/lib/gw-algolia";
 import { invalidateSkuCatalogueCache } from "@/app/lib/sku-catalogue";
 
@@ -40,7 +41,7 @@ const normName = (s: string) =>
   s.toLowerCase().replace(/[’'`]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 
 export async function POST(req: Request) {
-  if (!isAuthorizedAdmin(req.headers.get("authorization"))) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
 
@@ -197,6 +198,7 @@ export async function POST(req: Request) {
     invalidateSkuCatalogueCache();
   }
 
+  if (apply) await logAudit("admin", "sync-gw-catalogue", { linked, added, discontinued: discontinued.length });
   return NextResponse.json({
     ok: true,
     apply,

@@ -15,7 +15,7 @@
 import { NextResponse } from "next/server";
 import pLimit from "p-limit";
 import { query } from "@/lib/sql";
-import { isAuthorizedAdmin } from "@/lib/auth";
+import { isAdminRequest } from "@/lib/auth";
 import { fetchSkuAndPriceFromPage } from "@/lib/scraper";
 import { normalizeShopifySku } from "@/app/lib/shopify";
 import { scoreTitleAgainstName } from "@/app/lib/shopify-catalogue";
@@ -49,7 +49,7 @@ function skuSetFor(row: PairRow): Set<string> {
 }
 
 export async function POST(req: Request) {
-  if (!isAuthorizedAdmin(req.headers.get("authorization"))) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
 

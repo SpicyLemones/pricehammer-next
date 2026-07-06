@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS admin_audit (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  at TEXT NOT NULL DEFAULT (datetime('now')),
+  actor TEXT NOT NULL,
+  action TEXT NOT NULL,
+  detail TEXT
+);
