@@ -164,6 +164,12 @@ export async function fetchShopifyProductFeed(
       };
     }
 
+    // Some shops reject deep pagination (e.g. 400 past page ~100). If we
+    // already have pages in hand, treat that as end-of-feed, not failure.
+    if (!res.ok && page > 1 && (res.status === 400 || res.status === 404)) {
+      break;
+    }
+
     if (!res.ok) {
       return {
         ok: false,

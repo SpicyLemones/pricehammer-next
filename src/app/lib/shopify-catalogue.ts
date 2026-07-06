@@ -192,6 +192,14 @@ function buildCanonicalEntry(record: SkuCatalogueRecord): CanonicalEntry {
   if (name) nameVariants.add(name);
   if (record.searchTerm) nameVariants.add(record.searchTerm);
   for (const alias of record.nameAliases) nameVariants.add(alias);
+  // GW appends "Squad"/"Squadron" to unit names; retailers routinely drop it
+  // ("Heavy Intercessor Squad" vs "Space Marines Heavy Intercessors"). Score
+  // a suffix-stripped variant too — additive only, existing matches keep
+  // their scores, and single-word leftovers still hit the ambiguity cap.
+  for (const variant of [...nameVariants]) {
+    const stripped = variant.replace(/\b(squad|squadron)\b/gi, " ").replace(/\s+/g, " ").trim();
+    if (stripped && stripped !== variant) nameVariants.add(stripped);
+  }
 
   const tokens = new Set<string>();
   for (const variantName of nameVariants) {
