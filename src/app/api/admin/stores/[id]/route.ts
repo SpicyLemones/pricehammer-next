@@ -5,7 +5,8 @@
 //   DELETE — retire the store (soft delete: prices hidden, history kept)
 import { NextResponse } from "next/server";
 import { query } from "@/lib/sql";
-import { isAuthorizedAdmin } from "@/lib/auth";
+import { isAdminRequest } from "@/lib/auth";
+import { logAudit } from "@/app/lib/audit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,7 +22,7 @@ async function loadSeller(id: number) {
 }
 
 export async function PATCH(req: Request, ctx: Params) {
-  if (!isAuthorizedAdmin(req.headers.get("authorization"))) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
   const { id: idRaw } = await ctx.params;
@@ -83,11 +84,12 @@ export async function PATCH(req: Request, ctx: Params) {
 
   params.push(id);
   await query("run", `UPDATE sellers SET ${updates.join(", ")} WHERE id = ?`, params);
+  await logAudit("admin", "store-update", { id, ...body });
   return NextResponse.json({ ok: true, store: await loadSeller(id) });
 }
 
 export async function DELETE(req: Request, ctx: Params) {
-  if (!isAuthorizedAdmin(req.headers.get("authorization"))) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
   const { id: idRaw } = await ctx.params;

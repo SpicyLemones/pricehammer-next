@@ -7,7 +7,8 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import { isAuthorizedAdmin } from "@/lib/auth";
+import { isAdminRequest } from "@/lib/auth";
+import { logAudit } from "@/app/lib/audit";
 import { closeDb, query } from "@/lib/sql";
 
 export const runtime = "nodejs";
@@ -22,7 +23,7 @@ function resolveDbPath(): string {
 }
 
 export async function POST(req: Request) {
-  if (!isAuthorizedAdmin(req.headers.get("authorization"))) {
+  if (!isAdminRequest(req)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
 
@@ -91,5 +92,6 @@ export async function POST(req: Request) {
     verification = { error: `post-swap query failed: ${e instanceof Error ? e.message : e}` };
   }
 
+  await logAudit("admin", "upload-db", { bytes: bytes.length, verification });
   return NextResponse.json({ ok: true, path: dbPath, bytes: bytes.length, verification });
 }
