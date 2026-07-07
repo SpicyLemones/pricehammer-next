@@ -46,8 +46,7 @@ function Masthead({ data }: { data: RecessionData }) {
         The Recession Indicator
       </h1>
       <p className="mt-2 max-w-2xl font-serif text-sm italic text-slate-600 dark:text-slate-300">
-        An almanac of the Australian tech job market. All figures real, all jokes
-        load-bearing. Updated whenever it gets worse.
+        An almanac of the Australian tech job market. Updated whenever it gets worse.
       </p>
     </header>
   );
@@ -70,7 +69,13 @@ function ReadingStrip({ data }: { data: RecessionData }) {
         <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
           Current reading
         </div>
-        <div className="font-display mt-1 text-6xl leading-none">{data.indexLabel}</div>
+        <div
+          className={`font-display mt-1 text-6xl leading-none text-red-700 dark:text-red-500 ${
+            data.indexLabel === "Cooked" ? "reading-cooked" : ""
+          }`}
+        >
+          {data.indexLabel}
+        </div>
         <p className="mt-2 font-serif text-sm text-slate-600 dark:text-slate-300">
           {nf.format(data.latest.value)} tech job ads a month, nationally. There were{" "}
           {nf.format(data.peak.value)} at the peak.
@@ -186,7 +191,7 @@ function WhingeSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit B"
         title="The whinge-o-meter"
-        blurb="Posts per week on Australian job subreddits (r/ausjobs, r/auscorp). Every bar is people asking where the jobs went. This is our demand-side data."
+        blurb="Posts per week on Australian job subreddits (r/ausjobs, r/auscorp). Every bar is people asking where the jobs went."
       />
       {recent.length >= 2 ? (
         <>
@@ -266,7 +271,7 @@ function ThenVsNowSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit D"
         title="Then versus now"
-        blurb="Statistically backed nostalgia. The maths for each claim is in the fine print."
+        blurb="Just pull yourself up by your bootstraps lil bro."
       />
       <div className="grid gap-4 sm:grid-cols-2">
         {data.thenVsNow.map((card) => (
@@ -308,7 +313,7 @@ function SectionHeading({ kicker, title, blurb }: { kicker: string; title: strin
 function Methodology({ data }: { data: RecessionData }) {
   return (
     <footer className="mt-14 border-t border-slate-300 pt-5 text-xs leading-relaxed text-slate-500 dark:border-slate-700 dark:text-slate-400">
-      <h2 className="font-display text-xl tracking-wide text-slate-700 dark:text-slate-200">Methodology, or: yes, this is real data</h2>
+      <h2 className="font-display text-xl tracking-wide text-slate-700 dark:text-slate-200">Is this a larp?</h2>
       <ul className="mt-2 list-disc space-y-1 pl-5">
         <li>
           Historical job ads: {data.ivi.source}, retrieved {data.ivi.retrieved} from{" "}
@@ -327,8 +332,7 @@ function Methodology({ data }: { data: RecessionData }) {
           and also the disclaimer.
         </li>
         <li>
-          This page is satire wearing a high-vis vest of real statistics. It is not career or financial advice.
-          If it made you feel worse, the data did that, not us.
+          Uhh this is not financial advice and this page is satire or whatever, don&apos;t shoot the messenger.
         </li>
       </ul>
       <p className="mt-4">
