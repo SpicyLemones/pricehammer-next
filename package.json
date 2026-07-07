@@ -7,7 +7,8 @@
     "postinstall": "PUPPETEER_CACHE_DIR=/opt/render/.cache/puppeteer npx puppeteer browsers install chrome",
     "build": "next build --turbopack",
     "start": "next start -p ${PORT:-3000}",
-    "lint": "eslint"
+    "lint": "eslint",
+    "collect:recession": "node scripts/collect-recession.mjs"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",
