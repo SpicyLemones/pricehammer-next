@@ -51,16 +51,23 @@ async function handleNotification(subscriptionType: string, envelope: EventSubEn
     const chatterDisplayName = event.chatter_user_name as string | undefined;
     const text = event.message?.text as string | undefined;
 
+    // real emote names from the message fragments (type "emote")
+    const fragments = Array.isArray(event.message?.fragments) ? event.message.fragments : [];
+    const emotes = fragments
+      .filter((f: any) => f?.type === "emote" && typeof f?.text === "string")
+      .map((f: any) => f.text as string);
+
     if (chatterId && text) {
       actions.push({
         action: "record-message",
         chatterId,
         message: text,
+        emotes,
         chatterLogin,
         chatterDisplayName,
       });
     }
-  } 
+  }
   else if (subscriptionType === "channel.ban") {
     const chatterId = event.user_id as string | undefined;
     const chatterLogin = event.user_login as string | undefined;

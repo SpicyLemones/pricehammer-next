@@ -1,5 +1,13 @@
 import crypto from "node:crypto";
 
+/** Cosmetics a chatter has equipped from the overlay shop. */
+export type OverlayStyle = {
+  nameColor?: string;
+  bubble?: string;
+  badge?: string;
+  levelfx?: string;
+};
+
 export const OVERLAY_COOLDOWN_MS = 60_000;
 
 export type OverlayLevelUpPayload = {
@@ -10,6 +18,7 @@ export type OverlayLevelUpPayload = {
   flair: string;
   color: string;
   message?: string;
+  style?: OverlayStyle;
   at: string;
 };
 
@@ -21,6 +30,7 @@ export type OverlayProgressPayload = {
   xpMax: number;
   flair: string;
   color: string;
+  style?: OverlayStyle;
   at: string;
 };
 
@@ -30,6 +40,7 @@ export type OverlayChatPayload = {
   message: string;
   flair: string;
   color: string;
+  style?: OverlayStyle;
   at: string;
 };
 
@@ -144,6 +155,7 @@ type IncomingOverlayEvent = {
   flair?: string;
   color?: string;
   message?: string;
+  style?: OverlayStyle;
 };
 
 function colorFromId(id: string) {
@@ -174,6 +186,7 @@ function normalizeEvent(event: IncomingOverlayEvent): OverlayLevelUpPayload {
     xpToNext: Math.max(1, Math.round(xpToNextRaw)),
     color: (event.color ?? colorFromId(trimmedId || name)).trim() || DEFAULT_GRADIENTS[0],
     message,
+    style: event.style,
     at: now,
   };
 }
@@ -195,6 +208,7 @@ export function publishOverlayChat(streamerId: string, event: IncomingOverlayEve
     message,
     flair,
     color,
+    style: event.style,
     at: new Date().toISOString(),
   };
 
@@ -228,6 +242,7 @@ export function publishOverlayProgress(streamerId: string, event: IncomingOverla
     xpMax: Math.max(1, Math.round(xpMaxRaw)),
     flair,
     color,
+    style: event.style,
     at: new Date().toISOString(),
   };
 

@@ -7,6 +7,14 @@ import { Wifi, WifiOff } from "lucide-react";
 const FOCUS_DURATION_MS = 15 * 60 * 1000; // 15 Minutes
 const TRANSITION_DELAY_MS = 15 * 1000; // 15 Seconds
 
+// Cosmetics unlocked via the chat shop (!buy). Sent by the server per event.
+type OverlayStyle = {
+  nameColor?: string;
+  bubble?: string;
+  badge?: string;
+  levelfx?: string;
+};
+
 type OverlayTarget = {
   id: string;
   name: string;
@@ -15,6 +23,7 @@ type OverlayTarget = {
   xpMax: number;     // Inferred
   color: string;
   flair: string;
+  style?: OverlayStyle;
   lastMessage?: string;
   lastMessageAt?: number;
 };
@@ -148,6 +157,7 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
                 flair: payload.flair,
                 xpCurrent: Math.floor(estimatedCurrent),
                 xpMax: Math.floor(estimatedMax),
+                style: payload.style ?? previous?.style,
                 lastMessage: messageText || previous?.lastMessage,
                 lastMessageAt: messageText ? Date.now() : previous?.lastMessageAt,
               };
@@ -205,6 +215,7 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
                 flair: payload.flair || previous?.flair || "Channel Runner",
                 xpCurrent: previous?.xpCurrent ?? 0,
                 xpMax: previous?.xpMax ?? 500,
+                style: payload.style ?? previous?.style,
                 lastMessage: messageText,
                 lastMessageAt: Date.now(),
               };
@@ -227,6 +238,7 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
                 flair: payload.flair || previous?.flair || "Channel Runner",
                 xpCurrent: Math.max(0, Math.round(xpCurrent)),
                 xpMax: Math.max(1, Math.round(xpMax)),
+                style: payload.style ?? previous?.style,
                 lastMessage: previous?.lastMessage,
                 lastMessageAt: previous?.lastMessageAt,
               };
@@ -360,30 +372,59 @@ export function OverlayClient({ streamerId }: { streamerId: string }) {
 }
 
 
-function WoWBar({ 
-  user, 
-  isLevelingUp, 
-  chatMessage 
-}: { 
-  user: OverlayTarget; 
+// Shop bubble skins: extra classes per bubble style id
+const BUBBLE_SKINS: Record<string, { box: string; text: string; pointer: string }> = {
+  neon: {
+    box: "border-fuchsia-400/70 bg-black/85 shadow-[0_0_18px_rgba(232,121,249,0.45)]",
+    text: "text-fuchsia-100",
+    pointer: "border-fuchsia-400/70 bg-black/85",
+  },
+  parchment: {
+    box: "border-amber-900/40 bg-amber-100/95 shadow-xl",
+    text: "text-amber-950",
+    pointer: "border-amber-900/40 bg-amber-100/95",
+  },
+  terminal: {
+    box: "border-emerald-500/60 bg-black/90 font-mono shadow-[0_0_12px_rgba(16,185,129,0.35)]",
+    text: "text-emerald-300",
+    pointer: "border-emerald-500/60 bg-black/90",
+  },
+};
+
+function WoWBar({
+  user,
+  isLevelingUp,
+  chatMessage
+}: {
+  user: OverlayTarget;
   isLevelingUp: boolean;
   chatMessage: ChatMessage | null;
 }) {
   const percentage = Math.min(100, Math.max(0, (user.xpCurrent / user.xpMax) * 100));
+  const style = user.style;
+  const bubbleSkin = style?.bubble ? BUBBLE_SKINS[style.bubble] : undefined;
+  const nameColor = style?.nameColor;
+  const badge = style?.badge ? `${style.badge} ` : "";
 
   return (
     <div className="relative w-full">
-      
+
       {/* Chat Bubble Container (Pops up from the bar) */}
       <div className="absolute bottom-full left-8 mb-2 w-full pointer-events-none">
         <div className={`flex w-fit max-w-sm flex-col transition-all duration-300 ${
           chatMessage ? "translate-y-0 opacity-100 scale-100" : "translate-y-4 opacity-0 scale-95"
         }`}>
-          <div className="relative rounded-xl border border-white/10 bg-black/80 px-4 py-2 text-sm text-white shadow-xl backdrop-blur-md">
-            <span className="font-bold text-emerald-400">{user.name}: </span>
-            <span className="text-slate-200">{chatMessage?.text}</span>
+          <div className={`relative rounded-xl border px-4 py-2 text-sm shadow-xl backdrop-blur-md ${
+            bubbleSkin ? bubbleSkin.box : "border-white/10 bg-black/80 text-white"
+          }`}>
+            <span className="font-bold text-emerald-400" style={nameColor ? { color: nameColor } : undefined}>
+              {badge}{user.name}:{" "}
+            </span>
+            <span className={bubbleSkin ? bubbleSkin.text : "text-slate-200"}>{chatMessage?.text}</span>
             {/* Little triangle pointer */}
-            <div className="absolute -bottom-1.5 left-4 h-3 w-3 rotate-45 border-b border-r border-white/10 bg-black/80"></div>
+            <div className={`absolute -bottom-1.5 left-4 h-3 w-3 rotate-45 border-b border-r ${
+              bubbleSkin ? bubbleSkin.pointer : "border-white/10 bg-black/80"
+            }`}></div>
           </div>
         </div>
       </div>
@@ -398,10 +439,14 @@ function WoWBar({
            ))}
         </div>
 
-        {/* The Fill Bar */}
-        <div 
+        {/* The Fill Bar (levelfx skins swap the flash colour) */}
+        <div
           className={`h-full transition-all duration-700 ease-out ${
-            isLevelingUp ? "bg-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.6)]" : "bg-[#5c1c8a]"
+            isLevelingUp
+              ? style?.levelfx === "flames"
+                ? "bg-orange-500 shadow-[0_0_18px_rgba(249,115,22,0.8)]"
+                : "bg-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.6)]"
+              : "bg-[#5c1c8a]"
           }`}
           style={{ width: `${percentage}%` }}
         >
@@ -423,10 +468,14 @@ function WoWBar({
             style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
           >
             {isLevelingUp ? (
-              <span className="text-amber-300 animate-pulse">Level Up!</span>
+              <span className={`animate-pulse ${style?.levelfx === "flames" ? "text-orange-400" : "text-amber-300"}`}>
+                {style?.levelfx === "confetti" ? "🎉 Level Up! 🎉" : style?.levelfx === "flames" ? "🔥 Level Up! 🔥" : "Level Up!"}
+              </span>
             ) : (
               <>
-                <span className="text-gray-300">{user.name}</span>
+                <span className="text-gray-300" style={nameColor ? { color: nameColor } : undefined}>
+                  {badge}{user.name}
+                </span>
                 <span className="mx-2 text-gray-500">•</span>
                 <span className="text-[#d8b4fe]">XP: {user.xpCurrent} / {user.xpMax}</span>
               </>
