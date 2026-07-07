@@ -1,0 +1,16 @@
+{
+  "items": [
+    { "id": "name-gold", "kind": "nameColor", "name": "Gold Name", "price": 2500, "value": "#f5c542" },
+    { "id": "name-toxic", "kind": "nameColor", "name": "Toxic Green Name", "price": 1500, "value": "#39ff14" },
+    { "id": "name-blood", "kind": "nameColor", "name": "Blood Red Name", "price": 1500, "value": "#e02020" },
+    { "id": "name-royal", "kind": "nameColor", "name": "Royal Purple Name", "price": 2000, "value": "#9146ff" },
+    { "id": "bubble-neon", "kind": "bubble", "name": "Neon Bubble", "price": 3000, "value": "neon" },
+    { "id": "bubble-parchment", "kind": "bubble", "name": "Parchment Bubble", "price": 2500, "value": "parchment" },
+    { "id": "bubble-terminal", "kind": "bubble", "name": "Terminal Bubble", "price": 2500, "value": "terminal" },
+    { "id": "badge-toad", "kind": "badge", "name": "Toad Badge", "price": 5000, "value": "🐸" },
+    { "id": "badge-crown", "kind": "badge", "name": "Crown Badge", "price": 10000, "value": "👑" },
+    { "id": "badge-skull", "kind": "badge", "name": "Skull Badge", "price": 4000, "value": "💀" },
+    { "id": "fx-confetti", "kind": "levelfx", "name": "Confetti Level-Ups", "price": 6000, "value": "confetti" },
+    { "id": "fx-flames", "kind": "levelfx", "name": "Flaming Level-Ups", "price": 8000, "value": "flames" }
+  ]
+}

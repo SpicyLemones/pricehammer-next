@@ -19,10 +19,10 @@ const tiles = [
     background: "/images/twitchtoys.png", // Background Image
     type: "image"
   },
-  { 
-    title: "RECESSION INDICATOR", 
-    subtitle: "IN MAINTENANCE", 
-    href: "#", 
+  {
+    title: "RECESSION INDICATOR",
+    subtitle: "The tech job market, charted. Bring a helmet",
+    href: "/recession",
     external: false,
     background: "/videos/maintenance.mp4", // Example Video
     type: "video"

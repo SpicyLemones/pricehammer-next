@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { fetchChatters, getTwitchConfig, getValidSession } from "@/app/lib/twitch-auth";
 import { run, get, all } from "@/app/lib/sql";
 import { publishOverlayChat, publishOverlayLevelUp, publishOverlayProgress } from "@/app/api/twitch/overlay/channel";
+import { recordTerms, stableGagAge } from "@/app/lib/chatter-terms";
+import { getChatterStyle, handleShopCommand, type ChatterStyle } from "@/app/lib/chattergrounds-shop";
+import { autoCompleteChatQuests, type QuestCompletion } from "@/app/lib/quest-auto";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
@@ -19,7 +22,7 @@ type ChatterIdentity = {
 // REFACTORED: actions now favor 'xp' terminology
 export type PersistAction =
   | (ChatterIdentity & { action: "mint"; amount: number })
-  | (ChatterIdentity & { action: "record-message"; message?: string })
+  | (ChatterIdentity & { action: "record-message"; message?: string; emotes?: string[] })
   | (ChatterIdentity & { action: "ban" })
   | (ChatterIdentity & { action: "timeout" })
   | (ChatterIdentity & { action: "quest-completed"; amount?: number })
@@ -95,21 +98,6 @@ async function ensureChattergroundsSchema() {
   return schemaReadyPromise;
 }
 
-async function getRandomJokeTrait() {
-  try {
-    const configPath = path.join(process.cwd(), "data", "chattergrounds_config.json");
-    const file = await fs.readFile(configPath, "utf8");
-    const { jokeWords, jokeEmotes } = JSON.parse(file);
-
-    return {
-      word: jokeWords[Math.floor(Math.random() * jokeWords.length)],
-      emote: jokeEmotes[Math.floor(Math.random() * jokeEmotes.length)],
-      age: Math.floor(Math.random() * (80 - 12 + 1)) + 12,
-    };
-  } catch {
-    return { word: "Toad", emote: "Kappa", age: 25 };
-  }
-}
 
 function resolveStoredName(payload: PersistAction) {
   return payload.chatterLogin || payload.chatterDisplayName || payload.chatterId;
@@ -305,7 +293,10 @@ export async function applyChattergroundsAction(
     payload.action === "quest-completed" ||
     payload.action === "mint";
 
-  if (requiresLive) {
+  // CHATTERGROUNDS_ALLOW_OFFLINE=1 lets dev/testing record events without a
+  // live stream; production keeps the live gate.
+  const allowOffline = process.env.CHATTERGROUNDS_ALLOW_OFFLINE === "1";
+  if (requiresLive && !allowOffline) {
     const live = await isBroadcasterLive(broadcasterId);
     if (live !== true) {
       return { skipped: true, reason: "Broadcaster is not live" };
@@ -380,7 +371,9 @@ export async function applyChattergroundsAction(
   }
 
   const storedName = resolveStoredName(payload);
-  const traits = await getRandomJokeTrait();
+  // stable gag age per chatter; favourites start empty and are computed from
+  // REAL message data below (no more random joke traits pretending to be stats)
+  const traits = { age: stableGagAge(payload.chatterId), word: null as string | null, emote: null as string | null };
 
   try {
     await ensureChattergroundsSchema();
@@ -443,6 +436,72 @@ export async function applyChattergroundsAction(
          DO UPDATE SET messages = messages + excluded.messages`,
         [broadcasterId, bucketStart, msgs]
       );
+
+      // real favourite word/emote from actual message content
+      if (msgText) {
+        try {
+          const emotes = payload.action === "record-message" ? payload.emotes ?? [] : [];
+          const favs = await recordTerms(broadcasterId, payload.chatterId, msgText, emotes);
+          await run(
+            `UPDATE chattergrounds_stats
+             SET favorite_word = COALESCE(?, favorite_word),
+                 favorite_emote = COALESCE(?, favorite_emote)
+             WHERE broadcaster_id = ? AND chatter_id = ?`,
+            [favs.favoriteWord, favs.favoriteEmote, broadcasterId, payload.chatterId],
+          );
+        } catch (e) {
+          console.warn("[chattergrounds] term tracking failed:", e instanceof Error ? e.message : e);
+        }
+      }
+    }
+
+    // Overlay shop commands (!shop / !buy / !equip) come straight from chat.
+    // Runs after the upsert so the stats row (and its balance) exists.
+    let shopAnnounce: string | null = null;
+    if (msgText && msgText.startsWith("!")) {
+      try {
+        const shop = await handleShopCommand(broadcasterId, payload.chatterId, storedName, msgText);
+        if (shop.handled) shopAnnounce = shop.announce;
+      } catch (e) {
+        console.warn("[chattergrounds] shop command failed:", e instanceof Error ? e.message : e);
+      }
+    }
+
+    // Auto-complete any chat quests this message satisfies; rewards are paid
+    // out through the normal quest-completed action below.
+    let questCompletions: QuestCompletion[] = [];
+    if (payload.action === "record-message" && msgText && !msgText.startsWith("!")) {
+      try {
+        questCompletions = await autoCompleteChatQuests(
+          broadcasterId,
+          payload.chatterId,
+          storedName,
+          msgText,
+          payload.emotes ?? [],
+        );
+        for (const completion of questCompletions) {
+          await applyChattergroundsAction(
+            {
+              action: "quest-completed",
+              chatterId: payload.chatterId,
+              chatterLogin: payload.chatterLogin,
+              chatterDisplayName: payload.chatterDisplayName,
+              amount: completion.reward,
+            },
+            context,
+          );
+        }
+      } catch (e) {
+        console.warn("[chattergrounds] quest auto-complete failed:", e instanceof Error ? e.message : e);
+      }
+    }
+
+    // Equipped cosmetics, fetched after shop handling so purchases show immediately
+    let style: ChatterStyle | undefined;
+    try {
+      style = await getChatterStyle(broadcasterId, payload.chatterId);
+    } catch {
+      style = undefined;
     }
 
     const result = await get(
@@ -463,15 +522,28 @@ export async function applyChattergroundsAction(
         level: newLevelInfo.level,
         xpToNext,
         message: msgText ?? undefined,
+        style,
       });
     }
 
-    // Stream live chat to the overlay for the focused chatter bubble
+    // Stream live chat to the overlay for the focused chatter bubble.
+    // Shop commands show their announcement instead of the raw !command.
     if (msgText) {
       publishOverlayChat(broadcasterId, {
         id: payload.chatterId,
         name: resolveStoredName(payload),
-        message: msgText,
+        message: shopAnnounce ?? msgText,
+        style,
+      });
+    }
+
+    // Announce auto-completed quests on the overlay
+    for (const completion of questCompletions) {
+      publishOverlayChat(broadcasterId, {
+        id: payload.chatterId,
+        name: resolveStoredName(payload),
+        message: completion.announce,
+        style,
       });
     }
 
@@ -482,6 +554,7 @@ export async function applyChattergroundsAction(
       level: newLevelInfo.level,
       xpCurrent: newLevelInfo.remainingXp,
       xpMax: newLevelInfo.currentThreshold,
+      style,
     });
 
     return result;
