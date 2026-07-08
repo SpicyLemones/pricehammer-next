@@ -1,12 +1,12 @@
 "use client";
 
-// The money ladder: from a grad's first salary all the way down to the
-// richest man on earth, drawn to one scale. One pixel = $50,000, which makes
-// the entire Australian pay scale about 800 pixels and Elon Musk twenty
-// million. The scrolling IS the visualisation. A skip button exists because
-// nobody's wrist deserves that.
+// The money ladder: from a grad's first salary at the bottom to the richest
+// man on earth at the top, drawn to one scale. One pixel = $50,000, which
+// makes the entire Australian pay scale about 800 pixels and Elon Musk twenty
+// million. You start at the bottom, because of course you do, and scroll up.
+// A skip button exists because nobody's wrist deserves that.
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReferenceStats } from "@/app/lib/recession";
 
 const DOLLARS_PER_PX = 50_000;
@@ -23,13 +23,14 @@ const fmtShort = (n: number) => {
 
 type Rung = { value: number; name: string; emoji: string; note: string; unit: string };
 
-// snark scattered through the twenty million pixels of nothing
+// snark scattered through the twenty million pixels of nothing (frac = share
+// of Musk's pile, from the bottom)
 const VOID_MARKS: { frac: number; text: string }[] = [
-  { frac: 0.002, text: "everyone you have ever met is above this line" },
-  { frac: 0.01, text: "1% of the way. the wheel squeaks." },
-  { frac: 0.05, text: "5%. a lifetime of the median CEO's pay is behind you." },
-  { frac: 0.15, text: "15%. there is nothing down here. there was never anything down here." },
-  { frac: 0.3, text: "30%. fun fact: you passed the GDP of several island nations a while ago" },
+  { frac: 0.002, text: "everyone you have ever met is below this line" },
+  { frac: 0.01, text: "1% of the way up. the wheel squeaks." },
+  { frac: 0.05, text: "5%. a lifetime of the median CEO's pay is already beneath you." },
+  { frac: 0.15, text: "15%. there is nothing up here. there was never anything up here." },
+  { frac: 0.3, text: "30%. you passed the GDP of several island nations a while ago" },
   { frac: 0.5, text: "halfway. hydrate. stretch the scrolling finger." },
   { frac: 0.7, text: "70%. imagine applying to 400 jobs and then imagine this much money" },
   { frac: 0.85, text: "85%. the money cannot hear you" },
@@ -49,24 +50,36 @@ export function MoneyLadder({ refStats }: { refStats: ReferenceStats }) {
   const maxValue = rungs[rungs.length - 1].value;
   const totalHeight = Math.ceil(maxValue / DOLLARS_PER_PX);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [scrolled, setScrolled] = useState(0);
+  const [seen, setSeen] = useState(0);
+
+  // start at the bottom, with the grads, where you live
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+      setSeen(Math.round((el.scrollHeight - el.scrollTop) * DOLLARS_PER_PX));
+    }
+  }, []);
 
   const onScroll = () => {
     const el = scrollRef.current;
-    if (el) setScrolled(Math.round((el.scrollTop + el.clientHeight) * DOLLARS_PER_PX));
+    if (!el) return;
+    // dollars between the bottom of the ladder and the top of the viewport
+    setSeen(Math.round((el.scrollHeight - el.scrollTop) * DOLLARS_PER_PX));
   };
 
-  const skipToEnd = () => {
-    scrollRef.current?.scrollTo({ top: totalHeight, behavior: "auto" });
+  const skipToElon = () => {
+    scrollRef.current?.scrollTo({ top: 0, behavior: "auto" });
   };
 
-  const done = scrolled >= maxValue;
+  const done = seen >= maxValue;
 
-  // labels for the packed top rungs get staggered so they stay readable
-  let lastLabelTop = -60;
+  //heights measured from the BOTTOM; labels stagger upwards so the packed
+  // human zone at the bottom stays readable
+  let lastLabelTop = totalHeight + 64;
   const placed = rungs.map((r) => {
-    const lineTop = Math.max(1, Math.round(r.value / DOLLARS_PER_PX));
-    const labelTop = Math.max(lineTop, lastLabelTop + 58);
+    const lineTop = totalHeight - Math.max(1, Math.round(r.value / DOLLARS_PER_PX));
+    const labelTop = Math.min(lineTop, lastLabelTop - 60);
     lastLabelTop = labelTop;
     return { ...r, lineTop, labelTop, offset: labelTop !== lineTop };
   });
@@ -77,16 +90,16 @@ export function MoneyLadder({ refStats }: { refStats: ReferenceStats }) {
     <div className="border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2 dark:border-slate-700">
         <span className="text-xs text-slate-500 dark:text-slate-400">
-          One pixel = {fmtMoney(DOLLARS_PER_PX)}. At this scale your first salary is about {gradPx} pixels tall
-          and the bottom of this ladder is twenty million.
+          One pixel = {fmtMoney(DOLLARS_PER_PX)}. Your first salary is about {gradPx} pixels of this ladder.
+          The top is twenty million away. Scroll up.
         </span>
         <div className="flex items-center gap-3">
           <span className="font-mono text-xs tabular-nums text-slate-700 dark:text-slate-200">
-            scrolled past: {fmtShort(Math.min(scrolled, maxValue))}
+            climbed past: {fmtShort(Math.max(0, Math.min(seen, maxValue)))}
             {done ? " — and he made it back while you scrolled" : ""}
           </span>
           <button
-            onClick={skipToEnd}
+            onClick={skipToElon}
             className="border border-slate-300 px-2 py-1 text-[11px] uppercase tracking-wider text-slate-500 hover:border-slate-500 hover:text-slate-900 dark:border-slate-600 dark:hover:text-slate-100"
           >
             give up, skip to Elon
@@ -94,26 +107,39 @@ export function MoneyLadder({ refStats }: { refStats: ReferenceStats }) {
         </div>
       </div>
       <div ref={scrollRef} onScroll={onScroll} className="relative h-[460px] overflow-y-auto">
-        <div className="relative" style={{ height: totalHeight + 80 }}>
-          {/* the money column */}
+        <div className="relative" style={{ height: totalHeight + 90 }}>
+          {/* the money column, on the left, green at your end and red at his */}
           <div
-            className="absolute right-4 top-0 w-8 bg-gradient-to-b from-red-200/70 via-red-500/60 to-red-800/90 dark:from-red-400/30 dark:via-red-500/50 dark:to-red-600/90 sm:right-10 sm:w-12"
+            className="absolute left-3 top-0 w-8 bg-gradient-to-t from-emerald-500/80 via-amber-500/70 to-red-600/90 dark:from-emerald-400/60 dark:via-amber-400/50 dark:to-red-500/80 sm:left-5 sm:w-12"
             style={{ height: totalHeight }}
             aria-hidden
           />
-          <div className="absolute right-1 top-1 text-[10px] text-slate-400 sm:right-14">$0 up here</div>
 
-          {/* pay rungs */}
-          {placed.map((r, i) => (
-            <div key={r.name} className="absolute left-0 right-16 sm:right-24" style={{ top: r.lineTop }}>
-              <div className="border-t border-dashed border-slate-400 dark:border-slate-500" style={{ width: `${52 + i * 8}%` }} />
+          {/* the top */}
+          <div className="absolute left-16 top-2 sm:left-24">
+            <div className="flex items-center gap-2">
+              <span className="text-3xl" aria-hidden>🚀</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                the top of the money. {Math.round(maxValue / refStats.medianGradSalary.value).toLocaleString("en-AU")} years
+                of your salary, assuming you never ate.
+              </span>
+            </div>
+          </div>
+
+          {/* pay rungs: tick on the bar, text directly beside it */}
+          {placed.map((r) => (
+            <div key={r.name}>
+              <div
+                className="absolute left-3 h-0 w-12 border-t-2 border-slate-700 dark:border-slate-200 sm:left-5 sm:w-16"
+                style={{ top: r.lineTop }}
+              />
               {r.offset && (
                 <div
-                  className="absolute left-6 border-l border-dotted border-slate-300 dark:border-slate-600"
-                  style={{ height: r.labelTop - r.lineTop }}
+                  className="absolute left-14 border-l border-dotted border-slate-400 dark:border-slate-500 sm:left-20"
+                  style={{ top: r.labelTop + 10, height: r.lineTop - r.labelTop - 8 }}
                 />
               )}
-              <div className="absolute left-2 flex items-start gap-2" style={{ top: r.labelTop - r.lineTop + 2 }}>
+              <div className="absolute left-16 flex items-start gap-2 sm:left-24" style={{ top: r.labelTop - 8 }}>
                 <span className="text-2xl leading-none" aria-hidden>{r.emoji}</span>
                 <div>
                   <div className="flex flex-wrap items-baseline gap-x-2">
@@ -132,20 +158,18 @@ export function MoneyLadder({ refStats }: { refStats: ReferenceStats }) {
           {VOID_MARKS.map((m) => (
             <div
               key={m.frac}
-              className="absolute left-4 right-20 text-xs italic text-slate-400 sm:right-28"
-              style={{ top: Math.round(totalHeight * m.frac) }}
+              className="absolute left-16 right-4 text-xs italic text-slate-400 sm:left-24"
+              style={{ top: Math.round(totalHeight * (1 - m.frac)) }}
             >
               {m.text}
             </div>
           ))}
 
-          {/* the bottom */}
-          <div className="absolute inset-x-0 flex items-end justify-between px-4 pb-2" style={{ top: totalHeight - 8, height: 80 }}>
-            <div className="text-xs text-slate-500 dark:text-slate-400">
-              the bottom of the money. it took {Math.round(maxValue / refStats.medianGradSalary.value).toLocaleString("en-AU")} years
-              of your salary to get here, assuming you never ate.
-            </div>
-            <span className="text-3xl" aria-hidden>🚀</span>
+          {/* the bottom, where you start */}
+          <div className="absolute left-16 sm:left-24" style={{ top: totalHeight + 14 }}>
+            <span className="text-xs text-slate-500 dark:text-slate-400">
+              $0. you are here. the only way is up, technically.
+            </span>
           </div>
         </div>
       </div>
