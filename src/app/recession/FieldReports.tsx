@@ -28,7 +28,7 @@ export function FieldReports({
           <div className="text-[11px] uppercase tracking-widest text-red-700 dark:text-red-400">Exhibit J</div>
           <h2 className="font-display text-3xl tracking-wide sm:text-4xl">Field reports from the trenches</h2>
           <p className="mt-1 max-w-2xl font-serif text-sm text-slate-600 dark:text-slate-300">
-            This month&apos;s most upvoted and most argued-about posts from the job subreddits. Morale is what it is.
+            The biggest and most heated posts on the job subreddits this month. Morale is what it is.
           </p>
         </div>
         <div className="flex border border-slate-300 text-sm dark:border-slate-700">

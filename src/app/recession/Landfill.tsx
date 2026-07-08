@@ -65,11 +65,11 @@ export function Landfill({
       <div className="border-b border-slate-200 px-4 py-4 dark:border-slate-700">
         <p className="font-serif text-lg text-slate-800 dark:text-slate-100">
           If every tech application this year were printed out and stacked, the pile would reach{" "}
-          <strong className="text-red-700 dark:text-red-400">{nf.format(stackMetres)} metres</strong> high
+          <strong className="text-red-700 dark:text-red-400">{nf.format(stackMetres)} metres</strong> high.
           {bestCleared ? (
-            <> — {(Math.round((stackMetres / bestCleared.metres) * 10) / 10).toLocaleString("en-AU")}x {bestCleared.name.toLowerCase()} {bestCleared.emoji}</>
+            <> That clears {bestCleared.name.toLowerCase()} {bestCleared.emoji}{" "}
+            {(Math.round((stackMetres / bestCleared.metres) * 10) / 10).toLocaleString("en-AU")} times over.</>
           ) : null}
-          .
         </p>
       </div>
 
