@@ -16,6 +16,7 @@ import type { ReferenceStats } from "@/app/lib/recession";
 const TOTAL_HEIGHT = 100_000; // px, bottom of ladder to Musk
 const HUMAN_GAP = 190; // px between the readable rungs at the bottom
 const BOTTOM_PAD = 90; // px under the grad rung for the "$0" note
+const TOP_PAD = 84; // px above the Musk rung so his label and the summit note don't collide
 
 const fmtMoney = (n: number) =>
   new Intl.NumberFormat("en-AU", { style: "currency", currency: "AUD", maximumFractionDigits: 0 }).format(n);
@@ -31,7 +32,7 @@ type Rung = { value: number; name: string; emoji: string; note: string; unit: st
 
 // milestones through the void, placed by dollar value so they stay honest
 const VOID_MARKS: { value: number; text: string }[] = [
-  { value: 100e6, text: "$100 million. the job ads never mention this bracket." },
+  { value: 100e6, text: "$100 million. the job postings never mention this bracket." },
   { value: 500e6, text: "$500 million. the wheel squeaks." },
   { value: 1e9, text: "$1 billion. congratulations, you are one thousandth of the way up one guy." },
   { value: 5e9, text: "$5 billion. there is nothing up here. there was never anything up here." },
@@ -140,17 +141,17 @@ export function MoneyLadder({ refStats }: { refStats: ReferenceStats }) {
         </div>
       </div>
       <div ref={scrollRef} onScroll={readScroll} className="relative h-[460px] overflow-y-auto">
-        <div className="relative" style={{ height: TOTAL_HEIGHT + BOTTOM_PAD }}>
+        <div className="relative" style={{ height: TOP_PAD + TOTAL_HEIGHT + BOTTOM_PAD }}>
           {/* the money column, on the left, green at your end and red at his */}
           <div
             className="absolute left-3 w-8 bg-gradient-to-t from-emerald-500/80 via-amber-500/70 to-red-600/90 dark:from-emerald-400/60 dark:via-amber-400/50 dark:to-red-500/80 sm:left-5 sm:w-12"
-            style={{ top: 0, height: TOTAL_HEIGHT }}
+            style={{ top: TOP_PAD, height: TOTAL_HEIGHT }}
             aria-hidden
           />
 
           {/* rungs: tick on the bar, text directly beside it */}
           {rungs.map((r) => {
-            const topPx = TOTAL_HEIGHT - yFor(r.value);
+            const topPx = TOP_PAD + TOTAL_HEIGHT - yFor(r.value);
             return (
               <div key={r.name}>
                 <div
@@ -178,7 +179,7 @@ export function MoneyLadder({ refStats }: { refStats: ReferenceStats }) {
             <div
               key={m.value}
               className="absolute left-16 right-4 text-xs italic text-slate-400 sm:left-[5.5rem]"
-              style={{ top: TOTAL_HEIGHT - yFor(m.value) }}
+              style={{ top: TOP_PAD + TOTAL_HEIGHT - yFor(m.value) }}
             >
               {m.text}
             </div>
@@ -187,25 +188,22 @@ export function MoneyLadder({ refStats }: { refStats: ReferenceStats }) {
           {/* the pixel-halfway gut punch */}
           <div
             className="absolute left-16 right-4 text-xs italic text-slate-400 sm:left-[5.5rem]"
-            style={{ top: Math.round(TOTAL_HEIGHT / 2) }}
+            style={{ top: TOP_PAD + Math.round(TOTAL_HEIGHT / 2) }}
           >
             halfway up the ladder. you have covered {fmtShort(valueFor(TOTAL_HEIGHT / 2))} of the{" "}
             {fmtShort(top.value)}. hydrate. stretch the scrolling finger.
           </div>
 
-          {/* the top */}
-          <div className="absolute left-16 top-2 sm:left-[5.5rem]">
-            <div className="flex items-center gap-2">
-              <span className="text-3xl" aria-hidden>🚀</span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
-                the top of the money. {Math.round(top.value / refStats.medianGradSalary.value).toLocaleString("en-AU")} years
-                of your salary, assuming you never ate.
-              </span>
-            </div>
+          {/* the summit note, in the padding above the Musk rung */}
+          <div className="absolute left-16 top-2 right-4 sm:left-[5.5rem]">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
+              the top of the money. {Math.round(top.value / refStats.medianGradSalary.value).toLocaleString("en-AU")} years
+              of your salary, assuming you never ate.
+            </span>
           </div>
 
           {/* the bottom, where you start */}
-          <div className="absolute left-16 sm:left-[5.5rem]" style={{ top: TOTAL_HEIGHT + 20 }}>
+          <div className="absolute left-16 sm:left-[5.5rem]" style={{ top: TOP_PAD + TOTAL_HEIGHT + 20 }}>
             <span className="text-xs text-slate-500 dark:text-slate-400">
               $0. you are here. the only way is up, technically.
             </span>

@@ -118,7 +118,7 @@ export function Landfill({
           <span className="text-slate-400">{refStats.applicationsPerAd.source}</span>
         </label>
         <p className="mt-2 text-[11px] text-slate-400">
-          Maths: {nf.format(adsPerYear)} tech ads a year (latest IVI month × 12) × {perAd} applications ×{" "}
+          Maths: {nf.format(adsPerYear)} tech job postings a year (latest IVI month × 12) × {perAd} applications ×{" "}
           {refStats.paperMaths.pagesPerApplication} pages. A ream of {reamSheets} sheets is {reamCm} cm tall and a
           sheet weighs about {refStats.paperMaths.gramsPerSheet} g. Crank the slider if you believe in yourself.
         </p>
