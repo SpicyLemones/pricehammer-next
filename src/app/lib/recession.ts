@@ -26,6 +26,7 @@ export type IviData = {
 
 export type RedditMonthly = { sub: string; month: string; count: number };
 export type RedditWeekly = { weekStart: string; count: number };
+export type RedditDaily = { day: string; count: number };
 export type SeekPoint = { day: string; series: string; value: number };
 export type FunPost = {
   sub: string;
@@ -54,6 +55,8 @@ export type ReferenceStats = {
   medianCeoPay: RefStat;
   topCeoPay: RefStat;
   muskNetWorth: RefStat;
+  ictGradsPerYear: RefStat;
+  gradStillLookingShares: { values: number[]; label: string; source: string };
   sydneyHouse2006: RefStat;
   sydneyHouseNow: RefStat;
   applicationsPerAd: { default: number; min: number; max: number; label: string; source: string };
@@ -78,6 +81,7 @@ export type RecessionData = {
   indexLabel: string;
   redditMonthly: RedditMonthly[];
   redditWeekly: RedditWeekly[]; // AU subs combined, complete weeks only
+  redditDaily: RedditDaily[]; // AU subs combined, complete days, most recent first-partial trimmed
   seekSeries: SeekPoint[];
   seekLatest: Record<string, number>;
   funPosts: FunPost[];
@@ -170,6 +174,7 @@ export async function getRecessionData(): Promise<RecessionData> {
   let funPosts: FunPost[] = [];
 
   let redditWeekly: RedditWeekly[] = [];
+  let redditDaily: RedditDaily[] = [];
   if (await tableExists("recession_reddit_posts")) {
     redditMonthly = (await all(
       `SELECT sub, strftime('%Y-%m', created_utc, 'unixepoch') AS month, COUNT(*) AS count
@@ -194,6 +199,17 @@ export async function getRecessionData(): Promise<RecessionData> {
     currentWeekStart.setUTCDate(currentWeekStart.getUTCDate() - dow);
     const currentWeek = currentWeekStart.toISOString().slice(0, 10);
     redditWeekly = weeks.slice(1).filter((w) => w.weekStart < currentWeek);
+
+    const days = (await all(
+      `SELECT date(created_utc, 'unixepoch') AS day, COUNT(*) AS count
+       FROM recession_reddit_posts
+       WHERE sub IN (${placeholders})
+       GROUP BY day
+       ORDER BY day ASC`,
+      AU_SUBS,
+    )) as RedditDaily[];
+    const today = new Date().toISOString().slice(0, 10);
+    redditDaily = days.slice(1).filter((d) => d.day < today);
   }
   if (await tableExists("recession_series")) {
     seekSeries = (await all(
@@ -237,25 +253,25 @@ export async function getRecessionData(): Promise<RecessionData> {
   const thenVsNow: ThenVsNow[] = [
     {
       heading: "The peak, a lifetime ago",
-      then: `${monthLabel(peak.month)}: ${peak.value.toLocaleString("en-AU")} tech job ads`,
-      now: `${monthLabel(latest.month)}: ${latest.value.toLocaleString("en-AU")} tech job ads`,
-      punchline: `For every ad today there were ${ratioPeak} at the peak. Your timing is impeccable.`,
+      then: `${monthLabel(peak.month)}: ${peak.value.toLocaleString("en-AU")} tech job postings`,
+      now: `${monthLabel(latest.month)}: ${latest.value.toLocaleString("en-AU")} tech job postings`,
+      punchline: `For every posting today there were ${ratioPeak} at the peak. Your timing is impeccable.`,
       maths: `IVI trend, ICT Professionals, ${monthLabel(peak.month)} vs ${monthLabel(latest.month)}.`,
     },
     {
       heading: "Five years ago",
-      then: `${monthLabel(months[fiveYearsIdx])}: ${fiveYearsAgo.toLocaleString("en-AU")} ads a month`,
-      now: `${latest.value.toLocaleString("en-AU")} ads a month`,
+      then: `${monthLabel(months[fiveYearsIdx])}: ${fiveYearsAgo.toLocaleString("en-AU")} postings a month`,
+      now: `${latest.value.toLocaleString("en-AU")} postings a month`,
       punchline: ratio5y >= 1
-        ? `${ratio5y} ads then for every 1 now. The person who ghosted you in 2021 had ${ratio5y}x the options and still didn't reply.`
-        : `Somehow more ads now than then. Do not get used to this sentence.`,
+        ? `${ratio5y} postings then for every 1 now. The person who ghosted you in 2021 had ${ratio5y}x the options and still didn't reply.`
+        : `Somehow more postings now than then. Do not get used to this sentence.`,
       maths: `IVI trend, ICT Professionals, same month five years apart.`,
     },
     {
       heading: "Twenty years ago",
-      then: `2006 average: ${avg2006.toLocaleString("en-AU")} tech ads a month, applied to by fax and hope`,
+      then: `2006 average: ${avg2006.toLocaleString("en-AU")} tech job postings a month, applied to by fax and hope`,
       now: `${latest.value.toLocaleString("en-AU")} a month, applied to by you and four hundred rivals per listing`,
-      punchline: `A 2006 grad had ${ratio2006}x the ads and zero LinkedIn thought leaders. Different universe.`,
+      punchline: `A 2006 grad had ${ratio2006}x the postings and zero LinkedIn thought leaders. Different universe.`,
       maths: `IVI trend, ICT Professionals, 2006 calendar-year average vs ${monthLabel(latest.month)}.`,
     },
   ];
@@ -264,9 +280,9 @@ export async function getRecessionData(): Promise<RecessionData> {
     const share = Math.max(1, Math.round(allIct / Math.max(1, grad)));
     thenVsNow.push({
       heading: "The graduate hunger games",
-      then: `Tech ads on Seek right now: ${allIct.toLocaleString("en-AU")}`,
+      then: `Tech postings on Seek right now: ${allIct.toLocaleString("en-AU")}`,
       now: `Ones that mention "graduate": ${grad.toLocaleString("en-AU")}`,
-      punchline: `1 in ${share} tech ads wants a graduate. ${Number.isFinite(senior) ? `"Senior" appears in ${senior.toLocaleString("en-AU")} of them, so the entry-level path is: be senior.` : `The rest would like five years of experience with tools released last year.`}`,
+      punchline: `1 in ${share} tech postings wants a graduate. ${Number.isFinite(senior) ? `"Senior" appears in ${senior.toLocaleString("en-AU")} of them, so the entry-level path is: be senior.` : `The rest would like five years of experience with tools released last year.`}`,
       maths: `Live Seek counts, ICT classification, keyword slices, captured ${new Date().toLocaleDateString("en-AU")}.`,
     });
   }
@@ -285,6 +301,7 @@ export async function getRecessionData(): Promise<RecessionData> {
     indexLabel,
     redditMonthly,
     redditWeekly,
+    redditDaily,
     seekSeries,
     seekLatest,
     funPosts,

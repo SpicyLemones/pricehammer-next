@@ -47,6 +47,16 @@
     "label": "Sydney median house price, Jan 2026",
     "source": "CoreLogic / carto.au median series"
   },
+  "ictGradsPerYear": {
+    "value": 5000,
+    "label": "Domestic university ICT completions a year, before counting international completions which more than double it",
+    "source": "NSW ICT Industry Landscape Report / ACS Digital Pulse"
+  },
+  "gradStillLookingShares": {
+    "values": [1.0, 0.25, 0.12, 0.06, 0.03],
+    "label": "Share of each cohort still hunting: everyone at graduation, then a decaying tail",
+    "source": "First-year figure anchored to GOS 2024 (IT full-time employment fell 6.6 points; roughly one in four computing grads had no full-time job 4-6 months out). Later years are our labelled guess."
+  },
   "applicationsPerAd": {
     "default": 100,
     "min": 50,

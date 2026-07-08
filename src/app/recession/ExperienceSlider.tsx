@@ -69,7 +69,7 @@ export function ExperienceSlider({ seekLatest }: { seekLatest: Record<string, nu
           {nf.format(count)}
         </span>
         <span className="text-sm text-slate-500 dark:text-slate-400">
-          of {nf.format(all)} tech ads on Seek right now ({share}%)
+          of {nf.format(all)} tech job postings on Seek right now ({share}%)
         </span>
       </div>
       <div className="mt-3 h-2 w-full bg-slate-100 dark:bg-slate-800" aria-hidden>
@@ -78,7 +78,7 @@ export function ExperienceSlider({ seekLatest }: { seekLatest: Record<string, nu
       <p className="mt-3 font-serif text-sm italic text-slate-600 dark:text-slate-300">{bracket.verdict}</p>
       <p className="mt-2 text-[11px] text-slate-400">
         Live Seek keyword counts, ICT classification, national, last 31 days. Brackets are keyword slices, so they
-        overlap the way job ads overlap with reality: loosely.
+        overlap the way job postings overlap with reality: loosely.
       </p>
     </div>
   );

@@ -13,7 +13,7 @@ export const revalidate = 0;
 export const metadata: Metadata = {
   title: "The Recession Indicator",
   description:
-    "An almanac of the Australian tech job market. Job ads, graduate odds and the collective mood of the internet, charted for your morbid curiosity.",
+    "An almanac of the Australian tech job market. Job postings, graduate odds and the collective mood of the internet, charted for your morbid curiosity.",
   alternates: { canonical: "/recession" },
 };
 
@@ -29,12 +29,13 @@ export default async function RecessionPage() {
       <DoomTicker data={data} />
       <LongChart data={data} />
       <WhingeSection data={data} />
-      <GraduateCorner data={data} />
+      <CompetitionSection data={data} />
       <ThenVsNowSection data={data} />
       <PayLadderSection data={data} />
       <LandfillSection data={data} />
       <RaceSection data={data} />
       <ExperienceSection data={data} />
+      <BacklogSection data={data} />
       <FieldReports funPosts={data.funPosts} auSubs={data.auSubs} globalSubs={data.globalSubs} />
       <Methodology data={data} />
     </div>
@@ -85,7 +86,7 @@ function ReadingStrip({ data }: { data: RecessionData }) {
             {data.indexLabel}
           </div>
           <p className="mt-2 font-serif text-sm text-slate-600 dark:text-slate-300">
-            {nf.format(data.latest.value)} tech job ads a month, nationally. There were{" "}
+            {nf.format(data.latest.value)} tech job postings a month, nationally. There were{" "}
             {nf.format(data.peak.value)} at the peak.
           </p>
         </div>
@@ -118,7 +119,7 @@ function ReadingStrip({ data }: { data: RecessionData }) {
               {y.pct > 0 ? "+" : ""}{y.pct}%
             </div>
             <div className="mt-0.5 text-[10px] text-slate-400">
-              {monthLabel(y.month)}: {nf.format(y.value)} ads
+              {monthLabel(y.month)}: {nf.format(y.value)} postings
             </div>
           </div>
         ))}
@@ -160,11 +161,11 @@ function LongChart({ data }: { data: RecessionData }) {
     <section className="mt-10">
       <SectionHeading
         kicker="Exhibit A"
-        title="Twenty years of tech job ads"
-        blurb="Monthly online job ads for ICT professionals across Australia. The big mountain is 2008, the smaller one is the free-money era. You live in the valley."
+        title="Twenty years of tech job postings"
+        blurb="Monthly online job postings for ICT professionals across Australia. The big mountain is 2008, the smaller one is the free-money era. You live in the valley."
       />
       <div className="overflow-x-auto border border-slate-300 bg-white p-2 dark:border-slate-700 dark:bg-slate-900">
-        <svg viewBox={`0 0 ${W} ${H}`} className="min-w-[640px]" role="img" aria-label="ICT job ads per month, 2006 to now">
+        <svg viewBox={`0 0 ${W} ${H}`} className="min-w-[640px]" role="img" aria-label="ICT job postings per month, 2006 to now">
           {[0.25, 0.5, 0.75, 1].map((f) => (
             <g key={f}>
               <line x1={PAD.l} x2={W - PAD.r} y1={y(max * f)} y2={y(max * f)} className="stroke-slate-200 dark:stroke-slate-800" strokeWidth="1" />
@@ -210,40 +211,51 @@ function LongChart({ data }: { data: RecessionData }) {
 /* ---------------- whinge-o-meter ---------------- */
 
 function WhingeSection({ data }: { data: RecessionData }) {
-  const recent = data.redditWeekly.slice(-16);
-  const max = Math.max(1, ...recent.map((w) => w.count));
-  const weekLabel = (d: string) => `${Number(d.slice(8, 10))}/${Number(d.slice(5, 7))}`;
+  // weekly once there's enough history to look respectable; daily until then
+  const weeks = data.redditWeekly.slice(-16);
+  const useWeekly = weeks.length >= 6;
+  const bars = useWeekly
+    ? weeks.map((w) => ({ key: w.weekStart, count: w.count }))
+    : data.redditDaily.slice(-21).map((d) => ({ key: d.day, count: d.count }));
+  const max = Math.max(1, ...bars.map((b) => b.count));
+  const dateLabel = (d: string) => `${Number(d.slice(8, 10))}/${Number(d.slice(5, 7))}`;
 
   return (
     <section className="mt-12">
       <SectionHeading
         kicker="Exhibit B"
         title="The whinge-o-meter"
-        blurb="Posts per week on Australian job subreddits (r/ausjobs, r/auscorp). Every bar is people asking where the jobs went."
+        blurb={`Posts per ${useWeekly ? "week" : "day"} on Australian job subreddits (r/ausjobs, r/auscorp). Every bar is people asking where the jobs went.`}
       />
-      {recent.length >= 2 ? (
+      {bars.length >= 2 ? (
         <>
           <div className="border border-slate-300 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
             <div className="flex items-end gap-1" style={{ height: 160 }}>
-              {recent.map((w) => (
-                <div key={w.weekStart} className="flex flex-1 flex-col items-center justify-end gap-1 self-stretch">
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400">{w.count}</span>
+              {bars.map((b, i) => (
+                <div key={b.key} className="flex flex-1 flex-col items-center justify-end gap-1 self-stretch">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">{b.count}</span>
                   <div
                     className="w-full bg-amber-500/80 dark:bg-amber-400/70"
-                    style={{ height: `${Math.max(3, (w.count / max) * 120)}px` }}
-                    title={`week of ${w.weekStart}: ${w.count} posts`}
+                    style={{ height: `${Math.max(3, (b.count / max) * 120)}px` }}
+                    title={`${useWeekly ? "week of " : ""}${b.key}: ${b.count} posts`}
                   />
-                  <span className="text-[9px] text-slate-400">{weekLabel(w.weekStart)}</span>
+                  <span className="text-[9px] text-slate-400">
+                    {useWeekly || bars.length <= 10 || i % 2 === 0 ? dateLabel(b.key) : ""}
+                  </span>
                 </div>
               ))}
             </div>
-            <p className="mt-2 text-right text-[10px] text-slate-400">complete weeks only, Mondays marked</p>
+            <p className="mt-2 text-right text-[10px] text-slate-400">
+              {useWeekly
+                ? "complete weeks only, Mondays marked"
+                : "complete days only; switches to weekly once enough history piles up"}
+            </p>
           </div>
           {data.adsPerWhinge && (
             <p className="mt-3 border-l-2 border-amber-500 pl-3 font-serif text-sm text-slate-600 dark:text-slate-300">
-              Current exchange rate: <strong>{data.adsPerWhinge.ratio} fresh Seek tech ads per r/ausjobs post</strong> over
-              the last 30 days ({nf.format(data.adsPerWhinge.ads)} ads, {nf.format(data.adsPerWhinge.whinges)} posts).
-              When this number reaches 1 we will simply assign each poster their own ad.
+              Current exchange rate: <strong>{data.adsPerWhinge.ratio} fresh Seek tech job postings per r/ausjobs post</strong> over
+              the last 30 days ({nf.format(data.adsPerWhinge.ads)} postings, {nf.format(data.adsPerWhinge.whinges)} posts).
+              When this number reaches 1 we will simply assign each poster their own posting.
             </p>
           )}
         </>
@@ -257,36 +269,51 @@ function WhingeSection({ data }: { data: RecessionData }) {
   );
 }
 
-/* ---------------- graduate corner ---------------- */
+/* ---------------- your competition ---------------- */
 
-function GraduateCorner({ data }: { data: RecessionData }) {
+function CompetitionSection({ data }: { data: RecessionData }) {
   const s = data.seekLatest;
+  const grads = data.refStats.ictGradsPerYear.value;
+  const gradPostings = s["seek-ict-graduate"];
+  const gradsPerPosting = Number.isFinite(gradPostings) && gradPostings > 0
+    ? Math.round(grads / 12 / gradPostings)
+    : null;
+
   const cells = [
-    { label: "Tech ads on Seek (last 31 days)", value: s["seek-ict-all"] },
+    { label: "New domestic ICT grads minted a year", value: grads },
+    { label: "Tech job postings a month (IVI)", value: data.latest.value },
+    { label: "Tech postings on Seek (last 31 days)", value: s["seek-ict-all"] },
     { label: "…mentioning “graduate”", value: s["seek-ict-graduate"] },
     { label: "…mentioning “junior”", value: s["seek-ict-junior"] },
-    { label: "…mentioning “senior”", value: s["seek-ict-senior"] },
     { label: "…mentioning “intern”", value: s["seek-ict-intern"] },
-    { label: "“Graduate” ads, every industry", value: s["seek-all-graduate"] },
   ].filter((c) => Number.isFinite(c.value));
-
-  if (!cells.length) return null;
 
   return (
     <section className="mt-12">
       <SectionHeading
         kicker="Exhibit C"
-        title="The graduate corner"
-        blurb="Bring a helmet. Live counts from Seek, national, ICT classification, refreshed daily."
+        title="Your competition"
+        blurb="Australia mints about five thousand domestic ICT graduates every year, before counting international completions, which more than double it. Here is what they are all walking into."
       />
       <div className="grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-3">
         {cells.map((c) => (
           <div key={c.label} className="bg-white p-4 dark:bg-slate-900">
-            <div className="font-display text-4xl leading-none">{nf.format(c.value)}</div>
+            <div className="font-display text-4xl leading-none">{nf.format(c.value as number)}</div>
             <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{c.label}</div>
           </div>
         ))}
       </div>
+      {gradsPerPosting !== null && (
+        <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
+          A month&apos;s worth of fresh domestic grads ({nf.format(Math.round(grads / 12))}) versus{" "}
+          {nf.format(gradPostings)} postings that say &ldquo;graduate&rdquo;: roughly{" "}
+          <strong>{nf.format(gradsPerPosting)} new grads per graduate posting</strong>, and that is before
+          the international cohort or last year&apos;s leftovers join the queue.
+        </p>
+      )}
+      <p className="mt-2 text-[11px] text-slate-400">
+        {data.refStats.ictGradsPerYear.source}. Seek counts are live, national, ICT classification.
+      </p>
     </section>
   );
 }
@@ -322,7 +349,43 @@ function ThenVsNowSection({ data }: { data: RecessionData }) {
           </article>
         ))}
       </div>
+      <YearlyAlmanac data={data} />
     </section>
+  );
+}
+
+// one line of annotated history per year, newest first
+const YEAR_QUIPS: Record<number, (v: { value: number; pct: number }) => string> = {
+  1: (v) => `${v.pct}% in a single year. You were told it had bottomed out.`,
+  2: () => `The bottom was also called this year. It was not the bottom.`,
+  3: () => `Layoffs everywhere, and still nearly double today's postings. The bad old days, allegedly.`,
+  4: () => `Free-money era. Juniors were fielding counter-offers. Counter-offers!`,
+  5: (v) => `${nf.format(v.value)} a month and everyone still complained. Nobody knew.`,
+};
+
+function YearlyAlmanac({ data }: { data: RecessionData }) {
+  return (
+    <div className="mt-4 border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
+      <div className="border-b border-slate-200 px-4 py-2 text-[11px] uppercase tracking-widest text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        The last five years, annotated
+      </div>
+      <ol className="divide-y divide-slate-100 dark:divide-slate-800">
+        {data.yearly.map((y) => (
+          <li key={y.yearsAgo} className="flex flex-wrap items-baseline gap-x-3 px-4 py-2.5">
+            <span className="font-display text-xl leading-none">{monthLabel(y.month)}</span>
+            <span className="font-mono text-xs tabular-nums text-slate-500 dark:text-slate-400">
+              {nf.format(y.value)} postings/mo
+            </span>
+            <span className={`font-mono text-xs tabular-nums ${y.pct < 0 ? "text-red-700 dark:text-red-400" : "text-emerald-700 dark:text-emerald-400"}`}>
+              {y.pct > 0 ? "+" : ""}{y.pct}% vs now
+            </span>
+            <span className="font-serif text-sm italic text-slate-600 dark:text-slate-300">
+              {YEAR_QUIPS[y.yearsAgo]?.(y) ?? ""}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }
 
@@ -336,7 +399,7 @@ function DoomTicker({ data }: { data: RecessionData }) {
           {nf.format(data.daysSincePeak)}
         </span>
         <span className="ml-2 text-xs text-slate-500 dark:text-slate-400">
-          days since tech job ads peaked ({monthLabel(data.peak.month)})
+          days since tech job postings peaked ({monthLabel(data.peak.month)})
         </span>
       </div>
       <div className="bg-white px-5 py-3 dark:bg-slate-900">
@@ -443,9 +506,71 @@ function ExperienceSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit H"
         title="The experience paradox"
-        blurb="Drag the slider to your years of experience and see how many of the current tech ads are actually aimed at you."
+        blurb="Drag the slider to your years of experience and see how many of the current tech job postings are actually aimed at you."
       />
       <ExperienceSlider seekLatest={data.seekLatest} />
+    </section>
+  );
+}
+
+/* ---------------- the backlog ---------------- */
+
+function BacklogSection({ data }: { data: RecessionData }) {
+  const grads = data.refStats.ictGradsPerYear.value;
+  const shares = data.refStats.gradStillLookingShares.values;
+  const currentYear = new Date().getFullYear();
+
+  const cohorts = shares.map((share, i) => ({
+    year: currentYear - i,
+    count: Math.round(grads * share),
+    share,
+  }));
+  const pool = cohorts.reduce((a, c) => a + c.count, 0);
+  const maxCount = cohorts[0].count;
+
+  const gradPostings = data.seekLatest["seek-ict-graduate"];
+  const perPosting = Number.isFinite(gradPostings) && gradPostings > 0 ? Math.round(pool / gradPostings) : null;
+
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker="Exhibit I"
+        title="The backlog"
+        blurb="Every class of graduates competes with the classes before them who never got picked up. The queue does not reset each year. It compounds."
+      />
+      <div className="border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+        <div className="space-y-3">
+          {cohorts.map((c, i) => (
+            <div key={c.year}>
+              <div className="flex flex-wrap items-baseline gap-x-3">
+                <span className="font-display text-xl leading-none">Class of {c.year}</span>
+                <span className="font-mono text-xs tabular-nums text-red-700 dark:text-red-400">
+                  {nf.format(c.count)} still hunting
+                </span>
+                <span className="text-[11px] text-slate-400">
+                  {i === 0 ? "all of them, they just got here" : `${Math.round(c.share * 100)}% of the cohort`}
+                </span>
+              </div>
+              <div className="mt-1 h-4 w-full bg-slate-100 dark:bg-slate-800">
+                <div
+                  className="h-full bg-red-700/80 dark:bg-red-500/80"
+                  style={{ width: `${(c.count / maxCount) * 100}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 font-serif text-sm italic text-slate-600 dark:text-slate-300">
+          {nf.format(pool)} domestic graduates in the hunger pool at once
+          {perPosting !== null
+            ? `, chasing ${nf.format(gradPostings)} postings that say "graduate". That is ${nf.format(perPosting)} of you per posting. Wear something memorable.`
+            : ". International completions would more than double this, but we are trying to keep morale above zero."}
+        </p>
+        <p className="mt-2 text-[11px] text-slate-400">
+          Cohort size: {data.refStats.ictGradsPerYear.source}. Still-hunting shares:{" "}
+          {data.refStats.gradStillLookingShares.source}
+        </p>
+      </div>
     </section>
   );
 }
@@ -468,7 +593,7 @@ function Methodology({ data }: { data: RecessionData }) {
       <h2 className="font-display text-xl tracking-wide text-slate-700 dark:text-slate-200">Is this a larp?</h2>
       <ul className="mt-2 list-disc space-y-1 pl-5">
         <li>
-          Historical job ads: {data.ivi.source}, retrieved {data.ivi.retrieved} from{" "}
+          Historical job postings: {data.ivi.source}, retrieved {data.ivi.retrieved} from{" "}
           <a className="underline" href={data.ivi.sourceUrl} rel="noreferrer" target="_blank">
             jobsandskills.gov.au
           </a>{" "}
@@ -476,11 +601,15 @@ function Methodology({ data }: { data: RecessionData }) {
         </li>
         <li>
           Live job counts: Seek search totals for the ICT classification, national, ads posted in the last 31 days.
-          Keyword slices count ads matching that keyword and overlap freely. Snapshotted daily.
+          Keyword slices count postings matching that keyword and overlap freely. Snapshotted daily.
         </li>
         <li>
           Whinge data: post counts from public subreddit feeds. Reddit only exposes recent history, so the meter
           deepens the longer we collect. Post frequency measures conversation, not unemployment.
+        </li>
+        <li>
+          Graduate competition: {data.refStats.ictGradsPerYear.source}. The backlog model&apos;s still-hunting
+          shares are an illustrative decay anchored to the GOS 2024 result; the working is shown on the exhibit.
         </li>
         <li>
           Pay figures: {data.refStats.medianCeoPay.source}; {data.refStats.awote.source};{" "}
