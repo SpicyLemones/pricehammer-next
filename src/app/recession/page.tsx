@@ -63,47 +63,67 @@ function Masthead({ data }: { data: RecessionData }) {
 /* ---------------- headline reading ---------------- */
 
 function ReadingStrip({ data }: { data: RecessionData }) {
-  const items = [
+  const bigItems = [
     {
       label: `vs the ${monthLabel(data.peak.month)} peak`,
       value: `${data.vsPeakPct}%`,
     },
-    { label: "vs five years ago", value: `${data.vsFiveYearsPct}%` },
     { label: "vs 2006, the fax era", value: `${data.vs2006Pct}%` },
   ];
   return (
-    <section className="grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-[2fr_1fr_1fr_1fr]">
-      <div className="bg-white p-5 dark:bg-slate-900">
-        <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
-          Current reading
-        </div>
-        <div
-          className={`font-display mt-1 text-6xl leading-none text-red-700 dark:text-red-500 ${
-            data.indexLabel === "Cooked" ? "reading-cooked" : ""
-          }`}
-        >
-          {data.indexLabel}
-        </div>
-        <p className="mt-2 font-serif text-sm text-slate-600 dark:text-slate-300">
-          {nf.format(data.latest.value)} tech job ads a month, nationally. There were{" "}
-          {nf.format(data.peak.value)} at the peak.
-        </p>
-      </div>
-      {items.map((it) => (
-        <div key={it.label} className="flex flex-col justify-between bg-white p-5 dark:bg-slate-900">
+    <>
+      <section className="grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-[2fr_1fr_1fr]">
+        <div className="bg-white p-5 dark:bg-slate-900">
           <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
-            {it.label}
+            Current reading
           </div>
           <div
-            className={`font-display text-4xl leading-none ${
-              it.value.startsWith("-") ? "text-red-700 dark:text-red-400" : "text-emerald-700 dark:text-emerald-400"
+            className={`font-display mt-1 text-6xl leading-none text-red-700 dark:text-red-500 ${
+              data.indexLabel === "Cooked" ? "reading-cooked" : ""
             }`}
           >
-            {it.value}
+            {data.indexLabel}
           </div>
+          <p className="mt-2 font-serif text-sm text-slate-600 dark:text-slate-300">
+            {nf.format(data.latest.value)} tech job ads a month, nationally. There were{" "}
+            {nf.format(data.peak.value)} at the peak.
+          </p>
         </div>
-      ))}
-    </section>
+        {bigItems.map((it) => (
+          <div key={it.label} className="flex flex-col justify-between bg-white p-5 dark:bg-slate-900">
+            <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
+              {it.label}
+            </div>
+            <div
+              className={`font-display text-4xl leading-none ${
+                it.value.startsWith("-") ? "text-red-700 dark:text-red-400" : "text-emerald-700 dark:text-emerald-400"
+              }`}
+            >
+              {it.value}
+            </div>
+          </div>
+        ))}
+      </section>
+      <section className="grid grid-cols-2 gap-px border border-t-0 border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-5">
+        {data.yearly.map((y) => (
+          <div key={y.yearsAgo} className="bg-white px-4 py-3 dark:bg-slate-900">
+            <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
+              vs {y.yearsAgo} year{y.yearsAgo > 1 ? "s" : ""} ago
+            </div>
+            <div
+              className={`font-display text-3xl leading-none ${
+                y.pct < 0 ? "text-red-700 dark:text-red-400" : "text-emerald-700 dark:text-emerald-400"
+              }`}
+            >
+              {y.pct > 0 ? "+" : ""}{y.pct}%
+            </div>
+            <div className="mt-0.5 text-[10px] text-slate-400">
+              {monthLabel(y.month)}: {nf.format(y.value)} ads
+            </div>
+          </div>
+        ))}
+      </section>
+    </>
   );
 }
 
@@ -339,7 +359,7 @@ function PayLadderSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit E"
         title="The pay ladder"
-        blurb="Your salary, the Prime Minister's, and an ASX CEO's, drawn to the same scale. There is only one way to appreciate the difference and it is with your scroll wheel."
+        blurb="From your first salary down to the richest man on earth, drawn to one scale. There is only one way to appreciate the difference and it is with your scroll wheel."
       />
       <MoneyLadder refStats={data.refStats} />
     </section>
@@ -354,14 +374,14 @@ function LandfillSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit F"
         title="The application landfill"
-        blurb="If every tech application this year were printed out and thrown in the bin where the ATS filter sent it anyway."
+        blurb="Nobody prints applications. Imagine, briefly, that we did."
       />
       <Landfill refStats={data.refStats} adsPerYear={data.adsPerYear} />
     </section>
   );
 }
 
-/* ---------------- the race you already lost ---------------- */
+/* ---------------- the race to home ---------------- */
 
 function RaceSection({ data }: { data: RecessionData }) {
   const r = data.refStats;
@@ -377,7 +397,7 @@ function RaceSection({ data }: { data: RecessionData }) {
     <section className="mt-12">
       <SectionHeading
         kicker="Exhibit G"
-        title="The race you already lost"
+        title="The race to home"
         blurb="Years of gross graduate salary to buy the median Sydney house. Every cent, no food, no rent, no tax. Speedrun rules."
       />
       <div className="border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">

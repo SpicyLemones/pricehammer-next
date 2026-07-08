@@ -1,14 +1,34 @@
 "use client";
 
-// The application landfill: if every ignored tech application were printed,
-// how much paper is that a year? A tipped bin, a mound of crumpled sheets,
-// and a live counter. The applications-per-ad assumption is a slider because
-// Seek won't publish the real number, only that it's at a record high.
+// The application landfill: if every tech application this year were printed
+// out and stacked, how high does the pile go? Measured against an escalating
+// ladder of objects, from a baby to the ISS. The applications-per-ad
+// assumption is a slider because Seek won't publish the real number, only
+// that it's at a record high.
 
 import { useEffect, useState } from "react";
 import type { ReferenceStats } from "@/app/lib/recession";
 
 const nf = new Intl.NumberFormat("en-AU");
+
+type Landmark = { name: string; emoji: string; metres: number };
+
+const LANDMARKS: Landmark[] = [
+  { name: "A baby", emoji: "👶", metres: 0.5 },
+  { name: "An adult human", emoji: "🧍", metres: 1.7 },
+  { name: "A giraffe", emoji: "🦒", metres: 5.5 },
+  { name: "A blue whale, on its tail", emoji: "🐋", metres: 30 },
+  { name: "The Sydney Opera House", emoji: "🎭", metres: 65 },
+  { name: "Big Ben", emoji: "🕰️", metres: 96 },
+  { name: "Eureka Tower", emoji: "🏙️", metres: 297 },
+  { name: "The Eiffel Tower", emoji: "🗼", metres: 330 },
+  { name: "Burj Khalifa", emoji: "🌆", metres: 828 },
+  { name: "Mt Kosciuszko", emoji: "⛰️", metres: 2228 },
+  { name: "Mt Everest", emoji: "🏔️", metres: 8849 },
+  { name: "Cruising altitude", emoji: "✈️", metres: 11000 },
+  { name: "Edge of space (Kármán line)", emoji: "🌌", metres: 100000 },
+  { name: "The ISS", emoji: "🛰️", metres: 408000 },
+];
 
 export function Landfill({
   refStats,
@@ -25,7 +45,6 @@ export function Landfill({
   const { sheets: reamSheets, cm: reamCm } = refStats.paperMaths.sheetsPerReamCm;
   const stackMetres = Math.round((sheets / reamSheets) * (reamCm / 100));
   const tonnes = Math.round((sheets * refStats.paperMaths.gramsPerSheet) / 1_000_000);
-  const eurekaTowers = Math.round((stackMetres / 297) * 10) / 10; // Eureka Tower, 297 m
 
   // live counter: applications sent so far this calendar year at that rate
   useEffect(() => {
@@ -37,54 +56,49 @@ export function Landfill({
     return () => clearInterval(id);
   }, [applicationsPerYear]);
 
-  // the mound: one paper ball per ~150k sheets, deterministic layout
-  const balls = Math.max(6, Math.min(60, Math.round(sheets / 150_000)));
-  const mound: { left: number; bottom: number; size: number; rot: number }[] = [];
-  for (let i = 0; i < balls; i++) {
-    const row = Math.floor(i / 12);
-    const inRow = i % 12;
-    mound.push({
-      left: 8 + inRow * 7.5 + (row % 2) * 3.5 + ((i * 37) % 5) - 2,
-      bottom: row * 14 + ((i * 13) % 6),
-      size: 16 + ((i * 29) % 10),
-      rot: (i * 47) % 360,
-    });
-  }
+  const cleared = LANDMARKS.filter((l) => l.metres <= stackMetres);
+  const notCleared = LANDMARKS.filter((l) => l.metres > stackMetres);
+  const bestCleared = cleared[cleared.length - 1];
 
   return (
     <div className="border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
-      <div className="grid gap-px bg-slate-300 dark:bg-slate-700 sm:grid-cols-3">
+      <div className="border-b border-slate-200 px-4 py-4 dark:border-slate-700">
+        <p className="font-serif text-lg text-slate-800 dark:text-slate-100">
+          If every tech application this year were printed out and stacked, the pile would reach{" "}
+          <strong className="text-red-700 dark:text-red-400">{nf.format(stackMetres)} metres</strong> high
+          {bestCleared ? (
+            <> — {(Math.round((stackMetres / bestCleared.metres) * 10) / 10).toLocaleString("en-AU")}x {bestCleared.name.toLowerCase()} {bestCleared.emoji}</>
+          ) : null}
+          .
+        </p>
+      </div>
+
+      <div className="grid gap-px bg-slate-300 dark:bg-slate-700 sm:grid-cols-2">
         <Tile big={nf.format(ticker)} small="applications fired into the void this year, and counting" />
-        <Tile big={`${nf.format(stackMetres)} m`} small={`the printed stack, about ${eurekaTowers} Eureka Towers`} />
         <Tile big={`${nf.format(tonnes)} t`} small="of A4, if anyone had hit print" />
       </div>
 
-      <div className="relative h-44 overflow-hidden border-t border-slate-200 dark:border-slate-700">
-        {/* tipped bin */}
-        <div className="absolute bottom-3 left-2 origin-bottom-left -rotate-[65deg] text-5xl" aria-hidden>
-          🗑️
-        </div>
-        {/* the mound */}
-        <div className="absolute bottom-0 left-16 right-2 h-full" aria-hidden>
-          {mound.map((b, i) => (
-            <span
-              key={i}
-              className="landfill-ball absolute select-none text-slate-400 dark:text-slate-500"
-              style={{
-                left: `${b.left}%`,
-                bottom: b.bottom,
-                fontSize: b.size,
-                transform: `rotate(${b.rot}deg)`,
-                animationDelay: `${(i % 10) * 0.18}s`,
-              }}
-            >
-              📄
-            </span>
+      {/* the ladder of things the stack has conquered */}
+      <div className="border-t border-slate-200 dark:border-slate-700">
+        <ol className="divide-y divide-slate-100 dark:divide-slate-800">
+          {[...notCleared].reverse().map((l) => (
+            <LandmarkRow key={l.name} l={l} stackMetres={stackMetres} cleared={false} />
           ))}
-        </div>
-        <div className="absolute right-2 top-2 max-w-[55%] text-right text-[11px] text-slate-400">
-          each sheet in the pile is roughly 150,000 real ones. the bin did not survive
-        </div>
+          <li className="flex items-center gap-3 bg-red-700/10 px-4 py-2.5 dark:bg-red-500/10">
+            <span className="text-2xl" aria-hidden>📄</span>
+            <div className="flex-1">
+              <span className="font-display text-lg tracking-wide text-red-700 dark:text-red-400">
+                YOUR STACK — {nf.format(stackMetres)} m
+              </span>
+              <span className="ml-2 text-[11px] text-slate-500 dark:text-slate-400">
+                everything below this line has been out-piled
+              </span>
+            </div>
+          </li>
+          {[...cleared].reverse().map((l) => (
+            <LandmarkRow key={l.name} l={l} stackMetres={stackMetres} cleared />
+          ))}
+        </ol>
       </div>
 
       <div className="border-t border-slate-200 px-4 py-3 dark:border-slate-700">
@@ -105,12 +119,33 @@ export function Landfill({
         </label>
         <p className="mt-2 text-[11px] text-slate-400">
           Maths: {nf.format(adsPerYear)} tech ads a year (latest IVI month × 12) × {perAd} applications ×{" "}
-          {refStats.paperMaths.pagesPerApplication} pages. A ream of {refStats.paperMaths.sheetsPerReamCm.sheets}{" "}
-          sheets is {refStats.paperMaths.sheetsPerReamCm.cm} cm tall and a sheet weighs about{" "}
-          {refStats.paperMaths.gramsPerSheet} g. Nobody prints applications, which is lucky.
+          {refStats.paperMaths.pagesPerApplication} pages. A ream of {reamSheets} sheets is {reamCm} cm tall and a
+          sheet weighs about {refStats.paperMaths.gramsPerSheet} g. Crank the slider if you believe in yourself.
         </p>
       </div>
     </div>
+  );
+}
+
+function LandmarkRow({ l, stackMetres, cleared }: { l: Landmark; stackMetres: number; cleared: boolean }) {
+  const times = stackMetres / l.metres;
+  return (
+    <li
+      className={`flex items-center gap-3 px-4 py-2 ${
+        cleared ? "" : "opacity-45"
+      }`}
+    >
+      <span className="text-2xl" aria-hidden>{l.emoji}</span>
+      <div className="flex flex-1 flex-wrap items-baseline gap-x-3">
+        <span className="text-sm text-slate-800 dark:text-slate-100">{l.name}</span>
+        <span className="font-mono text-xs tabular-nums text-slate-400">{nf.format(l.metres)} m</span>
+      </div>
+      <span className="text-[11px] text-slate-500 dark:text-slate-400">
+        {cleared
+          ? `cleared ${times >= 2 ? `${Math.floor(times).toLocaleString("en-AU")}x over` : "✓"}`
+          : `${Math.max(1, Math.round(1 / times)).toLocaleString("en-AU")}x more paper needed`}
+      </span>
+    </li>
   );
 }
 

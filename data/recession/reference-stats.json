@@ -31,6 +31,12 @@
     "label": "Highest realised pay in the ACSI FY24 sample",
     "source": "ACSI CEO Pay in ASX200 Companies, June 2025"
   },
+  "muskNetWorth": {
+    "value": 1000000000000,
+    "name": "Elon Musk",
+    "label": "Richest person on earth, net worth (not salary; no salary gets you here)",
+    "source": "Forbes / Bloomberg Billionaires Index, July 2026, ~US$1 trillion"
+  },
   "sydneyHouse2006": {
     "value": 470000,
     "label": "Sydney median house price, mid-2000s",
