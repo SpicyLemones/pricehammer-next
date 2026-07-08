@@ -53,6 +53,7 @@ export type ReferenceStats = {
   pmSalary: RefStat;
   medianCeoPay: RefStat;
   topCeoPay: RefStat;
+  muskNetWorth: RefStat;
   sydneyHouse2006: RefStat;
   sydneyHouseNow: RefStat;
   applicationsPerAd: { default: number; min: number; max: number; label: string; source: string };
@@ -73,6 +74,7 @@ export type RecessionData = {
   vsPeakPct: number; // negative = below peak
   vsFiveYearsPct: number;
   vs2006Pct: number;
+  yearly: { yearsAgo: number; month: string; value: number; pct: number }[];
   indexLabel: string;
   redditMonthly: RedditMonthly[];
   redditWeekly: RedditWeekly[]; // AU subs combined, complete weeks only
@@ -143,6 +145,15 @@ export async function getRecessionData(): Promise<RecessionData> {
   const fiveYearsIdx = Math.max(0, latestIdx - 60);
   const vsPeakPct = Math.round(((latest.value - peak.value) / peak.value) * 100);
   const vsFiveYearsPct = Math.round(((latest.value - ict[fiveYearsIdx]) / ict[fiveYearsIdx]) * 100);
+  const yearly = [1, 2, 3, 4, 5].map((yearsAgo) => {
+    const idx = Math.max(0, latestIdx - yearsAgo * 12);
+    return {
+      yearsAgo,
+      month: months[idx],
+      value: ict[idx],
+      pct: Math.round(((latest.value - ict[idx]) / ict[idx]) * 100),
+    };
+  });
   const avg2006 = Math.round(ict.slice(0, 12).reduce((a, b) => a + b, 0) / 12);
   const vs2006Pct = Math.round(((latest.value - avg2006) / avg2006) * 100);
 
@@ -270,6 +281,7 @@ export async function getRecessionData(): Promise<RecessionData> {
     vsPeakPct,
     vsFiveYearsPct,
     vs2006Pct,
+    yearly,
     indexLabel,
     redditMonthly,
     redditWeekly,

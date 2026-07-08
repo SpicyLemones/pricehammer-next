@@ -39,7 +39,14 @@ export function ExperienceSlider({ seekLatest }: { seekLatest: Record<string, nu
   const count = counts[bracket.countKey];
   const share = all > 0 ? Math.round((count / all) * 100) : 0;
 
-  if (!all) return null;
+  if (!all) {
+    return (
+      <p className="border border-dashed border-slate-300 p-4 text-sm text-slate-500 dark:border-slate-700">
+        The live Seek counts have not been loaded on this deployment yet. The slider wakes up when the data
+        collector next delivers. Much like the job market, check back later.
+      </p>
+    );
+  }
 
   return (
     <div className="border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
