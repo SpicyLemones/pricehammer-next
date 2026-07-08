@@ -381,7 +381,7 @@ function LandfillSection({ data }: { data: RecessionData }) {
   );
 }
 
-/* ---------------- the race you already lost ---------------- */
+/* ---------------- the race to home ---------------- */
 
 function RaceSection({ data }: { data: RecessionData }) {
   const r = data.refStats;
@@ -397,7 +397,7 @@ function RaceSection({ data }: { data: RecessionData }) {
     <section className="mt-12">
       <SectionHeading
         kicker="Exhibit G"
-        title="The race you already lost"
+        title="The race to home"
         blurb="Years of gross graduate salary to buy the median Sydney house. Every cent, no food, no rent, no tax. Speedrun rules."
       />
       <div className="border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
