@@ -110,7 +110,7 @@ export function Landfill({
             type="range"
             min={refStats.applicationsPerAd.min}
             max={refStats.applicationsPerAd.max}
-            step={10}
+            step={50}
             value={perAd}
             onChange={(e) => setPerAd(Number(e.target.value))}
             className="h-1 w-48 accent-red-700 dark:accent-red-500"

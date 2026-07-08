@@ -50,7 +50,7 @@
   "applicationsPerAd": {
     "default": 100,
     "min": 50,
-    "max": 300,
+    "max": 5000,
     "label": "Applications per job ad (adjustable assumption)",
     "source": "SEEK Employment Report May 2025: applications per ad at record high, up 16.4% year on year; absolute counts unpublished, so pick your own poison"
   },
