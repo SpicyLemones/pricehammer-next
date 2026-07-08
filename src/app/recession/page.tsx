@@ -5,6 +5,7 @@ import { FieldReports } from "./FieldReports";
 import { MoneyLadder } from "./MoneyLadder";
 import { Landfill } from "./Landfill";
 import { ExperienceSlider } from "./ExperienceSlider";
+import { ThemeToggle } from "@/app/components/ThemeToggle";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -47,9 +48,12 @@ export default async function RecessionPage() {
 function Masthead({ data }: { data: RecessionData }) {
   return (
     <header className="border-b-4 border-double border-slate-900 pb-4 pt-8 dark:border-slate-200">
-      <div className="flex items-baseline justify-between text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
+      <div className="flex items-center justify-between gap-3 text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
         <span>Tech jobs edition</span>
-        <span>Vol. 1 · {monthLabel(data.latest.month)}</span>
+        <div className="flex items-center gap-3">
+          <span>Vol. 1 · {monthLabel(data.latest.month)}</span>
+          <ThemeToggle />
+        </div>
       </div>
       <h1 className="font-display mt-1 text-5xl leading-none tracking-wide sm:text-7xl">
         The Recession Indicator
@@ -233,13 +237,13 @@ function WhingeSection({ data }: { data: RecessionData }) {
             <div className="flex items-end gap-1" style={{ height: 160 }}>
               {bars.map((b, i) => (
                 <div key={b.key} className="flex flex-1 flex-col items-center justify-end gap-1 self-stretch">
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400">{b.count}</span>
+                  <span className="h-3.5 text-[10px] leading-none text-slate-500 dark:text-slate-400">{b.count}</span>
                   <div
                     className="w-full bg-amber-500/80 dark:bg-amber-400/70"
                     style={{ height: `${Math.max(3, (b.count / max) * 120)}px` }}
                     title={`${useWeekly ? "week of " : ""}${b.key}: ${b.count} posts`}
                   />
-                  <span className="text-[9px] text-slate-400">
+                  <span className="h-3 text-[9px] leading-none text-slate-400">
                     {useWeekly || bars.length <= 10 || i % 2 === 0 ? dateLabel(b.key) : ""}
                   </span>
                 </div>
@@ -271,21 +275,39 @@ function WhingeSection({ data }: { data: RecessionData }) {
 
 /* ---------------- your competition ---------------- */
 
+// cohort model shared by Exhibits C and I: each class of the last five
+// years, and how many of them are estimated to still be hunting
+function computeGradBacklog(data: RecessionData) {
+  const grads = data.refStats.ictGradsPerYear.value;
+  const shares = data.refStats.gradStillLookingShares.values;
+  const currentYear = new Date().getFullYear();
+  const cohorts = shares.map((share, i) => ({
+    year: currentYear - i,
+    count: Math.round(grads * share),
+    share,
+  }));
+  const pool = cohorts.reduce((a, c) => a + c.count, 0);
+  return { grads, cohorts, pool };
+}
+
 function CompetitionSection({ data }: { data: RecessionData }) {
   const s = data.seekLatest;
-  const grads = data.refStats.ictGradsPerYear.value;
+  const { grads, pool } = computeGradBacklog(data);
   const gradPostings = s["seek-ict-graduate"];
   const gradsPerPosting = Number.isFinite(gradPostings) && gradPostings > 0
     ? Math.round(grads / 12 / gradPostings)
     : null;
+  const queuePerPosting = Number.isFinite(gradPostings) && gradPostings > 0
+    ? Math.round(pool / gradPostings)
+    : null;
 
   const cells = [
     { label: "New domestic ICT grads minted a year", value: grads },
+    { label: "Grads from the last five classes estimated still hunting", value: pool },
     { label: "Tech job postings a month (IVI)", value: data.latest.value },
     { label: "Tech postings on Seek (last 31 days)", value: s["seek-ict-all"] },
     { label: "…mentioning “graduate”", value: s["seek-ict-graduate"] },
     { label: "…mentioning “junior”", value: s["seek-ict-junior"] },
-    { label: "…mentioning “intern”", value: s["seek-ict-intern"] },
   ].filter((c) => Number.isFinite(c.value));
 
   return (
@@ -293,7 +315,7 @@ function CompetitionSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit C"
         title="Your competition"
-        blurb="Australia mints about five thousand domestic ICT graduates every year, before counting international completions, which more than double it. Here is what they are all walking into."
+        blurb="Australia mints about five thousand domestic ICT graduates every year, before counting international completions, which more than double it. The ones who don't get picked up don't vanish. They queue."
       />
       <div className="grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-3">
         {cells.map((c) => (
@@ -303,16 +325,20 @@ function CompetitionSection({ data }: { data: RecessionData }) {
           </div>
         ))}
       </div>
-      {gradsPerPosting !== null && (
-        <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
-          A month&apos;s worth of fresh domestic grads ({nf.format(Math.round(grads / 12))}) versus{" "}
-          {nf.format(gradPostings)} postings that say &ldquo;graduate&rdquo;: roughly{" "}
-          <strong>{nf.format(gradsPerPosting)} new grads per graduate posting</strong>, and that is before
-          the international cohort or last year&apos;s leftovers join the queue.
-        </p>
-      )}
+      <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
+        {nf.format(pool)} domestic grads from the classes of the last five years are estimated to still be
+        looking, against {nf.format(data.latest.value)} tech postings a month nationwide, and most of those
+        postings want seniors anyway.
+        {gradsPerPosting !== null && (
+          <> On Seek right now it is starker: roughly <strong>{nf.format(gradsPerPosting)} fresh grads per
+          &ldquo;graduate&rdquo; posting</strong> from this month&apos;s cohort alone.</>
+        )}
+        {queuePerPosting !== null && <> Count the whole queue and it is about {nf.format(queuePerPosting)} of
+        you per graduate posting. Exhibit I breaks the queue down by year.</>}
+      </p>
       <p className="mt-2 text-[11px] text-slate-400">
-        {data.refStats.ictGradsPerYear.source}. Seek counts are live, national, ICT classification.
+        {data.refStats.ictGradsPerYear.source}. Still-hunting shares are the model from Exhibit I. Seek counts
+        are live, national, ICT classification.
       </p>
     </section>
   );
@@ -422,7 +448,7 @@ function PayLadderSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit E"
         title="The pay ladder"
-        blurb="From your first salary down to the richest man on earth, drawn to one scale. There is only one way to appreciate the difference and it is with your scroll wheel."
+        blurb="Just how far are you from the richest man on earth?"
       />
       <MoneyLadder refStats={data.refStats} />
     </section>
@@ -437,7 +463,6 @@ function LandfillSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit F"
         title="The application landfill"
-        blurb="Nobody prints applications. Imagine, briefly, that we did."
       />
       <Landfill refStats={data.refStats} adsPerYear={data.adsPerYear} />
     </section>
@@ -461,7 +486,7 @@ function RaceSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit G"
         title="The race to home"
-        blurb="Years of gross graduate salary to buy the median Sydney house. Every cent, no food, no rent, no tax. Speedrun rules."
+        blurb="How many years of a grad salary it takes to buy the median Sydney house, if you spend literally nothing else the whole time."
       />
       <div className="border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
         <div className="space-y-5">
@@ -516,16 +541,7 @@ function ExperienceSection({ data }: { data: RecessionData }) {
 /* ---------------- the backlog ---------------- */
 
 function BacklogSection({ data }: { data: RecessionData }) {
-  const grads = data.refStats.ictGradsPerYear.value;
-  const shares = data.refStats.gradStillLookingShares.values;
-  const currentYear = new Date().getFullYear();
-
-  const cohorts = shares.map((share, i) => ({
-    year: currentYear - i,
-    count: Math.round(grads * share),
-    share,
-  }));
-  const pool = cohorts.reduce((a, c) => a + c.count, 0);
+  const { cohorts, pool } = computeGradBacklog(data);
   const maxCount = cohorts[0].count;
 
   const gradPostings = data.seekLatest["seek-ict-graduate"];
@@ -577,12 +593,12 @@ function BacklogSection({ data }: { data: RecessionData }) {
 
 /* ---------------- shared bits ---------------- */
 
-function SectionHeading({ kicker, title, blurb }: { kicker: string; title: string; blurb: string }) {
+function SectionHeading({ kicker, title, blurb }: { kicker: string; title: string; blurb?: string }) {
   return (
     <div className="mb-4">
       <div className="text-[11px] uppercase tracking-widest text-red-700 dark:text-red-400">{kicker}</div>
       <h2 className="font-display text-3xl tracking-wide sm:text-4xl">{title}</h2>
-      <p className="mt-1 max-w-2xl font-serif text-sm text-slate-600 dark:text-slate-300">{blurb}</p>
+      {blurb && <p className="mt-1 max-w-2xl font-serif text-sm text-slate-600 dark:text-slate-300">{blurb}</p>}
     </div>
   );
 }
