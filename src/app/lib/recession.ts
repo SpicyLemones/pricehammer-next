@@ -44,9 +44,31 @@ export type ThenVsNow = {
   maths: string;
 };
 
+export type RefStat = { value: number; label: string; source: string; name?: string };
+export type ReferenceStats = {
+  retrieved: string;
+  medianGradSalary: RefStat;
+  gradSalary2006: RefStat;
+  awote: RefStat;
+  pmSalary: RefStat;
+  medianCeoPay: RefStat;
+  topCeoPay: RefStat;
+  sydneyHouse2006: RefStat;
+  sydneyHouseNow: RefStat;
+  applicationsPerAd: { default: number; min: number; max: number; label: string; source: string };
+  paperMaths: {
+    pagesPerApplication: number;
+    sheetsPerReamCm: { sheets: number; cm: number };
+    gramsPerSheet: number;
+  };
+};
+
 export type RecessionData = {
   ivi: IviData;
   peak: { month: string; value: number };
+  recentPeak: { month: string; value: number }; // free-money era local peak
+  daysSincePeak: number;
+  daysSinceRecentPeak: number;
   latest: { month: string; value: number };
   vsPeakPct: number; // negative = below peak
   vsFiveYearsPct: number;
@@ -61,6 +83,8 @@ export type RecessionData = {
   globalSubs: string[];
   thenVsNow: ThenVsNow[];
   adsPerWhinge: { ads: number; whinges: number; ratio: number } | null;
+  refStats: ReferenceStats;
+  adsPerYear: number; // latest IVI monthly value annualised
 };
 
 export const AU_SUBS = ["ausjobs", "auscorp"];
@@ -80,6 +104,17 @@ async function loadIvi(): Promise<IviData> {
   return JSON.parse(raw) as IviData;
 }
 
+async function loadRefStats(): Promise<ReferenceStats> {
+  const raw = await fs.readFile(path.join(process.cwd(), "data", "recession", "reference-stats.json"), "utf8");
+  return JSON.parse(raw) as ReferenceStats;
+}
+
+function daysSinceMonth(ym: string): number {
+  const [y, m] = ym.split("-").map(Number);
+  // middle of the month keeps the number honest either side
+  return Math.floor((Date.now() - Date.UTC(y, m - 1, 15)) / 86_400_000);
+}
+
 async function tableExists(name: string): Promise<boolean> {
   const rows = (await all(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?`, [name])) as any[];
   return rows.length > 0;
@@ -90,11 +125,20 @@ export async function getRecessionData(): Promise<RecessionData> {
   const ict = ivi.series.ictProfessionals.values;
   const months = ivi.months;
 
+  const refStats = await loadRefStats();
+
   const latestIdx = ict.length - 1;
   const latest = { month: months[latestIdx], value: ict[latestIdx] };
   let peakIdx = 0;
   for (let i = 1; i < ict.length; i++) if (ict[i] > ict[peakIdx]) peakIdx = i;
   const peak = { month: months[peakIdx], value: ict[peakIdx] };
+
+  // free-money era local peak: highest month from 2021 onwards
+  let recentPeakIdx = months.findIndex((m) => m >= "2021-01");
+  for (let i = recentPeakIdx + 1; i < ict.length; i++) {
+    if (ict[i] > ict[recentPeakIdx]) recentPeakIdx = i;
+  }
+  const recentPeak = { month: months[recentPeakIdx], value: ict[recentPeakIdx] };
 
   const fiveYearsIdx = Math.max(0, latestIdx - 60);
   const vsPeakPct = Math.round(((latest.value - peak.value) / peak.value) * 100);
@@ -219,6 +263,9 @@ export async function getRecessionData(): Promise<RecessionData> {
   return {
     ivi,
     peak,
+    recentPeak,
+    daysSincePeak: daysSinceMonth(peak.month),
+    daysSinceRecentPeak: daysSinceMonth(recentPeak.month),
     latest,
     vsPeakPct,
     vsFiveYearsPct,
@@ -233,6 +280,8 @@ export async function getRecessionData(): Promise<RecessionData> {
     globalSubs: GLOBAL_SUBS,
     thenVsNow,
     adsPerWhinge,
+    refStats,
+    adsPerYear: latest.value * 12,
   };
 }
 

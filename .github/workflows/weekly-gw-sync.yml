@@ -1,4 +1,4 @@
-name: Weekly GW catalogue sync
+name: Weekly GW sync and price refresh
 
 on:
   schedule:
@@ -9,7 +9,7 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 150
     steps:
       - name: Sync GW catalogue (add new releases)
         run: |
@@ -28,3 +28,12 @@ jobs:
             -X POST "https://www.spycy.fun/api/auto-validate")
           echo "$RESPONSE"
           echo "$RESPONSE" | grep -q '"ok":true' || { echo "auto-validate failed"; exit 1; }
+
+      - name: Refresh prices (all sellers)
+        run: |
+          set -euo pipefail
+          RESPONSE=$(curl -sS -m 4800 \
+            -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
+            -X POST "https://www.spycy.fun/api/refresh-prices")
+          echo "$RESPONSE"
+          echo "$RESPONSE" | grep -q '"ok":true' || { echo "refresh failed"; exit 1; }

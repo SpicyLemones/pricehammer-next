@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getRecessionData, monthLabel, type RecessionData } from "@/app/lib/recession";
 import { FieldReports } from "./FieldReports";
+import { MoneyLadder } from "./MoneyLadder";
+import { Landfill } from "./Landfill";
+import { ExperienceSlider } from "./ExperienceSlider";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,10 +26,15 @@ export default async function RecessionPage() {
     <div className="mx-auto w-full max-w-5xl px-4 pb-16 text-slate-900 dark:text-slate-100">
       <Masthead data={data} />
       <ReadingStrip data={data} />
+      <DoomTicker data={data} />
       <LongChart data={data} />
       <WhingeSection data={data} />
       <GraduateCorner data={data} />
       <ThenVsNowSection data={data} />
+      <PayLadderSection data={data} />
+      <LandfillSection data={data} />
+      <RaceSection data={data} />
+      <ExperienceSection data={data} />
       <FieldReports funPosts={data.funPosts} auSubs={data.auSubs} globalSubs={data.globalSubs} />
       <Methodology data={data} />
     </div>
@@ -46,8 +54,7 @@ function Masthead({ data }: { data: RecessionData }) {
         The Recession Indicator
       </h1>
       <p className="mt-2 max-w-2xl font-serif text-sm italic text-slate-600 dark:text-slate-300">
-        An almanac of the Australian tech job market. All figures real, all jokes
-        load-bearing. Updated whenever it gets worse.
+        An almanac of the Australian tech job market. Updated whenever it gets worse.
       </p>
     </header>
   );
@@ -70,7 +77,13 @@ function ReadingStrip({ data }: { data: RecessionData }) {
         <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
           Current reading
         </div>
-        <div className="font-display mt-1 text-6xl leading-none">{data.indexLabel}</div>
+        <div
+          className={`font-display mt-1 text-6xl leading-none text-red-700 dark:text-red-500 ${
+            data.indexLabel === "Cooked" ? "reading-cooked" : ""
+          }`}
+        >
+          {data.indexLabel}
+        </div>
         <p className="mt-2 font-serif text-sm text-slate-600 dark:text-slate-300">
           {nf.format(data.latest.value)} tech job ads a month, nationally. There were{" "}
           {nf.format(data.peak.value)} at the peak.
@@ -186,7 +199,7 @@ function WhingeSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit B"
         title="The whinge-o-meter"
-        blurb="Posts per week on Australian job subreddits (r/ausjobs, r/auscorp). Every bar is people asking where the jobs went. This is our demand-side data."
+        blurb="Posts per week on Australian job subreddits (r/ausjobs, r/auscorp). Every bar is people asking where the jobs went."
       />
       {recent.length >= 2 ? (
         <>
@@ -266,7 +279,7 @@ function ThenVsNowSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit D"
         title="Then versus now"
-        blurb="Statistically backed nostalgia. The maths for each claim is in the fine print."
+        blurb="Just pull yourself up by your bootstraps lil bro."
       />
       <div className="grid gap-4 sm:grid-cols-2">
         {data.thenVsNow.map((card) => (
@@ -293,6 +306,130 @@ function ThenVsNowSection({ data }: { data: RecessionData }) {
   );
 }
 
+/* ---------------- doom ticker ---------------- */
+
+function DoomTicker({ data }: { data: RecessionData }) {
+  return (
+    <section className="mt-2 grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-2">
+      <div className="bg-white px-5 py-3 dark:bg-slate-900">
+        <span className="font-display text-4xl leading-none tabular-nums text-red-700 dark:text-red-400">
+          {nf.format(data.daysSincePeak)}
+        </span>
+        <span className="ml-2 text-xs text-slate-500 dark:text-slate-400">
+          days since tech job ads peaked ({monthLabel(data.peak.month)})
+        </span>
+      </div>
+      <div className="bg-white px-5 py-3 dark:bg-slate-900">
+        <span className="font-display text-4xl leading-none tabular-nums text-red-700 dark:text-red-400">
+          {nf.format(data.daysSinceRecentPeak)}
+        </span>
+        <span className="ml-2 text-xs text-slate-500 dark:text-slate-400">
+          days since the free-money era peak ({monthLabel(data.recentPeak.month)}). Any day now.
+        </span>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- pay ladder ---------------- */
+
+function PayLadderSection({ data }: { data: RecessionData }) {
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker="Exhibit E"
+        title="The pay ladder"
+        blurb="Your salary, the Prime Minister's, and an ASX CEO's, drawn to the same scale. There is only one way to appreciate the difference and it is with your scroll wheel."
+      />
+      <MoneyLadder refStats={data.refStats} />
+    </section>
+  );
+}
+
+/* ---------------- application landfill ---------------- */
+
+function LandfillSection({ data }: { data: RecessionData }) {
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker="Exhibit F"
+        title="The application landfill"
+        blurb="If every tech application this year were printed out and thrown in the bin where the ATS filter sent it anyway."
+      />
+      <Landfill refStats={data.refStats} adsPerYear={data.adsPerYear} />
+    </section>
+  );
+}
+
+/* ---------------- the race you already lost ---------------- */
+
+function RaceSection({ data }: { data: RecessionData }) {
+  const r = data.refStats;
+  const then = r.sydneyHouse2006.value / r.gradSalary2006.value;
+  const now = r.sydneyHouseNow.value / r.medianGradSalary.value;
+  const max = Math.max(then, now);
+  const rows = [
+    { year: "2006", years: then, salary: r.gradSalary2006.value, house: r.sydneyHouse2006.value },
+    { year: "2026", years: now, salary: r.medianGradSalary.value, house: r.sydneyHouseNow.value },
+  ];
+
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker="Exhibit G"
+        title="The race you already lost"
+        blurb="Years of gross graduate salary to buy the median Sydney house. Every cent, no food, no rent, no tax. Speedrun rules."
+      />
+      <div className="border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+        <div className="space-y-5">
+          {rows.map((row) => (
+            <div key={row.year}>
+              <div className="flex flex-wrap items-baseline gap-x-3">
+                <span className="font-display text-2xl leading-none">{row.year}</span>
+                <span className="font-display text-4xl leading-none text-red-700 dark:text-red-400 tabular-nums">
+                  {row.years.toFixed(1)} years
+                </span>
+                <span className="text-xs text-slate-500 dark:text-slate-400">
+                  {nf.format(row.house)} house ÷ {nf.format(row.salary)} grad salary
+                </span>
+              </div>
+              <div className="mt-1 h-4 w-full bg-slate-100 dark:bg-slate-800">
+                <div
+                  className="h-full bg-red-700/80 dark:bg-red-500/80"
+                  style={{ width: `${(row.years / max) * 100}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 font-serif text-sm italic text-slate-600 dark:text-slate-300">
+          The house got {(data.refStats.sydneyHouseNow.value / data.refStats.sydneyHouse2006.value).toFixed(1)}x more
+          expensive while the grad salary grew {(data.refStats.medianGradSalary.value / data.refStats.gradSalary2006.value).toFixed(1)}x.
+          The finish line is moving faster than you are.
+        </p>
+        <p className="mt-2 text-[11px] text-slate-400">
+          {r.gradSalary2006.source}; {r.medianGradSalary.source}; {r.sydneyHouse2006.source}; {r.sydneyHouseNow.source}.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- experience paradox ---------------- */
+
+function ExperienceSection({ data }: { data: RecessionData }) {
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker="Exhibit H"
+        title="The experience paradox"
+        blurb="Drag the slider to your years of experience and see how many of the current tech ads are actually aimed at you."
+      />
+      <ExperienceSlider seekLatest={data.seekLatest} />
+    </section>
+  );
+}
+
 /* ---------------- shared bits ---------------- */
 
 function SectionHeading({ kicker, title, blurb }: { kicker: string; title: string; blurb: string }) {
@@ -308,7 +445,7 @@ function SectionHeading({ kicker, title, blurb }: { kicker: string; title: strin
 function Methodology({ data }: { data: RecessionData }) {
   return (
     <footer className="mt-14 border-t border-slate-300 pt-5 text-xs leading-relaxed text-slate-500 dark:border-slate-700 dark:text-slate-400">
-      <h2 className="font-display text-xl tracking-wide text-slate-700 dark:text-slate-200">Methodology, or: yes, this is real data</h2>
+      <h2 className="font-display text-xl tracking-wide text-slate-700 dark:text-slate-200">Is this a larp?</h2>
       <ul className="mt-2 list-disc space-y-1 pl-5">
         <li>
           Historical job ads: {data.ivi.source}, retrieved {data.ivi.retrieved} from{" "}
@@ -323,12 +460,16 @@ function Methodology({ data }: { data: RecessionData }) {
         </li>
         <li>
           Whinge data: post counts from public subreddit feeds. Reddit only exposes recent history, so the meter
-          deepens the longer we collect. Post frequency measures conversation, not unemployment; that is the joke
-          and also the disclaimer.
+          deepens the longer we collect. Post frequency measures conversation, not unemployment.
         </li>
         <li>
-          This page is satire wearing a high-vis vest of real statistics. It is not career or financial advice.
-          If it made you feel worse, the data did that, not us.
+          Pay figures: {data.refStats.medianCeoPay.source}; {data.refStats.awote.source};{" "}
+          {data.refStats.medianGradSalary.source}; {data.refStats.pmSalary.source}. House prices:{" "}
+          {data.refStats.sydneyHouse2006.source} and {data.refStats.sydneyHouseNow.source}. Landfill maths shows its
+          working on the exhibit and lets you set the one number nobody publishes.
+        </li>
+        <li>
+          Uhh this is not financial advice and this page is satire or whatever, don&apos;t shoot the messenger.
         </li>
       </ul>
       <p className="mt-4">

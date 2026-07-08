@@ -1,0 +1,56 @@
+{
+  "retrieved": "2026-07-08",
+  "medianGradSalary": {
+    "value": 75000,
+    "label": "Median undergraduate starting salary, 2025",
+    "source": "QILT Graduate Outcomes Survey 2025"
+  },
+  "gradSalary2006": {
+    "value": 40000,
+    "label": "Median bachelor starting salary, 2006",
+    "source": "Graduate Careers Australia, GradStats 2006"
+  },
+  "awote": {
+    "value": 106657,
+    "label": "Average full-time earnings (AWOTE $2,051.10/wk, Nov 2025, annualised)",
+    "source": "ABS Average Weekly Earnings, Nov 2025"
+  },
+  "pmSalary": {
+    "value": 622071,
+    "label": "Prime Minister's salary from 1 July 2026",
+    "source": "Remuneration Tribunal, 2026 determination"
+  },
+  "medianCeoPay": {
+    "value": 4150000,
+    "label": "Median realised pay, ASX100 CEO, FY24",
+    "source": "ACSI CEO Pay in ASX200 Companies, June 2025"
+  },
+  "topCeoPay": {
+    "value": 39550000,
+    "name": "Victor Herrero, Lovisa",
+    "label": "Highest realised pay in the ACSI FY24 sample",
+    "source": "ACSI CEO Pay in ASX200 Companies, June 2025"
+  },
+  "sydneyHouse2006": {
+    "value": 470000,
+    "label": "Sydney median house price, mid-2000s",
+    "source": "APM/Demographia historical medians"
+  },
+  "sydneyHouseNow": {
+    "value": 1617000,
+    "label": "Sydney median house price, Jan 2026",
+    "source": "CoreLogic / carto.au median series"
+  },
+  "applicationsPerAd": {
+    "default": 100,
+    "min": 50,
+    "max": 300,
+    "label": "Applications per job ad (adjustable assumption)",
+    "source": "SEEK Employment Report May 2025: applications per ad at record high, up 16.4% year on year; absolute counts unpublished, so pick your own poison"
+  },
+  "paperMaths": {
+    "pagesPerApplication": 2,
+    "sheetsPerReamCm": { "sheets": 500, "cm": 5 },
+    "gramsPerSheet": 5
+  }
+}
