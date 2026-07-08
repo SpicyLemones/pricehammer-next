@@ -14,7 +14,8 @@ import { useEffect, useRef, useState } from "react";
 import type { ReferenceStats } from "@/app/lib/recession";
 
 const TOTAL_HEIGHT = 100_000; // px, bottom of ladder to Musk
-const HUMAN_GAP = 190; // px between the readable rungs at the bottom
+const PX_PER_LN = 250; // px per log unit in the human zone: every gap is proportional to its ratio
+const MIN_GAP = 80; // px floor so adjacent labels never collide
 const BOTTOM_PAD = 90; // px under the grad rung for the "$0" note
 const TOP_PAD = 84; // px above the Musk rung so his label and the summit note don't collide
 
@@ -48,20 +49,28 @@ export function MoneyLadder({ refStats }: { refStats: ReferenceStats }) {
   const rungs: Rung[] = [
     { value: refStats.medianGradSalary.value, name: "You, a fresh graduate", emoji: "🎓", note: refStats.medianGradSalary.source, unit: "salary/yr" },
     { value: refStats.awote.value, name: "Average full-time worker", emoji: "🧑‍🔧", note: refStats.awote.source, unit: "salary/yr" },
+    { value: 160_000, name: "Senior software engineer", emoji: "💻", note: "Hays / Seek salary guides, ballpark", unit: "salary/yr" },
+    { value: 250_000, name: "Your GP", emoji: "🩺", note: "ATO taxation statistics, general practitioners, ballpark", unit: "salary/yr" },
+    { value: 460_000, name: "Surgeon", emoji: "🔪", note: "ATO taxation statistics: the country's top-paid occupation", unit: "salary/yr" },
     { value: refStats.pmSalary.value, name: "The Prime Minister", emoji: "🏛️", note: refStats.pmSalary.source, unit: "salary/yr" },
     { value: refStats.medianCeoPay.value, name: "Median ASX100 CEO", emoji: "💼", note: refStats.medianCeoPay.source, unit: "realised pay/yr" },
     { value: refStats.topCeoPay.value, name: refStats.topCeoPay.name ?? "Top CEO", emoji: "👑", note: refStats.topCeoPay.source, unit: "realised pay/yr" },
     { value: refStats.muskNetWorth.value, name: refStats.muskNetWorth.name ?? "Elon Musk", emoji: "🚀", note: refStats.muskNetWorth.source, unit: "total net worth" },
   ].sort((a, b) => a.value - b.value);
 
-  // anchor points (value, heightFromBottom): human rungs evenly spaced at the
-  // bottom, then one long log-stretched segment up to the top
+  // anchor points (value, heightFromBottom): the human zone is spaced by the
+  // log of each jump, so a 6.7x leap (PM to median CEO) reads visibly bigger
+  // than a 1.4x one, then one long stretched segment up to the top
   const humanRungs = rungs.slice(0, -1);
   const top = rungs[rungs.length - 1];
-  const anchors: { value: number; y: number }[] = humanRungs.map((r, i) => ({
-    value: r.value,
-    y: BOTTOM_PAD + (i + 1) * HUMAN_GAP,
-  }));
+  let cursor = BOTTOM_PAD + 80;
+  const anchors: { value: number; y: number }[] = humanRungs.map((r, i) => {
+    if (i > 0) {
+      const gap = Math.log(r.value / humanRungs[i - 1].value) * PX_PER_LN;
+      cursor += Math.max(MIN_GAP, Math.round(gap));
+    }
+    return { value: r.value, y: cursor };
+  });
   anchors.unshift({ value: rungs[0].value / 10, y: 8 }); // near-zero baseline
   anchors.push({ value: top.value, y: TOTAL_HEIGHT });
 
@@ -123,9 +132,9 @@ export function MoneyLadder({ refStats }: { refStats: ReferenceStats }) {
     <div className="border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2 dark:border-slate-700">
         <span className="text-xs text-slate-500 dark:text-slate-400">
-          The bottom of the ladder is stretched so you can read it. Above the last CEO the climb to{" "}
-          {fmtShort(top.value)} is {Math.round((TOTAL_HEIGHT - yFor(rungs[rungs.length - 2].value)) / 1000)}k pixels
-          of nothing. Scroll up.
+          Every gap is drawn to the size of the jump: doubling your pay moves you the same distance whether
+          you are a grad or a surgeon. Above Victor, the climb to {fmtShort(top.value)} is{" "}
+          {Math.round((TOTAL_HEIGHT - yFor(rungs[rungs.length - 2].value)) / 1000)}k pixels. Scroll up.
         </span>
         <div className="flex items-center gap-3">
           <span className="font-mono text-xs tabular-nums text-slate-700 dark:text-slate-200">
