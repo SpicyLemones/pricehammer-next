@@ -52,6 +52,7 @@ export default async function IndustryPage({ params }: Params) {
       {data.config.slug === "marketing" && <BigSpendersSection kicker={nextExhibit()} />}
       <LongChart data={data} kicker={nextExhibit()} />
       <SeekTiles data={data} kicker={nextExhibit()} />
+      {data.topEmployers.length > 0 && <TopEmployersSection data={data} kicker={nextExhibit()} />}
       <YearlyAlmanac data={data} kicker={nextExhibit()} />
       <PayVsSection data={data} kicker={nextExhibit()} />
       <Methodology data={data} />
@@ -354,6 +355,51 @@ function SeekTiles({ data, kicker }: { data: IndustryData; kicker: string }) {
           The live Seek counts have not been loaded on this deployment yet. Check back after the next collector run.
         </p>
       )}
+    </section>
+  );
+}
+
+/* ---------------- who is actually hiring ---------------- */
+
+function TopEmployersSection({ data, kicker }: { data: IndustryData; kicker: string }) {
+  const employers = data.topEmployers;
+  const max = Math.max(1, ...employers.map((e) => e.postings));
+  const sampled = employers[0]?.sampled ?? 0;
+
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker={kicker}
+        title="Who is actually hiring"
+        blurb={`The twenty employers with the most live ${data.config.name.toLowerCase()} postings on Seek right now, ranked from a sample of ${nf.format(sampled)} current listings. Names straight from the postings, no curation.`}
+      />
+      <div className="border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
+        <ol className="divide-y divide-slate-100 dark:divide-slate-800">
+          {employers.map((e) => (
+            <li key={e.rank} className="flex items-center gap-3 px-4 py-2">
+              <span className="font-mono w-6 shrink-0 text-right text-xs text-slate-400">{e.rank}</span>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-baseline gap-x-3">
+                  <span className="font-display text-lg leading-none">{e.employer}</span>
+                  <span className="font-mono text-xs tabular-nums text-slate-500 dark:text-slate-400">
+                    {e.postings} posting{e.postings === 1 ? "" : "s"}
+                  </span>
+                </div>
+                <div className="mt-1 h-2 w-full bg-slate-100 dark:bg-slate-800">
+                  <div
+                    className="h-full bg-emerald-600/70 dark:bg-emerald-400/60"
+                    style={{ width: `${(e.postings / max) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <p className="mt-2 text-[11px] text-slate-400">
+        Live Seek sample, national, refreshed with each collector run. Private advertisers excluded. Nobody
+        publishes hire or layoff counts in Australia, so live postings are the honest proxy.
+      </p>
     </section>
   );
 }

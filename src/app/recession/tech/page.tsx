@@ -6,6 +6,7 @@ import { MoneyLadder } from "../MoneyLadder";
 import { Landfill } from "../Landfill";
 import { ExperienceSlider } from "../ExperienceSlider";
 import { PayVsChart } from "../PayVsChart";
+import { getTopEmployers, type TopEmployer } from "@/app/lib/recession-industries";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 
 export const runtime = "nodejs";
@@ -23,6 +24,7 @@ const nf = new Intl.NumberFormat("en-AU");
 
 export default async function RecessionPage() {
   const data = await getRecessionData();
+  const topEmployers = await getTopEmployers("tech");
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 pb-16 text-slate-900 dark:text-slate-100">
@@ -31,7 +33,7 @@ export default async function RecessionPage() {
       <DoomTicker data={data} />
       <LongChart data={data} />
       <WhingeSection data={data} />
-      <CompetitionSection data={data} />
+      <CompetitionSection data={data} topEmployers={topEmployers} />
       <ThenVsNowSection data={data} />
       <PayLadderSection data={data} />
       <LandfillSection data={data} />
@@ -296,7 +298,7 @@ function computeGradBacklog(data: RecessionData) {
   return { grads, cohorts, pool };
 }
 
-function CompetitionSection({ data }: { data: RecessionData }) {
+function CompetitionSection({ data, topEmployers }: { data: RecessionData; topEmployers: TopEmployer[] }) {
   const s = data.seekLatest;
   const { grads, pool } = computeGradBacklog(data);
   const gradPostings = s["seek-ict-graduate"];
@@ -340,11 +342,40 @@ function CompetitionSection({ data }: { data: RecessionData }) {
           &ldquo;graduate&rdquo; posting</strong> from this month&apos;s cohort alone.</>
         )}
         {queuePerPosting !== null && <> Count the whole queue and it is about {nf.format(queuePerPosting)} of
-        you per graduate posting. Exhibit I breaks the queue down by year.</>}
+        you per graduate posting. Exhibit J breaks the queue down by year.</>}
       </p>
+      {topEmployers.length > 0 && (
+        <div className="mt-4 border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
+          <div className="border-b border-slate-200 px-4 py-2 text-[11px] uppercase tracking-widest text-slate-500 dark:border-slate-700 dark:text-slate-400">
+            Who is actually hiring: top 20 by live Seek postings
+          </div>
+          <ol className="divide-y divide-slate-100 dark:divide-slate-800">
+            {topEmployers.map((e) => (
+              <li key={e.rank} className="flex items-center gap-3 px-4 py-2">
+                <span className="font-mono w-6 shrink-0 text-right text-xs text-slate-400">{e.rank}</span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-baseline gap-x-3">
+                    <span className="font-display text-lg leading-none">{e.employer}</span>
+                    <span className="font-mono text-xs tabular-nums text-slate-500 dark:text-slate-400">
+                      {e.postings} posting{e.postings === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                  <div className="mt-1 h-2 w-full bg-slate-100 dark:bg-slate-800">
+                    <div
+                      className="h-full bg-emerald-600/70 dark:bg-emerald-400/60"
+                      style={{ width: `${(e.postings / Math.max(1, topEmployers[0]?.postings ?? 1)) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
       <p className="mt-2 text-[11px] text-slate-400">
-        {data.refStats.ictGradsPerYear.source}. Still-hunting shares are the model from Exhibit I. Seek counts
-        are live, national, ICT classification.
+        {data.refStats.ictGradsPerYear.source}. Still-hunting shares are the model from Exhibit J. Seek counts
+        are live, national, ICT classification. Employer ranking from a live posting sample; private
+        advertisers excluded. Nobody publishes hire or layoff counts in Australia, so postings are the proxy.
       </p>
     </section>
   );
