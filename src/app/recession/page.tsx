@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getIndustrySummaries } from "@/app/lib/recession-industries";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { SearchPicker } from "./SearchPicker";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,14 +11,21 @@ export const revalidate = 0;
 export const metadata: Metadata = {
   title: "The Recession Indicator",
   description:
-    "Pick your industry and find out how cooked it is. Real job posting data, graduate odds and dark humour for the Australian job market.",
+    "Search your industry and find out how cooked it is. Real job posting data, graduate odds and dark humour for the Australian job market.",
   alternates: { canonical: "/recession" },
 };
 
-const nf = new Intl.NumberFormat("en-AU");
-
 export default async function RecessionPickerPage() {
   const industries = await getIndustrySummaries();
+  const pickerIndustries = industries.map((ind) => ({
+    slug: ind.slug,
+    name: ind.name,
+    pickerLine: ind.pickerLine,
+    searchTerms: ind.searchTerms,
+    hiring: ind.hiring,
+    indexLabel: ind.indexLabel,
+    latestValue: ind.latest.value,
+  }));
 
   return (
     <div className="relative min-h-[85vh] w-full overflow-hidden">
@@ -45,41 +53,13 @@ export default async function RecessionPickerPage() {
                 The Recession Indicator
               </h1>
               <p className="mt-1 font-serif text-sm italic text-slate-600 dark:text-slate-300">
-                Pick your industry. Find out how cooked it is.
+                Search your industry. Find out how cooked it is.
               </p>
             </div>
             <ThemeToggle />
           </div>
 
-          <ul className="divide-y divide-slate-200 dark:divide-slate-800">
-            {industries.map((ind) => (
-              <li key={ind.slug}>
-                <Link
-                  href={`/recession/${ind.slug}`}
-                  className="group flex items-center justify-between gap-4 px-6 py-4 transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
-                >
-                  <div>
-                    <div className="font-display text-2xl tracking-wide text-slate-900 group-hover:underline dark:text-slate-50">
-                      {ind.name}
-                    </div>
-                    <div className="font-serif text-sm text-slate-500 dark:text-slate-400">{ind.pickerLine}</div>
-                    <div className="mt-0.5 text-[11px] text-slate-400">
-                      {nf.format(ind.latest.value)} postings a month · {ind.vsPeakPct}% vs peak
-                    </div>
-                  </div>
-                  <span
-                    className={`font-display shrink-0 text-xl tracking-wider ${
-                      ind.hiring
-                        ? "reading-hiring text-emerald-600 dark:text-emerald-400"
-                        : "text-red-700 dark:text-red-400"
-                    }`}
-                  >
-                    {ind.hiring ? "HIRING" : ind.indexLabel}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <SearchPicker industries={pickerIndustries} />
 
           <div className="border-t border-slate-200 px-6 py-3 text-[11px] leading-relaxed text-slate-400 dark:border-slate-800">
             Readings come from twenty years of Jobs and Skills Australia vacancy data, each industry judged

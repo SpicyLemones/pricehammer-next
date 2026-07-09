@@ -18,6 +18,11 @@ export type IndustryHook = {
   tiles: { big: string; small: string }[];
   punchline: string;
   sources: string;
+  // optional pictogram conversion, e.g. three residents -> two care jobs
+  conversion?: {
+    from: { emoji: string; count: number; label: string };
+    to: { emoji: string; count: number; label: string };
+  };
 };
 
 export type IndustryConfig = {
@@ -28,7 +33,10 @@ export type IndustryConfig = {
   occupationNote: string; // what the IVI group actually covers
   seekClassification: string;
   seekExtraParams?: string; // e.g. keyword narrowing for childcare
+  searchTerms: string[]; // what the fake search bar matches on
+  headcount?: { value: number; label: string; source: string }; // real people in the job
   hook: IndustryHook;
+  extraHook?: IndustryHook; // a second exhibit for industries with more to say
   quips: Record<number, string>; // yearsAgo -> line
   pickerLine: string; // one-liner on the landing page card
 };
@@ -41,6 +49,12 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     tagline: "An almanac of the Australian tech job market. Updated whenever it gets worse.",
     occupationNote: "IVI group: ICT Professionals",
     seekClassification: "6281",
+    searchTerms: ["tech", "it", "ict", "software", "developer", "programmer", "engineer", "computer", "cyber", "data"],
+    headcount: {
+      value: 1000000,
+      label: "people already in Australia's tech workforce, which passed the million mark in 2024",
+      source: "ACS Digital Pulse 2024",
+    },
     hook: {
       kicker: "Exhibit 0",
       title: "Why the line moves",
@@ -65,6 +79,12 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     tagline: "An almanac of the Australian health job market. The only line on this site that mostly goes up.",
     occupationNote: "IVI group: Medical Practitioners and Nurses",
     seekClassification: "1211",
+    searchTerms: ["nurs", "health", "medic", "doctor", "aged care", "hospital", "midwif"],
+    headcount: {
+      value: 512332,
+      label: "nurses and midwives on the national register, the biggest health profession in the country",
+      source: "Nursing and Midwifery Board of Australia registrant data, 2024",
+    },
     hook: {
       kicker: "Exhibit 0",
       title: "Why the line moves: people got old",
@@ -77,6 +97,23 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
       punchline:
         "The generation that accumulated most of the housing stock is now accumulating hip replacements. Every year of boomer ageing converts directly into rosters, wards and vacancies. Your demand curve is, bluntly, their mortality schedule. Congratulations on the job security, and sorry about the reason.",
       sources: "Intergenerational Report 2023; Department of Health, Disability and Ageing workforce modelling via Ageing Australia.",
+    },
+    extraHook: {
+      kicker: "Exhibit A½",
+      title: "The conversion rate",
+      blurb: "Since October 2024 the law requires 215 minutes of care per aged-care resident per day, 44 of them from a registered nurse. Which means boomers now convert into jobs at a fixed, legislated exchange rate.",
+      tiles: [
+        { big: "215 min", small: "of mandated care per resident per day, including 44 registered-nurse minutes (Department of Health, from 1 October 2024)" },
+        { big: "3 → 2", small: "every three residents mandate roughly two full-time care jobs (215 min × 7 days vs a 38-hour week)" },
+        { big: "7 → 1", small: "every seven residents mandate a full-time registered nurse, by the same arithmetic" },
+      ],
+      punchline:
+        "Every boomer who checks into residential care legally manufactures about two-thirds of a full-time job on arrival. Demand for you is not a market forecast, it is legislation with a stopwatch. Whether the wage is livable is a separate exhibit the sector would prefer we not print.",
+      sources: "Care minutes mandate: Department of Health, Disability and Ageing. FTE maths shown on the tiles.",
+      conversion: {
+        from: { emoji: "👵", count: 3, label: "residents entering aged care" },
+        to: { emoji: "🧑‍⚕️", count: 2, label: "full-time care jobs, mandated by law" },
+      },
     },
     quips: {
       1: "Still hiring. The patients keep arriving on schedule.",
@@ -95,6 +132,12 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     occupationNote: "IVI group: Carers and Aides, which bundles child carers with aged and disabled carers. The same line covers both ends of life, which says plenty",
     seekClassification: "6123",
     seekExtraParams: "&keywords=early+childhood",
+    searchTerms: ["child", "care", "early childhood", "ecec", "daycare", "kinder", "educator"],
+    headcount: {
+      value: 173000,
+      label: "people already working in children's education and care, on some of the lowest professional pay going",
+      source: "Jobs and Skills Australia sector profiles",
+    },
     hook: {
       kicker: "Exhibit 0",
       title: "Why the line moves: both parents are at work",
@@ -107,6 +150,19 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
       punchline:
         "A single income stopped covering the median mortgage around the same time the mortgage doubled, so both parents work, so the kids need somewhere to be. That is the demand. The sector answers it on some of the lowest professional wages in the country, which is why the vacancies never close.",
       sources: "Jobs and Skills Australia, The Future of the Early Childhood Education Profession (2024); The Parenthood; sector workforce profiles.",
+    },
+    extraHook: {
+      kicker: "Exhibit A½",
+      title: "The pipeline: mortgage → two jobs → childcare",
+      blurb: "The correlation nobody markets: as the cost of living climbed, the single-income family quietly became a luxury product, and every family that lost it became a childcare customer.",
+      tiles: [
+        { big: "52.5%", small: "of couple families with dependent children had both parents working in 1993 (AIFS)" },
+        { big: "70%+", small: "the same figure today (ABS Labour Force Status of Families). The stay-at-home parent is now a minority position" },
+        { big: "11.8 → 21.6", small: "years of a graduate salary to buy the median Sydney house, 2006 versus now. This is the machine driving the other two numbers" },
+      ],
+      punchline:
+        "Follow the pipeline: the house got dearer, so both parents work, so the kids need somewhere to go, so childcare demand grows every year the housing market does. Early learning is the only industry whose order book is written by the mortgage belt.",
+      sources: "AIFS Family Facts (June 1993); ABS Labour Force Status of Families; house-to-salary maths as per the tech edition's Race to Home exhibit.",
     },
     quips: {
       1: "Vacancies everywhere. Wages, less so.",
@@ -124,6 +180,12 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     tagline: "An almanac of the Australian teaching job market. The vacancies are real, the reasons are grim.",
     occupationNote: "IVI group: Education Professionals",
     seekClassification: "6123",
+    searchTerms: ["teach", "education", "school", "lecturer", "tutor"],
+    headcount: {
+      value: 550000,
+      label: "registered teachers nationally, about 325,000 of them full-time-equivalent in schools",
+      source: "AITSL Australian Teacher Workforce Data / ACARA, 2025",
+    },
     hook: {
       kicker: "Exhibit 0",
       title: "Why the line moves: the exits are crowded",
@@ -153,6 +215,7 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     tagline: "An almanac of the Australian marketing job market. First budget cut, first out the door.",
     occupationNote: "IVI group: Sales, Marketing & Public Relations Professionals",
     seekClassification: "6008",
+    searchTerms: ["market", "advertis", "brand", "pr", "comms", "media", "content", "social"],
     hook: {
       kicker: "Exhibit 0",
       title: "Why the line moves: the budget went first",
@@ -247,7 +310,16 @@ export async function getIndustrySummaries() {
     const config = INDUSTRIES[slug];
     const s = ivi.series[slug];
     const { latest, vsPeakPct, hiring, indexLabel } = summarise(config, ivi.months, s.values);
-    return { slug, name: config.name, pickerLine: config.pickerLine, latest, vsPeakPct, hiring, indexLabel };
+    return {
+      slug,
+      name: config.name,
+      pickerLine: config.pickerLine,
+      searchTerms: config.searchTerms,
+      latest,
+      vsPeakPct,
+      hiring,
+      indexLabel,
+    };
   });
 }
 
