@@ -95,7 +95,9 @@ function ReadingStrip({ data }: { data: IndustryData }) {
             className={`font-display mt-1 text-6xl leading-none ${
               data.hiring
                 ? "reading-hiring text-emerald-600 dark:text-emerald-400"
-                : `text-red-700 dark:text-red-500 ${data.indexLabel === "Cooked" ? "reading-cooked" : ""}`
+                : data.indexLabel === "Cooked"
+                  ? "reading-cooked text-red-700 dark:text-red-500"
+                  : "text-amber-600 dark:text-amber-400"
             }`}
           >
             {data.indexLabel}

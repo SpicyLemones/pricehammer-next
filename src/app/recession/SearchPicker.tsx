@@ -104,10 +104,12 @@ export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
                         className={`font-display shrink-0 text-lg tracking-wider ${
                           ind.hiring
                             ? "reading-hiring text-emerald-600 dark:text-emerald-400"
-                            : "text-red-700 dark:text-red-400"
+                            : ind.indexLabel === "Cooked"
+                              ? "text-red-700 dark:text-red-400"
+                              : "text-amber-600 dark:text-amber-400"
                         }`}
                       >
-                        {ind.hiring ? "HIRING" : ind.indexLabel}
+                        {ind.hiring ? "HIRING" : ind.indexLabel.toUpperCase()}
                       </span>
                     </button>
                   </li>

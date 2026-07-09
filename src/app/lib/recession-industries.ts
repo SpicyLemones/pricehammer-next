@@ -269,11 +269,7 @@ export type IndustryData = {
 
 export function indexLabelFor(vsPeakPct: number, hiring: boolean): string {
   if (hiring) return "Hiring";
-  return vsPeakPct > -15 ? "Mild sniffles" :
-    vsPeakPct > -30 ? "Concerning cough" :
-    vsPeakPct > -45 ? "See a doctor" :
-    vsPeakPct > -60 ? "Family has been notified" :
-    "Cooked";
+  return vsPeakPct <= -55 ? "Cooked" : "Ehhh";
 }
 
 async function loadIviIndustries(): Promise<IviIndustries> {
