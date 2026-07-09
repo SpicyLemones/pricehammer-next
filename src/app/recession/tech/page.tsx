@@ -537,9 +537,9 @@ function PayVsSection() {
       <SectionHeading
         kicker="Exhibit H"
         title="Your pay against everything else"
-        blurb="Twenty years of pay next to the things it is supposed to buy. Click a line to spotlight it."
+        blurb="Twenty years of full-time pay in tech's own ABS division, next to the things it is supposed to buy. Click a line to spotlight it."
       />
-      <PayVsChart />
+      <PayVsChart industry="tech" />
       <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
         Pay nearly doubled in twenty years, which sounds fine until you notice the house more than tripled.
         The gap between those lines is why both your parents work and why your deposit is theoretical.
