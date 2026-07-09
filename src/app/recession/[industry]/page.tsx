@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import {
-  GROWTH_SINCE_2006,
   INDUSTRIES,
   getIndustryData,
   monthLabel,
@@ -11,6 +10,7 @@ import {
 } from "@/app/lib/recession-industries";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { AdSpendChart } from "../AdSpendChart";
+import { PayVsChart } from "../PayVsChart";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -37,19 +37,23 @@ export default async function IndustryPage({ params }: Params) {
   if (!(industry in INDUSTRIES)) notFound();
   const data = await getIndustryData(industry as IndustrySlug);
 
+  // exhibits letter themselves in page order, no halves
+  let letterCode = 65;
+  const nextExhibit = () => `Exhibit ${String.fromCharCode(letterCode++)}`;
+
   return (
     <div className="mx-auto w-full max-w-5xl px-4 pb-16 text-slate-900 dark:text-slate-100">
       <Masthead data={data} />
       <ReadingStrip data={data} />
       <DoomTicker data={data} />
       <HeadcountStrip data={data} />
-      <HookSection hook={data.config.hook} />
-      {data.config.extraHook && <HookSection hook={data.config.extraHook} variant="strip" />}
-      {data.config.slug === "marketing" && <BigSpendersSection />}
-      <LongChart data={data} />
-      <SeekTiles data={data} />
-      <YearlyAlmanac data={data} />
-      <PayVsSection data={data} />
+      <HookSection hook={data.config.hook} kicker={nextExhibit()} />
+      {data.config.extraHook && <HookSection hook={data.config.extraHook} kicker={nextExhibit()} variant="strip" />}
+      {data.config.slug === "marketing" && <BigSpendersSection kicker={nextExhibit()} />}
+      <LongChart data={data} kicker={nextExhibit()} />
+      <SeekTiles data={data} kicker={nextExhibit()} />
+      <YearlyAlmanac data={data} kicker={nextExhibit()} />
+      <PayVsSection data={data} kicker={nextExhibit()} />
       <Methodology data={data} />
     </div>
   );
@@ -180,11 +184,11 @@ function HeadcountStrip({ data }: { data: IndustryData }) {
 
 /* ---------------- why the line moves ---------------- */
 
-function HookSection({ hook, variant = "boxed" }: { hook: IndustryData["config"]["hook"]; variant?: "boxed" | "strip" }) {
+function HookSection({ hook, kicker, variant = "boxed" }: { hook: IndustryData["config"]["hook"]; kicker: string; variant?: "boxed" | "strip" }) {
   if (!hook.tiles.length) return null;
   return (
     <section className="mt-10">
-      <SectionHeading kicker={hook.kicker === "Exhibit 0" ? "Exhibit A" : hook.kicker} title={hook.title} blurb={hook.blurb} />
+      <SectionHeading kicker={kicker} title={hook.title} blurb={hook.blurb} />
       {variant === "boxed" ? (
         <div className="grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-3">
           {hook.tiles.map((t) => (
@@ -248,7 +252,7 @@ const ANNOTATIONS: { month: string; label: string; dy?: number }[] = [
   { month: "2022-05", label: "Free money era", dy: -8 },
 ];
 
-function LongChart({ data }: { data: IndustryData }) {
+function LongChart({ data, kicker }: { data: IndustryData; kicker: string }) {
   const months = data.months;
   const values = data.values;
   const W = 920;
@@ -271,7 +275,7 @@ function LongChart({ data }: { data: IndustryData }) {
   return (
     <section className="mt-10">
       <SectionHeading
-        kicker="Exhibit B"
+        kicker={kicker}
         title={`Twenty years of ${data.config.name.toLowerCase()} postings`}
         blurb={`Monthly online job postings, ${data.seriesTitle}, Australia-wide.`}
       />
@@ -321,7 +325,7 @@ function LongChart({ data }: { data: IndustryData }) {
 
 /* ---------------- live seek counts ---------------- */
 
-function SeekTiles({ data }: { data: IndustryData }) {
+function SeekTiles({ data, kicker }: { data: IndustryData; kicker: string }) {
   const s = data.seekLatest;
   const slug = data.config.slug;
   const cells = [
@@ -332,7 +336,7 @@ function SeekTiles({ data }: { data: IndustryData }) {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit C"
+        kicker={kicker}
         title="On the board right now"
         blurb="Live counts from Seek, national, refreshed with each collector run."
       />
@@ -356,10 +360,10 @@ function SeekTiles({ data }: { data: IndustryData }) {
 
 /* ---------------- yearly almanac ---------------- */
 
-function YearlyAlmanac({ data }: { data: IndustryData }) {
+function YearlyAlmanac({ data, kicker }: { data: IndustryData; kicker: string }) {
   return (
     <section className="mt-12">
-      <SectionHeading kicker="Exhibit D" title="The last five years, annotated" />
+      <SectionHeading kicker={kicker} title="The last five years, annotated" />
       <div className="border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
         <ol className="divide-y divide-slate-100 dark:divide-slate-800">
           {data.yearly.map((y) => (
@@ -384,13 +388,13 @@ function YearlyAlmanac({ data }: { data: IndustryData }) {
 
 /* ---------------- the big spenders (marketing only) ---------------- */
 
-function BigSpendersSection() {
+function BigSpendersSection({ kicker }: { kicker: string }) {
   return (
     <section className="mt-10">
       <SectionHeading
-        kicker="Exhibit A¾"
+        kicker={kicker}
         title="The big spenders"
-        blurb="The world's largest advertising budgets, from company filings. Ad Age ranks Amazon, L'Oréal, P&G and Alibaba as the top four spenders on earth. Here are the ones that publish a number, plus you."
+        blurb="The biggest advertising budgets on earth that can be sourced without a paywall, ranked. Ad Age tracks the full top 50 behind a subscription; these are the ones with public numbers."
       />
       <AdSpendChart />
       <p className="mt-2 text-[11px] text-slate-400">
@@ -403,44 +407,19 @@ function BigSpendersSection() {
 
 /* ---------------- your pay vs everything else ---------------- */
 
-function PayVsSection({ data }: { data: IndustryData }) {
-  const rows = GROWTH_SINCE_2006.rows;
-  const max = Math.max(...rows.map((r) => r.mult));
+function PayVsSection({ data, kicker }: { data: IndustryData; kicker: string }) {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit E"
+        kicker={kicker}
         title="Your pay against everything else"
-        blurb={`How pay has grown since ${GROWTH_SINCE_2006.baseline}, next to the things it is supposed to buy. Pay is the all-industries average because that is the honest series; ${data.config.name.toLowerCase()} wages have their own story but the shape is the same.`}
+        blurb={`Twenty years of pay next to the things it is supposed to buy. Click a line to spotlight it. Pay is the all-industries average because that is the honest series; ${data.config.name.toLowerCase()} wages have their own story but the shape is the same.`}
       />
-      <div className="border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
-        <div className="space-y-5">
-          {rows.map((r) => (
-            <div key={r.label}>
-              <div className="flex flex-wrap items-baseline gap-x-3">
-                <span className="font-display text-2xl leading-none">{r.label}</span>
-                <span className={`font-display text-4xl leading-none tabular-nums ${r.mult >= 3 ? "text-red-700 dark:text-red-400" : "text-slate-700 dark:text-slate-200"}`}>
-                  {r.mult.toFixed(2)}x
-                </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400">{r.detail}</span>
-              </div>
-              <div className="mt-1 h-4 w-full bg-slate-100 dark:bg-slate-800">
-                <div
-                  className={`h-full ${r.mult >= 3 ? "bg-red-700/80 dark:bg-red-500/80" : "bg-slate-500/70 dark:bg-slate-400/60"}`}
-                  style={{ width: `${(r.mult / max) * 100}%` }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-        <p className="mt-4 font-serif text-sm italic text-slate-600 dark:text-slate-300">
-          Pay nearly doubled in twenty years, which sounds fine until you notice the house more than tripled.
-          The gap between those bars is why both your parents work and why your deposit is theoretical.
-        </p>
-        <p className="mt-2 text-[11px] text-slate-400">
-          {rows.map((r) => r.source).join("; ")}.
-        </p>
-      </div>
+      <PayVsChart />
+      <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
+        Pay nearly doubled in twenty years, which sounds fine until you notice the house more than tripled.
+        The gap between those lines is why both your parents work and why your deposit is theoretical.
+      </p>
     </section>
   );
 }

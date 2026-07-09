@@ -5,6 +5,7 @@ import { FieldReports } from "../FieldReports";
 import { MoneyLadder } from "../MoneyLadder";
 import { Landfill } from "../Landfill";
 import { ExperienceSlider } from "../ExperienceSlider";
+import { PayVsChart } from "../PayVsChart";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 
 export const runtime = "nodejs";
@@ -35,6 +36,7 @@ export default async function RecessionPage() {
       <PayLadderSection data={data} />
       <LandfillSection data={data} />
       <RaceSection data={data} />
+      <PayVsSection />
       <ExperienceSection data={data} />
       <BacklogSection data={data} />
       <FieldReports funPosts={data.funPosts} auSubs={data.auSubs} globalSubs={data.globalSubs} />
@@ -527,13 +529,32 @@ function RaceSection({ data }: { data: RecessionData }) {
   );
 }
 
+/* ---------------- your pay vs everything else ---------------- */
+
+function PayVsSection() {
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker="Exhibit H"
+        title="Your pay against everything else"
+        blurb="Twenty years of pay next to the things it is supposed to buy. Click a line to spotlight it."
+      />
+      <PayVsChart />
+      <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
+        Pay nearly doubled in twenty years, which sounds fine until you notice the house more than tripled.
+        The gap between those lines is why both your parents work and why your deposit is theoretical.
+      </p>
+    </section>
+  );
+}
+
 /* ---------------- experience paradox ---------------- */
 
 function ExperienceSection({ data }: { data: RecessionData }) {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit H"
+        kicker="Exhibit I"
         title="The experience paradox"
         blurb="Drag the slider to your years of experience and see how many of the current tech job postings are actually aimed at you."
       />
@@ -554,7 +575,7 @@ function BacklogSection({ data }: { data: RecessionData }) {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit I"
+        kicker="Exhibit J"
         title="The backlog"
         blurb="Every class of graduates competes with the classes before them who never got picked up. The queue does not reset each year. It compounds."
       />

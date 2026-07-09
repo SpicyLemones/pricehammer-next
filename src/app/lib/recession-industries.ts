@@ -242,31 +242,6 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
 };
 
-// growth since 2006, indexed multiples, for the pay-vs-everything exhibit
-export const GROWTH_SINCE_2006 = {
-  baseline: "2006",
-  rows: [
-    {
-      label: "Average full-time pay",
-      mult: 1.94,
-      detail: "AWOTE $1,058.90/wk (Nov 2006) to $2,051.10/wk (Nov 2025)",
-      source: "ABS Average Weekly Earnings",
-    },
-    {
-      label: "The price of everything",
-      mult: 1.67,
-      detail: "consumer prices, 2006 to 2026",
-      source: "RBA inflation calculator / ABS CPI",
-    },
-    {
-      label: "The median Sydney house",
-      mult: 3.44,
-      detail: "$470,000 to $1,617,000",
-      source: "APM and CoreLogic-era medians",
-    },
-  ],
-};
-
 export type IviIndustries = {
   source: string;
   sourceUrl: string;
