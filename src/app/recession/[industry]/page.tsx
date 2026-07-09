@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import {
+  GROWTH_SINCE_2006,
   INDUSTRIES,
   getIndustryData,
   monthLabel,
@@ -9,6 +10,7 @@ import {
   type IndustrySlug,
 } from "@/app/lib/recession-industries";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { AdSpendChart } from "../AdSpendChart";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -42,10 +44,12 @@ export default async function IndustryPage({ params }: Params) {
       <DoomTicker data={data} />
       <HeadcountStrip data={data} />
       <HookSection hook={data.config.hook} />
-      {data.config.extraHook && <HookSection hook={data.config.extraHook} />}
+      {data.config.extraHook && <HookSection hook={data.config.extraHook} variant="strip" />}
+      {data.config.slug === "marketing" && <BigSpendersSection />}
       <LongChart data={data} />
       <SeekTiles data={data} />
       <YearlyAlmanac data={data} />
+      <PayVsSection data={data} />
       <Methodology data={data} />
     </div>
   );
@@ -176,19 +180,37 @@ function HeadcountStrip({ data }: { data: IndustryData }) {
 
 /* ---------------- why the line moves ---------------- */
 
-function HookSection({ hook }: { hook: IndustryData["config"]["hook"] }) {
+function HookSection({ hook, variant = "boxed" }: { hook: IndustryData["config"]["hook"]; variant?: "boxed" | "strip" }) {
   if (!hook.tiles.length) return null;
   return (
     <section className="mt-10">
       <SectionHeading kicker={hook.kicker === "Exhibit 0" ? "Exhibit A" : hook.kicker} title={hook.title} blurb={hook.blurb} />
-      <div className="grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-3">
-        {hook.tiles.map((t) => (
-          <div key={t.small} className="bg-white p-4 dark:bg-slate-900">
-            <div className="font-display text-4xl leading-none">{t.big}</div>
-            <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{t.small}</div>
-          </div>
-        ))}
-      </div>
+      {variant === "boxed" ? (
+        <div className="grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-3">
+          {hook.tiles.map((t) => (
+            <div key={t.small} className="bg-white p-4 dark:bg-slate-900">
+              <div className="font-display text-4xl leading-none">{t.big}</div>
+              <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{t.small}</div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-stretch gap-y-4 border-y-2 border-slate-900 bg-amber-50/60 px-5 py-6 dark:border-slate-100 dark:bg-amber-400/[0.06] sm:flex-row sm:items-start sm:gap-x-2">
+          {hook.tiles.map((t, i) => (
+            <div key={t.small} className="flex flex-1 items-start gap-x-2">
+              {i > 0 && (
+                <span className="font-display hidden self-center px-1 text-3xl text-red-700 dark:text-red-400 sm:block" aria-hidden>
+                  {hook.flow ? "→" : "·"}
+                </span>
+              )}
+              <div className={hook.flow ? "text-center sm:flex-1" : "sm:flex-1"}>
+                <div className="font-display text-5xl leading-none">{t.big}</div>
+                <div className="mx-auto mt-2 max-w-[26ch] font-serif text-xs text-slate-600 dark:text-slate-300">{t.small}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       {hook.conversion && (
         <div className="mt-px flex flex-wrap items-center justify-center gap-x-8 gap-y-2 border border-t-0 border-slate-300 bg-white px-4 py-5 dark:border-slate-700 dark:bg-slate-900">
           <div className="text-center">
@@ -355,6 +377,69 @@ function YearlyAlmanac({ data }: { data: IndustryData }) {
             </li>
           ))}
         </ol>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- the big spenders (marketing only) ---------------- */
+
+function BigSpendersSection() {
+  return (
+    <section className="mt-10">
+      <SectionHeading
+        kicker="Exhibit A¾"
+        title="The big spenders"
+        blurb="The world's largest advertising budgets, from company filings. Ad Age ranks Amazon, L'Oréal, P&G and Alibaba as the top four spenders on earth. Here are the ones that publish a number, plus you."
+      />
+      <AdSpendChart />
+      <p className="mt-2 text-[11px] text-slate-400">
+        Reported advertising or marketing expenses from annual filings; definitions vary by company. Ranking
+        context: Ad Age, World&apos;s Largest Advertisers 2024.
+      </p>
+    </section>
+  );
+}
+
+/* ---------------- your pay vs everything else ---------------- */
+
+function PayVsSection({ data }: { data: IndustryData }) {
+  const rows = GROWTH_SINCE_2006.rows;
+  const max = Math.max(...rows.map((r) => r.mult));
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker="Exhibit E"
+        title="Your pay against everything else"
+        blurb={`How pay has grown since ${GROWTH_SINCE_2006.baseline}, next to the things it is supposed to buy. Pay is the all-industries average because that is the honest series; ${data.config.name.toLowerCase()} wages have their own story but the shape is the same.`}
+      />
+      <div className="border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+        <div className="space-y-5">
+          {rows.map((r) => (
+            <div key={r.label}>
+              <div className="flex flex-wrap items-baseline gap-x-3">
+                <span className="font-display text-2xl leading-none">{r.label}</span>
+                <span className={`font-display text-4xl leading-none tabular-nums ${r.mult >= 3 ? "text-red-700 dark:text-red-400" : "text-slate-700 dark:text-slate-200"}`}>
+                  {r.mult.toFixed(2)}x
+                </span>
+                <span className="text-xs text-slate-500 dark:text-slate-400">{r.detail}</span>
+              </div>
+              <div className="mt-1 h-4 w-full bg-slate-100 dark:bg-slate-800">
+                <div
+                  className={`h-full ${r.mult >= 3 ? "bg-red-700/80 dark:bg-red-500/80" : "bg-slate-500/70 dark:bg-slate-400/60"}`}
+                  style={{ width: `${(r.mult / max) * 100}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 font-serif text-sm italic text-slate-600 dark:text-slate-300">
+          Pay nearly doubled in twenty years, which sounds fine until you notice the house more than tripled.
+          The gap between those bars is why both your parents work and why your deposit is theoretical.
+        </p>
+        <p className="mt-2 text-[11px] text-slate-400">
+          {rows.map((r) => r.source).join("; ")}.
+        </p>
       </div>
     </section>
   );
