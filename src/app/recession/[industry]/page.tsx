@@ -40,7 +40,9 @@ export default async function IndustryPage({ params }: Params) {
       <Masthead data={data} />
       <ReadingStrip data={data} />
       <DoomTicker data={data} />
-      <HookSection data={data} />
+      <HeadcountStrip data={data} />
+      <HookSection hook={data.config.hook} />
+      {data.config.extraHook && <HookSection hook={data.config.extraHook} />}
       <LongChart data={data} />
       <SeekTiles data={data} />
       <YearlyAlmanac data={data} />
@@ -155,14 +157,28 @@ function DoomTicker({ data }: { data: IndustryData }) {
   );
 }
 
+/* ---------------- real humans strip ---------------- */
+
+function HeadcountStrip({ data }: { data: IndustryData }) {
+  const h = data.config.headcount;
+  if (!h) return null;
+  return (
+    <section className="mt-2 border border-slate-300 bg-white px-5 py-3 dark:border-slate-700 dark:bg-slate-900">
+      <span className="font-display text-4xl leading-none tabular-nums">{nf.format(h.value)}</span>
+      <span className="ml-2 text-xs text-slate-500 dark:text-slate-400">
+        {h.label} ({h.source}). These are your colleagues, and also your competition.
+      </span>
+    </section>
+  );
+}
+
 /* ---------------- why the line moves ---------------- */
 
-function HookSection({ data }: { data: IndustryData }) {
-  const hook = data.config.hook;
+function HookSection({ hook }: { hook: IndustryData["config"]["hook"] }) {
   if (!hook.tiles.length) return null;
   return (
     <section className="mt-10">
-      <SectionHeading kicker="Exhibit A" title={hook.title} blurb={hook.blurb} />
+      <SectionHeading kicker={hook.kicker === "Exhibit 0" ? "Exhibit A" : hook.kicker} title={hook.title} blurb={hook.blurb} />
       <div className="grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-3">
         {hook.tiles.map((t) => (
           <div key={t.small} className="bg-white p-4 dark:bg-slate-900">
@@ -171,6 +187,27 @@ function HookSection({ data }: { data: IndustryData }) {
           </div>
         ))}
       </div>
+      {hook.conversion && (
+        <div className="mt-px flex flex-wrap items-center justify-center gap-x-8 gap-y-2 border border-t-0 border-slate-300 bg-white px-4 py-5 dark:border-slate-700 dark:bg-slate-900">
+          <div className="text-center">
+            <div className="text-4xl tracking-widest" aria-hidden>
+              {hook.conversion.from.emoji.repeat(hook.conversion.from.count)}
+            </div>
+            <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+              {hook.conversion.from.count} {hook.conversion.from.label}
+            </div>
+          </div>
+          <div className="font-display text-3xl text-red-700 dark:text-red-400" aria-hidden>→</div>
+          <div className="text-center">
+            <div className="text-4xl tracking-widest" aria-hidden>
+              {hook.conversion.to.emoji.repeat(hook.conversion.to.count)}
+            </div>
+            <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+              {hook.conversion.to.count} {hook.conversion.to.label}
+            </div>
+          </div>
+        </div>
+      )}
       <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
         {hook.punchline}
       </p>
