@@ -85,21 +85,10 @@ export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
                     <button
                       onClick={() => choose(ind)}
                       onDoubleClick={() => go(ind)}
-                      className="flex w-full items-center justify-between gap-4 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
+                      className="block w-full px-4 py-2.5 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
                     >
                       <span className="font-display text-xl tracking-wide text-slate-900 dark:text-slate-50">
                         {ind.name}
-                      </span>
-                      <span
-                        className={`font-display shrink-0 text-lg tracking-wider ${
-                          ind.hiring
-                            ? "reading-hiring text-emerald-600 dark:text-emerald-400"
-                            : ind.indexLabel === "Cooked"
-                              ? "text-red-700 dark:text-red-400"
-                              : "text-amber-600 dark:text-amber-400"
-                        }`}
-                      >
-                        {ind.hiring ? "HIRING" : ind.indexLabel.toUpperCase()}
                       </span>
                     </button>
                   </li>
