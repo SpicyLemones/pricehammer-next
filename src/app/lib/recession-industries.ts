@@ -18,6 +18,7 @@ export type IndustryHook = {
   tiles: { big: string; small: string }[];
   punchline: string;
   sources: string;
+  flow?: boolean; // strip layout joins the stats with arrows instead of rules
   // optional pictogram conversion, e.g. three residents -> two care jobs
   conversion?: {
     from: { emoji: string; count: number; label: string };
@@ -154,6 +155,7 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     extraHook: {
       kicker: "Exhibit A½",
       title: "The pipeline: mortgage → two jobs → childcare",
+      flow: true,
       blurb: "The correlation nobody markets: as the cost of living climbed, the single-income family turned into a luxury product. Every family that lost it became a childcare customer.",
       tiles: [
         { big: "52.5%", small: "of couple families with dependent children had both parents working in 1993 (AIFS)" },
@@ -238,6 +240,31 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     },
     pickerLine: "A leading indicator of corporate panic.",
   },
+};
+
+// growth since 2006, indexed multiples, for the pay-vs-everything exhibit
+export const GROWTH_SINCE_2006 = {
+  baseline: "2006",
+  rows: [
+    {
+      label: "Average full-time pay",
+      mult: 1.94,
+      detail: "AWOTE $1,058.90/wk (Nov 2006) to $2,051.10/wk (Nov 2025)",
+      source: "ABS Average Weekly Earnings",
+    },
+    {
+      label: "The price of everything",
+      mult: 1.67,
+      detail: "consumer prices, 2006 to 2026",
+      source: "RBA inflation calculator / ABS CPI",
+    },
+    {
+      label: "The median Sydney house",
+      mult: 3.44,
+      detail: "$470,000 to $1,617,000",
+      source: "APM and CoreLogic-era medians",
+    },
+  ],
 };
 
 export type IviIndustries = {
