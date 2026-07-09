@@ -17,8 +17,6 @@ export type PickerIndustry = {
   latestValue: number;
 };
 
-const nf = new Intl.NumberFormat("en-AU");
-
 export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -79,7 +77,7 @@ export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
         </div>
 
         {open && (
-          <div className="absolute inset-x-0 top-full z-10 border-2 border-t-0 border-slate-900 bg-white shadow-[6px_6px_0_rgba(0,0,0,0.15)] dark:border-slate-100 dark:bg-slate-950">
+          <div className="absolute inset-x-0 top-full z-10 max-h-72 overflow-y-auto border-2 border-t-0 border-slate-900 bg-white shadow-[6px_6px_0_rgba(0,0,0,0.15)] dark:border-slate-100 dark:bg-slate-950">
             {matches.length ? (
               <ul className="divide-y divide-slate-200 dark:divide-slate-800">
                 {matches.map((ind) => (
@@ -87,27 +85,21 @@ export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
                     <button
                       onClick={() => choose(ind)}
                       onDoubleClick={() => go(ind)}
-                      className="flex w-full items-center justify-between gap-4 px-4 py-3 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
+                      className="flex w-full items-center justify-between gap-4 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
                     >
-                      <span>
-                        <span className="font-display text-xl tracking-wide text-slate-900 dark:text-slate-50">
-                          {ind.name}
-                        </span>
-                        <span className="ml-2 font-serif text-sm text-slate-500 dark:text-slate-400">
-                          {ind.pickerLine}
-                        </span>
-                        <span className="mt-0.5 block text-[11px] text-slate-400">
-                          {nf.format(ind.latestValue)} postings a month
-                        </span>
+                      <span className="font-display text-xl tracking-wide text-slate-900 dark:text-slate-50">
+                        {ind.name}
                       </span>
                       <span
                         className={`font-display shrink-0 text-lg tracking-wider ${
                           ind.hiring
                             ? "reading-hiring text-emerald-600 dark:text-emerald-400"
-                            : "text-red-700 dark:text-red-400"
+                            : ind.indexLabel === "Cooked"
+                              ? "text-red-700 dark:text-red-400"
+                              : "text-amber-600 dark:text-amber-400"
                         }`}
                       >
-                        {ind.hiring ? "HIRING" : ind.indexLabel}
+                        {ind.hiring ? "HIRING" : ind.indexLabel.toUpperCase()}
                       </span>
                     </button>
                   </li>

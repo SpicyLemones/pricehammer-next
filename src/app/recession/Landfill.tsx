@@ -88,7 +88,7 @@ export function Landfill({
             <span className="text-2xl" aria-hidden>📄</span>
             <div className="flex-1">
               <span className="font-display text-lg tracking-wide text-red-700 dark:text-red-400">
-                YOUR STACK — {nf.format(stackMetres)} m
+                YOUR STACK: {nf.format(stackMetres)} m
               </span>
               <span className="ml-2 text-[11px] text-slate-500 dark:text-slate-400">
                 everything below this line has been out-piled

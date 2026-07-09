@@ -161,12 +161,9 @@ export async function getRecessionData(): Promise<RecessionData> {
   const avg2006 = Math.round(ict.slice(0, 12).reduce((a, b) => a + b, 0) / 12);
   const vs2006Pct = Math.round(((latest.value - avg2006) / avg2006) * 100);
 
-  const indexLabel =
-    vsPeakPct > -15 ? "Mild sniffles" :
-    vsPeakPct > -30 ? "Concerning cough" :
-    vsPeakPct > -45 ? "See a doctor" :
-    vsPeakPct > -60 ? "Family has been notified" :
-    "Cooked";
+  // same three readings as the industry pages: Hiring, Ehhh, Cooked
+  const hiring = vsPeakPct >= -20 || latest.value >= ict[fiveYearsIdx] * 1.1;
+  const indexLabel = hiring ? "Hiring" : vsPeakPct <= -55 ? "Cooked" : "Ehhh";
 
   // DB-backed pieces degrade gracefully before the collector has run
   let redditMonthly: RedditMonthly[] = [];
