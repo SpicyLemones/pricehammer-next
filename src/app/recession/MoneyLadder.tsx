@@ -139,7 +139,7 @@ export function MoneyLadder({ refStats }: { refStats: ReferenceStats }) {
         <div className="flex items-center gap-3">
           <span className="font-mono text-xs tabular-nums text-slate-700 dark:text-slate-200">
             climbed past: {fmtShort(Math.min(seen, top.value))}
-            {done ? " — and he made it back while you scrolled" : ""}
+            {done ? ". He made it back while you scrolled, by the way" : ""}
           </span>
           <button
             onClick={skipToElon}

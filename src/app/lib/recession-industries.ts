@@ -88,7 +88,7 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     hook: {
       kicker: "Exhibit 0",
       title: "Why the line moves: people got old",
-      blurb: "This is the healthiest jobs line in the country, and the reason is not inspiring. It is demographics.",
+      blurb: "The healthiest jobs line in the country, for the least inspiring reason going: demographics.",
       tiles: [
         { big: "2x", small: "the size the care and support workforce may need to be by 2049-50, versus 2020-21 (Intergenerational Report 2023)" },
         { big: "~79,500", small: "projected national nurse shortfall by 2035 (Department of Health modelling)" },
@@ -108,7 +108,7 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
         { big: "7 → 1", small: "every seven residents mandate a full-time registered nurse, by the same arithmetic" },
       ],
       punchline:
-        "Every boomer who checks into residential care legally manufactures about two-thirds of a full-time job on arrival. Demand for you is not a market forecast, it is legislation with a stopwatch. Whether the wage is livable is a separate exhibit the sector would prefer we not print.",
+        "Every boomer who checks into residential care legally manufactures about two-thirds of a full-time job on arrival. Your demand curve is written directly into legislation, with a stopwatch attached. Whether the wage is livable is a separate exhibit the sector would prefer we not print.",
       sources: "Care minutes mandate: Department of Health, Disability and Ageing. FTE maths shown on the tiles.",
       conversion: {
         from: { emoji: "👵", count: 3, label: "residents entering aged care" },
@@ -141,7 +141,7 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     hook: {
       kicker: "Exhibit 0",
       title: "Why the line moves: both parents are at work",
-      blurb: "Demand here is not a boom in national enthusiasm for early learning. It is arithmetic about mortgages.",
+      blurb: "Demand here has little to do with a national love of early learning and everything to do with mortgage arithmetic.",
       tiles: [
         { big: "21,000", small: "extra qualified educators needed right now just to meet current demand (Jobs and Skills Australia)" },
         { big: "173,000", small: "people already working in children's education and care, with below-average retention and pay to match" },
@@ -154,7 +154,7 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     extraHook: {
       kicker: "Exhibit A½",
       title: "The pipeline: mortgage → two jobs → childcare",
-      blurb: "The correlation nobody markets: as the cost of living climbed, the single-income family quietly became a luxury product, and every family that lost it became a childcare customer.",
+      blurb: "The correlation nobody markets: as the cost of living climbed, the single-income family turned into a luxury product. Every family that lost it became a childcare customer.",
       tiles: [
         { big: "52.5%", small: "of couple families with dependent children had both parents working in 1993 (AIFS)" },
         { big: "70%+", small: "the same figure today (ABS Labour Force Status of Families). The stay-at-home parent is now a minority position" },
@@ -226,7 +226,7 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
         { big: "∞", small: "LinkedIn posts about 'doing more with less'. The less was you" },
       ],
       punchline:
-        "No board has ever cut the legal team first. When budgets tighten, marketing goes, and generative tools gave every CFO a fresh excuse to try. The postings that survive now want one person to do the work of the four who left, with a title like 'growth ninja' as compensation.",
+        "No board has ever cut the legal team first. When budgets tighten, marketing goes. Generative tools just handed every CFO a fresh excuse. The postings that survive now want one person to do the work of the four who left, with a title like 'growth ninja' as compensation.",
       sources: "Gartner annual CMO spend surveys; the collective sighing of r/marketing.",
     },
     quips: {

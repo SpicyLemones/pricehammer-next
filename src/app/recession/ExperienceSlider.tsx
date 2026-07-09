@@ -15,9 +15,9 @@ type Bracket = {
 
 const BRACKETS: { max: number; b: Bracket }[] = [
   { max: 0, b: { label: "Fresh graduate", countKey: "seek-ict-graduate", verdict: "Ads that say the word 'graduate'. Most also want two years of experience, which is a fun paradox to sit with." } },
-  { max: 2, b: { label: "Junior (1–2 years)", countKey: "seek-ict-junior", verdict: "You now have experience, which disqualifies you from graduate roles and not much else." } },
-  { max: 5, b: { label: "Mid-level (3–5 years)", countKey: "mid", verdict: "Ads that name neither junior nor senior. You are the load-bearing middle nobody writes ads for." } },
-  { max: 10, b: { label: "Senior (6–10 years)", countKey: "seek-ict-senior", verdict: "Congratulations, the market wants you. It only took a decade." } },
+  { max: 2, b: { label: "Junior (1-2 years)", countKey: "seek-ict-junior", verdict: "You now have experience, which disqualifies you from graduate roles and not much else." } },
+  { max: 5, b: { label: "Mid-level (3-5 years)", countKey: "mid", verdict: "Ads that name neither junior nor senior. You are the load-bearing middle nobody writes ads for." } },
+  { max: 10, b: { label: "Senior (6-10 years)", countKey: "seek-ict-senior", verdict: "Congratulations, the market wants you. It only took a decade." } },
   { max: 15, b: { label: "Veteran (10+ years)", countKey: "seek-ict-senior", verdict: "Same senior ads as before, but now recruiters call you 'overqualified' in the rejection." } },
 ];
 
