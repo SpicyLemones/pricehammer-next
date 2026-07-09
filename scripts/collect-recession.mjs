@@ -62,7 +62,17 @@ const SEEK_SERIES = [
   { series: "seek-ict-senior", params: "classification=6281&keywords=senior" },
   { series: "seek-ict-intern", params: "classification=6281&keywords=intern" },
   { series: "seek-all-graduate", params: "keywords=graduate" },
+  // per-industry pages: healthcare 1211, education & training 6123, marketing 6008
+  { series: "seek-nursing-all", params: "classification=1211" },
+  { series: "seek-nursing-graduate", params: "classification=1211&keywords=graduate" },
+  { series: "seek-education-all", params: "classification=6123" },
+  { series: "seek-education-graduate", params: "classification=6123&keywords=graduate" },
+  { series: "seek-childcare-all", params: "classification=6123&keywords=early+childhood" },
+  { series: "seek-marketing-all", params: "classification=6008" },
+  { series: "seek-marketing-graduate", params: "classification=6008&keywords=graduate" },
 ];
+
+const seekOnly = process.argv.includes("--seek-only");
 
 async function seekCount(params) {
   const url = `https://www.seek.com.au/api/jobsearch/v5/search?siteKey=AU-Main&where=All+Australia&pageSize=1&${params}`;
@@ -130,6 +140,12 @@ function parseEntries(xml) {
     });
   }
   return entries.filter((e) => e.id);
+}
+
+if (seekOnly) {
+  console.log("Done (seek only).");
+  db.close();
+  process.exit(0);
 }
 
 console.log("— Reddit RSS —");

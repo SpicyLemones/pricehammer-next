@@ -21,7 +21,7 @@ const tiles = [
   },
   {
     title: "RECESSION INDICATOR",
-    subtitle: "The tech job market, charted. Bring a helmet",
+    subtitle: "How cooked is your industry? Pick one and find out",
     href: "/recession",
     external: false,
     background: "/videos/maintenance.mp4", // Example Video

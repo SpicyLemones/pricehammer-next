@@ -49,8 +49,8 @@ export function FieldReports({
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <PostColumn heading="Most popular" note="peak solidarity" posts={top} />
-        <PostColumn heading="Most controversial" note="peak discourse" posts={controversial} />
+        <PostColumn heading="Most popular" posts={top} />
+        <PostColumn heading="Most controversial" posts={controversial} />
       </div>
     </section>
   );
@@ -60,12 +60,11 @@ function byRank(a: FunPost, b: FunPost) {
   return a.rank - b.rank || a.sub.localeCompare(b.sub);
 }
 
-function PostColumn({ heading, note, posts }: { heading: string; note: string; posts: FunPost[] }) {
+function PostColumn({ heading, posts }: { heading: string; posts: FunPost[] }) {
   return (
     <div className="border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
-      <div className="flex items-baseline justify-between border-b border-slate-200 px-4 py-2 dark:border-slate-700">
+      <div className="border-b border-slate-200 px-4 py-2 dark:border-slate-700">
         <h3 className="font-display text-xl tracking-wide">{heading}</h3>
-        <span className="text-[11px] uppercase tracking-widest text-slate-400">{note}</span>
       </div>
       {posts.length ? (
         <ol className="divide-y divide-slate-100 dark:divide-slate-800">
