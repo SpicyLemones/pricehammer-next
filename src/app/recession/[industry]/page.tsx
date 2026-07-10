@@ -11,6 +11,7 @@ import {
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { AdSpendChart } from "../AdSpendChart";
 import { PayVsChart } from "../PayVsChart";
+import { JobRoulette } from "../JobRoulette";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,10 +25,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { industry } = await params;
   const config = INDUSTRIES[industry as IndustrySlug];
   if (!config) return { title: "The Recession Indicator" };
+  const title = `The Recession Indicator: ${config.name}`;
   return {
-    title: `The Recession Indicator: ${config.name}`,
+    title,
     description: config.tagline,
     alternates: { canonical: `/recession/${industry}` },
+    openGraph: { title, description: config.tagline, url: `/recession/${industry}` },
+    twitter: { title, description: config.tagline },
   };
 }
 
@@ -55,6 +59,7 @@ export default async function IndustryPage({ params }: Params) {
       {data.topEmployers.length > 0 && <TopEmployersSection data={data} kicker={nextExhibit()} />}
       <YearlyAlmanac data={data} kicker={nextExhibit()} />
       <PayVsSection data={data} kicker={nextExhibit()} />
+      <RouletteSection data={data} kicker={nextExhibit()} />
       {data.config.bigPlayers && <BigPlayersSection data={data} kicker={nextExhibit()} />}
       {!data.hiring && <HopeSection data={data} kicker={nextExhibit()} />}
       <Methodology data={data} />
@@ -468,6 +473,27 @@ function PayVsSection({ data, kicker }: { data: IndustryData; kicker: string }) 
         Pay nearly doubled in twenty years, which sounds fine until you notice the house more than tripled.
         The gap between those lines is why both your parents work and why your deposit is theoretical.
       </p>
+    </section>
+  );
+}
+
+/* ---------------- the application roulette ---------------- */
+
+// the Glassdoor ~250-per-opening figure, scaled by how the market reads
+function defaultApplicantsFor(data: IndustryData): number {
+  if (data.hiring) return 100;
+  return data.indexLabel === "Cooked" ? 500 : 250;
+}
+
+function RouletteSection({ data, kicker }: { data: IndustryData; kicker: string }) {
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker={kicker}
+        title="The application roulette"
+        blurb="One spin is one cold application. The green slice is your statistical share of the posting, drawn to scale. Good luck out there."
+      />
+      <JobRoulette industryName={data.config.name} defaultApplicants={defaultApplicantsFor(data)} />
     </section>
   );
 }

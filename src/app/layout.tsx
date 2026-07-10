@@ -26,9 +26,32 @@ const ui = Montserrat({
 const metadataBase = new URL("https://spycy.fun");
 
 const primaryDescription =
-  "Spycy.fun is home to PriceHammer, a Warhammer price tracker for Australian retailers, plus assorted side projects.";
+  "A collection of my most devious contraptions and majestic devices.";
+const pricehammerDescription =
+  "PriceHammer, a Warhammer price tracker for Australian retailers.";
 
-export const metadata: Metadata = {
+// pricehammer.xyz serves the same app; its links should embed as PriceHammer
+export async function generateMetadata(): Promise<Metadata> {
+  const { headers } = await import("next/headers");
+  const host = (await headers()).get("host") ?? "";
+  if (host.includes("pricehammer")) {
+    return {
+      ...baseMetadata,
+      title: { default: "PriceHammer", template: "%s | PriceHammer" },
+      description: pricehammerDescription,
+      openGraph: {
+        ...baseMetadata.openGraph,
+        title: "PriceHammer",
+        description: pricehammerDescription,
+        siteName: "PriceHammer",
+      },
+      twitter: { ...baseMetadata.twitter, title: "PriceHammer", description: pricehammerDescription },
+    };
+  }
+  return baseMetadata;
+}
+
+const baseMetadata: Metadata = {
   metadataBase,
   title: {
     default: "Spycy.fun ",

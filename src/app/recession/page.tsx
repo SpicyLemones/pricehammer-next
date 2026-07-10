@@ -8,11 +8,21 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+const pickerDescription = "Your go to hub in doom economics.";
+
 export const metadata: Metadata = {
   title: "The Recession Indicator",
-  description:
-    "Search your industry and find out how cooked it is. Real job posting data, graduate odds and dark humour for the Australian job market.",
+  description: pickerDescription,
   alternates: { canonical: "/recession" },
+  openGraph: {
+    title: "The Recession Indicator",
+    description: pickerDescription,
+    url: "/recession",
+  },
+  twitter: {
+    title: "The Recession Indicator",
+    description: pickerDescription,
+  },
 };
 
 export default async function RecessionPickerPage() {
@@ -30,8 +40,8 @@ export default async function RecessionPickerPage() {
   return (
     <div className="relative min-h-[85vh] w-full overflow-hidden">
       {/* the giant headline wall behind everything */}
-      <div className="pointer-events-none absolute inset-0 select-none overflow-hidden" aria-hidden>
-        <div className="font-display whitespace-nowrap text-[16vw] leading-[0.85] text-slate-900/[0.06] dark:text-slate-100/[0.05]">
+      <div className="pointer-events-none absolute inset-0 flex select-none items-center overflow-hidden" aria-hidden>
+        <div className="font-display w-full whitespace-nowrap text-[min(16vw,12.5vh)] leading-[0.85] text-slate-900/[0.06] dark:text-slate-100/[0.05]">
           THE RECESSION<br />
           INDICATOR<br />
           THE RECESSION<br />
@@ -53,7 +63,7 @@ export default async function RecessionPickerPage() {
                 The Recession Indicator
               </h1>
               <p className="mt-1 font-serif text-sm italic text-slate-600 dark:text-slate-300">
-                Search your industry. Find out how cooked it is.
+                Search your industry.
               </p>
             </div>
             <ThemeToggle />

@@ -6,6 +6,7 @@ import { MoneyLadder } from "../MoneyLadder";
 import { Landfill } from "../Landfill";
 import { ExperienceSlider } from "../ExperienceSlider";
 import { PayVsChart } from "../PayVsChart";
+import { JobRoulette } from "../JobRoulette";
 import { getTopEmployers, INDUSTRIES, type TopEmployer } from "@/app/lib/recession-industries";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 
@@ -13,11 +14,14 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+const techDescription = "An almanac of the Australian tech job market. Updated whenever it gets worse.";
+
 export const metadata: Metadata = {
   title: "The Recession Indicator: Tech",
-  description:
-    "An almanac of the Australian tech job market. Job postings, graduate odds and the collective mood of the internet, charted for your morbid curiosity.",
+  description: techDescription,
   alternates: { canonical: "/recession/tech" },
+  openGraph: { title: "The Recession Indicator: Tech", description: techDescription, url: "/recession/tech" },
+  twitter: { title: "The Recession Indicator: Tech", description: techDescription },
 };
 
 const nf = new Intl.NumberFormat("en-AU");
@@ -41,8 +45,9 @@ export default async function RecessionPage() {
       <PayVsSection />
       <ExperienceSection data={data} />
       <BacklogSection data={data} />
+      <RouletteSection />
       <BigPlayersSection />
-      <FieldReports funPosts={data.funPosts} auSubs={data.auSubs} globalSubs={data.globalSubs} kicker="Exhibit L" />
+      <FieldReports funPosts={data.funPosts} auSubs={data.auSubs} globalSubs={data.globalSubs} kicker="Exhibit M" />
       <HopeGagSection />
       <Methodology data={data} />
     </div>
@@ -651,12 +656,25 @@ function BacklogSection({ data }: { data: RecessionData }) {
 
 /* ---------------- the big end of town ---------------- */
 
+function RouletteSection() {
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker="Exhibit K"
+        title="The application roulette"
+        blurb="One spin is one cold application. The green slice is your statistical share of the posting, drawn to scale. Good luck out there."
+      />
+      <JobRoulette industryName="Tech" defaultApplicants={500} />
+    </section>
+  );
+}
+
 function BigPlayersSection() {
   const players = INDUSTRIES.tech.bigPlayers ?? [];
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit K"
+        kicker="Exhibit L"
         title="The big end of town"
         blurb="The largest players in Australian tech, ranked by heft. Figures only where they publish them."
       />
@@ -682,7 +700,7 @@ function BigPlayersSection() {
 function HopeGagSection() {
   return (
     <section className="mt-12">
-      <SectionHeading kicker="Exhibit M" title="What you can actually do about it" />
+      <SectionHeading kicker="Exhibit N" title="What you can actually do about it" />
       <div className="border border-dashed border-slate-400 bg-white px-6 py-10 text-center dark:border-slate-600 dark:bg-slate-900">
         <p className="font-serif text-sm italic text-slate-500 dark:text-slate-400">
           We went looking for genuine, proven advice for breaking into this market and will publish it the
