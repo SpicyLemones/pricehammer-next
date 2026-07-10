@@ -6,7 +6,7 @@ import { MoneyLadder } from "../MoneyLadder";
 import { Landfill } from "../Landfill";
 import { ExperienceSlider } from "../ExperienceSlider";
 import { PayVsChart } from "../PayVsChart";
-import { getTopEmployers, type TopEmployer } from "@/app/lib/recession-industries";
+import { getTopEmployers, INDUSTRIES, type TopEmployer } from "@/app/lib/recession-industries";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 
 export const runtime = "nodejs";
@@ -41,7 +41,9 @@ export default async function RecessionPage() {
       <PayVsSection />
       <ExperienceSection data={data} />
       <BacklogSection data={data} />
-      <FieldReports funPosts={data.funPosts} auSubs={data.auSubs} globalSubs={data.globalSubs} />
+      <BigPlayersSection />
+      <FieldReports funPosts={data.funPosts} auSubs={data.auSubs} globalSubs={data.globalSubs} kicker="Exhibit L" />
+      <HopeGagSection />
       <Methodology data={data} />
     </div>
   );
@@ -641,6 +643,53 @@ function BacklogSection({ data }: { data: RecessionData }) {
         <p className="mt-2 text-[11px] text-slate-400">
           Cohort size: {data.refStats.ictGradsPerYear.source}. Still-hunting shares:{" "}
           {data.refStats.gradStillLookingShares.source}
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- the big end of town ---------------- */
+
+function BigPlayersSection() {
+  const players = INDUSTRIES.tech.bigPlayers ?? [];
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker="Exhibit K"
+        title="The big end of town"
+        blurb="The largest players in Australian tech, ranked by heft. Figures only where they publish them."
+      />
+      <div className="border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
+        <ol className="divide-y divide-slate-100 dark:divide-slate-800">
+          {players.map((p, i) => (
+            <li key={p.name} className="flex items-baseline gap-3 px-4 py-2.5">
+              <span className="font-mono w-6 shrink-0 text-right text-xs text-slate-400">{i + 1}</span>
+              <div className="flex flex-wrap items-baseline gap-x-3">
+                <span className="font-display text-lg leading-none">{p.name}</span>
+                <span className="font-serif text-sm text-slate-500 dark:text-slate-400">{p.note}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- the hope section, tech edition ---------------- */
+
+function HopeGagSection() {
+  return (
+    <section className="mt-12">
+      <SectionHeading kicker="Exhibit M" title="What you can actually do about it" />
+      <div className="border border-dashed border-slate-400 bg-white px-6 py-10 text-center dark:border-slate-600 dark:bg-slate-900">
+        <p className="font-serif text-sm italic text-slate-500 dark:text-slate-400">
+          We went looking for genuine, proven advice for breaking into this market and will publish it the
+          moment we find some.
+        </p>
+        <p className="mt-3 text-[11px] uppercase tracking-widest text-slate-400">
+          this space has been blank since April 2022
         </p>
       </div>
     </section>

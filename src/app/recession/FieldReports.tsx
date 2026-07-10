@@ -7,10 +7,12 @@ export function FieldReports({
   funPosts,
   auSubs,
   globalSubs,
+  kicker = "Exhibit K",
 }: {
   funPosts: FunPost[];
   auSubs: string[];
   globalSubs: string[];
+  kicker?: string;
 }) {
   const [scope, setScope] = useState<"au" | "global">("au");
 
@@ -25,7 +27,7 @@ export function FieldReports({
     <section className="mt-12">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <div className="text-[11px] uppercase tracking-widest text-red-700 dark:text-red-400">Exhibit K</div>
+          <div className="text-[11px] uppercase tracking-widest text-red-700 dark:text-red-400">{kicker}</div>
           <h2 className="font-display text-3xl tracking-wide sm:text-4xl">Field reports from the trenches</h2>
           <p className="mt-1 max-w-2xl font-serif text-sm text-slate-600 dark:text-slate-300">
             The biggest and most heated posts on the job subreddits this month. Morale is what it is.
