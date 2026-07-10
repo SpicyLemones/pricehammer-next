@@ -70,6 +70,13 @@ const SEEK_SERIES = [
   { series: "seek-childcare-all", params: "classification=6123&keywords=early+childhood" },
   { series: "seek-marketing-all", params: "classification=6008" },
   { series: "seek-marketing-graduate", params: "classification=6008&keywords=graduate" },
+  // engineering 1209 + discipline keyword slices
+  { series: "seek-engineering-all", params: "classification=1209" },
+  { series: "seek-engineering-graduate", params: "classification=1209&keywords=graduate" },
+  { series: "seek-civil-all", params: "classification=1209&keywords=civil" },
+  { series: "seek-electrical-all", params: "classification=1209&keywords=electrical" },
+  { series: "seek-mechanical-all", params: "classification=1209&keywords=mechanical" },
+  { series: "seek-aerospace-all", params: "classification=1209&keywords=aerospace" },
 ];
 
 const seekOnly = process.argv.includes("--seek-only");
@@ -161,6 +168,11 @@ const EMPLOYER_INDUSTRIES = [
   { industry: "education", params: "classification=6123" },
   { industry: "childcare", params: "classification=6123&keywords=early+childhood" },
   { industry: "marketing", params: "classification=6008" },
+  { industry: "engineering", params: "classification=1209" },
+  { industry: "civil", params: "classification=1209&keywords=civil" },
+  { industry: "electrical", params: "classification=1209&keywords=electrical" },
+  { industry: "mechanical", params: "classification=1209&keywords=mechanical" },
+  { industry: "aerospace", params: "classification=1209&keywords=aerospace" },
 ];
 
 console.log("— Top employers —");

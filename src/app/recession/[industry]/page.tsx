@@ -55,6 +55,8 @@ export default async function IndustryPage({ params }: Params) {
       {data.topEmployers.length > 0 && <TopEmployersSection data={data} kicker={nextExhibit()} />}
       <YearlyAlmanac data={data} kicker={nextExhibit()} />
       <PayVsSection data={data} kicker={nextExhibit()} />
+      {data.config.bigPlayers && <BigPlayersSection data={data} kicker={nextExhibit()} />}
+      {!data.hiring && <HopeSection data={data} kicker={nextExhibit()} />}
       <Methodology data={data} />
     </div>
   );
@@ -466,6 +468,84 @@ function PayVsSection({ data, kicker }: { data: IndustryData; kicker: string }) 
         Pay nearly doubled in twenty years, which sounds fine until you notice the house more than tripled.
         The gap between those lines is why both your parents work and why your deposit is theoretical.
       </p>
+    </section>
+  );
+}
+
+/* ---------------- the big end of town ---------------- */
+
+function BigPlayersSection({ data, kicker }: { data: IndustryData; kicker: string }) {
+  const players = data.config.bigPlayers ?? [];
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker={kicker}
+        title="The big end of town"
+        blurb="The largest players in this industry, ranked by heft. Half of them are private, foreign-owned or not-for-profit and publish no Australian profit line, so real figures appear only where they exist."
+      />
+      <div className="border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
+        <ol className="divide-y divide-slate-100 dark:divide-slate-800">
+          {players.map((p, i) => (
+            <li key={p.name} className="flex items-baseline gap-3 px-4 py-2.5">
+              <span className="font-mono w-6 shrink-0 text-right text-xs text-slate-400">{i + 1}</span>
+              <div className="flex flex-wrap items-baseline gap-x-3">
+                <span className="font-display text-lg leading-none">{p.name}</span>
+                <span className="font-serif text-sm text-slate-500 dark:text-slate-400">{p.note}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- the hope section ---------------- */
+
+function HopeSection({ data, kicker }: { data: IndustryData; kicker: string }) {
+  const hope = data.config.hope;
+
+  if (!hope) {
+    // some industries have no proven playbook, and that is its own exhibit
+    return (
+      <section className="mt-12">
+        <SectionHeading kicker={kicker} title="What you can actually do about it" />
+        <div className="border border-dashed border-slate-400 bg-white px-6 py-10 text-center dark:border-slate-600 dark:bg-slate-900">
+          <p className="font-serif text-sm italic text-slate-500 dark:text-slate-400">
+            We went looking for genuine, proven advice for breaking into this market and will publish it the
+            moment we find some.
+          </p>
+          <p className="mt-3 text-[11px] uppercase tracking-widest text-slate-400">
+            this space has been blank since {monthLabel(data.peak.month)}
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="mt-12">
+      <SectionHeading kicker={kicker} title="What actually works" blurb={hope.blurb} />
+      <div className="border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
+        <ol className="divide-y divide-slate-100 dark:divide-slate-800">
+          {hope.items.map((it, i) => (
+            <li key={it.tip} className="flex gap-3 px-4 py-3">
+              <span className="font-display shrink-0 text-2xl leading-none text-emerald-600 dark:text-emerald-400">
+                {i + 1}
+              </span>
+              <div>
+                <div className="font-display text-lg leading-none">{it.tip}</div>
+                <p className="mt-1 font-serif text-sm text-slate-600 dark:text-slate-300">{it.why}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+      {hope.funFact && (
+        <p className="mt-3 border-l-2 border-emerald-600 pl-3 font-serif text-sm text-slate-600 dark:border-emerald-400 dark:text-slate-300">
+          {hope.funFact}
+        </p>
+      )}
     </section>
   );
 }
