@@ -142,6 +142,64 @@ function parseEntries(xml) {
   return entries.filter((e) => e.id);
 }
 
+// --- Top employers by live postings, per industry ---
+// Samples up to 1,000 postings per industry and ranks advertisers.
+
+await run(`CREATE TABLE IF NOT EXISTS recession_top_employers (
+  industry TEXT NOT NULL,
+  rank INTEGER NOT NULL,
+  employer TEXT NOT NULL,
+  postings INTEGER NOT NULL,
+  sampled INTEGER NOT NULL,
+  fetched_at TEXT NOT NULL,
+  PRIMARY KEY (industry, rank)
+)`);
+
+const EMPLOYER_INDUSTRIES = [
+  { industry: "tech", params: "classification=6281" },
+  { industry: "nursing", params: "classification=1211" },
+  { industry: "education", params: "classification=6123" },
+  { industry: "childcare", params: "classification=6123&keywords=early+childhood" },
+  { industry: "marketing", params: "classification=6008" },
+];
+
+console.log("— Top employers —");
+for (const { industry, params } of EMPLOYER_INDUSTRIES) {
+  try {
+    const counts = new Map();
+    let sampled = 0;
+    for (let page = 1; page <= 10; page++) {
+      const url = `https://www.seek.com.au/api/jobsearch/v5/search?siteKey=AU-Main&where=All+Australia&pageSize=100&page=${page}&${params}`;
+      const res = await fetch(url, { headers: { "User-Agent": UA, Accept: "application/json" } });
+      if (!res.ok) break;
+      const json = await res.json();
+      const jobs = Array.isArray(json?.data) ? json.data : [];
+      if (!jobs.length) break;
+      for (const job of jobs) {
+        const name = (job.advertiser?.description ?? "").trim();
+        if (!name || name === "Private Advertiser") continue;
+        counts.set(name, (counts.get(name) ?? 0) + 1);
+        sampled++;
+      }
+      if (jobs.length < 100) break;
+      await sleep(1200);
+    }
+    const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20);
+    await run(`DELETE FROM recession_top_employers WHERE industry = ?`, [industry]);
+    for (let i = 0; i < top.length; i++) {
+      await run(
+        `INSERT INTO recession_top_employers (industry, rank, employer, postings, sampled, fetched_at)
+         VALUES (?, ?, ?, ?, ?, ?)`,
+        [industry, i + 1, top[i][0].slice(0, 120), top[i][1], sampled, new Date().toISOString()],
+      );
+    }
+    console.log(`  ${industry}: sampled ${sampled}, top: ${top[0]?.[0]} (${top[0]?.[1]})`);
+  } catch (e) {
+    console.warn(`  ${industry} employers FAILED: ${e.message}`);
+  }
+  await sleep(1500);
+}
+
 if (seekOnly) {
   console.log("Done (seek only).");
   db.close();

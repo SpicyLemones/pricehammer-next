@@ -30,10 +30,11 @@ const payload = {
   series: await all("SELECT day, series, value FROM recession_series"),
   posts: await all("SELECT sub, post_id, created_utc, title, link, author FROM recession_reddit_posts"),
   funPosts: await all("SELECT sub, kind, rank, title, link, author, fetched_at FROM recession_fun_posts"),
+  topEmployers: await all("SELECT industry, rank, employer, postings, sampled, fetched_at FROM recession_top_employers"),
 };
 db.close();
 
-console.log(`pushing ${payload.series.length} series rows, ${payload.posts.length} posts, ${payload.funPosts.length} fun posts to ${base}`);
+console.log(`pushing ${payload.series.length} series rows, ${payload.posts.length} posts, ${payload.funPosts.length} fun posts, ${payload.topEmployers.length} employer rows to ${base}`);
 
 const res = await fetch(`${base}/api/admin/recession-import`, {
   method: "POST",

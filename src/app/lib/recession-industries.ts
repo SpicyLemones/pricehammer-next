@@ -267,7 +267,24 @@ export type IndustryData = {
   hiring: boolean;
   daysSincePeak: number;
   seekLatest: Record<string, number>;
+  topEmployers: TopEmployer[];
 };
+
+export type TopEmployer = {
+  rank: number;
+  employer: string;
+  postings: number;
+  sampled: number;
+};
+
+export async function getTopEmployers(slug: IndustrySlug): Promise<TopEmployer[]> {
+  if (!(await tableExists("recession_top_employers"))) return [];
+  return (await all(
+    `SELECT rank, employer, postings, sampled FROM recession_top_employers
+     WHERE industry = ? ORDER BY rank ASC`,
+    [slug],
+  )) as TopEmployer[];
+}
 
 export function indexLabelFor(vsPeakPct: number, hiring: boolean): string {
   if (hiring) return "Hiring";
@@ -366,6 +383,7 @@ export async function getIndustryData(slug: IndustrySlug): Promise<IndustryData>
     hiring,
     daysSincePeak: daysSinceMonth(peak.month),
     seekLatest,
+    topEmployers: await getTopEmployers(slug),
   };
 }
 
