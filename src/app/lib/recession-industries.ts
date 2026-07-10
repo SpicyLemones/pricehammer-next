@@ -596,9 +596,16 @@ export async function getTopEmployers(slug: IndustrySlug): Promise<TopEmployer[]
   )) as TopEmployer[];
 }
 
-export function indexLabelFor(vsPeakPct: number, hiring: boolean): string {
-  if (hiring) return "Hiring";
-  return vsPeakPct <= -55 ? "Cooked" : "Ehhh";
+// The reading judges each industry against its own twenty-year typical level
+// (median of the whole series) with a momentum check, rather than the single
+// all-time peak, which punished anything that ever had a boom.
+//   Hiring: well above its own normal, or above normal and climbing
+//   Cooked: deeply below its own normal
+//   Ehhh:   everything in between
+export function indexLabelFor(level: number, momentumPct: number): string {
+  if (level >= 1.25 || (level >= 1.0 && momentumPct >= 15)) return "Hiring";
+  if (level <= 0.7) return "Cooked";
+  return "Ehhh";
 }
 
 async function loadIviIndustries(): Promise<IviIndustries> {
@@ -624,9 +631,12 @@ function summarise(config: IndustryConfig, months: string[], values: number[]) {
   const peak = { month: months[peakIdx], value: values[peakIdx] };
   const vsPeakPct = Math.round(((latest.value - peak.value) / peak.value) * 100);
   const fiveYearsAgo = values[Math.max(0, latestIdx - 60)];
-  // "hiring" = near its all-time high, or meaningfully (10%+) above five years ago
-  const hiring = vsPeakPct >= -20 || latest.value >= fiveYearsAgo * 1.1;
-  return { latest, peak, vsPeakPct, hiring, indexLabel: indexLabelFor(vsPeakPct, hiring) };
+  const momentumPct = Math.round(((latest.value - fiveYearsAgo) / fiveYearsAgo) * 100);
+  const sorted = [...values].sort((a, b) => a - b);
+  const typical = sorted[Math.floor(sorted.length / 2)]; // twenty-year median
+  const level = latest.value / typical;
+  const indexLabel = indexLabelFor(level, momentumPct);
+  return { latest, peak, vsPeakPct, hiring: indexLabel === "Hiring", indexLabel };
 }
 
 export async function getIndustrySummaries() {
