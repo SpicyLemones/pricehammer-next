@@ -7,7 +7,7 @@ import { Landfill } from "../Landfill";
 import { ExperienceSlider } from "../ExperienceSlider";
 import { PayVsChart } from "../PayVsChart";
 import { JobRoulette } from "../JobRoulette";
-import { getTopEmployers, INDUSTRIES, type TopEmployer } from "@/app/lib/recession-industries";
+import { getIndustryData, getTopEmployers, INDUSTRIES, type IndustryData, type TopEmployer } from "@/app/lib/recession-industries";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 
 export const runtime = "nodejs";
@@ -29,6 +29,7 @@ const nf = new Intl.NumberFormat("en-AU");
 export default async function RecessionPage() {
   const data = await getRecessionData();
   const topEmployers = await getTopEmployers("tech");
+  const competition = (await getIndustryData("tech")).competition;
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 pb-16 text-slate-900 dark:text-slate-100">
@@ -45,7 +46,7 @@ export default async function RecessionPage() {
       <PayVsSection />
       <ExperienceSection data={data} />
       <BacklogSection data={data} />
-      <RouletteSection />
+      <RouletteSection competition={competition} />
       <BigPlayersSection />
       <FieldReports funPosts={data.funPosts} auSubs={data.auSubs} globalSubs={data.globalSubs} kicker="Exhibit M" />
       <HopeGagSection />
@@ -656,15 +657,19 @@ function BacklogSection({ data }: { data: RecessionData }) {
 
 /* ---------------- the big end of town ---------------- */
 
-function RouletteSection() {
+function RouletteSection({ competition }: { competition: IndustryData["competition"] }) {
+  const applicants = competition?.applicantsPerPosting ?? 368;
+  const note = competition
+    ? `The starting odds assume you are competing with the whole profession: 1,000,000 people in tech against a few thousand live postings a month is ${competition.workersPerPosting} workers per opening, versus about 71 across the whole labour market. Calibrated to the real national average of 184 applications per ad (SEEK, April 2025, a record high), that puts tech at roughly ${applicants} applicants per posting.`
+    : undefined;
   return (
     <section className="mt-12">
       <SectionHeading
         kicker="Exhibit K"
         title="The application roulette"
-        blurb="One spin is one cold application. The green slice is your statistical share of the posting, drawn to scale. Good luck out there."
+        blurb="One spin is one cold application. Assuming you are competing against every other applicant in the industry for the same job, this is your likelihood of coming out on top. The green slice is drawn to scale."
       />
-      <JobRoulette industryName="Tech" defaultApplicants={500} />
+      <JobRoulette industryName="Tech" defaultApplicants={applicants} oddsNote={note} />
     </section>
   );
 }

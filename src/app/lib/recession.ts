@@ -161,9 +161,14 @@ export async function getRecessionData(): Promise<RecessionData> {
   const avg2006 = Math.round(ict.slice(0, 12).reduce((a, b) => a + b, 0) / 12);
   const vs2006Pct = Math.round(((latest.value - avg2006) / avg2006) * 100);
 
-  // same three readings as the industry pages: Hiring, Ehhh, Cooked
-  const hiring = vsPeakPct >= -20 || latest.value >= ict[fiveYearsIdx] * 1.1;
-  const indexLabel = hiring ? "Hiring" : vsPeakPct <= -55 ? "Cooked" : "Ehhh";
+  // same three readings as the industry pages: judged against the series'
+  // own twenty-year median with a momentum check
+  const sortedIct = [...ict].sort((a, b) => a - b);
+  const typical = sortedIct[Math.floor(sortedIct.length / 2)];
+  const level = latest.value / typical;
+  const momentumPct = ((latest.value - ict[fiveYearsIdx]) / ict[fiveYearsIdx]) * 100;
+  const indexLabel =
+    level >= 1.25 || (level >= 1.0 && momentumPct >= 15) ? "Hiring" : level <= 0.7 ? "Cooked" : "Ehhh";
 
   // DB-backed pieces degrade gracefully before the collector has run
   let redditMonthly: RedditMonthly[] = [];

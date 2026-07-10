@@ -38,6 +38,7 @@ export type IndustryConfig = {
   seekExtraParams?: string; // e.g. keyword narrowing for childcare
   searchTerms: string[]; // what the fake search bar matches on
   headcount?: { value: number; label: string; source: string }; // real people in the job
+  workforce?: number; // working headcount for competition maths, when the register overstates it
   hook: IndustryHook;
   extraHook?: IndustryHook; // a second exhibit for industries with more to say
   quips: Record<number, string>; // yearsAgo -> line
@@ -222,6 +223,7 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
       label: "registered teachers nationally, about 325,000 of them full-time-equivalent in schools",
       source: "AITSL Australian Teacher Workforce Data / ACARA, 2025",
     },
+    workforce: 325000,
     hook: {
       kicker: "Exhibit 0",
       title: "Why the line moves: the exits are crowded",
@@ -575,6 +577,7 @@ export type IndustryData = {
   daysSincePeak: number;
   seekLatest: Record<string, number>;
   topEmployers: TopEmployer[];
+  competition: { applicantsPerPosting: number; workersPerPosting: number } | null;
 };
 
 export type TopEmployer = {
@@ -593,9 +596,16 @@ export async function getTopEmployers(slug: IndustrySlug): Promise<TopEmployer[]
   )) as TopEmployer[];
 }
 
-export function indexLabelFor(vsPeakPct: number, hiring: boolean): string {
-  if (hiring) return "Hiring";
-  return vsPeakPct <= -55 ? "Cooked" : "Ehhh";
+// The reading judges each industry against its own twenty-year typical level
+// (median of the whole series) with a momentum check, rather than the single
+// all-time peak, which punished anything that ever had a boom.
+//   Hiring: well above its own normal, or above normal and climbing
+//   Cooked: deeply below its own normal
+//   Ehhh:   everything in between
+export function indexLabelFor(level: number, momentumPct: number): string {
+  if (level >= 1.25 || (level >= 1.0 && momentumPct >= 15)) return "Hiring";
+  if (level <= 0.7) return "Cooked";
+  return "Ehhh";
 }
 
 async function loadIviIndustries(): Promise<IviIndustries> {
@@ -621,9 +631,12 @@ function summarise(config: IndustryConfig, months: string[], values: number[]) {
   const peak = { month: months[peakIdx], value: values[peakIdx] };
   const vsPeakPct = Math.round(((latest.value - peak.value) / peak.value) * 100);
   const fiveYearsAgo = values[Math.max(0, latestIdx - 60)];
-  // "hiring" = near its all-time high, or meaningfully (10%+) above five years ago
-  const hiring = vsPeakPct >= -20 || latest.value >= fiveYearsAgo * 1.1;
-  return { latest, peak, vsPeakPct, hiring, indexLabel: indexLabelFor(vsPeakPct, hiring) };
+  const momentumPct = Math.round(((latest.value - fiveYearsAgo) / fiveYearsAgo) * 100);
+  const sorted = [...values].sort((a, b) => a - b);
+  const typical = sorted[Math.floor(sorted.length / 2)]; // twenty-year median
+  const level = latest.value / typical;
+  const indexLabel = indexLabelFor(level, momentumPct);
+  return { latest, peak, vsPeakPct, hiring: indexLabel === "Hiring", indexLabel };
 }
 
 export async function getIndustrySummaries() {
@@ -675,6 +688,28 @@ export async function getIndustryData(slug: IndustrySlug): Promise<IndustryData>
     for (const r of rows) seekLatest[r.series] = r.value;
   }
 
+  // competition maths: this profession's workers per live posting, calibrated
+  // against the national average of 184 applications per ad (SEEK, Apr 2025)
+  // via the same workers-per-posting ratio for the whole labour market
+  let competition: IndustryData["competition"] = null;
+  const pool = config.workforce ?? config.headcount?.value;
+  if (pool) {
+    try {
+      const ictRaw = await fs.readFile(path.join(process.cwd(), "data", "recession", "ivi-ict.json"), "utf8");
+      const allOcc = JSON.parse(ictRaw).series.allOccupations.values as number[];
+      const nationalPostings = allOcc[allOcc.length - 1];
+      const EMPLOYED_NATIONAL = 14_600_000; // ABS employed persons, roughly
+      const nationalRatio = EMPLOYED_NATIONAL / nationalPostings;
+      const workersPerPosting = pool / latest.value;
+      competition = {
+        workersPerPosting: Math.round(workersPerPosting),
+        applicantsPerPosting: Math.max(25, Math.min(1000, Math.round((184 * workersPerPosting) / nationalRatio))),
+      };
+    } catch {
+      competition = null;
+    }
+  }
+
   return {
     config,
     ivi: { source: ivi.source, sourceUrl: ivi.sourceUrl, retrieved: ivi.retrieved, licence: ivi.licence },
@@ -691,6 +726,7 @@ export async function getIndustryData(slug: IndustrySlug): Promise<IndustryData>
     daysSincePeak: daysSinceMonth(peak.month),
     seekLatest,
     topEmployers: await getTopEmployers(slug),
+    competition,
   };
 }
 
