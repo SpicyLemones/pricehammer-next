@@ -38,6 +38,7 @@ export type IndustryConfig = {
   seekExtraParams?: string; // e.g. keyword narrowing for childcare
   searchTerms: string[]; // what the fake search bar matches on
   headcount?: { value: number; label: string; source: string }; // real people in the job
+  workforce?: number; // working headcount for competition maths, when the register overstates it
   hook: IndustryHook;
   extraHook?: IndustryHook; // a second exhibit for industries with more to say
   quips: Record<number, string>; // yearsAgo -> line
@@ -222,6 +223,7 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
       label: "registered teachers nationally, about 325,000 of them full-time-equivalent in schools",
       source: "AITSL Australian Teacher Workforce Data / ACARA, 2025",
     },
+    workforce: 325000,
     hook: {
       kicker: "Exhibit 0",
       title: "Why the line moves: the exits are crowded",
@@ -575,6 +577,7 @@ export type IndustryData = {
   daysSincePeak: number;
   seekLatest: Record<string, number>;
   topEmployers: TopEmployer[];
+  competition: { applicantsPerPosting: number; workersPerPosting: number } | null;
 };
 
 export type TopEmployer = {
@@ -675,6 +678,28 @@ export async function getIndustryData(slug: IndustrySlug): Promise<IndustryData>
     for (const r of rows) seekLatest[r.series] = r.value;
   }
 
+  // competition maths: this profession's workers per live posting, calibrated
+  // against the national average of 184 applications per ad (SEEK, Apr 2025)
+  // via the same workers-per-posting ratio for the whole labour market
+  let competition: IndustryData["competition"] = null;
+  const pool = config.workforce ?? config.headcount?.value;
+  if (pool) {
+    try {
+      const ictRaw = await fs.readFile(path.join(process.cwd(), "data", "recession", "ivi-ict.json"), "utf8");
+      const allOcc = JSON.parse(ictRaw).series.allOccupations.values as number[];
+      const nationalPostings = allOcc[allOcc.length - 1];
+      const EMPLOYED_NATIONAL = 14_600_000; // ABS employed persons, roughly
+      const nationalRatio = EMPLOYED_NATIONAL / nationalPostings;
+      const workersPerPosting = pool / latest.value;
+      competition = {
+        workersPerPosting: Math.round(workersPerPosting),
+        applicantsPerPosting: Math.max(25, Math.min(1000, Math.round((184 * workersPerPosting) / nationalRatio))),
+      };
+    } catch {
+      competition = null;
+    }
+  }
+
   return {
     config,
     ivi: { source: ivi.source, sourceUrl: ivi.sourceUrl, retrieved: ivi.retrieved, licence: ivi.licence },
@@ -691,6 +716,7 @@ export async function getIndustryData(slug: IndustrySlug): Promise<IndustryData>
     daysSincePeak: daysSinceMonth(peak.month),
     seekLatest,
     topEmployers: await getTopEmployers(slug),
+    competition,
   };
 }
 

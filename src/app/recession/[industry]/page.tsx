@@ -479,12 +479,18 @@ function PayVsSection({ data, kicker }: { data: IndustryData; kicker: string }) 
 
 /* ---------------- the application roulette ---------------- */
 
-// anchored to the real national average of 184 applications per job ad
-// (SEEK, April 2025, record high), scaled by how the market reads:
-// hiring markets sit under the average, cooked ones well over it
+// competition-scaled odds where the profession has a real headcount;
+// otherwise the SEEK national average of 184, scaled by the market reading
 function defaultApplicantsFor(data: IndustryData): number {
+  if (data.competition) return data.competition.applicantsPerPosting;
   if (data.hiring) return 110;
   return data.indexLabel === "Cooked" ? 368 : 184;
+}
+
+function oddsNoteFor(data: IndustryData): string | undefined {
+  if (!data.competition) return undefined;
+  const pool = (data.config.workforce ?? data.config.headcount!.value).toLocaleString("en-AU");
+  return `The starting odds assume you are competing with the whole profession: ${pool} people in ${data.config.name.toLowerCase()} against ${data.latest.value.toLocaleString("en-AU")} live postings a month is ${data.competition.workersPerPosting} workers per opening, versus about 71 across the whole labour market. Calibrated to the real national average of 184 applications per ad (SEEK, April 2025, a record high), that puts this field at roughly ${data.competition.applicantsPerPosting} applicants per posting.`;
 }
 
 function RouletteSection({ data, kicker }: { data: IndustryData; kicker: string }) {
@@ -493,9 +499,13 @@ function RouletteSection({ data, kicker }: { data: IndustryData; kicker: string 
       <SectionHeading
         kicker={kicker}
         title="The application roulette"
-        blurb="One spin is one cold application. The green slice is your statistical share of the posting, drawn to scale. Good luck out there."
+        blurb="One spin is one cold application. Assuming you are competing against every other applicant in the industry for the same job, this is your likelihood of coming out on top. The green slice is drawn to scale."
       />
-      <JobRoulette industryName={data.config.name} defaultApplicants={defaultApplicantsFor(data)} />
+      <JobRoulette
+        industryName={data.config.name}
+        defaultApplicants={defaultApplicantsFor(data)}
+        oddsNote={oddsNoteFor(data)}
+      />
     </section>
   );
 }

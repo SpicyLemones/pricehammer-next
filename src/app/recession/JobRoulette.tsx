@@ -60,9 +60,11 @@ function comparisonFor(odds: number): string {
 export function JobRoulette({
   industryName,
   defaultApplicants,
+  oddsNote,
 }: {
   industryName: string;
   defaultApplicants: number;
+  oddsNote?: string;
 }) {
   const [applicants, setApplicants] = useState(defaultApplicants);
   const [spinning, setSpinning] = useState(false);
@@ -180,11 +182,11 @@ export function JobRoulette({
         <p className="font-serif text-sm text-slate-700 dark:text-slate-200">{comparisonFor(applicants)}</p>
         <p className="mt-2 text-[11px] leading-relaxed text-slate-400">
           Model: one hire per posting, every applicant equal, so one cold application into {industryName.toLowerCase()}{" "}
-          wins at 1 in {applicants.toLocaleString("en-AU")}. The starting odds come from real data: the average
-          Australian job ad drew 184 applications in April 2025 (SEEK data, a record high, with single roles topping
-          4,000), scaled by how this market currently reads. The green slice is drawn to scale, which is the whole
-          point. Coin, dice and card odds are exact; twins, holes-in-one and lightning are published estimates
-          (lightning: US National Weather Service, annual).
+          wins at 1 in {applicants.toLocaleString("en-AU")}.{" "}
+          {oddsNote ??
+            "The starting odds come from real data: the average Australian job ad drew 184 applications in April 2025 (SEEK data, a record high, with single roles topping 4,000), scaled by how this market currently reads."}{" "}
+          Coin, dice and card odds are exact; twins, holes-in-one and lightning are published estimates (lightning: US
+          National Weather Service, annual).
         </p>
       </div>
     </div>
