@@ -17,6 +17,9 @@ export type PickerIndustry = {
   latestValue: number;
 };
 
+const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+const numberWord = (n: number) => NUMBER_WORDS[n] ?? String(n);
+
 export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -115,7 +118,7 @@ export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
         )}
       </div>
       <p className="mt-3 text-center text-[11px] uppercase tracking-widest text-slate-400">
-        five industries indexed · more when the data behaves
+        {numberWord(industries.length)} industries indexed · more when the data behaves
       </p>
     </div>
   );
