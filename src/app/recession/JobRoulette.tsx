@@ -165,7 +165,7 @@ export function JobRoulette({
                 onClick={() => setUnlocked(true)}
                 className="mt-2 block w-full border border-dashed border-slate-400 px-3 py-1.5 text-[11px] uppercase tracking-wider text-slate-500 transition-colors hover:border-slate-600 hover:text-slate-800 dark:border-slate-600 dark:hover:text-slate-200"
               >
-                unlock the odds and choose your own delusion
+                change your odds
               </button>
             ) : (
               <p className="mt-1 text-[11px] text-slate-400">
