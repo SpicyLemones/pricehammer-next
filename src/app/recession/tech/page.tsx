@@ -13,11 +13,14 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+const techDescription = "An almanac of the Australian tech job market. Updated whenever it gets worse.";
+
 export const metadata: Metadata = {
   title: "The Recession Indicator: Tech",
-  description:
-    "An almanac of the Australian tech job market. Job postings, graduate odds and the collective mood of the internet, charted for your morbid curiosity.",
+  description: techDescription,
   alternates: { canonical: "/recession/tech" },
+  openGraph: { title: "The Recession Indicator: Tech", description: techDescription, url: "/recession/tech" },
+  twitter: { title: "The Recession Indicator: Tech", description: techDescription },
 };
 
 const nf = new Intl.NumberFormat("en-AU");

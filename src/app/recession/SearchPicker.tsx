@@ -4,7 +4,7 @@
 // Type anything, get matched to an industry (or gently told we don't cover
 // it), pick a suggestion, hit Go, land on the almanac.
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export type PickerIndustry = {
@@ -23,6 +23,16 @@ export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
   const [selected, setSelected] = useState<PickerIndustry | null>(null);
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // clicking anywhere outside the search bar closes the dropdown
+  useEffect(() => {
+    const onPointerDown = (e: PointerEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, []);
 
   const matches = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -48,7 +58,7 @@ export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
 
   return (
     <div className="px-6 py-6">
-      <div className="relative">
+      <div className="relative" ref={rootRef}>
         <div className="flex border-2 border-slate-900 dark:border-slate-100">
           <input
             ref={inputRef}

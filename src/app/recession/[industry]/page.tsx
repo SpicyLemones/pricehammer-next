@@ -24,10 +24,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { industry } = await params;
   const config = INDUSTRIES[industry as IndustrySlug];
   if (!config) return { title: "The Recession Indicator" };
+  const title = `The Recession Indicator: ${config.name}`;
   return {
-    title: `The Recession Indicator: ${config.name}`,
+    title,
     description: config.tagline,
     alternates: { canonical: `/recession/${industry}` },
+    openGraph: { title, description: config.tagline, url: `/recession/${industry}` },
+    twitter: { title, description: config.tagline },
   };
 }
 
