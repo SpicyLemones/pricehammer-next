@@ -479,10 +479,12 @@ function PayVsSection({ data, kicker }: { data: IndustryData; kicker: string }) 
 
 /* ---------------- the application roulette ---------------- */
 
-// the Glassdoor ~250-per-opening figure, scaled by how the market reads
+// anchored to the real national average of 184 applications per job ad
+// (SEEK, April 2025, record high), scaled by how the market reads:
+// hiring markets sit under the average, cooked ones well over it
 function defaultApplicantsFor(data: IndustryData): number {
-  if (data.hiring) return 100;
-  return data.indexLabel === "Cooked" ? 500 : 250;
+  if (data.hiring) return 110;
+  return data.indexLabel === "Cooked" ? 368 : 184;
 }
 
 function RouletteSection({ data, kicker }: { data: IndustryData; kicker: string }) {

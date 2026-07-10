@@ -70,6 +70,7 @@ export function JobRoulette({
   const [attempts, setAttempts] = useState(0);
   const [wins, setWins] = useState(0);
   const [result, setResult] = useState<string | null>(null);
+  const [unlocked, setUnlocked] = useState(false);
   const rejectionIdx = useRef(0);
 
   const winDeg = Math.max(0.75, 360 / applicants); // the winning slice, to scale (floored so it stays visible)
@@ -143,18 +144,35 @@ export function JobRoulette({
               {result}
             </p>
           )}
-          <label className="mt-4 block text-xs text-slate-600 dark:text-slate-300">
-            assumed applicants per posting: <strong className="tabular-nums">{applicants.toLocaleString("en-AU")}</strong>
-            <input
-              type="range"
-              min={25}
-              max={1000}
-              step={25}
-              value={applicants}
-              onChange={(e) => setApplicants(Number(e.target.value))}
-              className="mt-1 block h-1 w-full accent-red-700 dark:accent-red-500"
-            />
-          </label>
+          <div className="mt-4 text-xs text-slate-600 dark:text-slate-300">
+            applicants per posting: <strong className="tabular-nums">{applicants.toLocaleString("en-AU")}</strong>
+            {!unlocked && (
+              <span className="text-slate-400"> (set from real data, see below)</span>
+            )}
+            {unlocked ? (
+              <input
+                type="range"
+                min={25}
+                max={1000}
+                step={1}
+                value={applicants}
+                onChange={(e) => setApplicants(Number(e.target.value))}
+                className="mt-1 block h-1 w-full accent-red-700 dark:accent-red-500"
+                aria-label="Applicants per posting"
+              />
+            ) : attempts > 0 && !spinning ? (
+              <button
+                onClick={() => setUnlocked(true)}
+                className="mt-2 block w-full border border-dashed border-slate-400 px-3 py-1.5 text-[11px] uppercase tracking-wider text-slate-500 transition-colors hover:border-slate-600 hover:text-slate-800 dark:border-slate-600 dark:hover:text-slate-200"
+              >
+                unlock the odds and choose your own delusion
+              </button>
+            ) : (
+              <p className="mt-1 text-[11px] text-slate-400">
+                the house sets the odds. spin once to unlock them.
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
@@ -162,9 +180,10 @@ export function JobRoulette({
         <p className="font-serif text-sm text-slate-700 dark:text-slate-200">{comparisonFor(applicants)}</p>
         <p className="mt-2 text-[11px] leading-relaxed text-slate-400">
           Model: one hire per posting, every applicant equal, so one cold application into {industryName.toLowerCase()}{" "}
-          wins at 1 in {applicants.toLocaleString("en-AU")}. The default scales the famous ~250-applications-per-corporate-opening
-          figure (Glassdoor) by how cooked this market currently reads. The green slice is drawn to scale, which is the
-          whole point. Coin, dice and card odds are exact; twins, holes-in-one and lightning are published estimates
+          wins at 1 in {applicants.toLocaleString("en-AU")}. The starting odds come from real data: the average
+          Australian job ad drew 184 applications in April 2025 (SEEK data, a record high, with single roles topping
+          4,000), scaled by how this market currently reads. The green slice is drawn to scale, which is the whole
+          point. Coin, dice and card odds are exact; twins, holes-in-one and lightning are published estimates
           (lightning: US National Weather Service, annual).
         </p>
       </div>

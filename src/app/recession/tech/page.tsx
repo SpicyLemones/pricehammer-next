@@ -664,7 +664,7 @@ function RouletteSection() {
         title="The application roulette"
         blurb="One spin is one cold application. The green slice is your statistical share of the posting, drawn to scale. Good luck out there."
       />
-      <JobRoulette industryName="Tech" defaultApplicants={500} />
+      <JobRoulette industryName="Tech" defaultApplicants={368} />
     </section>
   );
 }
