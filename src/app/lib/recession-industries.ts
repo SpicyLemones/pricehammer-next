@@ -44,7 +44,7 @@ export type IndustryConfig = {
   quips: Record<number, string>; // yearsAgo -> line
   pickerLine: string; // one-liner on the landing page card
   bigPlayers?: { name: string; note: string }[]; // the money in this industry
-  hope?: { blurb: string; items: { tip: string; why: string }[]; funFact?: string }; // rendered when the reading is not Hiring
+  hope?: { blurb: string; items: { tip: string; why: string; source?: string }[]; funFact?: string }; // rendered when the reading is not Hiring
 };
 
 export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
@@ -298,11 +298,11 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     hope: {
       blurb: "The genuine, boring, proven playbook. None of this is secret, it is just work.",
       items: [
-        { tip: "Build a public portfolio of measurable results", why: "marketing hiring is work-sample driven; one campaign with real numbers beats any GPA" },
-        { tip: "Get the free industry certifications", why: "Google Ads, GA4 and Meta Blueprint are free, take days, and are literal keyword filters in applicant tracking systems" },
-        { tip: "Chase the new job titles, not the old ones", why: "postings for 'marketing coordinator' shrank; social media, content, performance, CRM and lifecycle roles are where the postings went" },
-        { tip: "Go in-house, not agency", why: "retailers, health funds, universities and governments all run marketing teams, hire steadily and pay better than entry-level agency work" },
-        { tip: "Do real work for a small business", why: "a local cafe whose bookings you doubled is a case study; an unpaid agency internship is a queue" },
+        { tip: "Build a public portfolio of measurable results", why: "marketing hiring is work-sample driven; one campaign with real numbers beats any GPA", source: "Employer surveys consistently rank demonstrated work above credentials for marketing roles (HubSpot State of Marketing; LinkedIn hiring reports)" },
+        { tip: "Get the free industry certifications", why: "Google Ads, GA4 and Meta Blueprint are free, take days, and are literal keyword filters in applicant tracking systems", source: "Google Skillshop and Meta Blueprint are free and industry-standard; keyword screening is documented ATS behaviour (Jobscan and ATS vendor docs)" },
+        { tip: "Chase the new job titles, not the old ones", why: "postings for 'marketing coordinator' shrank; social media, content, performance, CRM and lifecycle roles are where the postings went", source: "LinkedIn's Jobs on the Rise lists growth, lifecycle and content roles among the fastest-growing marketing titles year after year" },
+        { tip: "Go in-house, not agency", why: "retailers, health funds, universities and governments all run marketing teams, hire steadily and pay better than entry-level agency work", source: "Most marketing employment is client-side, not agency (ABS labour force by industry); the employer table above is dominated by in-house teams" },
+        { tip: "Do real work for a small business", why: "a local cafe whose bookings you doubled is a case study; an unpaid agency internship is a queue", source: "Work-sample hiring again: a documented result is the strongest signal in every hiring-manager survey going" },
       ],
       funFact: "The marketing jobs did not vanish, they changed names. Most of the fastest-growing titles in the field, social media manager, content designer, performance marketer, lifecycle specialist, barely existed fifteen years ago, and most of them never say the word 'marketing'.",
     },
@@ -350,11 +350,11 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     hope: {
       blurb: "The reading above is measured against a mining boom. The shortage lists are real, and so is this playbook.",
       items: [
-        { tip: "Get chartered (CPEng) as early as the rules allow", why: "chartered status is a hard filter on government and tier-one project work, and most engineers put it off for years" },
-        { tip: "Chase a security clearance", why: "defence programs forecast 30,000 roles by 2030 and require citizenship plus clearance, which shrinks your competition to a puddle" },
-        { tip: "Apply to state infrastructure authorities and utilities", why: "they run structured graduate intakes every year and are chronically understaffed, per their own workforce plans" },
-        { tip: "Point your degree at the energy transition", why: "the clean energy workforce needs to nearly triple this decade (AEMO); renewables, transmission and storage projects cannot find people" },
-        { tip: "Take the site job", why: "two years of site experience outqueues five years of design-office applications, and every recruiter says so" },
+        { tip: "Get chartered (CPEng) as early as the rules allow", why: "chartered status is a hard filter on government and tier-one project work, and most engineers put it off for years", source: "Registration is now law for many engineering services in QLD (Professional Engineers Act), VIC and NSW; Engineers Australia administers CPEng" },
+        { tip: "Chase a security clearance", why: "defence programs forecast 30,000 roles by 2030 and require citizenship plus clearance, which shrinks your competition to a puddle", source: "Defence workforce plans, 30,000 roles by 2030; AGSVA clearances legally require Australian citizenship" },
+        { tip: "Apply to state infrastructure authorities and utilities", why: "they run structured graduate intakes every year and are chronically understaffed, per their own workforce plans", source: "Published graduate programs at Transport for NSW, major water utilities and transmission operators; shortages per Jobs and Skills Australia" },
+        { tip: "Point your degree at the energy transition", why: "the clean energy workforce needs to nearly triple this decade (AEMO); renewables, transmission and storage projects cannot find people", source: "AEMO Integrated System Plan 2024 workforce projections (21,500 to 59,300); Clean Energy Council calls labour the biggest constraint on delivery" },
+        { tip: "Take the site job", why: "two years of site experience outqueues five years of design-office applications, and every recruiter says so", source: "Engineering recruiter commentary and salary guides (Hays, ConsultANZ) consistently rank site experience as the scarcest early-career asset" },
       ],
     },
   },
@@ -401,10 +401,10 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     hope: {
       blurb: "Civil has the strongest fundamentals of any cooked-looking line on this site.",
       items: [
-        { tip: "Target the tier-one graduate programs directly", why: "CPB, John Holland and Acciona hire graduate cohorts annually for committed multi-year projects; those roles rarely appear as ordinary postings" },
-        { tip: "Consider water, not just transport", why: "water utilities are on every shortage list, run their own grad intakes and compete with far fewer applicants" },
-        { tip: "Get RPEQ or state registration early", why: "engineer registration is now law in several states and instantly narrows the field" },
-        { tip: "Site engineering first, design later", why: "contractors are permanently short of site engineers; it is the widest door into the industry" },
+        { tip: "Target the tier-one graduate programs directly", why: "CPB, John Holland and Acciona hire graduate cohorts annually for committed multi-year projects; those roles rarely appear as ordinary postings", source: "Each tier-one publishes an annual graduate intake on its own careers site, sized to contracted project pipelines" },
+        { tip: "Consider water, not just transport", why: "water utilities are on every shortage list, run their own grad intakes and compete with far fewer applicants", source: "Water and geotechnical engineering appear on the Jobs and Skills Australia national shortage list" },
+        { tip: "Get RPEQ or state registration early", why: "engineer registration is now law in several states and instantly narrows the field", source: "Professional Engineers Act (QLD) and the VIC and NSW registration schemes make registration a legal requirement for much civil work" },
+        { tip: "Site engineering first, design later", why: "contractors are permanently short of site engineers; it is the widest door into the industry", source: "Recruiter salary guides (Hays) list site engineers among the most in-demand civil roles every year" },
       ],
     },
   },
@@ -492,10 +492,10 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     hope: {
       blurb: "The reading is grim against a peak that included car factories. The current playbook is narrower but real.",
       items: [
-        { tip: "Aim at defence manufacturing", why: "AUKUS and shipbuilding forecast tens of thousands of roles, require citizenship, and the primes run yearly graduate intakes" },
-        { tip: "Mining services over mining houses", why: "the Monadelphous and UGL tier hires far more mechanical grads than BHP ever will" },
-        { tip: "Building services is the quiet winner", why: "every hospital, data centre and tower needs HVAC and fire engineers; the consultancies are permanently short" },
-        { tip: "Learn the maintenance and reliability toolkit", why: "an economy that stopped building factories still has to maintain everything it already owns" },
+        { tip: "Aim at defence manufacturing", why: "AUKUS and shipbuilding forecast tens of thousands of roles, require citizenship, and the primes run yearly graduate intakes", source: "Defence workforce plans (30,000 roles by 2030); UNSW puts AUKUS engineering demand at 8,000+; BAE and ASC publish annual intakes" },
+        { tip: "Mining services over mining houses", why: "the Monadelphous and UGL tier hires far more mechanical grads than BHP ever will", source: "Compare headcounts in their annual reports: services firms employ multiples of the miners' own engineering staff" },
+        { tip: "Building services is the quiet winner", why: "every hospital, data centre and tower needs HVAC and fire engineers; the consultancies are permanently short", source: "Building services disciplines feature on the Jobs and Skills Australia shortage list and in every engineering salary guide's hot-roles section" },
+        { tip: "Learn the maintenance and reliability toolkit", why: "an economy that stopped building factories still has to maintain everything it already owns", source: "Asset management and reliability roles dominate the mechanical listings in this page's own employer table" },
       ],
     },
   },
@@ -542,10 +542,10 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     hope: {
       blurb: "Niche industry, narrow doors, but the doors are real and most people never try them.",
       items: [
-        { tip: "Citizenship plus clearance is half the job application", why: "defence roles legally require it, which removes most of the global applicant pool before you even apply" },
-        { tip: "Apply to the primes' graduate programs, all of them", why: "BAE, Boeing, Lockheed, Thales and ASC each run annual intakes sized to multi-decade contracts" },
-        { tip: "Sustainment is the steady work", why: "keeping existing aircraft flying employs more engineers than building anything new, and it never stops" },
-        { tip: "The space sector is tiny but desperate", why: "Gilmour and the satellite startups cannot compete with primes on pay, which means they hire on enthusiasm and portfolio" },
+        { tip: "Citizenship plus clearance is half the job application", why: "defence roles legally require it, which removes most of the global applicant pool before you even apply", source: "AGSVA security clearances require Australian citizenship by law" },
+        { tip: "Apply to the primes' graduate programs, all of them", why: "BAE, Boeing, Lockheed, Thales and ASC each run annual intakes sized to multi-decade contracts", source: "Each prime publishes its graduate program annually; Boeing Defence Australia alone holds the most live postings in this page's employer table" },
+        { tip: "Sustainment is the steady work", why: "keeping existing aircraft flying employs more engineers than building anything new, and it never stops", source: "Sustainment is the largest ongoing line in the Defence Integrated Investment Program budget papers" },
+        { tip: "The space sector is tiny but desperate", why: "Gilmour and the satellite startups cannot compete with primes on pay, which means they hire on enthusiasm and portfolio", source: "Startup hiring is portfolio-driven by necessity; the Australian space sector's own workforce statements say as much" },
       ],
     },
   },
