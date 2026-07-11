@@ -46,7 +46,7 @@ export default async function IndustryPage({ params }: Params) {
   const nextExhibit = () => `Exhibit ${String.fromCharCode(letterCode++)}`;
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 pb-16 text-slate-900 dark:text-slate-100">
+    <div className="recession-page mx-auto w-full max-w-5xl px-4 pb-16 text-slate-900 dark:text-slate-100">
       <Masthead data={data} />
       <ReadingStrip data={data} />
       <DoomTicker data={data} />
@@ -86,7 +86,7 @@ function Masthead({ data }: { data: IndustryData }) {
       <h1 className="font-display mt-1 text-5xl leading-none tracking-wide sm:text-7xl">
         The Recession Indicator
       </h1>
-      <p className="mt-2 max-w-2xl font-serif text-sm italic text-slate-600 dark:text-slate-300">
+      <p className="mt-2 font-serif text-sm italic text-slate-600 dark:text-slate-300">
         {data.config.tagline}
       </p>
     </header>
@@ -416,7 +416,7 @@ function TopEmployersSection({ data, kicker }: { data: IndustryData; kicker: str
 function YearlyAlmanac({ data, kicker }: { data: IndustryData; kicker: string }) {
   return (
     <section className="mt-12">
-      <SectionHeading kicker={kicker} title="The last five years, annotated" />
+      <SectionHeading kicker={kicker} title="The last five years" />
       <div className="border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
         <ol className="divide-y divide-slate-100 dark:divide-slate-800">
           {data.yearly.map((y) => (
@@ -574,6 +574,7 @@ function HopeSection({ data, kicker }: { data: IndustryData; kicker: string }) {
               <div>
                 <div className="font-display text-lg leading-none">{it.tip}</div>
                 <p className="mt-1 font-serif text-sm text-slate-600 dark:text-slate-300">{it.why}</p>
+                {it.source && <p className="mt-1 text-[11px] text-slate-400">{it.source}</p>}
               </div>
             </li>
           ))}
@@ -595,7 +596,7 @@ function SectionHeading({ kicker, title, blurb }: { kicker: string; title: strin
     <div className="mb-4">
       <div className="text-[11px] uppercase tracking-widest text-red-700 dark:text-red-400">{kicker}</div>
       <h2 className="font-display text-3xl tracking-wide sm:text-4xl">{title}</h2>
-      {blurb && <p className="mt-1 max-w-2xl font-serif text-sm text-slate-600 dark:text-slate-300">{blurb}</p>}
+      {blurb && <p className="mt-1 font-serif text-sm text-slate-600 dark:text-slate-300">{blurb}</p>}
     </div>
   );
 }

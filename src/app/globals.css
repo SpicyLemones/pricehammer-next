@@ -363,3 +363,9 @@
     text-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
   }
 }
+
+/* Recession Indicator: let copy run the container width on desktop */
+.recession-page p,
+.recession-page li {
+  max-width: none;
+}

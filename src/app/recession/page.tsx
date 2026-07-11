@@ -39,17 +39,20 @@ export default async function RecessionPickerPage() {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
-      {/* the giant headline wall, full bleed: the block overfills the viewport
-          and crops symmetrically at the edges */}
-      <div className="pointer-events-none absolute inset-0 flex select-none items-center justify-center overflow-hidden" aria-hidden>
-        <div className="font-display whitespace-nowrap text-center text-[16vw] leading-[0.85] text-slate-900/[0.06] dark:text-slate-100/[0.05]">
-          {Array.from({ length: 7 }).map((_, i) => (
-            <span key={i}>
-              THE RECESSION<br />
-              INDICATOR<br />
-            </span>
-          ))}
-        </div>
+      {/* the headline wall: left-anchored rows bleeding off both edges,
+          staggered like a movie-poster text wall */}
+      <div className="pointer-events-none absolute inset-0 select-none overflow-hidden" aria-hidden>
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div
+            key={i}
+            className="font-display whitespace-nowrap text-[11vw] leading-[0.92] text-slate-900/[0.06] dark:text-slate-100/[0.05]"
+            style={{ marginLeft: `${-((i * 13) % 34)}vw` }}
+          >
+            {i % 2 === 0
+              ? "THE RECESSION INDICATOR THE RECESSION"
+              : "INDICATOR THE RECESSION INDICATOR"}
+          </div>
+        ))}
       </div>
 
       {/* the centred box */}

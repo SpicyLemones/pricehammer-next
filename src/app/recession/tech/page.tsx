@@ -8,6 +8,7 @@ import { ExperienceSlider } from "../ExperienceSlider";
 import { PayVsChart } from "../PayVsChart";
 import { JobRoulette } from "../JobRoulette";
 import { getIndustryData, getTopEmployers, INDUSTRIES, type IndustryData, type TopEmployer } from "@/app/lib/recession-industries";
+import payVsData from "../../../../data/recession/pay-vs-everything.json";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 
 export const runtime = "nodejs";
@@ -32,7 +33,7 @@ export default async function RecessionPage() {
   const competition = (await getIndustryData("tech")).competition;
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 pb-16 text-slate-900 dark:text-slate-100">
+    <div className="recession-page mx-auto w-full max-w-5xl px-4 pb-16 text-slate-900 dark:text-slate-100">
       <Masthead data={data} />
       <ReadingStrip data={data} />
       <DoomTicker data={data} />
@@ -74,7 +75,7 @@ function Masthead({ data }: { data: RecessionData }) {
       <h1 className="font-display mt-1 text-5xl leading-none tracking-wide sm:text-7xl">
         The Recession Indicator
       </h1>
-      <p className="mt-2 max-w-2xl font-serif text-sm italic text-slate-600 dark:text-slate-300">
+      <p className="mt-2 font-serif text-sm italic text-slate-600 dark:text-slate-300">
         An almanac of the Australian tech job market. Updated whenever it gets worse.
       </p>
     </header>
@@ -438,7 +439,7 @@ function YearlyAlmanac({ data }: { data: RecessionData }) {
   return (
     <div className="mt-4 border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
       <div className="border-b border-slate-200 px-4 py-2 text-[11px] uppercase tracking-widest text-slate-500 dark:border-slate-700 dark:text-slate-400">
-        The last five years, annotated
+        The last five years
       </div>
       <ol className="divide-y divide-slate-100 dark:divide-slate-800">
         {data.yearly.map((y) => (
@@ -518,52 +519,77 @@ function LandfillSection({ data }: { data: RecessionData }) {
 
 function RaceSection({ data }: { data: RecessionData }) {
   const r = data.refStats;
+  const house = payVsData.series.house as { year: number; value: number; anchored: boolean }[];
+  const grad = payVsData.series.gradSalary as { year: number; value: number; anchored: boolean }[];
+
+  const W = 920;
+  const H = 340;
+  const PAD = { l: 56, r: 60, t: 20, b: 28 };
+  const maxV = Math.max(...house.map((p) => p.value));
+  const x = (year: number) => PAD.l + ((year - 2006) / (2026 - 2006)) * (W - PAD.l - PAD.r);
+  const y = (v: number) => H - PAD.b - (v / maxV) * (H - PAD.t - PAD.b);
+  const pathOf = (pts: typeof house) =>
+    pts.map((p, i) => `${i === 0 ? "M" : "L"}${x(p.year).toFixed(1)},${y(p.value).toFixed(1)}`).join(" ");
+  const fmtM = (v: number) => (v >= 1e6 ? `$${(v / 1e6).toFixed(1)}m` : `$${Math.round(v / 1000)}k`);
   const then = r.sydneyHouse2006.value / r.gradSalary2006.value;
   const now = r.sydneyHouseNow.value / r.medianGradSalary.value;
-  const max = Math.max(then, now);
-  const rows = [
-    { year: "2006", years: then, salary: r.gradSalary2006.value, house: r.sydneyHouse2006.value },
-    { year: "2026", years: now, salary: r.medianGradSalary.value, house: r.sydneyHouseNow.value },
-  ];
 
   return (
     <section className="mt-12">
       <SectionHeading
         kicker="Exhibit G"
         title="The race to home"
-        blurb="How many years of a grad salary it takes to buy the median Sydney house, if you spend literally nothing else the whole time."
+        blurb="The median Sydney house against the median graduate salary, on the same dollar axis, every year from 2006. The salary line is not broken. It is just losing."
       />
-      <div className="border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
-        <div className="space-y-5">
-          {rows.map((row) => (
-            <div key={row.year}>
-              <div className="flex flex-wrap items-baseline gap-x-3">
-                <span className="font-display text-2xl leading-none">{row.year}</span>
-                <span className="font-display text-4xl leading-none text-red-700 dark:text-red-400 tabular-nums">
-                  {row.years.toFixed(1)} years
-                </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400">
-                  {nf.format(row.house)} house ÷ {nf.format(row.salary)} grad salary
-                </span>
-              </div>
-              <div className="mt-1 h-4 w-full bg-slate-100 dark:bg-slate-800">
-                <div
-                  className="h-full bg-red-700/80 dark:bg-red-500/80"
-                  style={{ width: `${(row.years / max) * 100}%` }}
-                />
-              </div>
-            </div>
+      <div className="overflow-x-auto border border-slate-300 bg-white p-2 dark:border-slate-700 dark:bg-slate-900">
+        <svg viewBox={`0 0 ${W} ${H}`} className="min-w-[640px]" role="img" aria-label="Sydney house price versus graduate salary, 2006 to 2026, same dollar axis">
+          {[400000, 800000, 1200000, 1600000].map((g) => (
+            <g key={g}>
+              <line x1={PAD.l} x2={W - PAD.r} y1={y(g)} y2={y(g)} className="stroke-slate-200 dark:stroke-slate-800" strokeWidth="1" />
+              <text x={PAD.l - 6} y={y(g) + 3} textAnchor="end" className="fill-slate-400 text-[9px]">{fmtM(g)}</text>
+            </g>
           ))}
-        </div>
-        <p className="mt-4 font-serif text-sm italic text-slate-600 dark:text-slate-300">
-          The house got {(data.refStats.sydneyHouseNow.value / data.refStats.sydneyHouse2006.value).toFixed(1)}x more
-          expensive while the grad salary grew {(data.refStats.medianGradSalary.value / data.refStats.gradSalary2006.value).toFixed(1)}x.
-          The finish line is moving faster than you are.
-        </p>
-        <p className="mt-2 text-[11px] text-slate-400">
-          {r.gradSalary2006.source}; {r.medianGradSalary.source}; {r.sydneyHouse2006.source}; {r.sydneyHouseNow.source}.
-        </p>
+          {[2006, 2010, 2014, 2018, 2022, 2026].map((yr) => (
+            <text key={yr} x={x(yr)} y={H - 8} textAnchor="middle" className="fill-slate-400 text-[9px]">{yr}</text>
+          ))}
+
+          {/* the house */}
+          <path d={pathOf(house)} fill="none" strokeDasharray="5 4" className="stroke-red-700 dark:stroke-red-400" strokeWidth="2.5" />
+          {house.map((p) => (
+            <circle key={p.year} cx={x(p.year)} cy={y(p.value)} r={3.5} className="fill-red-700 dark:fill-red-400">
+              <title>{`${p.year}: ${fmtM(p.value)} (published median)`}</title>
+            </circle>
+          ))}
+          <text x={x(2026) + 6} y={y(house[house.length - 1].value) + 3} className="fill-red-700 text-[11px] font-bold dark:fill-red-400">
+            {fmtM(house[house.length - 1].value)}
+          </text>
+
+          {/* the salary, technically also on this chart */}
+          <path d={pathOf(grad)} fill="none" strokeDasharray="5 4" className="stroke-emerald-600 dark:stroke-emerald-400" strokeWidth="2.5" />
+          {grad.map((p) => (
+            <circle key={p.year} cx={x(p.year)} cy={y(p.value)} r={3.5} className="fill-emerald-600 dark:fill-emerald-400">
+              <title>{`${p.year}: ${fmtM(p.value)} (published median starting salary)`}</title>
+            </circle>
+          ))}
+          <text x={x(2026) + 6} y={y(grad[grad.length - 1].value) + 3} className="fill-emerald-600 text-[11px] font-bold dark:fill-emerald-400">
+            {fmtM(grad[grad.length - 1].value)}
+          </text>
+          <text x={x(2016)} y={y(grad[1].value) - 10} textAnchor="middle" className="fill-slate-400 text-[10px] italic">
+            your salary, to the same scale
+          </text>
+        </svg>
       </div>
+      <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
+        Same axis, no tricks: the house went from {then.toFixed(1)} years of a grad salary in 2006 to{" "}
+        {now.toFixed(1)} years now. The house got{" "}
+        {(r.sydneyHouseNow.value / r.sydneyHouse2006.value).toFixed(1)}x dearer while the salary grew{" "}
+        {(r.medianGradSalary.value / r.gradSalary2006.value).toFixed(1)}x. The finish line is moving faster than
+        you are.
+      </p>
+      <p className="mt-2 text-[11px] text-slate-400">
+        Dots are published medians ({r.sydneyHouse2006.source}; {r.sydneyHouseNow.source}; GCA GradStats and QILT
+        GOS for salaries); dashed lines join the anchors.
+      </p>
     </section>
   );
 }
@@ -726,7 +752,7 @@ function SectionHeading({ kicker, title, blurb }: { kicker: string; title: strin
     <div className="mb-4">
       <div className="text-[11px] uppercase tracking-widest text-red-700 dark:text-red-400">{kicker}</div>
       <h2 className="font-display text-3xl tracking-wide sm:text-4xl">{title}</h2>
-      {blurb && <p className="mt-1 max-w-2xl font-serif text-sm text-slate-600 dark:text-slate-300">{blurb}</p>}
+      {blurb && <p className="mt-1 font-serif text-sm text-slate-600 dark:text-slate-300">{blurb}</p>}
     </div>
   );
 }
