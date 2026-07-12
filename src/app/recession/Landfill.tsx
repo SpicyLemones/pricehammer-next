@@ -33,11 +33,14 @@ const LANDMARKS: Landmark[] = [
 export function Landfill({
   refStats,
   adsPerYear,
+  defaultApplicants,
 }: {
   refStats: ReferenceStats;
   adsPerYear: number;
+  defaultApplicants?: number;
 }) {
-  const [perAd, setPerAd] = useState(refStats.applicationsPerAd.default);
+  const [perAd, setPerAd] = useState(defaultApplicants ?? refStats.applicationsPerAd.default);
+  const [unlocked, setUnlocked] = useState(false);
   const [ticker, setTicker] = useState(0);
 
   const applicationsPerYear = adsPerYear * perAd;
@@ -102,25 +105,38 @@ export function Landfill({
       </div>
 
       <div className="border-t border-slate-200 px-4 py-3 dark:border-slate-700">
-        <label className="flex flex-wrap items-center gap-3 text-xs text-slate-600 dark:text-slate-300">
+        <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 dark:text-slate-300">
           <span>
-            assumed applications per ad: <strong className="tabular-nums">{perAd}</strong>
+            applications per posting: <strong className="tabular-nums">{perAd.toLocaleString("en-AU")}</strong>
+            {!unlocked && <span className="text-slate-400"> (same odds as the roulette below)</span>}
           </span>
-          <input
-            type="range"
-            min={refStats.applicationsPerAd.min}
-            max={refStats.applicationsPerAd.max}
-            step={50}
-            value={perAd}
-            onChange={(e) => setPerAd(Number(e.target.value))}
-            className="h-1 w-48 accent-red-700 dark:accent-red-500"
-          />
-          <span className="text-slate-400">{refStats.applicationsPerAd.source}</span>
-        </label>
+          {unlocked ? (
+            <input
+              type="range"
+              min={25}
+              max={refStats.applicationsPerAd.max}
+              step={25}
+              value={perAd}
+              onChange={(e) => setPerAd(Number(e.target.value))}
+              className="h-1 w-48 accent-red-700 dark:accent-red-500"
+              aria-label="Applications per posting"
+            />
+          ) : (
+            <button
+              onClick={() => setUnlocked(true)}
+              className="border border-dashed border-slate-400 px-3 py-1 text-[11px] uppercase tracking-wider text-slate-500 transition-colors hover:border-slate-600 hover:text-slate-800 dark:border-slate-600 dark:hover:text-slate-200"
+            >
+              change your odds
+            </button>
+          )}
+        </div>
         <p className="mt-2 text-[11px] text-slate-400">
-          Maths: {nf.format(adsPerYear)} tech job postings a year (latest IVI month × 12) × {perAd} applications ×{" "}
-          {refStats.paperMaths.pagesPerApplication} pages. A ream of {reamSheets} sheets is {reamCm} cm tall and a
-          sheet weighs about {refStats.paperMaths.gramsPerSheet} g. Crank the slider if you believe in yourself.
+          Maths: {nf.format(adsPerYear)} tech job postings a year (latest IVI month × 12) × {perAd.toLocaleString("en-AU")}{" "}
+          applications × {refStats.paperMaths.pagesPerApplication} pages. The default applications figure is the same
+          competition-scaled estimate the roulette uses: workers per opening in this profession, calibrated to the
+          real 184-applications-per-ad national average (SEEK, April 2025). A ream of {reamSheets} sheets is {reamCm}{" "}
+          cm tall and a sheet weighs about {refStats.paperMaths.gramsPerSheet} g. Crank the slider if you believe in
+          yourself.
         </p>
       </div>
     </div>

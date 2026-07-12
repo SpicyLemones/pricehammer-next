@@ -42,7 +42,7 @@ export default async function RecessionPage() {
       <CompetitionSection data={data} topEmployers={topEmployers} />
       <ThenVsNowSection data={data} />
       <PayLadderSection data={data} />
-      <LandfillSection data={data} />
+      <LandfillSection data={data} competition={competition} />
       <RaceSection data={data} />
       <PayVsSection />
       <ExperienceSection data={data} />
@@ -503,14 +503,14 @@ function PayLadderSection({ data }: { data: RecessionData }) {
 
 /* ---------------- application landfill ---------------- */
 
-function LandfillSection({ data }: { data: RecessionData }) {
+function LandfillSection({ data, competition }: { data: RecessionData; competition: IndustryData["competition"] }) {
   return (
     <section className="mt-12">
       <SectionHeading
         kicker="Exhibit F"
         title="The application landfill"
       />
-      <Landfill refStats={data.refStats} adsPerYear={data.adsPerYear} />
+      <Landfill refStats={data.refStats} adsPerYear={data.adsPerYear} defaultApplicants={competition?.applicantsPerPosting ?? 368} />
     </section>
   );
 }
@@ -522,73 +522,79 @@ function RaceSection({ data }: { data: RecessionData }) {
   const house = payVsData.series.house as { year: number; value: number; anchored: boolean }[];
   const grad = payVsData.series.gradSalary as { year: number; value: number; anchored: boolean }[];
 
+  // linear interpolation between published anchors, per year
+  const interp = (pts: typeof house, year: number): number => {
+    let lo = pts[0];
+    let hi = pts[pts.length - 1];
+    for (const p of pts) {
+      if (p.year <= year && p.year >= lo.year) lo = p;
+      if (p.year >= year && p.year < hi.year) hi = p;
+    }
+    if (lo.year === hi.year) return lo.value;
+    return lo.value + ((year - lo.year) / (hi.year - lo.year)) * (hi.value - lo.value);
+  };
+  const anchorYears = new Set([...house, ...grad].map((p) => p.year));
+  const years: { year: number; ratio: number; anchor: boolean }[] = [];
+  for (let yr = 2006; yr <= 2026; yr++) {
+    years.push({ year: yr, ratio: interp(house, yr) / interp(grad, yr), anchor: anchorYears.has(yr) });
+  }
+
   const W = 920;
-  const H = 340;
-  const PAD = { l: 56, r: 60, t: 20, b: 28 };
-  const maxV = Math.max(...house.map((p) => p.value));
+  const H = 320;
+  const PAD = { l: 48, r: 64, t: 24, b: 28 };
+  const maxR = Math.max(...years.map((p) => p.ratio));
   const x = (year: number) => PAD.l + ((year - 2006) / (2026 - 2006)) * (W - PAD.l - PAD.r);
-  const y = (v: number) => H - PAD.b - (v / maxV) * (H - PAD.t - PAD.b);
-  const pathOf = (pts: typeof house) =>
-    pts.map((p, i) => `${i === 0 ? "M" : "L"}${x(p.year).toFixed(1)},${y(p.value).toFixed(1)}`).join(" ");
-  const fmtM = (v: number) => (v >= 1e6 ? `$${(v / 1e6).toFixed(1)}m` : `$${Math.round(v / 1000)}k`);
-  const then = r.sydneyHouse2006.value / r.gradSalary2006.value;
-  const now = r.sydneyHouseNow.value / r.medianGradSalary.value;
+  const y = (ratio: number) => H - PAD.b - (ratio / (maxR * 1.08)) * (H - PAD.t - PAD.b);
+  const path = years.map((p, i) => `${i === 0 ? "M" : "L"}${x(p.year).toFixed(1)},${y(p.ratio).toFixed(1)}`).join(" ");
+  const first = years[0];
+  const last = years[years.length - 1];
 
   return (
     <section className="mt-12">
       <SectionHeading
         kicker="Exhibit G"
         title="The race to home"
-        blurb="The median Sydney house against the median graduate salary, on the same dollar axis, every year from 2006. The salary line is not broken. It is just losing."
+        blurb="Years of a median graduate salary needed to buy the median Sydney house, every year since 2006, if every cent went to the house. Yes, your pay rises after graduation; for the sake of the argument, and the horror, this chart holds you at the starting salary the whole way."
       />
       <div className="overflow-x-auto border border-slate-300 bg-white p-2 dark:border-slate-700 dark:bg-slate-900">
-        <svg viewBox={`0 0 ${W} ${H}`} className="min-w-[640px]" role="img" aria-label="Sydney house price versus graduate salary, 2006 to 2026, same dollar axis">
-          {[400000, 800000, 1200000, 1600000].map((g) => (
+        <svg viewBox={`0 0 ${W} ${H}`} className="min-w-[640px]" role="img" aria-label="Years of graduate salary needed to buy the median Sydney house, 2006 to 2026">
+          {[5, 10, 15, 20].map((g) => (
             <g key={g}>
               <line x1={PAD.l} x2={W - PAD.r} y1={y(g)} y2={y(g)} className="stroke-slate-200 dark:stroke-slate-800" strokeWidth="1" />
-              <text x={PAD.l - 6} y={y(g) + 3} textAnchor="end" className="fill-slate-400 text-[9px]">{fmtM(g)}</text>
+              <text x={PAD.l - 6} y={y(g) + 3} textAnchor="end" className="fill-slate-400 text-[9px]">{g} yrs</text>
             </g>
           ))}
           {[2006, 2010, 2014, 2018, 2022, 2026].map((yr) => (
             <text key={yr} x={x(yr)} y={H - 8} textAnchor="middle" className="fill-slate-400 text-[9px]">{yr}</text>
           ))}
 
-          {/* the house */}
-          <path d={pathOf(house)} fill="none" strokeDasharray="5 4" className="stroke-red-700 dark:stroke-red-400" strokeWidth="2.5" />
-          {house.map((p) => (
-            <circle key={p.year} cx={x(p.year)} cy={y(p.value)} r={3.5} className="fill-red-700 dark:fill-red-400">
-              <title>{`${p.year}: ${fmtM(p.value)} (published median)`}</title>
+          <path d={path} fill="none" className="stroke-red-700 dark:stroke-red-400" strokeWidth="2.5" />
+          {years.filter((p) => p.anchor).map((p) => (
+            <circle key={p.year} cx={x(p.year)} cy={y(p.ratio)} r={3.5} className="fill-red-700 dark:fill-red-400">
+              <title>{`${p.year}: ${p.ratio.toFixed(1)} years of a grad salary (published median in at least one series)`}</title>
             </circle>
           ))}
-          <text x={x(2026) + 6} y={y(house[house.length - 1].value) + 3} className="fill-red-700 text-[11px] font-bold dark:fill-red-400">
-            {fmtM(house[house.length - 1].value)}
+          <text x={x(2006) + 6} y={y(first.ratio) - 8} className="fill-slate-700 text-[11px] font-bold dark:fill-slate-200">
+            {first.ratio.toFixed(1)} yrs
           </text>
-
-          {/* the salary, technically also on this chart */}
-          <path d={pathOf(grad)} fill="none" strokeDasharray="5 4" className="stroke-emerald-600 dark:stroke-emerald-400" strokeWidth="2.5" />
-          {grad.map((p) => (
-            <circle key={p.year} cx={x(p.year)} cy={y(p.value)} r={3.5} className="fill-emerald-600 dark:fill-emerald-400">
-              <title>{`${p.year}: ${fmtM(p.value)} (published median starting salary)`}</title>
-            </circle>
-          ))}
-          <text x={x(2026) + 6} y={y(grad[grad.length - 1].value) + 3} className="fill-emerald-600 text-[11px] font-bold dark:fill-emerald-400">
-            {fmtM(grad[grad.length - 1].value)}
+          <text x={x(2026) + 4} y={y(last.ratio) + 3} className="fill-red-700 text-[11px] font-bold dark:fill-red-400">
+            {last.ratio.toFixed(1)} yrs
           </text>
-          <text x={x(2016)} y={y(grad[1].value) - 10} textAnchor="middle" className="fill-slate-400 text-[10px] italic">
-            your salary, to the same scale
+          <text x={x(2016)} y={y(years[10].ratio) - 14} textAnchor="middle" className="fill-slate-400 text-[10px] italic">
+            a working lifetime, measured in house
           </text>
         </svg>
       </div>
       <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
-        Same axis, no tricks: the house went from {then.toFixed(1)} years of a grad salary in 2006 to{" "}
-        {now.toFixed(1)} years now. The house got{" "}
-        {(r.sydneyHouseNow.value / r.sydneyHouse2006.value).toFixed(1)}x dearer while the salary grew{" "}
+        From {first.ratio.toFixed(1)} years of gross salary in 2006 to {last.ratio.toFixed(1)} now. The house got{" "}
+        {(r.sydneyHouseNow.value / r.sydneyHouse2006.value).toFixed(1)}x dearer while the starting salary grew{" "}
         {(r.medianGradSalary.value / r.gradSalary2006.value).toFixed(1)}x. The finish line is moving faster than
         you are.
       </p>
       <p className="mt-2 text-[11px] text-slate-400">
-        Dots are published medians ({r.sydneyHouse2006.source}; {r.sydneyHouseNow.source}; GCA GradStats and QILT
-        GOS for salaries); dashed lines join the anchors.
+        Dots mark years with a published median in at least one input ({r.sydneyHouse2006.source};{" "}
+        {r.sydneyHouseNow.source}; GCA GradStats and QILT GOS for salaries); the line interpolates between
+        anchors. No tax, no rent, no food, no pay rises: speedrun rules.
       </p>
     </section>
   );
@@ -632,51 +638,67 @@ function ExperienceSection({ data }: { data: RecessionData }) {
 
 function BacklogSection({ data }: { data: RecessionData }) {
   const { cohorts, pool } = computeGradBacklog(data);
-  const maxCount = cohorts[0].count;
 
   const gradPostings = data.seekLatest["seek-ict-graduate"];
   const perPosting = Number.isFinite(gradPostings) && gradPostings > 0 ? Math.round(pool / gradPostings) : null;
+
+  // the graduate survival curve: share of a cohort still hunting, by years out
+  const W = 920;
+  const H = 300;
+  const PAD = { l: 48, r: 24, t: 26, b: 40 };
+  const x = (i: number) => PAD.l + (i / (cohorts.length - 1)) * (W - PAD.l - PAD.r);
+  const y = (share: number) => H - PAD.b - share * (H - PAD.t - PAD.b);
+  const linePath = cohorts.map((c, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(c.share).toFixed(1)}`).join(" ");
+  const areaPath = `${linePath} L${x(cohorts.length - 1).toFixed(1)},${y(0)} L${x(0).toFixed(1)},${y(0)} Z`;
 
   return (
     <section className="mt-12">
       <SectionHeading
         kicker="Exhibit J"
         title="The backlog"
-        blurb="Every class of graduates competes with the classes before them who never got picked up. The queue does not reset each year. It compounds."
+        blurb="The graduate survival curve: the share of each class still hunting, by years since graduation. Every new class lands on top of everyone under the curve. The queue does not reset. It compounds."
       />
-      <div className="border border-slate-300 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
-        <div className="space-y-3">
-          {cohorts.map((c, i) => (
-            <div key={c.year}>
-              <div className="flex flex-wrap items-baseline gap-x-3">
-                <span className="font-display text-xl leading-none">Class of {c.year}</span>
-                <span className="font-mono text-xs tabular-nums text-red-700 dark:text-red-400">
-                  {nf.format(c.count)} still hunting
-                </span>
-                <span className="text-[11px] text-slate-400">
-                  {i === 0 ? "all of them, they just got here" : `${Math.round(c.share * 100)}% of the cohort`}
-                </span>
-              </div>
-              <div className="mt-1 h-4 w-full bg-slate-100 dark:bg-slate-800">
-                <div
-                  className="h-full bg-red-700/80 dark:bg-red-500/80"
-                  style={{ width: `${(c.count / maxCount) * 100}%` }}
-                />
-              </div>
-            </div>
+      <div className="overflow-x-auto border border-slate-300 bg-white p-2 dark:border-slate-700 dark:bg-slate-900">
+        <svg viewBox={`0 0 ${W} ${H}`} className="min-w-[640px]" role="img" aria-label="Share of each graduate cohort still job hunting, by years since graduation">
+          {[0.25, 0.5, 0.75, 1].map((g) => (
+            <g key={g}>
+              <line x1={PAD.l} x2={W - PAD.r} y1={y(g)} y2={y(g)} className="stroke-slate-200 dark:stroke-slate-800" strokeWidth="1" />
+              <text x={PAD.l - 6} y={y(g) + 3} textAnchor="end" className="fill-slate-400 text-[9px]">{Math.round(g * 100)}%</text>
+            </g>
           ))}
-        </div>
-        <p className="mt-4 font-serif text-sm italic text-slate-600 dark:text-slate-300">
-          {nf.format(pool)} domestic graduates in the hunger pool at once
-          {perPosting !== null
-            ? `, chasing ${nf.format(gradPostings)} postings that say "graduate". That is ${nf.format(perPosting)} of you per posting. Wear something memorable.`
-            : ". International completions would more than double this, but we are trying to keep morale above zero."}
-        </p>
-        <p className="mt-2 text-[11px] text-slate-400">
-          Cohort size: {data.refStats.ictGradsPerYear.source}. Still-hunting shares:{" "}
-          {data.refStats.gradStillLookingShares.source}
-        </p>
+          <path d={areaPath} className="fill-red-700/10 dark:fill-red-400/10" />
+          <path d={linePath} fill="none" className="stroke-red-700 dark:stroke-red-400" strokeWidth="2.5" />
+          {cohorts.map((c, i) => (
+            <g key={c.year}>
+              <circle cx={x(i)} cy={y(c.share)} r={4} className="fill-red-700 dark:fill-red-400">
+                <title>{`Class of ${c.year}: ${nf.format(c.count)} still hunting (${Math.round(c.share * 100)}%)`}</title>
+              </circle>
+              <text x={x(i)} y={y(c.share) - 10} textAnchor="middle" className="fill-slate-700 text-[10px] font-bold dark:fill-slate-200">
+                {nf.format(c.count)}
+              </text>
+              <text x={x(i)} y={H - 22} textAnchor="middle" className="fill-slate-500 text-[10px] dark:fill-slate-400">
+                Class of {c.year}
+              </text>
+              <text x={x(i)} y={H - 10} textAnchor="middle" className="fill-slate-400 text-[9px]">
+                {i === 0 ? "just landed" : `${i} yr${i > 1 ? "s" : ""} out · ${Math.round(c.share * 100)}%`}
+              </text>
+            </g>
+          ))}
+          <text x={x(2)} y={y(0.62)} textAnchor="middle" className="fill-slate-400 text-[10px] italic">
+            everyone under this curve is in the queue with you
+          </text>
+        </svg>
       </div>
+      <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
+        {nf.format(pool)} domestic graduates in the hunger pool at once
+        {perPosting !== null
+          ? `, chasing ${nf.format(gradPostings)} postings that say "graduate". That is ${nf.format(perPosting)} of you per posting. Wear something memorable.`
+          : ". International completions would more than double this, but we are trying to keep morale above zero."}
+      </p>
+      <p className="mt-2 text-[11px] text-slate-400">
+        Cohort size: {data.refStats.ictGradsPerYear.source}. Still-hunting shares:{" "}
+        {data.refStats.gradStillLookingShares.source}
+      </p>
     </section>
   );
 }
