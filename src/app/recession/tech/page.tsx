@@ -637,67 +637,97 @@ function ExperienceSection({ data }: { data: RecessionData }) {
 /* ---------------- the backlog ---------------- */
 
 function BacklogSection({ data }: { data: RecessionData }) {
-  const { cohorts, pool } = computeGradBacklog(data);
+  // the backlog machine: a fixed cohort of graduates arrives every year and
+  // the market absorbs them in proportion to real postings, calibrated so
+  // 2006 cleared 75% of its pool. Whoever is left rolls into next year.
+  // Difficulty = hunters per posting, indexed to 2006 = 1x.
+  const GRADS = data.refStats.ictGradsPerYear.value;
+  const yearly: Record<number, number[]> = {};
+  data.ivi.months.forEach((m, i) => {
+    const y = Number(m.slice(0, 4));
+    (yearly[y] = yearly[y] ?? []).push(data.ivi.series.ictProfessionals.values[i]);
+  });
+  const avgPostings: Record<number, number> = {};
+  for (const [y, arr] of Object.entries(yearly)) avgPostings[Number(y)] = arr.reduce((a, b) => a + b, 0) / arr.length;
+  const startYear = 2006;
+  const endYear = Math.max(...Object.keys(avgPostings).map(Number));
+  const c = (0.75 * GRADS) / avgPostings[startYear];
+  let poolNow = GRADS;
+  const rows: { year: number; pool: number; difficulty: number }[] = [];
+  for (let yr = startYear; yr <= endYear; yr++) {
+    rows.push({ year: yr, pool: Math.round(poolNow), difficulty: poolNow / avgPostings[yr] });
+    poolNow = poolNow - Math.min(poolNow, c * avgPostings[yr]) + GRADS;
+  }
+  const base = rows[0].difficulty;
+  rows.forEach((r) => (r.difficulty = r.difficulty / base));
+  const last = rows[rows.length - 1];
 
-  const gradPostings = data.seekLatest["seek-ict-graduate"];
-  const perPosting = Number.isFinite(gradPostings) && gradPostings > 0 ? Math.round(pool / gradPostings) : null;
-
-  // the graduate survival curve: share of a cohort still hunting, by years out
   const W = 920;
-  const H = 300;
-  const PAD = { l: 48, r: 24, t: 26, b: 40 };
-  const x = (i: number) => PAD.l + (i / (cohorts.length - 1)) * (W - PAD.l - PAD.r);
-  const y = (share: number) => H - PAD.b - share * (H - PAD.t - PAD.b);
-  const linePath = cohorts.map((c, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(c.share).toFixed(1)}`).join(" ");
-  const areaPath = `${linePath} L${x(cohorts.length - 1).toFixed(1)},${y(0)} L${x(0).toFixed(1)},${y(0)} Z`;
+  const H = 320;
+  const PAD = { l: 44, r: 66, t: 26, b: 28 };
+  const maxD = Math.max(...rows.map((r) => r.difficulty));
+  const x = (year: number) => PAD.l + ((year - startYear) / (endYear - startYear)) * (W - PAD.l - PAD.r);
+  const y = (d: number) => H - PAD.b - (d / (maxD * 1.06)) * (H - PAD.t - PAD.b);
+  const linePath = rows.map((r, i) => `${i === 0 ? "M" : "L"}${x(r.year).toFixed(1)},${y(r.difficulty).toFixed(1)}`).join(" ");
+  const areaPath = `${linePath} L${x(endYear).toFixed(1)},${y(0)} L${x(startYear).toFixed(1)},${y(0)} Z`;
+  const marks = [
+    { year: 2009, label: "GFC" },
+    { year: 2020, label: "Lockdowns" },
+    { year: 2022, label: "Free money" },
+  ];
 
   return (
     <section className="mt-12">
       <SectionHeading
         kicker="Exhibit J"
         title="The backlog"
-        blurb="The graduate survival curve: the share of each class still hunting, by years since graduation. Every new class lands on top of everyone under the curve. The queue does not reset. It compounds."
+        blurb="Every year a new class of graduates arrives whether the market wants them or not, and whoever is not absorbed rolls into next year's queue. This chart runs that machine on twenty years of real posting data and asks one question: how many times harder is it to get hired than in 2006?"
       />
       <div className="overflow-x-auto border border-slate-300 bg-white p-2 dark:border-slate-700 dark:bg-slate-900">
-        <svg viewBox={`0 0 ${W} ${H}`} className="min-w-[640px]" role="img" aria-label="Share of each graduate cohort still job hunting, by years since graduation">
-          {[0.25, 0.5, 0.75, 1].map((g) => (
+        <svg viewBox={`0 0 ${W} ${H}`} className="min-w-[640px]" role="img" aria-label="How many times harder it is for a graduate to get hired than in 2006, by year">
+          {[5, 10, 15].filter((g) => g <= maxD).map((g) => (
             <g key={g}>
               <line x1={PAD.l} x2={W - PAD.r} y1={y(g)} y2={y(g)} className="stroke-slate-200 dark:stroke-slate-800" strokeWidth="1" />
-              <text x={PAD.l - 6} y={y(g) + 3} textAnchor="end" className="fill-slate-400 text-[9px]">{Math.round(g * 100)}%</text>
+              <text x={PAD.l - 6} y={y(g) + 3} textAnchor="end" className="fill-slate-400 text-[9px]">{g}x</text>
             </g>
           ))}
+          {[2006, 2010, 2014, 2018, 2022, 2026].map((yr) => (
+            <text key={yr} x={x(yr)} y={H - 8} textAnchor="middle" className="fill-slate-400 text-[9px]">{yr}</text>
+          ))}
+
           <path d={areaPath} className="fill-red-700/10 dark:fill-red-400/10" />
           <path d={linePath} fill="none" className="stroke-red-700 dark:stroke-red-400" strokeWidth="2.5" />
-          {cohorts.map((c, i) => (
-            <g key={c.year}>
-              <circle cx={x(i)} cy={y(c.share)} r={4} className="fill-red-700 dark:fill-red-400">
-                <title>{`Class of ${c.year}: ${nf.format(c.count)} still hunting (${Math.round(c.share * 100)}%)`}</title>
-              </circle>
-              <text x={x(i)} y={y(c.share) - 10} textAnchor="middle" className="fill-slate-700 text-[10px] font-bold dark:fill-slate-200">
-                {nf.format(c.count)}
-              </text>
-              <text x={x(i)} y={H - 22} textAnchor="middle" className="fill-slate-500 text-[10px] dark:fill-slate-400">
-                Class of {c.year}
-              </text>
-              <text x={x(i)} y={H - 10} textAnchor="middle" className="fill-slate-400 text-[9px]">
-                {i === 0 ? "just landed" : `${i} yr${i > 1 ? "s" : ""} out · ${Math.round(c.share * 100)}%`}
-              </text>
-            </g>
+          {rows.map((r) => (
+            <circle key={r.year} cx={x(r.year)} cy={y(r.difficulty)} r={2.5} className="fill-red-700 dark:fill-red-400">
+              <title>{`${r.year}: ${r.difficulty.toFixed(1)}x harder than 2006 (modelled queue: ${nf.format(r.pool)})`}</title>
+            </circle>
           ))}
-          <text x={x(2)} y={y(0.62)} textAnchor="middle" className="fill-slate-400 text-[10px] italic">
-            everyone under this curve is in the queue with you
+          {marks.map((m) => {
+            const row = rows.find((r) => r.year === m.year);
+            if (!row) return null;
+            return (
+              <g key={m.year}>
+                <line x1={x(m.year)} x2={x(m.year)} y1={y(row.difficulty) - 8} y2={PAD.t + 6} className="stroke-slate-400" strokeWidth="0.75" strokeDasharray="2 3" />
+                <text x={x(m.year)} y={PAD.t} textAnchor="middle" className="fill-slate-500 text-[10px] dark:fill-slate-400">{m.label}</text>
+              </g>
+            );
+          })}
+          <circle cx={x(endYear)} cy={y(last.difficulty)} r={4.5} className="fill-red-700 dark:fill-red-400" />
+          <text x={x(endYear) + 8} y={y(last.difficulty) + 4} className="fill-red-700 text-[13px] font-bold dark:fill-red-400">
+            {last.difficulty.toFixed(0)}x
           </text>
         </svg>
       </div>
       <p className="mt-3 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
-        {nf.format(pool)} domestic graduates in the hunger pool at once
-        {perPosting !== null
-          ? `, chasing ${nf.format(gradPostings)} postings that say "graduate". That is ${nf.format(perPosting)} of you per posting. Wear something memorable.`
-          : ". International completions would more than double this, but we are trying to keep morale above zero."}
+        By this machine, a graduate applying today faces about {last.difficulty.toFixed(0)}x the competition of a
+        2006 graduate. The dips are real hiring booms clearing the queue; the climbs are the queue winning. It has
+        been winning since 2022.
       </p>
       <p className="mt-2 text-[11px] text-slate-400">
-        Cohort size: {data.refStats.ictGradsPerYear.source}. Still-hunting shares:{" "}
-        {data.refStats.gradStillLookingShares.source}
+        The model: {nf.format(GRADS)} domestic ICT graduates arrive each year ({data.refStats.ictGradsPerYear.source});
+        hiring absorbs the pool in proportion to real IVI postings, calibrated so 2006 cleared 75% of its queue;
+        nobody ever gives up and leaves the field, which is the only optimistic assumption in it. Difficulty is
+        hunters per posting, indexed to 2006.
       </p>
     </section>
   );
