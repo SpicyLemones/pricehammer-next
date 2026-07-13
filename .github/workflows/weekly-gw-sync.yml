@@ -6,6 +6,9 @@ on:
     - cron: "30 16 * * 0"
   workflow_dispatch: {}
 
+env:
+  BASE: https://www.spycy.fun
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -19,29 +22,61 @@ jobs:
           fi
           echo "credentials present"
 
+      # Every call retries with backoff: Render serves an HTML error page
+      # while a deploy is in flight, which is what killed previous runs.
       - name: Sync GW catalogue (add new releases)
         run: |
-          set -euo pipefail
-          RESPONSE=$(curl -sS -m 1800 \
-            -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
-            -X POST "https://www.spycy.fun/api/admin/sync-gw-catalogue?apply=1")
-          echo "$RESPONSE"
-          echo "$RESPONSE" | grep -q '"ok":true' || { echo "sync failed"; exit 1; }
+          set -uo pipefail
+          for attempt in 1 2 3 4 5; do
+            HTTP=$(curl -sS -m 1800 -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
+              -X POST "$BASE/api/admin/sync-gw-catalogue?apply=1" -o resp.json -w "%{http_code}") || HTTP=000
+            if [ "$HTTP" = "200" ] && grep -q '"ok":true' resp.json; then
+              echo "sync ok (attempt $attempt)"; head -c 800 resp.json; echo; exit 0
+            fi
+            echo "sync attempt $attempt failed (HTTP $HTTP), retrying:"; head -c 300 resp.json 2>/dev/null; echo
+            sleep $((attempt * 45))
+          done
+          echo "::error::sync failed after 5 attempts"; exit 1
 
       - name: Auto-validate new pairs across sellers
         run: |
-          set -euo pipefail
-          RESPONSE=$(curl -sS -m 3600 \
-            -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
-            -X POST "https://www.spycy.fun/api/auto-validate")
-          echo "$RESPONSE"
-          echo "$RESPONSE" | grep -q '"ok":true' || { echo "auto-validate failed"; exit 1; }
+          set -uo pipefail
+          for attempt in 1 2 3 4 5; do
+            HTTP=$(curl -sS -m 3600 -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
+              -X POST "$BASE/api/auto-validate" -o resp.json -w "%{http_code}") || HTTP=000
+            if [ "$HTTP" = "200" ] && grep -q '"ok":true' resp.json; then
+              echo "auto-validate ok (attempt $attempt)"; head -c 800 resp.json; echo; exit 0
+            fi
+            echo "auto-validate attempt $attempt failed (HTTP $HTTP), retrying:"; head -c 300 resp.json 2>/dev/null; echo
+            sleep $((attempt * 45))
+          done
+          echo "::error::auto-validate failed after 5 attempts"; exit 1
 
-      - name: Refresh prices (all sellers)
+      # Refresh one seller per request (the admin UI's own granularity) so no
+      # single request runs long enough for the proxy to cut it off.
+      - name: Refresh prices (per seller)
         run: |
-          set -euo pipefail
-          RESPONSE=$(curl -sS -m 4800 \
-            -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
-            -X POST "https://www.spycy.fun/api/refresh-prices")
-          echo "$RESPONSE"
-          echo "$RESPONSE" | grep -q '"ok":true' || { echo "refresh failed"; exit 1; }
+          set -uo pipefail
+          SELLERS=$(curl -sS -m 60 "$BASE/api/sellers" | jq -r '.[].id')
+          if [ -z "$SELLERS" ]; then echo "::error::could not list sellers"; exit 1; fi
+          FAILED=""
+          for id in $SELLERS; do
+            ok=0
+            for attempt in 1 2 3; do
+              HTTP=$(curl -sS -m 1200 -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
+                -X POST "$BASE/api/refresh-prices" -H "Content-Type: application/json" \
+                -d "{\"seller\":$id}" -o resp.json -w "%{http_code}") || HTTP=000
+              if [ "$HTTP" = "200" ] && grep -q '"ok":true' resp.json; then
+                echo "seller $id ok (attempt $attempt): $(head -c 200 resp.json)"
+                ok=1; break
+              fi
+              echo "seller $id attempt $attempt failed (HTTP $HTTP)"; head -c 200 resp.json 2>/dev/null; echo
+              sleep $((attempt * 30))
+            done
+            [ "$ok" = "1" ] || FAILED="$FAILED $id"
+          done
+          if [ -n "$FAILED" ]; then
+            echo "::error::price refresh failed for sellers:$FAILED"
+            exit 1
+          fi
+          echo "all sellers refreshed"
