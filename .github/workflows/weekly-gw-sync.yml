@@ -11,6 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 150
     steps:
+      - name: Check credentials are configured
+        run: |
+          if [ -z "${{ secrets.PRICEHAMMER_ADMIN_USER }}" ] || [ -z "${{ secrets.PRICEHAMMER_ADMIN_PASS }}" ]; then
+            echo "::error::Repo secrets PRICEHAMMER_ADMIN_USER and PRICEHAMMER_ADMIN_PASS are not set. Add them under Settings -> Secrets and variables -> Actions -> New repository secret, using the same values as ADMIN_USER / ADMIN_PASS on Render. Every step in this workflow will fail with 'unauthorized' until they exist."
+            exit 1
+          fi
+          echo "credentials present"
+
       - name: Sync GW catalogue (add new releases)
         run: |
           set -euo pipefail
