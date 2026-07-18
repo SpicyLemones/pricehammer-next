@@ -10,6 +10,7 @@ import { JobRoulette } from "../JobRoulette";
 import { getIndustryData, getTopEmployers, INDUSTRIES, type IndustryData, type TopEmployer } from "@/app/lib/recession-industries";
 import payVsData from "../../../../data/recession/pay-vs-everything.json";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { ReadingExplainer, RolesLeaderboard } from "../ReadingBreakdown";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -30,16 +31,26 @@ const nf = new Intl.NumberFormat("en-AU");
 export default async function RecessionPage() {
   const data = await getRecessionData();
   const topEmployers = await getTopEmployers("tech");
-  const competition = (await getIndustryData("tech")).competition;
+  const industry = await getIndustryData("tech");
+  const competition = industry.competition;
 
   return (
     <div className="recession-page mx-auto w-full max-w-5xl px-4 pb-16 text-slate-900 dark:text-slate-100">
       <Masthead data={data} />
       <ReadingStrip data={data} />
+      <ReadingExplainer
+        indexLabel={data.indexLabel}
+        latestValue={data.latest.value}
+        seriesTitle="ICT Professionals"
+        level={industry.reading.level}
+        momentumPct={industry.reading.momentumPct}
+        typical={industry.reading.typical}
+      />
       <DoomTicker data={data} />
       <LongChart data={data} />
       <WhingeSection data={data} />
       <CompetitionSection data={data} topEmployers={topEmployers} />
+      <RolesLeaderboard roles={industry.topRoles} industryName="tech" kicker="Exhibit D" />
       <ThenVsNowSection data={data} />
       <PayLadderSection data={data} />
       <LandfillSection data={data} competition={competition} />
@@ -49,7 +60,7 @@ export default async function RecessionPage() {
       <BacklogSection data={data} />
       <RouletteSection competition={competition} />
       <BigPlayersSection />
-      <FieldReports funPosts={data.funPosts} auSubs={data.auSubs} globalSubs={data.globalSubs} kicker="Exhibit M" />
+      <FieldReports funPosts={data.funPosts} auSubs={data.auSubs} globalSubs={data.globalSubs} kicker="Exhibit N" />
       <HopeGagSection />
       <Methodology data={data} />
     </div>
@@ -351,7 +362,7 @@ function CompetitionSection({ data, topEmployers }: { data: RecessionData; topEm
           &ldquo;graduate&rdquo; posting</strong> from this month&apos;s cohort alone.</>
         )}
         {queuePerPosting !== null && <> Count the whole queue and it is about {nf.format(queuePerPosting)} of
-        you per graduate posting. Exhibit J breaks the queue down by year.</>}
+        you per graduate posting. Exhibit K breaks the queue down by year.</>}
       </p>
       {topEmployers.length > 0 && (
         <div className="mt-4 border border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-900">
@@ -382,7 +393,7 @@ function CompetitionSection({ data, topEmployers }: { data: RecessionData; topEm
         </div>
       )}
       <p className="mt-2 text-[11px] text-slate-400">
-        {data.refStats.ictGradsPerYear.source}. Still-hunting shares are the model from Exhibit J. Seek counts
+        {data.refStats.ictGradsPerYear.source}. Still-hunting shares are the model from Exhibit K. Seek counts
         are live, national, ICT classification. Employer ranking from a live posting sample; private
         advertisers excluded. Nobody publishes hire or layoff counts in Australia, so postings are the proxy.
       </p>
@@ -396,7 +407,7 @@ function ThenVsNowSection({ data }: { data: RecessionData }) {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit D"
+        kicker="Exhibit E"
         title="Then versus now"
         blurb="Just pull yourself up by your bootstraps lil bro."
       />
@@ -492,7 +503,7 @@ function PayLadderSection({ data }: { data: RecessionData }) {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit E"
+        kicker="Exhibit F"
         title="The pay ladder"
         blurb="Just how far are you from the richest man on earth?"
       />
@@ -507,7 +518,7 @@ function LandfillSection({ data, competition }: { data: RecessionData; competiti
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit F"
+        kicker="Exhibit G"
         title="The application landfill"
       />
       <Landfill refStats={data.refStats} adsPerYear={data.adsPerYear} defaultApplicants={competition?.applicantsPerPosting ?? 368} />
@@ -552,7 +563,7 @@ function RaceSection({ data }: { data: RecessionData }) {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit G"
+        kicker="Exhibit H"
         title="The race to home"
         blurb="Years of a median graduate salary needed to buy the median Sydney house, every year since 2006, if every cent went to the house. Yes, your pay rises after graduation; for the sake of the argument, and the horror, this chart holds you at the starting salary the whole way."
       />
@@ -606,7 +617,7 @@ function PayVsSection() {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit H"
+        kicker="Exhibit I"
         title="Your pay against everything else"
         blurb="Twenty years of full-time pay in tech's own ABS division, next to the things it is supposed to buy. Click a line to spotlight it."
       />
@@ -625,7 +636,7 @@ function ExperienceSection({ data }: { data: RecessionData }) {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit I"
+        kicker="Exhibit J"
         title="The experience paradox"
         blurb="Drag the slider to your years of experience and see how many of the current tech job postings are actually aimed at you."
       />
@@ -679,7 +690,7 @@ function BacklogSection({ data }: { data: RecessionData }) {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit J"
+        kicker="Exhibit K"
         title="The backlog"
         blurb="Every year a new class of graduates arrives whether the market wants them or not, and whoever is not absorbed rolls into next year's queue. This chart runs that machine on twenty years of real posting data and asks one question: how many times harder is it to get hired than in 2006?"
       />
@@ -743,7 +754,7 @@ function RouletteSection({ competition }: { competition: IndustryData["competiti
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit K"
+        kicker="Exhibit L"
         title="The application roulette"
         blurb="One spin is one cold application. Assuming you are competing against every other applicant in the industry for the same job, this is your likelihood of coming out on top. The green slice is drawn to scale."
       />
@@ -757,7 +768,7 @@ function BigPlayersSection() {
   return (
     <section className="mt-12">
       <SectionHeading
-        kicker="Exhibit L"
+        kicker="Exhibit M"
         title="The big end of town"
         blurb="The largest players in Australian tech, ranked by heft. Figures only where they publish them."
       />
@@ -783,7 +794,7 @@ function BigPlayersSection() {
 function HopeGagSection() {
   return (
     <section className="mt-12">
-      <SectionHeading kicker="Exhibit N" title="What you can actually do about it" />
+      <SectionHeading kicker="Exhibit O" title="What you can actually do about it" />
       <div className="border border-dashed border-slate-400 bg-white px-6 py-10 text-center dark:border-slate-600 dark:bg-slate-900">
         <p className="font-serif text-sm italic text-slate-500 dark:text-slate-400">
           We went looking for genuine, proven advice for breaking into this market and will publish it the

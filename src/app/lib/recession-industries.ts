@@ -1364,12 +1364,24 @@ export type IndustryData = {
   daysSincePeak: number;
   seekLatest: Record<string, number>;
   topEmployers: TopEmployer[];
+  topRoles: TopRole[];
   competition: { applicantsPerPosting: number; workersPerPosting: number } | null;
+  // The raw ingredients behind indexLabel, so pages can explain the verdict:
+  // level = latest / twenty-year median, momentumPct = % change vs 60 months
+  // ago, typical = the median itself.
+  reading: { level: number; momentumPct: number; typical: number };
 };
 
 export type TopEmployer = {
   rank: number;
   employer: string;
+  postings: number;
+  sampled: number;
+};
+
+export type TopRole = {
+  rank: number;
+  role: string;
   postings: number;
   sampled: number;
 };
@@ -1381,6 +1393,15 @@ export async function getTopEmployers(slug: IndustrySlug): Promise<TopEmployer[]
      WHERE industry = ? ORDER BY rank ASC`,
     [slug],
   )) as TopEmployer[];
+}
+
+export async function getTopRoles(slug: IndustrySlug): Promise<TopRole[]> {
+  if (!(await tableExists("recession_top_roles"))) return [];
+  return (await all(
+    `SELECT rank, role, postings, sampled FROM recession_top_roles
+     WHERE industry = ? ORDER BY rank ASC`,
+    [slug],
+  )) as TopRole[];
 }
 
 // The reading judges each industry against its own twenty-year typical level
@@ -1423,7 +1444,7 @@ function summarise(config: IndustryConfig, months: string[], values: number[]) {
   const typical = sorted[Math.floor(sorted.length / 2)]; // twenty-year median
   const level = latest.value / typical;
   const indexLabel = indexLabelFor(level, momentumPct);
-  return { latest, peak, vsPeakPct, hiring: indexLabel === "Hiring", indexLabel };
+  return { latest, peak, vsPeakPct, hiring: indexLabel === "Hiring", indexLabel, level, momentumPct, typical };
 }
 
 export async function getIndustrySummaries() {
@@ -1451,7 +1472,7 @@ export async function getIndustryData(slug: IndustrySlug): Promise<IndustryData>
   const s = ivi.series[slug];
   const months = ivi.months;
   const values = s.values;
-  const { latest, peak, vsPeakPct, hiring, indexLabel } = summarise(config, months, values);
+  const { latest, peak, vsPeakPct, hiring, indexLabel, level, momentumPct, typical } = summarise(config, months, values);
 
   const latestIdx = values.length - 1;
   const yearly = [1, 2, 3, 4, 5].map((yearsAgo) => {
@@ -1513,7 +1534,9 @@ export async function getIndustryData(slug: IndustrySlug): Promise<IndustryData>
     daysSincePeak: daysSinceMonth(peak.month),
     seekLatest,
     topEmployers: await getTopEmployers(slug),
+    topRoles: await getTopRoles(slug),
     competition,
+    reading: { level, momentumPct, typical },
   };
 }
 

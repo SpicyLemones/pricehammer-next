@@ -188,6 +188,16 @@ await run(`CREATE TABLE IF NOT EXISTS recession_top_employers (
   PRIMARY KEY (industry, rank)
 )`);
 
+await run(`CREATE TABLE IF NOT EXISTS recession_top_roles (
+  industry TEXT NOT NULL,
+  rank INTEGER NOT NULL,
+  role TEXT NOT NULL,
+  postings INTEGER NOT NULL,
+  sampled INTEGER NOT NULL,
+  fetched_at TEXT NOT NULL,
+  PRIMARY KEY (industry, rank)
+)`);
+
 const EMPLOYER_INDUSTRIES = [
   { industry: "tech", params: "classification=6281" },
   { industry: "nursing", params: "classification=1211" },
@@ -218,11 +228,13 @@ const EMPLOYER_INDUSTRIES = [
   { industry: "justice", params: "classification=6163&keywords=case+worker" },
 ];
 
-console.log("— Top employers —");
+console.log("— Top employers and roles —");
 for (const { industry, params } of EMPLOYER_INDUSTRIES) {
   try {
     const counts = new Map();
+    const roleCounts = new Map();
     let sampled = 0;
+    let roleSampled = 0;
     for (let page = 1; page <= 10; page++) {
       const url = `https://www.seek.com.au/api/jobsearch/v5/search?siteKey=AU-Main&where=All+Australia&pageSize=100&page=${page}&${params}`;
       const res = await fetch(url, { headers: { "User-Agent": UA, Accept: "application/json" } });
@@ -231,6 +243,13 @@ for (const { industry, params } of EMPLOYER_INDUSTRIES) {
       const jobs = Array.isArray(json?.data) ? json.data : [];
       if (!jobs.length) break;
       for (const job of jobs) {
+        // Role type from Seek's own subclassification, counted for every job
+        // (private advertisers still tell us what the role is).
+        const role = (job.classifications?.[0]?.subclassification?.description ?? "").trim();
+        if (role) {
+          roleCounts.set(role, (roleCounts.get(role) ?? 0) + 1);
+          roleSampled++;
+        }
         const name = (job.advertiser?.description ?? "").trim();
         if (!name || name === "Private Advertiser") continue;
         counts.set(name, (counts.get(name) ?? 0) + 1);
@@ -248,7 +267,16 @@ for (const { industry, params } of EMPLOYER_INDUSTRIES) {
         [industry, i + 1, top[i][0].slice(0, 120), top[i][1], sampled, new Date().toISOString()],
       );
     }
-    console.log(`  ${industry}: sampled ${sampled}, top: ${top[0]?.[0]} (${top[0]?.[1]})`);
+    const topRoles = [...roleCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10);
+    await run(`DELETE FROM recession_top_roles WHERE industry = ?`, [industry]);
+    for (let i = 0; i < topRoles.length; i++) {
+      await run(
+        `INSERT INTO recession_top_roles (industry, rank, role, postings, sampled, fetched_at)
+         VALUES (?, ?, ?, ?, ?, ?)`,
+        [industry, i + 1, topRoles[i][0].slice(0, 120), topRoles[i][1], roleSampled, new Date().toISOString()],
+      );
+    }
+    console.log(`  ${industry}: sampled ${sampled}, top: ${top[0]?.[0]} (${top[0]?.[1]}), top role: ${topRoles[0]?.[0]} (${topRoles[0]?.[1]}/${roleSampled})`);
   } catch (e) {
     console.warn(`  ${industry} employers FAILED: ${e.message}`);
   }
