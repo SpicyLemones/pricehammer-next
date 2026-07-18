@@ -10,31 +10,67 @@ import {
 } from "@/app/lib/storefronts";
 import { ensureProductImage } from "@/app/lib/product-metadata";
 import { probeSellerHealth, reconcileSellerStatus } from "@/app/lib/seller-health";
+import { getJob, startJob } from "@/app/lib/job-runner";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-async function readSellerFromRequest(req: Request): Promise<number | null> {
+type RefreshRequest = { seller: number | null; async: boolean };
+
+async function readRequest(req: Request): Promise<RefreshRequest> {
+  const out: RefreshRequest = { seller: null, async: false };
   // Try JSON
   try {
     if (req.headers.get("content-type")?.includes("application/json")) {
       const body = await req.json();
       if (body && body.seller !== undefined && body.seller !== "")
-        return Number(body.seller);
+        out.seller = Number(body.seller);
+      if (body && (body.async === true || body.async === "1" || body.async === "true"))
+        out.async = true;
+      return out;
     }
   } catch {}
   // Try form
   try {
     const form = await req.formData();
     const s = form.get("seller");
-    if (typeof s === "string" && s.trim() !== "") return Number(s);
+    if (typeof s === "string" && s.trim() !== "") out.seller = Number(s);
+    const a = form.get("async");
+    if (a === "1" || a === "true") out.async = true;
   } catch {}
-  return null;
+  return out;
+}
+
+// Poll a running refresh: GET /api/refresh-prices?job=<id>
+export async function GET(req: Request) {
+  const id = new URL(req.url).searchParams.get("job");
+  if (!id) return NextResponse.json({ ok: false, error: "missing ?job=<id>" }, { status: 400 });
+  const job = getJob(id);
+  if (!job) {
+    // Not necessarily an error from the caller's side: a redeploy wipes the
+    // in-memory registry, so "not found" also means "lost, run it again".
+    return NextResponse.json({ ok: false, error: "job not found (finished long ago, or lost to a redeploy)" }, { status: 404 });
+  }
+  return NextResponse.json({ ok: true, job });
 }
 
 export async function POST(req: Request) {
+  const { seller: sellerFilter, async: wantAsync } = await readRequest(req);
+
+  if (wantAsync) {
+    const job = startJob(`refresh-prices${sellerFilter != null ? `-s${sellerFilter}` : ""}`, () =>
+      runRefresh(sellerFilter),
+    );
+    console.log(`[refresh-prices] QUEUED job=${job.id} seller=${sellerFilter ?? "ALL"}`);
+    return NextResponse.json({ ok: true, jobId: job.id, status: job.status });
+  }
+
+  const summary = await runRefresh(sellerFilter);
+  return NextResponse.json({ ok: true, ...summary });
+}
+
+async function runRefresh(sellerFilter: number | null) {
   const t0 = Date.now();
-  const sellerFilter = await readSellerFromRequest(req);
   console.log(
     `[refresh-prices] START seller=${sellerFilter != null ? sellerFilter : "ALL"}`
   );
@@ -249,12 +285,11 @@ export async function POST(req: Request) {
     } in ${ms}ms`
   );
 
-  return NextResponse.json({
-    ok: true,
+  return {
     updated,
     skipped,
     failed,
     total: (pairs as any[]).length,
     ms,
-  });
+  };
 }
