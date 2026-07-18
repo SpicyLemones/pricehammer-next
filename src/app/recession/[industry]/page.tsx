@@ -9,6 +9,7 @@ import {
   type IndustrySlug,
 } from "@/app/lib/recession-industries";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { ReadingExplainer, RolesLeaderboard } from "../ReadingBreakdown";
 import { AdSpendChart } from "../AdSpendChart";
 import { PayVsChart } from "../PayVsChart";
 import { JobRoulette } from "../JobRoulette";
@@ -49,6 +50,14 @@ export default async function IndustryPage({ params }: Params) {
     <div className="recession-page mx-auto w-full max-w-5xl px-4 pb-16 text-slate-900 dark:text-slate-100">
       <Masthead data={data} />
       <ReadingStrip data={data} />
+      <ReadingExplainer
+        indexLabel={data.indexLabel}
+        latestValue={data.latest.value}
+        seriesTitle={data.seriesTitle}
+        level={data.reading.level}
+        momentumPct={data.reading.momentumPct}
+        typical={data.reading.typical}
+      />
       <DoomTicker data={data} />
       <HeadcountStrip data={data} />
       <HookSection hook={data.config.hook} kicker={nextExhibit()} />
@@ -56,6 +65,9 @@ export default async function IndustryPage({ params }: Params) {
       {data.config.slug === "marketing" && <BigSpendersSection kicker={nextExhibit()} />}
       <LongChart data={data} kicker={nextExhibit()} />
       <SeekTiles data={data} kicker={nextExhibit()} />
+      {data.topRoles.length > 0 && (
+        <RolesLeaderboard roles={data.topRoles} industryName={data.config.name} kicker={nextExhibit()} />
+      )}
       {data.topEmployers.length > 0 && <TopEmployersSection data={data} kicker={nextExhibit()} />}
       <YearlyAlmanac data={data} kicker={nextExhibit()} />
       <PayVsSection data={data} kicker={nextExhibit()} />
