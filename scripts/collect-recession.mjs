@@ -90,6 +90,19 @@ const SEEK_SERIES = [
   { series: "seek-law-graduate", params: "classification=1216&keywords=graduate" },
   { series: "seek-retail-all", params: "classification=6043" },
   { series: "seek-media-all", params: "classification=6304" },
+  // wave three
+  { series: "seek-design-all", params: "classification=6263&keywords=designer" },
+  { series: "seek-design-graduate", params: "classification=6263&keywords=designer+graduate" },
+  { series: "seek-science-all", params: "classification=1223" },
+  { series: "seek-science-graduate", params: "classification=1223&keywords=graduate" },
+  { series: "seek-environment-all", params: "classification=1223&keywords=environmental" },
+  { series: "seek-psychology-all", params: "classification=1211&keywords=psychologist" },
+  { series: "seek-socialwork-all", params: "classification=6163" },
+  { series: "seek-socialwork-graduate", params: "classification=6163&keywords=graduate" },
+  { series: "seek-veterinary-all", params: "classification=6205&keywords=veterinary" },
+  { series: "seek-libraries-all", params: "keywords=librarian" },
+  { series: "seek-economics-all", params: "classification=1203&keywords=economist" },
+  { series: "seek-justice-all", params: "classification=6163&keywords=case+worker" },
 ];
 
 const seekOnly = process.argv.includes("--seek-only");
@@ -194,6 +207,15 @@ const EMPLOYER_INDUSTRIES = [
   { industry: "law", params: "classification=1216" },
   { industry: "retail", params: "classification=6043" },
   { industry: "media", params: "classification=6304" },
+  { industry: "design", params: "classification=6263&keywords=designer" },
+  { industry: "science", params: "classification=1223" },
+  { industry: "environment", params: "classification=1223&keywords=environmental" },
+  { industry: "psychology", params: "classification=1211&keywords=psychologist" },
+  { industry: "socialwork", params: "classification=6163" },
+  { industry: "veterinary", params: "classification=6205&keywords=veterinary" },
+  { industry: "libraries", params: "keywords=librarian" },
+  { industry: "economics", params: "classification=1203&keywords=economist" },
+  { industry: "justice", params: "classification=6163&keywords=case+worker" },
 ];
 
 console.log("— Top employers —");
