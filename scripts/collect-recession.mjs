@@ -77,6 +77,19 @@ const SEEK_SERIES = [
   { series: "seek-electrical-all", params: "classification=1209&keywords=electrical" },
   { series: "seek-mechanical-all", params: "classification=1209&keywords=mechanical" },
   { series: "seek-aerospace-all", params: "classification=1209&keywords=aerospace" },
+  // the 2026 expansion wave
+  { series: "seek-hospitality-all", params: "classification=1212" },
+  { series: "seek-hospitality-graduate", params: "classification=1212&keywords=graduate" },
+  { series: "seek-construction-all", params: "classification=1206" },
+  { series: "seek-construction-graduate", params: "classification=1206&keywords=graduate" },
+  { series: "seek-architecture-all", params: "classification=6263&keywords=architect" },
+  { series: "seek-actuarial-all", params: "classification=1214&keywords=actuarial" },
+  { series: "seek-accounting-all", params: "classification=1200" },
+  { series: "seek-accounting-graduate", params: "classification=1200&keywords=graduate" },
+  { series: "seek-law-all", params: "classification=1216" },
+  { series: "seek-law-graduate", params: "classification=1216&keywords=graduate" },
+  { series: "seek-retail-all", params: "classification=6043" },
+  { series: "seek-media-all", params: "classification=6304" },
 ];
 
 const seekOnly = process.argv.includes("--seek-only");
@@ -173,6 +186,14 @@ const EMPLOYER_INDUSTRIES = [
   { industry: "electrical", params: "classification=1209&keywords=electrical" },
   { industry: "mechanical", params: "classification=1209&keywords=mechanical" },
   { industry: "aerospace", params: "classification=1209&keywords=aerospace" },
+  { industry: "hospitality", params: "classification=1212" },
+  { industry: "construction", params: "classification=1206" },
+  { industry: "architecture", params: "classification=6263&keywords=architect" },
+  { industry: "actuarial", params: "classification=1214&keywords=actuarial" },
+  { industry: "accounting", params: "classification=1200" },
+  { industry: "law", params: "classification=1216" },
+  { industry: "retail", params: "classification=6043" },
+  { industry: "media", params: "classification=6304" },
 ];
 
 console.log("— Top employers —");

@@ -17,7 +17,7 @@ export type PickerIndustry = {
   latestValue: number;
 };
 
-const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
 const numberWord = (n: number) => NUMBER_WORDS[n] ?? String(n);
 
 export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
