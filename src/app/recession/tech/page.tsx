@@ -295,7 +295,6 @@ function WhingeSection({ data }: { data: RecessionData }) {
             <p className="mt-3 border-l-2 border-amber-500 pl-3 font-serif text-sm text-slate-600 dark:text-slate-300">
               Current exchange rate: <strong>{data.adsPerWhinge.ratio} fresh Seek tech job postings per r/ausjobs post</strong> over
               the last 30 days ({nf.format(data.adsPerWhinge.ads)} postings, {nf.format(data.adsPerWhinge.whinges)} posts).
-              When this number reaches 1 we will simply assign each poster their own posting.
             </p>
           )}
         </>
