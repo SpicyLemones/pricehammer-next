@@ -16,7 +16,7 @@ export type IndustrySlug =
   | "accounting" | "law" | "retail" | "media"
   | "design" | "science" | "environment" | "psychology" | "socialwork"
   | "veterinary" | "libraries" | "economics" | "justice"
-  | "hospomgmt" | "projectmgmt";
+  | "projectmgmt";
 
 export type IndustryHook = {
   kicker: string;
@@ -584,53 +584,45 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
 
   hospitality: {
     slug: "hospitality",
-    category: "Hospitality & Tourism",
-    grads: { perYear: 2000, label: "hospitality and tourism degree completions a year, roughly", source: "Department of Education completions" },
-    name: "Food & Beverage",
-    edition: "Food and beverage edition",
-    tagline: "An almanac of the Australian hospitality job market. The industry that staffs your weekend and cannot staff itself.",
-    occupationNote: "IVI group: Hospitality Workers (chefs live in Food Trades, which is its own saga)",
+    category: "Business & Commerce",
+    grads: { perYear: 2000, label: "hospitality and tourism management completions a year, roughly", source: "Department of Education completions" },
+    name: "Hospitality & Tourism Management",
+    edition: "Hospitality and tourism edition",
+    tagline: "An almanac of the Australian hospitality and tourism job market. The degree lives in the business school, the job lives wherever the roster needs you at 6am.",
+    occupationNote: "IVI group: Cafe and Restaurant Managers (3-month average), the job the degree actually leads to. Floor staff are a separate occupation and their line appears in the hook",
     seekClassification: "1212",
-    searchTerms: ["hospitality", "food", "beverage", "cafe", "restaurant", "bar", "chef", "waiter", "barista", "tourism"],
+    searchTerms: ["hospitality", "tourism", "hotel", "restaurant", "cafe", "bar", "chef", "food", "beverage", "events", "venue"],
     hook: {
       kicker: "Exhibit 0",
-      title: "Why the line moves: discretionary spending went first",
-      blurb: "When household budgets tighten, eating out is the first thing cut, and hospitality postings follow the mood of the mortgage belt.",
+      title: "Why the line moves: the floor shrank, the office did not",
+      blurb: "The industry runs on two very different job markets and this page tracks the one the degree points at: management. The comparison with the floor is the whole story.",
       tiles: [
-        { big: "-60%", small: "postings versus five years ago, the steepest fall of any industry on this site bar tech" },
-        { big: "2021-22", small: "the reopening frenzy, when venues fought over anyone who could carry three plates" },
-        { big: "#1", small: "the first line item households cut when rates rise: eating out. Your roster feels every RBA meeting" },
+        { big: "152%", small: "manager postings against their own twenty-year typical level. The office is hiring" },
+        { big: "-60%", small: "floor-staff postings versus five years ago (IVI, Hospitality Workers). QR codes and closures did that" },
+        { big: "~600", small: "cafe and restaurant manager postings a month nationally, plus the hotel and venue roles around them" },
       ],
       punchline:
-        "This industry hired anything with a pulse when borders reopened, then interest rates arrived and the bookings thinned. The jobs never vanish entirely because venues run on churn, but the boom-era desperation is over. Hospitality demand is a live feed of how the economy feels, which is why it appears on this site at all.",
-      sources: "IVI series on this page; RBA cash rate history does the rest.",
+        "Venues cut waitstaff and kept the person who runs the roster, which is why the two lines point in opposite directions. A hospitality and tourism management degree is a business degree with worse weekends, and its actual job market, the management one, has been short-staffed for years because the industry burns through managers faster than it trains them. The floor is casual work. The office is the career, and the office is hiring.",
+      sources: "IVI series for both occupations; the floor-staff line is Hospitality Workers, ANZSCO group 43.",
     },
     quips: {
-      1: "Venues quietly cut shifts before they cut menus.",
-      2: "The cost-of-living pinch reached the brunch bill.",
-      3: "Reopening frenzy cooled. The staff shortage headlines retired.",
-      4: "Every cafe in the country had a sign in the window.",
-      5: "Borders shut, industry flattened, nobody forgot it.",
+      1: "Venues reopened faster than managers came back.",
+      2: "The staffing crisis made the manager the staff.",
+      3: "QR codes replaced the floor, not the office.",
+      4: "Wage theft headlines made compliance a manager problem.",
+      5: "Short-staffed then. The industry's natural climate.",
     },
-    pickerLine: "A live feed of the national mood.",
+    pickerLine: "A business degree with worse weekends.",
     bigPlayers: [
-      { name: "Endeavour Group", note: "Dan Murphy's and 350-odd pubs, the biggest drinks-and-venues operator going" },
-      { name: "Merivale", note: "Sydney's hospitality empire" },
-      { name: "Australian Venue Co", note: "200+ pubs, private-equity assembled" },
-      { name: "Accor Pacific", note: "the biggest hotel operator in the region" },
-      { name: "Star Entertainment", note: "casinos, in the news for all the wrong reasons" },
-      { name: "Crown Resorts", note: "Blackstone-owned casinos, same energy" },
-      { name: "McDonald's Australia", note: "over 100,000 employees, the biggest youth employer in the country" },
-      { name: "Compass Group", note: "the catering giant nobody has heard of feeding everyone" },
+      { name: "Accor", note: "the biggest hotel operator in the country" },
+      { name: "Marriott International", note: "the other lobby" },
+      { name: "Merivale", note: "the Sydney venue empire" },
+      { name: "Australian Venue Co", note: "200+ pubs and counting" },
+      { name: "Endeavour Group", note: "pubs plus the bottle shops" },
+      { name: "Crown Resorts", note: "casinos, eventfully managed" },
+      { name: "Compass Group", note: "the catering giant nobody names" },
+      { name: "Flight Centre", note: "the tourism side of the degree" },
     ],
-    hope: {
-      blurb: "The proven paths in an industry built on churn.",
-      items: [
-        { tip: "Get the certificates nobody else bothers with", why: "RSA is table stakes; add barista, gaming (RSG) and food safety supervisor tickets and you are hireable at every venue type in the state", source: "State licensing requirements; venues legally need certified staff on every shift" },
-        { tip: "Aim at clubs, pubs and hotels rather than cafes", why: "big venue groups run actual careers with penalty rates, supervisor tracks and management programs; cafes mostly run on goodwill", source: "Enterprise agreements at the large groups versus award-rate cafe work" },
-        { tip: "Functions and events pay better than floors", why: "corporate catering and events run on skeleton casual crews and chronically need reliable people", source: "The employer table above skews to catering and venue groups, not cafes" },
-      ],
-    },
   },
   construction: {
     slug: "construction",
@@ -1399,49 +1391,6 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
     ],
   },
 
-  hospomgmt: {
-    slug: "hospomgmt",
-    category: "Hospitality & Tourism",
-    grads: { perYear: 2000, label: "hospitality and tourism degree completions a year, roughly", source: "Department of Education completions" },
-    name: "Hospitality Management",
-    edition: "Hospitality management edition",
-    tagline: "An almanac of the Australian hospitality management job market. Somebody has to run the room, and right now the market cannot find enough of them.",
-    occupationNote: "IVI group: Cafe and Restaurant Managers (3-month average)",
-    seekClassification: "1212",
-    seekExtraParams: "&keywords=manager",
-    searchTerms: ["hospitality management", "restaurant manager", "venue manager", "hotel management", "tourism management", "events"],
-    hook: {
-      kicker: "Exhibit 0",
-      title: "Why the line moves: everyone wants a manager, nobody wants the hours",
-      blurb: "Postings for cafe and restaurant managers run at one and a half times their twenty-year norm, because running a venue is the job the industry burns through fastest.",
-      tiles: [
-        { big: "152%", small: "of the occupation's own twenty-year typical posting level" },
-        { big: "~600", small: "manager postings a month nationally, one for every strip of shops with a vacancy sign" },
-        { big: "7 days", small: "a venue trades. The roster maths of who supervises them is the entire labour story" },
-      ],
-      punchline:
-        "The degree teaches revenue management and food cost percentages, and the job delivers split shifts, staff no-shows and a Saturday that never ends. Churn does the rest: venues constantly need managers because managers constantly stop being managers. For a graduate who actually wants the work, the demand is standing and the promotion ladder is short.",
-      sources: "IVI series on this page; ask any venue owner about their last three managers.",
-    },
-    quips: {
-      1: "Venues reopened faster than managers came back.",
-      2: "The staffing crisis made the manager the staff.",
-      3: "Every group operator announced ten new openings.",
-      4: "Wage theft headlines made compliance a manager problem.",
-      5: "Short-staffed then. The industry's natural climate.",
-    },
-    pickerLine: "Somebody has to run the room.",
-    bigPlayers: [
-      { name: "Accor", note: "the biggest hotel operator in the country" },
-      { name: "Marriott International", note: "the other lobby" },
-      { name: "Merivale", note: "the Sydney venue empire" },
-      { name: "Australian Venue Co", note: "200+ pubs and counting" },
-      { name: "Endeavour Group", note: "pubs plus the bottle shops" },
-      { name: "Star Entertainment", note: "casinos, eventfully managed" },
-      { name: "Compass Group", note: "the catering giant nobody names" },
-      { name: "Flight Centre", note: "the travel side of the degree" },
-    ],
-  },
   projectmgmt: {
     slug: "projectmgmt",
     category: "Business & Commerce",
