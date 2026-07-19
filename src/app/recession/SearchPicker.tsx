@@ -10,12 +10,28 @@ import { useRouter } from "next/navigation";
 export type PickerIndustry = {
   slug: string;
   name: string;
+  category: string;
   pickerLine: string;
   searchTerms: string[];
   hiring: boolean;
   indexLabel: string;
   latestValue: number;
 };
+
+// dropdown grouping order: the fields of study, roughly as a uni open day
+// would arrange the marquees
+const CATEGORY_ORDER = [
+  "Engineering & Computing",
+  "Health",
+  "Education",
+  "Business & Commerce",
+  "Law & Justice",
+  "Science & Environment",
+  "Built Environment",
+  "Creative Arts & Media",
+  "Society & Community",
+  "Hospitality & Tourism",
+];
 
 const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine", "thirty"];
 const numberWord = (n: number) => NUMBER_WORDS[n] ?? String(n);
@@ -92,21 +108,30 @@ export function SearchPicker({ industries }: { industries: PickerIndustry[] }) {
         {open && (
           <div className="absolute inset-x-0 top-full z-10 max-h-72 overflow-y-auto border-2 border-t-0 border-slate-900 bg-white shadow-[6px_6px_0_rgba(0,0,0,0.15)] dark:border-slate-100 dark:bg-slate-950">
             {matches.length ? (
-              <ul className="divide-y divide-slate-200 dark:divide-slate-800">
-                {matches.map((ind) => (
-                  <li key={ind.slug}>
-                    <button
-                      onClick={() => choose(ind)}
-                      onDoubleClick={() => go(ind)}
-                      className="block w-full px-4 py-2.5 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
-                    >
-                      <span className="font-display text-xl tracking-wide text-slate-900 dark:text-slate-50">
-                        {ind.name}
-                      </span>
-                    </button>
-                  </li>
+              <div>
+                {CATEGORY_ORDER.filter((cat) => matches.some((m) => m.category === cat)).map((cat) => (
+                  <div key={cat}>
+                    <div className="border-b border-slate-200 bg-slate-50 px-4 py-1.5 text-[10px] uppercase tracking-widest text-slate-400 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-500">
+                      {cat}
+                    </div>
+                    <ul className="divide-y divide-slate-200 dark:divide-slate-800">
+                      {matches.filter((m) => m.category === cat).map((ind) => (
+                        <li key={ind.slug}>
+                          <button
+                            onClick={() => choose(ind)}
+                            onDoubleClick={() => go(ind)}
+                            className="block w-full px-4 py-2.5 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
+                          >
+                            <span className="font-display text-xl tracking-wide text-slate-900 dark:text-slate-50">
+                              {ind.name}
+                            </span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </div>
             ) : (
               <p className="px-4 py-4 font-serif text-sm text-slate-500 dark:text-slate-400">
                 No almanac for that one yet. We currently cover{" "}

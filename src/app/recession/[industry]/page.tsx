@@ -3,13 +3,18 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import {
   INDUSTRIES,
+  getGradIndexStats,
   getIndustryData,
+  issueLabel,
   monthLabel,
   type IndustryData,
   type IndustrySlug,
 } from "@/app/lib/recession-industries";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
-import { ReadingExplainer, RolesLeaderboard } from "../ReadingBreakdown";
+import { ReadingExplainer } from "../ReadingBreakdown";
+import { RolesToggle } from "../RolesToggle";
+import { GradIndexSection, GradBacklogSection } from "../GradSections";
+import occEmployment from "../../../../data/recession/occupation-employment.json";
 import { AdSpendChart } from "../AdSpendChart";
 import { PayVsChart } from "../PayVsChart";
 import { JobRoulette } from "../JobRoulette";
@@ -41,6 +46,7 @@ export default async function IndustryPage({ params }: Params) {
   if (industry === "tech") redirect("/recession/tech");
   if (!(industry in INDUSTRIES)) notFound();
   const data = await getIndustryData(industry as IndustrySlug);
+  const gradStats = await getGradIndexStats(industry as IndustrySlug);
 
   // exhibits letter themselves in page order, no halves
   let letterCode = 65;
@@ -65,10 +71,31 @@ export default async function IndustryPage({ params }: Params) {
       {data.config.slug === "marketing" && <BigSpendersSection kicker={nextExhibit()} />}
       <LongChart data={data} kicker={nextExhibit()} />
       <SeekTiles data={data} kicker={nextExhibit()} />
-      {data.topRoles.length > 0 && (
-        <RolesLeaderboard roles={data.topRoles} industryName={data.config.name} kicker={nextExhibit()} />
-      )}
+      <RolesToggle
+        employment={(occEmployment.byIndustry as Record<string, { rank: number; occupation: string; employed: number }[]>)[data.config.slug] ?? []}
+        employmentQuarter={occEmployment.quarter}
+        postings={data.topRoles}
+        industryName={data.config.name}
+        kicker={nextExhibit()}
+      />
       {data.topEmployers.length > 0 && <TopEmployersSection data={data} kicker={nextExhibit()} />}
+      {data.config.grads && gradStats && (
+        <GradIndexSection
+          grads={data.config.grads}
+          stats={gradStats}
+          industryName={data.config.name}
+          kicker={nextExhibit()}
+        />
+      )}
+      {data.config.grads && (
+        <GradBacklogSection
+          grads={data.config.grads}
+          months={data.months}
+          values={data.values}
+          industryName={data.config.name}
+          kicker={nextExhibit()}
+        />
+      )}
       <YearlyAlmanac data={data} kicker={nextExhibit()} />
       <PayVsSection data={data} kicker={nextExhibit()} />
       <RouletteSection data={data} kicker={nextExhibit()} />
@@ -91,7 +118,7 @@ function Masthead({ data }: { data: IndustryData }) {
           {data.config.edition}
         </span>
         <div className="flex items-center gap-3">
-          <span>Vol. 1 · {monthLabel(data.latest.month)}</span>
+          <span>Vol. 1 · {issueLabel()}</span>
           <ThemeToggle />
         </div>
       </div>
