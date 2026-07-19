@@ -89,11 +89,9 @@ export function GradIndexSection({
         {verdict}
       </p>
       <p className="mt-2 text-[11px] text-slate-400">
-        Graduate numbers: {grads.source}. Openings are measured, not modelled, on one side: the net change in
-        national employment across this field&apos;s occupations over the last five years (ABS Labour Force
-        Detailed, EQ08, {nf.format(jobs.employed)} currently employed), averaged per year. Replacement seats are
-        the stated assumption: 3% of the workforce a year retires or leaves for good. Openings count every
-        level, not just entry, and migrants and career changers compete for them too.
+        Graduate numbers: {grads.source}. Openings: the measured five-year change in national employment for
+        this field&apos;s occupations (ABS EQ08, {nf.format(jobs.employed)} employed), plus an assumed 3% a year
+        replacement. They count every level, and migrants and career changers compete for them too.
       </p>
     </section>
   );
@@ -206,9 +204,8 @@ export function GradBacklogSection({
       </p>
       <p className="mt-2 text-[11px] text-slate-400">
         The model: ~{nf.format(GRADS)} graduates arrive each year ({grads.source}); hiring absorbs the pool in
-        proportion to real IVI postings, calibrated so 2006 cleared 75% of its queue; nobody ever gives up and
-        leaves the field, which is the only optimistic assumption in it. Difficulty is hunters per posting,
-        indexed to 2006.
+        proportion to real postings, calibrated so 2006 cleared 75% of its queue. Difficulty is hunters per
+        posting, indexed to 2006.
       </p>
     </section>
   );

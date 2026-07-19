@@ -66,10 +66,7 @@ export function ReadingExplainer({
       </div>
       <p className="mt-3 font-serif text-sm text-slate-600 dark:text-slate-300">
         In plain terms: we compare how many jobs this industry advertises right now against what has been normal
-        for it across twenty years, then check whether the trend is up or down. At 125% of normal or better the
-        reading is <span className="font-semibold">Hiring</span>, and so is above normal with 15%+ growth over
-        five years. At 70% of normal or worse it is <span className="font-semibold">Cooked</span>. Everything in
-        between is <span className="font-semibold">Ehhh</span>. {verdict}
+        for it across twenty years, then check whether the trend is up or down. {verdict}
       </p>
     </section>
   );

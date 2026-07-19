@@ -1,0 +1,164 @@
+{
+ "source": "Reddit sidebar member counts preserved in Internet Archive Wayback Machine snapshots",
+ "sourceUrl": "https://web.archive.org/",
+ "retrieved": "2026-07-19",
+ "note": "one point per archived month; gaps are gaps in the archive, not in the subreddit",
+ "subs": {
+  "ausjobs": [
+   {
+    "month": "2011-06",
+    "members": 124
+   },
+   {
+    "month": "2011-07",
+    "members": 127
+   },
+   {
+    "month": "2011-09",
+    "members": 167
+   },
+   {
+    "month": "2011-11",
+    "members": 189
+   },
+   {
+    "month": "2012-01",
+    "members": 201
+   },
+   {
+    "month": "2012-03",
+    "members": 219
+   },
+   {
+    "month": "2012-05",
+    "members": 234
+   },
+   {
+    "month": "2012-07",
+    "members": 296
+   },
+   {
+    "month": "2012-09",
+    "members": 362
+   },
+   {
+    "month": "2012-11",
+    "members": 377
+   },
+   {
+    "month": "2012-12",
+    "members": 385
+   },
+   {
+    "month": "2014-08",
+    "members": 1173
+   },
+   {
+    "month": "2015-05",
+    "members": 1508
+   },
+   {
+    "month": "2015-07",
+    "members": 1550
+   },
+   {
+    "month": "2020-03",
+    "members": 2339
+   },
+   {
+    "month": "2022-09",
+    "members": 2650
+   },
+   {
+    "month": "2022-11",
+    "members": 2666
+   },
+   {
+    "month": "2024-09",
+    "members": 3194
+   },
+   {
+    "month": "2024-11",
+    "members": 3306
+   },
+   {
+    "month": "2025-01",
+    "members": 3372
+   },
+   {
+    "month": "2025-02",
+    "members": 3450
+   },
+   {
+    "month": "2025-03",
+    "members": 3489
+   },
+   {
+    "month": "2025-04",
+    "members": 3542
+   },
+   {
+    "month": "2025-05",
+    "members": 3663
+   }
+  ],
+  "auscorp": [
+   {
+    "month": "2024-07",
+    "members": 38326
+   },
+   {
+    "month": "2024-08",
+    "members": 44311
+   },
+   {
+    "month": "2024-09",
+    "members": 47048
+   },
+   {
+    "month": "2024-10",
+    "members": 50531
+   },
+   {
+    "month": "2024-11",
+    "members": 55429
+   },
+   {
+    "month": "2024-12",
+    "members": 58937
+   },
+   {
+    "month": "2025-01",
+    "members": 63999
+   },
+   {
+    "month": "2025-02",
+    "members": 69568
+   },
+   {
+    "month": "2025-03",
+    "members": 73168
+   },
+   {
+    "month": "2025-04",
+    "members": 82675
+   },
+   {
+    "month": "2025-05",
+    "members": 84780
+   },
+   {
+    "month": "2025-06",
+    "members": 92266
+   },
+   {
+    "month": "2025-07",
+    "members": 97691
+   },
+   {
+    "month": "2025-08",
+    "members": 101920
+   }
+  ]
+ }
+}

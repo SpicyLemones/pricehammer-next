@@ -120,8 +120,8 @@ export function RolesToggle({
       </div>
       <p className="mt-2 text-[11px] text-slate-400">
         {view === "employment"
-          ? "ABS Labour Force Detailed, EQ08, occupation unit groups, national, all sexes and states summed. The census of the field, updated quarterly."
-          : "Role types are Seek's own subclassifications on each live posting, national sample, refreshed with each collector run. Private advertisers count here too, since even a mystery employer has to say what the job is."}
+          ? "ABS Labour Force Detailed (EQ08), national. The census of the field, updated quarterly."
+          : "Seek's own role categories, counted from a live national sample each collector run. Private advertisers count too, since even a mystery employer has to say what the job is."}
       </p>
     </section>
   );

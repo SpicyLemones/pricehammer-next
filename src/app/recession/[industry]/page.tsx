@@ -13,6 +13,7 @@ import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { ReadingExplainer } from "../ReadingBreakdown";
 import { RolesToggle } from "../RolesToggle";
 import { GradIndexSection, GradBacklogSection } from "../GradSections";
+import { LifeGame } from "../LifeGame";
 import occEmployment from "../../../../data/recession/occupation-employment.json";
 import { AdSpendChart } from "../AdSpendChart";
 import { PayVsChart } from "../PayVsChart";
@@ -98,6 +99,7 @@ export default async function IndustryPage({ params }: Params) {
           kicker={nextExhibit()}
         />
       )}
+      <LifeGameSection kicker={nextExhibit()} />
       <YearlyAlmanac data={data} kicker={nextExhibit()} />
       <PayVsSection data={data} kicker={nextExhibit()} />
       <RouletteSection data={data} kicker={nextExhibit()} />
@@ -448,6 +450,21 @@ function TopEmployersSection({ data, kicker }: { data: IndustryData; kicker: str
         Live Seek sample, national, refreshed with each collector run. Private advertisers excluded. Nobody
         publishes hire or layoff counts in Australia, so live postings are the honest proxy.
       </p>
+    </section>
+  );
+}
+
+/* ---------------- start your life again ---------------- */
+
+function LifeGameSection({ kicker }: { kicker: string }) {
+  return (
+    <section className="mt-12">
+      <SectionHeading
+        kicker={kicker}
+        title="Start your life again"
+        blurb="Pick a birth year, make every choice a normal childhood offers, and let the machine mark your homework. Just pull yourself up by your bootstraps lil bro."
+      />
+      <LifeGame />
     </section>
   );
 }
