@@ -1,46 +1,45 @@
 // Shared graduate exhibits: the grad index (completions each year against
-// graduate-tagged postings right now) and the backlog machine (the tech
-// page's compounding-difficulty model, generalised to any industry with a
-// grads figure and an IVI series).
+// measured national job creation, ABS EQ08) and the backlog machine (the
+// tech page's compounding-difficulty model, generalised to any industry
+// with a grads figure and an IVI series).
 
 const nf = new Intl.NumberFormat("en-AU");
 
 export type GradsConfig = { perYear: number; label: string; source: string };
 
-export type GradIndexStats = {
-  monthly: number;
-  index: number;
-  rank: number;
-  of: number;
-  median: number;
+export type JobsCreated = {
+  employed: number;
+  growthPerYear: number;
+  replacementPerYear: number;
+  openingsPerYear: number;
 };
 
 export function GradIndexSection({
   grads,
-  stats,
+  jobs,
+  indexLabel,
   industryName,
   kicker,
 }: {
   grads: GradsConfig;
-  stats: GradIndexStats | null;
+  jobs: JobsCreated | null;
+  indexLabel: string;
   industryName: string;
   kicker: string;
 }) {
-  if (!stats) return null;
-  const { monthly, index, rank, of, median } = stats;
-  // graduate-tagged ads undercount entry hiring everywhere, so the honest
-  // signal is the rank among industries, not the raw ratio
-  const tercile = rank <= Math.ceil(of / 3) ? "top" : rank <= Math.ceil((2 * of) / 3) ? "mid" : "bottom";
+  if (!jobs) return null;
+  const seats = jobs.openingsPerYear / grads.perYear;
+  const band = seats >= 3 ? "comfortable" : seats >= 1.2 ? "workable" : "thin";
 
   let verdict: string;
-  if (monthly === 0) {
-    verdict = `Zero postings in this slice currently bother saying "graduate" at all. Either entry happens through doors Seek never sees, or it barely happens. Both readings are worth sitting with.`;
-  } else if (tercile === "top") {
-    verdict = `That ratio ranks ${rank} of ${of} industries on this site, comfortably above the median of ${median.toFixed(2)}. Relative to everyone else's queue, this pipeline works: employers here actually advertise for graduates, in numbers that mean something against the size of the cohort.`;
-  } else if (tercile === "mid") {
-    verdict = `That ratio ranks ${rank} of ${of} industries on this site, around the median of ${median.toFixed(2)}. Mid-table: the cohort does not walk into work, but it is not a landfill either.`;
+  if (band === "comfortable" && indexLabel === "Cooked") {
+    verdict = `On paper that is ${seats.toFixed(1)} seats per graduate, which looks generous for an industry reading Cooked. The catch is who the seats are for: openings count every level, and replacement demand hires experience. The backlog chart below shows what the entry rows actually face.`;
+  } else if (band === "comfortable") {
+    verdict = `That is roughly ${seats.toFixed(1)} openings per graduate per year. Even after migrants and career changers join the queue, the maths clears. This is what a pipeline with room in it looks like.`;
+  } else if (band === "workable") {
+    verdict = `That is roughly ${seats.toFixed(1)} openings per graduate per year. Enough to cover the cohort on paper, before migrants, career changers and last year's leftovers join the same queue. Workable, not roomy.`;
   } else {
-    verdict = `That ratio ranks ${rank} of ${of} industries on this site, below the median of ${median.toFixed(2)}. Graduate-tagged demand is thin against the size of the cohort, and the backlog chart below shows what that does over twenty years.`;
+    verdict = `That is roughly ${seats.toFixed(1)} openings per graduate per year, which does not cover the cohort even before anyone else joins the queue. The industry graduates more people than it makes room for, year after year, and the backlog chart below is what that compounds into.`;
   }
 
   return (
@@ -49,8 +48,8 @@ export function GradIndexSection({
         <div className="text-[11px] uppercase tracking-widest text-red-700 dark:text-red-400">{kicker}</div>
         <h2 className="font-display text-3xl tracking-wide sm:text-4xl">The graduating class</h2>
         <p className="mt-1 font-serif text-sm text-slate-600 dark:text-slate-300">
-          Two real numbers decide how a {industryName.toLowerCase()} graduate&apos;s first year goes: how many of
-          you finish the degree, and how many employers say the word graduate out loud.
+          Two national numbers decide how a {industryName.toLowerCase()} graduate&apos;s first year goes: how many
+          of you finish the degree, and how many jobs the industry actually makes room for.
         </p>
       </div>
       <div className="grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-3">
@@ -60,27 +59,29 @@ export function GradIndexSection({
           <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{grads.label}</div>
         </div>
         <div className="bg-white p-4 dark:bg-slate-900">
-          <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">Graduate-tagged postings now</div>
-          <div className="font-display mt-1 text-4xl leading-none">{nf.format(monthly)}</div>
+          <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">Openings a year</div>
+          <div className="font-display mt-1 text-4xl leading-none">~{nf.format(jobs.openingsPerYear)}</div>
           <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-            live Seek postings in this slice mentioning &ldquo;graduate&rdquo; (last 31 days)
+            {jobs.growthPerYear >= 0
+              ? `${nf.format(jobs.growthPerYear)} net new jobs a year (measured) plus ${nf.format(jobs.replacementPerYear)} replacement seats`
+              : `a shrinking headcount (${nf.format(jobs.growthPerYear)} a year) offset by ${nf.format(jobs.replacementPerYear)} replacement seats`}
           </div>
         </div>
         <div className="bg-white p-4 dark:bg-slate-900">
-          <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">Openings per graduate</div>
+          <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">Seats per graduate</div>
           <div
             className={`font-display mt-1 text-4xl leading-none ${
-              tercile === "top"
+              band === "comfortable"
                 ? "text-emerald-700 dark:text-emerald-400"
-                : tercile === "mid"
+                : band === "workable"
                   ? "text-amber-600 dark:text-amber-400"
                   : "text-red-700 dark:text-red-400"
             }`}
           >
-            {index.toFixed(2)}
+            {seats.toFixed(seats >= 10 ? 0 : 1)}
           </div>
           <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-            graduate-tagged openings per graduate per year, ranked {rank} of {of} industries here
+            openings per graduate per year. 1.0 means the cohort fits exactly, with no room for anyone else
           </div>
         </div>
       </div>
@@ -88,10 +89,11 @@ export function GradIndexSection({
         {verdict}
       </p>
       <p className="mt-2 text-[11px] text-slate-400">
-        Graduate numbers: {grads.source}. The postings count only catches ads that literally say graduate, which
-        undercounts entry hiring everywhere, and especially in fields where governments recruit graduates through
-        their own portals (teaching, nursing, police). The rank against other industries is the honest signal, not
-        the raw number.
+        Graduate numbers: {grads.source}. Openings are measured, not modelled, on one side: the net change in
+        national employment across this field&apos;s occupations over the last five years (ABS Labour Force
+        Detailed, EQ08, {nf.format(jobs.employed)} currently employed), averaged per year. Replacement seats are
+        the stated assumption: 3% of the workforce a year retires or leaves for good. Openings count every
+        level, not just entry, and migrants and career changers compete for them too.
       </p>
     </section>
   );

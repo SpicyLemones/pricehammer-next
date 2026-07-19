@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import {
   INDUSTRIES,
-  getGradIndexStats,
   getIndustryData,
   issueLabel,
   monthLabel,
@@ -46,7 +45,9 @@ export default async function IndustryPage({ params }: Params) {
   if (industry === "tech") redirect("/recession/tech");
   if (!(industry in INDUSTRIES)) notFound();
   const data = await getIndustryData(industry as IndustrySlug);
-  const gradStats = await getGradIndexStats(industry as IndustrySlug);
+  const jobsCreated =
+    (occEmployment as unknown as { jobsCreated: { byIndustry: Record<string, { employed: number; growthPerYear: number; replacementPerYear: number; openingsPerYear: number }> } })
+      .jobsCreated.byIndustry[industry] ?? null;
 
   // exhibits letter themselves in page order, no halves
   let letterCode = 65;
@@ -79,10 +80,11 @@ export default async function IndustryPage({ params }: Params) {
         kicker={nextExhibit()}
       />
       {data.topEmployers.length > 0 && <TopEmployersSection data={data} kicker={nextExhibit()} />}
-      {data.config.grads && gradStats && (
+      {data.config.grads && jobsCreated && (
         <GradIndexSection
           grads={data.config.grads}
-          stats={gradStats}
+          jobs={jobsCreated}
+          indexLabel={data.indexLabel}
           industryName={data.config.name}
           kicker={nextExhibit()}
         />

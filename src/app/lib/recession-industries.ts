@@ -1573,47 +1573,6 @@ export function issueLabel(): string {
   return new Date().toLocaleDateString("en-AU", { month: "long", year: "numeric", timeZone: "Australia/Sydney" });
 }
 
-// The grad index compared across every industry that has a grads figure:
-// graduate-tagged postings are a systematic undercount everywhere, so the
-// meaningful signal is where an industry ranks, not its absolute number.
-export type GradIndexStats = {
-  monthly: number;
-  index: number;
-  rank: number;
-  of: number;
-  median: number;
-};
-
-export async function getGradIndexStats(slug: IndustrySlug): Promise<GradIndexStats | null> {
-  const config = INDUSTRIES[slug];
-  if (!config.grads) return null;
-  if (!(await tableExists("recession_series"))) return null;
-  const rows = (await all(
-    `SELECT series, value FROM recession_series WHERE series LIKE '%-graduate'
-     AND day = (SELECT MAX(day) FROM recession_series WHERE series LIKE '%-graduate')`,
-  )) as { series: string; value: number }[];
-  const seriesFor = (s: IndustrySlug) => (s === "tech" ? "seek-ict-graduate" : `seek-${s}-graduate`);
-  const entries: { slug: IndustrySlug; index: number }[] = [];
-  for (const s of Object.keys(INDUSTRIES) as IndustrySlug[]) {
-    const g = INDUSTRIES[s].grads;
-    if (!g) continue;
-    const r = rows.find((x) => x.series === seriesFor(s));
-    if (!r) continue;
-    entries.push({ slug: s, index: (r.value * 12) / g.perYear });
-  }
-  const mine = entries.find((e) => e.slug === slug);
-  if (!mine) return null;
-  const sorted = [...entries].sort((a, b) => b.index - a.index);
-  const monthlyRow = rows.find((x) => x.series === seriesFor(slug));
-  return {
-    monthly: monthlyRow?.value ?? 0,
-    index: mine.index,
-    rank: sorted.findIndex((e) => e.slug === slug) + 1,
-    of: sorted.length,
-    median: sorted[Math.floor(sorted.length / 2)].index,
-  };
-}
-
 export async function getIndustryData(slug: IndustrySlug): Promise<IndustryData> {
   const config = INDUSTRIES[slug];
   const ivi = await loadIviIndustries();
