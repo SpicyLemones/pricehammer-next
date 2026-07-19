@@ -27,17 +27,17 @@ const tiles = [
     background: "/videos/maintenance.mp4", // Example Video
     type: "video"
   },
-  { 
-    title: "MY MODS", 
-    subtitle: "Hidden for privacy/NDA", 
-    href: "#", 
-    external: false 
+  {
+    title: "MY MODS",
+    subtitle: "Coming soon",
+    href: "#",
+    external: false
   },
-  { 
-    title: "Useful Links", 
-    subtitle: "Hidden for privacy/NDA", 
-    href: "#", 
-    external: false 
+  {
+    title: "Useful Links",
+    subtitle: "Coming soon",
+    href: "#",
+    external: false
   },
 ];
 

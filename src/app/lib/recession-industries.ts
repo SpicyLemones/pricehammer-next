@@ -15,7 +15,8 @@ export type IndustrySlug =
   | "hospitality" | "construction" | "architecture" | "actuarial"
   | "accounting" | "law" | "retail" | "media"
   | "design" | "science" | "environment" | "psychology" | "socialwork"
-  | "veterinary" | "libraries" | "economics" | "justice";
+  | "veterinary" | "libraries" | "economics" | "justice"
+  | "hospomgmt" | "projectmgmt";
 
 export type IndustryHook = {
   kicker: string;
@@ -40,6 +41,13 @@ export type IndustryConfig = {
   occupationNote: string; // what the IVI group actually covers
   seekClassification: string;
   seekExtraParams?: string; // e.g. keyword narrowing for childcare
+  // uni field of study grouping for the picker; listed=false keeps the page
+  // alive but off the picker (industry classifications, not things you study)
+  category: string;
+  listed?: boolean;
+  // annual graduate completions, honestly approximate and sourced, feeding
+  // the grad index exhibit and the backlog machine
+  grads?: { perYear: number; label: string; source: string };
   searchTerms: string[]; // what the fake search bar matches on
   headcount?: { value: number; label: string; source: string }; // real people in the job
   workforce?: number; // working headcount for competition maths, when the register overstates it
@@ -54,6 +62,8 @@ export type IndustryConfig = {
 export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   tech: {
     slug: "tech",
+    category: "Engineering & Computing",
+    grads: { perYear: 5000, label: "domestic ICT bachelor completions a year", source: "Department of Education award course completions" },
     name: "Tech",
     edition: "Tech jobs edition",
     tagline: "An almanac of the Australian tech job market. Updated whenever it gets worse.",
@@ -94,6 +104,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   nursing: {
     slug: "nursing",
+    category: "Health",
+    grads: { perYear: 16000, label: "nursing completions a year, roughly", source: "Department of Education completions; Health Workforce data" },
     name: "Nursing & Medicine",
     edition: "Nursing and medicine edition",
     tagline: "An almanac of the Australian health job market. The only line on this site that mostly goes up.",
@@ -156,6 +168,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   childcare: {
     slug: "childcare",
+    category: "Education",
+    grads: { perYear: 4000, label: "early childhood teaching completions a year, roughly", source: "Department of Education completions" },
     name: "Childcare & Care Work",
     edition: "Care work edition",
     tagline: "An almanac of the Australian care job market. Someone has to hold everything together. Underpaid, obviously.",
@@ -216,6 +230,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   education: {
     slug: "education",
+    category: "Education",
+    grads: { perYear: 17000, label: "initial teacher education completions a year", source: "AITSL initial teacher education pipeline reports" },
     name: "Education",
     edition: "Education edition",
     tagline: "An almanac of the Australian teaching job market. The vacancies are real, the reasons are grim.",
@@ -262,6 +278,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   marketing: {
     slug: "marketing",
+    category: "Business & Commerce",
+    grads: { perYear: 10000, label: "marketing and communications completions a year, roughly", source: "Department of Education completions, Management and Commerce field" },
     name: "Marketing",
     edition: "Marketing edition",
     tagline: "An almanac of the Australian marketing job market. First budget cut, first out the door.",
@@ -314,6 +332,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
 
   engineering: {
     slug: "engineering",
+    category: "Engineering & Computing",
+    grads: { perYear: 9000, label: "domestic engineering bachelor completions a year", source: "Engineers Australia statistical overview" },
     name: "Engineering",
     edition: "Engineering edition",
     tagline: "An almanac of the Australian engineering job market. Everyone says shortage, the chart says otherwise, both are right.",
@@ -364,6 +384,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   civil: {
     slug: "civil",
+    category: "Engineering & Computing",
+    grads: { perYear: 3000, label: "civil-stream completions a year, roughly a third of all engineering", source: "Engineers Australia discipline shares" },
     name: "Civil Engineering",
     edition: "Civil engineering edition",
     tagline: "An almanac of the Australian civil engineering job market. The pipeline is bigger than the workforce. The postings didn't get the memo.",
@@ -414,6 +436,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   electrical: {
     slug: "electrical",
+    category: "Engineering & Computing",
+    grads: { perYear: 1200, label: "electrical-stream completions a year, roughly", source: "Engineers Australia discipline shares" },
     name: "Electrical Engineering",
     edition: "Electrical engineering edition",
     tagline: "An almanac of the Australian electrical engineering job market. Everything is being rewired and someone has to do it.",
@@ -455,6 +479,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   mechanical: {
     slug: "mechanical",
+    category: "Engineering & Computing",
+    grads: { perYear: 2000, label: "mechanical-stream completions a year, roughly", source: "Engineers Australia discipline shares" },
     name: "Mechanical Engineering",
     edition: "Mechanical engineering edition",
     tagline: "An almanac of the Australian mechanical engineering job market. The factories left. The mines and the submarines stayed.",
@@ -505,6 +531,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   aerospace: {
     slug: "aerospace",
+    category: "Engineering & Computing",
+    grads: { perYear: 400, label: "aerospace-stream completions a year, roughly", source: "Engineers Australia discipline shares" },
     name: "Aerospace Engineering",
     edition: "Aerospace edition",
     tagline: "An almanac of the Australian aerospace job market. Defence is the customer now.",
@@ -556,6 +584,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
 
   hospitality: {
     slug: "hospitality",
+    category: "Hospitality & Tourism",
+    grads: { perYear: 2000, label: "hospitality and tourism degree completions a year, roughly", source: "Department of Education completions" },
     name: "Food & Beverage",
     edition: "Food and beverage edition",
     tagline: "An almanac of the Australian hospitality job market. The industry that staffs your weekend and cannot staff itself.",
@@ -604,6 +634,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   construction: {
     slug: "construction",
+    category: "Built Environment",
+    grads: { perYear: 2500, label: "construction management degree completions a year, roughly", source: "Department of Education completions" },
     name: "Construction",
     edition: "Construction edition",
     tagline: "An almanac of the Australian construction job market. A national housing target and nobody to swing the hammers.",
@@ -652,6 +684,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   architecture: {
     slug: "architecture",
+    category: "Built Environment",
+    grads: { perYear: 1700, label: "accredited Master of Architecture completions a year, roughly", source: "AACA accreditation and Department of Education completions" },
     name: "Architecture",
     edition: "Architecture edition",
     tagline: "An almanac of the Australian architecture job market. Seven years of training for a market that moves with building approvals.",
@@ -706,6 +740,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   actuarial: {
     slug: "actuarial",
+    category: "Business & Commerce",
+    grads: { perYear: 700, label: "actuarial program completions a year, roughly", source: "Actuaries Institute accredited program throughput" },
     name: "Actuarial",
     edition: "Actuarial edition",
     tagline: "An almanac of the Australian actuarial job market. The people who priced your insurance can price their own scarcity.",
@@ -760,6 +796,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   accounting: {
     slug: "accounting",
+    category: "Business & Commerce",
+    grads: { perYear: 10000, label: "domestic accounting completions a year, roughly", source: "Department of Education completions; CPA Australia workforce reporting" },
     name: "Accounting",
     edition: "Accounting edition",
     tagline: "An almanac of the Australian accounting job market. Perpetually short of accountants, increasingly short of graduate desks.",
@@ -813,6 +851,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   law: {
     slug: "law",
+    category: "Law & Justice",
+    grads: { perYear: 8000, label: "LLB and JD completions a year, roughly", source: "Council of Australian Law Deans figures" },
     name: "Law",
     edition: "Law edition",
     tagline: "An almanac of the Australian legal job market. The profession keeps growing and so does the queue to enter it.",
@@ -858,6 +898,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   retail: {
     slug: "retail",
+    category: "Other",
+    listed: false,
     name: "Retail",
     edition: "Retail edition",
     tagline: "An almanac of the Australian retail job market. The biggest employer of young Australians, run on rosters and thin margins.",
@@ -906,6 +948,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   media: {
     slug: "media",
+    category: "Creative Arts & Media",
+    grads: { perYear: 8000, label: "communications and media completions a year, roughly", source: "Department of Education completions, Creative Arts field" },
     name: "Media & Arts",
     edition: "Media and arts edition",
     tagline: "An almanac of the Australian media job market. Smaller than it was, hungrier than it looks.",
@@ -947,6 +991,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
 
   design: {
     slug: "design",
+    category: "Creative Arts & Media",
+    grads: { perYear: 5000, label: "design and visual communication completions a year, roughly", source: "Department of Education completions, Creative Arts field" },
     name: "Design",
     edition: "Design edition",
     tagline: "An almanac of the Australian design job market. The tools got better at your job faster than the market got better at paying for it.",
@@ -996,6 +1042,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   science: {
     slug: "science",
+    category: "Science & Environment",
+    grads: { perYear: 20000, label: "natural and physical sciences completions a year, roughly", source: "Department of Education award course completions" },
     name: "Science",
     edition: "Science edition",
     tagline: "An almanac of the Australian science job market. Years of study, grant cycles for pay, and the quiet hope of a permanent contract.",
@@ -1044,6 +1092,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   environment: {
     slug: "environment",
+    category: "Science & Environment",
+    grads: { perYear: 2500, label: "environmental science completions a year, roughly", source: "Department of Education completions" },
     name: "Environmental Science",
     edition: "Environmental science edition",
     tagline: "An almanac of the Australian environmental job market. Every project needs an approval and every approval needs one of you.",
@@ -1085,6 +1135,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   psychology: {
     slug: "psychology",
+    category: "Health",
+    grads: { perYear: 9000, label: "psychology undergraduate completions a year, roughly; a fraction reach registration", source: "Department of Education completions; Psychology Board registration pathway" },
     name: "Psychology",
     edition: "Psychology edition",
     tagline: "An almanac of the Australian psychology job market. Demand outran the profession years ago and never looked back.",
@@ -1126,6 +1178,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   socialwork: {
     slug: "socialwork",
+    category: "Society & Community",
+    grads: { perYear: 3500, label: "accredited social work completions a year, roughly", source: "AASW accreditation data" },
     name: "Social Work",
     edition: "Social work edition",
     tagline: "An almanac of the Australian social work job market. Society outsources its hardest problems here and pays accordingly, which is to say badly.",
@@ -1166,6 +1220,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   veterinary: {
     slug: "veterinary",
+    category: "Health",
+    grads: { perYear: 750, label: "veterinary science graduates a year, roughly", source: "Veterinary Schools of Australia and New Zealand intake data" },
     name: "Veterinary",
     edition: "Veterinary edition",
     tagline: "An almanac of the Australian veterinary job market. The hottest reading on this entire site belongs to the people who put their arm in a cow.",
@@ -1207,6 +1263,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   libraries: {
     slug: "libraries",
+    category: "Other",
+    listed: false,
     name: "Libraries & Archives",
     edition: "Libraries edition",
     tagline: "An almanac of the Australian library job market. A small, beloved profession that everyone assumes is dying and never quite does.",
@@ -1248,6 +1306,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   economics: {
     slug: "economics",
+    category: "Business & Commerce",
+    grads: { perYear: 2000, label: "economics majors completing a year, roughly", source: "a number the RBA has publicly worried about for years" },
     name: "Economics",
     edition: "Economics edition",
     tagline: "An almanac of the Australian economics job market. The people who study scarcity, experiencing it.",
@@ -1297,6 +1357,8 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
   },
   justice: {
     slug: "justice",
+    category: "Law & Justice",
+    grads: { perYear: 4000, label: "criminology and justice completions a year, roughly", source: "Department of Education completions, Society and Culture field" },
     name: "Criminology & Justice",
     edition: "Criminology and justice edition",
     tagline: "An almanac of the Australian justice job market. The degree says criminology, the payslip usually says case worker.",
@@ -1334,6 +1396,93 @@ export const INDUSTRIES: Record<IndustrySlug, IndustryConfig> = {
       { name: "Youth Justice agencies", note: "the reform-round regulars" },
       { name: "Australian Federal Police", note: "the federal door, campaign-recruited too" },
       { name: "Community legal centres", note: "underfunded, essential, hiring anyway" },
+    ],
+  },
+
+  hospomgmt: {
+    slug: "hospomgmt",
+    category: "Hospitality & Tourism",
+    grads: { perYear: 2000, label: "hospitality and tourism degree completions a year, roughly", source: "Department of Education completions" },
+    name: "Hospitality Management",
+    edition: "Hospitality management edition",
+    tagline: "An almanac of the Australian hospitality management job market. Somebody has to run the room, and right now the market cannot find enough of them.",
+    occupationNote: "IVI group: Cafe and Restaurant Managers (3-month average)",
+    seekClassification: "1212",
+    seekExtraParams: "&keywords=manager",
+    searchTerms: ["hospitality management", "restaurant manager", "venue manager", "hotel management", "tourism management", "events"],
+    hook: {
+      kicker: "Exhibit 0",
+      title: "Why the line moves: everyone wants a manager, nobody wants the hours",
+      blurb: "Postings for cafe and restaurant managers run at one and a half times their twenty-year norm, because running a venue is the job the industry burns through fastest.",
+      tiles: [
+        { big: "152%", small: "of the occupation's own twenty-year typical posting level" },
+        { big: "~600", small: "manager postings a month nationally, one for every strip of shops with a vacancy sign" },
+        { big: "7 days", small: "a venue trades. The roster maths of who supervises them is the entire labour story" },
+      ],
+      punchline:
+        "The degree teaches revenue management and food cost percentages, and the job delivers split shifts, staff no-shows and a Saturday that never ends. Churn does the rest: venues constantly need managers because managers constantly stop being managers. For a graduate who actually wants the work, the demand is standing and the promotion ladder is short.",
+      sources: "IVI series on this page; ask any venue owner about their last three managers.",
+    },
+    quips: {
+      1: "Venues reopened faster than managers came back.",
+      2: "The staffing crisis made the manager the staff.",
+      3: "Every group operator announced ten new openings.",
+      4: "Wage theft headlines made compliance a manager problem.",
+      5: "Short-staffed then. The industry's natural climate.",
+    },
+    pickerLine: "Somebody has to run the room.",
+    bigPlayers: [
+      { name: "Accor", note: "the biggest hotel operator in the country" },
+      { name: "Marriott International", note: "the other lobby" },
+      { name: "Merivale", note: "the Sydney venue empire" },
+      { name: "Australian Venue Co", note: "200+ pubs and counting" },
+      { name: "Endeavour Group", note: "pubs plus the bottle shops" },
+      { name: "Star Entertainment", note: "casinos, eventfully managed" },
+      { name: "Compass Group", note: "the catering giant nobody names" },
+      { name: "Flight Centre", note: "the travel side of the degree" },
+    ],
+  },
+  projectmgmt: {
+    slug: "projectmgmt",
+    category: "Business & Commerce",
+    grads: { perYear: 3000, label: "project management degree and masters completions a year, roughly", source: "Department of Education completions" },
+    name: "Project Management",
+    edition: "Project management edition",
+    tagline: "An almanac of the Australian project management job market. The people who own the spreadsheet that owns everyone else.",
+    occupationNote: "IVI group: Contract, Program and Project Administrators (3-month average)",
+    seekClassification: "",
+    seekExtraParams: "keywords=project+manager",
+    searchTerms: ["project management", "project manager", "program manager", "pmo", "scrum", "delivery"],
+    hook: {
+      kicker: "Exhibit 0",
+      title: "Why the line moves: every industry needs one, so every industry is the market",
+      blurb: "Project administration postings sit just above their twenty-year norm, spread across construction, government, tech and everything else that has ever missed a deadline.",
+      tiles: [
+        { big: "2,107", small: "postings a month for contract, program and project administrators nationally" },
+        { big: "108%", small: "of the occupation's own twenty-year typical level, steady as the Gantt chart it lives in" },
+        { big: "every", small: "industry on this site hires them, which spreads the risk that sinks single-industry careers" },
+      ],
+      punchline:
+        "Project management is the rare degree whose job market is everyone else's job market: when construction slows, government infrastructure picks up, and when tech cuts, defence programs hire. The postings line barely moves because it is an average of ten industries that never slump at once. Unexciting is the correct word, and in this almanac unexciting is a compliment.",
+      sources: "IVI series on this page.",
+    },
+    quips: {
+      1: "The infrastructure pipeline kept the PMOs full.",
+      2: "Agile transformations transformed mostly the org chart.",
+      3: "Defence programs hoovered up the security-cleared PMs.",
+      4: "Every megaproject overrun created three more PM roles.",
+      5: "The spreadsheet needed owning then too.",
+    },
+    pickerLine: "The spreadsheet that owns everyone else.",
+    bigPlayers: [
+      { name: "Transurban", note: "toll roads are forever projects" },
+      { name: "Lendlease", note: "construction megaprojects, globally" },
+      { name: "John Holland", note: "rail, roads, everything with a lane closure" },
+      { name: "CPB Contractors", note: "the CIMIC delivery arm" },
+      { name: "Downer", note: "utilities and transport programs" },
+      { name: "Accenture", note: "the transformation programs, all of them" },
+      { name: "Defence and its primes", note: "decade-long programs with clearances" },
+      { name: "State infrastructure agencies", note: "the pipeline that survives every budget" },
     ],
   },
 };
@@ -1449,21 +1598,71 @@ function summarise(config: IndustryConfig, months: string[], values: number[]) {
 
 export async function getIndustrySummaries() {
   const ivi = await loadIviIndustries();
-  return (Object.keys(INDUSTRIES) as IndustrySlug[]).map((slug) => {
-    const config = INDUSTRIES[slug];
-    const s = ivi.series[slug];
-    const { latest, vsPeakPct, hiring, indexLabel } = summarise(config, ivi.months, s.values);
-    return {
-      slug,
-      name: config.name,
-      pickerLine: config.pickerLine,
-      searchTerms: config.searchTerms,
-      latest,
-      vsPeakPct,
-      hiring,
-      indexLabel,
-    };
-  });
+  return (Object.keys(INDUSTRIES) as IndustrySlug[])
+    .filter((slug) => INDUSTRIES[slug].listed !== false)
+    .map((slug) => {
+      const config = INDUSTRIES[slug];
+      const s = ivi.series[slug];
+      const { latest, vsPeakPct, hiring, indexLabel } = summarise(config, ivi.months, s.values);
+      return {
+        slug,
+        name: config.name,
+        category: config.category,
+        pickerLine: config.pickerLine,
+        searchTerms: config.searchTerms,
+        latest,
+        vsPeakPct,
+        hiring,
+        indexLabel,
+      };
+    });
+}
+
+// Issue date for the masthead: the almanac is dated like a newspaper, by
+// when you are reading it, not by the latest data month inside it.
+export function issueLabel(): string {
+  return new Date().toLocaleDateString("en-AU", { month: "long", year: "numeric", timeZone: "Australia/Sydney" });
+}
+
+// The grad index compared across every industry that has a grads figure:
+// graduate-tagged postings are a systematic undercount everywhere, so the
+// meaningful signal is where an industry ranks, not its absolute number.
+export type GradIndexStats = {
+  monthly: number;
+  index: number;
+  rank: number;
+  of: number;
+  median: number;
+};
+
+export async function getGradIndexStats(slug: IndustrySlug): Promise<GradIndexStats | null> {
+  const config = INDUSTRIES[slug];
+  if (!config.grads) return null;
+  if (!(await tableExists("recession_series"))) return null;
+  const rows = (await all(
+    `SELECT series, value FROM recession_series WHERE series LIKE '%-graduate'
+     AND day = (SELECT MAX(day) FROM recession_series WHERE series LIKE '%-graduate')`,
+  )) as { series: string; value: number }[];
+  const seriesFor = (s: IndustrySlug) => (s === "tech" ? "seek-ict-graduate" : `seek-${s}-graduate`);
+  const entries: { slug: IndustrySlug; index: number }[] = [];
+  for (const s of Object.keys(INDUSTRIES) as IndustrySlug[]) {
+    const g = INDUSTRIES[s].grads;
+    if (!g) continue;
+    const r = rows.find((x) => x.series === seriesFor(s));
+    if (!r) continue;
+    entries.push({ slug: s, index: (r.value * 12) / g.perYear });
+  }
+  const mine = entries.find((e) => e.slug === slug);
+  if (!mine) return null;
+  const sorted = [...entries].sort((a, b) => b.index - a.index);
+  const monthlyRow = rows.find((x) => x.series === seriesFor(slug));
+  return {
+    monthly: monthlyRow?.value ?? 0,
+    index: mine.index,
+    rank: sorted.findIndex((e) => e.slug === slug) + 1,
+    of: sorted.length,
+    median: sorted[Math.floor(sorted.length / 2)].index,
+  };
 }
 
 export async function getIndustryData(slug: IndustrySlug): Promise<IndustryData> {

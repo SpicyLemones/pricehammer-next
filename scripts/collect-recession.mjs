@@ -103,6 +103,25 @@ const SEEK_SERIES = [
   { series: "seek-libraries-all", params: "keywords=librarian" },
   { series: "seek-economics-all", params: "classification=1203&keywords=economist" },
   { series: "seek-justice-all", params: "classification=6163&keywords=case+worker" },
+  // graduate-tagged slices for the grad index; some are honestly tiny
+  { series: "seek-childcare-graduate", params: "classification=6123&keywords=early+childhood+graduate" },
+  { series: "seek-civil-graduate", params: "classification=1209&keywords=civil+graduate" },
+  { series: "seek-electrical-graduate", params: "classification=1209&keywords=electrical+graduate" },
+  { series: "seek-mechanical-graduate", params: "classification=1209&keywords=mechanical+graduate" },
+  { series: "seek-aerospace-graduate", params: "classification=1209&keywords=aerospace+graduate" },
+  { series: "seek-architecture-graduate", params: "classification=6263&keywords=architect+graduate" },
+  { series: "seek-actuarial-graduate", params: "classification=1214&keywords=actuarial+graduate" },
+  { series: "seek-media-graduate", params: "classification=6304&keywords=graduate" },
+  { series: "seek-environment-graduate", params: "classification=1223&keywords=environmental+graduate" },
+  { series: "seek-psychology-graduate", params: "classification=1211&keywords=psychologist+graduate" },
+  { series: "seek-veterinary-graduate", params: "classification=6205&keywords=veterinary+graduate" },
+  { series: "seek-economics-graduate", params: "classification=1203&keywords=economist+graduate" },
+  { series: "seek-justice-graduate", params: "classification=6163&keywords=case+worker+graduate" },
+  // wave four: hospitality management and project management
+  { series: "seek-hospomgmt-all", params: "classification=1212&keywords=manager" },
+  { series: "seek-hospomgmt-graduate", params: "classification=1212&keywords=manager+graduate" },
+  { series: "seek-projectmgmt-all", params: "keywords=project+manager" },
+  { series: "seek-projectmgmt-graduate", params: "keywords=graduate+project+manager" },
 ];
 
 const seekOnly = process.argv.includes("--seek-only");
@@ -226,6 +245,8 @@ const EMPLOYER_INDUSTRIES = [
   { industry: "libraries", params: "keywords=librarian" },
   { industry: "economics", params: "classification=1203&keywords=economist" },
   { industry: "justice", params: "classification=6163&keywords=case+worker" },
+  { industry: "hospomgmt", params: "classification=1212&keywords=manager" },
+  { industry: "projectmgmt", params: "keywords=project+manager" },
 ];
 
 console.log("— Top employers and roles —");

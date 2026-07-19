@@ -7,10 +7,12 @@ import { Landfill } from "../Landfill";
 import { ExperienceSlider } from "../ExperienceSlider";
 import { PayVsChart } from "../PayVsChart";
 import { JobRoulette } from "../JobRoulette";
-import { getIndustryData, getTopEmployers, INDUSTRIES, type IndustryData, type TopEmployer } from "@/app/lib/recession-industries";
+import { getIndustryData, getTopEmployers, INDUSTRIES, issueLabel, type IndustryData, type TopEmployer } from "@/app/lib/recession-industries";
 import payVsData from "../../../../data/recession/pay-vs-everything.json";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
-import { ReadingExplainer, RolesLeaderboard } from "../ReadingBreakdown";
+import { ReadingExplainer } from "../ReadingBreakdown";
+import { RolesToggle } from "../RolesToggle";
+import occEmployment from "../../../../data/recession/occupation-employment.json";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -50,7 +52,13 @@ export default async function RecessionPage() {
       <LongChart data={data} />
       <WhingeSection data={data} />
       <CompetitionSection data={data} topEmployers={topEmployers} />
-      <RolesLeaderboard roles={industry.topRoles} industryName="tech" kicker="Exhibit D" />
+      <RolesToggle
+        employment={(occEmployment.byIndustry as Record<string, { rank: number; occupation: string; employed: number }[]>).tech ?? []}
+        employmentQuarter={occEmployment.quarter}
+        postings={industry.topRoles}
+        industryName="tech"
+        kicker="Exhibit D"
+      />
       <ThenVsNowSection data={data} />
       <PayLadderSection data={data} />
       <LandfillSection data={data} competition={competition} />
@@ -79,7 +87,7 @@ function Masthead({ data }: { data: RecessionData }) {
           Tech jobs edition
         </span>
         <div className="flex items-center gap-3">
-          <span>Vol. 1 · {monthLabel(data.latest.month)}</span>
+          <span>Vol. 1 · {issueLabel()}</span>
           <ThemeToggle />
         </div>
       </div>

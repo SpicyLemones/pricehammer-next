@@ -30,6 +30,7 @@ export default async function RecessionPickerPage() {
   const pickerIndustries = industries.map((ind) => ({
     slug: ind.slug,
     name: ind.name,
+    category: ind.category,
     pickerLine: ind.pickerLine,
     searchTerms: ind.searchTerms,
     hiring: ind.hiring,
