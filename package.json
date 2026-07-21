@@ -8,7 +8,9 @@
     "build": "next build --turbopack",
     "start": "next start -p ${PORT:-3000}",
     "lint": "eslint",
-    "collect:recession": "node scripts/collect-recession.mjs"
+    "collect:recession": "node scripts/collect-recession.mjs",
+    "refresh:prices": "node scripts/refresh-prices-local.mjs",
+    "push:prices": "node scripts/push-prices.mjs"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",

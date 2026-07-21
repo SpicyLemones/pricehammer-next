@@ -52,50 +52,13 @@ jobs:
           done
           echo "::error::auto-validate failed after 5 attempts"; exit 1
 
-      # One async job covers every seller: POST {async:true} returns a job id
-      # in under a second, the server does the whole refresh in the background
-      # (it already rate-limits itself: 3 pages in flight, per-seller health
-      # checks, storefront feeds first), and we poll GET ?job=<id> every 30s.
-      # No request ever runs long enough for Render's proxy to cut it, and the
-      # workflow spends exactly as long as the refresh actually takes. If a
-      # redeploy lands mid-run the in-memory job vanishes; the poll sees 404
-      # and we start the whole refresh again, which is idempotent.
-      - name: Refresh prices (single async job)
-        run: |
-          set -uo pipefail
-          ok=0
-          for attempt in 1 2 3; do
-            HTTP=$(curl -sS -m 60 -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
-              -X POST "$BASE/api/refresh-prices" -H "Content-Type: application/json" \
-              -d '{"async":true}' -o resp.json -w "%{http_code}") || HTTP=000
-            if [ "$HTTP" != "200" ] || ! grep -q '"ok":true' resp.json; then
-              echo "start attempt $attempt failed (HTTP $HTTP):"; head -c 300 resp.json 2>/dev/null; echo
-              sleep $((attempt * 45)); continue
-            fi
-            JOB=$(jq -r '.jobId' resp.json)
-            echo "refresh job $JOB started (attempt $attempt)"
-            # Poll every 30s for up to 4 hours: sellers now refresh one at a
-            # time inside the job (memory-bounded), which trades wall-clock
-            # for not OOMing the Render instance.
-            for i in $(seq 1 480); do
-              sleep 30
-              HTTP=$(curl -sS -m 60 -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
-                "$BASE/api/refresh-prices?job=$JOB" -o poll.json -w "%{http_code}") || HTTP=000
-              STATUS=$(jq -r '.job.status // empty' poll.json 2>/dev/null)
-              if [ "$STATUS" = "done" ]; then
-                echo "refresh done: $(jq -c '.job.result' poll.json)"
-                ok=1; break
-              elif [ "$STATUS" = "failed" ]; then
-                echo "refresh job failed: $(jq -r '.job.error' poll.json | head -c 300)"
-                break
-              elif [ "$HTTP" = "404" ]; then
-                echo "job $JOB lost (redeploy mid-run), restarting refresh"
-                break
-              fi
-            done
-            [ "$ok" = "1" ] && break
-          done
-          if [ "$ok" != "1" ]; then
-            echo "::error::price refresh did not complete"
-            exit 1
-          fi
+      # Price refreshing is deliberately NOT done here any more. Scraping from
+      # the Render instance starves its CPU, times out every poll, and browns
+      # out the live site while it runs. Prices are refreshed from a local
+      # machine instead (same pattern as the recession collector):
+      #   npm run dev          (in one terminal)
+      #   npm run refresh:prices
+      # which runs the refresh locally and pushes results to prod via
+      # /api/admin/prices-import.
+      - name: Price refresh reminder
+        run: echo "Prices refresh locally now - run npm run refresh:prices on the dev machine. This workflow only syncs the catalogue and auto-validates."
