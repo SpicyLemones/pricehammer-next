@@ -80,216 +80,189 @@ async function runRefresh(sellerFilter: number | null) {
       ? [await query("get", "select/seller_id", [sellerFilter])]
       : await query("all", "select/all_sellers");
 
-  const pairs =
-    sellerFilter != null
-      ? await query("all", "select/validated_pairs_by_seller", [sellerFilter])
-      : await query("all", "select/validated_pairs");
-
-  const sById: Record<number, any> = {};
-  (sellers as any[])?.forEach((s) => s && (sById[s.id] = s));
-
-  // Health-check each seller first: dead/retired stores are skipped entirely
-  // (their pairs keep old data but display already hides dead sellers).
-  const skipSellers = new Set<number>();
-  await Promise.allSettled(
-    (sellers as any[]).map(async (s) => {
-      if (!s) return;
-      if ((s.status || "active") === "retired") {
-        skipSellers.add(Number(s.id));
-        return;
-      }
-      const health = await probeSellerHealth(String(s.base_url ?? ""));
-      const status = await reconcileSellerStatus(Number(s.id), s.status, health);
-      if (status === "dead") {
-        skipSellers.add(Number(s.id));
-        console.log(`[refresh-prices] SKIP seller ${s.name ?? s.id} (dead: ${health.detail})`);
-      }
-    }),
-  );
-
-  const storefrontIndexes = new Map<number, StorefrontIndexReady>();
-  const storefrontLimit = pLimit(2);
-  await Promise.allSettled(
-    (sellers as any[]).map((sellerRow) =>
-      storefrontLimit(async () => {
-        if (!sellerRow) return;
-        const sellerId = Number(sellerRow.id);
-        if (!Number.isFinite(sellerId) || skipSellers.has(sellerId)) return;
-        const index = await buildStorefrontIndex(sellerRow);
-        if (!index) return;
-        const label = `${sellerRow.name ?? "Seller"}#${sellerId}`;
-        if (index.status === "ready") {
-          storefrontIndexes.set(sellerId, index);
-          index.diagnostics.forEach((msg) =>
-            console.log(`[refresh-prices] STORE INFO ${label}: ${msg}`),
-          );
-        } else {
-          index.diagnostics.forEach((msg) =>
-            console.log(`[refresh-prices] STORE WARN ${label}: ${msg}`),
-          );
-          if (index.fallbackOption) {
-            console.log(
-              `[refresh-prices] STORE Fallback ${label}: ${index.fallbackOption.message}`,
-            );
-          }
-        }
-      }),
-    ),
-  );
-
-  const limit = pLimit(3); // <= at most 3 pages in-flight
-
   let updated = 0;
   let skipped = 0;
   let failed = 0;
+  let total = 0;
 
   const productImageEnsures = new Map<number, Promise<void>>();
 
-  await Promise.allSettled(
-    (pairs as any[]).map(({ seller_id, product_id, link }) =>
-      limit(async () => {
-        const s =
-          sById[seller_id] ||
-          (await query("get", "select/seller_id", [seller_id]));
-        if (!s) {
-          skipped++;
-          console.log(
-            `[refresh-prices] SKIP p=${product_id} s=${seller_id} (seller missing)`
-          );
-          return;
-        }
-        if (skipSellers.has(Number(seller_id))) {
-          skipped++;
-          return;
-        }
+  // One seller at a time: health-check it, build its storefront index, refresh
+  // its pairs, then let the index leave scope before the next seller starts.
+  // Holding every seller's catalogue in memory at once is what pushed the
+  // whole-run job past Render's memory limit.
+  for (const s of sellers as any[]) {
+    if (!s) continue;
+    const sellerId = Number(s.id);
+    if (!Number.isFinite(sellerId)) continue;
+    const pairs = (await query("all", "select/validated_pairs_by_seller", [sellerId])) as any[];
+    total += pairs.length;
+    const label = `${s.name ?? "Seller"}#${sellerId}`;
 
-        const existingLink =
-          typeof link === "string" && link.trim() !== "" ? link : null;
-        console.log(
-          `[refresh-prices] FETCH  p=${product_id} s=${seller_id} -> ${existingLink ?? "(no link)"}`
+    if ((s.status || "active") === "retired") {
+      skipped += pairs.length;
+      continue;
+    }
+    const health = await probeSellerHealth(String(s.base_url ?? ""));
+    const status = await reconcileSellerStatus(sellerId, s.status, health);
+    if (status === "dead") {
+      skipped += pairs.length;
+      console.log(`[refresh-prices] SKIP seller ${label} (dead: ${health.detail})`);
+      continue;
+    }
+
+    let storefrontIndex: StorefrontIndexReady | undefined;
+    const index = await buildStorefrontIndex(s);
+    if (index) {
+      if (index.status === "ready") {
+        storefrontIndex = index;
+        index.diagnostics.forEach((msg) =>
+          console.log(`[refresh-prices] STORE INFO ${label}: ${msg}`),
         );
+      } else {
+        index.diagnostics.forEach((msg) =>
+          console.log(`[refresh-prices] STORE WARN ${label}: ${msg}`),
+        );
+        if (index.fallbackOption) {
+          console.log(
+            `[refresh-prices] STORE Fallback ${label}: ${index.fallbackOption.message}`,
+          );
+        }
+      }
+    }
 
-        let priceSource: "api" | "scrape" | null = null;
-        let price: number | null = null;
-        let linkForUpdate: string | null = existingLink;
+    const limit = pLimit(3); // <= at most 3 pages in-flight per seller
 
-        const storefrontIndex = storefrontIndexes.get(Number(seller_id));
-        if (storefrontIndex) {
-          // The stored link IS the product's identity (it was validated or
-          // SKU-verified) — look it up in the feed directly first. Only fall
-          // back to catalogue matching when the link isn't in the feed.
-          const linkKey = normalizeProductUrl(existingLink);
-          const byLinkMatch = linkKey
-            ? storefrontIndex.byLink?.get(linkKey)
-            : undefined;
-          const catalogueMatch = storefrontIndex.matches.get(Number(product_id));
-          // Trust gate for catalogue matches only (byLink is inherently
-          // trusted): SKU-verified or high-confidence name, same as
-          // auto-validate. Weaker fuzzy matches must NOT update validated
-          // pairs — a 0.55 name match can overwrite a human-validated link
-          // with a related-but-wrong product.
-          const trusted =
-            byLinkMatch != null ||
-            (catalogueMatch &&
-              (catalogueMatch.reason === "sku" || catalogueMatch.confidence >= 0.85));
-          const match = byLinkMatch ?? catalogueMatch;
-          if (match && trusted) {
-            if (match.price != null) {
-              price = match.price;
-              priceSource = "api";
-              if (match.url) {
-                linkForUpdate = match.url;
-              }
-              if (match.image) {
-                const pid = Number(product_id);
-                if (!productImageEnsures.has(pid)) {
-                  productImageEnsures.set(
-                    pid,
-                    ensureProductImage(pid, match.image).catch(() => undefined),
-                  );
+    await Promise.allSettled(
+      pairs.map(({ product_id, link }) =>
+        limit(async () => {
+          const existingLink =
+            typeof link === "string" && link.trim() !== "" ? link : null;
+          console.log(
+            `[refresh-prices] FETCH  p=${product_id} s=${sellerId} -> ${existingLink ?? "(no link)"}`
+          );
+
+          let priceSource: "api" | "scrape" | null = null;
+          let price: number | null = null;
+          let linkForUpdate: string | null = existingLink;
+
+          if (storefrontIndex) {
+            // The stored link IS the product's identity (it was validated or
+            // SKU-verified) — look it up in the feed directly first. Only fall
+            // back to catalogue matching when the link isn't in the feed.
+            const linkKey = normalizeProductUrl(existingLink);
+            const byLinkMatch = linkKey
+              ? storefrontIndex.byLink?.get(linkKey)
+              : undefined;
+            const catalogueMatch = storefrontIndex.matches.get(Number(product_id));
+            // Trust gate for catalogue matches only (byLink is inherently
+            // trusted): SKU-verified or high-confidence name, same as
+            // auto-validate. Weaker fuzzy matches must NOT update validated
+            // pairs — a 0.55 name match can overwrite a human-validated link
+            // with a related-but-wrong product.
+            const trusted =
+              byLinkMatch != null ||
+              (catalogueMatch &&
+                (catalogueMatch.reason === "sku" || catalogueMatch.confidence >= 0.85));
+            const match = byLinkMatch ?? catalogueMatch;
+            if (match && trusted) {
+              if (match.price != null) {
+                price = match.price;
+                priceSource = "api";
+                if (match.url) {
+                  linkForUpdate = match.url;
                 }
+                if (match.image) {
+                  const pid = Number(product_id);
+                  if (!productImageEnsures.has(pid)) {
+                    productImageEnsures.set(
+                      pid,
+                      ensureProductImage(pid, match.image).catch(() => undefined),
+                    );
+                  }
+                }
+              } else {
+                console.log(
+                  `[refresh-prices] STORE SKIP p=${product_id} s=${sellerId} (no price in feed, reason=${match.reason})`
+                );
               }
-            } else {
+            } else if (match && !trusted) {
               console.log(
-                `[refresh-prices] STORE SKIP p=${product_id} s=${seller_id} (no price in feed, reason=${match.reason})`
+                `[refresh-prices] STORE LOWCONF p=${product_id} s=${sellerId} (conf=${match.confidence.toFixed(2)}), falling back to stored link`
               );
             }
-          } else if (match && !trusted) {
-            console.log(
-              `[refresh-prices] STORE LOWCONF p=${product_id} s=${seller_id} (conf=${match.confidence.toFixed(2)}) — falling back to stored link`
-            );
           }
-        }
 
-        if (priceSource !== "api") {
-          if (!existingLink) {
+          if (priceSource !== "api") {
+            if (!existingLink) {
+              skipped++;
+              console.log(
+                `[refresh-prices] SKIP p=${product_id} s=${sellerId} (no link and no feed price)`
+              );
+              return;
+            }
+            try {
+              price = await fetchPriceFromLinkWithSellerSelectors(s, existingLink);
+              priceSource = "scrape";
+            } catch (e: any) {
+              failed++;
+              console.log(
+                `[refresh-prices] ERROR p=${product_id} s=${sellerId}: ${
+                  e?.message || e
+                }`
+              );
+              return;
+            }
+          }
+
+          if (price == null) {
             skipped++;
             console.log(
-              `[refresh-prices] SKIP p=${product_id} s=${seller_id} (no link and no feed price)`
+              `[refresh-prices] NONE  p=${product_id} s=${sellerId} (no price)`
             );
             return;
           }
+
           try {
-            price = await fetchPriceFromLinkWithSellerSelectors(s, existingLink);
-            priceSource = "scrape";
-          } catch (e: any) {
-            failed++;
-            console.log(
-              `[refresh-prices] ERROR p=${product_id} s=${seller_id}: ${
-                e?.message || e
-              }`
-            );
-            return;
+            await query("run", "insert/price_history", [
+              sellerId,
+              product_id,
+              price,
+              linkForUpdate,
+            ]);
+          } catch {
+            // ignore duplicates/history failure
           }
-        }
 
-        if (price == null) {
-          skipped++;
-          console.log(
-            `[refresh-prices] NONE  p=${product_id} s=${seller_id} (no price)`
-          );
-          return;
-        }
-
-        try {
-          await query("run", "insert/price_history", [
-            seller_id,
-            product_id,
+          await query("run", "update/price_only_validated", [
             price,
             linkForUpdate,
+            sellerId,
+            product_id,
           ]);
-        } catch {
-          // ignore duplicates/history failure
-        }
+          updated++;
+          console.log(
+            `[refresh-prices] UPDATED p=${product_id} s=${sellerId} price=${price} via=${priceSource ?? "unknown"}`
+          );
+        })
+      )
+    );
 
-        await query("run", "update/price_only_validated", [
-          price,
-          linkForUpdate,
-          seller_id,
-          product_id,
-        ]);
-        updated++;
-        console.log(
-          `[refresh-prices] UPDATED p=${product_id} s=${seller_id} price=${price} via=${priceSource ?? "unknown"}`
-        );
-      })
-    )
-  );
-
-  await Promise.allSettled(productImageEnsures.values());
+    // flush image work per seller so the map never grows unbounded either
+    await Promise.allSettled(productImageEnsures.values());
+    productImageEnsures.clear();
+  }
 
   const ms = Date.now() - t0;
   console.log(
-    `[refresh-prices] DONE updated=${updated} skipped=${skipped} failed=${failed} total=${
-      (pairs as any[]).length
-    } in ${ms}ms`
+    `[refresh-prices] DONE updated=${updated} skipped=${skipped} failed=${failed} total=${total} in ${ms}ms`
   );
 
   return {
     updated,
     skipped,
     failed,
-    total: (pairs as any[]).length,
+    total,
     ms,
   };
 }
