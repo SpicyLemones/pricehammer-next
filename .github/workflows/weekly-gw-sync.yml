@@ -12,7 +12,7 @@ env:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    timeout-minutes: 300
     steps:
       - name: Check credentials are configured
         run: |
@@ -74,8 +74,10 @@ jobs:
             fi
             JOB=$(jq -r '.jobId' resp.json)
             echo "refresh job $JOB started (attempt $attempt)"
-            # Poll every 30s for up to 2 hours.
-            for i in $(seq 1 240); do
+            # Poll every 30s for up to 4 hours: sellers now refresh one at a
+            # time inside the job (memory-bounded), which trades wall-clock
+            # for not OOMing the Render instance.
+            for i in $(seq 1 480); do
               sleep 30
               HTTP=$(curl -sS -m 60 -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
                 "$BASE/api/refresh-prices?job=$JOB" -o poll.json -w "%{http_code}") || HTTP=000
