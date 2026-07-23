@@ -13,7 +13,6 @@ import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { ReadingExplainer } from "../ReadingBreakdown";
 import { RolesToggle } from "../RolesToggle";
 import { LifeGame } from "../LifeGame";
-import subredditGrowth from "../../../../data/recession/subreddit-growth.json";
 import occEmployment from "../../../../data/recession/occupation-employment.json";
 
 export const runtime = "nodejs";
@@ -267,7 +266,7 @@ function WhingeSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit B"
         title="The economy of vibes"
-        blurb={`Posts per ${useWeekly ? "week" : "day"} on Australian job subreddits (r/ausjobs, r/auscorp), plus how many people have joined the room over the years. Every bar is someone asking where the jobs went.`}
+        blurb={`Posts per ${useWeekly ? "week" : "day"} on Australian job subreddits (r/ausjobs, r/auscorp). Every bar is someone asking where the jobs went.`}
       />
       {bars.length >= 2 ? (
         <>
@@ -299,7 +298,6 @@ function WhingeSection({ data }: { data: RecessionData }) {
               the last 30 days ({nf.format(data.adsPerWhinge.ads)} postings, {nf.format(data.adsPerWhinge.whinges)} posts).
             </p>
           )}
-          <MembersChart />
         </>
       ) : (
         <p className="border border-dashed border-slate-300 p-4 text-sm text-slate-500 dark:border-slate-700">
@@ -308,76 +306,6 @@ function WhingeSection({ data }: { data: RecessionData }) {
         </p>
       )}
     </section>
-  );
-}
-
-// membership growth of the vibe economy, harvested from Wayback snapshots
-function MembersChart() {
-  const subs = (subredditGrowth as { subs: Record<string, { month: string; members: number }[]> }).subs;
-  const entries = Object.entries(subs).filter(([, pts]) => pts.length >= 3);
-  if (!entries.length) return null;
-  const allMonths = [...new Set(entries.flatMap(([, pts]) => pts.map((p) => p.month)))].sort();
-  const maxMembers = Math.max(...entries.flatMap(([, pts]) => pts.map((p) => p.members)));
-  const minMembers = Math.min(...entries.flatMap(([, pts]) => pts.map((p) => p.members)));
-  const W = 920;
-  const H = 240;
-  const PAD = { l: 52, r: 96, t: 16, b: 26 };
-  const x = (m: string) => PAD.l + (allMonths.indexOf(m) / Math.max(1, allMonths.length - 1)) * (W - PAD.l - PAD.r);
-  // log scale: one room has a hundred thousand people, the other has three
-  // thousand, and both lines deserve a slope
-  const lo = Math.log10(Math.max(10, minMembers * 0.8));
-  const hi = Math.log10(maxMembers * 1.3);
-  const y = (v: number) => H - PAD.b - ((Math.log10(Math.max(10, v)) - lo) / (hi - lo)) * (H - PAD.t - PAD.b);
-  const colours = ["stroke-amber-500", "stroke-sky-500"];
-  const fills = ["fill-amber-600 dark:fill-amber-400", "fill-sky-600 dark:fill-sky-400"];
-  const yearsShown = [...new Set(allMonths.map((m) => m.slice(0, 4)))].filter((_, i, a) => i % Math.ceil(a.length / 8) === 0);
-
-  return (
-    <div className="mt-3 border border-slate-300 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
-      <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
-        The congregation grows
-      </div>
-      <div className="mt-2 overflow-x-auto">
-        <svg viewBox={`0 0 ${W} ${H}`} className="min-w-[640px]" role="img" aria-label="Subreddit member counts over time">
-          {[100, 1000, 10000, 100000].filter((g) => g >= minMembers * 0.5 && g <= maxMembers * 1.3).map((g) => (
-            <g key={g}>
-              <line x1={PAD.l} x2={W - PAD.r} y1={y(g)} y2={y(g)} className="stroke-slate-200 dark:stroke-slate-800" strokeWidth="1" />
-              <text x={PAD.l - 6} y={y(g) + 3} textAnchor="end" className="fill-slate-400 text-[9px]">
-                {g >= 1000 ? g / 1000 + "k" : g}
-              </text>
-            </g>
-          ))}
-          {yearsShown.map((yr) => {
-            const m = allMonths.find((mm) => mm.startsWith(yr));
-            if (!m) return null;
-            return (
-              <text key={yr} x={x(m)} y={H - 8} textAnchor="middle" className="fill-slate-400 text-[9px]">{yr}</text>
-            );
-          })}
-          {entries.map(([sub, pts], i) => {
-            const path = pts.map((p, j) => `${j === 0 ? "M" : "L"}${x(p.month).toFixed(1)},${y(p.members).toFixed(1)}`).join(" ");
-            const last = pts[pts.length - 1];
-            return (
-              <g key={sub}>
-                <path d={path} fill="none" className={colours[i % colours.length]} strokeWidth="2.5" />
-                {pts.map((p) => (
-                  <circle key={p.month} cx={x(p.month)} cy={y(p.members)} r="2.5" className={fills[i % fills.length]}>
-                    <title>{`r/${sub}, ${p.month}: ${nf.format(p.members)} members`}</title>
-                  </circle>
-                ))}
-                <text x={x(last.month) + 8} y={y(last.members) + 4} className={`${fills[i % fills.length]} text-[11px] font-bold`}>
-                  r/{sub}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-      <p className="mt-2 text-[11px] text-slate-400">
-        Member counts recovered from Internet Archive snapshots of each subreddit, one point per archived month.
-        Gaps are gaps in the archive. The congregation only moves one way.
-      </p>
-    </div>
   );
 }
 
@@ -701,7 +629,7 @@ function ExperienceSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit J"
         title="The experience paradox"
-        blurb="Drag the slider to your years of experience and see how many of the current tech job postings are actually aimed at you."
+        blurb="Pick your years of experience. The pie knows how much of the market is actually aimed at you, but it is not telling until you commit."
       />
       <ExperienceSlider seekLatest={data.seekLatest} />
     </section>
