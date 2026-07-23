@@ -322,7 +322,11 @@ function MembersChart() {
   const W = 920;
   const H = 240;
   const PAD = { l: 52, r: 96, t: 16, b: 26 };
-  const x = (m: string) => PAD.l + (allMonths.indexOf(m) / Math.max(1, allMonths.length - 1)) * (W - PAD.l - PAD.r);
+  // true time scale, so a three-year archive gap looks like a three-year gap
+  const asTime = (m: string) => Number(m.slice(0, 4)) + (Number(m.slice(5, 7)) - 1) / 12;
+  const t0 = asTime(allMonths[0]);
+  const t1 = asTime(allMonths[allMonths.length - 1]);
+  const x = (m: string) => PAD.l + ((asTime(m) - t0) / Math.max(0.1, t1 - t0)) * (W - PAD.l - PAD.r);
   // log scale: one room has a hundred thousand people, the other has three
   // thousand, and both lines deserve a slope
   const lo = Math.log10(Math.max(10, minMembers * 0.8));
@@ -330,12 +334,13 @@ function MembersChart() {
   const y = (v: number) => H - PAD.b - ((Math.log10(Math.max(10, v)) - lo) / (hi - lo)) * (H - PAD.t - PAD.b);
   const colours = ["stroke-amber-500", "stroke-sky-500"];
   const fills = ["fill-amber-600 dark:fill-amber-400", "fill-sky-600 dark:fill-sky-400"];
-  const yearsShown = [...new Set(allMonths.map((m) => m.slice(0, 4)))].filter((_, i, a) => i % Math.ceil(a.length / 8) === 0);
+  const yearsShown: string[] = [];
+  for (let yr = Math.ceil(t0); yr <= Math.floor(t1) + 1; yr += 2) yearsShown.push(String(yr));
 
   return (
     <div className="mt-3 border border-slate-300 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
       <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
-        The congregation grows
+        Subreddit user growth
       </div>
       <div className="mt-2 overflow-x-auto">
         <svg viewBox={`0 0 ${W} ${H}`} className="min-w-[640px]" role="img" aria-label="Subreddit member counts over time">
@@ -347,13 +352,9 @@ function MembersChart() {
               </text>
             </g>
           ))}
-          {yearsShown.map((yr) => {
-            const m = allMonths.find((mm) => mm.startsWith(yr));
-            if (!m) return null;
-            return (
-              <text key={yr} x={x(m)} y={H - 8} textAnchor="middle" className="fill-slate-400 text-[9px]">{yr}</text>
-            );
-          })}
+          {yearsShown.map((yr) => (
+            <text key={yr} x={x(yr + "-01")} y={H - 8} textAnchor="middle" className="fill-slate-400 text-[9px]">{yr}</text>
+          ))}
           {entries.map(([sub, pts], i) => {
             const path = pts.map((p, j) => `${j === 0 ? "M" : "L"}${x(p.month).toFixed(1)},${y(p.members).toFixed(1)}`).join(" ");
             const last = pts[pts.length - 1];
@@ -375,7 +376,8 @@ function MembersChart() {
       </div>
       <p className="mt-2 text-[11px] text-slate-400">
         Member counts recovered from Internet Archive snapshots of each subreddit, one point per archived month.
-        Gaps are gaps in the archive. The congregation only moves one way.
+        The flat stretches are archive gaps (nobody snapshotted r/ausjobs from 2016 to 2019, or r/auscorp before
+        2024), not pauses in growth. The line only moves one way.
       </p>
     </div>
   );
@@ -701,7 +703,7 @@ function ExperienceSection({ data }: { data: RecessionData }) {
       <SectionHeading
         kicker="Exhibit J"
         title="The experience paradox"
-        blurb="Drag the slider to your years of experience and see how many of the current tech job postings are actually aimed at you."
+        blurb="Pick your years of experience. The pie knows how much of the market is actually aimed at you, but it is not telling until you commit."
       />
       <ExperienceSlider seekLatest={data.seekLatest} />
     </section>
