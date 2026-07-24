@@ -28,6 +28,12 @@ const tiles = [
     type: "video"
   },
   {
+    title: "SCHRODINGER'S HORMUZ",
+    subtitle: "The strait is both open and closed until you look",
+    href: "/hormuz",
+    external: false
+  },
+  {
     title: "MY MODS",
     subtitle: "Coming soon",
     href: "#",

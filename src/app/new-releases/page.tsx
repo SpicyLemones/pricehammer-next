@@ -35,7 +35,13 @@ const imgSrc = (image?: string | null) => {
 const fmt = (n: number) =>
   new Intl.NumberFormat("en-AU", { style: "currency", currency: "AUD" }).format(n);
 
-export default async function NewReleasesPage() {
+export default async function NewReleasesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>;
+}) {
+  const { tab } = await searchParams;
+  const showPast = tab === "past";
   const rows = (await query(
     "all",
     `SELECT m.product_id, m.name, m.game, m.faction, m.image, m.is_pre_order,
@@ -52,6 +58,44 @@ export default async function NewReleasesPage() {
      WHERE (m.is_new_release = 1 OR m.is_pre_order = 1) AND COALESCE(m.hidden, 0) = 0
      ORDER BY m.is_pre_order DESC, m.name`,
   )) as Row[];
+
+  // Past releases: earlier sync batches, grouped by the day the catalogue
+  // sync added them. The initial bulk import (a thousand-plus rows in one
+  // day) is not a release batch and is excluded by the size guard.
+  type Batch = { day: string; items: Row[] };
+  let pastBatches: Batch[] = [];
+  if (showPast) {
+    const days = (await query(
+      "all",
+      `SELECT DATE(m.created_at) AS day, COUNT(*) AS n
+       FROM product_metadata m
+       WHERE COALESCE(m.hidden, 0) = 0
+       GROUP BY day HAVING n <= 300
+       ORDER BY day DESC LIMIT 8`,
+    )) as { day: string; n: number }[];
+    for (const d of days) {
+      const items = (await query(
+        "all",
+        `SELECT m.product_id, m.name, m.game, m.faction, m.image, m.is_pre_order,
+                (SELECT MIN(pr.price) FROM prices pr
+                 JOIN sellers s ON s.id = pr.seller_id
+                 WHERE pr.product_id = m.product_id AND pr.validated = 1 AND pr.price IS NOT NULL
+                   AND COALESCE(s.status,'active') NOT IN ('dead','retired')) AS best_price,
+                (SELECT s.shipping_info FROM prices pr
+                 JOIN sellers s ON s.id = pr.seller_id
+                 WHERE pr.product_id = m.product_id AND pr.validated = 1 AND pr.price IS NOT NULL
+                   AND COALESCE(s.status,'active') NOT IN ('dead','retired')
+                 ORDER BY pr.price ASC LIMIT 1) AS best_shipping
+         FROM product_metadata m
+         WHERE DATE(m.created_at) = ? AND COALESCE(m.hidden, 0) = 0
+           AND m.is_new_release = 0 AND m.is_pre_order = 0
+         ORDER BY m.name`,
+        [d.day],
+      )) as Row[];
+      if (items.length) pastBatches.push({ day: d.day, items });
+      if (pastBatches.length >= 5) break;
+    }
+  }
 
   // group by universe, in label order
   const groups = new Map<string, Row[]>();
@@ -73,12 +117,35 @@ export default async function NewReleasesPage() {
       <div>
         <h1 className="text-3xl font-display font-bold">New Releases</h1>
         <p className="mt-1 text-slate-600 dark:text-slate-300">
-          The latest Games Workshop kits and current pre-orders, straight from GW&apos;s
-          catalogue. Updated with every sync.
+          {showPast
+            ? "The release batches that came before this week's, newest first."
+            : "The latest Games Workshop kits and current pre-orders, straight from GW's catalogue. Updated with every sync."}
         </p>
+        <div className="mt-4 flex gap-2">
+          <Link
+            href="/new-releases"
+            className={`border-2 px-4 py-1.5 text-sm transition-colors ${
+              !showPast
+                ? "border-slate-900 bg-slate-900 text-white dark:border-slate-100 dark:bg-slate-100 dark:text-slate-900"
+                : "border-slate-300 text-slate-500 hover:border-slate-900 hover:text-slate-900 dark:border-slate-700 dark:text-slate-400 dark:hover:border-slate-100 dark:hover:text-slate-100"
+            }`}
+          >
+            New releases
+          </Link>
+          <Link
+            href="/new-releases?tab=past"
+            className={`border-2 px-4 py-1.5 text-sm transition-colors ${
+              showPast
+                ? "border-slate-900 bg-slate-900 text-white dark:border-slate-100 dark:bg-slate-100 dark:text-slate-900"
+                : "border-slate-300 text-slate-500 hover:border-slate-900 hover:text-slate-900 dark:border-slate-700 dark:text-slate-400 dark:hover:border-slate-100 dark:hover:text-slate-100"
+            }`}
+          >
+            Past releases
+          </Link>
+        </div>
       </div>
 
-      {orderedGroups.length === 0 && (
+      {!showPast && orderedGroups.length === 0 && (
         <div className="border-t border-slate-300 py-16 text-center dark:border-slate-700">
           <p className="text-lg text-slate-600 dark:text-slate-300">
             Nothing brand-new right now.
@@ -90,7 +157,7 @@ export default async function NewReleasesPage() {
         </div>
       )}
 
-      {orderedGroups.map(({ slug, items }) => (
+      {!showPast && orderedGroups.map(({ slug, items }) => (
         <section key={slug} aria-labelledby={`nr-${slug}`}>
           <h2
             id={`nr-${slug}`}
@@ -120,6 +187,61 @@ export default async function NewReleasesPage() {
                       Pre-order
                     </span>
                   )}
+                  <div className="font-medium leading-snug group-hover:underline">{r.name}</div>
+                  {r.faction && r.faction !== "No Faction / Misc" && (
+                    <div className="text-xs text-slate-500 dark:text-slate-400">{r.faction}</div>
+                  )}
+                  <div className="text-sm font-bold text-green-700 dark:text-emerald-300">
+                    {r.best_price != null ? `from ${fmt(r.best_price)}` : "no prices yet"}
+                  </div>
+                  {r.best_price != null && (
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      {deliveryEstimate(parseShipping(r.best_shipping), r.best_price)}
+                    </div>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      {showPast && pastBatches.length === 0 && (
+        <div className="border-t border-slate-300 py-16 text-center dark:border-slate-700">
+          <p className="text-lg text-slate-600 dark:text-slate-300">No past batches recorded yet.</p>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+            Batches appear here once the weekly sync has run a few times.
+          </p>
+        </div>
+      )}
+
+      {showPast && pastBatches.map(({ day, items }) => (
+        <section key={day} aria-labelledby={`pb-${day}`}>
+          <h2
+            id={`pb-${day}`}
+            className="border-b border-slate-300 pb-2 text-2xl font-display font-semibold dark:border-slate-700"
+          >
+            Release batch ·{" "}
+            {new Date(day + "T12:00:00").toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric" })}
+            <span className="ml-3 text-sm font-normal text-slate-500 dark:text-slate-400">{items.length} kits</span>
+          </h2>
+          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {items.map((r) => (
+              <Link
+                key={r.product_id}
+                href={`/product/${r.product_id}`}
+                className="group border border-slate-300 bg-white p-3 transition-colors hover:border-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-400"
+              >
+                <div className="aspect-square overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={imgSrc(r.image)}
+                    alt={r.name}
+                    className="h-full w-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="mt-2 space-y-1">
                   <div className="font-medium leading-snug group-hover:underline">{r.name}</div>
                   {r.faction && r.faction !== "No Faction / Misc" && (
                     <div className="text-xs text-slate-500 dark:text-slate-400">{r.faction}</div>

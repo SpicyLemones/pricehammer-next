@@ -17,7 +17,7 @@ import {
   SelectLabel,
 } from "./ui/select";
 import { Separator } from "./ui/separator";
-import { Search, ExternalLink, X } from "lucide-react";
+import { Search, Loader2, ExternalLink, X} from "lucide-react";
 import { GAME_LABELS, gameLabel } from "@/lib/game-labels";
 import { addToCart } from "@/lib/cart";
 
@@ -93,7 +93,7 @@ const FACTION_GROUPS: Record<
   ],
   Chaos: [
     "Chaos Daemons","Chaos Knights","Chaos Space Marines","Death Guard",
-    "Emperor’s Children","Thousand Sons","World Eaters"
+    "Emperor’s Children","Emperor's Children","Iron Warriors","Red Corsairs","Thousand Sons","World Eaters"
   ],
   Xenos: [
     "Aeldari","Drukhari","Genestealer Cults","Leagues of Votann","Necrons","Orks","T’au Empire","Tyranids",
@@ -103,8 +103,8 @@ const FACTION_GROUPS: Record<
     "Lumineth Realm-lords","Seraphon","Stormcast Eternals","Sylvaneth",
   ],
   "Chaos (AoS)" : [
-    "Beasts of Chaos","Blades of Khorne","Disciples of Tzeentch","Hedonites of Slaanesh","Maggotkin of Nurgle",
-    "Skaven","Slaves to Darkness"
+    "Beasts of Chaos","Blades of Khorne","Disciples of Tzeentch","Hedonites of Slaanesh","Helsmiths of Hashut",
+    "Maggotkin of Nurgle","Skaven","Slaves to Darkness"
   ],
   Destruction: [
     "Bonesplitterz","Gloomspite Gitz","Ironjawz","Kruleboyz","Ogor Mawtribes","Sons of Behemat",
@@ -113,6 +113,29 @@ const FACTION_GROUPS: Record<
     "Flesh-eater Courts","Nighthaunt","Ossiarch Bonereapers","Soulblight Gravelords",
   ],
 };
+
+// Which side of the Warhammer divide each faction group belongs to.
+// "all" groups pass through everywhere; everything else only shows for
+// universes on its own side, whatever the product tags claim.
+const AOS_SIDE = new Set(["ageofsigmar", "warcry", "underworlds"]);
+const FORTYK_SIDE = new Set(["warhammer40k", "killteam", "horusheresy", "legionsimperialis", "adeptustitanicus", "necromunda"]);
+const GROUP_SIDE: Record<string, "40k" | "aos" | "all"> = {
+  "No Faction": "all",
+  Imperium: "40k",
+  Chaos: "40k",
+  Xenos: "40k",
+  Order: "aos",
+  "Chaos (AoS)": "aos",
+  Destruction: "aos",
+  Death: "aos",
+  Other: "all",
+};
+function groupAllowed(group: string, universe: string): boolean {
+  const side = GROUP_SIDE[group] ?? "all";
+  if (side === "all" || universe === "all") return true;
+  if (side === "40k") return !AOS_SIDE.has(universe);
+  return !FORTYK_SIDE.has(universe);
+}
 
 // ---------- Report wrong (unchanged) ----------
 async function reportWrong(
@@ -221,6 +244,7 @@ export function ProductLookup() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   // the guided browse: universe first, then faction, then everything in it
   const [wizardStep, setWizardStep] = useState<"universe" | "faction" | null>(null);
+  const [loading, setLoading] = useState(true);
 
   // Fetch live retailers + (same) metadata from the DB-backed API
   useEffect(() => {
@@ -236,6 +260,8 @@ export function ProductLookup() {
         }
       } catch (e) {
         console.warn("Falling back to manual products only (no DB retailers).", e);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
     })();
     return () => { cancelled = true; };
@@ -267,14 +293,16 @@ export function ProductLookup() {
   const factionSet = useMemo(() => new Set(factions), [factions]);
   const groupedFactions = useMemo(() => {
     const grouped = (Object.entries(FACTION_GROUPS) as [string, string[]][])
+      .filter(([group]) => groupAllowed(group, selectedGame))
       .map(([group, list]) => ({ group, items: list.filter((f) => factionSet.has(f)) }))
       .filter((g) => g.items.length > 0);
-    // anything GW names that our hardcoded groups don't know about
+    // anything GW names that our hardcoded groups don't know about; a faction
+    // canonically filed on the other side of the divide never leaks in here
     const known = new Set(Object.values(FACTION_GROUPS).flat());
     const other = factions.filter((f) => !known.has(f)).sort();
-    if (other.length) grouped.push({ group: "Other", items: other });
+    if (other.length && groupAllowed("Other", selectedGame)) grouped.push({ group: "Other", items: other });
     return grouped;
-  }, [factionSet, factions]);
+  }, [factionSet, factions, selectedGame]);
 
   // 1) Filtering — only meaningful once a search has been committed
   const filteredAll = useMemo(() => {
@@ -417,7 +445,13 @@ export function ProductLookup() {
       {/* Results */}
       {!hasSearched ? (
         <div className="border-t border-slate-300 py-16 dark:border-slate-700">
-          <div className="mx-auto flex w-full max-w-2xl flex-col items-center text-center">
+          {loading ? (
+            <div className="flex flex-col items-center justify-center gap-3 py-8">
+              <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+              <p className="text-sm text-slate-500 dark:text-slate-400">Loading the catalogue…</p>
+            </div>
+          ) : (
+          <div key={wizardStep ?? "start"} className="fade-step mx-auto flex w-full max-w-3xl flex-col items-center text-center">
             {wizardStep === null && (
               <>
                 <p className="text-lg text-slate-600 dark:text-slate-300">Nothing searched yet.</p>
@@ -435,12 +469,12 @@ export function ProductLookup() {
                 <p className="text-lg font-medium text-slate-700 dark:text-slate-200">
                   What universe are you playing?
                 </p>
-                <div className="mt-4 flex flex-wrap justify-center gap-2">
+                <div className="mt-5 grid w-full grid-cols-2 gap-2 sm:grid-cols-3">
                   {gamesPresent.map((slug) => (
                     <Button
                       key={slug}
                       variant="outline"
-                      className="px-5"
+                      className="w-full"
                       onClick={() => {
                         setSelectedGame(slug);
                         setWizardStep("faction");
@@ -449,20 +483,20 @@ export function ProductLookup() {
                       {GAME_LABELS[slug]}
                     </Button>
                   ))}
-                  <Button
-                    variant="outline"
-                    className="px-5"
-                    onClick={() => {
-                      setSelectedGame("all");
-                      setSelectedFaction("all");
-                      setHasSearched(true);
-                      setVisibleCount(PAGE_SIZE);
-                      setWizardStep(null);
-                    }}
-                  >
-                    Show me everything
-                  </Button>
                 </div>
+                <Button
+                  variant="outline"
+                  className="mt-3 w-full sm:w-auto sm:px-10"
+                  onClick={() => {
+                    setSelectedGame("all");
+                    setSelectedFaction("all");
+                    setHasSearched(true);
+                    setVisibleCount(PAGE_SIZE);
+                    setWizardStep(null);
+                  }}
+                >
+                  Show me everything
+                </Button>
                 <button
                   className="mt-4 text-xs text-slate-400 underline hover:text-slate-600 dark:hover:text-slate-300"
                   onClick={() => setWizardStep(null)}
@@ -477,34 +511,43 @@ export function ProductLookup() {
                 <p className="text-lg font-medium text-slate-700 dark:text-slate-200">
                   What faction are you looking for?
                 </p>
-                <div className="mt-4 flex max-h-[50vh] flex-wrap justify-center gap-2 overflow-y-auto">
-                  <Button
-                    variant="default"
-                    className="px-5"
-                    onClick={() => {
-                      setSelectedFaction("all");
-                      setHasSearched(true);
-                      setVisibleCount(PAGE_SIZE);
-                      setWizardStep(null);
-                    }}
-                  >
-                    All of {selectedGame === "all" ? "them" : GAME_LABELS[selectedGame] ?? "them"}
-                  </Button>
-                  {groupedFactions.flatMap(({ items }) => items).map((f) => (
-                    <Button
-                      key={f}
-                      variant="outline"
-                      onClick={() => {
-                        setSelectedFaction(f);
-                        setHasSearched(true);
-                        setVisibleCount(PAGE_SIZE);
-                        setWizardStep(null);
-                      }}
-                    >
-                      {f}
-                    </Button>
+                <div className="mt-5 max-h-[60vh] w-full space-y-5 overflow-y-auto pr-1">
+                  {groupedFactions.map(({ group, items }) => (
+                    <div key={group}>
+                      <div className="mb-2 text-left text-[11px] uppercase tracking-widest text-slate-400">
+                        {group}
+                      </div>
+                      <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3">
+                        {items.map((fac) => (
+                          <Button
+                            key={fac}
+                            variant="outline"
+                            className="w-full truncate"
+                            onClick={() => {
+                              setSelectedFaction(fac);
+                              setHasSearched(true);
+                              setVisibleCount(PAGE_SIZE);
+                              setWizardStep(null);
+                            }}
+                          >
+                            {fac}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
+                <Button
+                  className="mt-4 w-full sm:w-auto sm:px-10"
+                  onClick={() => {
+                    setSelectedFaction("all");
+                    setHasSearched(true);
+                    setVisibleCount(PAGE_SIZE);
+                    setWizardStep(null);
+                  }}
+                >
+                  All of {selectedGame === "all" ? "it" : GAME_LABELS[selectedGame] ?? "it"}
+                </Button>
                 <button
                   className="mt-4 text-xs text-slate-400 underline hover:text-slate-600 dark:hover:text-slate-300"
                   onClick={() => setWizardStep("universe")}
@@ -514,9 +557,10 @@ export function ProductLookup() {
               </>
             )}
           </div>
+          )}
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="fade-step space-y-4">
           <p className="text-sm text-slate-500 dark:text-slate-400">
             {sorted.length} result{sorted.length === 1 ? "" : "s"}
             {sorted.length > shown.length ? ` — showing ${shown.length}` : ""}
