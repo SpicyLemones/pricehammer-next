@@ -10,7 +10,8 @@
     "lint": "eslint",
     "collect:recession": "node scripts/collect-recession.mjs",
     "refresh:prices": "node scripts/refresh-prices-local.mjs",
-    "push:prices": "node scripts/push-prices.mjs"
+    "push:prices": "node scripts/push-prices.mjs",
+    "purge:outliers": "node scripts/purge-price-outliers.mjs"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",

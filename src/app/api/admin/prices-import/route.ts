@@ -17,6 +17,9 @@ export const dynamic = "force-dynamic";
 type Payload = {
   prices?: { seller_id: number; product_id: number; price: number; link: string | null }[];
   history?: { seller_id: number; product_id: number; price: number; link: string | null; recorded_at: string }[];
+  // pairs judged wrong (price outliers, bad matches): demoted to validated=0
+  // so they leave the product page until something re-validates them properly
+  unvalidate?: { seller_id: number; product_id: number }[];
 };
 
 export async function POST(req: Request) {
@@ -57,6 +60,15 @@ export async function POST(req: Request) {
     history += r?.changes ?? 0;
   }
 
-  await logAudit("admin", "prices-import", { prices, history });
-  return NextResponse.json({ ok: true, prices, history });
+  let unvalidated = 0;
+  for (const u of payload.unvalidate ?? []) {
+    const r = (await run(
+      `UPDATE prices SET validated = 0 WHERE seller_id = ? AND product_id = ? AND validated = 1`,
+      [u.seller_id, u.product_id],
+    )) as { changes?: number };
+    unvalidated += r?.changes ?? 0;
+  }
+
+  await logAudit("admin", "prices-import", { prices, history, unvalidated });
+  return NextResponse.json({ ok: true, prices, history, unvalidated });
 }

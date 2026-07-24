@@ -219,6 +219,8 @@ export function ProductLookup() {
   // Results only appear after a deliberate search or filter choice
   const [hasSearched, setHasSearched] = useState(false);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  // the guided browse: universe first, then faction, then everything in it
+  const [wizardStep, setWizardStep] = useState<"universe" | "faction" | null>(null);
 
   // Fetch live retailers + (same) metadata from the DB-backed API
   useEffect(() => {
@@ -414,11 +416,104 @@ export function ProductLookup() {
 
       {/* Results */}
       {!hasSearched ? (
-        <div className="border-t border-slate-300 py-16 text-center dark:border-slate-700">
-          <p className="text-lg text-slate-600 dark:text-slate-300">Nothing searched yet.</p>
-          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-            Search for a unit, or pick a universe or faction to browse.
-          </p>
+        <div className="border-t border-slate-300 py-16 dark:border-slate-700">
+          <div className="mx-auto flex w-full max-w-2xl flex-col items-center text-center">
+            {wizardStep === null && (
+              <>
+                <p className="text-lg text-slate-600 dark:text-slate-300">Nothing searched yet.</p>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  Search for a unit, or pick a universe or faction to browse.
+                </p>
+                <Button className="mt-5 px-6" onClick={() => setWizardStep("universe")}>
+                  Not sure where to start?
+                </Button>
+              </>
+            )}
+
+            {wizardStep === "universe" && (
+              <>
+                <p className="text-lg font-medium text-slate-700 dark:text-slate-200">
+                  What universe are you playing?
+                </p>
+                <div className="mt-4 flex flex-wrap justify-center gap-2">
+                  {gamesPresent.map((slug) => (
+                    <Button
+                      key={slug}
+                      variant="outline"
+                      className="px-5"
+                      onClick={() => {
+                        setSelectedGame(slug);
+                        setWizardStep("faction");
+                      }}
+                    >
+                      {GAME_LABELS[slug]}
+                    </Button>
+                  ))}
+                  <Button
+                    variant="outline"
+                    className="px-5"
+                    onClick={() => {
+                      setSelectedGame("all");
+                      setSelectedFaction("all");
+                      setHasSearched(true);
+                      setVisibleCount(PAGE_SIZE);
+                      setWizardStep(null);
+                    }}
+                  >
+                    Show me everything
+                  </Button>
+                </div>
+                <button
+                  className="mt-4 text-xs text-slate-400 underline hover:text-slate-600 dark:hover:text-slate-300"
+                  onClick={() => setWizardStep(null)}
+                >
+                  Back
+                </button>
+              </>
+            )}
+
+            {wizardStep === "faction" && (
+              <>
+                <p className="text-lg font-medium text-slate-700 dark:text-slate-200">
+                  What faction are you looking for?
+                </p>
+                <div className="mt-4 flex max-h-[50vh] flex-wrap justify-center gap-2 overflow-y-auto">
+                  <Button
+                    variant="default"
+                    className="px-5"
+                    onClick={() => {
+                      setSelectedFaction("all");
+                      setHasSearched(true);
+                      setVisibleCount(PAGE_SIZE);
+                      setWizardStep(null);
+                    }}
+                  >
+                    All of {selectedGame === "all" ? "them" : GAME_LABELS[selectedGame] ?? "them"}
+                  </Button>
+                  {groupedFactions.flatMap(({ items }) => items).map((f) => (
+                    <Button
+                      key={f}
+                      variant="outline"
+                      onClick={() => {
+                        setSelectedFaction(f);
+                        setHasSearched(true);
+                        setVisibleCount(PAGE_SIZE);
+                        setWizardStep(null);
+                      }}
+                    >
+                      {f}
+                    </Button>
+                  ))}
+                </div>
+                <button
+                  className="mt-4 text-xs text-slate-400 underline hover:text-slate-600 dark:hover:text-slate-300"
+                  onClick={() => setWizardStep("universe")}
+                >
+                  Back
+                </button>
+              </>
+            )}
+          </div>
         </div>
       ) : (
         <div className="space-y-4">

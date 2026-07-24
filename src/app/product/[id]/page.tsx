@@ -9,6 +9,7 @@ import ProductEditForm from "./ProductEditForm";
 import AddToCartButton from "./AddToCartButton";
 import { fetchProductMetadata } from "@/app/lib/product-metadata";
 import { gameLabel } from "@/app/lib/game-labels";
+import { deliveryEstimate, parseShipping } from "@/app/lib/shipping";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -17,6 +18,7 @@ type ProductRow = { id: number; name: string; search_term: string };
 type PriceRow = {
   seller_id?: number;
   seller_name: string;
+  shipping_info?: string | null;
   price: number | null;
   link: string | null;
 };
@@ -250,7 +252,12 @@ export default async function ProductPage({
                                  hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                       data-price={String(priceNum)}  // used by client-side sorter
                     >
-                      <div className="font-medium text-slate-900 dark:text-slate-100">{r.seller_name}</div>
+                      <div>
+                        <div className="font-medium text-slate-900 dark:text-slate-100">{r.seller_name}</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">
+                          {deliveryEstimate(parseShipping(r.shipping_info), r.price)}
+                        </div>
+                      </div>
 
                       <div className="font-semibold tabular-nums text-slate-900 dark:text-slate-50">
                         {fmtAUD(r.price)}
