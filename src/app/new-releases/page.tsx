@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { query } from "@/lib/sql";
 import { GAME_LABELS, gameLabel } from "@/app/lib/game-labels";
+import { deliveryEstimate, parseShipping } from "@/app/lib/shipping";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -20,6 +21,7 @@ type Row = {
   image: string | null;
   is_pre_order: number;
   best_price: number | null;
+  best_shipping: string | null;
 };
 
 const PLACEHOLDER = "/logo/logo.png";
@@ -40,7 +42,12 @@ export default async function NewReleasesPage() {
             (SELECT MIN(pr.price) FROM prices pr
              JOIN sellers s ON s.id = pr.seller_id
              WHERE pr.product_id = m.product_id AND pr.validated = 1 AND pr.price IS NOT NULL
-               AND COALESCE(s.status,'active') NOT IN ('dead','retired')) AS best_price
+               AND COALESCE(s.status,'active') NOT IN ('dead','retired')) AS best_price,
+            (SELECT s.shipping_info FROM prices pr
+             JOIN sellers s ON s.id = pr.seller_id
+             WHERE pr.product_id = m.product_id AND pr.validated = 1 AND pr.price IS NOT NULL
+               AND COALESCE(s.status,'active') NOT IN ('dead','retired')
+             ORDER BY pr.price ASC LIMIT 1) AS best_shipping
      FROM product_metadata m
      WHERE (m.is_new_release = 1 OR m.is_pre_order = 1) AND COALESCE(m.hidden, 0) = 0
      ORDER BY m.is_pre_order DESC, m.name`,
@@ -120,6 +127,11 @@ export default async function NewReleasesPage() {
                   <div className="text-sm font-bold text-green-700 dark:text-emerald-300">
                     {r.best_price != null ? `from ${fmt(r.best_price)}` : "no prices yet"}
                   </div>
+                  {r.best_price != null && (
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      {deliveryEstimate(parseShipping(r.best_shipping), r.best_price)}
+                    </div>
+                  )}
                 </div>
               </Link>
             ))}
