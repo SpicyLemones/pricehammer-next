@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import { query } from "@/lib/sql";
+import { query, recomputeRemaining } from "@/lib/sql";
 import { ensureProductMetadataSeeded } from "@/app/lib/product-metadata";
 
 export const runtime = "nodejs";
@@ -38,7 +38,7 @@ export async function POST() {
     const products: Product[] = JSON.parse(fs.readFileSync(path.join(root, "products.json"), "utf8"));
 
     // 3) Upsert sellers (skip duplicates by name+base_url)
-    const existingSellers = await query<any[]>("all", "select/all_sellers");
+    const existingSellers = (await query("all", "select/all_sellers")) as Seller[];
     const seenSellers = new Set(existingSellers.map(s => `${s.name}|||${s.base_url}`));
     for (const s of sellers) {
       const key = `${s.name}|||${s.base_url}`;
@@ -52,7 +52,7 @@ export async function POST() {
     }
 
     // 4) Upsert products (skip duplicates by name+search_term)
-    const existingProducts = await query<any[]>("all", "select/all_products");
+    const existingProducts = (await query("all", "select/all_products")) as Product[];
     const seenProducts = new Set(existingProducts.map(p => `${p.name}|||${p.search_term}`));
     for (const p of products) {
       const key = `${p.name}|||${p.search_term}`;
@@ -77,12 +77,12 @@ export async function POST() {
     await ensureProductMetadataSeeded();
 
     // 7) Report how many unchecked we’ve got
-    const unchecked = await query<any[]>("all", "select/count_unsorted");
+    const uncheckedCount = await recomputeRemaining();
     return NextResponse.json({
       ok: true,
       sellers: freshSellers.length,
       products: freshProducts.length,
-      uncheckedCount: unchecked.length
+      uncheckedCount
     });
   } catch (e: any) {
     return NextResponse.json({ ok: false, error: e?.message || "setup failed" }, { status: 500 });

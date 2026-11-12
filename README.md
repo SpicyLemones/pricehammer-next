@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PriceHammer (+ spycy.fun)
 
-## Getting Started
+Next.js 15 app deployed on Render. One codebase serves:
 
-First, run the development server:
+- **PriceHammer** (`pricehammer.xyz` → `/price-lookup`): Warhammer price comparison across Australian hobby stores.
+- **Twitch tools** (`/twitch/*`): overlays, Chattergrounds, Wheel of Blame, stream quests.
+- **Recession** pages (`/recession/*`): data you collect locally and push to prod.
+
+Data lives in a single SQLite file (`DB_PATH`, default `data/db/data.sqlite`). On Render, point `DB_PATH` at a persistent disk or every deploy resets it.
+
+## How prices get in
+
+There is no web scraping. Every price comes from a store's own public API:
+
+| Platform | Source | Used by |
+| --- | --- | --- |
+| Shopify | `/products.json` (full feed), `/search/suggest.json` (search) | most AU stores |
+| WooCommerce | `/wp-json/wc/store/products` | Woo stores |
+| GW | Algolia index behind warhammer.com | Warhammer Official |
+| misc | none; links are entered by hand in `/tinder` | bot-walled stores |
+
+- `src/app/lib/storefronts.ts` builds a per-store index from the full feed. Auto-validate and price refresh use it.
+- `src/app/lib/store-search.ts` runs a single keyword search against the store's API. `/tinder` uses it, so a review card loads in about a second.
+
+## Admin jobs
+
+Long jobs (`/api/refresh-prices`, `/api/auto-validate`, `/api/admin/sync-gw-catalogue`) accept `?async=1` (or `{"async": true}`). They return a job id straight away; poll `GET <route>?job=<id>` for the result. The admin panel and the weekly GitHub workflow both work this way, so no request runs long enough for Render's proxy to cut it.
+
+## Commands
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev               # local dev server
+npm run build && npm start
+npm run refresh:prices    # refresh all prices locally, push results to prod
+npm run push:prices       # push a local refresh to prod
+npm run collect:recession # collect recession data locally
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`ADMIN_USER` / `ADMIN_PASS` must be set in production. Without them, admin routes are open.

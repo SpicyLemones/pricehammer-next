@@ -29,7 +29,37 @@ export async function closeDb(): Promise<void> {
   if (!handle) return;
   await new Promise<void>((resolve) => handle.close(() => resolve()));
   globalThis.__pricehammer_db__ = undefined;
+  bumpCatalogueVersion();
 }
+
+/**
+ * Catalogue version: bumped whenever a write touches price/product/seller
+ * data (or the DB file is swapped). Read-heavy endpoints like
+ * /api/lookup-data cache their response keyed on this number, so they stay
+ * instant without ever serving stale data after an admin edit.
+ */
+declare global {
+  // eslint-disable-next-line no-var
+  var __pricehammer_catalogue_version__: number | undefined;
+}
+export function catalogueVersion(): number {
+  return globalThis.__pricehammer_catalogue_version__ ?? 0;
+}
+export function bumpCatalogueVersion(): void {
+  globalThis.__pricehammer_catalogue_version__ = catalogueVersion() + 1;
+}
+const CATALOGUE_TABLES = /\b(prices|products|product_metadata|product_skus|sellers)\b/i;
+
+/**
+ * Indexes the hot read paths rely on. The prices table's primary key is
+ * (seller_id, product_id), so every "prices for product X" lookup was a full
+ * table scan until these existed. IF NOT EXISTS makes this safe on every boot
+ * and on freshly uploaded DB files.
+ */
+const STARTUP_INDEXES = [
+  "CREATE INDEX IF NOT EXISTS idx_prices_product ON prices(product_id, validated)",
+  "CREATE INDEX IF NOT EXISTS idx_prices_validated ON prices(validated, seller_id)",
+];
 
 function openDb(): SqliteDb {
   if (globalThis.__pricehammer_db__) return globalThis.__pricehammer_db__;
@@ -56,6 +86,14 @@ function openDb(): SqliteDb {
     db.run("PRAGMA journal_mode = WAL;");
     db.run("PRAGMA synchronous = NORMAL;");
     db.run("PRAGMA busy_timeout = 5000;");
+    for (const sql of STARTUP_INDEXES) {
+      // tables may not exist yet on a brand-new DB; that's fine
+      db.run(sql, (err) => {
+        if (err && !/no such table/i.test(err.message)) {
+          console.warn("[DB] index create failed:", err.message);
+        }
+      });
+    }
   });
 
   globalThis.__pricehammer_db__ = db;
@@ -97,6 +135,7 @@ export function run(sqlOrName: string, params: any[] = []) {
   return new Promise<sqlite3.RunResult>((resolve, reject) => {
     db.run(sql, params, function (err) {
       if (err) return reject(err);
+      if (CATALOGUE_TABLES.test(sql)) bumpCatalogueVersion();
       resolve(this);
     });
   });
@@ -172,9 +211,10 @@ export async function query<T = any>(
   return each<T>(nameOrSql, args);
 }
 
+/** Number of price pairs still waiting for review (COUNT, not a row dump). */
 export async function recomputeRemaining(): Promise<number> {
-  const rows = await all(q("select/count_unsorted.sql"));
-  return rows.length;
+  const row = await get<{ c: number }>("select/count_unsorted");
+  return Number(row?.c ?? 0);
 }
 
 /** Optional: quick transaction helper */

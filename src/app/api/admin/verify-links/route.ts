@@ -1,8 +1,8 @@
 // src/app/api/admin/verify-links/route.ts
 //
 // Verify stored links for scraped (feed-less) sellers like War For Less and
-// Frontline Hobbies: open each validated pair's link with Puppeteer and check
-// the page identifies the right product.
+// Frontline Hobbies: fetch each validated pair's link (plain HTTP, no
+// browser) and check the page identifies the right product.
 //   1. SKU on page (JSON-LD / data-product-sku) -> compare to canonical SKU
 //   2. no SKU (e.g. War For Less) -> compare page title to product name with
 //      the shared matcher (>=0.85 verified, <=0.5 mismatch)
@@ -16,7 +16,7 @@ import { NextResponse } from "next/server";
 import pLimit from "p-limit";
 import { query } from "@/lib/sql";
 import { isAdminRequest } from "@/lib/auth";
-import { fetchSkuAndPriceFromPage } from "@/lib/scraper";
+import { fetchPageFacts } from "@/app/lib/page-facts";
 import { normalizeShopifySku } from "@/app/lib/shopify";
 import { scoreTitleAgainstName } from "@/app/lib/shopify-catalogue";
 
@@ -82,12 +82,12 @@ export async function POST(req: Request) {
   let failed = 0;
   const mismatches: Record<string, unknown>[] = [];
 
-  const limiter = pLimit(2);
+  const limiter = pLimit(4);
   await Promise.all(
     pairs.map((row) =>
       limiter(async () => {
         try {
-          const { sku, price, title } = await fetchSkuAndPriceFromPage(row.link);
+          const { sku, price, title } = await fetchPageFacts(row.link);
           const pageSku = normalizeShopifySku(sku);
           const wanted = skuSetFor(row);
 

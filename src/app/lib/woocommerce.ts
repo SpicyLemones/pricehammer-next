@@ -23,7 +23,7 @@ type WooPrices = {
   sale_price?: string;
   currency_minor_unit?: number;
 };
-type WooItem = {
+export type WooItem = {
   id?: number | string;
   name?: string;
   slug?: string;
@@ -42,7 +42,7 @@ function minorToMajor(value: string | undefined, minorUnit: number): number | nu
   return n / Math.pow(10, minorUnit);
 }
 
-function normalizeItem(item: WooItem): ShopifyFeedProduct {
+export function normalizeWooItem(item: WooItem): ShopifyFeedProduct {
   const minorUnit = item.prices?.currency_minor_unit ?? 2;
   const price = minorToMajor(item.prices?.price, minorUnit);
   const regular = minorToMajor(item.prices?.regular_price, minorUnit);
@@ -142,7 +142,7 @@ export async function fetchWooCommerceProductFeed(
     }
     if (data.length === 0) break;
 
-    for (const item of data as WooItem[]) products.push(normalizeItem(item));
+    for (const item of data as WooItem[]) products.push(normalizeWooItem(item));
     pageCount++;
     if (data.length < PER_PAGE) break;
   }

@@ -22,39 +22,60 @@ jobs:
           fi
           echo "credentials present"
 
-      # Every call retries with backoff: Render serves an HTML error page
-      # while a deploy is in flight, which is what killed previous runs.
-      - name: Sync GW catalogue (add new releases)
+      # Each job is started in the background on the server (async=1 -> HTTP
+      # 202 + job id) and polled with short requests, so no single request
+      # lives long enough for Render's proxy to cut it. Starting retries with
+      # backoff because Render serves an HTML error page mid-deploy; a job
+      # lost to a redeploy (poll -> 404) is simply restarted.
+      - name: Write job helper
         run: |
+          cat > run-job.sh <<'SH'
+          #!/usr/bin/env bash
+          # usage: run-job.sh <label> <path-with-query>
           set -uo pipefail
+          label="$1"; path="$2"; auth="$ADMIN_USER:$ADMIN_PASS"
           for attempt in 1 2 3 4 5; do
-            HTTP=$(curl -sS -m 1800 -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
-              -X POST "$BASE/api/admin/sync-gw-catalogue?apply=1" -o resp.json -w "%{http_code}") || HTTP=000
-            if [ "$HTTP" = "200" ] && grep -q '"ok":true' resp.json; then
-              echo "sync ok (attempt $attempt)"; head -c 800 resp.json; echo; exit 0
+            HTTP=$(curl -sS -m 60 -u "$auth" -X POST "$BASE$path" -o start.json -w "%{http_code}") || HTTP=000
+            JOB=$(jq -r '.jobId // empty' start.json 2>/dev/null)
+            if [ "$HTTP" != "202" ] || [ -z "$JOB" ]; then
+              echo "$label start attempt $attempt failed (HTTP $HTTP):"; head -c 300 start.json 2>/dev/null; echo
+              sleep $((attempt * 45)); continue
             fi
-            echo "sync attempt $attempt failed (HTTP $HTTP), retrying:"; head -c 300 resp.json 2>/dev/null; echo
-            sleep $((attempt * 45))
+            echo "$label job $JOB started"
+            route="${path%%\?*}"
+            for i in $(seq 1 240); do   # up to 2h at 30s
+              sleep 30
+              PH=$(curl -sS -m 30 -u "$auth" "$BASE$route?job=$JOB" -o poll.json -w "%{http_code}") || PH=000
+              [ "$PH" = "404" ] && { echo "$label job lost (redeploy?), restarting"; continue 2; }
+              [ "$PH" = "200" ] || { echo "poll HTTP $PH, retrying"; continue; }
+              STATUS=$(jq -r '.job.status' poll.json)
+              case "$STATUS" in
+                running) echo "$label still running ($((i * 30))s)";;
+                done) echo "$label ok"; jq -c '.job.result' poll.json | head -c 1500; echo; exit 0;;
+                *) echo "::error::$label failed: $(jq -r '.job.error' poll.json)"; exit 1;;
+              esac
+            done
+            echo "::error::$label timed out waiting"; exit 1
           done
-          echo "::error::sync failed after 5 attempts"; exit 1
+          echo "::error::$label could not be started after 5 attempts"; exit 1
+          SH
+          chmod +x run-job.sh
+
+      - name: Sync GW catalogue (add new releases)
+        env:
+          ADMIN_USER: ${{ secrets.PRICEHAMMER_ADMIN_USER }}
+          ADMIN_PASS: ${{ secrets.PRICEHAMMER_ADMIN_PASS }}
+        run: ./run-job.sh sync "/api/admin/sync-gw-catalogue?apply=1&async=1"
 
       - name: Auto-validate new pairs across sellers
-        run: |
-          set -uo pipefail
-          for attempt in 1 2 3 4 5; do
-            HTTP=$(curl -sS -m 3600 -u "${{ secrets.PRICEHAMMER_ADMIN_USER }}:${{ secrets.PRICEHAMMER_ADMIN_PASS }}" \
-              -X POST "$BASE/api/auto-validate" -o resp.json -w "%{http_code}") || HTTP=000
-            if [ "$HTTP" = "200" ] && grep -q '"ok":true' resp.json; then
-              echo "auto-validate ok (attempt $attempt)"; head -c 800 resp.json; echo; exit 0
-            fi
-            echo "auto-validate attempt $attempt failed (HTTP $HTTP), retrying:"; head -c 300 resp.json 2>/dev/null; echo
-            sleep $((attempt * 45))
-          done
-          echo "::error::auto-validate failed after 5 attempts"; exit 1
+        env:
+          ADMIN_USER: ${{ secrets.PRICEHAMMER_ADMIN_USER }}
+          ADMIN_PASS: ${{ secrets.PRICEHAMMER_ADMIN_PASS }}
+        run: ./run-job.sh auto-validate "/api/auto-validate?async=1"
 
-      # Price refreshing is deliberately NOT done here any more. Scraping from
-      # the Render instance starves its CPU, times out every poll, and browns
-      # out the live site while it runs. Prices are refreshed from a local
+      # Price refreshing is deliberately NOT done here. Building every store's
+      # full feed index is CPU/memory heavy and browns out the small Render
+      # instance while it runs. Prices are refreshed from a local
       # machine instead (same pattern as the recession collector):
       #   npm run dev          (in one terminal)
       #   npm run refresh:prices

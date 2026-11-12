@@ -123,13 +123,14 @@ export async function ensureProductMetadataSeeded(): Promise<void> {
     seedPromise = (async () => {
       await query("run", "create/product_metadata");
 
-      const existingRows = (await query<{ product_id: number }[]>("all", "SELECT product_id FROM product_metadata")) ?? [];
+      const existingRows = ((await query("all", "SELECT product_id FROM product_metadata")) ?? []) as { product_id: number }[];
       const existingIds = new Set<number>(existingRows.map((row) => Number(row.product_id)));
 
-      const allProducts = (await query<{ id: number; name: string; search_term: string }[]>(
-        "all",
-        "select/all_products"
-      )) ?? [];
+      const allProducts = ((await query("all", "select/all_products")) ?? []) as {
+        id: number;
+        name: string;
+        search_term: string;
+      }[];
       const productsById = new Map<number, { name: string; search_term: string }>(
         allProducts.map((p) => [Number(p.id), { name: p.name, search_term: p.search_term }])
       );

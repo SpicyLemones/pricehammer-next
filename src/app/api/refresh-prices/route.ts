@@ -2,7 +2,6 @@
 import { NextResponse } from "next/server";
 import pLimit from "p-limit";
 import { query } from "@/lib/sql";
-import { fetchPriceFromLinkWithSellerSelectors } from "@/lib/scraper";
 import {
   buildStorefrontIndex,
   normalizeProductUrl,
@@ -10,63 +9,33 @@ import {
 } from "@/app/lib/storefronts";
 import { ensureProductImage } from "@/app/lib/product-metadata";
 import { probeSellerHealth, reconcileSellerStatus } from "@/app/lib/seller-health";
-import { getJob, startJob } from "@/app/lib/job-runner";
+import { jobStatusResponse, runMaybeAsync } from "@/app/lib/job-runner";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type RefreshRequest = { seller: number | null; async: boolean };
-
-async function readRequest(req: Request): Promise<RefreshRequest> {
-  const out: RefreshRequest = { seller: null, async: false };
-  // Try JSON
-  try {
-    if (req.headers.get("content-type")?.includes("application/json")) {
-      const body = await req.json();
-      if (body && body.seller !== undefined && body.seller !== "")
-        out.seller = Number(body.seller);
-      if (body && (body.async === true || body.async === "1" || body.async === "true"))
-        out.async = true;
-      return out;
-    }
-  } catch {}
-  // Try form
-  try {
-    const form = await req.formData();
-    const s = form.get("seller");
-    if (typeof s === "string" && s.trim() !== "") out.seller = Number(s);
-    const a = form.get("async");
-    if (a === "1" || a === "true") out.async = true;
-  } catch {}
-  return out;
-}
-
-// Poll a running refresh: GET /api/refresh-prices?job=<id>
+// POST {seller?, async?} — async:true (or ?async=1) runs in the background
+// and returns a job id; poll GET /api/refresh-prices?job=<id>.
 export async function GET(req: Request) {
-  const id = new URL(req.url).searchParams.get("job");
-  if (!id) return NextResponse.json({ ok: false, error: "missing ?job=<id>" }, { status: 400 });
-  const job = getJob(id);
-  if (!job) {
-    // Not necessarily an error from the caller's side: a redeploy wipes the
-    // in-memory registry, so "not found" also means "lost, run it again".
-    return NextResponse.json({ ok: false, error: "job not found (finished long ago, or lost to a redeploy)" }, { status: 404 });
-  }
-  return NextResponse.json({ ok: true, job });
+  return jobStatusResponse(req);
 }
 
 export async function POST(req: Request) {
-  const { seller: sellerFilter, async: wantAsync } = await readRequest(req);
+  return runMaybeAsync(req, "refresh-prices", async (r) => {
+    const summary = await runRefresh(await readSeller(r));
+    return NextResponse.json({ ok: true, ...summary });
+  });
+}
 
-  if (wantAsync) {
-    const job = startJob(`refresh-prices${sellerFilter != null ? `-s${sellerFilter}` : ""}`, () =>
-      runRefresh(sellerFilter),
-    );
-    console.log(`[refresh-prices] QUEUED job=${job.id} seller=${sellerFilter ?? "ALL"}`);
-    return NextResponse.json({ ok: true, jobId: job.id, status: job.status });
-  }
-
-  const summary = await runRefresh(sellerFilter);
-  return NextResponse.json({ ok: true, ...summary });
+async function readSeller(req: Request): Promise<number | null> {
+  const toSeller = (v: unknown) =>
+    v === undefined || v === null || v === "" || !Number.isFinite(Number(v)) ? null : Number(v);
+  const ct = req.headers.get("content-type") || "";
+  try {
+    if (ct.includes("application/json")) return toSeller(((await req.json()) as { seller?: unknown })?.seller);
+    if (ct.includes("form")) return toSeller((await req.formData()).get("seller"));
+  } catch {}
+  return toSeller(new URL(req.url).searchParams.get("seller"));
 }
 
 async function runRefresh(sellerFilter: number | null) {
@@ -111,42 +80,30 @@ async function runRefresh(sellerFilter: number | null) {
       continue;
     }
 
-    let storefrontIndex: StorefrontIndexReady | undefined;
     const index = await buildStorefrontIndex(s);
-    if (index) {
-      if (index.status === "ready") {
-        storefrontIndex = index;
-        index.diagnostics.forEach((msg) =>
-          console.log(`[refresh-prices] STORE INFO ${label}: ${msg}`),
-        );
-      } else {
-        index.diagnostics.forEach((msg) =>
-          console.log(`[refresh-prices] STORE WARN ${label}: ${msg}`),
-        );
-        if (index.fallbackOption) {
-          console.log(
-            `[refresh-prices] STORE Fallback ${label}: ${index.fallbackOption.message}`,
-          );
-        }
-      }
+    if (!index || index.status !== "ready") {
+      // no feed = nothing to price from; don't walk every pair just to skip it
+      skipped += pairs.length;
+      console.log(`[refresh-prices] SKIP seller ${label} (no usable storefront feed)`);
+      index?.diagnostics.forEach((msg) => console.log(`[refresh-prices] STORE WARN ${label}: ${msg}`));
+      continue;
     }
+    const storefrontIndex: StorefrontIndexReady = index;
+    console.log(`[refresh-prices] STORE ${label}: ${index.matches.size} catalogue matches, ${index.diagnostics.length} unmatched feed items`);
 
-    const limit = pLimit(3); // <= at most 3 pages in-flight per seller
+    const limit = pLimit(3); // DB writes in flight per seller
 
     await Promise.allSettled(
       pairs.map(({ product_id, link }) =>
         limit(async () => {
           const existingLink =
             typeof link === "string" && link.trim() !== "" ? link : null;
-          console.log(
-            `[refresh-prices] FETCH  p=${product_id} s=${sellerId} -> ${existingLink ?? "(no link)"}`
-          );
 
-          let priceSource: "api" | "scrape" | null = null;
+          let priceSource: "api" | null = null;
           let price: number | null = null;
           let linkForUpdate: string | null = existingLink;
 
-          if (storefrontIndex) {
+          {
             // The stored link IS the product's identity (it was validated or
             // SKU-verified) — look it up in the feed directly first. Only fall
             // back to catalogue matching when the link isn't in the feed.
@@ -193,26 +150,18 @@ async function runRefresh(sellerFilter: number | null) {
             }
           }
 
+          // Prices come from store APIs only. A pair whose link isn't in the
+          // store's feed (or whose store has no feed) keeps its last price —
+          // headless-browser scraping was slow, got bot-walled, and starved
+          // the server, so it's gone.
           if (priceSource !== "api") {
-            if (!existingLink) {
-              skipped++;
-              console.log(
-                `[refresh-prices] SKIP p=${product_id} s=${sellerId} (no link and no feed price)`
-              );
-              return;
-            }
-            try {
-              price = await fetchPriceFromLinkWithSellerSelectors(s, existingLink);
-              priceSource = "scrape";
-            } catch (e: any) {
-              failed++;
-              console.log(
-                `[refresh-prices] ERROR p=${product_id} s=${sellerId}: ${
-                  e?.message || e
-                }`
-              );
-              return;
-            }
+            skipped++;
+            console.log(
+              `[refresh-prices] SKIP p=${product_id} s=${sellerId} (${
+                storefrontIndex ? "not in store feed" : "store has no usable feed"
+              })`
+            );
+            return;
           }
 
           if (price == null) {

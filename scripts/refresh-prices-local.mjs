@@ -1,6 +1,6 @@
 // scripts/refresh-prices-local.mjs
-// Run the full price refresh against the LOCAL dev server (which does the
-// scraping from this machine), then push the results to prod.
+// Run the full price refresh against the LOCAL dev server (which pulls every
+// store feed from this machine), then push the results to prod.
 //   npm run refresh:prices            (refresh + push to spycy.fun)
 //   node scripts/refresh-prices-local.mjs --no-push   (refresh only)
 // Needs `npm run dev` running on localhost:3000 and ADMIN_USER / ADMIN_PASS
@@ -59,7 +59,7 @@ for (;;) {
     });
     job = (await res.json()).job;
   } catch {
-    console.log("  poll hiccup (server busy scraping), still going");
+    console.log("  poll hiccup (server busy fetching feeds), still going");
     continue;
   }
   if (!job) {
