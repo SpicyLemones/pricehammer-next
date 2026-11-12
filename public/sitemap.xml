@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://pricehammer.xyz/</loc>
-    <lastmod>2025-10-03</lastmod>
+    <loc>https://spycy.fun/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://pricehammer.xyz/price-lookup</loc>
-    <lastmod>2025-10-03</lastmod>
+    <loc>https://spycy.fun/price-lookup</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://pricehammer.xyz/about</loc>
-    <lastmod>2025-10-03</lastmod>
+    <loc>https://spycy.fun/new-releases</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://spycy.fun/recession</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://spycy.fun/twitch</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://pricehammer.xyz/contact</loc>
-    <lastmod>2025-10-03</lastmod>
-    <priority>0.6</priority>
+    <loc>https://spycy.fun/about</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://spycy.fun/contact</loc>
+    <priority>0.5</priority>
   </url>
 </urlset>

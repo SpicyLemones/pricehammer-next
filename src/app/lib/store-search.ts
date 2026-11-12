@@ -43,7 +43,7 @@ type ProductLike = { id?: number; name: string; search_term?: string | null };
 
 const REQUEST_TIMEOUT_MS = 8_000;
 const MAX_RESULTS = 10;
-const UA = "PriceHammer/1.0 (+https://pricehammer.xyz)";
+const UA = "PriceHammer/1.0 (+https://spycy.fun/price-lookup)";
 
 const isSanePrice = (n: number | null): n is number =>
   typeof n === "number" && Number.isFinite(n) && n >= 0.5 && n <= 5000;
