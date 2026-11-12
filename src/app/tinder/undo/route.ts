@@ -23,9 +23,9 @@ export async function GET(req: Request) {
   if (prev?.s && prev?.p) {
     await query("run", "update/unvalidate_price", [prev.s, prev.p]);
     // focus that exact pair again
-    return NextResponse.redirect(new URL("/tinder", originOf(req)));
+    return NextResponse.redirect(new URL(new URL(req.url).searchParams.get("m") === "1" ? "/tinder?manual=1" : "/tinder", originOf(req)));
   }
 
   // nothing to undo—go back to queue
-  return NextResponse.redirect(new URL("/tinder", originOf(req)));
+  return NextResponse.redirect(new URL(new URL(req.url).searchParams.get("m") === "1" ? "/tinder?manual=1" : "/tinder", originOf(req)));
 }

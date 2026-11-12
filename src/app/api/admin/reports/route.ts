@@ -66,7 +66,8 @@ export async function POST(req: Request) {
   if (action === "unvalidate") {
     const r = (await query(
       "run",
-      `UPDATE prices SET validated = NULL WHERE link = ?`,
+      `UPDATE prices SET validated = NULL, decided_by = 'flag',
+         review_reason = 'reported as a wrong link by a visitor' WHERE link = ?`,
       [link],
     )) as { changes?: number };
     pairsUnvalidated = r?.changes ?? 0;

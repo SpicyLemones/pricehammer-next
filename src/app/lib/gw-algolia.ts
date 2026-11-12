@@ -8,7 +8,6 @@
 // frontend bundle — safe to embed, but override via env if it ever rotates.
 
 import { normalizeShopifySku } from "@/app/lib/shopify";
-import { loadSkuCatalogue } from "@/app/lib/sku-catalogue";
 
 const APP_ID = process.env.GW_ALGOLIA_APP_ID || "M5ZIQZNQ2H";
 const API_KEY =
@@ -200,55 +199,4 @@ export async function fetchGwCatalogueByGame(
     }
   }
   return [...byKey.values()];
-}
-
-export type GwPriceMatch = {
-  productId: number;
-  price: number | null;
-  url: string | null;
-  title: string;
-  sku: string | null;
-};
-
-/**
- * Resolve prices for our catalogue products by canonical SKU.
- * Returns a map keyed by internal product id.
- */
-export async function buildGwPriceMap(
-  fetchImpl: FetchLike = fetch,
-): Promise<Map<number, GwPriceMatch>> {
-  const catalogue = await fetchGwCatalogue(fetchImpl);
-  const bySku = new Map<string, GwCatalogueItem>();
-  for (const item of catalogue) {
-    if (item.normalizedSku) {
-      const existing = bySku.get(item.normalizedSku);
-      // prefer entries that actually have a price
-      if (!existing || (existing.price == null && item.price != null)) {
-        bySku.set(item.normalizedSku, item);
-      }
-    }
-  }
-
-  const catalogueRecords = await loadSkuCatalogue();
-  const map = new Map<number, GwPriceMatch>();
-  for (const entry of catalogueRecords) {
-    const productId = Number(entry.productId);
-    if (!Number.isFinite(productId)) continue;
-    const skus = [entry.canonicalSku, ...entry.skuAliases]
-      .map((s) => normalizeShopifySku(s))
-      .filter((s): s is string => Boolean(s));
-    for (const sku of skus) {
-      const item = bySku.get(sku);
-      if (!item) continue;
-      map.set(productId, {
-        productId,
-        price: item.price,
-        url: item.slug ? `${SHOP_BASE}${item.slug}` : null,
-        title: item.name ?? "",
-        sku: item.sku,
-      });
-      break;
-    }
-  }
-  return map;
 }

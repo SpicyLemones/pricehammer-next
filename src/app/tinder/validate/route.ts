@@ -40,6 +40,6 @@ export async function GET(req: Request) {
   setLastAction(s, p);
 
   // Redirect back to Tinder using the *public* origin (not req.url's internal one)
-  const dest = new URL("/tinder", originOf(req));
+  const dest = new URL(new URL(req.url).searchParams.get("m") === "1" ? "/tinder?manual=1" : "/tinder", originOf(req));
   return NextResponse.redirect(dest, 303); // 303 = "See Other" (safe after GET/POST)
 }

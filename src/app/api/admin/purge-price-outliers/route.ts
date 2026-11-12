@@ -71,8 +71,10 @@ export async function POST(req: Request) {
     if (!outliers.length) break;
     for (const o of outliers) {
       await run(
-        `UPDATE prices SET validated = 0 WHERE seller_id = ? AND product_id = ? AND validated = 1`,
-        [o.seller_id, o.product_id],
+        // hidden from the site and sent to /tinder (flagged: never auto-reaccepted)
+        `UPDATE prices SET validated = NULL, decided_by = 'flag', review_reason = ?
+         WHERE seller_id = ? AND product_id = ? AND validated = 1`,
+        [`price outlier: $${o.price} vs median $${o.median} at other stores`, o.seller_id, o.product_id],
       );
       demoted.push(o);
     }

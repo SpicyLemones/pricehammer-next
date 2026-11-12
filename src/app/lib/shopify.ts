@@ -30,10 +30,19 @@ export type ShopifyFeedProduct = {
 export type ShopifyFeedSuccess = {
   ok: true;
   source: "rest_products_json";
+  /** Empty when the caller streamed pages through `onPage`. */
   products: ShopifyFeedProduct[];
   pageCount: number;
   requestCount: number;
+  /**
+   * True when the walk reached the real end of the feed (a short or empty
+   * page). False when it stopped early (page cap, or the shop refusing deep
+   * pagination), in which case "missing from the feed" proves nothing.
+   */
+  complete: boolean;
 };
+
+export type FeedPageHandler = (products: ShopifyFeedProduct[]) => void | Promise<void>;
 
 export type ShopifyFeedFailure = {
   ok: false;
@@ -107,7 +116,7 @@ function pickImage(record: Record<string, unknown>): {
 
 export async function fetchShopifyProductFeed(
   baseUrl: string,
-  opts: { fetchImpl?: FetchLike; maxPages?: number } = {}
+  opts: { fetchImpl?: FetchLike; maxPages?: number; onPage?: FeedPageHandler } = {}
 ): Promise<ShopifyFeedResult> {
   let origin: URL;
   try {
@@ -122,6 +131,7 @@ export async function fetchShopifyProductFeed(
   const products: ShopifyFeedProduct[] = [];
   let pageCount = 0;
   let requestCount = 0;
+  let complete = false;
 
   // Plain page-based pagination. Mixing page= (first request, default order)
   // with since_id= (subsequent requests, id order) anchors the walk at the
@@ -201,9 +211,13 @@ export async function fetchShopifyProductFeed(
     }
 
     if (feedProducts.length === 0) {
+      complete = true;
       break;
     }
 
+    // with onPage, each page is handed off and dropped: constant memory even
+    // for 50k-product feeds
+    const pageProducts: ShopifyFeedProduct[] = opts.onPage ? [] : products;
     for (const prod of feedProducts) {
       const { src: imageSrc, alt: imageAlt } = pickImage(prod);
       const rawVariants = isRecord(prod) && Array.isArray(prod.variants)
@@ -241,7 +255,7 @@ export async function fetchShopifyProductFeed(
         };
       });
 
-      products.push({
+      pageProducts.push({
         id:
           typeof prod.id === "number" || typeof prod.id === "string"
             ? prod.id
@@ -268,8 +282,10 @@ export async function fetchShopifyProductFeed(
     }
 
     pageCount++;
+    if (opts.onPage) await opts.onPage(pageProducts);
 
     if (feedProducts.length < 250) {
+      complete = true;
       break;
     }
   }
@@ -280,5 +296,6 @@ export async function fetchShopifyProductFeed(
     products,
     pageCount,
     requestCount,
+    complete,
   };
 }
