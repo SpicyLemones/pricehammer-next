@@ -52,13 +52,17 @@ export async function loadSkuCatalogue(): Promise<SkuCatalogueRecord[]> {
 
   let records: SkuCatalogueRecord[] = [];
   try {
+    // Every visible product, SKU-tracked or not: products without a SKU row
+    // can still be matched by name (they used to be invisible to matching
+    // and could only ever be validated by hand).
     const rows = (await query(
       "all",
-      `SELECT ps.product_id, ps.canonical_sku, ps.sku_aliases, ps.name_aliases,
+      `SELECT p.id AS product_id, ps.canonical_sku, ps.sku_aliases, ps.name_aliases,
               p.name, p.search_term, pm.image
-       FROM product_skus ps
-       LEFT JOIN products p ON p.id = ps.product_id
-       LEFT JOIN product_metadata pm ON pm.product_id = ps.product_id`,
+       FROM products p
+       LEFT JOIN product_skus ps ON ps.product_id = p.id
+       LEFT JOIN product_metadata pm ON pm.product_id = p.id
+       WHERE COALESCE(pm.hidden, 0) = 0`,
     )) as DbRow[];
     records = rows.map((r) => ({
       productId: String(r.product_id),

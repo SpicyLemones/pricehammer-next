@@ -17,7 +17,7 @@ export async function GET(req: Request) {
   const s = Number(u.searchParams.get("s"));
   const p = Number(u.searchParams.get("p"));
   if (!s || !p) {
-    return NextResponse.redirect(new URL("/tinder", originOf(req)));
+    return NextResponse.redirect(new URL(new URL(req.url).searchParams.get("m") === "1" ? "/tinder?manual=1" : "/tinder", originOf(req)));
   }
 
   await query("run", "update/invalidate_price", [s, p]);
@@ -25,5 +25,5 @@ export async function GET(req: Request) {
   // record previous decision
   setLastAction(s, p);
 
-  return NextResponse.redirect(new URL("/tinder", originOf(req)));
+  return NextResponse.redirect(new URL(new URL(req.url).searchParams.get("m") === "1" ? "/tinder?manual=1" : "/tinder", originOf(req)));
 }

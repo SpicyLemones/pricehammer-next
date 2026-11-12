@@ -18,6 +18,13 @@ export type ShopifyMatchCandidate = {
   confidence: number;
   matchedSku?: string | null;
   nameScore?: number;
+  /**
+   * Whole-name closeness (Dice over the canonical name's tokens vs the
+   * retailer title). Breaks ties between names where one contains the other:
+   * "Combat Patrol: Chaos Space Marines" vs "Combat Patrol: Space Marines"
+   * both score 0.99 on a Chaos listing, but only one is an exact fit.
+   */
+  exactness?: number;
   productUrl?: string;
   image?: string | null;
 };
@@ -58,6 +65,8 @@ type CanonicalEntry = {
   skuSet: Set<string>;
   tokens: Set<string>;
   nameVariants: string[];
+  /** toTokenSet() of each name variant, precomputed once per index build */
+  variantTokens: Set<string>[];
   image?: string;
   name: string;
 };
@@ -100,6 +109,7 @@ function singularize(token: string): string {
 function normalizeNameForMatch(value: string): string {
   return value
     .toLowerCase()
+    .replace(/\b40[,.\s]?000\b/g, " ") // "Warhammer 40,000" boilerplate
     .replace(/\[[^\]]*\]/g, " ") // "[PRE-ORDER]" style prefixes
     .replace(/\([^)]*\)/g, " ")
     .replace(/[’'`]/g, "")
@@ -207,12 +217,14 @@ function buildCanonicalEntry(record: SkuCatalogueRecord): CanonicalEntry {
     for (const token of toTokenSet(variantName)) tokens.add(token);
   }
 
+  const variants = Array.from(nameVariants).filter(Boolean);
   return {
     productId: record.productId,
     canonicalSku,
     skuSet,
     tokens,
-    nameVariants: Array.from(nameVariants).filter(Boolean),
+    nameVariants: variants,
+    variantTokens: variants.map(toTokenSet),
     image: record.image ?? undefined,
     name,
   };
@@ -221,18 +233,60 @@ function buildCanonicalEntry(record: SkuCatalogueRecord): CanonicalEntry {
 type CanonicalIndex = {
   entries: CanonicalEntry[];
   bySku: Map<string, CanonicalEntry>;
+  /** token -> entries whose names contain it (inverted index) */
+  byToken: Map<string, CanonicalEntry[]>;
+  /** token -> number of distinct product names using it (duplicates count once) */
+  nameFrequency: Map<string, number>;
 };
 
-// Built lazily from the DB-backed SKU catalogue; loadSkuCatalogue caches for
-// 5 minutes, so rebuilding here is cheap and stays fresh after syncs.
+// Built from the DB-backed catalogue and memoized on the records array, which
+// loadSkuCatalogue caches for 5 minutes (and drops after catalogue syncs).
+let _index: { records: unknown; index: CanonicalIndex } | null = null;
 async function getCanonicalIndex(): Promise<CanonicalIndex> {
   const records = await loadSkuCatalogue();
+  if (_index && _index.records === records) return _index.index;
   const entries = records.map(buildCanonicalEntry);
   const bySku = new Map<string, CanonicalEntry>();
+  const byToken = new Map<string, CanonicalEntry[]>();
   for (const entry of entries) {
     for (const sku of entry.skuSet) bySku.set(sku, entry);
+    for (const token of entry.tokens) {
+      let list = byToken.get(token);
+      if (!list) byToken.set(token, (list = []));
+      list.push(entry);
+    }
   }
-  return { entries, bySku };
+  const namesByToken = new Map<string, Set<string>>();
+  for (const entry of entries) {
+    const key = [...entry.tokens].sort().join(" ");
+    for (const token of entry.tokens) {
+      let set = namesByToken.get(token);
+      if (!set) namesByToken.set(token, (set = new Set()));
+      set.add(key);
+    }
+  }
+  const nameFrequency = new Map([...namesByToken].map(([t, set]) => [t, set.size]));
+  const index = { entries, bySku, byToken, nameFrequency };
+  _index = { records, index };
+  return index;
+}
+
+/**
+ * Entries that share at least one token with the retailer product. A name
+ * score is 0 without a shared token (both Dice and containment need one), so
+ * scoring only these gives identical results to scoring every entry, at a
+ * fraction of the cost on 50k-item feeds.
+ */
+function candidateEntries(index: CanonicalIndex, product: ShopifyFeedProduct): Set<CanonicalEntry> {
+  const out = new Set<CanonicalEntry>();
+  const tokens = new Set([
+    ...toTokenSet(product.title),
+    ...toTokenSet(product.handle.replace(/[-_]+/g, " ")),
+  ]);
+  for (const token of tokens) {
+    for (const entry of index.byToken.get(token) ?? []) out.add(entry);
+  }
+  return out;
 }
 
 export function buildShopifyProductUrl(
@@ -269,7 +323,9 @@ function dedupeCandidates(candidates: ShopifyMatchCandidate[]): ShopifyMatchCand
       seen.set(key, candidate);
     }
   }
-  return Array.from(seen.values()).sort((a, b) => b.confidence - a.confidence);
+  return Array.from(seen.values()).sort(
+    (a, b) => b.confidence - a.confidence || (b.exactness ?? 1) - (a.exactness ?? 1),
+  );
 }
 
 // Retailer product types that are NOT the miniature kit itself: a novel,
@@ -280,6 +336,7 @@ const NON_KIT_TYPE = /book|novel|black library|paint|dice|audio|magazine|puzzle|
 function computeNameScore(
   entry: CanonicalEntry,
   product: ShopifyFeedProduct,
+  nameFrequency?: Map<string, number>,
 ): number {
   const titleTokens = toTokenSet(product.title);
   const handleTokens = toTokenSet(product.handle.replace(/[-_]+/g, " "));
@@ -304,8 +361,23 @@ function computeNameScore(
       // containment bonus: our short name fully present in their long title
       s = Math.max(s, 0.92 * containmentScore(canonicalTokens, retailerAll));
     } else {
-      // single generic words (Ancient, Chosen, Apothecary…) are too ambiguous
-      s = Math.min(s, 0.75);
+      // Single generic words (Ancient, Chosen, Apothecary…) are too
+      // ambiguous to accept on their own. But a word only ONE product in the
+      // catalogue uses (Barbgaunts, Branchwych, Karanak) identifies it as
+      // surely as a full name does, so a listing containing it scores high.
+      const [only] = canonicalTokens;
+      const distinctive = nameFrequency?.get(only) === 1;
+      const exactTitle = titleTokens.size === 1 && titleTokens.has(only);
+      if (retailerAll.has(only) && (distinctive || exactTitle)) {
+        // the word is unique to one product, or the listing is literally
+        // just that word ("Taurox", next to our "Taurox Prime")
+        s = Math.max(s, exactTitle ? 0.88 : 0.9);
+      } else {
+        s = Math.min(s, 0.75);
+        // fully present but ambiguous: keep it as a candidate (-> review),
+        // never let a long title push it below the bar (-> "not stocked")
+        if (retailerAll.has(only)) s = Math.max(s, 0.6);
+      }
     }
     if (markerMismatch) s = Math.min(s, 0.7);
     if (nonKitType) s = Math.min(s, 0.7);
@@ -313,8 +385,8 @@ function computeNameScore(
   };
 
   let best = scoreAgainst(entry.tokens);
-  for (const alias of entry.nameVariants) {
-    best = Math.max(best, scoreAgainst(toTokenSet(alias)));
+  for (const aliasTokens of entry.variantTokens) {
+    best = Math.max(best, scoreAgainst(aliasTokens));
   }
   return best;
 }
@@ -331,7 +403,8 @@ export async function matchShopifyProductsAgainstCatalogue(
   const minFuzzyScore = opts.minFuzzyScore ?? 0.55;
   const baseUrl = opts.baseUrl ?? null;
 
-  const { entries: canonicalEntries, bySku: canonicalBySku } = await getCanonicalIndex();
+  const canonicalIndex = await getCanonicalIndex();
+  const canonicalBySku = canonicalIndex.bySku;
 
   const results: ShopifyMatchResult[] = [];
   let matchedBySku = 0;
@@ -364,16 +437,27 @@ export async function matchShopifyProductsAgainstCatalogue(
     const hasSkuCandidate = candidates.some((c) => c.reason === "sku");
 
     if (!hasSkuCandidate) {
-      const scoredEntries: Array<{ entry: CanonicalEntry; score: number }> = [];
-      for (const entry of canonicalEntries) {
-        const score = computeNameScore(entry, product);
+      const scoredEntries: Array<{ entry: CanonicalEntry; score: number; exactness: number }> = [];
+      const titleTokens = toTokenSet(product.title);
+      for (const entry of candidateEntries(canonicalIndex, product)) {
+        const score = computeNameScore(entry, product, canonicalIndex.nameFrequency);
         if (score >= minFuzzyScore) {
-          scoredEntries.push({ entry, score });
+          const exactness = Math.max(
+            diceScore(entry.tokens, titleTokens),
+            ...entry.variantTokens.map((t) => diceScore(t, titleTokens)),
+          );
+          scoredEntries.push({ entry, score, exactness });
         }
       }
 
-      scoredEntries.sort((a, b) => b.score - a.score);
-      for (const { entry, score } of scoredEntries.slice(0, maxFuzzyCandidates)) {
+      // deterministic: score, then whole-name closeness, then product id
+      scoredEntries.sort(
+        (a, b) =>
+          b.score - a.score ||
+          b.exactness - a.exactness ||
+          Number(a.entry.productId) - Number(b.entry.productId),
+      );
+      for (const { entry, score, exactness } of scoredEntries.slice(0, maxFuzzyCandidates)) {
         candidates.push({
           canonicalProductId: entry.productId,
           canonicalName: entry.name,
@@ -383,6 +467,7 @@ export async function matchShopifyProductsAgainstCatalogue(
           // (auto-validate accepts >= 0.85), so don't inflate it.
           confidence: Math.min(0.99, score),
           nameScore: score,
+          exactness,
           productUrl: buildShopifyProductUrl(baseUrl, product.handle),
           image: entry.image ?? null,
         });

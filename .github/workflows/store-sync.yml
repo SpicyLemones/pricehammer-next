@@ -1,9 +1,11 @@
-name: Weekly GW sync and price refresh
+name: GW catalogue sync and daily store sync
 
 on:
   schedule:
-    # 16:30 UTC Sunday = 2:30am AEST Monday — picks up the week's GW releases
+    # 16:30 UTC = 2:30am AEST. Sunday's run also picks up the week's GW
+    # releases; every run syncs store listings and auto-matches prices.
     - cron: "30 16 * * 0"
+    - cron: "30 16 * * 1-6"
   workflow_dispatch: {}
 
 env:
@@ -62,24 +64,19 @@ jobs:
           chmod +x run-job.sh
 
       - name: Sync GW catalogue (add new releases)
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '30 16 * * 0'
         env:
           ADMIN_USER: ${{ secrets.PRICEHAMMER_ADMIN_USER }}
           ADMIN_PASS: ${{ secrets.PRICEHAMMER_ADMIN_PASS }}
         run: ./run-job.sh sync "/api/admin/sync-gw-catalogue?apply=1&async=1"
 
-      - name: Auto-validate new pairs across sellers
+      # Fetches every store's catalogue through its own API (page by page,
+      # constant memory), saves the Warhammer listings, then decides price
+      # pairs automatically: refreshes confirmed prices, accepts SKU / clear
+      # name matches, marks not-stocked, notices removed or changed listings.
+      # Only ambiguous or flagged pairs are left in /tinder.
+      - name: Sync stores and auto-match prices
         env:
           ADMIN_USER: ${{ secrets.PRICEHAMMER_ADMIN_USER }}
           ADMIN_PASS: ${{ secrets.PRICEHAMMER_ADMIN_PASS }}
-        run: ./run-job.sh auto-validate "/api/auto-validate?async=1"
-
-      # Price refreshing is deliberately NOT done here. Building every store's
-      # full feed index is CPU/memory heavy and browns out the small Render
-      # instance while it runs. Prices are refreshed from a local
-      # machine instead (same pattern as the recession collector):
-      #   npm run dev          (in one terminal)
-      #   npm run refresh:prices
-      # which runs the refresh locally and pushes results to prod via
-      # /api/admin/prices-import.
-      - name: Price refresh reminder
-        run: echo "Prices refresh locally now - run npm run refresh:prices on the dev machine. This workflow only syncs the catalogue and auto-validates."
+        run: ./run-job.sh sync-stores "/api/admin/sync-stores?async=1"

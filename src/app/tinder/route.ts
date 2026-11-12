@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { query, recomputeRemaining } from "@/lib/sql";
 import { searchStore, type StoreCandidate } from "@/app/lib/store-search";
-import { peekStorefrontIndex } from "@/app/lib/storefronts";
+import { hasProductApi, localCandidates } from "@/app/lib/listings";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,42 +12,21 @@ export const revalidate = 0;
 type Seller = any;
 type Product = any;
 
-type FeedInfo = {
-  reason: string;
-  candidate?: {
-    title: string;
-    price: number | null;
-    url: string | null;
-    confidence: number;
-    matchReason: string;
-  };
-};
-
 function esc(s: unknown): string {
   return String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-function feedBox(sellerId: number, productId: number, feed?: FeedInfo): string {
-  if (!feed) return "";
-  const c = feed.candidate;
-  if (!c || !c.url || c.price == null) {
-    return `
-    <div style="border:1px solid #e0d6b8; background:#fdf8e8; border-radius:10px; padding:10px 14px; margin-bottom:14px;">
-      <b>Why is this here?</b> ${esc(feed.reason)}
-    </div>`;
-  }
-  const acceptHref =
-    `/tinder/validate?s=${sellerId}&p=${productId}` +
-    `&link=${encodeURIComponent(c.url)}&price=${encodeURIComponent(String(c.price))}`;
+function reasonBox(opts: { reason?: string | null; flagged: boolean; link?: string | null; price?: number | null }): string {
+  if (!opts.reason && !opts.link) return "";
+  const color = opts.flagged ? "#f3c1bb;background:#fdeceb" : "#e0d6b8;background:#fdf8e8";
+  const current = opts.link
+    ? `<div style="margin-top:4px;">Currently linked: <a href="${esc(opts.link)}" target="_blank" rel="noopener">${esc(opts.link)}</a>${opts.price != null ? ` — $${esc(opts.price)}` : ""}</div>`
+    : "";
   return `
-  <div style="border:1px solid #bcd9bc; background:#eef8ee; border-radius:10px; padding:10px 14px; margin-bottom:14px;">
-    <div><b>Feed suggestion</b> (${esc(feed.reason)}):</div>
-    <div style="margin:6px 0;">
-      <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title)}</a>
-      — $${esc(c.price)} — confidence ${(c.confidence * 100).toFixed(0)}% (${esc(c.matchReason)})
-    </div>
-    <a href="${acceptHref}"><button style="background:#2e9e44;color:#fff;border:0;border-radius:6px;padding:8px 14px;cursor:pointer;">✅ Accept feed match</button></a>
-  </div>`;
+    <div style="border:1px solid ${color}; border-radius:10px; padding:10px 14px; margin-bottom:14px;">
+      <b>${opts.flagged ? "Flagged" : "Why is this here?"}</b> ${esc(opts.reason ?? "")}
+      ${current}
+    </div>`;
 }
 
 function htmlPage(opts: {
@@ -57,10 +36,13 @@ function htmlPage(opts: {
   showAltBox: boolean;
   altTerm?: string;
   remaining: number;
-  feed?: FeedInfo;
   note?: string;
+  pair?: { review_reason?: string | null; decided_by?: string | null; link?: string | null; price?: number | null };
+  manual: boolean;
+  manualCount: number;
 }) {
-  const { seller, product, items, showAltBox, altTerm = "", remaining, feed, note } = opts;
+  const { seller, product, items, showAltBox, altTerm = "", remaining, note, pair, manual, manualCount } = opts;
+  const m = manual ? "1" : "0";
 
   return `
   <div style="max-width:900px;margin:24px auto;font-family:system-ui,Segoe UI,Arial">
@@ -70,10 +52,20 @@ function htmlPage(opts: {
       <div><b>Search term:</b> ${product?.search_term ?? ""}</div>
     </div>
     <div style="font-size: 20px; margin-bottom: 16px; text-align:center;">
-      Remaining unchecked prices: ${remaining}
+      ${manual ? "Manual stores" : "Needs review"}: ${remaining}
+      <span style="font-size:14px; margin-left:12px;">
+        ${manual
+          ? `<a href="/tinder">back to the review queue</a>`
+          : `<a href="/tinder?manual=1">manual stores (${manualCount})</a>`}
+      </span>
     </div>
 
-    ${feedBox(Number(seller?.id), Number(product?.id), feed)}
+    ${reasonBox({
+      reason: pair?.review_reason,
+      flagged: pair?.decided_by === "flag",
+      link: pair?.decided_by === "flag" ? pair?.link : null,
+      price: pair?.decided_by === "flag" ? pair?.price : null,
+    })}
 
     <div id="loading" style="text-align:center; margin:8px 0 10px; color:#666;">${esc(note ?? "")}</div>
 
@@ -94,7 +86,7 @@ function htmlPage(opts: {
     </div>
 
     <div style="display:flex; justify-content:center; gap:12px; margin-bottom:20px;">
-      <a class="backBtn" href="/tinder/undo">⬅ Undo Last</a>
+      <a class="backBtn" href="/tinder/undo?m=${m}">⬅ Undo Last</a>
     </div>
 
     <!-- Alt-search + manual validate -->
@@ -104,6 +96,7 @@ function htmlPage(opts: {
         <form id="altSearchForm" method="POST" action="/tinder" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
           <input type="hidden" name="s" value="${seller.id}" />
           <input type="hidden" name="p" value="${product.id}" />
+          <input type="hidden" name="m" value="${m}" />
           <input id="altTerm" name="altTerm" placeholder="Alternate keywords / SKU / different spelling..."
                  value="${esc(altTerm)}"
                  style="flex:1; min-width:280px; padding:8px; border:1px solid #ccd; border-radius:8px;" />
@@ -119,7 +112,7 @@ function htmlPage(opts: {
             <input type="checkbox" id="updateTerm" />
             <span>Update search term in DB if I click <b>Yum</b></span>
           </label>
-          <a id="forceInvalidate" href="/tinder/invalidate?s=${seller.id}&p=${product.id}"
+          <a id="forceInvalidate" href="/tinder/invalidate?s=${seller.id}&p=${product.id}&m=${m}"
              style="padding:8px 12px; border-radius:8px; background:#e74c3c; color:#fff; text-decoration:none;">
             Force Invalidate
           </a>
@@ -216,7 +209,7 @@ function htmlPage(opts: {
         const sc = $q("#candScore");
         if (sc) {
           const pct = Math.round((cand.score || 0) * 100);
-          sc.textContent = cand.reason === "sku" ? "SKU match" : pct + "% name match";
+          sc.textContent = cand.reason === "sku" ? "SKU match" : (String(cand.title || "").startsWith("Current link:") ? "currently on the site" : pct + "% name match");
           sc.style.background = cand.reason === "sku" || pct >= 85 ? "#d4f5dc" : pct >= 60 ? "#fdf3cf" : "#fbe0dd";
         }
         const pos = $q("#candPos"); if (pos) pos.textContent = (idx + 1) + " of " + products.length;
@@ -234,7 +227,7 @@ function htmlPage(opts: {
         const cand = products[idx] || { link:"", price:"" };
         const update = $q("#updateTerm")?.checked ? "1" : "";
         const altTermVal = $q("#altTerm")?.value || "";
-        const href = "/tinder/validate?s=${seller.id}&p=${product.id}" +
+        const href = "/tinder/validate?s=${seller.id}&p=${product.id}&m=${m}" +
                      "&link=" + encodeURIComponent(cand.link || "") +
                      "&price=" + encodeURIComponent(String(cand.price || "")) +
                      (update ? ("&updateTerm=1&altTerm=" + encodeURIComponent(altTermVal)) : "");
@@ -252,7 +245,7 @@ function htmlPage(opts: {
         }
         const update = $q("#updateTerm")?.checked ? "1" : "";
         const altTermVal = $q("#altTerm")?.value || "";
-        const href = "/tinder/validate?s=${seller.id}&p=${product.id}" +
+        const href = "/tinder/validate?s=${seller.id}&p=${product.id}&m=${m}" +
                      "&link=" + encodeURIComponent(link) +
                      "&price=" + encodeURIComponent(price) +
                      (update ? ("&updateTerm=1&altTerm=" + encodeURIComponent(altTermVal)) : "");
@@ -283,47 +276,6 @@ function htmlPage(opts: {
     </script>
   </div>
   `;
-}
-
-// Full-catalogue feed context ("why is this pair still unchecked?"). Building a
-// feed index can take minutes for big stores, so this NEVER waits: it uses the
-// cached index if one exists and otherwise warms it in the background.
-function buildFeedInfo(seller: Seller, productId: number): FeedInfo | undefined {
-  try {
-    const index = peekStorefrontIndex(seller);
-    if (index === undefined) return undefined; // still warming
-    if (!index) {
-      return { reason: "store has no product feed (custom or bot-walled site) — manual check needed" };
-    }
-    if (index.status !== "ready") {
-      return { reason: `feed unavailable: ${index.diagnostics?.[0] ?? "unknown"}` };
-    }
-    const match = index.matches.get(productId);
-    if (!match) {
-      return { reason: "no feed match at all — the store likely doesn't stock this product" };
-    }
-    const candidate = {
-      title: match.title,
-      price: match.price,
-      url: match.url,
-      confidence: match.confidence,
-      matchReason: match.reason,
-    };
-    if (match.reason === "sku" || match.confidence >= 0.85) {
-      return {
-        reason: match.price == null
-          ? "strong feed match but it has no price (out of stock?)"
-          : "strong feed match — auto-validate may not have run since it appeared",
-        candidate,
-      };
-    }
-    return {
-      reason: `best feed match is only ${(match.confidence * 100).toFixed(0)}% confident — below the auto-accept bar`,
-      candidate,
-    };
-  } catch (e) {
-    return { reason: `feed lookup failed: ${e instanceof Error ? e.message : e}` };
-  }
 }
 
 function noStoreHeaders() {
@@ -358,10 +310,24 @@ async function productSkus(productId: number): Promise<string[]> {
   return out;
 }
 
+// Saved listings first (instant, already scored); the store's live search
+// fills in when we have fewer than 3, and is the only source for alternate
+// search terms.
 async function candidatesFor(seller: Seller, product: Product, term?: string) {
-  const skus = await productSkus(Number(product?.id));
-  const result = await searchStore(seller, product, { term, productSkus: skus });
-  const items: TinderItem[] = result.candidates.map((c) => ({
+  const local = term ? [] : await localCandidates(Number(seller?.id), Number(product?.id));
+  let note: string | undefined;
+  let live: StoreCandidate[] = [];
+  if (local.length < 3 && hasProductApi(seller)) {
+    const skus = await productSkus(Number(product?.id));
+    const result = await searchStore(seller, product, { term, productSkus: skus });
+    live = result.candidates;
+    if (!local.length) note = result.note;
+  } else if (!local.length) {
+    note = "this store has no public product API — open the store, find the item, and paste its link and price below";
+  }
+  const seen = new Set<string>();
+  const merged = [...local, ...live].filter((c) => (seen.has(c.link) ? false : (seen.add(c.link), true)));
+  const items: TinderItem[] = merged.map((c) => ({
     title: c.title,
     link: c.link,
     price: c.price ?? "",
@@ -369,32 +335,66 @@ async function candidatesFor(seller: Seller, product: Product, term?: string) {
     score: c.score,
     reason: c.reason,
   }));
-  return { items, note: result.note };
+  return { items, note };
 }
 
-export async function GET() {
-  const price = await query("get", "select/unchecked_prices");
+async function counts() {
+  const [remaining, manual] = await Promise.all([
+    recomputeRemaining(),
+    query("get", "select/count_manual") as Promise<{ c: number } | undefined>,
+  ]);
+  return { remaining, manualCount: Number(manual?.c ?? 0) };
+}
+
+// For a flagged pair, the question is "is the current link still right?",
+// so its current listing is the first card: Yum keeps it, Yuck moves on to
+// the alternatives.
+async function withCurrentLink(items: TinderItem[], pair: { seller_id: number; link?: string | null; price?: number | null; decided_by?: string | null }) {
+  if (pair.decided_by !== "flag" || !pair.link) return items;
+  const listing = (await query(
+    "get",
+    `SELECT title, price, image FROM store_listings WHERE seller_id = ? AND url = ?`,
+    [pair.seller_id, pair.link],
+  ).catch(() => undefined)) as { title: string; price: number | null; image: string | null } | undefined;
+  const current: TinderItem = {
+    title: `Current link: ${listing?.title ?? pair.link}`,
+    link: pair.link,
+    price: listing?.price ?? pair.price ?? "",
+    img: listing?.image ?? "",
+    score: 0,
+    reason: "name",
+  };
+  return [current, ...items.filter((i) => i.link !== pair.link)];
+}
+
+export async function GET(req: Request) {
+  const manual = new URL(req.url).searchParams.get("manual") === "1";
+  const price = await query("get", manual ? "select/unchecked_manual" : "select/unchecked_prices");
+  const { remaining, manualCount } = await counts();
   if (!price) {
     const html = `
       <div style="max-width:900px;margin:24px auto;font-family:system-ui,Segoe UI,Arial">
-        <h2>No unchecked prices left!</h2>
+        <h2>${manual ? "No manual-store items left." : "Nothing needs review. Automation has it covered."}</h2>
+        <p>${manual ? `<a href="/tinder">Back to the review queue</a>` : manualCount ? `<a href="/tinder?manual=1">${manualCount} items at manual stores</a> (optional)` : ""}</p>
         <a href="/admin"><button>Admin Panel</button></a>
       </div>`;
     return new NextResponse(html, { headers: noStoreHeaders() });
   }
 
-  const [seller, product, remaining] = await Promise.all([
+  const [seller, product] = await Promise.all([
     query("get", "select/seller_id", [price.seller_id]),
     query("get", "select/product_id", [price.product_id]),
-    recomputeRemaining(),
   ]);
+  const found = await candidatesFor(seller, product);
+  const items = await withCurrentLink(found.items, price);
+  const note = items.length ? undefined : found.note;
 
-  const feed = buildFeedInfo(seller, Number(price.product_id));
-  const { items, note } = await candidatesFor(seller, product);
+  console.log("[/tinder] candidates", items.length, "store:", seller?.name, "reason:", price.review_reason);
 
-  console.log("[/tinder] candidates", items.length, "store:", seller?.name, "term:", product?.search_term);
-
-  const html = htmlPage({ seller, product, items, showAltBox: true, remaining, feed, note });
+  const html = htmlPage({
+    seller, product, items, showAltBox: true, remaining: manual ? manualCount : remaining,
+    note, pair: price, manual, manualCount,
+  });
   return new NextResponse(html, { headers: noStoreHeaders() });
 }
 
@@ -404,14 +404,16 @@ export async function POST(req: Request) {
   const p = Number(form.get("p"));
   const useName = form.get("useName");
   const altTermRaw = (form.get("altTerm") || "").toString().trim();
+  const manual = form.get("m") === "1";
 
-  const [seller, product, remaining] = await Promise.all([
+  const [seller, product, pair, { remaining, manualCount }] = await Promise.all([
     query("get", "select/seller_id", [s]),
     query("get", "select/product_id", [p]),
-    recomputeRemaining(),
+    query("get", `SELECT * FROM prices WHERE seller_id = ? AND product_id = ?`, [s, p]),
+    counts(),
   ]);
   if (!seller || !product) {
-    return NextResponse.redirect(new URL("/tinder", req.url), 303);
+    return NextResponse.redirect(new URL(manual ? "/tinder?manual=1" : "/tinder", req.url), 303);
   }
 
   const altTerm = useName ? product.name : altTermRaw;
@@ -419,6 +421,9 @@ export async function POST(req: Request) {
 
   console.log("[/tinder POST] candidates", items.length, "term:", altTerm || product.search_term);
 
-  const html = htmlPage({ seller, product, items, showAltBox: true, altTerm, remaining, note });
+  const html = htmlPage({
+    seller, product, items, showAltBox: true, altTerm, remaining: manual ? manualCount : remaining,
+    note, pair, manual, manualCount,
+  });
   return new NextResponse(html, { headers: noStoreHeaders() });
 }

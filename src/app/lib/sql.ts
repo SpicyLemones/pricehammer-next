@@ -56,9 +56,13 @@ const CATALOGUE_TABLES = /\b(prices|products|product_metadata|product_skus|selle
  * table scan until these existed. IF NOT EXISTS makes this safe on every boot
  * and on freshly uploaded DB files.
  */
-const STARTUP_INDEXES = [
+const STARTUP_STATEMENTS = [
   "CREATE INDEX IF NOT EXISTS idx_prices_product ON prices(product_id, validated)",
   "CREATE INDEX IF NOT EXISTS idx_prices_validated ON prices(validated, seller_id)",
+  // decision provenance for automatic matching (see listings.ts)
+  "ALTER TABLE prices ADD COLUMN review_reason TEXT",
+  "ALTER TABLE prices ADD COLUMN decided_by TEXT",
+  "ALTER TABLE prices ADD COLUMN checked_at TEXT",
 ];
 
 function openDb(): SqliteDb {
@@ -86,10 +90,11 @@ function openDb(): SqliteDb {
     db.run("PRAGMA journal_mode = WAL;");
     db.run("PRAGMA synchronous = NORMAL;");
     db.run("PRAGMA busy_timeout = 5000;");
-    for (const sql of STARTUP_INDEXES) {
-      // tables may not exist yet on a brand-new DB; that's fine
+    for (const sql of STARTUP_STATEMENTS) {
+      // tables may not exist yet on a brand-new DB, and columns may already
+      // exist; both are fine
       db.run(sql, (err) => {
-        if (err && !/no such table/i.test(err.message)) {
+        if (err && !/no such table|duplicate column/i.test(err.message)) {
           console.warn("[DB] index create failed:", err.message);
         }
       });

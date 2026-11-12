@@ -51,9 +51,13 @@ if (dry) {
 
 let local = 0;
 for (const o of outliers) {
+  // flagged for /tinder rather than silently hidden; falls back to the old
+  // demotion on a DB the app hasn't opened since the review columns were added
   local += await run(
-    "UPDATE prices SET validated = 0 WHERE seller_id = ? AND product_id = ? AND validated = 1",
-    [o.seller_id, o.product_id],
+    "UPDATE prices SET validated = NULL, decided_by = 'flag', review_reason = ? WHERE seller_id = ? AND product_id = ? AND validated = 1",
+    [`price outlier: $${o.price} vs median $${o.median} at other stores`, o.seller_id, o.product_id],
+  ).catch(() =>
+    run("UPDATE prices SET validated = 0 WHERE seller_id = ? AND product_id = ? AND validated = 1", [o.seller_id, o.product_id]),
   );
 }
 db.close();

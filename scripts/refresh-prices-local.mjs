@@ -1,6 +1,8 @@
 // scripts/refresh-prices-local.mjs
-// Run the full price refresh against the LOCAL dev server (which pulls every
-// store feed from this machine), then push the results to prod.
+// OPTIONAL fallback. Production now syncs stores and refreshes prices on its
+// own every night (GitHub workflow -> /api/admin/sync-stores). Use this only
+// if the prod server can't do it: it runs the store sync on the LOCAL dev
+// server, then pushes current prices to prod (match decisions stay local).
 //   npm run refresh:prices            (refresh + push to spycy.fun)
 //   node scripts/refresh-prices-local.mjs --no-push   (refresh only)
 // Needs `npm run dev` running on localhost:3000 and ADMIN_USER / ADMIN_PASS

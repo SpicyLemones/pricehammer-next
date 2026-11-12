@@ -63,7 +63,9 @@ export async function POST(req: Request) {
   let unvalidated = 0;
   for (const u of payload.unvalidate ?? []) {
     const r = (await run(
-      `UPDATE prices SET validated = 0 WHERE seller_id = ? AND product_id = ? AND validated = 1`,
+      `UPDATE prices SET validated = NULL, decided_by = 'flag',
+         review_reason = 'price outlier (flagged by the local outlier sweep)'
+       WHERE seller_id = ? AND product_id = ? AND validated = 1`,
       [u.seller_id, u.product_id],
     )) as { changes?: number };
     unvalidated += r?.changes ?? 0;

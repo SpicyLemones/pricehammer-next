@@ -82,7 +82,8 @@ export async function POST(req: Request) {
     for (const r of retailerFlags) {
       await query(
         "run",
-        `UPDATE prices SET validated = NULL WHERE seller_id = ? AND product_id = ?`,
+        `UPDATE prices SET validated = NULL, decided_by = 'flag',
+           review_reason = 'priced above the Warhammer RRP' WHERE seller_id = ? AND product_id = ?`,
         [r.seller_id, r.product_id],
       );
       flagged++;
@@ -90,7 +91,8 @@ export async function POST(req: Request) {
     for (const g of gwSuspect) {
       await query(
         "run",
-        `UPDATE prices SET validated = NULL
+        `UPDATE prices SET validated = NULL, decided_by = 'flag',
+           review_reason = 'Warhammer price looks wrong next to the other stores'
          WHERE product_id = ? AND seller_id IN (SELECT id FROM sellers WHERE name LIKE '%Warhammer%')`,
         [g.product_id],
       );

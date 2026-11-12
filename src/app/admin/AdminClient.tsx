@@ -133,7 +133,6 @@ function Status({ state, message }: { state: RunState; message: string }) {
 export default function AdminClient({ initialCount }: { initialCount: number }) {
   // inputs
   const [autoSeller, setAutoSeller] = useState("");
-  const [autoProduct, setAutoProduct] = useState("");
   const [refreshSeller, setRefreshSeller] = useState("");
   const [seedSeller, setSeedSeller] = useState("");
   const [seedProduct, setSeedProduct] = useState("");
@@ -162,7 +161,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
       <div className="flex items-baseline justify-between">
         <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Admin Panel</h1>
         <div className="text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2">
-          Remaining unchecked prices: <b>{initialCount}</b>
+          Needs review in Tinder: <b>{initialCount}</b>
           <button
             onClick={() => location.reload()}
             className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition"
@@ -203,7 +202,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {/* Auto-Validate */}
-        <Card title="Auto-Validate (feeds + SKUs)">
+        <Card title="Auto-Validate">
           <div className="flex flex-col gap-2">
             <input
               name="seller"
@@ -212,20 +211,16 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
               value={autoSeller}
               onChange={(e) => setAutoSeller(e.target.value.replace(/[^\d]/g, ""))}
             />
-            <input
-              name="product"
-              placeholder="Product ID (optional)"
-              className="border rounded px-3 py-2 bg-white text-slate-900 placeholder:text-slate-400 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:placeholder:text-slate-500"
-              value={autoProduct}
-              onChange={(e) => setAutoProduct(e.target.value.replace(/[^\d]/g, ""))}
-            />
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Re-decides pairs from saved store listings (syncing any store older than a day).
+              Only ambiguous matches are left for /tinder.
+            </p>
             <button
               className="rounded bg-emerald-600 text-white px-3 py-2 hover:bg-emerald-700 active:scale-95 transition disabled:opacity-50"
               disabled={autoValidate.state === "working"}
               onClick={() =>
                 autoValidate.runJob("/api/auto-validate", {
                   seller: autoSeller ? Number(autoSeller) : undefined,
-                  product: autoProduct ? Number(autoProduct) : undefined,
                 })
               }
             >
@@ -243,7 +238,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
         </Card>
 
         {/* Refresh Prices */}
-        <Card title="Refresh Prices (validated only)">
+        <Card title="Sync Stores + Refresh Prices">
           <div className="flex flex-col gap-2">
             <input
               name="seller"
@@ -267,7 +262,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
                   Refreshing…
                 </span>
               ) : (
-                "Refresh"
+                "Sync now"
               )}
             </button>
             <Status state={refreshPrices.state} message={refreshPrices.message} />

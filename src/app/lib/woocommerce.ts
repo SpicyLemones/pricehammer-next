@@ -7,6 +7,7 @@
 
 import {
   normalizeShopifySku,
+  type FeedPageHandler,
   type ShopifyFeedProduct,
   type ShopifyFeedResult,
 } from "@/app/lib/shopify";
@@ -71,7 +72,7 @@ export function normalizeWooItem(item: WooItem): ShopifyFeedProduct {
 
 export async function fetchWooCommerceProductFeed(
   baseUrl: string,
-  opts: { fetchImpl?: FetchLike; maxPages?: number } = {},
+  opts: { fetchImpl?: FetchLike; maxPages?: number; onPage?: FeedPageHandler } = {},
 ): Promise<ShopifyFeedResult> {
   let origin: URL;
   try {
@@ -86,6 +87,7 @@ export async function fetchWooCommerceProductFeed(
   const products: ShopifyFeedProduct[] = [];
   let pageCount = 0;
   let requestCount = 0;
+  let complete = false;
 
   for (let page = 1; page <= maxPages; page++) {
     if (page > 1) await new Promise((r) => setTimeout(r, 300));
@@ -140,11 +142,19 @@ export async function fetchWooCommerceProductFeed(
     if (!Array.isArray(data)) {
       return { ok: false, error: "Unexpected WooCommerce response (expected array)" };
     }
-    if (data.length === 0) break;
+    if (data.length === 0) {
+      complete = true;
+      break;
+    }
 
-    for (const item of data as WooItem[]) products.push(normalizeWooItem(item));
+    const pageProducts = (data as WooItem[]).map(normalizeWooItem);
     pageCount++;
-    if (data.length < PER_PAGE) break;
+    if (opts.onPage) await opts.onPage(pageProducts);
+    else products.push(...pageProducts);
+    if (data.length < PER_PAGE) {
+      complete = true;
+      break;
+    }
   }
 
   return {
@@ -153,5 +163,6 @@ export async function fetchWooCommerceProductFeed(
     products,
     pageCount,
     requestCount,
+    complete,
   };
 }

@@ -1,19 +1,10 @@
+// src/app/lib/storefronts.ts
+// Seller storefront config (which product API a store exposes) and small
+// shared helpers. Fetching + matching live in listings.ts.
 import pLimit from "p-limit";
 
-import {
-  fetchShopifyProductFeed,
-  normalizeShopifySku,
-  type ShopifyFeedProduct,
-  type ShopifyFeedVariant,
-} from "@/app/lib/shopify";
-import {
-  matchShopifyProductsAgainstCatalogue,
-  buildShopifyProductUrl,
-  type ShopifyMatchSummary,
-  type ShopifyMatchReason,
-} from "@/app/lib/shopify-catalogue";
-import { buildGwPriceMap } from "@/app/lib/gw-algolia";
-import { fetchWooCommerceProductFeed } from "@/app/lib/woocommerce";
+import { normalizeShopifySku, type ShopifyFeedProduct } from "@/app/lib/shopify";
+import { buildShopifyProductUrl } from "@/app/lib/shopify-catalogue";
 
 export type StorefrontPlatform = "shopify" | "woocommerce" | "gw-algolia" | "misc";
 export type StorefrontMatchStrategy = "name" | "sku-from-page";
@@ -24,30 +15,7 @@ export type SellerStorefrontConfig = {
   maxFeedPages?: number;
 };
 
-export type StorefrontPriceMatch = {
-  price: number | null;
-  compareAtPrice: number | null;
-  image: string | null;
-  url: string | null;
-  title: string;
-  handle?: string;
-  confidence: number;
-  reason: ShopifyMatchReason | "unknown";
-  variantTitle?: string | null;
-};
-
-export type StorefrontIndexReady = {
-  status: "ready";
-  platform: StorefrontPlatform;
-  config: SellerStorefrontConfig;
-  matches: Map<number, StorefrontPriceMatch>;
-  /** Every feed product keyed by normalized product URL — lets refresh look
-   *  up a pair's STORED link directly, no name matching required. */
-  byLink: Map<string, StorefrontPriceMatch>;
-  diagnostics: string[];
-};
-
-/** Normalize a product URL for byLink lookups. */
+/** Normalize a product URL into a stable lookup key (host + path, lowercased). */
 export function normalizeProductUrl(url: string | null | undefined): string | null {
   if (!url) return null;
   try {
@@ -59,29 +27,7 @@ export function normalizeProductUrl(url: string | null | undefined): string | nu
   }
 }
 
-export type StorefrontIndexUnavailable = {
-  status: "unavailable";
-  platform: StorefrontPlatform;
-  config: SellerStorefrontConfig;
-  diagnostics: string[];
-  fallbackOption?: {
-    message: string;
-    skuExample?: { raw: string; normalized: string | null };
-  };
-};
-
-export type StorefrontIndexResult =
-  | StorefrontIndexReady
-  | StorefrontIndexUnavailable;
-
 type FetchLike = typeof fetch;
-
-type SellerRow = {
-  id: number;
-  name?: string | null;
-  base_url?: string | null;
-  storefront?: unknown;
-};
 
 const JSON_LD_REGEX =
   /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
@@ -157,18 +103,6 @@ export function parseSellerStorefront(
   if (strategy) config.matchStrategy = strategy;
 
   return config;
-}
-
-function pickVariantForPricing(
-  variants: ShopifyFeedVariant[],
-): ShopifyFeedVariant | null {
-  if (!Array.isArray(variants) || variants.length === 0) return null;
-  return (
-    variants.find((variant) => variant.available && variant.price != null) ??
-    variants.find((variant) => variant.price != null) ??
-    variants[0] ??
-    null
-  );
 }
 
 function findSkuInJsonLd(node: unknown): string | null {
@@ -251,7 +185,7 @@ async function fetchSkuFromProductPage(
   return null;
 }
 
-async function ensureSkuForProducts(
+export async function ensureSkuForProducts(
   products: ShopifyFeedProduct[],
   baseUrl: string,
   fetchImpl: FetchLike,
@@ -277,325 +211,4 @@ async function ensureSkuForProducts(
       }),
     ),
   );
-}
-
-// Rank competing retailer products claiming the same canonical product:
-// SKU-verified beats fuzzy-name, then higher confidence, then having a price.
-function matchRank(m: StorefrontPriceMatch): number {
-  return (m.reason === "sku" ? 100 : 0) + m.confidence + (m.price != null ? 0.001 : 0);
-}
-
-function buildMatchesFromSummary(
-  summary: ShopifyMatchSummary,
-  products: ShopifyFeedProduct[],
-): Map<number, StorefrontPriceMatch> {
-  const map = new Map<number, StorefrontPriceMatch>();
-  summary.products.forEach((result, index) => {
-    const product = products[index];
-    if (!result?.bestCandidate) return;
-    const idNum = Number(result.bestCandidate.canonicalProductId);
-    if (!Number.isFinite(idNum)) return;
-    const variant = pickVariantForPricing(product?.variants ?? []);
-    const price = variant?.price ?? null;
-    const compareAt = variant?.compareAtPrice ?? null;
-    const image = product?.image ?? null;
-    const url = product?.productUrl ?? null;
-    const candidate: StorefrontPriceMatch = {
-      price,
-      compareAtPrice: compareAt,
-      image,
-      url,
-      title: product?.title ?? result?.title ?? "",
-      handle: product?.handle,
-      confidence: result.bestCandidate.confidence,
-      reason: result.bestCandidate.reason,
-      variantTitle: variant?.title ?? null,
-    };
-    const existing = map.get(idNum);
-    if (!existing || matchRank(candidate) > matchRank(existing)) {
-      map.set(idNum, candidate);
-    }
-  });
-  return map;
-}
-
-async function buildShopifyIndex(
-  seller: SellerRow,
-  config: SellerStorefrontConfig,
-  fetchImpl: FetchLike,
-): Promise<StorefrontIndexResult> {
-  const baseUrl = typeof seller.base_url === "string" ? seller.base_url : "";
-  if (!baseUrl) {
-    return {
-      status: "unavailable",
-      platform: "shopify",
-      config,
-      diagnostics: [
-        `Seller ${seller.id} is missing a base_url, skipping Shopify feed sync`,
-      ],
-      fallbackOption: {
-        message: "Provide a base_url to enable Shopify feed sync for this seller.",
-      },
-    };
-  }
-
-  const feedResult = await fetchShopifyProductFeed(baseUrl, {
-    fetchImpl,
-    maxPages: config.maxFeedPages,
-  });
-
-  if (!feedResult.ok) {
-    return {
-      status: "unavailable",
-      platform: "shopify",
-      config,
-      diagnostics: [
-        `Shopify feed for ${seller.name ?? seller.id} failed: ${feedResult.error}`,
-      ],
-      fallbackOption: {
-        message:
-          "Switch this seller to matchStrategy=\"sku-from-page\" to extract SKUs from product HTML.",
-        skuExample: {
-          raw: "prod4780167-99120218061",
-          normalized: normalizeShopifySku("prod4780167-99120218061"),
-        },
-      },
-    };
-  }
-
-  const products = feedResult.products.map((product) => ({
-    ...product,
-    productUrl: product.productUrl ?? buildShopifyProductUrl(baseUrl, product.handle),
-  }));
-
-  if ((config.matchStrategy ?? "name") === "sku-from-page") {
-    await ensureSkuForProducts(products, baseUrl, fetchImpl);
-  }
-
-  return finishFeedIndex("shopify", seller, config, baseUrl, products);
-}
-
-// Shared tail for feed-based platforms: run the SKU/name matcher over the
-// normalized feed and package the result as a storefront index.
-async function finishFeedIndex(
-  platform: StorefrontPlatform,
-  seller: SellerRow,
-  config: SellerStorefrontConfig,
-  baseUrl: string,
-  products: ShopifyFeedProduct[],
-): Promise<StorefrontIndexResult> {
-  const summary = await matchShopifyProductsAgainstCatalogue(products, {
-    baseUrl,
-  });
-
-  const matches = buildMatchesFromSummary(summary, products);
-
-  // Index EVERY feed product by URL: a stored, verified link identifies its
-  // product exactly, so refresh can price it without any name matching.
-  const byLink = new Map<string, StorefrontPriceMatch>();
-  for (const product of products) {
-    const key = normalizeProductUrl(product.productUrl);
-    if (!key) continue;
-    const variant = pickVariantForPricing(product.variants ?? []);
-    byLink.set(key, {
-      price: variant?.price ?? null,
-      compareAtPrice: variant?.compareAtPrice ?? null,
-      image: product.image ?? null,
-      url: product.productUrl ?? null,
-      title: product.title,
-      handle: product.handle,
-      confidence: 1,
-      reason: "sku", // identity by stored link — as strong as a SKU match
-      variantTitle: variant?.title ?? null,
-    });
-  }
-
-  if (!matches.size) {
-    return {
-      status: "unavailable",
-      platform,
-      config,
-      diagnostics: [
-        `${platform} feed for ${seller.name ?? seller.id} returned no confident catalogue matches`,
-      ],
-      fallbackOption: {
-        message:
-          "Consider enabling matchStrategy=\"sku-from-page\" so we can lift the manufacturer SKU from the product page JSON-LD before matching.",
-        skuExample: {
-          raw: "prod4780167-99120218061",
-          normalized: normalizeShopifySku("prod4780167-99120218061"),
-        },
-      },
-    };
-  }
-
-  return {
-    status: "ready",
-    platform,
-    config,
-    matches,
-    byLink,
-    diagnostics: summary.products
-      .filter((result) => !result.bestCandidate)
-      .map(
-        (result) =>
-          `No confident match for ${result.title} (${result.handle}) from ${seller.name ?? seller.id}`,
-      ),
-  };
-}
-
-async function buildWooCommerceIndex(
-  seller: SellerRow,
-  config: SellerStorefrontConfig,
-  fetchImpl: FetchLike,
-): Promise<StorefrontIndexResult> {
-  const baseUrl = typeof seller.base_url === "string" ? seller.base_url : "";
-  if (!baseUrl) {
-    return {
-      status: "unavailable",
-      platform: "woocommerce",
-      config,
-      diagnostics: [
-        `Seller ${seller.id} is missing a base_url, skipping WooCommerce feed sync`,
-      ],
-    };
-  }
-
-  const feedResult = await fetchWooCommerceProductFeed(baseUrl, {
-    fetchImpl,
-    maxPages: config.maxFeedPages,
-  });
-  if (!feedResult.ok) {
-    return {
-      status: "unavailable",
-      platform: "woocommerce",
-      config,
-      diagnostics: [
-        `WooCommerce feed for ${seller.name ?? seller.id} failed: ${feedResult.error}`,
-      ],
-    };
-  }
-
-  return finishFeedIndex("woocommerce", seller, config, baseUrl, feedResult.products);
-}
-
-// Feed indexes are expensive (minutes for 10k+ item feeds), so interactive
-// consumers (/tinder) use this cache. Batch jobs should call
-// buildStorefrontIndex directly for fresh data.
-const INDEX_CACHE = new Map<number, { ts: number; index: StorefrontIndexResult | null }>();
-const INDEX_CACHE_TTL_MS = 15 * 60 * 1000;
-
-const INDEX_BUILDS = new Map<number, Promise<StorefrontIndexResult | null>>();
-
-/**
- * Non-blocking cache read for interactive pages. Returns the cached index if
- * one is fresh; otherwise returns undefined immediately and (once per seller)
- * starts building it in the background so the NEXT request has it. Use this
- * anywhere a human is waiting — a cold Good Games feed takes minutes.
- */
-export function peekStorefrontIndex(
-  seller: SellerRow,
-): StorefrontIndexResult | null | undefined {
-  const id = Number(seller?.id);
-  if (!Number.isFinite(id)) return undefined;
-  const hit = INDEX_CACHE.get(id);
-  if (hit && Date.now() - hit.ts < INDEX_CACHE_TTL_MS) return hit.index;
-  if (!INDEX_BUILDS.has(id)) {
-    const build = getCachedStorefrontIndex(seller)
-      .catch(() => null)
-      .finally(() => INDEX_BUILDS.delete(id));
-    INDEX_BUILDS.set(id, build);
-  }
-  return undefined;
-}
-
-export async function getCachedStorefrontIndex(
-  seller: SellerRow,
-  fetchImpl: FetchLike = fetch,
-): Promise<StorefrontIndexResult | null> {
-  const id = Number(seller?.id);
-  if (!Number.isFinite(id)) return buildStorefrontIndex(seller, fetchImpl);
-  const hit = INDEX_CACHE.get(id);
-  if (hit && Date.now() - hit.ts < INDEX_CACHE_TTL_MS) return hit.index;
-  const index = await buildStorefrontIndex(seller, fetchImpl);
-  INDEX_CACHE.set(id, { ts: Date.now(), index });
-  return index;
-}
-
-export async function buildStorefrontIndex(
-  seller: SellerRow,
-  fetchImpl: FetchLike = fetch,
-): Promise<StorefrontIndexResult | null> {
-  const config = parseSellerStorefront(seller?.storefront);
-  if (!config || config.platform === "misc") {
-    return null;
-  }
-
-  switch (config.platform) {
-    case "shopify":
-      return buildShopifyIndex(seller, config, fetchImpl);
-    case "gw-algolia":
-      return buildGwAlgoliaIndex(seller, config, fetchImpl);
-    case "woocommerce":
-      return buildWooCommerceIndex(seller, config, fetchImpl);
-    default:
-      return null;
-  }
-}
-
-async function buildGwAlgoliaIndex(
-  seller: SellerRow,
-  config: SellerStorefrontConfig,
-  fetchImpl: FetchLike,
-): Promise<StorefrontIndexResult> {
-  try {
-    const priceMap = await buildGwPriceMap(fetchImpl);
-    const matches = new Map<number, StorefrontPriceMatch>();
-    const byLink = new Map<string, StorefrontPriceMatch>();
-    for (const [productId, gwMatch] of priceMap) {
-      const match: StorefrontPriceMatch = {
-        price: gwMatch.price,
-        compareAtPrice: null,
-        image: null,
-        url: gwMatch.url,
-        title: gwMatch.title,
-        handle: undefined,
-        confidence: 1,
-        reason: "sku",
-        variantTitle: null,
-      };
-      matches.set(productId, match);
-      const key = normalizeProductUrl(gwMatch.url);
-      if (key) byLink.set(key, match);
-    }
-    if (!matches.size) {
-      return {
-        status: "unavailable",
-        platform: "gw-algolia",
-        config,
-        diagnostics: [
-          `GW Algolia index returned no SKU matches for ${seller.name ?? seller.id} — is product-skus.ts seeded?`,
-        ],
-      };
-    }
-    return {
-      status: "ready",
-      platform: "gw-algolia",
-      config,
-      matches,
-      byLink,
-      diagnostics: [
-        `GW Algolia catalogue resolved ${matches.size} products by canonical SKU`,
-      ],
-    };
-  } catch (error) {
-    return {
-      status: "unavailable",
-      platform: "gw-algolia",
-      config,
-      diagnostics: [
-        `GW Algolia fetch failed for ${seller.name ?? seller.id}: ${(error as Error)?.message ?? error}`,
-      ],
-    };
-  }
 }
