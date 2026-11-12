@@ -464,8 +464,11 @@ export default function WheelOfBlameClient() {
                 const playPromise = videoRef.current.play();
                 if (playPromise && typeof playPromise.catch === "function") {
                   playPromise.catch(() => {
-                    videoRef.current?.pause();
-                    videoRef.current.muted = true;
+                    const video = videoRef.current;
+                    if (video) {
+                      video.pause();
+                      video.muted = true;
+                    }
                     setSoundEnabled(false);
                   });
                 }

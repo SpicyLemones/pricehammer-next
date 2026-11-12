@@ -40,8 +40,8 @@ function parseSecret(request: NextRequest) {
   return secret?.trim() || null;
 }
 
-export async function GET(request: NextRequest, { params }: { params: { streamerId: string } }) {
-  const streamerId = (params?.streamerId ?? "").trim();
+export async function GET(request: NextRequest, { params }: { params: Promise<{ streamerId: string }> }) {
+  const streamerId = ((await params)?.streamerId ?? "").trim();
   if (!streamerId) return jsonError("missing_streamerId", 400);
 
   const token = parseToken(request);
@@ -94,8 +94,8 @@ export async function GET(request: NextRequest, { params }: { params: { streamer
   });
 }
 
-export async function POST(request: NextRequest, { params }: { params: { streamerId: string } }) {
-  const streamerId = (params?.streamerId ?? "").trim();
+export async function POST(request: NextRequest, { params }: { params: Promise<{ streamerId: string }> }) {
+  const streamerId = ((await params)?.streamerId ?? "").trim();
   if (!streamerId) return jsonError("missing_streamerId", 400);
 
   const session = await getValidSession();

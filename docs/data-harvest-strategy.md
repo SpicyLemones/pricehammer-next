@@ -1,5 +1,10 @@
 # Improving product matching for scraped retailer data
 
+> **Historical note (Nov 2026):** the Puppeteer scraper referenced below
+> (`src/app/lib/scraper.ts`) has been removed. All prices now come from store
+> APIs (Shopify, WooCommerce, GW Algolia) via `storefronts.ts`, and the /tinder
+> review queue searches stores through `store-search.ts`.
+
 This note summarises options for making the scraping pipeline more deterministic
 when a storefront search page returns loosely related items.
 

@@ -72,7 +72,7 @@ async function detectPlatform(baseUrl: string): Promise<DetectedPlatform> {
   return {
     platform: "misc",
     detail:
-      "no public product feed detected — will need scraper selectors (or the site is bot-walled)",
+      "no public product feed detected — prices for this store must be entered by hand in /tinder (or the site is bot-walled)",
   };
 }
 
@@ -191,7 +191,7 @@ export async function POST(req: Request) {
     seededPairs: seeded.c,
     nextStep:
       detected.platform === "misc"
-        ? "No feed found — add scraper selectors to this seller before prices can be collected."
+        ? "No feed found — this store can only be priced manually (paste links in /tinder)."
         : `Run POST /api/auto-validate?seller=${sellerId} to pull prices from the ${detected.platform} feed.`,
   });
 }

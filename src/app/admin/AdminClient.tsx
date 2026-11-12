@@ -63,7 +63,49 @@ function useAction() {
     }
   }
 
-  return { state, message, runJSON, runForm, reset: () => (setState("idle"), setMessage("")) };
+  // Long jobs: start in the background, then poll until done. Keeps every
+  // HTTP request short so Render's proxy never cuts one off mid-run.
+  async function runJob(url: string, body?: Record<string, any>) {
+    try {
+      setState("working");
+      setMessage("");
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...(body ?? {}), async: true }),
+      });
+      const start = await res.json().catch(() => null);
+      if (!res.ok || !start?.jobId) {
+        setState("error");
+        setMessage(start?.error || `Request failed (${res.status})`);
+        return;
+      }
+      const t0 = Date.now();
+      for (;;) {
+        await new Promise((r) => setTimeout(r, 3000));
+        const poll = await fetch(`${url}?job=${encodeURIComponent(start.jobId)}`);
+        const data = await poll.json().catch(() => null);
+        const job = data?.job;
+        if (!poll.ok || !job) {
+          setState("error");
+          setMessage(data?.error || `Lost track of job (${poll.status})`);
+          return;
+        }
+        if (job.status === "running") {
+          setMessage(`Running… ${Math.round((Date.now() - t0) / 1000)}s`);
+          continue;
+        }
+        setState(job.status === "done" ? "done" : "error");
+        setMessage(job.status === "done" ? JSON.stringify(job.result) : job.error || "Job failed");
+        return;
+      }
+    } catch (e: any) {
+      setState("error");
+      setMessage(e?.message || "Network error");
+    }
+  }
+
+  return { state, message, runJSON, runForm, runJob, reset: () => (setState("idle"), setMessage("")) };
 }
 
 function Status({ state, message }: { state: RunState; message: string }) {
@@ -83,7 +125,7 @@ function Status({ state, message }: { state: RunState; message: string }) {
       {state === "working" && <Loader2 className="h-4 w-4 animate-spin" />}
       {state === "done" && <CheckCircle2 className="h-4 w-4" />}
       {state === "error" && <AlertCircle className="h-4 w-4" />}
-      <span>{state === "working" ? "Working…" : message}</span>
+      <span>{state === "working" ? message || "Working…" : message}</span>
     </div>
   );
 }
@@ -160,8 +202,8 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {/* Auto-Validate (first hit) */}
-        <Card title="Auto-Validate (first hit)">
+        {/* Auto-Validate */}
+        <Card title="Auto-Validate (feeds + SKUs)">
           <div className="flex flex-col gap-2">
             <input
               name="seller"
@@ -181,7 +223,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
               className="rounded bg-emerald-600 text-white px-3 py-2 hover:bg-emerald-700 active:scale-95 transition disabled:opacity-50"
               disabled={autoValidate.state === "working"}
               onClick={() =>
-                autoValidate.runJSON("/api/auto-validate", {
+                autoValidate.runJob("/api/auto-validate", {
                   seller: autoSeller ? Number(autoSeller) : undefined,
                   product: autoProduct ? Number(autoProduct) : undefined,
                 })
@@ -214,7 +256,7 @@ export default function AdminClient({ initialCount }: { initialCount: number }) 
               className="rounded bg-sky-600 text-white px-3 py-2 hover:bg-sky-700 active:scale-95 transition disabled:opacity-50"
               disabled={refreshPrices.state === "working"}
               onClick={() =>
-                refreshPrices.runJSON("/api/refresh-prices", {
+                refreshPrices.runJob("/api/refresh-prices", {
                   seller: refreshSeller ? Number(refreshSeller) : undefined,
                 })
               }

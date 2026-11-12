@@ -62,3 +62,61 @@ export function listJobs(name?: string): Job[] {
   const all = [...jobs.values()].sort((a, b) => b.startedAt.localeCompare(a.startedAt));
   return name ? all.filter((j) => j.name === name) : all;
 }
+
+/* ---------------- HTTP helpers ----------------
+   Let any long-running POST route opt into background mode with
+   `?async=1` (or `{"async": true}` in a JSON body). The caller gets a job id
+   back right away (HTTP 202) and polls `GET <same route>?job=<id>`. Without
+   the flag the route behaves exactly as before (synchronous).            */
+
+function truthy(v: unknown): boolean {
+  return v === true || v === 1 || v === "1" || v === "true";
+}
+
+export async function runMaybeAsync(
+  req: Request,
+  name: string,
+  handler: (req: Request) => Promise<Response>,
+): Promise<Response> {
+  const url = new URL(req.url);
+  // buffer the body so the handler can read it after we've already responded
+  const bodyText = req.method === "GET" || req.method === "HEAD" ? "" : await req.text();
+  const replay = () =>
+    new Request(req.url, {
+      method: req.method,
+      headers: req.headers,
+      body: bodyText === "" ? undefined : bodyText,
+    });
+
+  let wantAsync = truthy(url.searchParams.get("async"));
+  if (!wantAsync && bodyText && (req.headers.get("content-type") || "").includes("application/json")) {
+    try {
+      wantAsync = truthy((JSON.parse(bodyText) as { async?: unknown })?.async);
+    } catch {}
+  }
+  if (!wantAsync) return handler(replay());
+
+  const job = startJob(name, async () => {
+    const res = await handler(replay());
+    const body = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
+    if (!res.ok || body?.ok === false) throw new Error(body?.error || `HTTP ${res.status}`);
+    return body;
+  });
+  console.log(`[jobs] QUEUED ${job.id}`);
+  return Response.json({ ok: true, jobId: job.id, status: job.status }, { status: 202 });
+}
+
+/** GET ?job=<id> handler body shared by every async-capable route. */
+export function jobStatusResponse(req: Request): Response {
+  const id = new URL(req.url).searchParams.get("job");
+  if (!id) return Response.json({ ok: false, error: "missing ?job=<id>" }, { status: 400 });
+  const job = getJob(id);
+  if (!job) {
+    // a redeploy wipes the in-memory registry: "not found" also means "lost, run it again"
+    return Response.json(
+      { ok: false, error: "job not found (finished long ago, or lost to a redeploy)" },
+      { status: 404 },
+    );
+  }
+  return Response.json({ ok: true, job });
+}

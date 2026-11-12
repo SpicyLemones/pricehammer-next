@@ -19,6 +19,7 @@ import { isAdminRequest } from "@/lib/auth";
 import { logAudit } from "@/app/lib/audit";
 import { fetchGwCatalogueByGame, type GwCatalogueItem } from "@/app/lib/gw-algolia";
 import { invalidateSkuCatalogueCache } from "@/app/lib/sku-catalogue";
+import { jobStatusResponse, runMaybeAsync } from "@/app/lib/job-runner";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -40,10 +41,22 @@ const CATEGORY_BY_TYPE: Record<string, string> = {
 const normName = (s: string) =>
   s.toLowerCase().replace(/[’'`]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 
+// POST ?async=1 runs in the background; poll GET ?job=<id>
 export async function POST(req: Request) {
   if (!isAdminRequest(req)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
+  return runMaybeAsync(req, "sync-gw-catalogue", handle);
+}
+
+export async function GET(req: Request) {
+  if (!isAdminRequest(req)) {
+    return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
+  }
+  return jobStatusResponse(req);
+}
+
+async function handle(req: Request): Promise<Response> {
 
   const url = new URL(req.url);
   const apply = ["1", "true"].includes((url.searchParams.get("apply") ?? "").toLowerCase());

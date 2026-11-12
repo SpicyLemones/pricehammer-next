@@ -86,6 +86,22 @@ function pickItem(hit: AlgoliaHit): GwCatalogueItem {
 }
 
 /**
+ * Keyword search against GW's catalogue (one request, typically <300ms).
+ * Used by the /tinder review queue to show candidates for a product.
+ */
+export async function searchGwCatalogue(
+  term: string,
+  limit = 12,
+  fetchImpl: FetchLike = fetch,
+): Promise<(GwCatalogueItem & { url: string | null })[]> {
+  const r = await algoliaQuery({ query: term, hitsPerPage: limit, page: 0 }, fetchImpl);
+  return (r.hits ?? []).map((hit) => {
+    const item = pickItem(hit);
+    return { ...item, url: item.slug ? `${SHOP_BASE}${item.slug}` : null };
+  });
+}
+
+/**
  * Fetch the full GW catalogue. The search API caps pagination at ~1000 hits
  * per filter expression, so partition by productType, then stock status, then
  * game system until every slice fits.

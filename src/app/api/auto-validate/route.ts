@@ -26,6 +26,8 @@ import {
   type StorefrontPriceMatch,
 } from "@/app/lib/storefronts";
 import { probeSellerHealth, reconcileSellerStatus } from "@/app/lib/seller-health";
+import { jobStatusResponse, runMaybeAsync } from "@/app/lib/job-runner";
+import { isAdminRequest } from "@/lib/auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,7 +58,19 @@ function shouldAccept(match: StorefrontPriceMatch): boolean {
   return match.confidence >= NAME_ACCEPT_CONFIDENCE;
 }
 
+// POST ?async=1 runs in the background; poll GET ?job=<id>
 export async function POST(req: Request) {
+  return runMaybeAsync(req, "auto-validate", handle);
+}
+
+export async function GET(req: Request) {
+  if (!isAdminRequest(req)) {
+    return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
+  }
+  return jobStatusResponse(req);
+}
+
+async function handle(req: Request): Promise<Response> {
   try {
     const url = new URL(req.url);
     let seller = toInt(url.searchParams.get("seller"));

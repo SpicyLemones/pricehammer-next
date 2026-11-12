@@ -354,7 +354,7 @@ async function buildShopifyIndex(
       ],
       fallbackOption: {
         message:
-          "Switch this seller to matchStrategy=\"sku-from-page\" to extract SKUs from product HTML, or fall back to the legacy scraper.",
+          "Switch this seller to matchStrategy=\"sku-from-page\" to extract SKUs from product HTML.",
         skuExample: {
           raw: "prod4780167-99120218061",
           normalized: normalizeShopifySku("prod4780167-99120218061"),
@@ -484,6 +484,30 @@ async function buildWooCommerceIndex(
 // buildStorefrontIndex directly for fresh data.
 const INDEX_CACHE = new Map<number, { ts: number; index: StorefrontIndexResult | null }>();
 const INDEX_CACHE_TTL_MS = 15 * 60 * 1000;
+
+const INDEX_BUILDS = new Map<number, Promise<StorefrontIndexResult | null>>();
+
+/**
+ * Non-blocking cache read for interactive pages. Returns the cached index if
+ * one is fresh; otherwise returns undefined immediately and (once per seller)
+ * starts building it in the background so the NEXT request has it. Use this
+ * anywhere a human is waiting — a cold Good Games feed takes minutes.
+ */
+export function peekStorefrontIndex(
+  seller: SellerRow,
+): StorefrontIndexResult | null | undefined {
+  const id = Number(seller?.id);
+  if (!Number.isFinite(id)) return undefined;
+  const hit = INDEX_CACHE.get(id);
+  if (hit && Date.now() - hit.ts < INDEX_CACHE_TTL_MS) return hit.index;
+  if (!INDEX_BUILDS.has(id)) {
+    const build = getCachedStorefrontIndex(seller)
+      .catch(() => null)
+      .finally(() => INDEX_BUILDS.delete(id));
+    INDEX_BUILDS.set(id, build);
+  }
+  return undefined;
+}
 
 export async function getCachedStorefrontIndex(
   seller: SellerRow,
