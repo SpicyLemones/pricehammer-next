@@ -6,8 +6,8 @@ const tiles = [
   {
     title: "PriceHammer",
     subtitle: "Cheaper warhammer plastic",
-    href: "https://pricehammer.xyz",
-    external: true,
+    href: "/price-lookup",
+    external: false,
     background: "/logo.svg", // Background Image
     type: "image"
   },

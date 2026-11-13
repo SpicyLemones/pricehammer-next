@@ -5,15 +5,12 @@
 // spot with no streamer involvement. Quests without a matcher (typeracer,
 // gifting, TTS...) stay manual — the streamer claims them from the tavern UI.
 //
-// State lives in the same per-streamer JSON the stream-quests route owns
-// (data/stream-quests/<userId>.json). We only touch chatterQuests + ledger
+// State lives in the same per-streamer document the stream-quests route owns
+// (SQLite, via stream-quest-store.ts). We only touch chatterQuests + ledger
 // and preserve everything else, so the two writers stay compatible. The
 // optional `progress` field added here survives the route's spreads.
 
-import { promises as fs } from "node:fs";
-import path from "node:path";
-
-const STREAM_QUESTS_DIR = path.join(process.cwd(), "data", "stream-quests");
+import { readQuestState, writeQuestState } from "@/app/lib/stream-quest-store";
 
 type ChatterQuestRecord = {
   id: string;
@@ -124,11 +121,6 @@ function templateIdOf(questId: string): string | null {
   return null;
 }
 
-function statePath(userId: string) {
-  const safe = String(userId ?? "").trim().replace(/[^a-zA-Z0-9_-]/g, "_");
-  return path.join(STREAM_QUESTS_DIR, `${safe}.json`);
-}
-
 /**
  * Check a chat message against the chatter's open auto-matchable quests.
  * Mutates the quest state file (completed flags, progress, ledger) and
@@ -141,12 +133,13 @@ export async function autoCompleteChatQuests(
   message: string,
   emotes: string[],
 ): Promise<QuestCompletion[]> {
-  let state: QuestStateRecord;
+  let state: QuestStateRecord | null;
   try {
-    state = JSON.parse(await fs.readFile(statePath(broadcasterId), "utf8"));
+    state = await readQuestState<QuestStateRecord>(broadcasterId);
   } catch {
-    return []; // no quest state yet — nothing to complete
+    return [];
   }
+  if (!state) return []; // no quest state yet — nothing to complete
 
   // only today's quest board auto-completes
   if (state.date !== new Date().toISOString().slice(0, 10)) return [];
@@ -195,7 +188,7 @@ export async function autoCompleteChatQuests(
   }
 
   if (dirty) {
-    await fs.writeFile(statePath(broadcasterId), JSON.stringify(state, null, 2), "utf8");
+    await writeQuestState(broadcasterId, state);
   }
 
   return completions;

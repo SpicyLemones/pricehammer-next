@@ -51,13 +51,6 @@ async function verifySession(token: string | undefined, user: string, pass: stri
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const host = req.headers.get("host") || "";
-
-  if (host.includes("pricehammer.xyz") && pathname === "/") {
-    const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = "/price-lookup";
-    return NextResponse.redirect(redirectUrl);
-  }
 
   // Root page stays public
   if (pathname === "/") {

@@ -2,7 +2,7 @@
 
 Next.js 15 app deployed on Render. One codebase serves:
 
-- **PriceHammer** (`pricehammer.xyz` → `/price-lookup`): Warhammer price comparison across Australian hobby stores.
+- **PriceHammer** (`/price-lookup`): Warhammer price comparison across Australian hobby stores.
 - **Twitch tools** (`/twitch/*`): overlays, Chattergrounds, Wheel of Blame, stream quests.
 - **Recession** pages (`/recession/*`): data you collect locally and push to prod.
 

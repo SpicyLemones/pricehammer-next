@@ -7,6 +7,7 @@ import { NextResponse } from "next/server";
 import { fetchChatters, getValidSession, twitchApi } from "@/app/lib/twitch-auth";
 import { applyChattergroundsAction } from "@/app/api/twitch/chattergrounds/route";
 import { all } from "@/app/lib/sql";
+import { readQuestState, writeQuestState } from "@/app/lib/stream-quest-store";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -93,7 +94,6 @@ type QuestTemplateConfig = {
 
 // --- Config ---
 
-const STREAM_QUESTS_DIR = path.join(process.cwd(), "data", "stream-quests");
 const TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "quest-library.json");
 const CHAT_TEMPLATE_LIBRARY_PATH = path.join(process.cwd(), "data", "chat-quest-library.json");
 
@@ -527,22 +527,12 @@ async function ensureState(audience: AudienceSnapshot, userId: string) {
   return { state, regenerated: true };
 }
 
-function sanitizeUserId(userId: string) {
-  const safe = String(userId ?? "").trim();
-  if (!safe) throw new Error("Missing Twitch user id");
-  return safe.replace(/[^a-zA-Z0-9_-]/g, "_");
-}
-
-function getDataPath(userId: string) {
-  const safeId = sanitizeUserId(userId);
-  return path.join(STREAM_QUESTS_DIR, `${safeId}.json`);
-}
-
+// State persists in SQLite (stream-quest-store.ts), not in the app folder,
+// so it survives deploys.
 async function loadState(userId: string): Promise<StreamQuestState | null> {
   try {
-    const raw = await fs.readFile(getDataPath(userId), "utf8");
-    const parsed = JSON.parse(raw) as StreamQuestState;
-    if (!parsed.date || parsed.ledger === undefined) {
+    const parsed = await readQuestState<StreamQuestState>(userId);
+    if (!parsed || !parsed.date || parsed.ledger === undefined) {
       return null;
     }
 
@@ -559,9 +549,7 @@ async function loadState(userId: string): Promise<StreamQuestState | null> {
 }
 
 async function saveState(userId: string, state: StreamQuestState) {
-  const dataPath = getDataPath(userId);
-  await fs.mkdir(path.dirname(dataPath), { recursive: true });
-  await fs.writeFile(dataPath, JSON.stringify(state, null, 2), "utf8");
+  await writeQuestState(userId, state);
 }
 
 function serializeState(state: StreamQuestState) {
