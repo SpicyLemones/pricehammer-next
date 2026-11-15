@@ -1,0 +1,90 @@
+name: Weekly recession data collection
+
+# Collects the Recession Indicator's live data (Seek posting counts, top
+# employers and roles, Reddit activity) once a week and pushes that week's
+# rows to the live site. Each run adds one dated reading per series, which
+# is what the trend charts and /recession/history are drawn from.
+
+on:
+  schedule:
+    # 18:23 UTC Sunday = about 4:23am Monday in Sydney
+    - cron: "23 18 * * 0"
+  workflow_dispatch: {}
+
+env:
+  BASE: https://www.spycy.fun
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Writes to a scratch database, not the repo copy: only this run's rows
+      # are pushed, and the import on the server is add-or-update only.
+      - name: Collect
+        env:
+          RECESSION_DB: ${{ runner.temp }}/recession.sqlite
+          RECESSION_SUMMARY: ${{ runner.temp }}/summary.json
+        run: node scripts/collect-recession.mjs
+
+      - name: Push this week's rows to the live site
+        env:
+          RECESSION_DB: ${{ runner.temp }}/recession.sqlite
+          ADMIN_USER: ${{ secrets.PRICEHAMMER_ADMIN_USER }}
+          ADMIN_PASS: ${{ secrets.PRICEHAMMER_ADMIN_PASS }}
+        run: |
+          if [ -z "$ADMIN_USER" ] || [ -z "$ADMIN_PASS" ]; then
+            echo "::error::Repo secrets PRICEHAMMER_ADMIN_USER / PRICEHAMMER_ADMIN_PASS are not set."
+            exit 1
+          fi
+          # Render serves an error page while a deploy is in flight: retry
+          for attempt in 1 2 3 4; do
+            if node scripts/push-recession.mjs "$BASE"; then exit 0; fi
+            echo "push attempt $attempt failed, retrying"
+            sleep $((attempt * 60))
+          done
+          echo "::error::Could not push the collected data to $BASE"
+          exit 1
+
+      # The raw reading is kept for 90 days as a backup of each week's data.
+      - name: Keep the raw reading
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recession-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/recession.sqlite
+            ${{ runner.temp }}/summary.json
+          if-no-files-found: ignore
+          retention-days: 90
+
+      # Runs last so whatever was collected is already pushed. Seek and Reddit
+      # both sometimes refuse cloud servers; this makes that visible instead
+      # of leaving a silent gap in the history.
+      - name: Check every source answered
+        env:
+          SUMMARY: ${{ runner.temp }}/summary.json
+        run: |
+          cat "$SUMMARY"
+          fail=0
+          if [ "$(jq '.seek.ok' "$SUMMARY")" = "0" ]; then
+            echo "::error::Seek returned nothing ($(jq -r '.seek.lastError' "$SUMMARY")). It is probably blocking GitHub's servers. No job counts were recorded this week; run 'npm run collect:recession' and 'node scripts/push-recession.mjs' from a home connection instead."
+            fail=1
+          elif [ "$(jq '.seek.failed' "$SUMMARY")" != "0" ]; then
+            echo "::warning::$(jq '.seek.failed' "$SUMMARY") Seek series failed this week ($(jq -r '.seek.lastError' "$SUMMARY"))."
+          fi
+          if [ "$(jq '.reddit.ok' "$SUMMARY")" = "0" ]; then
+            echo "::error::Reddit returned nothing ($(jq -r '.reddit.lastError' "$SUMMARY")). It is probably blocking GitHub's servers. Job counts were still recorded; Reddit activity was not."
+            fail=1
+          fi
+          exit $fail

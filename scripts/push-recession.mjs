@@ -23,7 +23,8 @@ if (!user || !pass) {
   process.exit(1);
 }
 
-const db = new sqlite3.Database("data/db/data.sqlite");
+// RECESSION_DB: same override the collector takes (the weekly workflow uses a scratch file)
+const db = new sqlite3.Database(process.env.RECESSION_DB || "data/db/data.sqlite");
 const all = (s) => new Promise((res, rej) => db.all(s, (e, r) => (e ? rej(e) : res(r))));
 
 const payload = {
@@ -45,4 +46,6 @@ const res = await fetch(`${base}/api/admin/recession-import`, {
   },
   body: JSON.stringify(payload),
 });
-console.log(res.status, await res.text());
+const text = await res.text();
+console.log(res.status, text.slice(0, 500));
+if (!res.ok) process.exit(1);

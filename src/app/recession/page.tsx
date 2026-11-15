@@ -62,7 +62,8 @@ export default async function RecessionPickerPage() {
           <div className="flex items-center justify-between border-b-4 border-double border-slate-900 px-6 py-4 dark:border-slate-100">
             <div>
               <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                Australia · updated whenever it gets worse
+                Australia · updated weekly ·{" "}
+                <Link href="/recession/history" className="underline">the archive</Link>
               </div>
               <h1 className="font-display mt-1 text-4xl leading-none tracking-wide text-slate-900 dark:text-slate-50 sm:text-5xl">
                 The Recession Indicator

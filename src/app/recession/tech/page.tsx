@@ -13,6 +13,8 @@ import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { ReadingExplainer } from "../ReadingBreakdown";
 import { RolesToggle } from "../RolesToggle";
 import { LifeGame } from "../LifeGame";
+import { SeekTrend } from "../SeekTrend";
+import { getSeekTrends, type TrendPoint } from "@/app/lib/recession-history";
 import occEmployment from "../../../../data/recession/occupation-employment.json";
 
 export const runtime = "nodejs";
@@ -34,6 +36,11 @@ const nf = new Intl.NumberFormat("en-AU");
 export default async function RecessionPage() {
   const data = await getRecessionData();
   const topEmployers = await getTopEmployers("tech");
+  const trends = await getSeekTrends("seek-ict-%");
+  const seekTrend = {
+    all: trends["seek-ict-all"]?.points ?? [],
+    graduate: trends["seek-ict-graduate"]?.points ?? [],
+  };
   const industry = await getIndustryData("tech");
   const competition = industry.competition;
 
@@ -52,7 +59,7 @@ export default async function RecessionPage() {
       <DoomTicker data={data} />
       <LongChart data={data} />
       <WhingeSection data={data} />
-      <CompetitionSection data={data} topEmployers={topEmployers} />
+      <CompetitionSection data={data} topEmployers={topEmployers} seekTrend={seekTrend} />
       <RolesToggle
         employment={(occEmployment.byIndustry as Record<string, { rank: number; occupation: string; employed: number }[]>).tech ?? []}
         employmentQuarter={occEmployment.quarter}
@@ -326,7 +333,15 @@ function computeGradBacklog(data: RecessionData) {
   return { grads, cohorts, pool };
 }
 
-function CompetitionSection({ data, topEmployers }: { data: RecessionData; topEmployers: TopEmployer[] }) {
+function CompetitionSection({
+  data,
+  topEmployers,
+  seekTrend,
+}: {
+  data: RecessionData;
+  topEmployers: TopEmployer[];
+  seekTrend: { all: TrendPoint[]; graduate: TrendPoint[] };
+}) {
   const s = data.seekLatest;
   const { grads, pool } = computeGradBacklog(data);
   const gradPostings = s["seek-ict-graduate"];
@@ -361,6 +376,7 @@ function CompetitionSection({ data, topEmployers }: { data: RecessionData; topEm
           </div>
         ))}
       </div>
+      <SeekTrend all={seekTrend.all} graduate={seekTrend.graduate} label="tech postings on Seek" />
       <div className="mt-3 space-y-1.5 border-l-2 border-red-700 pl-3 font-serif text-sm text-slate-600 dark:border-red-500 dark:text-slate-300">
         <p>
           {nf.format(pool)} grads from the last five classes are estimated to still be looking, against{" "}

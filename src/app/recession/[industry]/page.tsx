@@ -14,6 +14,8 @@ import { ReadingExplainer } from "../ReadingBreakdown";
 import { RolesToggle } from "../RolesToggle";
 import { GradIndexSection, GradBacklogSection } from "../GradSections";
 import { LifeGame } from "../LifeGame";
+import { SeekTrend } from "../SeekTrend";
+import { getSeekTrends, seekPrefix, type TrendPoint } from "@/app/lib/recession-history";
 import occEmployment from "../../../../data/recession/occupation-employment.json";
 import { AdSpendChart } from "../AdSpendChart";
 import { PayVsChart } from "../PayVsChart";
@@ -50,6 +52,13 @@ export default async function IndustryPage({ params }: Params) {
     (occEmployment as unknown as { jobsCreated: { byIndustry: Record<string, { employed: number; growthPerYear: number; replacementPerYear: number; openingsPerYear: number }> } })
       .jobsCreated.byIndustry[industry] ?? null;
 
+  const prefix = seekPrefix(industry as IndustrySlug);
+  const trends = await getSeekTrends(`${prefix}-%`);
+  const seekTrend = {
+    all: trends[`${prefix}-all`]?.points ?? [],
+    graduate: trends[`${prefix}-graduate`]?.points ?? [],
+  };
+
   // exhibits letter themselves in page order, no halves
   let letterCode = 65;
   const nextExhibit = () => `Exhibit ${String.fromCharCode(letterCode++)}`;
@@ -72,7 +81,7 @@ export default async function IndustryPage({ params }: Params) {
       {data.config.extraHook && <HookSection hook={data.config.extraHook} kicker={nextExhibit()} variant="strip" />}
       {data.config.slug === "marketing" && <BigSpendersSection kicker={nextExhibit()} />}
       <LongChart data={data} kicker={nextExhibit()} />
-      <SeekTiles data={data} kicker={nextExhibit()} />
+      <SeekTiles data={data} kicker={nextExhibit()} seekTrend={seekTrend} />
       <RolesToggle
         employment={(occEmployment.byIndustry as Record<string, { rank: number; occupation: string; employed: number }[]>)[data.config.slug] ?? []}
         employmentQuarter={occEmployment.quarter}
@@ -376,7 +385,15 @@ function LongChart({ data, kicker }: { data: IndustryData; kicker: string }) {
 
 /* ---------------- live seek counts ---------------- */
 
-function SeekTiles({ data, kicker }: { data: IndustryData; kicker: string }) {
+function SeekTiles({
+  data,
+  kicker,
+  seekTrend,
+}: {
+  data: IndustryData;
+  kicker: string;
+  seekTrend: { all: TrendPoint[]; graduate: TrendPoint[] };
+}) {
   const s = data.seekLatest;
   const slug = data.config.slug;
   const cells = [
@@ -389,7 +406,7 @@ function SeekTiles({ data, kicker }: { data: IndustryData; kicker: string }) {
       <SectionHeading
         kicker={kicker}
         title="On the board right now"
-        blurb="Live counts from Seek, national, refreshed with each collector run."
+        blurb="Counts from Seek, national, collected every week and kept, so you can watch the line move."
       />
       {cells.length ? (
         <div className="grid gap-px border border-slate-300 bg-slate-300 dark:border-slate-700 dark:bg-slate-700 sm:grid-cols-2">
@@ -400,6 +417,9 @@ function SeekTiles({ data, kicker }: { data: IndustryData; kicker: string }) {
             </div>
           ))}
         </div>
+      ) : null}
+      {cells.length ? (
+        <SeekTrend all={seekTrend.all} graduate={seekTrend.graduate} label={`${data.config.name.toLowerCase()} postings on Seek`} />
       ) : (
         <p className="border border-dashed border-slate-300 p-4 text-sm text-slate-500 dark:border-slate-700">
           The live Seek counts have not been loaded on this deployment yet. Check back after the next collector run.
