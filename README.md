@@ -49,6 +49,14 @@ Long jobs (`/api/admin/sync-stores`, `/api/refresh-prices`, `/api/auto-validate`
 - `sync-stores?sync=never&dryRun=1` re-decides from the saved listings and writes nothing.
 - `auto-validate` only re-syncs stores whose listings are more than a day old.
 
+## Recession data
+
+- `recession-collect.yml` runs `scripts/collect-recession.mjs` every week (Monday morning, Sydney time) and pushes that run's rows to the live site through `/api/admin/recession-import`.
+- Each run adds one dated reading per Seek series to `recession_series`. Readings are never overwritten, so the history builds up week by week.
+- `/recession/history` shows every industry at any past collection date. Each industry page has a weekly trend chart.
+- If Seek or Reddit blocks GitHub's servers, the workflow fails with a message saying which one. Run `npm run collect:recession` then `node scripts/push-recession.mjs` from a home connection to fill the gap.
+- The long-run government series in `data/recession/*.json` are still snapshots committed to the repo.
+
 ## Commands
 
 ```bash

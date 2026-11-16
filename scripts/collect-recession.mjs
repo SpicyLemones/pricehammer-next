@@ -1,7 +1,15 @@
 // scripts/collect-recession.mjs
 //
-// Feeds the Recession Indicator page. Run daily (or whenever).
+// Feeds the Recession Indicator page. Runs weekly from GitHub Actions
+// (.github/workflows/recession-collect.yml) and can still be run by hand:
 //   node scripts/collect-recession.mjs
+//
+// Env:
+//   RECESSION_DB       sqlite file to write (default data/db/data.sqlite).
+//                      The workflow points this at a scratch file and pushes
+//                      just that run's rows to prod with push-recession.mjs.
+//   RECESSION_SUMMARY  if set, a JSON summary of what worked is written here
+//                      so the workflow can fail loudly when a source blocks us.
 //
 // Collects, politely:
 //   - Seek job counts for tech (classification 6281) plus grad/junior/senior
@@ -15,8 +23,23 @@
 // one slow retry. Total run is a couple of minutes.
 
 import sqlite3 from "sqlite3";
+import { writeFileSync } from "node:fs";
 
-const db = new sqlite3.Database("data/db/data.sqlite");
+const db = new sqlite3.Database(process.env.RECESSION_DB || "data/db/data.sqlite");
+
+// what worked this run, per source
+const summary = {
+  day: new Date().toISOString().slice(0, 10),
+  seek: { ok: 0, failed: 0, lastError: null },
+  employers: { ok: 0, failed: 0, lastError: null },
+  reddit: { ok: 0, failed: 0, lastError: null, newPosts: 0 },
+};
+function finish(message) {
+  if (process.env.RECESSION_SUMMARY) writeFileSync(process.env.RECESSION_SUMMARY, JSON.stringify(summary, null, 2));
+  console.log(message);
+  console.log("summary:", JSON.stringify(summary));
+  db.close();
+}
 const run = (s, p = []) => new Promise((res, rej) => db.run(s, p, function (e) { e ? rej(e) : res(this); }));
 const get = (s, p = []) => new Promise((res, rej) => db.get(s, p, (e, r) => (e ? rej(e) : res(r))));
 
@@ -143,8 +166,11 @@ for (const { series, params } of SEEK_SERIES) {
        ON CONFLICT(day, series) DO UPDATE SET value = excluded.value`,
       [today, series, value],
     );
+    summary.seek.ok++;
     console.log(`  ${series}: ${value}`);
   } catch (e) {
+    summary.seek.failed++;
+    summary.seek.lastError = e.message;
     console.warn(`  ${series} FAILED: ${e.message}`);
   }
   await sleep(1200);
@@ -256,7 +282,10 @@ for (const { industry, params } of EMPLOYER_INDUSTRIES) {
     for (let page = 1; page <= 10; page++) {
       const url = `https://www.seek.com.au/api/jobsearch/v5/search?siteKey=AU-Main&where=All+Australia&pageSize=100&page=${page}&${params}`;
       const res = await fetch(url, { headers: { "User-Agent": UA, Accept: "application/json" } });
-      if (!res.ok) break;
+      if (!res.ok) {
+        if (page === 1) throw new Error(`seek ${res.status}`);
+        break;
+      }
       const json = await res.json();
       const jobs = Array.isArray(json?.data) ? json.data : [];
       if (!jobs.length) break;
@@ -277,6 +306,9 @@ for (const { industry, params } of EMPLOYER_INDUSTRIES) {
       await sleep(1200);
     }
     const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20);
+    // nothing sampled = keep last week's leaderboard rather than blanking it
+    if (!top.length && !roleCounts.size) throw new Error("no postings returned");
+    summary.employers.ok++;
     await run(`DELETE FROM recession_top_employers WHERE industry = ?`, [industry]);
     for (let i = 0; i < top.length; i++) {
       await run(
@@ -296,14 +328,15 @@ for (const { industry, params } of EMPLOYER_INDUSTRIES) {
     }
     console.log(`  ${industry}: sampled ${sampled}, top: ${top[0]?.[0]} (${top[0]?.[1]}), top role: ${topRoles[0]?.[0]} (${topRoles[0]?.[1]}/${roleSampled})`);
   } catch (e) {
+    summary.employers.failed++;
+    summary.employers.lastError = e.message;
     console.warn(`  ${industry} employers FAILED: ${e.message}`);
   }
   await sleep(1500);
 }
 
 if (seekOnly) {
-  console.log("Done (seek only).");
-  db.close();
+  finish("Done (seek only).");
   process.exit(0);
 }
 
@@ -330,8 +363,12 @@ for (const { sub } of SUBS) {
       after = entries[entries.length - 1].id;
       await sleep(3500);
     }
+    summary.reddit.ok++;
+    summary.reddit.newPosts += stored;
     console.log(`  r/${sub}: +${stored} new posts`);
   } catch (e) {
+    summary.reddit.failed++;
+    summary.reddit.lastError = e.message;
     console.warn(`  r/${sub} listing FAILED: ${e.message}`);
   }
 
@@ -340,6 +377,7 @@ for (const { sub } of SUBS) {
     try {
       const xml = await fetchRss(`https://www.reddit.com/r/${sub}/${kind}/.rss?t=month&limit=8`);
       const entries = parseEntries(xml).slice(0, 8);
+      if (!entries.length) throw new Error("empty feed"); // keep last week's list
       await run(`DELETE FROM recession_fun_posts WHERE sub = ? AND kind = ?`, [sub, kind]);
       for (let i = 0; i < entries.length; i++) {
         const e = entries[i];
@@ -358,5 +396,4 @@ for (const { sub } of SUBS) {
 }
 
 const totals = await get(`SELECT COUNT(*) AS posts FROM recession_reddit_posts`);
-console.log(`Done. ${totals.posts} reddit posts tracked total.`);
-db.close();
+finish(`Done. ${totals.posts} reddit posts in this database.`);

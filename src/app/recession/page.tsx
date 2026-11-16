@@ -41,9 +41,13 @@ export default async function RecessionPickerPage() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* the headline wall: left-anchored rows bleeding off both edges,
-          staggered like a movie-poster text wall */}
-      <div className="pointer-events-none absolute inset-0 select-none overflow-hidden" aria-hidden>
-        {Array.from({ length: 10 }).map((_, i) => (
+          staggered like a movie-poster text wall. Pinned to the window, not
+          the page, and with far more rows than a normal screen needs (each
+          row is about 10% of the window's width tall, so 64 rows cover a
+          window over six times taller than it is wide). The extra rows are
+          simply clipped, so it fills the screen at any size or zoom level. */}
+      <div className="pointer-events-none fixed inset-0 select-none overflow-hidden" aria-hidden>
+        {Array.from({ length: 64 }).map((_, i) => (
           <div
             key={i}
             className="font-display whitespace-nowrap text-[11vw] leading-[0.92] text-slate-900/[0.06] dark:text-slate-100/[0.05]"
@@ -62,7 +66,8 @@ export default async function RecessionPickerPage() {
           <div className="flex items-center justify-between border-b-4 border-double border-slate-900 px-6 py-4 dark:border-slate-100">
             <div>
               <div className="text-[11px] uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                Australia · updated whenever it gets worse
+                Australia · updated weekly ·{" "}
+                <Link href="/recession/history" className="underline">the archive</Link>
               </div>
               <h1 className="font-display mt-1 text-4xl leading-none tracking-wide text-slate-900 dark:text-slate-50 sm:text-5xl">
                 The Recession Indicator
